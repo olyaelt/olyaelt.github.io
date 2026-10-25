@@ -213,10 +213,21 @@ s{color:var(--muted)}
   border-radius:10px;padding:8px 10px;cursor:pointer;line-height:1.6}
 .ln .pl{width:30px;height:30px;border-radius:50%;border:0;background:var(--instr);color:var(--instr-ink);display:grid;place-items:center;font-size:.8rem;cursor:pointer}
 .whole-note{color:var(--muted);font-size:.85rem;white-space:nowrap}
+.gap-in{font:inherit;font-weight:700;color:var(--answer);background:var(--hl);border:0;border-bottom:2px solid var(--hl-ink);border-radius:4px 4px 0 0;padding:0 6px;margin:1px 0;max-width:100%}
+.gap-in:focus{background:var(--card);outline:2px solid var(--instr);outline-offset:1px}
+.gap-res{font-weight:700;border-radius:3px;padding:0 4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.gap-res.ans{background:var(--hl);color:var(--hl-ink)}
+.gap-res.ok{background:var(--ok-bg);color:var(--ok-ink)}
+.gap-fb{grid-column:2;background:var(--no-bg);border-radius:8px;padding:6px 10px;font-size:.95rem;line-height:1.5}
+.chip-x{color:var(--no-ink);font-weight:900}
 .ln.playing{border-color:var(--instr);background:var(--ground)}
 .ln.has-gap{border-width:2px}
-.gapbox{font:inherit;font-weight:700;background:var(--hl);color:transparent;border:2px dashed var(--hl-ink);border-radius:6px;padding:0 6px;margin:1px 0;cursor:pointer;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.gapbox{font:inherit;font-weight:700;background:var(--hl);color:var(--hl-ink);border:2px dashed var(--hl-ink);border-radius:6px;padding:0 6px;margin:1px 0;cursor:pointer;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .gapbox.open{border-style:solid;border-color:transparent}
+.gapbox .g-hint{font-size:.8em;font-weight:900;letter-spacing:.02em;padding:0 10px}
+.gapbox .g-ans{display:none}
+.gapbox.open .g-ans{display:inline}
+.gapbox.open .g-hint{display:none}
 .gapbox.open{color:var(--hl-ink)}
 .tap-hint{margin:0}
 .pc-note{margin:0;padding:10px 12px;border-radius:10px;background:var(--ground);border:1px dashed var(--line)}
@@ -728,12 +739,15 @@ function partsHTML(parts){
 function renderListen(st, count, pct){
   const lines = st.clip;
   const instr = st.first
-    ? "Tap the top line to hear the whole clip. Then tap the line with the gap and try to catch what's in it. Tap the yellow box to check."
-    : "Listen and catch the missing words. Tap the yellow box to check.";
+    ? "Tap the top line to hear the whole clip. Then tap the line with the gap and try to catch the missing words. Type them if you like, then tap Check answers."
+    : "Listen and catch the missing words. Then tap Check answers.";
+  let gk = 0;
+  const keyOf = k => current.id+"-"+stepIdx+"-g"+k;
   const lineHTML = (l,i) => `<div class="ln ${l[3].some(p=>typeof p!=="string")?"has-gap":""}" data-i="${i}">
       <button class="pl" aria-label="${i===0?"Play the whole clip":"Play this line"}">▶</button>
       <span class="ln-text">${l[3].map(p => typeof p === "string" ? esc(p)
-        : `<button class="gapbox ${checked?"open":""}" aria-label="Show the missing words">${esc(p.gap)}</button>`).join("")}${i===0?` <span class="whole-note">· whole clip</span>`:""}</span>
+        : (k => `<input class="gap-in" data-k="${k}" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"
+             aria-label="Type the missing words" style="width:min(100%, ${p.gap.length + 3}ch)" value="${esc(typed[keyOf(k)]||"")}">`)(gk++)).join("")}${i===0?` <span class="whole-note">· whole clip</span>`:""}</span>
     </div>`;
   shell({count, pct, instr,
     stageHTML: `
@@ -743,7 +757,7 @@ function renderListen(st, count, pct){
         <p class="small tap-hint" id="hint" hidden>Nothing playing? Tap the video once, then tap the line again.</p>
         <p class="small" id="after" ${checked?"":"hidden"}>Listen again: how did the expression sound? Try to say it like the speaker.</p>
       </div>`,
-    actionsHTML: navButtons()});
+    actionsHTML: navButtons("Check answers")});
   const msg = document.getElementById("vmsg");
   let ready = false;
   loadYT().then(()=>{
@@ -765,15 +779,34 @@ function renderListen(st, count, pct){
       if(tnow >= to){ ytPlayer.pauseVideo(); clearInterval(ytTimer); rows.forEach(m=>m.classList.remove("playing")); }
     }, 100);
   };
-  rows.forEach((row,i)=>row.addEventListener("click",()=>{
+  rows.forEach((row,i)=>row.addEventListener("click",ev=>{
+    if(ev.target.closest("input")) return;
     if(i===0) play(lines[0][1], clipEnd(lines, lines.length-1), 0);   /* top line: the whole clip, as in TubeQuizard */
     else play(lines[i][1], clipEnd(lines,i), i);
   }));
-  app.querySelectorAll(".gapbox").forEach(g=>g.addEventListener("click",ev=>{
-    ev.stopPropagation(); g.classList.toggle("open"); document.getElementById("after").hidden = false;
-  }));
+  const answers = lines.flatMap(l => l[3].filter(p=>typeof p!=="string").map(p=>p.gap));
+  app.querySelectorAll(".gap-in").forEach(inp=>{
+    inp.addEventListener("click", ev=>ev.stopPropagation());
+    inp.addEventListener("input", ()=>{ typed[keyOf(+inp.dataset.k)] = inp.value; });
+    inp.addEventListener("keydown", ev=>{ if(ev.key==="Enter"){ ev.preventDefault(); inp.blur(); } });
+  });
   wireNav(()=>{
-    app.querySelectorAll(".gapbox").forEach(g=>g.classList.add("open"));
+    app.querySelectorAll(".gap-in").forEach(inp=>{
+      const k = +inp.dataset.k, ans = answers[k], val = inp.value.trim();
+      const res = document.createElement("span");
+      if(!val){ res.className = "gap-res ans"; res.textContent = ans; }
+      else {
+        const m = markAnswer(val, [ans]);
+        if(m.ok){ res.className = "gap-res ok"; res.textContent = ans + " ✓"; }
+        else {
+          res.className = "gap-res ans"; res.textContent = ans;
+          const fb = document.createElement("div"); fb.className = "gap-fb";
+          fb.innerHTML = m.plain ? `<span class="chip-x">✗</span> You: ${esc(val)}` : `<span class="chip-x">✗</span> ${m.you} → ${m.fix}`;
+          inp.closest(".ln").appendChild(fb);
+        }
+      }
+      inp.replaceWith(res);
+    });
     document.getElementById("after").hidden = false;
     const last = stepIdx === current.steps.length-1;
     document.getElementById("go").textContent = last ? "Finish" : "Next";
