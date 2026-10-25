@@ -103,6 +103,7 @@ details.summary[open] summary::after{content:"Hide"}
 .status{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-weight:900;color:transparent}
 .task-btn.is-done .status{border-color:var(--done);background:var(--done);color:var(--card)}
 .task-btn.is-link .status{border-style:dashed}
+.done-banner{background:var(--ok-bg);color:var(--ok-ink);font-weight:700;border-radius:12px;padding:10px 14px;margin-bottom:10px}
 .foot{color:var(--muted);font-size:.88rem;display:grid;gap:4px;padding-top:6px}
 
 /* ---------- task view ---------- */
@@ -209,13 +210,14 @@ s{color:var(--muted)}
 .vmsg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:16px;color:#fff;font-size:.95rem;background:#1D1D1B}
 .lines{display:grid;gap:6px}
 .ln{display:grid;grid-template-columns:34px minmax(0,1fr);gap:8px;align-items:start;text-align:left;width:100%;background:transparent;border:1px solid var(--line);
-  border-radius:10px;padding:8px 10px;cursor:pointer;line-height:1.45}
-.ln .pl{width:30px;height:30px;border-radius:50%;background:var(--instr);color:var(--instr-ink);display:grid;place-items:center;font-size:.8rem}
+  border-radius:10px;padding:8px 10px;cursor:pointer;line-height:1.6}
+.ln .pl{width:30px;height:30px;border-radius:50%;border:0;background:var(--instr);color:var(--instr-ink);display:grid;place-items:center;font-size:.8rem;cursor:pointer}
+.whole-note{color:var(--muted);font-size:.85rem;white-space:nowrap}
 .ln.playing{border-color:var(--instr);background:var(--ground)}
 .ln.has-gap{border-width:2px}
-.gapbox{font-weight:700;background:var(--hl);color:transparent;border-radius:3px;padding:0 3px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.gapbox{font:inherit;font-weight:700;background:var(--hl);color:transparent;border:2px dashed var(--hl-ink);border-radius:6px;padding:0 6px;margin:1px 0;cursor:pointer;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.gapbox.open{border-style:solid;border-color:transparent}
 .gapbox.open{color:var(--hl-ink)}
-.whole{justify-self:start;background:none;border:0;color:var(--instr);font-weight:700;cursor:pointer;padding:4px 0}
 .tap-hint{margin:0}
 .pc-note{margin:0;padding:10px 12px;border-radius:10px;background:var(--ground);border:1px dashed var(--line)}
 .cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--instr);color:var(--instr-ink);text-decoration:none;font-weight:900;
@@ -446,10 +448,11 @@ const typed = {};   /* what the student typed, kept while the page is open */
 const norm = s => String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/[.!?,;:]+$/,"").replace(/\s+/g," ").trim();
 
 /* ---------- home ---------- */
-function renderHome(){
+function renderHome(justDone){
   current = null;
   const secs = [...new Set(TASKS.map(t=>t.sec))];
   app.innerHTML = `
+    ${justDone?`<div class="done-banner" role="status">✓ Done! Mark it in our spreadsheet in your colour.</div>`:""}
     <header class="lesson-head">
       <span class="date">23.10.26</span>
       <h1>The clocks go back on Sunday</h1>
@@ -502,7 +505,7 @@ function shell({count, pct, instr, stageHTML, withBox, actionsHTML}){
     <div class="actions">${actionsHTML}</div>`;
   document.getElementById("home").addEventListener("click",goHome);
 }
-function goHome(){ stopPlayer(); stopRecorder(); try{ history.replaceState(null,"",location.pathname+location.search); }catch(e){} renderHome(); }
+function goHome(justDone){ stopPlayer(); stopRecorder(); try{ history.replaceState(null,"",location.pathname+location.search); }catch(e){} renderHome(justDone===true); }
 
 function renderTask(){
   stopPlayer(); stopRecorder();
@@ -510,7 +513,7 @@ function renderTask(){
   if(t.kind==="gaps") return renderGaps(t);
   if(t.kind==="link") return renderLink(t);
   if(t.kind==="write") return renderWrite(t);
-  if(stepIdx >= t.steps.length) return renderEnd(t);
+  if(stepIdx >= t.steps.length){ finish(t); return goHome(true); }
   const st = t.steps[stepIdx];
   const count = `${stepIdx+1} of ${t.steps.length}`;
   const pct = Math.round((stepIdx)/t.steps.length*100);
@@ -568,7 +571,7 @@ function renderGaps(t){
     chunks.forEach(c=>c.classList.toggle("open",open));
     all.dataset.open = open ? "1" : "0"; all.textContent = open ? "Hide all" : "Show all";
   });
-  document.getElementById("fin").addEventListener("click",()=>{ finish(t); renderEnd(t); });
+  document.getElementById("fin").addEventListener("click",()=>{ finish(t); goHome(true); });
   window.scrollTo(0,0);
 }
 
@@ -725,16 +728,18 @@ function partsHTML(parts){
 function renderListen(st, count, pct){
   const lines = st.clip;
   const instr = st.first
-    ? "Tap the top line to hear the context. Then tap the line with the gap and try to catch what's in it. Then tap Check."
-    : "Listen and catch the missing words.";
+    ? "Tap the top line to hear the whole clip. Then tap the line with the gap and try to catch what's in it. Tap the yellow box to check."
+    : "Listen and catch the missing words. Tap the yellow box to check.";
+  const lineHTML = (l,i) => `<div class="ln ${l[3].some(p=>typeof p!=="string")?"has-gap":""}" data-i="${i}">
+      <button class="pl" aria-label="${i===0?"Play the whole clip":"Play this line"}">▶</button>
+      <span class="ln-text">${l[3].map(p => typeof p === "string" ? esc(p)
+        : `<button class="gapbox ${checked?"open":""}" aria-label="Show the missing words">${esc(p.gap)}</button>`).join("")}${i===0?` <span class="whole-note">· whole clip</span>`:""}</span>
+    </div>`;
   shell({count, pct, instr,
     stageHTML: `
       <div class="panel">
         <div class="video"><div id="yt"></div><p class="vmsg" id="vmsg" hidden></p></div>
-        <div class="lines">
-          ${lines.map((l,i)=>`<button class="ln ${l[3].some(p=>typeof p!=="string")?"has-gap":""}" data-i="${i}" aria-label="Play this line"><span class="pl" aria-hidden="true">▶</span><span>${partsHTML(l[3])}</span></button>`).join("")}
-        </div>
-        <button class="whole" id="whole">▶ Play the whole clip</button>
+        <div class="lines">${lines.map(lineHTML).join("")}</div>
         <p class="small tap-hint" id="hint" hidden>Nothing playing? Tap the video once, then tap the line again.</p>
         <p class="small" id="after" ${checked?"":"hidden"}>Listen again: how did the expression sound? Try to say it like the speaker.</p>
       </div>`,
@@ -748,20 +753,25 @@ function renderListen(st, count, pct){
       events: { onReady: () => { ready = true; } }
     });
   }).catch(()=>{ msg.hidden = false; msg.textContent = "The video can't play in this preview. On the published page it plays right here."; });
-  const marks = [...app.querySelectorAll(".ln")];
+  const rows = [...app.querySelectorAll(".ln")];
   const play = (from, to, i) => {
     if(!ytPlayer || !ready) return;
     clearInterval(ytTimer); clearTimeout(ytWatch);
-    marks.forEach((m,k)=>m.classList.toggle("playing", k===i));
+    rows.forEach((m,k)=>m.classList.toggle("playing", k===i));
     ytPlayer.seekTo(from, true); ytPlayer.playVideo();
     ytWatch = setTimeout(()=>{ try{ if(ytPlayer.getPlayerState() !== 1) document.getElementById("hint").hidden = false; }catch(e){} }, 2000);
     ytTimer = setInterval(()=>{
       let tnow = 0; try{ tnow = ytPlayer.getCurrentTime(); }catch(e){}
-      if(tnow >= to){ ytPlayer.pauseVideo(); clearInterval(ytTimer); marks.forEach(m=>m.classList.remove("playing")); }
+      if(tnow >= to){ ytPlayer.pauseVideo(); clearInterval(ytTimer); rows.forEach(m=>m.classList.remove("playing")); }
     }, 100);
   };
-  marks.forEach((b,i)=>b.addEventListener("click",()=>play(lines[i][1], clipEnd(lines,i), i)));
-  document.getElementById("whole").addEventListener("click",()=>play(lines[0][1], clipEnd(lines, lines.length-1), -1));
+  rows.forEach((row,i)=>row.addEventListener("click",()=>{
+    if(i===0) play(lines[0][1], clipEnd(lines, lines.length-1), 0);   /* top line: the whole clip, as in TubeQuizard */
+    else play(lines[i][1], clipEnd(lines,i), i);
+  }));
+  app.querySelectorAll(".gapbox").forEach(g=>g.addEventListener("click",ev=>{
+    ev.stopPropagation(); g.classList.toggle("open"); document.getElementById("after").hidden = false;
+  }));
   wireNav(()=>{
     app.querySelectorAll(".gapbox").forEach(g=>g.classList.add("open"));
     document.getElementById("after").hidden = false;
@@ -808,7 +818,7 @@ function renderLink(t){
         <a class="cta" href="${t.url}" target="_blank" rel="noopener">Open ${esc(t.title.replace("TubeQuizard: ",""))} in TubeQuizard</a>
       </div>`,
     actionsHTML:`<button class="btn primary grow" id="fin">I've done it</button>`});
-  document.getElementById("fin").addEventListener("click",()=>{ finish(t); renderEnd(t); });
+  document.getElementById("fin").addEventListener("click",()=>{ finish(t); goHome(true); });
   window.scrollTo(0,0);
 }
 
@@ -942,7 +952,7 @@ function renderWrite(t){
     $("txt-copy").click();
   });
 
-  $("fin").addEventListener("click",()=>{ stopRecorder(); finish(t); renderEnd(t); });
+  $("fin").addEventListener("click",()=>{ stopRecorder(); finish(t); goHome(true); });
   window.scrollTo(0,0);
 }
 
