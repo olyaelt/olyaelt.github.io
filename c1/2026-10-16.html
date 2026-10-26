@@ -34,7 +34,7 @@
   --topic-a:#FFF3CF; --topic-b:#E2EFFB;
   --ok-bg:#EAF7EC; --ok-chip:#CDEFD3; --ok-ink:#1E6B2E;
   --no-bg:#FDECEB; --no-chip:#F9D2CF; --no-ink:#A1261B;
-  --good-hl:#BFF2B8; --strike:#9A9A9A; --fix-bg:#D6E6FF; --note-ink:#0B2F8F; --note-bg:#DCE9FF; --note-line:#7FA6E8; --next-line:#6DBA7C;
+  --good-hl:#BFF2B8; --strike:#9A9A9A; --fix-bg:#D6E6FF;
   --date-ink:#1D1D1B;
   --fig-filter:none;
   --font-body:"Homework Sans","Calibri","Carlito","Segoe UI",system-ui,sans-serif;
@@ -50,7 +50,7 @@
     --hl:#FFF34D; --hl-ink:#111111; --share:#52F552; --gloss:#5BB8F5; --ipa:#4CC5B3;
     --bubble:#3B391F; --bubble-ink:#F3F0D0; --bubble-line:#8C8760; --summary:#22362A; --done:#62C774;
     --fig-filter:invert(1) hue-rotate(180deg);
-    --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB; --good-hl:#BFF2B8; --strike:#8A8D91; --fix-bg:#22345A; --note-ink:#F2F5FF; --note-bg:#30518C; --note-line:#6F95D9; --next-line:#6FC481; --topic-a:#2A2614; --topic-b:#162636;
+    --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB; --good-hl:#BFF2B8; --strike:#8A8D91; --fix-bg:#22345A; --topic-a:#2A2614; --topic-b:#162636;
     color-scheme:dark;
   }
 }
@@ -60,7 +60,7 @@
   --hl:#FFF34D; --hl-ink:#111111; --share:#52F552; --gloss:#5BB8F5; --ipa:#4CC5B3;
   --bubble:#3B391F; --bubble-ink:#F3F0D0; --bubble-line:#8C8760; --summary:#22362A; --done:#62C774;
   --fig-filter:invert(1) hue-rotate(180deg);
-  --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB; --good-hl:#BFF2B8; --strike:#8A8D91; --fix-bg:#22345A; --note-ink:#F2F5FF; --note-bg:#30518C; --note-line:#6F95D9; --next-line:#6FC481; --topic-a:#2A2614; --topic-b:#162636;
+  --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB; --good-hl:#BFF2B8; --strike:#8A8D91; --fix-bg:#22345A; --topic-a:#2A2614; --topic-b:#162636;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -133,6 +133,11 @@ details.summary[open] summary::after{content:"Hide"}
 .hot{background:var(--card);border-radius:var(--radius);padding:12px 14px;margin:0 0 16px;border-left:5px solid var(--label)}
 .hot ul{margin:6px 0 0;padding-left:18px;display:grid;gap:4px}
 .hot .small{margin:4px 0 0}
+.hot.fbnew{border:2px solid var(--label);border-left-width:6px}
+.hot.fbnew>b{color:var(--label)}
+.hot.fbnew li span{color:var(--muted);font-size:.9rem}
+.fb-read{margin-top:10px}
+.fb-isread{color:var(--done);font-weight:700;margin:8px 0 0}
 .hot.wait{border-left-color:var(--instr)}
 .hot.wait li span{color:var(--muted);font-size:.9rem}
 .t-item.t-focus{outline:3px solid var(--instr);outline-offset:2px}
@@ -147,7 +152,7 @@ details.summary[open] summary::after{content:"Hide"}
 .tool.good{background:var(--good-hl);color:var(--hl-ink)}
 .tool.del{color:var(--strike);text-decoration:line-through}
 .tool.ins{color:#0000FF;background:var(--hl)}
-.tool.cmt{color:var(--note-ink);background:var(--note-bg)}
+.tool.cmt{color:var(--answer);background:var(--fix-bg)}
 .t-ta{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
 .t-prev{border:1px dashed var(--line);border-radius:10px;padding:10px 12px;min-height:2em}
 .t-fb{display:grid;gap:8px;margin-top:8px}
@@ -188,7 +193,7 @@ details.summary[open] summary::after{content:"Hide"}
 .toast.out{opacity:0}
 .topic-earlier{background:var(--card);border:2px dashed var(--line)}
 .task-wrap{display:grid;gap:0}
-.fb-line{display:block;width:100%;text-align:left;margin-top:-6px;padding:12px 14px 8px;border-radius:0 0 12px 12px;font:inherit;font-size:.92rem;font-weight:700;border:0;background:var(--note-bg);color:var(--note-ink);cursor:pointer}
+.fb-line{display:block;width:100%;text-align:left;margin-top:-6px;padding:12px 14px 8px;border-radius:0 0 12px 12px;font:inherit;font-size:.92rem;font-weight:700;border:0;background:var(--fix-bg);color:var(--answer);cursor:pointer}
 .fb-line.is-new::after{content:" • new";color:var(--label)}
 .fb-wait{background:transparent;color:var(--muted);font-weight:400;cursor:default;padding:8px 4px 0;margin-top:0}
 .fb-key{margin:0 0 10px}
@@ -197,10 +202,7 @@ details.summary[open] summary::after{content:"Hide"}
 .fb-good{background:var(--good-hl);color:var(--hl-ink);border-radius:2px;padding:0 2px;font-weight:inherit;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .fb-del{text-decoration:line-through;text-decoration-thickness:2px;color:var(--strike)}
 .fb-ins{color:#0000FF;font-weight:900;background:var(--hl);border-radius:3px;padding:0 2px;text-decoration:none;-webkit-box-decoration-break:clone;box-decoration-break:clone}
-.fb-note{color:var(--note-ink);font-weight:400;font-size:.95em;background:var(--note-bg);border-radius:3px;padding:1px 4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
-.fb-overall{margin:0 0 14px;padding:10px 14px 12px;border:2px solid var(--note-line);border-left-width:6px;border-radius:12px;background:var(--card);color:var(--ink);line-height:1.55}
-.fb-overall.fb-next{margin:14px 0 0;border-color:var(--next-line)}
-.fb-overall-h{font-size:.78rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.fb-note{color:var(--answer);font-weight:700;background:var(--fix-bg);border-radius:3px;padding:0 3px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .fb-orig summary{cursor:pointer;color:var(--muted)}
 .fb-sent{margin-top:6px;white-space:normal}
 .task-row{position:relative}
@@ -728,30 +730,28 @@ function fbLine(id){
   const q = last.type==="question" || last.type==="marked";
   return `<div class="fb-line fb-wait">✓ ${last.type==="marked"?"Marked for Olya":q?"Question sent":"Sent to Olya"} ${esc(last.sent||"")} · ${q?"her answer":"her feedback"} will appear here</div>`;
 }
+/* new feedback the student hasn't marked as read: a red box on top of the home screen */
+const unreadIn = id => (work[id]||[]).filter(w=>String(w.feedback||"").trim() && !w.seen);
+function newFbHTML(){
+  if(isTeacher() || !myCode()) return "";
+  const list = TASKS.filter(t=>unreadIn(t.id).length);
+  if(!list.length) return "";
+  return `<section class="hot fbnew" role="status"><b>💬 New from Olya</b><ul>${list.map(t=>`<li><button class="linklike" data-fb="${t.id}">${esc(t.title)}</button> <span>${unreadIn(t.id).every(w=>w.type==="question"||w.type==="marked") ? "an answer to your question" : "feedback on your work"}</span></li>`).join("")}</ul>
+    <p class="small">Tap to read it. When you've read it, tap “✓ I've read it”.</p></section>`;
+}
 function refreshWork(){
   if(current || isTeacher()) return;
+  const nb = document.getElementById("fbnew-slot"); if(nb) nb.innerHTML = newFbHTML();
   document.querySelectorAll("[data-fbslot]").forEach(s=>{ s.innerHTML = fbLine(s.dataset.fbslot); });
   wireFb();
 }
 function wireFb(){ document.querySelectorAll("[data-fb]").forEach(b=>{ if(b._w) return; b._w = 1; b.addEventListener("click",()=>renderFeedback(b.dataset.fb)); }); }
-const fbMarks = s => esc(s)
+const fbHTML = s => esc(s)
   .replace(/\*\*([\s\S]+?)\*\*/g,'<b class="fb-good">$1</b>')
   .replace(/~~([\s\S]+?)~~/g,'<s class="fb-del">$1</s>')
   .replace(/\[\[([\s\S]+?)\]\]/g,'<span class="fb-note">$1</span>')
   .replace(/\{([\s\S]+?)\}/g,'<ins class="fb-ins">$1</ins>')
   .replace(/\n/g,"<br>");
-// Olya's overall comment = the first line(s) that are one whole [[...]] comment (framed box above the marked-up text);
-// her follow-up task = the last line(s) that are one whole [[...]] comment (framed box below it)
-const fbHTML = s => {
-  const lines = String(s||"").trim().split("\n"), over = [], next = [];
-  const whole = l => /^\[\[[\s\S]*\]\]$/.test(l) && !/\]\][\s\S]*\[\[/.test(l.slice(2,-2));
-  while(lines.length && whole(lines[0].trim())) over.push(lines.shift().trim().slice(2,-2));
-  while(lines.length && whole(lines[lines.length-1].trim())){
-    next.unshift(lines.pop().trim().slice(2,-2));
-    while(lines.length && !lines[lines.length-1].trim()) lines.pop(); }
-  const box = (cls, h, xs) => xs.length ? `<div class="fb-overall ${cls}"><div class="fb-overall-h">${h}</div>${xs.map(fbMarks).join("<br>")}</div>` : "";
-  return box("", "💬 Overall", over) + fbMarks(lines.join("\n").trim()) + box("fb-next", "🎯 Follow-up", next);
-};
 function renderFeedback(id){
   const t = TASKS.find(x=>x.id===id); if(!t) return renderHome();
   stopPlayer(); stopRecorder(); current = t;
@@ -763,12 +763,16 @@ function renderFeedback(id){
         ${(w.type==="question"||w.type==="marked") ? `<p class="fb-q">${esc(String(w.text||"").split("\n").filter(l=>!/^https?:/.test(l)).join(" "))}</p>` : ""}
         ${String(w.feedback||"").trim() ? `<div class="fb-text">${fbHTML(w.feedback)}</div>` : `<p class="small">Olya hasn't written feedback on this one yet.</p>`}
         ${w.type==="text" && w.text ? `<details class="fb-orig"><summary>What you sent</summary><div class="fb-sent">${esc(w.text).replace(/\n/g,"<br>")}</div></details>` : ""}
+        ${String(w.feedback||"").trim() ? (w.seen ? `<p class="small fb-isread">✓ Read</p>` : `<div class="fb-read"><button class="btn" data-read="${w.id}">✓ I've read it</button></div>`) : ""}
       </div>`).join(""),
     actionsHTML:`<button class="btn primary grow" id="fb-home">Back to all tasks</button>`});
   document.getElementById("fb-home").addEventListener("click", goHome);
   window.scrollTo(0,0);
-  list.forEach(w=>{ if(String(w.feedback||"").trim() && !w.seen){ w.seen = true; post({action:"seen", code:myCode(), page:PAGE_KEY, id:w.id}); } });
-  saveWork();
+  app.querySelectorAll("[data-read]").forEach(b=>b.addEventListener("click",()=>{
+    const w = list.find(x=>String(x.id)===b.dataset.read); if(!w) return;
+    w.seen = true; saveWork(); post({action:"seen", code:myCode(), page:PAGE_KEY, id:w.id});
+    b.parentElement.outerHTML = `<p class="small fb-isread">✓ Read — thank you!</p>`;
+  }));
 }
 function reactHTML(){
   if(!lastDone || !myCode() || syncState==="unknown" || isTeacher()) return "";
@@ -1001,7 +1005,7 @@ function renderTeacherTask(id, wid){
         ${items.length ? `<p><button class="tool" id="t-copy-all">📋 Copy all for Claude</button></p>` : ""}
       </div>
       ${items.length ? items.map(w=>`<div class="panel t-item" data-w="${w.id}">
-          <div class="small">${icon[w.type]} · ${who(w.s)}${esc(w.sent||"")}${w.seen?" · seen ✓":""}</div>
+          <div class="small">${icon[w.type]} · ${who(w.s)}${esc(w.sent||"")}${String(w.feedback||"").trim() ? (w.seen ? " · read ✓" : " · not read yet") : ""}</div>
           ${sentAs(w)}
           <div class="t-fb">
             <div class="t-tools"><button class="tool good" data-wrap="**|**">✓ Good</button><button class="tool del" data-wrap="~~|~~">✗ Change</button><button class="tool ins" data-mark="ins">✎ Correction</button><button class="tool cmt" data-mark="note">💬 Comment</button><button class="tool t-copy" data-copy="${w.id}">📋 Copy</button></div>
@@ -1080,6 +1084,7 @@ function renderHome(justDone){
       <p class="total">About ${Math.round(TASKS.reduce((s,t)=>s+minutesOf(t),0)/5)*5} minutes in total — you don't have to do it all in one go.</p>
     </header>
     <div id="sync-slot">${syncHTML()}</div>
+    <div id="fbnew-slot">${newFbHTML()}</div>
     <div id="meter-slot">${(myCode() && syncState!=="unknown") ? meterHTML(groupStats) : ""}</div>
     ${waitHTML()}${hotHTML()}
     ${TOPICS.map((tp,ti)=>`

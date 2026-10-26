@@ -107,6 +107,10 @@ h1{margin:0;font-size:var(--step-2);line-height:1.2;font-weight:900}
 .prog .bar i{display:block;height:100%;background:var(--done);border-radius:99px}
 .prog.all span{color:var(--done);font-weight:900}
 .hw.todo{border-color:var(--label)}
+.hw.fbnew{border-color:var(--label)}
+.fb-alert{background:var(--card);border:2px solid var(--label);border-left-width:6px;border-radius:var(--radius);padding:12px 14px;margin:0 0 16px;line-height:1.5}
+.fb-alert b{color:var(--label)}
+.fb-alert a{color:var(--answer);font-weight:700}
 .tb{font-size:.92rem;color:var(--muted)}
 .tb b{color:var(--label)}
 .t-sum{margin:0 0 14px;font-weight:900;color:var(--label)}
@@ -282,6 +286,13 @@ function teacherSum(){
   if(tfailed) return `<p class="t-sum">${total ? `💬 ${total} waiting for your answer · ` : ""}⚠️ ${tfailed} homework didn't answer — reload the page</p>`;
   return `<p class="t-sum ${total?"":"none"}">${total ? `💬 ${total} waiting for your answer — open the homework with the red frame` : "✓ Nothing waiting for your answer"}</p>`;
 }
+/* a student's new feedback, on top of the list (red) */
+function studentFbHTML(){
+  if(!myCode() || syncState==="unknown" || teacherView()) return "";
+  const list = HW.filter(h=>stats(h).fbNew);
+  if(!list.length) return "";
+  return `<div class="fb-alert" role="status"><b>💬 New feedback from Olya</b> on ${list.map(h=>`<a href="${esc(h.file)}">${esc(h.date)}</a>`).join(", ")}. Open the homework and tap the red box on top.</div>`;
+}
 function card(h, i){
   const st = stats(h), n = h.tasks.length, all = n && st.done >= n;
   if(teacherView()){
@@ -293,11 +304,11 @@ function card(h, i){
     <div class="tb">${badges}</div>
   </a>`;
   }
-  return `<a class="hw ${i===0?"latest":""}" href="${esc(h.file)}">
+  return `<a class="hw ${i===0?"latest":""} ${st.fbNew?"fbnew":""}" href="${esc(h.file)}">
     <div class="hw-top"><span class="date">${esc(h.date)}</span>${i===0?`<span class="tag">Latest</span>`:""}<span class="go" aria-hidden="true">→</span></div>
     <div class="topics">${h.topics.map((tp,k)=>`<div class="topic t${k%2}"><b>${esc(tp.title)}</b><span>${esc(tp.sub)}</span></div>`).join("")}</div>
     <div class="prog ${all?"all":""}"><div class="bar" aria-hidden="true"><i style="width:${n?Math.round(st.done/n*100):0}%"></i></div><span>${all?"All done ✓":`${st.done} of ${n} tasks done`}</span></div>
-    ${st.fbNew ? `<div class="fb new">💬 Feedback from Olya</div>` : st.fb ? `<div class="fb">💬 Feedback from Olya</div>` : ""}
+    ${st.fbNew ? `<div class="fb new">💬 New feedback from Olya — open to read</div>` : st.fb ? `<div class="fb">💬 Feedback from Olya</div>` : ""}
   </a>`;
 }
 function syncHTML(){
@@ -331,6 +342,7 @@ function render(){
   app.innerHTML = `
     <header class="head"><h1>Homework</h1><p><b>Wed Fri 18.30</b> · All our homework in one place. The newest is at the top.</p></header>
     <div id="sync-slot">${syncHTML()}</div>
+    ${studentFbHTML()}
     ${(myCode() && syncState!=="unknown") ? meterHTML(groupStats) : ""}
     ${tipHTML()}
     ${teacherSum()}
