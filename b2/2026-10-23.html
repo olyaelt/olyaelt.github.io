@@ -1605,6 +1605,18 @@ function stopPlayer(){
 }
 /* one player for the whole listening task, as TubeQuizard does: a new player for every clip
    counts as a new viewing for YouTube, and that is when the ads come */
+/* subtitles off by default: YouTube loads its captions module when a video starts; unload it once per video
+   (a student who then turns CC on keeps it) */
+const ytCcOff = {};
+function captionsOffOnce(){
+  let vid = ""; try{ vid = (ytPlayer.getVideoData() || {}).video_id || ""; }catch(e){}
+  if(!vid || ytCcOff[vid]) return;
+  let mods = null; try{ mods = ytPlayer.getOptions(); }catch(e){}
+  if(Array.isArray(mods) && !mods.some(m => m === "captions" || m === "cc")) return;     /* not loaded yet: wait for the next change */
+  ytCcOff[vid] = true;
+  try{ ytPlayer.unloadModule("captions"); }catch(e){}
+  try{ ytPlayer.unloadModule("cc"); }catch(e){}
+}
 function pausePlayer(){ clearInterval(ytTimer); clearTimeout(ytWatch); try{ ytPlayer && ytPlayer.pauseVideo(); }catch(e){} }
 const playerOnScreen = () => !!(ytPlayer && app.querySelector(".video iframe"));
 function clipEnd(lines, i){ return (i+1 < lines.length ? lines[i+1][1] : lines[i][1] + lines[i][2]) + 0.15; }
@@ -1652,8 +1664,8 @@ function renderListen(st, count, pct){
       ytVideo = lines[0][0];
       ytPlayer = new YT.Player("yt", {
         videoId: lines[0][0], width: "100%", height: "100%",
-        playerVars: { playsinline: 1, rel: 0, modestbranding: 1, start: Math.floor(lines[0][1]) },
-        events: { onReady: () => { ytReady = true; } }
+        playerVars: { playsinline: 1, rel: 0, modestbranding: 1, cc_load_policy: 0, iv_load_policy: 3, start: Math.floor(lines[0][1]) },
+        events: { onReady: () => { ytReady = true; }, onApiChange: captionsOffOnce, onStateChange: e => { if(e && e.data === 1) setTimeout(captionsOffOnce, 300); } }
       });
     }).catch(()=>{ msg.hidden = false; msg.textContent = "The video can't play in this preview. On the published page it plays right here."; });
     const ok = document.getElementById("yt-ok");
