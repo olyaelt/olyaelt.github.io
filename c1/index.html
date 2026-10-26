@@ -6,9 +6,7 @@
 <meta name="apple-mobile-web-app-title" content="Homework">
 <meta name="theme-color" content="#F6F1DC">
 <title>Homework · Wed Fri 20.15</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../fonts/homework-sans.css">
 <style>
 :root{
   --ground:#F6F1DC;      /* the cream frame around her slides */
@@ -38,7 +36,7 @@
   --good-hl:#BFF2B8; --strike:#9A9A9A; --fix-bg:#D6E6FF;
   --date-ink:#1D1D1B;
   --fig-filter:none;
-  --font-body:"Lato","Calibri","Carlito","Segoe UI",system-ui,sans-serif;
+  --font-body:"Homework Sans","Calibri","Carlito","Segoe UI",system-ui,sans-serif;
   --step-0:clamp(1rem,0.96rem + 0.2vw,1.0625rem);
   --step-1:clamp(1.125rem,1.06rem + 0.3vw,1.25rem);
   --step-2:clamp(1.375rem,1.25rem + 0.6vw,1.625rem);
@@ -124,10 +122,15 @@ h1{margin:0;font-size:var(--step-2);line-height:1.2;font-weight:900}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);max-width:min(92vw,520px);background:#1D1D1B;color:#fff;font-weight:700;padding:12px 16px;border-radius:12px;z-index:61;box-shadow:0 6px 20px rgba(0,0,0,.25);transition:opacity .5s}
 .toast.out{opacity:0}
 
+.legal{max-width:var(--maxw,760px);margin:0 auto;padding:18px 16px 28px;color:var(--muted);font-size:.85rem;text-align:center}
+.legal a{color:inherit}
+.chip-t{font:inherit;font-size:.9rem;font-weight:700;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:3px 12px;cursor:pointer}
+.preview-bar{align-items:center;background:var(--card);border:2px dashed var(--instr);border-radius:12px;padding:8px 12px;color:var(--ink)}
 </style>
 </head>
 <body>
 <div class="wrap" id="app"></div>
+<footer class="legal"><a href="../impressum.html">Impressum</a> · <a href="../datenschutz.html">Datenschutz</a></footer>
 <script>
 const HW = [{"file": "2026-10-23.html", "key": "hw-ge-c1-2026-10-23", "date": "23.10.26", "topics": [{"title": "The clocks go back", "sub": "Moving a call when the clocks change"}, {"title": "How did you get into that?", "sub": "Talking about your studies and your career path"}], "tasks": ["clocks-text", "clock-listen", "clock-practice", "career-rewrite", "career-finish", "career-listen", "write"]}];
 const SYNC_URL = "https://script.google.com/macros/s/AKfycbwHqzwA-2z09POg7JSqiMhqglOKbD8bxs-UG-NcFKZPzTyzmdEW79ct3zHGktUGyLM_/exec";
@@ -137,6 +140,15 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":
 const app = document.getElementById("app");
 let server = null, syncState = "";
 const myCode = () => SYNC_URL ? ls.get("hw-code") : "";
+/* Olya's "Student view": her own code, but the page behaves like a student's page, and nothing is sent to the table.
+   Switching in or out starts from a clean page (her own ticks and marks on this device are cleared). */
+const asStudent = () => !!(SYNC_URL && ls.get("hw-code") && ls.get("hw-role") === "teacher" && ls.get("hw-as-student"));
+function setStudentView(on){
+  ls.set("hw-as-student", on ? "1" : "");
+  try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
+  location.reload();
+}
+document.addEventListener("click", ev => { const b = ev.target.closest && ev.target.closest("#as-student, #as-teacher"); if(b) setStudentView(b.id === "as-student"); });
 const GROUP_ID = (HW[0] && HW[0].key.split("-")[2]) || "group";
 /* a student sees only their own group: with a code from the other group, go to that group's list */
 function toOwnGroup(gid){
@@ -221,8 +233,11 @@ function card(h, i){
 function syncHTML(){
   if(!SYNC_URL) return "";
   const code = myCode(), who = ls.get("hw-who");
+  if(asStudent()) return `<div class="sync sync-on preview-bar"><span>👀 <b>Student view</b> — what your students see. Nothing is sent to the table.</span>
+      <button class="chip-t" id="as-teacher">Back to teacher view</button></div>`;
   if(code && syncState!=="unknown" && ls.get("hw-role")==="teacher") return `<div class="sync sync-on">
-      <span>👩‍🏫 <b>Teacher view</b>${who?` — ${esc(who)}`:""}. Open a homework to see your group on each task.</span>
+      <span>👩‍🏫 <b>Teacher view</b>${who?` — ${esc(who)}`:""}. Open a homework page to see your group on each task.</span>
+      <button class="chip-t" id="as-student">👀 Student view</button>
       <button class="linklike" id="code-change">Not you?</button></div>`;
   if(code && syncState!=="unknown") return `<div class="sync sync-on">
       <span>✓ ${who?`Hi, ${esc(who)}! `:""}Olya can see your progress${syncState==="offline"?" — no connection right now, so this shows what's saved on this device.":"."}</span>
@@ -249,10 +264,10 @@ function render(){
     ${(myCode() && syncState!=="unknown") ? meterHTML(groupStats) : ""}
     ${tipHTML()}
     <div class="list">${HW.map(card).join("")}</div>
-    <p class="foot">Open a homework, do the tasks, and tick them off. Your ticks show up here.</p>`;
+    <p class="foot">Open a homework page, do the tasks and tick them off. Your ticks show up here.</p>`;
   const x = document.getElementById("tip-x"); if(x) x.addEventListener("click",()=>{ ls.set("hw-tip-done","1"); document.getElementById("tip").remove(); });
   const ch = document.getElementById("code-change");
-  if(ch) ch.addEventListener("click",()=>{ ls.set("hw-code",""); ls.set("hw-who",""); ls.set("hw-role",""); ls.set("hw-gid",""); server = null; syncState = ""; render(); const i=document.getElementById("code"); if(i) i.focus(); });
+  if(ch) ch.addEventListener("click",()=>{ ls.set("hw-code",""); ls.set("hw-who",""); ls.set("hw-role",""); ls.set("hw-gid",""); ls.set("hw-as-student",""); server = null; syncState = ""; render(); const i=document.getElementById("code"); if(i) i.focus(); });
   const go = document.getElementById("code-go"), inp = document.getElementById("code");
   if(go && inp){
     const save = async ()=>{
@@ -271,7 +286,7 @@ function render(){
 }
 function gotGroup(g){ if(!g) return; groupStats = g; ls.set("hw-group-"+GROUP_ID, JSON.stringify(g)); setTimeout(()=>checkMilestone(g, GROUP_ID), 50); }
 async function refresh(){
-  const code = myCode(); if(!code) return;
+  const code = myCode(); if(!code || asStudent()) return;
   const res = await post({action:"summary", code, pages:HW.map(h=>h.key)});
   if(code !== myCode()) return;
   if(otherGroup(res, code)) return;

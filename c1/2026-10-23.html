@@ -6,9 +6,7 @@
 <style>body{margin:0}img{max-width:100%}</style>
 <title>How did you get into that? homework</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../fonts/homework-sans.css">
 <style>
 /* Layout: one calm column like a slide on a phone — task list home, then one task step per screen with a sticky action bar. Colours are Olya's deck colours. */
 :root{
@@ -39,7 +37,7 @@
   --good-hl:#BFF2B8; --strike:#9A9A9A; --fix-bg:#D6E6FF;
   --date-ink:#1D1D1B;
   --fig-filter:none;
-  --font-body:"Lato","Calibri","Carlito","Segoe UI",system-ui,sans-serif;
+  --font-body:"Homework Sans","Calibri","Carlito","Segoe UI",system-ui,sans-serif;
   --step-0:clamp(1rem,0.96rem + 0.2vw,1.0625rem);
   --step-1:clamp(1.125rem,1.06rem + 0.3vw,1.25rem);
   --step-2:clamp(1.375rem,1.25rem + 0.6vw,1.625rem);
@@ -119,6 +117,7 @@ details.summary[open] summary::after{content:"Hide"}
 .teacher .status{display:none}
 .teacher .task-btn{padding-right:16px!important}
 .teacher-bar{align-items:center}
+.preview-bar{align-items:center;background:var(--card);border:2px dashed var(--instr);border-radius:12px;padding:8px 12px;color:var(--ink)}
 .chip-t{font:inherit;font-size:.9rem;font-weight:700;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:3px 12px;cursor:pointer}
 .chip-t[aria-pressed="true"]{border-color:var(--instr);background:var(--instr);color:var(--instr-ink)}
 .t-line{display:flex;flex-wrap:wrap;align-items:center;gap:5px;width:100%;text-align:left;background:transparent;border:0;padding:8px 4px 2px;cursor:pointer;font:inherit}
@@ -302,6 +301,8 @@ s{color:var(--muted)}
 .steps-list{margin:0;padding-left:1.3em;display:grid;gap:4px}
 .video{position:relative;width:100%;aspect-ratio:16/9;max-width:100%;background:#000;border-radius:10px;overflow:hidden}
 .video iframe,.video > div{position:absolute;inset:0;width:100%;height:100%;border:0}
+.yt-consent{display:grid;place-items:center;text-align:center;padding:10px 14px;color:#fff;background:#1D1D1B;font-size:.9rem;line-height:1.35}
+.yt-consent p{margin:0 0 8px}.yt-consent a{color:#9CC9FF}.yt-consent .small{color:#C9C9C9;margin:6px 0 0;font-size:.8rem}
 .vmsg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:16px;color:#fff;font-size:.95rem;background:#1D1D1B}
 .lines{display:grid;gap:6px}
 .ln{display:grid;grid-template-columns:34px minmax(0,1fr);gap:8px;align-items:start;text-align:left;width:100%;background:transparent;border:1px solid var(--line);
@@ -403,11 +404,14 @@ audio{width:100%}
 .btn.grow{flex:1}
 .btn[disabled]{opacity:.35;cursor:default}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.next-line{opacity:1;transform:none}}
+.legal{max-width:var(--maxw,760px);margin:0 auto;padding:18px 16px 28px;color:var(--muted);font-size:.85rem;text-align:center}
+.legal a{color:inherit}
 </style>
 
 </head>
 <body>
 <div class="wrap" id="app"></div>
+<footer class="legal"><a href="../impressum.html">Impressum</a> · <a href="../datenschutz.html">Datenschutz</a></footer>
 
 <script>
 /* ===== LESSON CONTENT: START — replace only what is between START and END for a new homework ===== */
@@ -649,15 +653,25 @@ let syncState = "", syncBusy = false, syncAgain = false, syncTimer = null;
 let work = (()=>{ try{ return JSON.parse(localStorage.getItem(PAGE_KEY+"-work")||"{}")||{}; }catch(e){ return {}; } })();
 function saveWork(){ try{ localStorage.setItem(PAGE_KEY+"-work", JSON.stringify(work)); }catch(e){} }
 async function post(payload, opts={}){
+  if(asStudent()) return {ok:true, id:"preview-" + Date.now(), preview:true};   /* Student view: nothing goes to the table */
   try{
     const r = await fetch(SYNC_URL, {method:"POST", body:JSON.stringify(payload), headers:{"Content-Type":"text/plain;charset=utf-8"}, keepalive:!!opts.keepalive});
     return await r.json();
   }catch(e){ return {ok:false, error:"offline"}; }
 }
 const myCode = () => SYNC_URL ? ls.get("hw-code") : "";
+/* Olya's "Student view": her own code, but the page behaves like a student's page, and nothing is sent to the table.
+   Switching in or out starts from a clean page (her own ticks and marks on this device are cleared). */
+const asStudent = () => !!(SYNC_URL && ls.get("hw-code") && ls.get("hw-role") === "teacher" && ls.get("hw-as-student"));
+function setStudentView(on){
+  ls.set("hw-as-student", on ? "1" : "");
+  try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
+  location.reload();
+}
+document.addEventListener("click", ev => { const b = ev.target.closest && ev.target.closest("#as-student, #as-teacher"); if(b) setStudentView(b.id === "as-student"); });
 function syncSoon(){ if(!myCode()) return; clearTimeout(syncTimer); syncTimer = setTimeout(()=>syncNow(), 600); }
 async function syncNow(code, opts={}){
-  code = code || myCode(); if(!SYNC_URL || !code) return null;
+  code = code || myCode(); if(!SYNC_URL || !code || asStudent()) return null;
   if(syncBusy && !opts.keepalive){ syncAgain = true; return null; }
   syncBusy = true;
   const res = await post({ action:"sync", code, page:PAGE_KEY, date:LESSON.date,
@@ -695,9 +709,12 @@ document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState=
 function syncHTML(){
   if(!SYNC_URL) return "";
   const code = myCode(), who = ls.get("hw-who");
+  if(asStudent()) return `<div class="sync sync-on preview-bar"><span>👀 <b>Student view</b> — what your students see. Nothing is sent to the table.</span>
+      <button class="chip-t" id="as-teacher">Back to teacher view</button></div>`;
   if(code && syncState!=="unknown" && ls.get("hw-role")==="teacher") return `<div class="sync sync-on teacher-bar">
       <span>👩‍🏫 <b>Teacher view</b>${who?` — ${esc(who)}`:""}${teacherData?"":" · loading…"}</span>
       <button class="chip-t" id="hide-names" aria-pressed="${hideNames()}">🙈 Hide names</button>
+      <button class="chip-t" id="as-student">👀 Student view</button>
       <button class="linklike" id="code-change">Not you?</button></div>`;
   if(code && syncState!=="unknown") return `<div class="sync sync-on">
       <span>✓ ${who?`Hi, ${esc(who)}! `:""}Olya can see your progress${syncState==="offline"?" — <b>not sent yet</b>: no connection right now. Your ticks are saved here and will go to her later.":"."}</span>
@@ -713,7 +730,7 @@ function syncHTML(){
 function wireSync(){
   const box = document.getElementById("sync-slot"); if(!box) return;
   const ch = document.getElementById("code-change");
-  if(ch) ch.addEventListener("click",()=>{ ls.set("hw-code",""); ls.set("hw-who",""); ls.set("hw-role",""); ls.set("hw-gid",""); teacherData = null; syncState=""; if(!current){ renderHome(); } refreshSync(); const i=document.getElementById("code"); if(i) i.focus(); });
+  if(ch) ch.addEventListener("click",()=>{ ls.set("hw-code",""); ls.set("hw-who",""); ls.set("hw-role",""); ls.set("hw-gid",""); ls.set("hw-as-student",""); teacherData = null; syncState=""; if(!current){ renderHome(); } refreshSync(); const i=document.getElementById("code"); if(i) i.focus(); });
   const go = document.getElementById("code-go"), inp = document.getElementById("code");
   if(go && inp){
     const save = async ()=>{
@@ -909,7 +926,7 @@ async function flushFlags(){
 
 /* ---------- teacher view: Olya's own code shows her group on this page ---------- */
 let teacherData = null;
-const isTeacher = () => !!(myCode() && ls.get("hw-role") === "teacher");
+const isTeacher = () => !!(myCode() && ls.get("hw-role") === "teacher" && !asStudent());
 const hideNames = () => !!ls.get("hw-hide");
 function labelsFor(students){
   const words = n => n.trim().split(/\s+/);
@@ -1019,7 +1036,7 @@ function renderHome(justDone){
             <button class="status" data-toggle="${t.id}" aria-pressed="${done.has(t.id)}" aria-label="${done.has(t.id)?"Done — tap to untick":"Tap to mark as done"}">✓</button>
           </div><div data-fbslot="${t.id}">${isTeacher() ? teacherLine(t.id) : fbLine(t.id)}</div></div>`;
   app.innerHTML = `
-    ${justDone?`<div class="done-banner" role="status">✓ Done!${lastDone && myCode() && syncState!=="unknown" ? ` +${framesOf(lastDone)} 🎞 for our group.` : ""} Mark it in our spreadsheet in your colour.${reactHTML()}</div>`:""}
+    ${justDone?`<div class="done-banner" role="status">✓ Done!${lastDone && myCode() && syncState!=="unknown" ? ` +${framesOf(lastDone)} 🎞 for our group.` : " Mark it in our spreadsheet in your colour."}${reactHTML()}</div>`:""}
     <header class="lesson-head">
       ${ON_SITE?`<a class="all-hw" href="index.html">← All homework</a>`:""}
       <span class="date">${LESSON.date}</span>
@@ -1291,6 +1308,11 @@ function loadYT(){
   }
   return ytPromise;
 }
+/* the videos come from YouTube: nothing is loaded from there until the student agrees (remembered on this device) */
+const ytConsentHTML = () => `<div class="yt-consent" id="yt-consent"><div>
+    <p>The clips play from <b>YouTube</b>. When you load them, YouTube (Google) gets your IP address and may store cookies.${ON_SITE ? ` <a href="../datenschutz.html#youtube">More</a>` : ""}</p>
+    <button class="btn primary" id="yt-ok">Load the videos</button>
+    <p class="small">Just once on this device.</p></div></div>`;
 function stopPlayer(){
   clearInterval(ytTimer); clearTimeout(ytWatch);
   if(ytPlayer){ try{ ytPlayer.destroy(); }catch(e){} ytPlayer = null; }
@@ -1336,11 +1358,11 @@ function renderListen(st, count, pct){
     shell({count, pct, instr,
       stageHTML: `
       <div class="panel">
-        <div class="video"><div id="yt"></div><p class="vmsg" id="vmsg" hidden></p></div>${rest}
+        <div class="video"><div id="yt"></div><p class="vmsg" id="vmsg" hidden></p>${ls.get("hw-yt-ok") ? "" : ytConsentHTML()}</div>${rest}
       </div>`,
       actionsHTML: navButtons("Check answers")});
     const msg = document.getElementById("vmsg");
-    loadYT().then(()=>{
+    const startYT = () => loadYT().then(()=>{
       if(!document.getElementById("yt")) return;
       ytVideo = lines[0][0];
       ytPlayer = new YT.Player("yt", {
@@ -1349,6 +1371,9 @@ function renderListen(st, count, pct){
         events: { onReady: () => { ytReady = true; } }
       });
     }).catch(()=>{ msg.hidden = false; msg.textContent = "The video can't play in this preview. On the published page it plays right here."; });
+    const ok = document.getElementById("yt-ok");
+    if(ok) ok.addEventListener("click", ()=>{ ls.set("hw-yt-ok", "1"); const c = document.getElementById("yt-consent"); if(c) c.remove(); startYT(); });
+    else startYT();
   }
   const rows = [...app.querySelectorAll(".ln")];
   const play = (from, to, i) => {
@@ -1429,7 +1454,7 @@ function renderEnd(t){
   shell({stageHTML:`
     <div class="end">
       <div class="cloud">This is the end of the task.<br>Takeaways?</div>
-      <p>Mark it in our spreadsheet in your colour.</p>
+      ${myCode() && syncState!=="unknown" ? "" : "<p>Mark it in our spreadsheet in your colour.</p>"}
     </div>`,
     actionsHTML:`${t.kind==="steps"?`<button class="btn" id="again">Do it again</button>`:""}<button class="btn primary grow" id="list">All tasks</button>`});
   document.getElementById("list").addEventListener("click",goHome);
