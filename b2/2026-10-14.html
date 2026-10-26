@@ -198,7 +198,7 @@ details.summary[open] summary::after{content:"Hide"}
 .fb-del{text-decoration:line-through;text-decoration-thickness:2px;color:var(--strike)}
 .fb-ins{color:#0000FF;font-weight:900;background:var(--hl);border-radius:3px;padding:0 2px;text-decoration:none;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .fb-note{color:var(--note-ink);font-weight:400;font-size:.95em;background:var(--note-bg);border-radius:3px;padding:1px 4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
-.fb-overall{margin-top:14px;padding:10px 14px 12px;border:2px solid var(--note-line);border-left-width:6px;border-radius:12px;background:var(--card);color:var(--ink);line-height:1.55}
+.fb-overall{margin:0 0 14px;padding:10px 14px 12px;border:2px solid var(--note-line);border-left-width:6px;border-radius:12px;background:var(--card);color:var(--ink);line-height:1.55}
 .fb-overall-h{font-size:.78rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .fb-orig summary{cursor:pointer;color:var(--muted)}
 .fb-sent{margin-top:6px;white-space:normal}
@@ -725,14 +725,14 @@ const fbMarks = s => esc(s)
   .replace(/\[\[([\s\S]+?)\]\]/g,'<span class="fb-note">$1</span>')
   .replace(/\{([\s\S]+?)\}/g,'<ins class="fb-ins">$1</ins>')
   .replace(/\n/g,"<br>");
-// the last line(s) that are one whole [[...]] comment = Olya's overall comment, shown in its own framed box
+// the first line(s) that are one whole [[...]] comment = Olya's overall comment, shown in a framed box above the marked-up text
 const fbHTML = s => {
-  const lines = String(s||"").replace(/\s+$/,"").split("\n"), over = [];
-  while(lines.length){ const l = lines[lines.length-1].trim();
+  const lines = String(s||"").trim().split("\n"), over = [];
+  while(lines.length){ const l = lines[0].trim();
     if(!/^\[\[[\s\S]*\]\]$/.test(l) || /\]\][\s\S]*\[\[/.test(l.slice(2,-2))) break;
-    over.unshift(l.slice(2,-2)); lines.pop(); }
-  const body = fbMarks(lines.join("\n").replace(/\s+$/,""));
-  return body + (over.length ? `<div class="fb-overall"><div class="fb-overall-h">💬 Overall</div>${over.map(fbMarks).join("<br>")}</div>` : "");
+    over.push(l.slice(2,-2)); lines.shift(); }
+  const body = fbMarks(lines.join("\n").trim());
+  return (over.length ? `<div class="fb-overall"><div class="fb-overall-h">💬 Overall</div>${over.map(fbMarks).join("<br>")}</div>` : "") + body;
 };
 function renderFeedback(id){
   const t = TASKS.find(x=>x.id===id); if(!t) return renderHome();
