@@ -663,7 +663,7 @@ const minutesOf = t => t.min || (t.kind==="gaps" ? 5 : t.kind==="link" ? 10 : Ma
 const lsMem = {};   /* if the browser blocks storage (private mode), remember things for this visit at least */
 const ls = { get:k=>{ try{ const v = localStorage.getItem(k); if(v != null) return v; }catch(e){} return lsMem[k] || ""; }, set:(k,v)=>{ lsMem[k] = v; try{ localStorage.setItem(k,v); }catch(e){} } };
 /* ---------- progress: kept on this device, and in Olya's table once the student enters their code ---------- */
-const SYNC_URL = "";   /* the address of Olya's progress table; empty = ticks stay on this device only */
+const SYNC_URL = "https://script.google.com/macros/s/AKfycbwHqzwA-2z09POg7JSqiMhqglOKbD8bxs-UG-NcFKZPzTyzmdEW79ct3zHGktUGyLM_/exec";   /* the address of Olya's progress table; empty = ticks stay on this device only */
 function loadDone(){ try{ return new Set(JSON.parse(localStorage.getItem(PAGE_KEY)||"[]")); }catch(e){ return new Set(); } }
 function saveDone(set){ try{ localStorage.setItem(PAGE_KEY, JSON.stringify([...set])); }catch(e){} }
 let done = loadDone();
