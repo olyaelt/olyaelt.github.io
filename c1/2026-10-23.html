@@ -264,6 +264,7 @@ details.summary[open] summary::after{content:"Hide"}
 .reveal{display:block;width:100%;text-align:left;font-weight:700;background:var(--hl);color:transparent;border:0;border-radius:3px;padding:6px 8px;cursor:pointer;min-height:2.2em}
 .reveal.open{color:var(--hl-ink)}
 .reveal:not(.open) *{color:transparent !important}   /* marked answers stay hidden until tapped */
+.reveal.open .pp,.reveal.open .g{color:#0000FF}.reveal.open .ps{color:#C00000}   /* on yellow: the slide colours, in dark mode too */
 .small{font-size:.9rem;color:var(--muted)}
 s{color:var(--muted)}
 
@@ -284,6 +285,8 @@ s{color:var(--muted)}
 .dots{letter-spacing:.3em;font-weight:900}
 .notes{display:grid;gap:4px;font-size:.95rem;border-top:1px dashed var(--line);padding-top:10px}
 .g{color:var(--gloss);font-weight:700}
+.pp{color:var(--answer);font-weight:700}   /* present perfect: blue, as on her slides */
+.ps{color:var(--label);font-weight:700}    /* past simple: red */
 .next-line{opacity:0;transform:translateY(6px);animation:rise .3s ease forwards}
 @keyframes rise{to{opacity:1;transform:none}}
 
@@ -603,7 +606,7 @@ const TQ_STEPS = [];
 const RW_FIRST = "Rewrite it with the word in capitals (2–5 words). Type the missing part or say it aloud, then tap Check.";
 const FIN_FIRST = "Finish the sentence in English. Type it or say it aloud, then tap Check.";
 const TASKS = [
-  {id:"clocks-text", topic:"clocks", sec:"Revision", title:"The clock change chat: the missing words", meta:"Say the missing words, then check", alt:"Or study the new Brainscape deck.", kind:"gaps",
+  {id:"clocks-text", topic:"clocks", sec:"Revision", title:"The clock change chat: the missing words", meta:"Say the missing words, then check", kind:"gaps",
    lead:"Now without the glossary.", instr:"Say the missing words. Then tap the yellow boxes to check.", lines:GAPS.clocks},
   {id:"clock-listen", topic:"clocks", sec:"Extension", title:"Listening: the clock change", meta:"10 short clips from real videos", kind:"steps",
    steps:TQ.tq1.map((clip,i)=>({type:"listen",clip,first:i===0}))},
@@ -629,7 +632,7 @@ if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
   TASKS.push({id:"earlier", topic:"earlier", sec:"Revision", title:"Quick look back", meta:`${EARLIER.length} sentences from earlier lessons`, kind:"steps",
     steps: EARLIER.map((e,i)=> e.type==="rewrite"
       ? {type:"rewrite", r:e.r, first:i===0, instrFirst:"Do you still remember? Rewrite the sentence. Use the word in capitals, then tap Check.", instr:"Rewrite the sentence."}
-      : {type:"sayit", s:e.s, first:i===0, box:""})});
+      : {type:"sayit", s:e.s, first:i===0, box:"", instr:e.instr})});
 }
 /* rough minutes per step, so students can plan their time */
 const EST = {gaps:5, dlg:2.5, rewrite:1, sayit:1.5, share:1.5, lookback:2, listen:1.2, task:1, plan:3, produce:12};
@@ -1167,9 +1170,9 @@ function renderGaps(t){
 const glossLineHTML = g => gapLineHTML({p:g.p}).replace(/<\/p>$/, `${g.m?` <span class="mean">— ${esc(g.m)}</span>`:""}${g.ru?` ${ru(esc(g.ru))}`:""}</p>`);
 function renderDlg(st, count, pct){
   const side = st.box ? box(st.box)
-    : st.gloss ? `<aside class="box gloss" aria-label="Glossary"><h4>GLOSSARY</h4>${st.gloss.map(glossLineHTML).join("")}</aside>` : "";
+    : st.gloss ? `<aside class="box gloss" aria-label="Glossary"><h4>GLOSSARY</h4>${st.gloss.map(g=>g.h?`<h4>${esc(g.h)}</h4>`:glossLineHTML(g)).join("")}</aside>` : "";
   shell({count, pct, instr: st.instr,
-    stageHTML:`<div class="panel">${st.intro?`<p class="situation">${esc(st.intro)}</p>`:""}<div class="dlg">${st.lines.map(gapLineHTML).join("")}</div></div>${side}`,
+    stageHTML:`<div class="panel">${st.intro?`<p class="situation">${esc(st.intro)}</p>`:""}<div class="dlg">${st.lines.map(gapLineHTML).join("")}</div>${checked&&st.note?`<p class="small">${st.note}</p>`:""}</div>${side}`,
     withBox: !!side, actionsHTML: navButtons(st.checkLabel || "Show the answers")});
   const chunks = [...app.querySelectorAll(".chunk")];
   const toggle = c => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); };
@@ -1300,21 +1303,28 @@ function renderSayit(st, count, pct){
 
 /* ---------- share your reaction and ask ---------- */
 function renderShare(st, count, pct){
-  const s = st.s;
+  const s = st.s, q = s.q || "";
+  const turn = (who, text) => who === "b"
+    ? `<div class="turn b"><div class="bubble">${esc(text)}</div><img class="fig" src="${IMG_B}" alt=""></div>`
+    : `<div class="turn a"><img class="fig" src="${IMG_A}" alt=""><div class="bubble">${esc(text)}</div></div>`;
   const bBubble = checked
-    ? `<span class="mark-s">${s.s}</span> <span class="mark-a">${s.q}</span>`
-    : (s.hint ? `<span class="hint"><span class="s">[share your reaction]</span> <span class="a">[ask a question]</span></span>` : `<span class="dots" aria-label="Your turn">• • •</span>`);
+    ? `<span class="mark-s">${s.s}</span>${q?` <span class="mark-a">${q}</span>`:""}`
+    : (typeof s.hint === "string" ? `<span class="hint">${s.hint}</span>`
+      : s.hint ? `<span class="hint"><span class="s">[share your reaction]</span> <span class="a">[ask a question]</span></span>` : `<span class="dots" aria-label="Your turn">• • •</span>`);
+  const bx = checked && st.boxAfter !== undefined ? st.boxAfter : st.box !== undefined ? st.box : BOX_SHARE;   /* a step can bring its own box, or none (""); boxAfter = another box on the answer */
   shell({count, pct, instr: s.i,
     stageHTML: `
       <div class="panel convo">
-        <div class="turn a"><img class="fig" src="${IMG_A}" alt=""><div class="bubble">${esc(s.a)}</div></div>
-        ${checked?"":`<p class="situation">${esc(s.sit)}</p>${s.use?`<p class="use">Use: <b>${s.use}</b></p>`:""}`}
+        ${s.ctx?`<p class="situation">${esc(s.ctx)}</p>`:""}
+        ${(s.pre||[]).map(([who,text])=>turn(who,text)).join("")}
+        ${turn("a", s.a)}
+        ${checked||!s.sit?"":`<p class="situation">${esc(s.sit)}</p>`}${checked||!s.use?"":`<p class="use">Use: <b>${s.use}</b></p>`}
         <div class="turn b"><div class="bubble">${bBubble}</div><img class="fig" src="${IMG_B}" alt=""></div>
-        ${checked?`<p class="mk-row mk-right">${markBtn(String(stepIdx), plainText(s.s+" "+s.q))}</p>${markHint()}`:""}
-        ${checked?`<div class="turn a next-line"><img class="fig" src="${IMG_A}" alt=""><div class="bubble">${esc(s.next)}</div></div>
-          <div class="notes">${s.notes.map(n=>`<div>${n}</div>`).join("")}</div>`:""}
-      </div>${box(BOX_SHARE)}`,
-    withBox: true, actionsHTML: navButtons()});
+        ${checked?`<p class="mk-row mk-right">${markBtn(String(stepIdx), plainText(s.s+(q?" "+q:"")))}</p>${markHint()}`:""}
+        ${checked?`<div class="turn a next-line"><img class="fig" src="${IMG_A}" alt=""><div class="bubble">${s.nextHtml || esc(s.next)}</div></div>
+          ${(s.notes||[]).length?`<div class="notes">${s.notes.map(n=>`<div>${n}</div>`).join("")}</div>`:""}`:""}
+      </div>${bx?box(bx):""}`,
+    withBox: !!bx, actionsHTML: navButtons()});
   wireNav(()=>renderTaskKeep());
 }
 
@@ -1542,8 +1552,8 @@ const usedKey = () => "hw-used-"+PAGE_KEY;
 const getList = k => { try{ return JSON.parse(ls.get(k) || "[]"); }catch(e){ return []; } };
 function plainNext(){ checked = true; return navButtons(); }   /* nothing to check on these screens: the button is Next / Finish */
 const taskPeek = () => `<details class="task-peek"><summary><b>Your task</b> <span class="small">tap to see</span></summary><div class="task-card">${TASK_HTML}</div></details>`;
-const modelHTML = () => `<details class="model-peek"><summary><b>The conversation from class</b></summary>
-  <p class="situation">${READ_INTRO}</p><div class="model">${MODEL.map(([sp,line])=>`<p><span class="spk">${sp}:</span> ${line}</p>`).join("")}</div></details>`;
+const modelHTML = () => !MODEL.length ? "" : `<details class="model-peek"><summary><b>${typeof MODEL_TITLE!=="undefined"?MODEL_TITLE:"The conversation from class"}</b></summary>
+  ${READ_INTRO?`<p class="situation">${READ_INTRO}</p>`:""}<div class="model">${MODEL.map(([sp,line])=>`<p><span class="spk">${sp}:</span> ${line}</p>`).join("")}</div></details>`;
 
 /* 1. the task, short enough to keep in your head */
 function renderTaskCard(st, count, pct){
@@ -1563,7 +1573,7 @@ function renderPlan(st, count, pct){
         ${taskPeek()}
         <div class="pick-count small" id="pc" aria-live="polite"></div>
         <div class="picks">${list}</div>
-        <p class="small tenses"><b>Tenses:</b> ${TENSES}</p>
+        ${TENSES?`<p class="small tenses"><b>Tenses:</b> ${TENSES}</p>`:""}
         ${modelHTML()}
       </div>`,
     actionsHTML: plainNext()});
@@ -1603,7 +1613,7 @@ function renderProduce(st, count, pct){
           <p class="small" id="rec-msg" hidden></p>
         </div>
         <div id="m-write" ${mode==="write"?"":"hidden"} class="mode">
-          <textarea id="txt" rows="7" placeholder="A: …&#10;B: …&#10;(Tap the microphone on your keyboard to dictate.)">${esc(ls.get(draftKey()))}</textarea>
+          <textarea id="txt" rows="7" placeholder="${typeof PRODUCE_PH!=="undefined"?PRODUCE_PH:"A: …&#10;B: …"}&#10;(Tap the microphone on your keyboard to dictate.)">${esc(ls.get(draftKey()))}</textarea>
         </div>
         <fieldset class="check">
           <legend>Your phrases</legend>
