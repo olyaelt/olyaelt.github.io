@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-title" content="Homework">
+<meta name="theme-color" content="#F6F1DC">
+<title>Homework</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#F6F1DC;      /* the cream frame around her slides */
+  --card:#FFFFFF;
+  --ink:#1D1D1B;
+  --muted:#6B6B6B;
+  --line:#D9D2B8;
+  --instr:#0693E3;       /* blue instruction box */
+  --instr-ink:#FFFFFF;
+  --answer:#0000FF;      /* blue answers */
+  --label:#E00000;       /* red category labels, key words */
+  --hl:#FFFF00;          /* yellow hidden answers */
+  --hl-ink:#1D1D1B;
+  --share:#00FF00;       /* green: share your reaction */
+  --gloss:#0693E3;
+  --ipa:#0E8A7E;
+  --bubble:#FFFF8C;
+  --bubble-ink:#1D1D1B;
+  --bubble-line:#1D1D1B;
+  --summary:#D9EAD3;     /* green box from the spreadsheet */
+  --done:#2E8B3E;
+  --date-bg:#FF9900;
+  --rec:#D93025;
+  --topic-a:#FFF3CF; --topic-b:#E2EFFB;
+  --ok-bg:#EAF7EC; --ok-chip:#CDEFD3; --ok-ink:#1E6B2E;
+  --no-bg:#FDECEB; --no-chip:#F9D2CF; --no-ink:#A1261B;
+  --good-hl:#BFF2B8; --strike:#9A9A9A; --fix-bg:#D6E6FF;
+  --date-ink:#1D1D1B;
+  --fig-filter:none;
+  --font-body:"Lato","Calibri","Carlito","Segoe UI",system-ui,sans-serif;
+  --step-0:clamp(1rem,0.96rem + 0.2vw,1.0625rem);
+  --step-1:clamp(1.125rem,1.06rem + 0.3vw,1.25rem);
+  --step-2:clamp(1.375rem,1.25rem + 0.6vw,1.625rem);
+  --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D;
+    --instr:#1578C0; --instr-ink:#FFFFFF; --answer:#8FB0FF; --label:#FF7A7A;
+    --hl:#FFF34D; --hl-ink:#111111; --share:#52F552; --gloss:#5BB8F5; --ipa:#4CC5B3;
+    --bubble:#3B391F; --bubble-ink:#F3F0D0; --bubble-line:#8C8760; --summary:#22362A; --done:#62C774;
+    --fig-filter:invert(1) hue-rotate(180deg);
+    --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB; --good-hl:#BFF2B8; --strike:#8A8D91; --fix-bg:#22345A; --topic-a:#2A2614; --topic-b:#162636;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D;
+  --instr:#1578C0; --instr-ink:#FFFFFF; --answer:#8FB0FF; --label:#FF7A7A;
+  --hl:#FFF34D; --hl-ink:#111111; --share:#52F552; --gloss:#5BB8F5; --ipa:#4CC5B3;
+  --bubble:#3B391F; --bubble-ink:#F3F0D0; --bubble-line:#8C8760; --summary:#22362A; --done:#62C774;
+  --fig-filter:invert(1) hue-rotate(180deg);
+  --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB; --good-hl:#BFF2B8; --strike:#8A8D91; --fix-bg:#22345A; --topic-a:#2A2614; --topic-b:#162636;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{background:var(--ground);margin:0}
+body{color:var(--ink);font-family:var(--font-body);font-size:var(--step-0);line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:760px;margin:0 auto;padding-block:24px 48px}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--instr);outline-offset:2px;border-radius:6px}
+h1{margin:0;font-size:var(--step-2);line-height:1.2;font-weight:900}
+.head{display:grid;gap:4px;padding-block:4px 18px}
+.head p{margin:0;color:var(--muted)}
+.small{font-size:.9rem;color:var(--muted)}
+.btn{min-height:48px;padding:0 20px;border-radius:12px;border:2px solid var(--instr);background:transparent;color:var(--instr);font-weight:900;cursor:pointer}
+.btn.primary{background:var(--instr);color:var(--instr-ink)}
+.btn:disabled{opacity:.5}
+.linklike{background:none;border:0;padding:0;color:var(--instr);font:inherit;font-weight:700;text-decoration:underline;cursor:pointer}
+.sync{margin:0 0 16px}
+.sync-on{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;color:var(--muted);font-size:.95rem}
+.sync-card{background:var(--card);border:2px solid var(--instr);border-radius:14px;padding:12px 14px;display:grid;gap:8px}
+.sync-row{display:flex;gap:8px}
+.sync-row input{flex:1;min-width:0;font:inherit;font-size:1.05rem;color:var(--ink);background:var(--ground);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.sync-card .small{margin:0}
+.sync-card .sync-msg{color:var(--ink);font-weight:700}
+.sync-msg:empty{display:none}
+.tip{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;background:var(--card);border-radius:14px;padding:12px 14px;margin:0 0 16px;font-size:.95rem}
+.tip .linklike{white-space:nowrap}
+.list{display:grid;gap:14px}
+.hw{display:grid;gap:10px;text-decoration:none;color:inherit;background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+.hw:hover{border-color:var(--instr)}
+.hw:active{transform:scale(.995)}
+.hw.latest{border-color:var(--instr)}
+.hw-top{display:flex;align-items:center;gap:10px}
+.date{display:inline-flex;font-weight:900;letter-spacing:.04em;font-size:.85rem;background:var(--date-bg);color:var(--date-ink);padding:3px 10px;border-radius:6px}
+.tag{font-size:.78rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--instr)}
+.go{margin-left:auto;color:var(--instr);font-weight:900}
+.topics{display:grid;gap:8px}
+.topic{border-radius:10px;padding:8px 12px;display:grid;gap:1px}
+.topic.t0{background:var(--topic-a)} .topic.t1{background:var(--topic-b)}
+.topic b{font-size:var(--step-1);line-height:1.3}
+.topic span{color:var(--muted);font-size:.92rem}
+.prog{display:flex;align-items:center;gap:10px;font-size:.92rem;color:var(--muted)}
+.prog .bar{flex:1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.prog .bar i{display:block;height:100%;background:var(--done);border-radius:99px}
+.prog.all span{color:var(--done);font-weight:900}
+.fb{font-weight:700;color:var(--answer);background:var(--fix-bg);border-radius:10px;padding:8px 12px;font-size:.95rem}
+.fb.new::after{content:" • new";color:var(--label)}
+.foot{color:var(--muted);font-size:.88rem;margin-top:22px}
+.meter{background:var(--card);border-radius:var(--radius);padding:12px 14px;margin:0 0 16px;display:grid;gap:8px}
+.meter-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.meter-top span{font-weight:900;color:var(--ink)}
+.strip{display:flex;gap:3px;background:#1D1D1B;border-radius:6px;padding:9px 6px;position:relative}
+.strip::before,.strip::after{content:"";position:absolute;left:6px;right:6px;height:3px;background:repeating-linear-gradient(90deg,#F6F1DC 0 5px,transparent 5px 11px);opacity:.55}
+.strip::before{top:3px}.strip::after{bottom:3px}
+.strip i{flex:1;height:22px;border-radius:2px;background:#3A3A36}
+.strip i.on{background:linear-gradient(180deg,#FFE066,#FF9900)}
+.meter .small{margin:0}
+.confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);max-width:min(92vw,520px);background:#1D1D1B;color:#fff;font-weight:700;padding:12px 16px;border-radius:12px;z-index:61;box-shadow:0 6px 20px rgba(0,0,0,.25);transition:opacity .5s}
+.toast.out{opacity:0}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+const HW = [{"file": "2026-10-23.html", "key": "hw-ge-c1-2026-10-23", "date": "23.10.26", "topics": [{"title": "The clocks go back", "sub": "Moving a call when the clocks change"}, {"title": "How did you get into that?", "sub": "Talking about your studies and your career path"}], "tasks": ["clocks-text", "clock-listen", "clock-practice", "career-rewrite", "career-finish", "career-listen", "write"]}];
+const SYNC_URL = "";
+const lsMem = {};   /* if the browser blocks storage (private mode), remember things for this visit at least */
+const ls = { get:k=>{ try{ const v = localStorage.getItem(k); if(v != null) return v; }catch(e){} return lsMem[k] || ""; }, set:(k,v)=>{ lsMem[k] = v; try{ localStorage.setItem(k,v); }catch(e){} } };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const app = document.getElementById("app");
+let server = null, syncState = "";
+const myCode = () => SYNC_URL ? ls.get("hw-code") : "";
+const GROUP_ID = (HW[0] && HW[0].key.split("-")[2]) || "group";
+let groupStats = (()=>{ try{ return JSON.parse(localStorage.getItem("hw-group-"+GROUP_ID)||"null"); }catch(e){ return null; } })();
+/* ---------- group goal: film-strip meter, confetti, milestones ---------- */
+const fmtN = n => Number(n||0).toLocaleString("en-GB");
+const capFirst = s => String(s||"").charAt(0).toUpperCase() + String(s||"").slice(1);
+function meterHTML(gs){
+  if(!gs || !gs.goal) return "";
+  const pct = Math.min(1, gs.total/gs.goal), n = 20, filled = Math.min(n, Math.round(pct*n));
+  return `<section class="meter" aria-label="Our group's goal">
+      <div class="meter-top"><b>🎬 Our group</b><span>${gs.reached ? "Goal reached!" : `${fmtN(gs.total)} / ${fmtN(gs.goal)} 🎞`}</span></div>
+      <div class="strip" role="img" aria-label="${Math.round(pct*100)}% of the way">${Array.from({length:n},(_,i)=>`<i class="${i<filled?"on":""}"></i>`).join("")}</div>
+      <p class="small">${gs.reached ? `🎉 We did it! ${esc(capFirst(gs.reward))} is coming.` : `Every task adds frames — one per minute of work, Over to you counts double. At ${fmtN(gs.goal)} we'll have ${esc(gs.reward)}.`}${gs.size ? ` <b>${gs.week} of ${gs.size}</b> have added something this week.` : ""}</p>
+    </section>`;
+}
+function confetti(big){
+  try{ if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; }catch(e){}
+  const c = document.createElement("canvas"); c.className = "confetti"; c.setAttribute("aria-hidden","true"); document.body.appendChild(c);
+  const d = window.devicePixelRatio || 1, W = c.width = innerWidth*d, H = c.height = innerHeight*d, x = c.getContext("2d");
+  if(!x){ c.remove(); return; }
+  const cols = ["#0693E3","#FFFF00","#FF9900","#2E8B3E","#E00000","#8FB0FF"];
+  const ps = Array.from({length: big ? 170 : 70}, (_,i)=>({ x: W/2 + (Math.random()-.5)*W*(big?.9:.35), y: H*(big?.4:.22),
+    vx: (Math.random()-.5)*W*.012, vy: -(Math.random()*.018+.006)*H, s: (5+Math.random()*7)*d, r: Math.random()*6, vr: (Math.random()-.5)*.35, c: cols[i%cols.length] }));
+  const t0 = performance.now(), life = big ? 2800 : 1700;
+  (function frame(now){
+    x.clearRect(0,0,W,H);
+    ps.forEach(p=>{ p.vy += H*.0007; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+      x.save(); x.translate(p.x,p.y); x.rotate(p.r); x.globalAlpha = Math.max(0, 1-(now-t0)/life); x.fillStyle = p.c; x.fillRect(-p.s/2,-p.s/4,p.s,p.s/2); x.restore(); });
+    if(now - t0 < life) requestAnimationFrame(frame); else c.remove();
+  })(t0);
+}
+function toast(msg){
+  const t = document.createElement("div"); t.className = "toast"; t.setAttribute("role","status"); t.textContent = msg; document.body.appendChild(t);
+  setTimeout(()=>{ t.classList.add("out"); setTimeout(()=>t.remove(), 600); }, 4200);
+}
+/* 25 / 50 / 75 / 100 %: celebrate once per device when the group passes a mark (a new goal starts a new season) */
+function checkMilestone(gs, groupId){
+  if(!gs || !gs.goal) return;
+  const key = "hw-ms-" + groupId + "-" + gs.goal;
+  const pct = gs.total/gs.goal*100, ms = pct>=100 ? 100 : pct>=75 ? 75 : pct>=50 ? 50 : pct>=25 ? 25 : 0;
+  const seen = ls.get(key);
+  if(seen === ""){ ls.set(key, String(ms)); return; }
+  if(ms > Number(seen)){
+    ls.set(key, String(ms)); confetti(true);
+    toast(ms===100 ? `🎉 We did it! ${capFirst(gs.reward)} is coming!` : `🎬 Our group is ${ms}% of the way to ${gs.reward}!`);
+  }
+}
+
+
+async function post(payload){
+  try{
+    const r = await fetch(SYNC_URL, {method:"POST", body:JSON.stringify(payload), headers:{"Content-Type":"text/plain;charset=utf-8"}});
+    return await r.json();
+  }catch(e){ return {ok:false, error:"offline"}; }
+}
+const json = k => { try{ return JSON.parse(localStorage.getItem(k)||"null"); }catch(e){ return null; } };
+function stats(h){
+  /* Olya's table knows this homework once its page has synced; until then, show what's on this device */
+  const s = server && server.pages ? server.pages[h.key] : null;
+  if(s) return { done: h.tasks.filter(id=>s.done.includes(id)).length, fb: s.fb, fbNew: s.fbNew };
+  const d = new Set(json(h.key) || []);
+  const w = Object.values(json(h.key+"-work") || {}).flat().filter(x=>x && String(x.feedback||"").trim());
+  return { done: h.tasks.filter(id=>d.has(id)).length, fb: w.length, fbNew: w.filter(x=>!x.seen).length };
+}
+function card(h, i){
+  const st = stats(h), n = h.tasks.length, all = n && st.done >= n;
+  return `<a class="hw ${i===0?"latest":""}" href="${esc(h.file)}">
+    <div class="hw-top"><span class="date">${esc(h.date)}</span>${i===0?`<span class="tag">Latest</span>`:""}<span class="go" aria-hidden="true">→</span></div>
+    <div class="topics">${h.topics.map((tp,k)=>`<div class="topic t${k%2}"><b>${esc(tp.title)}</b><span>${esc(tp.sub)}</span></div>`).join("")}</div>
+    <div class="prog ${all?"all":""}"><div class="bar" aria-hidden="true"><i style="width:${n?Math.round(st.done/n*100):0}%"></i></div><span>${all?"All done ✓":`${st.done} of ${n} tasks done`}</span></div>
+    ${st.fbNew ? `<div class="fb new">💬 Feedback from Olya</div>` : st.fb ? `<div class="fb">💬 Feedback from Olya</div>` : ""}
+  </a>`;
+}
+function syncHTML(){
+  if(!SYNC_URL) return "";
+  const code = myCode(), who = ls.get("hw-who");
+  if(code && syncState!=="unknown" && ls.get("hw-role")==="teacher") return `<div class="sync sync-on">
+      <span>👩‍🏫 <b>Teacher view</b>${who?` — ${esc(who)}`:""}. Open a homework to see your group on each task.</span>
+      <button class="linklike" id="code-change">Not you?</button></div>`;
+  if(code && syncState!=="unknown") return `<div class="sync sync-on">
+      <span>✓ ${who?`Hi, ${esc(who)}! `:""}Olya can see your progress${syncState==="offline"?" — no connection right now, so this shows what's saved on this device.":"."}</span>
+      <button class="linklike" id="code-change">Not you?</button></div>`;
+  return `<div class="sync sync-card">
+      <label for="code"><b>Your code from Olya</b></label>
+      <div class="sync-row"><input id="code" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="e.g. lemon42" value="${esc(code)}">
+        <button class="btn primary" id="code-go">Save</button></div>
+      <p class="small">Olya will see your progress, and your ticks will be the same on your phone and computer.</p>
+      <p class="small sync-msg" id="sync-msg" aria-live="polite">${syncState==="unknown"?"Hmm, Olya's list doesn't have this code. Check it with her.":""}</p>
+    </div>`;
+}
+const standalone = () => { try{ return window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true; }catch(e){ return false; } };
+function tipHTML(){
+  let phone = true; try{ phone = window.matchMedia("(pointer: coarse)").matches; }catch(e){}
+  if(ls.get("hw-tip-done") || standalone() || !phone) return "";
+  return `<div class="tip" id="tip"><span>📱 <b>Keep this page on your phone.</b> iPhone (Safari): tap <b>Share</b> → <b>Add to Home Screen</b>. Android (Chrome): tap <b>⋮</b> → <b>Add to Home screen</b>.</span>
+    <button class="linklike" id="tip-x">Got it</button></div>`;
+}
+function render(){
+  app.innerHTML = `
+    <header class="head"><h1>Homework</h1><p>All our homework in one place. The newest is at the top.</p></header>
+    <div id="sync-slot">${syncHTML()}</div>
+    ${(myCode() && syncState!=="unknown") ? meterHTML(groupStats) : ""}
+    ${tipHTML()}
+    <div class="list">${HW.map(card).join("")}</div>
+    <p class="foot">Open a homework, do the tasks, and tick them off. Your ticks show up here.</p>`;
+  const x = document.getElementById("tip-x"); if(x) x.addEventListener("click",()=>{ ls.set("hw-tip-done","1"); document.getElementById("tip").remove(); });
+  const ch = document.getElementById("code-change");
+  if(ch) ch.addEventListener("click",()=>{ ls.set("hw-code",""); ls.set("hw-who",""); ls.set("hw-role",""); server = null; syncState = ""; render(); const i=document.getElementById("code"); if(i) i.focus(); });
+  const go = document.getElementById("code-go"), inp = document.getElementById("code");
+  if(go && inp){
+    const save = async ()=>{
+      const code = inp.value.trim().toLowerCase(), msg = document.getElementById("sync-msg");
+      if(!code){ msg.textContent = "Type the code Olya sent you."; return; }
+      go.disabled = true; msg.textContent = "Checking…";
+      const res = await post({action:"summary", code, pages:HW.map(h=>h.key)});
+      go.disabled = false;
+      if(res.ok){ ls.set("hw-code", code); ls.set("hw-role", res.role==="teacher" ? "teacher" : ""); ls.set("hw-who", res.name||""); if(!ls.get("hw-name") && res.name) ls.set("hw-name", res.name); server = res; syncState = "ok"; gotGroup(res.group); render(); }
+      else msg.textContent = res.error==="unknown-code" ? "Hmm, Olya's list doesn't have this code. Check it with her." : "Can't reach Olya's list right now. Try again in a minute.";
+    };
+    go.addEventListener("click", save);
+    inp.addEventListener("keydown", e=>{ if(e.key==="Enter") save(); });
+  }
+}
+function gotGroup(g){ if(!g) return; groupStats = g; ls.set("hw-group-"+GROUP_ID, JSON.stringify(g)); setTimeout(()=>checkMilestone(g, GROUP_ID), 50); }
+async function refresh(){
+  const code = myCode(); if(!code) return;
+  const res = await post({action:"summary", code, pages:HW.map(h=>h.key)});
+  if(code !== myCode()) return;
+  if(res.ok){ server = res.role==="teacher" ? null : res; syncState = "ok"; ls.set("hw-who", res.name||""); ls.set("hw-role", res.role==="teacher" ? "teacher" : ""); gotGroup(res.group); }
+  else syncState = res.error==="unknown-code" ? "unknown" : "offline";
+  render();
+}
+render(); refresh();
+window.addEventListener("pageshow", e=>{ if(e.persisted){ render(); refresh(); } });
+</script>
+</body>
+</html>

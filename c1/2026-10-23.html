@@ -1,0 +1,1665 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}</style>
+<title>How did you get into that? homework</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+/* Layout: one calm column like a slide on a phone — task list home, then one task step per screen with a sticky action bar. Colours are Olya's deck colours. */
+:root{
+  --ground:#F6F1DC;      /* the cream frame around her slides */
+  --card:#FFFFFF;
+  --ink:#1D1D1B;
+  --muted:#6B6B6B;
+  --line:#D9D2B8;
+  --instr:#0693E3;       /* blue instruction box */
+  --instr-ink:#FFFFFF;
+  --answer:#0000FF;      /* blue answers */
+  --label:#E00000;       /* red category labels, key words */
+  --hl:#FFFF00;          /* yellow hidden answers */
+  --hl-ink:#1D1D1B;
+  --share:#00FF00;       /* green: share your reaction */
+  --gloss:#0693E3;
+  --ipa:#0E8A7E;
+  --bubble:#FFFF8C;
+  --bubble-ink:#1D1D1B;
+  --bubble-line:#1D1D1B;
+  --summary:#D9EAD3;     /* green box from the spreadsheet */
+  --done:#2E8B3E;
+  --date-bg:#FF9900;
+  --rec:#D93025;
+  --topic-a:#FFF3CF; --topic-b:#E2EFFB;
+  --ok-bg:#EAF7EC; --ok-chip:#CDEFD3; --ok-ink:#1E6B2E;
+  --no-bg:#FDECEB; --no-chip:#F9D2CF; --no-ink:#A1261B;
+  --good-hl:#BFF2B8; --strike:#9A9A9A; --fix-bg:#D6E6FF;
+  --date-ink:#1D1D1B;
+  --fig-filter:none;
+  --font-body:"Lato","Calibri","Carlito","Segoe UI",system-ui,sans-serif;
+  --step-0:clamp(1rem,0.96rem + 0.2vw,1.0625rem);
+  --step-1:clamp(1.125rem,1.06rem + 0.3vw,1.25rem);
+  --step-2:clamp(1.375rem,1.25rem + 0.6vw,1.625rem);
+  --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D;
+    --instr:#1578C0; --instr-ink:#FFFFFF; --answer:#8FB0FF; --label:#FF7A7A;
+    --hl:#FFF34D; --hl-ink:#111111; --share:#52F552; --gloss:#5BB8F5; --ipa:#4CC5B3;
+    --bubble:#3B391F; --bubble-ink:#F3F0D0; --bubble-line:#8C8760; --summary:#22362A; --done:#62C774;
+    --fig-filter:invert(1) hue-rotate(180deg);
+    --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB; --good-hl:#BFF2B8; --strike:#8A8D91; --fix-bg:#22345A; --topic-a:#2A2614; --topic-b:#162636;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D;
+  --instr:#1578C0; --instr-ink:#FFFFFF; --answer:#8FB0FF; --label:#FF7A7A;
+  --hl:#FFF34D; --hl-ink:#111111; --share:#52F552; --gloss:#5BB8F5; --ipa:#4CC5B3;
+  --bubble:#3B391F; --bubble-ink:#F3F0D0; --bubble-line:#8C8760; --summary:#22362A; --done:#62C774;
+  --fig-filter:invert(1) hue-rotate(180deg);
+  --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB; --good-hl:#BFF2B8; --strike:#8A8D91; --fix-bg:#22345A; --topic-a:#2A2614; --topic-b:#162636;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{background:var(--ground)}
+body{color:var(--ink);font-family:var(--font-body);font-size:var(--step-0);line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--ground)}
+.wrap{max-width:760px;margin:0 auto;padding-block:20px 40px}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--instr);outline-offset:2px;border-radius:6px}
+h1,h2,h3{text-wrap:balance;margin:0}
+
+/* ---------- home ---------- */
+.lesson-head{display:grid;gap:6px;padding-block:8px 18px}
+.date{display:inline-flex;align-self:start;justify-self:start;font-weight:900;letter-spacing:.04em;font-size:.85rem;
+  background:var(--date-bg);color:var(--date-ink);padding:3px 10px;border-radius:6px}
+.lesson-head h1{font-size:var(--step-2);line-height:1.2;font-weight:900}
+.lesson-head p{margin:0;color:var(--muted)}
+details.summary{background:var(--summary);border-radius:var(--radius);padding:12px 16px;margin-bottom:22px}
+details.summary summary{cursor:pointer;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:12px}
+details.summary summary::-webkit-details-marker{display:none}
+details.summary summary::after{content:"Show";font-weight:400;color:var(--muted)}
+details.summary[open] summary::after{content:"Hide"}
+.summary ul{margin:10px 0 2px;padding:0;list-style:none;display:grid;gap:6px}
+.summary li b{font-weight:700}
+.ru{font-style:italic;color:var(--muted)}
+.ipa{color:var(--ipa);font-style:normal;white-space:nowrap}
+.section{display:grid;gap:10px;margin-bottom:22px}
+.section h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:900}
+.all-hw{justify-self:start;color:var(--instr);font-weight:700;text-decoration:none;margin-bottom:6px}
+.sync{margin:0 0 16px}
+.sync-on{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;color:var(--muted);font-size:.95rem}
+.sync-card{background:var(--card);border:2px solid var(--instr);border-radius:14px;padding:12px 14px;display:grid;gap:8px}
+.sync-row{display:flex;gap:8px}
+.sync-row input{flex:1;min-width:0;font:inherit;font-size:1.05rem;color:var(--ink);background:var(--ground);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.sync-card .small{margin:0}
+.sync-msg:empty{display:none}
+.sync-card .sync-msg{color:var(--ink);font-weight:700}
+.linklike{background:none;border:0;padding:0;color:var(--instr);font:inherit;font-weight:700;text-decoration:underline;cursor:pointer}
+.total{font-size:.92rem}
+.slow-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.slow{font:inherit;font-weight:700;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:6px 14px;cursor:pointer}
+.slow[aria-pressed="true"]{border-color:var(--instr);background:var(--instr);color:var(--instr-ink)}
+.react{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:10px;font-weight:400;color:var(--ink)}
+.chips{display:inline-flex;gap:6px}
+.chip{font:inherit;font-weight:700;border:2px solid var(--ok-ink);background:transparent;color:var(--ok-ink);border-radius:99px;padding:4px 12px;cursor:pointer}
+.chip.on{background:var(--ok-ink);color:var(--card)}
+.ask-box{display:grid;gap:8px;margin-top:10px}
+.ask-box textarea{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+.react-msg{margin:6px 0 0;font-weight:400}
+.react-msg:empty{display:none}
+.fb-q{margin:0;font-style:italic}
+.teacher .status{display:none}
+.teacher .task-btn{padding-right:16px!important}
+.teacher-bar{align-items:center}
+.chip-t{font:inherit;font-size:.9rem;font-weight:700;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:3px 12px;cursor:pointer}
+.chip-t[aria-pressed="true"]{border-color:var(--instr);background:var(--instr);color:var(--instr-ink)}
+.t-line{display:flex;flex-wrap:wrap;align-items:center;gap:5px;width:100%;text-align:left;background:transparent;border:0;padding:8px 4px 2px;cursor:pointer;font:inherit}
+.t-chip{display:inline-grid;place-items:center;min-width:30px;height:26px;padding:0 6px;border-radius:7px;border:1.5px solid var(--line);background:var(--card);color:var(--muted);font-size:.8rem;font-weight:700}
+.t-chip.on{background:var(--done);border-color:var(--done);color:#fff}
+.t-chip.wide{margin:2px 0}
+.t-count{font-weight:700;color:var(--muted);font-size:.9rem}
+.t-badges{margin-left:auto;font-size:.88rem;color:var(--muted)}
+.t-line.hot .t-badges{color:var(--label)}
+.hot{background:var(--card);border-radius:var(--radius);padding:12px 14px;margin:0 0 16px;border-left:5px solid var(--label)}
+.hot ul{margin:6px 0 0;padding-left:18px;display:grid;gap:4px}
+.hot .small{margin:4px 0 0}
+.t-panel p{margin:0}
+.t-item{margin-top:12px}
+.t-text{background:var(--ground);border-radius:10px;padding:10px 12px;line-height:1.6}
+.t-link{color:var(--instr);font-weight:700}
+.t-tools{display:flex;gap:6px;flex-wrap:wrap}
+.tool{font:inherit;font-weight:700;border-radius:8px;padding:5px 10px;cursor:pointer;border:2px solid var(--line);background:var(--card)}
+.tool.good{background:var(--good-hl);color:var(--hl-ink)}
+.tool.del{color:var(--strike);text-decoration:line-through}
+.tool.ins{color:var(--answer);background:var(--fix-bg)}
+.t-ta{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+.t-prev{border:1px dashed var(--line);border-radius:10px;padding:10px 12px;min-height:2em}
+.t-prev:empty{display:none}
+.t-msg:empty{display:none}
+.mk{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--instr);font:inherit;font-weight:900;font-size:.95rem;line-height:1;cursor:pointer;display:inline-grid;place-items:center;vertical-align:middle;margin-left:6px;padding:0}
+.mk.on{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
+.mk.demo{width:22px;height:22px;font-size:.8rem;margin:0 2px;cursor:default}
+.mk-row{margin:0;display:flex;justify-content:flex-end}
+.mk-right{margin-top:-4px}
+.mk-hint{margin:0;font-size:.88rem;color:var(--muted);text-align:right}
+.ln{position:relative}
+.ln .mk{position:absolute;right:8px;top:8px}
+.say-a{display:flex;align-items:center;gap:6px}
+.say-a .reveal{flex:1}
+.ln.has-mk{padding-right:46px}
+.flagged{margin-top:10px;display:grid;gap:6px;font-weight:400;color:var(--ink)}
+.fl{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;background:var(--card);border-radius:10px;padding:6px 10px}
+.fl-s{font-style:italic}
+.note-box{display:flex;gap:6px;width:100%}
+.note-box input{flex:1;min-width:0;font:inherit;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--ground);color:var(--ink)}
+.note-box .btn{min-height:36px;padding:0 12px}
+.meter{background:var(--card);border-radius:var(--radius);padding:12px 14px;margin:0 0 16px;display:grid;gap:8px}
+.meter-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.meter-top span{font-weight:900;color:var(--ink)}
+.strip{display:flex;gap:3px;background:#1D1D1B;border-radius:6px;padding:9px 6px;position:relative}
+.strip::before,.strip::after{content:"";position:absolute;left:6px;right:6px;height:3px;background:repeating-linear-gradient(90deg,#F6F1DC 0 5px,transparent 5px 11px);opacity:.55}
+.strip::before{top:3px}.strip::after{bottom:3px}
+.strip i{flex:1;height:22px;border-radius:2px;background:#3A3A36}
+.strip i.on{background:linear-gradient(180deg,#FFE066,#FF9900)}
+.meter .small{margin:0}
+.confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);max-width:min(92vw,520px);background:#1D1D1B;color:#fff;font-weight:700;padding:12px 16px;border-radius:12px;z-index:61;box-shadow:0 6px 20px rgba(0,0,0,.25);transition:opacity .5s}
+.toast.out{opacity:0}
+.topic-earlier{background:var(--card);border:2px dashed var(--line)}
+.task-wrap{display:grid;gap:0}
+.fb-line{display:block;width:100%;text-align:left;margin-top:-6px;padding:12px 14px 8px;border-radius:0 0 12px 12px;font:inherit;font-size:.92rem;font-weight:700;border:0;background:var(--fix-bg);color:var(--answer);cursor:pointer}
+.fb-line.is-new::after{content:" • new";color:var(--label)}
+.fb-wait{background:transparent;color:var(--muted);font-weight:400;cursor:default;padding:8px 4px 0;margin-top:0}
+.fb-key{margin:0 0 10px}
+.fb-item{margin-bottom:12px}
+.fb-text{font-size:var(--step-1);line-height:1.6}
+.fb-good{background:var(--good-hl);color:var(--hl-ink);border-radius:2px;padding:0 2px;font-weight:inherit;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.fb-del{text-decoration:line-through;text-decoration-thickness:2px;color:var(--strike)}
+.fb-ins{color:var(--answer);font-weight:900;background:var(--fix-bg);border-radius:3px;padding:0 2px;text-decoration:none}
+.fb-orig summary{cursor:pointer;color:var(--muted)}
+.fb-sent{margin-top:6px;white-space:normal}
+.task-row{position:relative}
+.task-row .status{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:var(--card);cursor:pointer;padding:0;width:38px;height:38px;font-size:1.05rem}
+.task-row.is-done .status{border-color:var(--done);background:var(--done);color:var(--card)}
+.task-btn{display:grid;grid-template-columns:1fr;align-items:center;gap:12px;padding-right:62px!important;width:100%;text-align:left;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;cursor:pointer;
+  transition:transform .12s ease,border-color .12s ease}
+.task-btn:hover{border-color:var(--instr)}
+.task-btn:active{transform:scale(.99)}
+.task-btn .t{font-weight:700;font-size:var(--step-1);line-height:1.3}
+.task-btn .m{color:var(--muted);font-size:.9rem;margin-top:2px}
+.task-btn .alt{font-size:.9rem;margin-top:6px}
+.status{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-weight:900;color:transparent}
+.done-banner{background:var(--ok-bg);color:var(--ok-ink);font-weight:700;border-radius:12px;padding:10px 14px;margin-bottom:10px}
+.foot{color:var(--muted);font-size:.88rem;display:grid;gap:4px;padding-top:6px}
+
+/* ---------- task view ---------- */
+.taskbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--ground);padding-block:10px 10px;display:grid;gap:8px}
+.taskbar-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.back{background:none;border:0;padding:6px 0;cursor:pointer;color:var(--instr);font-weight:700}
+.count{color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}
+.bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--instr);width:0;transition:width .25s ease}
+.task-title{font-size:var(--step-1);font-weight:900;line-height:1.25}
+.instr{background:var(--instr);color:var(--instr-ink);font-weight:700;padding:10px 14px;border-radius:4px;margin-block:12px 14px}
+.stage{display:grid;gap:16px}
+@media (min-width:720px){ .stage.with-box{grid-template-columns:minmax(0,1fr) 250px;align-items:start} }
+.panel{background:var(--card);border-radius:var(--radius);padding:16px;min-width:0;display:grid;gap:12px}
+
+/* dialogue with gaps */
+.dlg{display:grid;gap:10px;margin:0}
+.dlg p{margin:0;line-height:1.9}
+.spk{font-style:italic;color:var(--muted)}
+.chunk{cursor:pointer;border-radius:3px}
+.gap .f{font-weight:700;color:var(--answer)}
+.gap .r{font-weight:700;background:var(--hl);color:transparent;padding:1px 0;border-radius:2px;transition:color .15s ease}
+.gap .r:empty{display:none}
+.chunk.open .gap .r{color:var(--hl-ink)}
+.gap .r::selection{background:var(--hl)}
+
+/* rewrite */
+.orig{margin:0;font-size:var(--step-1)}
+.panel.checked .orig{font-style:italic;color:var(--muted)}
+.key{margin:0;color:var(--label);font-weight:900;font-size:var(--step-1);letter-spacing:.03em}
+.target{margin:0;font-size:var(--step-1)}
+.blank{color:var(--muted);letter-spacing:.1em}
+.ans{color:var(--answer);font-weight:700}
+.note{margin:0;font-size:.95rem}
+.gap-input{font:inherit;font-weight:700;color:var(--answer);background:var(--ground);border:0;border-bottom:2px dashed var(--muted);border-radius:4px 4px 0 0;
+  padding:2px 6px;width:min(100%,13em);margin-block:2px}
+.gap-input::placeholder{color:var(--muted);font-weight:400;font-style:italic}
+.gap-input:focus{border-bottom-color:var(--instr)}
+.yours{margin:0}
+.verdict{display:grid;gap:6px;padding:12px 14px;border-radius:12px}
+.verdict.ok{background:var(--ok-bg)}
+.verdict.no{background:var(--no-bg)}
+.chip{justify-self:start;font-weight:900;padding:2px 12px;border-radius:999px;font-size:.92rem}
+.verdict.ok .chip{background:var(--ok-chip);color:var(--ok-ink)}
+.verdict.no .chip{background:var(--no-chip);color:var(--no-ink)}
+.verdict p{margin:0;font-size:var(--step-1);line-height:1.5}
+.good{background:var(--good-hl);color:var(--hl-ink);border-radius:2px;padding:0 2px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.wrong{text-decoration:line-through;text-decoration-thickness:2px;color:var(--strike)}
+.fix{color:var(--answer);font-weight:900;background:var(--fix-bg);border-radius:3px;padding:0 2px}
+.legend{font-size:.85rem;color:var(--muted)}
+.tick{color:var(--done);font-weight:900}
+
+/* say it */
+.say{display:grid;gap:10px}
+.say-row{display:grid;gap:6px;padding:10px 0;border-top:1px solid var(--line)}
+.say-row:first-child{border-top:0;padding-top:0}
+.say-row .q{font-style:italic;color:var(--muted)}
+.reveal{display:block;width:100%;text-align:left;font-weight:700;background:var(--hl);color:transparent;border:0;border-radius:3px;padding:6px 8px;cursor:pointer;min-height:2.2em}
+.reveal.open{color:var(--hl-ink)}
+.small{font-size:.9rem;color:var(--muted)}
+s{color:var(--muted)}
+
+/* share and ask */
+.convo{display:grid;gap:12px}
+.turn{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:end;gap:8px}
+.turn.b{grid-template-columns:minmax(0,1fr) auto}
+.fig{height:84px;width:auto;filter:var(--fig-filter)}
+.bubble{position:relative;border:2px solid var(--bubble-line);border-radius:22px;padding:10px 14px;line-height:1.45}
+.turn.a .bubble{background:var(--bubble);color:var(--bubble-ink);border-bottom-left-radius:6px}
+.turn.b .bubble{background:var(--card);border-bottom-right-radius:6px}
+.situation{margin:0;font-style:italic;color:var(--muted)}
+.use{margin:0}
+.use b{letter-spacing:.03em}
+.hint .s,.mark-s{background:var(--share);color:var(--hl-ink)}
+.hint .a,.mark-a{background:var(--hl);color:var(--hl-ink)}
+.mark-s,.mark-a{padding:1px 2px;border-radius:2px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.dots{letter-spacing:.3em;font-weight:900}
+.notes{display:grid;gap:4px;font-size:.95rem;border-top:1px dashed var(--line);padding-top:10px}
+.g{color:var(--gloss);font-weight:700}
+.next-line{opacity:0;transform:translateY(6px);animation:rise .3s ease forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+
+/* useful language box */
+.box{background:var(--card);border:2px solid var(--ink);border-radius:4px;padding:12px 14px 14px;margin-top:18px;position:relative;font-size:.92rem;display:grid;gap:2px}
+.box .sticker{width:150px;height:auto;margin:-26px 0 2px -8px}
+.box h4{margin:8px 0 2px;color:var(--label);font-size:.8rem;letter-spacing:.06em;font-weight:900}
+.box h4:first-of-type{margin-top:0}
+.box p{margin:0;line-height:1.4}
+.box .n{display:inline-block;min-width:1.5em;font-weight:700}
+
+/* look back */
+.lb{display:grid;gap:14px}
+.lb-group{display:grid;gap:6px}
+.lb-group .phrase{color:var(--gloss);font-weight:700;font-size:var(--step-1)}
+
+/* end */
+.end{display:grid;justify-items:center;text-align:center;gap:14px;padding:28px 16px}
+.end .cloud{background:var(--bubble);color:var(--bubble-ink);border:2px solid var(--bubble-line);border-radius:48% 52% 46% 54%/55% 45% 55% 45%;padding:34px 30px;font-size:var(--step-2);font-weight:700;line-height:1.3;max-width:420px}
+
+/* link + write tasks */
+.steps-list{margin:0;padding-left:1.3em;display:grid;gap:4px}
+.video{position:relative;width:100%;aspect-ratio:16/9;max-width:100%;background:#000;border-radius:10px;overflow:hidden}
+.video iframe,.video > div{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vmsg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:16px;color:#fff;font-size:.95rem;background:#1D1D1B}
+.lines{display:grid;gap:6px}
+.ln{display:grid;grid-template-columns:34px minmax(0,1fr);gap:8px;align-items:start;text-align:left;width:100%;background:transparent;border:1px solid var(--line);
+  border-radius:10px;padding:8px 10px;cursor:pointer;line-height:1.6}
+.ln .pl{width:30px;height:30px;border-radius:50%;border:0;background:var(--instr);color:var(--instr-ink);display:grid;place-items:center;font-size:.8rem;cursor:pointer}
+.whole-note{color:var(--muted);font-size:.85rem;white-space:nowrap}
+.gap-in{font:inherit;font-weight:700;color:var(--answer);background:var(--hl);border:0;border-bottom:2px solid var(--hl-ink);border-radius:4px 4px 0 0;padding:0 6px;margin:1px 0;max-width:100%}
+.gap-in:focus{background:var(--card);outline:2px solid var(--instr);outline-offset:1px}
+.gap-res{font-weight:700;border-radius:3px;padding:0 4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.gap-res.ans{background:var(--hl);color:var(--hl-ink)}
+.gap-res.ok{background:var(--ok-bg);color:var(--ok-ink)}
+.gap-fb{grid-column:2;background:var(--no-bg);border-radius:8px;padding:6px 10px;font-size:.95rem;line-height:1.5}
+.chip-x{color:var(--no-ink);font-weight:900}
+.ln.playing{border-color:var(--instr);background:var(--ground)}
+.ln.has-gap{border-width:2px}
+.gapbox{font:inherit;font-weight:700;background:var(--hl);color:var(--hl-ink);border:2px dashed var(--hl-ink);border-radius:6px;padding:0 6px;margin:1px 0;cursor:pointer;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.gapbox.open{border-style:solid;border-color:transparent}
+.gapbox .g-hint{font-size:.8em;font-weight:900;letter-spacing:.02em;padding:0 10px}
+.gapbox .g-ans{display:none}
+.gapbox.open .g-ans{display:inline}
+.gapbox.open .g-hint{display:none}
+.gapbox.open{color:var(--hl-ink)}
+.tap-hint{margin:0}
+.pc-note{margin:0;padding:10px 12px;border-radius:10px;background:var(--ground);border:1px dashed var(--line)}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--instr);color:var(--instr-ink);text-decoration:none;font-weight:900;
+  padding:14px 18px;border-radius:12px;border:0;cursor:pointer;min-height:48px}
+.cta.secondary{background:transparent;color:var(--instr);border:2px solid var(--instr)}
+.model p{margin:0 0 6px}
+.check{border:0;padding:0;margin:0;display:grid;gap:8px;min-width:0}
+.check legend{font-weight:900;font-size:var(--step-1);padding:0;margin-bottom:2px}
+.check label{display:grid;grid-template-columns:26px minmax(0,1fr);gap:8px;align-items:start;cursor:pointer;line-height:1.45}
+.check input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--done)}
+.box .ru{display:block;font-size:.85rem}
+.box .mean{font-size:.85rem}
+.think{margin:0;padding-left:1.2em;display:grid;gap:4px}
+.preview{background:var(--ground);border-radius:10px;padding:10px 12px;line-height:1.5;max-height:14em;overflow:auto}
+.plan-peek summary{cursor:pointer}
+.plan-peek .box{margin-top:26px}
+.task-card{font-size:var(--step-1);line-height:1.5}
+.task-card p{margin:0}
+.task-card ul{margin:0;padding-left:1.1em;display:grid;gap:6px}
+.task-card .task-h{font-weight:900;font-size:var(--step-2)}
+.picks{display:grid;gap:6px}
+.pick-h{margin:10px 0 2px;color:var(--label);font-size:.8rem;letter-spacing:.06em;font-weight:900;text-transform:uppercase}
+.pick-h:first-child{margin-top:0}
+.pick{display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;align-items:start;text-align:left;width:100%;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px;cursor:pointer;line-height:1.4}
+.pick .tick{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);margin-top:1px;display:grid;place-items:center;font-size:.8rem;font-weight:900;color:transparent}
+.pick.on{background:var(--ok-bg);border-color:var(--done)}
+.pick.on .tick{background:var(--done);border-color:var(--done);color:var(--card)}
+.pick.on .tick::after{content:"✓"}
+.pick .ru{display:block;font-size:.85rem}
+.pick .mean{font-size:.85rem}
+.pick-count{font-weight:700}
+.tenses{margin:4px 0 0}
+.model-peek summary{cursor:pointer}
+.task-peek{background:var(--ground);border-radius:10px;padding:10px 12px}
+.task-peek summary{cursor:pointer}
+.task-peek[open] .small{display:none}
+.task-peek .task-card{font-size:var(--step-0);margin-top:6px;display:grid;gap:6px}
+.task-peek .task-h{display:none}
+.model-peek .model{margin-top:8px}
+.topic{border-radius:18px;padding:16px;margin-bottom:22px;display:grid;gap:12px}
+.topic-0{background:var(--topic-a)}
+.topic-1{background:var(--topic-b)}
+.topic-head{display:grid;gap:2px}
+.topic-n{font-size:.75rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.topic-head h2{font-size:var(--step-2);font-weight:900;line-height:1.2}
+.topic-head p{margin:0;color:var(--muted)}
+.ul-peek summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px}
+.ul-peek summary::-webkit-details-marker{display:none}
+.sticker-sm{width:118px;height:auto}
+.ul-hint{font-size:.9rem;color:var(--muted);font-weight:700}
+.ul-peek[open] .ul-hint{display:none}
+.box-home{margin-top:8px}
+.sec{display:grid;gap:8px}
+.sec-label{justify-self:start;margin:4px 0 0;font-size:.78rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;background:var(--hl);color:var(--hl-ink);padding:2px 8px;border-radius:4px}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--ground);border-radius:12px;padding:4px}
+.seg-btn{min-height:42px;border:0;border-radius:9px;background:transparent;font-weight:900;color:var(--muted);cursor:pointer}
+.seg-btn.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.field{display:grid;gap:4px}
+.field input,textarea{font:inherit;color:var(--ink);background:var(--ground);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+textarea{min-height:10em;resize:vertical;line-height:1.5}
+.mode{display:grid;gap:10px}
+.rec-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.rec-btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 22px;border-radius:999px;border:2px solid var(--rec);background:var(--card);color:var(--rec);font-weight:900;cursor:pointer}
+.rec-btn .dot{width:14px;height:14px;border-radius:50%;background:var(--rec)}
+.rec-btn.on{background:var(--rec);color:#fff}
+.rec-btn.on .dot{background:#fff;border-radius:3px;animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.4}}
+audio{width:100%}
+.row-btns{display:flex;gap:10px;flex-wrap:wrap}
+.model b{font-weight:700}
+
+/* sticky actions */
+.actions{position:sticky;bottom:0;z-index:4;background:var(--ground);display:flex;gap:10px;justify-content:flex-end;
+  padding-block:12px calc(12px + env(safe-area-inset-bottom,0px));margin-top:14px}
+.btn{min-height:48px;padding:0 20px;border-radius:12px;border:2px solid var(--instr);background:transparent;color:var(--instr);font-weight:900;cursor:pointer}
+.btn.primary{background:var(--instr);color:var(--instr-ink)}
+.btn.grow{flex:1}
+.btn[disabled]{opacity:.35;cursor:default}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.next-line{opacity:1;transform:none}}
+</style>
+
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+/* ===== LESSON CONTENT: START — replace only what is between START and END for a new homework ===== */
+const IMG_A = "data:image/png;base64,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";
+const IMG_B = "data:image/png;base64,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";
+const STICKER = "data:image/png;base64,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";
+const GAPS = {"clocks": [{"s": "Fiona", "p": ["Oh, I almost forgot! ", {"f": "T", "r": "he"}, " ", {"f": "c", "r": "locks"}, " ", {"f": "g", "r": "o"}, " ", {"f": "b", "r": "ack"}, " on Sunday, so from next week our call will be an ", {"f": "h", "r": "our"}, " ", {"f": "l", "r": "ater"}, " ", {"f": "f", "r": "or"}, " ", {"f": "y", "r": "ou"}, "."]}, {"s": "Emre", "p": ["So one o'clock for me?"]}, {"s": "Fiona", "p": ["Yes — ten ", {"f": "m", "r": "y"}, " ", {"f": "t", "r": "ime"}, ", one ", {"f": "y", "r": "our"}, " ", {"f": "t", "r": "ime"}, ". ", {"f": "D", "r": "oes"}, " ", {"f": "t", "r": "hat"}, " ", {"f": "s", "r": "till"}, " ", {"f": "w", "r": "ork"}, " ", {"f": "f", "r": "or"}, " ", {"f": "y", "r": "ou"}, "?"]}, {"s": "Emre", "p": ["Hmm, that's my lunch break. Could we make it nine ", {"f": "y", "r": "our"}, " ", {"f": "t", "r": "ime"}, "?"]}, {"s": "Fiona", "p": ["Sure! My body will still think it's ten."]}, {"s": "Emre", "p": ["Ha! We don't change the clocks here, so I never remember: do you lose an hour or get an extra one?"]}, {"s": "Fiona", "p": ["We get one! An ", {"f": "e", "r": "xtra"}, " ", {"f": "h", "r": "our"}, " ", {"f": "o", "r": "f"}, " ", {"f": "s", "r": "leep"}, "."]}, {"s": "Emre", "p": ["Lucky you! See you next Friday, then — nine ", {"f": "y", "r": "our"}, " ", {"f": "t", "r": "ime"}, "."]}, {"s": "Fiona", "p": ["Nine ", {"f": "m", "r": "y"}, " ", {"f": "t", "r": "ime"}, ". Have a good weekend!"]}, {"s": "Emre", "p": ["You too. Enjoy ", {"f": "y", "r": "our"}, " ", {"f": "e", "r": "xtra"}, " ", {"f": "h", "r": "our"}, " ", {"f": "o", "r": "f"}, " ", {"f": "s", "r": "leep"}, "!"]}]};
+const TQ = {"tq1": [[["F2hc2FLOdhI", 259.291, 17.562, ["I spent the morning pacing around my room, waiting for him to call --"]], ["F2hc2FLOdhI", 263.209, 6.483, ["and waiting and waiting, but the phone didn't ring."]], ["F2hc2FLOdhI", 269.692, 2.475, ["Given the ", {"gap": "time difference"}, ", I assumed,"]], ["F2hc2FLOdhI", 272.167, 2.641, ["\"Ok, he's out with friends, he will call later.\""]], ["F2hc2FLOdhI", 274.808, 2.045, ["There were no cell phones then."]]], [["5MuIMqhT8DM", 541.947, 35.485, ["Because there is a global experiment performed on 1.6 billion people"]], ["5MuIMqhT8DM", 547.479, 4.277, ["across 70 countries twice a year,"]], ["5MuIMqhT8DM", 551.78, 1.889, ["and it's called ", {"gap": "daylight saving time"}, "."]], ["5MuIMqhT8DM", 554.907, 3.458, ["Now, in the spring, when we ", {"gap": "lose one hour of sleep"}, ","]], ["5MuIMqhT8DM", 558.389, 5.619, ["we see a subsequent 24-percent increase in heart attacks that following day."]], ["5MuIMqhT8DM", 566.952, 3.175, ["In the autumn, when we ", {"gap": "gain an hour of sleep"}, ","]], ["5MuIMqhT8DM", 570.151, 3.868, ["we see a 21-percent reduction in heart attacks."]], ["5MuIMqhT8DM", 575.752, 1.68, ["Isn't that incredible?"]]], [["B43f89Y9f-A", 660.154, 12.429, ["Can I call you every day?"]], ["B43f89Y9f-A", 661.37, 2.43, ["Maybe text you every day and call later in the week?"]], ["B43f89Y9f-A", 663.824, 1.331, [{"gap": "What works for you"}, "?\""]], ["B43f89Y9f-A", 666.409, 3.183, ["By getting my permission, she earned my complete confidence"]], ["B43f89Y9f-A", 669.616, 2.967, ["and remains one of my best friends today."]]], [["5jz3xhelQsc", 7.966, 9.467, ["IT STILL FEELS LIKE OCTOBER TO ME."]], ["5jz3xhelQsc", 9.5, 2, ["I DON'T KNOW--"]], ["5jz3xhelQsc", 11.5, 2.833, ["DID Y'ALL REMEMBER TO ", {"gap": "SET THE CLOCKS BACK"}, " THIS WEEKEND?"]], ["5jz3xhelQsc", 14.333, 1.333, ["YEAH, GOOD."]], ["5jz3xhelQsc", 15.666, 1.767, ["PORTIA AND I COULDN'T FIGURE OUT HOW TO DO IT,"]]], [["J3C6yzYuVC0", 1301.26, 11.92, ["They're fantastic people."]], ["J3C6yzYuVC0", 1302.72, 1.51, ["I never get to work with them."]], ["J3C6yzYuVC0", 1304.23, 2.25, ["It's a 12-hour ", {"gap": "time difference"}, " between here and there."]], ["J3C6yzYuVC0", 1306.48, 4.03, ["So we've got small, co-located, and next-- dedicated."]], ["J3C6yzYuVC0", 1310.51, 2.67, ["Everybody's working on one project, this project"]]], [["hhPmTeKSWSw", 58.664, 7.886, ["But if there's no questions, we can also"]], ["hhPmTeKSWSw", 60.33, 2.775, ["just hold the Q&A until the end."]], ["hhPmTeKSWSw", 63.105, 1.918, ["So ", {"gap": "does that work for everyone"}, "?"]], ["hhPmTeKSWSw", 65.023, 1.527, ["All right, that sounds cool."]]], [["iufEyfkFYCY", 3037.57, 13.54, ["CHRIS DIBONA: Visit the dish and [INAUDIBLE]."]], ["iufEyfkFYCY", 3038.26, 2.52, ["S. PETE WORDEN: But that means that they are at work at 5:00"]], ["iufEyfkFYCY", 3040.78, 1.14, [{"gap": "AM my time"}, "."]], ["iufEyfkFYCY", 3041.92, 4.14, ["And so usually the first hour or two is spent in"]], ["iufEyfkFYCY", 3046.06, 5.05, ["interactions with headquarters, discussions with"]]], [["oUu3f0ETMJQ", 6324.101, 15.369, ["So, you're in New York, right?"]], ["oUu3f0ETMJQ", 6327.79, 1.99, ["People in Italy have an advanced clock"]], ["oUu3f0ETMJQ", 6329.78, 3.28, ["because they are six ", {"gap": "hours ahead of"}, " us."]], ["oUu3f0ETMJQ", 6333.06, 3.457, ["So if you're in New York and you get light early"]], ["oUu3f0ETMJQ", 6336.517, 2.953, ["in the evening, you delay even further from Italy."]]], [["5SQm2Z7SoSA", 146.663, 13.067, ["time in Office Hours?"]], ["5SQm2Z7SoSA", 149.514, 0.633, ["JASON SALAS: Yeah."]], ["5SQm2Z7SoSA", 150.147, 3.853, ["I actually-- normally, because of the ", {"gap": "time difference"}, " between"]], ["5SQm2Z7SoSA", 154, 2.5, ["you fine folks and me, I usually catch it on demand."]], ["5SQm2Z7SoSA", 156.5, 3.23, ["But I was really interested in participating today just"]]], [["5SQm2Z7SoSA", 200.84, 15.0, ["So I am about 3 and 1/2 hours south of Japan and 8 and 1/2"]], ["5SQm2Z7SoSA", 205.34, 3.46, ["hours north of Hawaii."]], ["5SQm2Z7SoSA", 208.8, 2.41, ["That's 15 ", {"gap": "hours ahead of"}, " you guys."]], ["5SQm2Z7SoSA", 211.21, 2.574, ["So you're literally talking to somebody from the future."]], ["5SQm2Z7SoSA", 213.784, 2.056, ["JONATHAN: Oh, how is it in the future?"]]]], "career": [[["640BQNxB5mc", 720, 19.264, ["and now after 30 years,"]], ["640BQNxB5mc", 722, 3.858, ["my wife and I are reverse tithers --we give away 90 percent and live on 10."]], ["640BQNxB5mc", 727.055, 1.87, ["That, actually, was ", {"gap": "the easy part"}, "."]], ["640BQNxB5mc", 728.949, 2.729, [{"gap": "The hard part"}, " is, what do I do with all this attention?"]], ["640BQNxB5mc", 732.162, 3.141, ["Because I started getting all kinds of invitations."]], ["640BQNxB5mc", 735.327, 3.937, ["I just came off a nearly month-long speaking tour"]]], [["3aYWvujaT6M", 728.2, 19.856, ["and I am so glad."]], ["3aYWvujaT6M", 731.04, 4.76, ["But falling in love is not the same thing as staying in love."]], ["3aYWvujaT6M", 736.44, 2.4, ["Falling in love is ", {"gap": "the easy part"}, "."]], ["3aYWvujaT6M", 740.36, 4.376, ["So at the end of my article, I wrote, \"Love didn't happen to us."]], ["3aYWvujaT6M", 744.76, 3.296, ["We're in love because we each made the choice to be.\""]]], [["9YbJtxIHJBg", 39.333, 9.367, ["ALL RIGHT, WILL YOU BE AVAILABLE FOR WEDDINGS AFTER THIS?"]], ["9YbJtxIHJBg", 42.133, 1.6, ["- I AM MORE THAN AVAILABLE FOR WEDDINGS."]], ["9YbJtxIHJBg", 43.733, 1.333, ["I AM ", {"gap": "LEARNING ON THE JOB"}, ","]], ["9YbJtxIHJBg", 45.066, 1.867, ["BUT IF ANYONE'S GETTING MARRIED, I'M HERE."]], ["9YbJtxIHJBg", 46.933, 1.767, ["- GREAT, AND HOW WAS YOUR WEDDING,"]]], [["FNysF-Ce6ys", 54.233, 11.167, ["A 5.0 GRADE POINT AVERAGE."]], ["FNysF-Ce6ys", 55.9, 2.2, ["I HAD NO IDEA, AND 2100 ON..."]], ["FNysF-Ce6ys", 58.1, 2.9, ["AND SO YOU JUST--", {"gap": "HAVE YOU ALWAYS BEEN"}, " A GOOD STUDENT?"]], ["FNysF-Ce6ys", 61, 1.9, ["- YEAH, I GUESS IT STARTED WHEN I WAS YOUNG,"]], ["FNysF-Ce6ys", 62.9, 2.5, ["SO I JUST GOT ON, LIKE, A GOOD PATH."]]], [["pfhdf7KHO9c", 165.4, 7.333, ["AS LONG YOU'RE WILLING TO PUSH THROUGH IT."]], ["pfhdf7KHO9c", 167.533, 1.033, ["- EXCELLENT, EXCELLENT."]], ["pfhdf7KHO9c", 168.566, 1.6, [{"gap": "HAVE YOU ALWAYS BEEN"}, " THIS SMART?"]], ["pfhdf7KHO9c", 170.166, 1.1, ["[cheers and applause]"]], ["pfhdf7KHO9c", 171.266, 1.467, ["- ALWAYS AT THIS SHOW."]]], [["GEZhD3J89ZE", 3105.372, 15.415, ["but also when you'd like to go to bed."]], ["GEZhD3J89ZE", 3108.008, 2.636, ["For most of us, setting a goal is easy."]], ["GEZhD3J89ZE", 3110.711, 2.602, ["But getting to bed on time, that's ", {"gap": "the hard part"}, "."]], ["GEZhD3J89ZE", 3113.78, 3.27, ["Experts say that establishing a bedtime routine"]], ["GEZhD3J89ZE", 3117.117, 3.67, ["helps the body transition from wakefulness to sleep."]]], [["-bsS7FczPas", 112.61, 16.28, ["So I thought we'd just go over them one by one."]], ["-bsS7FczPas", 114.43, 1.78, [">> Andrew: No, that's sounds awful. [laughter]"]], ["-bsS7FczPas", 116.21, 5.699, [">> Interviewer: Like I say, ", {"gap": "how did you get into"}, " cooking?"]], ["-bsS7FczPas", 121.909, 4.161, [">> Andrew: You know I was either going to be a rock star or I was"]], ["-bsS7FczPas", 126.07, 2.82, ["going to be a chef. You know, in the late -- I've"]]], [["2Boqo9FIBqI", 231.58, 17.03, ["I know. Being lawyer is the same."]], ["2Boqo9FIBqI", 234.879, 0.681, ["[laughter]"]], ["2Boqo9FIBqI", 235.56, 2.989, ["So, Will, ", {"gap": "how did you get into"}, " the restaurant business?"]], ["2Boqo9FIBqI", 238.549, 5.371, [">>Will Guidara: Similarly, it's what I've done my entire life. And a little bit different"]], ["2Boqo9FIBqI", 243.92, 4.69, ["for me because my dad was in the restaurant business as well. So, we work pretty long"]]], [["3OoFtgDbTvY", 133.95, 26.95, ["science and religion without looking at it from many different angles. We have to consider"]], ["3OoFtgDbTvY", 138, 6.68, ["recent findings from evolutionary biology, quantum physics, cosmology and neuroscience."]], ["3OoFtgDbTvY", 144.68, 5.589, ["We also need a solid ", {"gap": "grounding in"}, " theology, religious history and what William James called"]], ["3OoFtgDbTvY", 150.269, 5, ["\"the varieties of religious experience.\" This is a really complicated and fascinating subject."]], ["3OoFtgDbTvY", 155.269, 5.631, ["The science and religion debate is not just about evolution and creationism."]]], [["jza_YIHvAFU", 8.249, 27.97, ["Magic - it's not what you see, it's what you think you see."]], ["jza_YIHvAFU", 18.34, 4.04, ["Well, it's been a lovely interview hasn't it? I mean it's gone well up to this point."]], ["jza_YIHvAFU", 26.92, 3.08, [{"gap": "How did you get into"}, " magic in the first place? Because you know it's one of those things"]], ["jza_YIHvAFU", 30, 2.32, ["that's really hard to work out how you do all this amazing stuff."]], ["jza_YIHvAFU", 32.32, 3.899, ["Yeah I was basically bored, I don't have have like a real - I'd love to tell you about a"]]], [["kkpVr5eoyVE", 558.41, 15.346, ["- And how did you, given that start,"]], ["kkpVr5eoyVE", 561.92, 0.924, ["which is a hard beginning,"]], ["kkpVr5eoyVE", 564.182, 4.27, [{"gap": "how did you get into"}, " technology?"]], ["kkpVr5eoyVE", 568.452, 1.738, [{"gap": "How did you get into"}, " computers,"]], ["kkpVr5eoyVE", 570.19, 1.769, ["which was kind of your first passion,"]], ["kkpVr5eoyVE", 571.959, 1.797, ["or one of your first passions, that and music?"]]], [["hcCwHw8SmFw", 445.78, 8.819, ["- First day of CES, amazing, right?"]], ["hcCwHw8SmFw", 447.853, 2.028, ["- Yeah, first and only day for us."]], ["hcCwHw8SmFw", 449.881, 0.938, ["What do you think, ", {"gap": "was it worth it"}, "?"]], ["hcCwHw8SmFw", 450.819, 1.339, ["- It was good, totally worth it."]], ["hcCwHw8SmFw", 452.158, 2.441, ["- I think so too, it was worth it, just to meet people."]]], [["RyJdh5KnOvk", 826.4, 10.02, ["We were right."]], ["RyJdh5KnOvk", 827.28, 1.7, ["But let's see if she used a stunt double."]], ["RyJdh5KnOvk", 829.08, 1.54, ["- That's about it. - ", {"gap": "Learned it on the job"}, "?"]], ["RyJdh5KnOvk", 830.62, 2.86, ["Yeah, well, I was lucky to have an amazing teacher,"]], ["RyJdh5KnOvk", 833.48, 2.94, ["and uh...who..."]]], [["svPqLr5NXoM", 1952.683, 20.547, ["decide what you want to learn next, or how do you prioritize?"]], ["svPqLr5NXoM", 1956.796, 4.44, ["Most of the stuff- Well, most of the languages that I've really mastered"]], ["svPqLr5NXoM", 1961.236, 2.46, ["have been languages that I've ", {"gap": "learned on the job"}, "."]], ["svPqLr5NXoM", 1964.477, 3.31, ["I think every single job I've gone into, I've had to use a language"]], ["svPqLr5NXoM", 1967.787, 5.443, ["that I either had never heard of, or had heard of but never really used,"]]], [["MO8MEuUUufM", 223.06, 9.56, ["the flashing lights?"]], ["MO8MEuUUufM", 224.81, 1.36, ["LORNA MITCHELL: So the electronics degree gave me a"]], ["MO8MEuUUufM", 226.17, 2.8, ["really good ", {"gap": "grounding in"}, " hardware, because I was"]], ["MO8MEuUUufM", 228.97, 2.88, ["dealing with bits of wire, and my soldering's good, and all"]], ["MO8MEuUUufM", 231.85, 0.77, ["those kinds of things."]]]]};   /* clips from the TubeQuizard quizzes: [videoId, start, duration, parts] */
+/* Link to the group's homework spreadsheet. Leave empty and the page simply says where to write. */
+const SHEET_URL = "";
+const PAGE_KEY = "hw-ge-c1-2026-10-23";
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const g = t => `<b class="g">${t}</b>`;
+const ru = t => `<i class="ru">${t}</i>`;
+const ipa = t => `<span class="ipa">${t}</span>`;
+
+/* ---------- content of this page (everything below up to TASKS is lesson-specific) ---------- */
+const LESSON = { date:"23.10.26", sub:"" };
+const CLOCKS_MAP = [
+  {h:"Next week's call", items:[
+    ["<b>The clocks go back</b> on Sunday. <span class=\"ipa\">/ðə ˈklɒks ɡəʊ ˈbæk/</span>","переводят часы назад (весной: go forward)"],
+    ["Our call will be <b>an hour later for you</b>. <span class=\"ipa\">/ən ˈaʊə ˈleɪtə/</span>","для тебя на час позже (earlier — раньше)"],
+    ["ten <b>my time</b>, one <b>your time</b>","в десять по моему времени, в час по твоему"],
+    ["<b>Could we make it</b> nine your time?","может, в девять по твоему?"],
+    ["<b>Does that still work for you?</b> <span class=\"ipa\">/wɜːk/</span>","тебе так всё ещё удобно?"]]},
+  {h:"Small talk", items:[
+    ["<b>an extra hour of sleep</b> <span class=\"ipa\">/ˈekstrə ˈaʊər əv ˈsliːp/</span>","поспать на час дольше"],
+    ["<b>The clocks went back.</b>","часы перевели"]]}
+];
+const TOPICS = [
+  {id:"clocks", title:"The clocks go back", sub:"Moving a call when the clocks change", box:()=>mapInner(CLOCKS_MAP)},
+  {id:"career", title:"How did you get into that?", sub:"Talking about your studies and your career path", box:()=>mapInner(MAP, true, false, TENSES)}
+];
+const READ_INTRO = "A friend's birthday dinner. Sophie has just moved to the area and only knows the host, so over dinner she chats to the people sitting near her.";
+const TASK_HTML = `
+        <p class="task-h">Your task</p>
+        <p>At a dinner, you meet someone new.</p>
+        <ul>
+          <li><b>They ask:</b> “So, what do you do?” and “How did you get into that?”</li>
+          <li><b>You:</b> tell your story in about a minute — then ask “And what about you?”</li>
+        </ul>
+        <p class="small">Retired? They'll ask: “What did you do before?” · Record it or write it.</p>`;
+const PLAN_INSTR = "Tap the phrases you'll use — three or four are enough.";
+const PRODUCE_INSTR = "Write your story — a short paragraph is enough. Then send it to Olya. (Prefer to talk? Tap Record it.)";
+const PRODUCE_NOTE = `<p class="small">Listen to it once. Not happy? Record a better version.</p>`;
+const MAP_NUMBERED = false;
+const BOX_CLOCKS = `
+  <h4>NEXT WEEK'S CALL</h4>
+  <p><b>The clocks go back.</b></p>
+  <p><b>an hour later for you</b></p>
+  <p>nine <b>my time</b></p>
+  <p>twelve <b>your time</b></p>
+  <p><b>Does that still work for you?</b></p>
+  <h4>SMALL TALK</h4>
+  <p><b>an extra hour of sleep</b></p>
+  <p><b>The clocks went back.</b></p>`;
+const BOX_SHARE = `
+  <h4>START</h4>
+  <p><span class="n">1</span><b>Are you (still) watching</b> …?</p>
+  <p><span class="n">2</span><b>Did you see</b> the final <b>last night</b>?</p>
+  <p><span class="n">3</span><b>Have you seen</b> the new season <b>yet</b>?</p>
+  <p><span class="n">4</span><b>Anyway,</b> …</p>
+  <h4>SHARE</h4>
+  <p><span class="n">5</span>I was <b>on the edge of my seat</b>.</p>
+  <p><span class="n">6</span>I watched <b>the whole thing in one go</b>.</p>
+  <p><span class="n">7</span>I'm <b>still not over it</b>.</p>
+  <p><span class="n">8</span><b>Honestly? I was a bit disappointed.</b></p>
+  <p><span class="n">9</span>Horror's <b>not really my thing</b>, but …</p>
+  <h4>ASK</h4>
+  <p><span class="n">10</span><b>What did you think of</b> the ending?</p>`;
+/* Over to you: the box for the story (English meaning, then Russian, as in the C1 glossaries) */
+const MAP = [
+  {h:"Ask", items:[
+    ["<b>So, what do you do?</b>","а чем ты занимаешься?"],
+    ["<b>How did you get into that</b>, then?","как ты к этому пришёл?","how did you start doing it? (then = so: shows interest)"],
+    ["<b>Have you always been a</b> teacher?","ты всегда была учителем?"],
+    ["<b>Was it worth it</b>, though? <span class=\"ipa\">/wɜːθ/</span>","и как, оно того стоило?","about something that took time, money or effort"],
+    ["<b>What about you?</b>","а ты?"]]},
+  {h:"How you started", items:[
+    ["I <b>did</b> economics <b>at uni</b>.","учился на экономиста","studied it · neutral: at university · AmE: majored in … in college"],
+    ["That's <b>just what everyone did</b>.","так было принято"],
+    ["I <b>trained as</b> a teacher.","выучилась на учителя","did teacher training"],
+    ["I'm an economist <b>by training</b>.","по образованию экономист","what you studied or trained as"],
+    ["I <b>did a course in</b> project management.","прошла курс по…","one programme = a course (not courses)"],
+    ["<b>A job came up</b> in Dublin.","подвернулась работа","became available"]]},
+  {h:"Was it useful?", items:[
+    ["It <b>gave me a good grounding in</b> statistics. <span class=\"ipa\">/ˈɡraʊndɪŋ/</span>","дал(а) хорошую базу по…","a solid foundation in"],
+    ["I <b>learned most of it on the job</b>.","научилась уже на работе","while working"],
+    ["The chemistry <b>is the easy part</b>. <b>It's the</b> parents' evenings <b>I find hard</b>.","химия — это просто, а вот встречи с родителями мне даются тяжело"]]}
+];
+const TENSES = `Still true → <b>present perfect</b>: I've been teaching for 22 years now. · A finished step → <b>past simple</b>: A job came up three years ago.`;
+const mapInner = (map, withRu=true, numbered=false, tenses="") => map.map((g,i)=>`<h4>${numbered?(i+1)+" · ":""}${g.h.toUpperCase()}</h4>${g.items.map(it=>{ const [en,r,mean] = it; return `<p>${en}${mean&&withRu?` <span class="mean">— ${mean}</span>`:""}${withRu&&r?` ${ru(r)}`:""}</p>`; }).join("")}`).join("")
+  + (tenses?`<h4>TENSES</h4><p>${tenses}</p>`:"");
+const mapBox = (withRu=true) => box(mapInner(MAP, withRu, MAP_NUMBERED, TENSES));
+const CHECKS = [
+  ["What you studied and why","I did … at uni because… / That's just what everyone did"],
+  ["Was it any use?","It gave me a good grounding in… — or not really?"],
+  ["How you really learned to do it","on the job? a course?"],
+  ["How you got the job","did one just come up?"],
+  ["The easy part and the hard part",""],
+  ["A personal detail","or a little joke, if you like"],
+  ["A question back","And what about you?"]
+];
+const box = inner => `<aside class="box" aria-label="Useful language"><img class="sticker" src="${STICKER}" alt="Useful language">${inner}</aside>`;
+
+/* ---------- content (from the deck, slides 38, 40–55, 71, 110–133, 23–24) ---------- */
+const REWRITE = [
+  {o:"Is ten o'clock still OK for you?", k:"WORK", pre:"Does ten o'clock ", post:"?", a:"still work for you", acc:["still work for you"],
+   n:`${ipa("/wɜːk/")}<br>After does: work, no -s.<br>${ru("тебе всё ещё удобно в десять?")}`},
+  {o:"From next week, our call will start at two your time instead of one.", k:"LATER", pre:"From next week, our call will be ", post:".", a:"an hour later for you", acc:["an hour later for you","an hour later your time"],
+   n:`later = at a later time; late = not on time.<br>${ru("на час позже по твоему времени")}<br>${ru("or: an hour later your time")}`},
+  {o:"My degree is in physics.", k:"DID", pre:"I ", post:" university.", a:"did physics at", acc:["did physics at","did a physics degree at"],
+   n:`${ipa("/ˈfɪzɪks/")}<br>do + subject, no article; at university.<br>${ru("учился на физика")}<br>${ru("or: did a physics degree at")}<br>${ru("AmE: I majored in physics in college.")}`},
+  {o:"Why did you decide to work in HR?", k:"GET", pre:"How ", post:" HR?", a:"did you get into", acc:["did you get into","did you get started in"],
+   n:`How did you get into…? sounds interested, not suspicious.<br>${ru("а как ты к этому пришёл?")}<br>${ru("or: did you get started in")}`},
+  {o:"I really can't wait to see you next week.", k:"FORWARD", pre:"I'm really ", post:" you next week.", a:"looking forward to seeing", acc:["looking forward to seeing"],
+   n:`look forward to + -ing: to is a preposition here.<br>${ru("очень жду встречи")}`},
+  {o:"The course taught me the basics of statistics.", k:"GROUNDING", pre:"The course gave ", post:" statistics.", a:"me a good grounding in",
+   acc:["me a good grounding in","me a solid grounding in","me a thorough grounding in","me a basic grounding in","me a grounding in"],
+   n:`${ipa("/ˈɡraʊndɪŋ/")}<br>a good grounding in + subject.<br>${ru("дал мне хорошую базу по статистике")}<br>${ru("or: me a solid / thorough / basic grounding in")}<br>${ru("or: me a grounding in")}`},
+  {o:"I did a course to become a yoga teacher too.", k:"TRAINED", pre:"I ", post:" a yoga teacher too.", a:"trained as", acc:["trained as","trained to be"],
+   n:`trained as — active: I trained (I did it myself).<br>${ru("я ещё и выучилась на преподавателя йоги")}<br>${ru("or: trained to be")}`},
+  {o:"I moved to Melbourne ten years ago, and I still love it here.", k:"LIVED", pre:"I ", post:" ten years, and I still love it here.", a:"have lived in Melbourne for",
+   acc:["have lived in Melbourne for","have been living in Melbourne for"],
+   n:`Melbourne ${ipa("/ˈmelbən/")}<br>Still there → present perfect + for.<br>${ru("я живу в Мельбурне уже десять лет")}`},
+  {o:"Back then, you couldn't earn enough to live on as a teacher.", k:"LIVING", pre:"Back then, you couldn't ", post:" a teacher.", a:"make a living as", acc:["make a living as","earn a living as"],
+   n:`${ipa("/ˈlɪvɪŋ/")}<br>make a living as + job.<br>${ru("прокормиться учительской зарплатой")}<br>${ru("or: earn a living as")}`},
+  {o:"It's a pity she spent all those years as a governess — she was capable of so much more.", k:"HAVE", pre:"It's a pity she spent all those years as a governess — she ", post:" so much more.",
+   a:"could have done", acc:["could have done","could have achieved","could have been"],
+   n:`could have done ${ipa("/kʊd əv ˈdʌn/")} · governess ${ipa("/ˈɡʌvənəs/")}<br>could have + past participle: it was possible, but it didn't happen.<br>${ru("она могла бы сделать гораздо больше")}<br>${ru("or: could have achieved / could have been")}`}
+];
+const FINISH = [
+  {pre:"The clocks go back on Sunday, so ", hint:"мы поспим на час дольше", post:"!", a:"we'll get an extra hour of sleep",
+   acc:["we'll get an extra hour of sleep","we'll get an extra hour's sleep","we get an extra hour of sleep","we can sleep an hour longer","we get an extra hour in bed"],
+   n:`sleep is a noun here: an extra hour of sleep / an extra hour's sleep.<br>${ru("or: we can sleep an hour longer / we get an extra hour in bed")}<br>${ru("AmE: the clocks fall back")}`},
+  {pre:"", hint:"У нас часы не переводят", post:", so I can never remember whether our calls move earlier or later.", a:"We don't change the clocks here",
+   acc:["We don't change the clocks here","The clocks don't change here","We don't have daylight saving here","We don't have daylight saving time here"],
+   n:`change the clocks — the clocks, plural.<br>${ru("or: The clocks don't change here / We don't have daylight saving (time) here")}`},
+  {pre:"He's a brilliant programmer, but ", hint:"у него нет высшего образования", post:".", a:"he doesn't have a degree",
+   acc:["he doesn't have a degree","he hasn't got a degree","he never went to university","he never went to college"],
+   n:`${ipa("/dɪˈɡriː/")}<br>a degree = higher education; education = any schooling.<br>${ru("A diploma is usually a lower qualification than a degree.")}<br>${ru("or: he hasn't got a degree / he never went to university")}<br>${ru("AmE: he never went to college")}`},
+  {pre:"I was never ", hint:"силён в математике в школе", post:".", a:"good at maths at school", acc:["good at maths at school","good at math in school"],
+   n:`maths ${ipa("/mæθs/")}<br>good at + subject; at school, no article.<br>${ru("AmE: good at math in school")}`},
+  {pre:"I'm ", hint:"по образованию экономист", post:", but I've worked in IT for years.", a:"an economist by training",
+   acc:["an economist by training","a trained economist","an economist by education"],
+   n:`economist ${ipa("/ɪˈkɒnəmɪst/")}<br>X by training = what you studied or trained as.<br>${ru("or: a trained economist / an economist by education (less common)")}`},
+  {pre:"Then a job came up at a logistics company, so ", hint:"я перешла к ним", post:", and I learned the rest on the job.", a:"I joined them",
+   acc:["I joined them","I took it","I went to work for them"],
+   n:`A story in the past → past simple: joined.<br>${ru("or: I took it / I went to work for them")}`},
+  {pre:"And what does your husband do, ", hint:"если не секрет", post:"?", a:"if you don't mind me asking", acc:["if you don't mind me asking","if you don't mind my asking"],
+   n:`A polite way to ask something personal.<br>${ru("or: if you don't mind my asking")}`},
+  {pre:"— How are you doing?\n— ", hint:"Да ничего, спасибо", post:". You?", a:"Not too bad, thanks", acc:["Not too bad, thanks","Not bad, thanks","Pretty good, thanks"],
+   n:`The usual friendly answer.<br>${ru("or: Not bad, thanks / Pretty good, thanks")}`},
+  {pre:"", hint:"Я учу английский уже 30 лет", post:", and I'm still not fluent!", a:"I've been learning English for 30 years now",
+   acc:["I've been learning English for 30 years now","I've been learning English for 30 years","I've been learning English for thirty years now","I've been learning English for thirty years",
+        "I've been studying English for 30 years now","I've been studying English for 30 years","I've studied English for 30 years now","I've studied English for 30 years"],
+   n:`30 years ${ipa("/ˈθɜːti ˈjɪəz/")}<br>Still learning → present perfect (continuous); now is optional.<br>${ru("or: I've been studying / I've studied English for 30 years")}`},
+  {pre:"If she had stayed in Warsaw, she ", hint:"никогда не смогла бы получить высшее", post:".", a:"could never have got a degree",
+   acc:["could never have got a degree","would never have got a degree","would never have been able to get a degree","could never have gone to university","could never have gotten a degree"],
+   n:`could never have got ${ipa("/kʊd ˈnevər əv ˈɡɒt/")}<br>if + past perfect → could have + past participle.<br>${ru("or: would never have got a degree")}<br>${ru("or: would never have been able to get a degree / could never have gone to university")}<br>${ru("AmE: could never have gotten a degree")}`}
+];
+const MODEL = [
+  ["Sophie","So, what do you do?"],
+  ["Dan","Me? I'm in finance."],
+  ["Sophie","Oh, right. <b>How did you get into that</b>, then?"],
+  ["Dan","I went to uni because <b>that's just what everyone did</b>, and I <b>did economics</b> because my dad said it was “safe”. And to be fair, it <b>gave me a good grounding in</b> statistics, which I still use. I started in audit, at one of the big firms — lots of travelling, lots of hotels, lots of spreadsheets at two in the morning."],
+  ["Sophie","Two in the morning?!"],
+  ["Dan","Oh yes, regularly. And on top of that, I spent my evenings studying for my accountancy exams, which was horrible, but in my field you can't really get anywhere without them. Then I moved into financial analysis, which is much more my thing. Three years ago <b>a job came up</b> in Dublin, so we packed up and went. For the last couple of years I've been looking after the numbers for a few of our European offices."],
+  ["Sophie","<b>Was it worth it</b>, though? All those evenings?"],
+  ["Dan","For the job, definitely. For my marriage — you'd have to ask my wife."],
+  ["Sophie","What about you, Ruth?"],
+  ["Ruth","I teach chemistry at an international school — so, teenagers and small explosions, basically."],
+  ["Sophie","Ha! Brave woman. <b>Have you always been a teacher</b>?"],
+  ["Ruth","Pretty much. I did chemistry at uni, and then I <b>trained as a teacher</b>, which I'd always sort of known I'd do. My mum was a teacher too. The degree gave me a good grounding in the subject, but the actual teaching? I <b>learned most of that on the job</b>, from the people in the classroom next door. About ten years ago I <b>did a course in</b> teaching kids whose first language isn't English — online, a year of evenings, and it cost a fortune."],
+  ["Sophie","Ouch!"],
+  ["Ruth","I know. But it completely changed how I teach. Anyway, I've been teaching for twenty-two years now, and <b>the chemistry is the easy part</b>. <b>It's the parents' evenings I find hard</b>."],
+  ["Sophie","Really? Why?"],
+  ["Ruth","In the lab, at least I know what's going to explode."]
+];
+const TQ_STEPS = [];
+const RW_FIRST = "Rewrite it with the word in capitals (2–5 words). Type the missing part or say it aloud, then tap Check.";
+const FIN_FIRST = "Finish the sentence in English. Type it or say it aloud, then tap Check.";
+const TASKS = [
+  {id:"clocks-text", topic:"clocks", sec:"Revision", title:"The clock change chat: the missing words", meta:"Say the missing words, then check", alt:"Or study the new Brainscape deck.", kind:"gaps",
+   lead:"Now without the glossary.", instr:"Say the missing words. Then tap the yellow boxes to check.", lines:GAPS.clocks},
+  {id:"clock-listen", topic:"clocks", sec:"Extension", title:"Listening: the clock change", meta:"10 short clips from real videos", kind:"steps",
+   steps:TQ.tq1.map((clip,i)=>({type:"listen",clip,first:i===0}))},
+  {id:"clock-practice", topic:"clocks", sec:"Extension", title:"Practice: rewrite and finish", meta:"4 sentences", kind:"steps",
+   steps:[{type:"rewrite",r:REWRITE[0],first:true,instrFirst:RW_FIRST},{type:"rewrite",r:REWRITE[1]},
+          {type:"rewrite",r:FINISH[0],first:true,instrFirst:FIN_FIRST},{type:"rewrite",r:FINISH[1],instr:"Finish the sentence in English."}]},
+  {id:"career-rewrite", topic:"career", sec:"Revision", title:"Rewrite the sentence", meta:"8 sentences about studies and work", kind:"steps",
+   steps:REWRITE.slice(2).map((r,i)=>({type:"rewrite",r,first:i===0,instrFirst:RW_FIRST}))},
+  {id:"career-finish", topic:"career", sec:"Revision", title:"Finish it in English", meta:"8 sentences", kind:"steps",
+   steps:FINISH.slice(2).map((r,i)=>({type:"rewrite",r,first:i===0,instrFirst:FIN_FIRST,instr:"Finish the sentence in English."}))},
+  {id:"career-listen", topic:"career", sec:"Extension", title:"Listening: how did you get into that?", meta:"15 short clips from real videos", kind:"steps",
+   takeaway:"Takeaways? Anything you've realised about how the expressions are used? Any other expressions you've picked up?",
+   steps:TQ.career.map((clip,i)=>({type:"listen",clip,first:i===0}))},
+  {id:"write", topic:"career", sec:"Over to you!", title:"So, how did you get into that?", meta:"Your task · plan · record and send", kind:"steps",
+   steps:[{type:"task"},{type:"plan"},{type:"produce"}]}
+];
+
+/* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
+/* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
+const EARLIER = [];
+if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
+  TOPICS.push({id:"earlier", title:"From earlier lessons", sub:"A quick look back at language from earlier homework", box:null});
+  TASKS.push({id:"earlier", topic:"earlier", sec:"Revision", title:"Quick look back", meta:`${EARLIER.length} sentences from earlier lessons`, kind:"steps",
+    steps: EARLIER.map((e,i)=> e.type==="rewrite"
+      ? {type:"rewrite", r:e.r, first:i===0, instrFirst:"Do you still remember? Rewrite the sentence. Use the word in capitals, then tap Check.", instr:"Rewrite the sentence."}
+      : {type:"sayit", s:e.s, first:i===0, box:""})});
+}
+/* rough minutes per step, so students can plan their time */
+const EST = {gaps:5, rewrite:1, sayit:1.5, share:1.5, lookback:2, listen:1.2, task:1, plan:3, produce:12};
+const framesOf = t => minutesOf(t) * ((t.steps||[]).some(s=>s.type==="produce") ? 2 : 1);   /* group goal: a frame per minute, Over to you double */
+const GROUP_ID = PAGE_KEY.split("-")[2] || "group";
+let groupStats = (()=>{ try{ return JSON.parse(localStorage.getItem("hw-group-"+GROUP_ID)||"null"); }catch(e){ return null; } })();
+const minutesOf = t => t.min || (t.kind==="gaps" ? 5 : t.kind==="link" ? 10 : Math.max(2, Math.round((t.steps||[]).reduce((s,st)=>s+(EST[st.type]||1),0))));
+const lsMem = {};   /* if the browser blocks storage (private mode), remember things for this visit at least */
+const ls = { get:k=>{ try{ const v = localStorage.getItem(k); if(v != null) return v; }catch(e){} return lsMem[k] || ""; }, set:(k,v)=>{ lsMem[k] = v; try{ localStorage.setItem(k,v); }catch(e){} } };
+/* ---------- progress: kept on this device, and in Olya's table once the student enters their code ---------- */
+const SYNC_URL = "";   /* the address of Olya's progress table; empty = ticks stay on this device only */
+function loadDone(){ try{ return new Set(JSON.parse(localStorage.getItem(PAGE_KEY)||"[]")); }catch(e){ return new Set(); } }
+function saveDone(set){ try{ localStorage.setItem(PAGE_KEY, JSON.stringify([...set])); }catch(e){} }
+let done = loadDone();
+/* marks: {taskId: {done, ts}} — the newer mark wins when phone and computer disagree */
+let marks = (()=>{ try{ return JSON.parse(localStorage.getItem(PAGE_KEY+"-marks")||"{}")||{}; }catch(e){ return {}; } })();
+done.forEach(id=>{ if(!marks[id]) marks[id] = {done:true, ts:Date.now()}; });
+function saveMarks(){
+  done = new Set(Object.keys(marks).filter(id=>marks[id].done));
+  saveDone(done);
+  try{ localStorage.setItem(PAGE_KEY+"-marks", JSON.stringify(marks)); }catch(e){}
+}
+saveMarks();
+function setMark(id, on){ marks[id] = {done:!!on, ts:Date.now()}; saveMarks(); if(!isTeacher()) syncSoon(); }
+
+let syncState = "", syncBusy = false, syncAgain = false, syncTimer = null;
+/* the student's work on this page and Olya's feedback (from her table) */
+let work = (()=>{ try{ return JSON.parse(localStorage.getItem(PAGE_KEY+"-work")||"{}")||{}; }catch(e){ return {}; } })();
+function saveWork(){ try{ localStorage.setItem(PAGE_KEY+"-work", JSON.stringify(work)); }catch(e){} }
+async function post(payload, opts={}){
+  try{
+    const r = await fetch(SYNC_URL, {method:"POST", body:JSON.stringify(payload), headers:{"Content-Type":"text/plain;charset=utf-8"}, keepalive:!!opts.keepalive});
+    return await r.json();
+  }catch(e){ return {ok:false, error:"offline"}; }
+}
+const myCode = () => SYNC_URL ? ls.get("hw-code") : "";
+function syncSoon(){ if(!myCode()) return; clearTimeout(syncTimer); syncTimer = setTimeout(()=>syncNow(), 600); }
+async function syncNow(code, opts={}){
+  code = code || myCode(); if(!SYNC_URL || !code) return null;
+  if(syncBusy && !opts.keepalive){ syncAgain = true; return null; }
+  syncBusy = true;
+  const res = await post({ action:"sync", code, page:PAGE_KEY, date:LESSON.date,
+      tasks: TASKS.map(t=>({id:t.id, title:t.title, frames:framesOf(t)})),
+      events: Object.entries(marks).map(([task,m])=>({task, done:m.done, ts:m.ts})) }, opts);
+  syncBusy = false;
+  if(res.ok && res.role === "teacher"){
+    if(code === myCode()){ ls.set("hw-role","teacher"); ls.set("hw-who", res.name||""); teacherData = res; if(res.group){ groupStats = res.group; } syncState = "ok";
+      if(!current){ const y = scrollY; renderHome(); scrollTo(0,y); } }
+    if(syncAgain){ syncAgain = false; syncNow(); }
+    return res;
+  }
+  if(res.ok){
+    let changed = false;
+    Object.entries(res.tasks||{}).forEach(([id,m])=>{
+      const mine = marks[id];
+      if(!mine || m.ts >= mine.ts){ if(!mine || mine.done !== m.done) changed = true; marks[id] = {done:!!m.done, ts:m.ts}; }
+    });
+    saveMarks();
+    if(res.work){ work = res.work; saveWork(); refreshWork(); }
+    if(code === myCode()) flushFlags();
+    if(res.group && code === myCode()){ groupStats = res.group; ls.set("hw-group-"+GROUP_ID, JSON.stringify(res.group)); refreshMeter(); checkMilestone(res.group, GROUP_ID); }
+    if(code === myCode()){ ls.set("hw-who", res.name||""); if(!ls.get("hw-name") && res.name) ls.set("hw-name", res.name); }
+    if(changed) refreshTicks();
+  }
+  if(code === myCode()){ syncState = res.ok ? "ok" : (res.error==="unknown-code" ? "unknown" : "offline"); refreshSync(); }
+  if(syncAgain){ syncAgain = false; syncNow(); }
+  return res;
+}
+document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="hidden" && syncTimer){ clearTimeout(syncTimer); syncTimer=null; syncNow(null,{keepalive:true}); } });
+
+/* the code card on the home screen */
+function syncHTML(){
+  if(!SYNC_URL) return "";
+  const code = myCode(), who = ls.get("hw-who");
+  if(code && syncState!=="unknown" && ls.get("hw-role")==="teacher") return `<div class="sync sync-on teacher-bar">
+      <span>👩‍🏫 <b>Teacher view</b>${who?` — ${esc(who)}`:""}${teacherData?"":" · loading…"}</span>
+      <button class="chip-t" id="hide-names" aria-pressed="${hideNames()}">🙈 Hide names</button>
+      <button class="linklike" id="code-change">Not you?</button></div>`;
+  if(code && syncState!=="unknown") return `<div class="sync sync-on">
+      <span>✓ ${who?`Hi, ${esc(who)}! `:""}Olya can see your progress${syncState==="offline"?" — <b>not sent yet</b>: no connection right now. Your ticks are saved here and will go to her later.":"."}</span>
+      <button class="linklike" id="code-change">Not you?</button></div>`;
+  return `<div class="sync sync-card">
+      <label for="code"><b>Your code from Olya</b></label>
+      <div class="sync-row"><input id="code" type="text" inputmode="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="e.g. lemon42" value="${esc(code)}">
+        <button class="btn primary" id="code-go">Save</button></div>
+      <p class="small">Olya will see your progress, and your ticks will be the same on your phone and computer.</p>
+      <p class="small sync-msg" id="sync-msg" aria-live="polite">${syncState==="unknown"?"Hmm, Olya's list doesn't have this code. Check it with her.":""}</p>
+    </div>`;
+}
+function wireSync(){
+  const box = document.getElementById("sync-slot"); if(!box) return;
+  const ch = document.getElementById("code-change");
+  if(ch) ch.addEventListener("click",()=>{ ls.set("hw-code",""); ls.set("hw-who",""); ls.set("hw-role",""); teacherData = null; syncState=""; if(!current){ renderHome(); } refreshSync(); const i=document.getElementById("code"); if(i) i.focus(); });
+  const go = document.getElementById("code-go"), inp = document.getElementById("code");
+  if(go && inp){
+    const save = async ()=>{
+      const code = inp.value.trim().toLowerCase(); const msg = document.getElementById("sync-msg");
+      if(!code){ msg.textContent = "Type the code Olya sent you."; return; }
+      go.disabled = true; msg.textContent = "Checking…";
+      const res = await syncNow(code);
+      go.disabled = false;
+      if(res && res.ok && res.role==="teacher"){ ls.set("hw-code", code); ls.set("hw-role","teacher"); ls.set("hw-who", res.name||""); teacherData = res; if(res.group) groupStats = res.group; syncState = "ok"; renderHome(); return; }
+      if(res && res.ok){ ls.set("hw-code", code); ls.set("hw-role", ""); ls.set("hw-who", res.name||""); if(!ls.get("hw-name") && res.name) ls.set("hw-name", res.name); syncState = "ok"; refreshSync(); refreshTicks(); refreshWork(); if(res.group){ groupStats = res.group; ls.set("hw-group-"+GROUP_ID, JSON.stringify(res.group)); refreshMeter(); checkMilestone(res.group, GROUP_ID); } }
+      else msg.textContent = (res && res.error==="unknown-code") ? "Hmm, Olya's list doesn't have this code. Check it with her." : "Can't reach Olya's list right now. Try again in a minute.";
+    };
+    go.addEventListener("click", save);
+    inp.addEventListener("keydown", e=>{ if(e.key==="Enter") save(); });
+  }
+}
+function refreshSync(){ const box = document.getElementById("sync-slot"); if(!box || current) return; box.innerHTML = syncHTML(); wireSync(); refreshFoot(); }
+function refreshTicks(){
+  if(current) return;
+  document.querySelectorAll("[data-toggle]").forEach(b=>{
+    const on = done.has(b.dataset.toggle);
+    b.closest(".task-row").classList.toggle("is-done", on);
+    b.setAttribute("aria-pressed", on); b.setAttribute("aria-label", on ? "Done — tap to untick" : "Tap to mark as done");
+  });
+}
+function fbLine(id){
+  const list = myCode() ? (work[id]||[]) : [];
+  if(!list.length) return "";
+  const withFb = list.filter(w=>String(w.feedback||"").trim());
+  if(withFb.length) return `<button class="fb-line ${withFb.some(w=>!w.seen)?"is-new":""}" data-fb="${id}">💬 ${withFb.every(w=>w.type==="question"||w.type==="marked")?"Olya answered your question":"Olya's feedback is here"} — tap to read</button>`;
+  const last = list[list.length-1];
+  const q = last.type==="question" || last.type==="marked";
+  return `<div class="fb-line fb-wait">✓ ${last.type==="marked"?"Marked for Olya":q?"Question sent":"Sent to Olya"} ${esc(last.sent||"")} · ${q?"her answer":"her feedback"} will appear here</div>`;
+}
+function refreshWork(){
+  if(current || isTeacher()) return;
+  document.querySelectorAll("[data-fbslot]").forEach(s=>{ s.innerHTML = fbLine(s.dataset.fbslot); });
+  wireFb();
+}
+function wireFb(){ document.querySelectorAll("[data-fb]").forEach(b=>{ if(b._w) return; b._w = 1; b.addEventListener("click",()=>renderFeedback(b.dataset.fb)); }); }
+const fbHTML = s => esc(s)
+  .replace(/\*\*([\s\S]+?)\*\*/g,'<b class="fb-good">$1</b>')
+  .replace(/~~([\s\S]+?)~~/g,'<s class="fb-del">$1</s>')
+  .replace(/\{([\s\S]+?)\}/g,'<ins class="fb-ins">$1</ins>')
+  .replace(/\n/g,"<br>");
+function renderFeedback(id){
+  const t = TASKS.find(x=>x.id===id); if(!t) return renderHome();
+  stopPlayer(); stopRecorder(); current = t;
+  const list = (work[id]||[]).slice().reverse();
+  shell({instr:"Here's Olya's feedback on your work.",
+    stageHTML: `<p class="fb-key small"><b class="fb-good">green</b> = great, keep it · <s class="fb-del">grey</s> = change this · <ins class="fb-ins">blue</ins> = Olya's words</p>` +
+      list.map(w=>`<div class="panel fb-item">
+        <div class="small">${w.type==="recording"?"🎙 Your recording":w.type==="question"?"❓ Your question":w.type==="marked"?"🔖 You marked":"✍️ Your text"} · sent ${esc(w.sent||"")}</div>
+        ${(w.type==="question"||w.type==="marked") ? `<p class="fb-q">${esc(String(w.text||"").split("\n").filter(l=>!/^https?:/.test(l)).join(" "))}</p>` : ""}
+        ${String(w.feedback||"").trim() ? `<div class="fb-text">${fbHTML(w.feedback)}</div>` : `<p class="small">Olya hasn't written feedback on this one yet.</p>`}
+        ${w.type==="text" && w.text ? `<details class="fb-orig"><summary>What you sent</summary><div class="fb-sent">${esc(w.text).replace(/\n/g,"<br>")}</div></details>` : ""}
+      </div>`).join(""),
+    actionsHTML:`<button class="btn primary grow" id="fb-home">Back to all tasks</button>`});
+  document.getElementById("fb-home").addEventListener("click", goHome);
+  window.scrollTo(0,0);
+  list.forEach(w=>{ if(String(w.feedback||"").trim() && !w.seen){ w.seen = true; post({action:"seen", code:myCode(), page:PAGE_KEY, id:w.id}); } });
+  saveWork();
+}
+function reactHTML(){
+  if(!lastDone || !myCode() || syncState==="unknown" || isTeacher()) return "";
+  const n = lastFlagged.length;
+  const fl = n ? `<div class="flagged"><b>🔖 You marked ${n} ${n===1?"thing":"things"} — Olya will see ${n===1?"it":"them"}.</b>
+      ${lastFlagged.map((f,i)=>`<div class="fl"><span class="fl-s">${esc(f.s.length>90?f.s.slice(0,88)+"…":f.s)}</span>
+        <button class="linklike" data-note="${i}">add a note</button>
+        <span class="note-box" data-nb="${i}" hidden><input type="text" placeholder="What's unclear? (optional)" data-ni="${i}"><button class="btn" data-ng="${i}">Add</button></span></div>`).join("")}</div>` : "";
+  return fl + `<div class="react" id="react">
+      <span>How was it?</span>
+      <span class="chips">${["easy","ok","hard"].map(l=>`<button class="chip" data-react="${l}">${l==="ok"?"OK":l[0].toUpperCase()+l.slice(1)}</button>`).join("")}</span>
+      <button class="linklike" id="ask">I have a question</button>
+    </div>
+    <div class="ask-box" id="ask-box" hidden>
+      <textarea id="ask-txt" rows="3" placeholder="Your question for Olya — in English or Russian"></textarea>
+      <button class="btn primary" id="ask-go">Send to Olya</button>
+    </div>
+    <p class="react-msg" id="react-msg" aria-live="polite"></p>`;
+}
+function wireReact(){
+  const t = lastDone; if(!t || !document.getElementById("react")) return;
+  const msg = document.getElementById("react-msg");
+  document.querySelectorAll("[data-note]").forEach(b=>b.addEventListener("click",()=>{ const nb = document.querySelector(`[data-nb="${b.dataset.note}"]`); nb.hidden = false; b.hidden = true; nb.querySelector("input").focus(); }));
+  document.querySelectorAll("[data-ng]").forEach(b=>b.addEventListener("click", async ()=>{
+    const i = +b.dataset.ng, f = lastFlagged[i], txt = document.querySelector(`[data-ni="${i}"]`).value.trim(); if(!f || !txt) return;
+    b.disabled = true;
+    if(f.id){ const res = await post({action:"note", code:myCode(), page:PAGE_KEY, id:f.id, text:txt}); b.textContent = res.ok ? "Added ✓" : "Try again"; b.disabled = !res.ok ? false : true; }
+    else { f.note = txt; saveFlags(); b.textContent = "Added ✓"; }
+  }));
+  document.querySelectorAll("[data-react]").forEach(b=>b.addEventListener("click", async ()=>{
+    document.querySelectorAll("[data-react]").forEach(x=>x.classList.toggle("on", x===b));
+    const res = await post({action:"react", code:myCode(), page:PAGE_KEY, date:LESSON.date, task:t.id, title:t.title, level:b.dataset.react});
+    msg.textContent = res.ok ? "Thanks! Olya will see it." : "It didn't go through — no connection right now.";
+  }));
+  document.getElementById("ask").addEventListener("click",()=>{ const box = document.getElementById("ask-box"); box.hidden = false; document.getElementById("ask-txt").focus(); });
+  document.getElementById("ask-go").addEventListener("click", async ()=>{
+    const q = document.getElementById("ask-txt").value.trim(); if(!q){ msg.textContent = "Type your question first."; return; }
+    const res = await post({action:"submit", code:myCode(), page:PAGE_KEY, date:LESSON.date, task:t.id, title:t.title, type:"question", text:q});
+    if(res.ok){
+      const d = new Date(), p2 = n=>String(n).padStart(2,"0");
+      (work[t.id] = work[t.id] || []).push({id:res.id, sent:`${p2(d.getDate())}.${p2(d.getMonth()+1)} ${p2(d.getHours())}:${p2(d.getMinutes())}`, type:"question", text:q, feedback:"", seen:false});
+      saveWork(); document.getElementById("ask-box").hidden = true; msg.textContent = "Sent ✓ Olya's answer will appear under the task (💬)."; refreshWork();
+    } else msg.textContent = "It didn't go through — no connection right now. Try again in a minute.";
+  });
+}
+
+/* ---------- group goal: film-strip meter, confetti, milestones ---------- */
+const fmtN = n => Number(n||0).toLocaleString("en-GB");
+const capFirst = s => String(s||"").charAt(0).toUpperCase() + String(s||"").slice(1);
+function meterHTML(gs){
+  if(!gs || !gs.goal) return "";
+  const pct = Math.min(1, gs.total/gs.goal), n = 20, filled = Math.min(n, Math.round(pct*n));
+  return `<section class="meter" aria-label="Our group's goal">
+      <div class="meter-top"><b>🎬 Our group</b><span>${gs.reached ? "Goal reached!" : `${fmtN(gs.total)} / ${fmtN(gs.goal)} 🎞`}</span></div>
+      <div class="strip" role="img" aria-label="${Math.round(pct*100)}% of the way">${Array.from({length:n},(_,i)=>`<i class="${i<filled?"on":""}"></i>`).join("")}</div>
+      <p class="small">${gs.reached ? `🎉 We did it! ${esc(capFirst(gs.reward))} is coming.` : `Every task adds frames — one per minute of work, Over to you counts double. At ${fmtN(gs.goal)} we'll have ${esc(gs.reward)}.`}${gs.size ? ` <b>${gs.week} of ${gs.size}</b> have added something this week.` : ""}</p>
+    </section>`;
+}
+function confetti(big){
+  try{ if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; }catch(e){}
+  const c = document.createElement("canvas"); c.className = "confetti"; c.setAttribute("aria-hidden","true"); document.body.appendChild(c);
+  const d = window.devicePixelRatio || 1, W = c.width = innerWidth*d, H = c.height = innerHeight*d, x = c.getContext("2d");
+  if(!x){ c.remove(); return; }
+  const cols = ["#0693E3","#FFFF00","#FF9900","#2E8B3E","#E00000","#8FB0FF"];
+  const ps = Array.from({length: big ? 170 : 70}, (_,i)=>({ x: W/2 + (Math.random()-.5)*W*(big?.9:.35), y: H*(big?.4:.22),
+    vx: (Math.random()-.5)*W*.012, vy: -(Math.random()*.018+.006)*H, s: (5+Math.random()*7)*d, r: Math.random()*6, vr: (Math.random()-.5)*.35, c: cols[i%cols.length] }));
+  const t0 = performance.now(), life = big ? 2800 : 1700;
+  (function frame(now){
+    x.clearRect(0,0,W,H);
+    ps.forEach(p=>{ p.vy += H*.0007; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+      x.save(); x.translate(p.x,p.y); x.rotate(p.r); x.globalAlpha = Math.max(0, 1-(now-t0)/life); x.fillStyle = p.c; x.fillRect(-p.s/2,-p.s/4,p.s,p.s/2); x.restore(); });
+    if(now - t0 < life) requestAnimationFrame(frame); else c.remove();
+  })(t0);
+}
+function toast(msg){
+  const t = document.createElement("div"); t.className = "toast"; t.setAttribute("role","status"); t.textContent = msg; document.body.appendChild(t);
+  setTimeout(()=>{ t.classList.add("out"); setTimeout(()=>t.remove(), 600); }, 4200);
+}
+/* 25 / 50 / 75 / 100 %: celebrate once per device when the group passes a mark (a new goal starts a new season) */
+function checkMilestone(gs, groupId){
+  if(!gs || !gs.goal) return;
+  const key = "hw-ms-" + groupId + "-" + gs.goal;
+  const pct = gs.total/gs.goal*100, ms = pct>=100 ? 100 : pct>=75 ? 75 : pct>=50 ? 50 : pct>=25 ? 25 : 0;
+  const seen = ls.get(key);
+  if(seen === ""){ ls.set(key, String(ms)); return; }
+  if(ms > Number(seen)){
+    ls.set(key, String(ms)); confetti(true);
+    toast(ms===100 ? `🎉 We did it! ${capFirst(gs.reward)} is coming!` : `🎬 Our group is ${ms}% of the way to ${gs.reward}!`);
+  }
+}
+/* "?" next to an answer: the student marks what's unclear or hard to hear; it goes to Olya when the task is finished */
+let flags = (()=>{ try{ return JSON.parse(localStorage.getItem(PAGE_KEY+"-flags")||"{}")||{}; }catch(e){ return {}; } })();
+let lastFlagged = [];
+const saveFlags = () => { try{ localStorage.setItem(PAGE_KEY+"-flags", JSON.stringify(flags)); }catch(e){} };
+const canMark = () => !!(myCode() && syncState!=="unknown" && !isTeacher());
+const plainText = s => { const d = document.createElement("div"); d.innerHTML = String(s||""); return d.textContent.replace(/\s+/g," ").trim(); };
+function markBtn(key, snippet, link){
+  if(!canMark() || !current) return "";
+  const on = !!(flags[current.id] && flags[current.id][key]);
+  return `<button class="mk ${on?"on":""}" data-mk="${esc(key)}" data-s="${esc(snippet)}" data-l="${esc(link||"")}" aria-pressed="${on}" aria-label="${on?"Marked for Olya — tap to unmark":"Not sure? Mark it for Olya"}">?</button>`;
+}
+function markHint(){ return canMark() && !ls.get("hw-mark-used") ? `<p class="mk-hint">Not sure about something? Tap <span class="mk demo">?</span> — Olya will see it.</p>` : ""; }
+document.addEventListener("click", ev=>{
+  const b = ev.target.closest(".mk[data-mk]"); if(!b || !current) return;
+  ev.stopPropagation();
+  const id = current.id, k = b.dataset.mk; flags[id] = flags[id] || {};
+  if(flags[id][k]) delete flags[id][k]; else { flags[id][k] = {s: b.dataset.s, l: b.dataset.l}; ls.set("hw-mark-used","1"); }
+  const on = !!flags[id][k]; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on);
+  b.setAttribute("aria-label", on ? "Marked for Olya — tap to unmark" : "Not sure? Mark it for Olya");
+  saveFlags();
+}, true);
+/* send the marks of finished tasks (also retried after the next sync if there was no connection) */
+let flagBusy = false;
+async function flushFlags(){
+  if(flagBusy || !canMark()) return; flagBusy = true;
+  for(const id of Object.keys(flags)){
+    const t = TASKS.find(x=>x.id===id); if(!t || !done.has(id)) continue;
+    for(const k of Object.keys(flags[id])){
+      const f = flags[id][k];
+      const res = await post({action:"submit", code:myCode(), page:PAGE_KEY, date:LESSON.date, task:id, title:t.title, type:"marked",
+                              text: f.s + (f.note ? "\n— " + f.note : "") + (f.l ? "\n" + f.l : "")});
+      if(!res.ok){ flagBusy = false; saveFlags(); return; }
+      f.id = res.id; f.sent = true; delete flags[id][k];
+      const d = new Date(), p2 = n=>String(n).padStart(2,"0");
+      (work[id] = work[id] || []).push({id:res.id, sent:`${p2(d.getDate())}.${p2(d.getMonth()+1)} ${p2(d.getHours())}:${p2(d.getMinutes())}`, type:"marked", text:f.s, feedback:"", seen:false});
+    }
+    if(!Object.keys(flags[id]).length) delete flags[id];
+  }
+  saveFlags(); saveWork(); refreshWork(); flagBusy = false;
+}
+
+/* ---------- teacher view: Olya's own code shows her group on this page ---------- */
+let teacherData = null;
+const isTeacher = () => !!(myCode() && ls.get("hw-role") === "teacher");
+const hideNames = () => !!ls.get("hw-hide");
+function labelsFor(students){
+  const words = n => n.trim().split(/\s+/);
+  const lv = [n=>n[0], n=>n.slice(0,2), n=>n[0]+(words(n)[1]||" ")[0], n=>n.slice(0,3), n=>n.slice(0,2)+(words(n)[1]||" ")[0], n=>words(n)[0]];
+  return students.map((s,i)=>{
+    for(const f of lv){ const c = f(s.name).trim(); if(c && students.every((o,j)=>j===i || f(o.name).trim().toLowerCase() !== c.toLowerCase())) return c; }
+    return s.name;
+  });
+}
+function teacherCounts(id){
+  const w = (teacherData && teacherData.work || []).filter(x=>x.task===id);
+  const r = teacherData && teacherData.reactions && teacherData.reactions[id] || {easy:[],ok:[],hard:[]};
+  return { marked: w.filter(x=>x.type==="marked").length, questions: w.filter(x=>x.type==="question").length,
+           work: w.filter(x=>x.type==="text"||x.type==="recording").length, open: w.filter(x=>!String(x.feedback||"").trim()).length, hard: r.hard.length };
+}
+function teacherLine(id){
+  if(!isTeacher() || !teacherData) return "";
+  const st = teacherData.students || [], lab = labelsFor(st), dn = new Set((teacherData.done||{})[id] || []), c = teacherCounts(id);
+  const chips = hideNames() ? `<span class="t-count">${dn.size} of ${st.length} done</span>`
+    : st.map((s,i)=>`<span class="t-chip ${dn.has(i)?"on":""}" title="${esc(s.name)}">${esc(lab[i])}</span>`).join("");
+  const badges = [c.marked?`🔖 ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:"", c.hard?`😓 ${c.hard}`:""].filter(Boolean).join(" · ");
+  return `<button class="t-line ${c.marked+c.questions?"hot":""}" data-teach="${id}">${chips}${badges?`<span class="t-badges">${badges}${c.open?` · <b>${c.open} to answer</b>`:""}</span>`:""}</button>`;
+}
+function hotHTML(){
+  if(!isTeacher() || !teacherData) return "";
+  const hot = TASKS.map(t=>({t, c:teacherCounts(t.id)})).filter(x=>x.c.marked+x.c.questions+x.c.hard>0).sort((a,b)=>(b.c.marked+b.c.questions+b.c.hard)-(a.c.marked+a.c.questions+a.c.hard));
+  return `<section class="hot"><b>Where they got stuck</b>${hot.length ? `<ul>${hot.map(x=>`<li><button class="linklike" data-teach="${x.t.id}">${esc(x.t.title)}</button> <span>${[x.c.marked?`🔖 ${x.c.marked}`:"", x.c.questions?`❓ ${x.c.questions}`:"", x.c.hard?`😓 ${x.c.hard} hard`:""].filter(Boolean).join(" · ")}</span></li>`).join("")}</ul>` : `<p class="small">No questions or marks yet.</p>`}</section>`;
+}
+function wireTeacher(){
+  document.querySelectorAll("[data-teach]").forEach(b=>{ if(b._t) return; b._t = 1; b.addEventListener("click",()=>renderTeacherTask(b.dataset.teach)); });
+  const h = document.getElementById("hide-names");
+  if(h && !h._t){ h._t = 1; h.addEventListener("click",()=>{ ls.set("hw-hide", hideNames() ? "" : "1"); const y = scrollY; renderHome(); scrollTo(0,y); }); }
+}
+const wrapSel = (ta, a, b) => { const s = ta.selectionStart, e = ta.selectionEnd, v = ta.value; if(s===e) return; ta.value = v.slice(0,s) + a + v.slice(s,e) + b + v.slice(e); ta.focus(); ta.setSelectionRange(s, e + a.length + b.length); ta.dispatchEvent(new Event("input")); };
+function renderTeacherTask(id){
+  const t = TASKS.find(x=>x.id===id); if(!t || !teacherData) return;
+  stopPlayer(); stopRecorder(); current = t; stepIdx = 0; checked = false;
+  const st = teacherData.students || [], dn = new Set((teacherData.done||{})[id] || []), hn = hideNames();
+  const who = i => hn ? "" : `<b>${esc((st[i]||{}).name||"")}</b> · `;
+  const r = (teacherData.reactions||{})[id] || {easy:[],ok:[],hard:[]};
+  const order = {marked:0, question:1, text:2, recording:3};
+  const items = (teacherData.work||[]).filter(x=>x.task===id).sort((a,b)=>order[a.type]-order[b.type]);
+  const icon = {marked:"🔖 Marked", question:"❓ Question", text:"✍️ Their text", recording:"🎙 Recording"};
+  const body = w => {
+    const lines = String(w.text||"").split("\n"), links = lines.filter(l=>/^https?:/.test(l)), txt = lines.filter(l=>!/^https?:/.test(l)).join("\n");
+    if(w.type==="recording") return `<p class="small">Sent in Telegram.</p>`;
+    if(w.type==="text") return `<div class="t-text">${esc(txt).replace(/\n/g,"<br>")}</div>${w.phrases?`<p class="small">Phrases they planned to use: ${esc(w.phrases.replace(/\n/g," · "))}</p>`:""}`;
+    return `<p class="fb-q">${esc(txt).replace(/\n/g,"<br>")}</p>${links.map(l=>`<a class="t-link" href="${esc(l)}" target="_blank" rel="noopener">▶ Listen to this line on YouTube</a>`).join("")}`;
+  };
+  shell({instr: hn ? "Names are hidden — good for sharing your screen." : "Your group on this task. Tap Write feedback to answer — the student sees it under the task.",
+    stageHTML: `<div class="panel t-panel">
+        <p><b>Done:</b> ${hn ? `${dn.size} of ${st.length}` : st.map((s,i)=>`<span class="t-chip wide ${dn.has(i)?"on":""}">${esc(s.name)}</span>`).join(" ")}</p>
+        ${r.easy.length+r.ok.length+r.hard.length ? `<p><b>How was it:</b> Easy ${r.easy.length} · OK ${r.ok.length} · Hard ${r.hard.length}${!hn && r.hard.length ? ` (${r.hard.map(i=>esc((st[i]||{}).name||"")).join(", ")})` : ""}</p>` : ""}
+      </div>
+      ${items.length ? items.map(w=>`<div class="panel t-item" data-w="${w.id}">
+          <div class="small">${icon[w.type]} · ${who(w.s)}${esc(w.sent||"")}${w.seen?" · seen ✓":""}</div>
+          ${body(w)}
+          <div class="t-fb">${String(w.feedback||"").trim() ? `<div class="fb-text">${fbHTML(w.feedback)}</div><button class="btn t-edit" data-edit="${w.id}">Edit feedback</button>` : `<button class="btn primary t-edit" data-edit="${w.id}">Write feedback</button>`}</div>
+        </div>`).join("") : `<div class="panel"><p class="small">Nothing sent for this task yet.</p></div>`}`,
+    actionsHTML: `<button class="btn" id="t-open">Open the task</button><button class="btn primary grow" id="t-home">Back to all tasks</button>`});
+  document.getElementById("t-home").addEventListener("click", goHome);
+  document.getElementById("t-open").addEventListener("click", ()=>openTask(id));
+  app.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>{
+    const w = items.find(x=>String(x.id)===b.dataset.edit), box = b.closest(".t-fb");
+    const start = String(w.feedback||"").trim() ? w.feedback : (w.type==="text" ? String(w.text||"") : "");
+    box.innerHTML = `<div class="t-tools"><button class="tool good" data-wrap="**|**">✓ Good</button><button class="tool del" data-wrap="~~|~~">✗ Change</button><button class="tool ins" data-wrap="{|}">✎ Your words</button></div>
+      <textarea class="t-ta" rows="6">${esc(start)}</textarea>
+      <div class="fb-text t-prev"></div>
+      <div class="row-btns"><button class="btn" data-cancel>Cancel</button><button class="btn primary grow" data-save>Save</button></div><p class="small t-msg"></p>`;
+    const ta = box.querySelector(".t-ta"), prev = box.querySelector(".t-prev");
+    const upd = () => { prev.innerHTML = fbHTML(ta.value); }; upd(); ta.addEventListener("input", upd);
+    box.querySelectorAll("[data-wrap]").forEach(x=>x.addEventListener("mousedown", e=>e.preventDefault()));
+    box.querySelectorAll("[data-wrap]").forEach(x=>x.addEventListener("click",()=>{ const [a,c] = x.dataset.wrap.split("|"); wrapSel(ta, a, c); }));
+    box.querySelector("[data-cancel]").addEventListener("click",()=>{ const y = scrollY; renderTeacherTask(id); scrollTo(0,y); });
+    box.querySelector("[data-save]").addEventListener("click", async ()=>{
+      const msg = box.querySelector(".t-msg"); msg.textContent = "Saving…";
+      const res = await post({action:"feedback", code:myCode(), page:PAGE_KEY, id:w.id, text:ta.value});
+      if(res.ok){ w.feedback = ta.value; const y = scrollY; renderTeacherTask(id); scrollTo(0,y); }
+      else msg.textContent = "It didn't save — no connection. Your text is still here.";
+    });
+    ta.focus();
+  }));
+  window.scrollTo(0,0);
+}
+function refreshMeter(){ const m = document.getElementById("meter-slot"); if(m && !current) m.innerHTML = (myCode() && syncState!=="unknown") ? meterHTML(groupStats) : ""; }
+function footHTML(){
+  return myCode() && syncState!=="unknown"
+    ? `<span>When you finish a task, mark it in our spreadsheet in your colour.</span><span>Your ticks are saved for Olya and on all your devices.</span>`
+    : `<span>When you finish a task, mark it in our spreadsheet in your colour.</span><span>The ticks on this page are saved on this phone only.</span>`;
+}
+function refreshFoot(){ const f = document.getElementById("foot"); if(f) f.innerHTML = footHTML(); }
+
+const app = document.getElementById("app");
+let current = null, stepIdx = 0, checked = false;
+const typed = {};   /* what the student typed, kept while the page is open */
+const norm = s => String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/[.!?,;:]+$/,"").replace(/\s+/g," ").trim();
+
+/* ---------- home ---------- */
+const ON_SITE = /\.github\.io$/.test(location.hostname) || location.protocol === "file:";   /* the list of all homework lives next to this page on the site */
+function renderHome(justDone){
+  current = null;
+  const taskBtn = t => `
+          <div class="task-wrap"><div class="task-row ${done.has(t.id)?"is-done":""}">
+            <button class="task-btn" data-open="${t.id}">
+              <span><div class="t">${esc(t.title)}</div><div class="m">${esc(t.meta)} · ≈ ${minutesOf(t)} min</div>${t.alt?`<div class="alt">${esc(t.alt)}</div>`:""}</span>
+            </button>
+            <button class="status" data-toggle="${t.id}" aria-pressed="${done.has(t.id)}" aria-label="${done.has(t.id)?"Done — tap to untick":"Tap to mark as done"}">✓</button>
+          </div><div data-fbslot="${t.id}">${isTeacher() ? teacherLine(t.id) : fbLine(t.id)}</div></div>`;
+  app.innerHTML = `
+    ${justDone?`<div class="done-banner" role="status">✓ Done!${lastDone && myCode() && syncState!=="unknown" ? ` +${framesOf(lastDone)} 🎞 for our group.` : ""} Mark it in our spreadsheet in your colour.${reactHTML()}</div>`:""}
+    <header class="lesson-head">
+      ${ON_SITE?`<a class="all-hw" href="index.html">← All homework</a>`:""}
+      <span class="date">${LESSON.date}</span>
+      <h1>Homework</h1>
+      ${LESSON.sub?`<p>${LESSON.sub}</p>`:""}
+      <p class="total">About ${Math.round(TASKS.reduce((s,t)=>s+minutesOf(t),0)/5)*5} minutes in total — you don't have to do it all in one go.</p>
+    </header>
+    <div id="sync-slot">${syncHTML()}</div>
+    <div id="meter-slot">${(myCode() && syncState!=="unknown") ? meterHTML(groupStats) : ""}</div>
+    ${hotHTML()}
+    ${TOPICS.map((tp,ti)=>`
+      <section class="topic ${tp.id==="earlier"?"topic-earlier":"topic-"+(ti%2)}">
+        <div class="topic-head"><span class="topic-n">${tp.id==="earlier"?"Look back":"Topic "+(ti+1)}</span><h2>${esc(tp.title)}</h2><p>${esc(tp.sub)}</p></div>
+        ${tp.box?`<details class="ul-peek"><summary><img class="sticker-sm" src="${STICKER}" alt="Useful language"><span class="ul-hint">Tap to see the phrases</span></summary>
+          <aside class="box box-home" aria-label="Useful language">${tp.box()}</aside></details>`:""}
+        ${["Revision","Extension","Over to you!"].map(sec=>{ const ts = TASKS.filter(t=>t.topic===tp.id && t.sec===sec);
+          return ts.length ? `<div class="sec"><h3 class="sec-label">${sec}</h3>${ts.map(taskBtn).join("")}</div>` : ""; }).join("")}
+      </section>`).join("")}
+    <div class="foot" id="foot">${footHTML()}</div>`;
+  app.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>openTask(b.dataset.open)));
+  app.querySelectorAll("[data-toggle]").forEach(b=>b.addEventListener("click",()=>{
+    const id = b.dataset.toggle; setMark(id, !done.has(id)); refreshTicks();
+  }));
+  app.classList.toggle("teacher", isTeacher()); wireTeacher();
+  wireSync(); wireFb(); if(justDone){ wireReact(); setTimeout(()=>confetti(false), 120); } else lastDone = null;
+  window.scrollTo(0,0);
+}
+
+/* ---------- task shell ---------- */
+function openTask(id, idx=0){
+  const t = TASKS.find(x=>x.id===id); if(!t){ renderHome(); return; }
+  current = t; stepIdx = idx; checked = false;
+  try{ if(location.hash !== "#"+id) history.replaceState(null,"","#"+id); }catch(e){}
+  renderTask();
+}
+function shell({count, pct, instr, stageHTML, withBox, actionsHTML}){
+  app.innerHTML = `
+    <div class="taskbar">
+      <div class="taskbar-row"><button class="back" id="home">← All tasks</button>${count?`<span class="count">${count}</span>`:""}</div>
+      ${pct!=null?`<div class="bar" aria-hidden="true"><i style="width:${pct}%"></i></div>`:""}
+      <h2 class="task-title">${esc(current.title)}</h2>
+    </div>
+    ${instr?`<div class="instr">${instr}</div>`:""}
+    <div class="stage ${withBox?"with-box":""}">${stageHTML}</div>
+    <div class="actions">${actionsHTML}</div>`;
+  document.getElementById("home").addEventListener("click",goHome);
+}
+function goHome(justDone){ stopPlayer(); stopRecorder(); try{ history.replaceState(null,"",location.pathname+location.search); }catch(e){} renderHome(justDone===true); }
+
+function renderTask(){
+  const t = current;
+  const nextListen = t.steps && stepIdx < t.steps.length && t.steps[stepIdx].type === "listen";
+  if(nextListen && playerOnScreen()) pausePlayer(); else stopPlayer();
+  stopRecorder();
+  if(t.kind==="gaps") return renderGaps(t);
+  if(t.kind==="link") return renderLink(t);
+  if(stepIdx >= t.steps.length){ finish(t); return goHome(true); }
+  const st = t.steps[stepIdx];
+  const count = `${stepIdx+1} of ${t.steps.length}`;
+  const pct = Math.round((stepIdx)/t.steps.length*100);
+  ({rewrite:renderRewrite, sayit:renderSayit, share:renderShare, lookback:renderLookback, listen:renderListen, task:renderTaskCard, plan:renderPlan, produce:renderProduce})[st.type](st, count, pct);
+  window.scrollTo(0,0);
+}
+function navButtons(checkLabel="Check"){
+  const last = stepIdx === current.steps.length-1;
+  return `<button class="btn" id="prev" ${stepIdx===0?"disabled":""}>Back</button>
+          <button class="btn primary grow" id="go">${checked ? (last?"Finish":"Next") : checkLabel}</button>`;
+}
+function wireNav(onCheck){
+  document.getElementById("prev").addEventListener("click",()=>{ if(stepIdx>0){ stepIdx--; checked=false; renderTask(); }});
+  document.getElementById("go").addEventListener("click",()=>{
+    if(!checked){ checked = true; onCheck(); }
+    else { stepIdx++; checked=false; renderTask(); }
+  });
+}
+let lastDone = null;
+function finish(t){ setMark(t.id, true); lastDone = t; lastFlagged = Object.values(flags[t.id]||{}); flushFlags(); }
+
+/* ---------- gapped dialogue ---------- */
+function gapLineHTML(line){
+  const parts = line.p; let html = "", i = 0;
+  while(i < parts.length){
+    const x = parts[i];
+    if(typeof x === "object" && "r" in x){
+      let chunk = "";
+      while(i < parts.length){
+        const y = parts[i];
+        if(typeof y === "object" && "r" in y){ chunk += `<span class="gap"><span class="f">${esc(y.f)}</span><span class="r">${esc(y.r)}</span></span>`; i++; }
+        else if(typeof y === "string" && /^\s+$/.test(y) && typeof parts[i+1] === "object" && parts[i+1] && "r" in parts[i+1]){ chunk += y; i++; }
+        else break;
+      }
+      html += `<span class="chunk" role="button" tabindex="0" aria-label="Show the missing words">${chunk}</span>`;
+    } else if(typeof x === "object" && "b" in x){ html += `<b>${esc(x.b)}</b>`; i++; }
+    else { html += esc(x); i++; }
+  }
+  return `<p>${line.s?`<span class="spk">${esc(line.s)}:</span> `:""}${html}</p>`;
+}
+function renderGaps(t){
+  shell({
+    instr:`${esc(t.lead)}<br>${esc(t.instr)}`,
+    stageHTML:`<div class="panel"><div class="dlg">${t.lines.map(gapLineHTML).join("")}</div></div>`,
+    actionsHTML:`<button class="btn" id="all">Show all</button><button class="btn primary grow" id="fin">Finish</button>`
+  });
+  const chunks = [...app.querySelectorAll(".chunk")];
+  const toggle = c => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); };
+  chunks.forEach(c=>{
+    c.addEventListener("click",()=>toggle(c));
+    c.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggle(c); }});
+  });
+  const all = document.getElementById("all");
+  all.addEventListener("click",()=>{
+    const open = all.dataset.open !== "1";
+    chunks.forEach(c=>c.classList.toggle("open",open));
+    all.dataset.open = open ? "1" : "0"; all.textContent = open ? "Hide all" : "Show all";
+  });
+  document.getElementById("fin").addEventListener("click",()=>{ finish(t); goHome(true); });
+  window.scrollTo(0,0);
+}
+
+/* ---------- rewrite the sentence ---------- */
+/* ---------- marking a typed answer: strike only the error, mark what was good, show the change ---------- */
+const splitTok = s => String(s).replace(/[’‘]/g,"'").trim().split(/\s+/).filter(Boolean);
+const coreOf = w => { const m = w.match(/^([^A-Za-z0-9']*)(.*?)([^A-Za-z0-9']*)$/); return {lead:m[1], core:m[2], trail:m[3]}; };
+function lev(a,b){ const d=[...Array(b.length+1).keys()]; for(let i=1;i<=a.length;i++){ let p=d[0]; d[0]=i; for(let j=1;j<=b.length;j++){ const q=d[j]; d[j]=Math.min(d[j]+1,d[j-1]+1,p+(a[i-1]===b[j-1]?0:1)); p=q; } } return d[b.length]; }
+const similar = (a,b) => a && b && lev(a,b) <= Math.max(1, Math.floor(Math.max(a.length,b.length)/3));
+function alignWords(S,T){            /* S, T: lower-case cores */
+  const n=S.length, m=T.length, D=Array.from({length:n+1},(_,i)=>Array(m+1).fill(0));
+  for(let i=0;i<=n;i++) D[i][0]=i; for(let j=0;j<=m;j++) D[0][j]=j;
+  const sub=(a,b)=> a===b?0 : similar(a,b)?0.6 : 1.4;
+  for(let i=1;i<=n;i++) for(let j=1;j<=m;j++) D[i][j]=Math.min(D[i-1][j]+1, D[i][j-1]+1, D[i-1][j-1]+sub(S[i-1],T[j-1]));
+  const ops=[]; let i=n, j=m;
+  while(i>0||j>0){
+    if(i>0&&j>0&&D[i][j]===D[i-1][j-1]+sub(S[i-1],T[j-1])){ ops.push({op:S[i-1]===T[j-1]?"eq":(similar(S[i-1],T[j-1])?"near":"sub"),i:i-1,j:j-1}); i--; j--; }
+    else if(i>0&&D[i][j]===D[i-1][j]+1){ ops.push({op:"extra",i:i-1}); i--; }
+    else { ops.push({op:"miss",j:j-1}); j--; }
+  }
+  return {cost:D[n][m], ops:ops.reverse()};
+}
+function charMarks(a,b){            /* which letters of a and of b are outside their longest common subsequence */
+  const A=a.toLowerCase(), B=b.toLowerCase(), L=Array.from({length:A.length+1},()=>Array(B.length+1).fill(0));
+  for(let i=A.length-1;i>=0;i--) for(let j=B.length-1;j>=0;j--) L[i][j]= A[i]===B[j] ? L[i+1][j+1]+1 : Math.max(L[i+1][j],L[i][j+1]);
+  const ma=Array(A.length).fill(true), mb=Array(B.length).fill(true); let i=0,j=0;
+  while(i<A.length&&j<B.length){ if(A[i]===B[j]){ ma[i]=mb[j]=false; i++; j++; } else if(L[i+1][j]>=L[i][j+1]) i++; else j++; }
+  return {ma, mb};
+}
+const runs = (word, marks, cls) => { let h="", cur=null, buf=""; const flush=()=>{ if(buf) h += cur ? `<span class="${cls}">${esc(buf)}</span>` : esc(buf); buf=""; };
+  [...word].forEach((ch,k)=>{ if(marks[k]!==cur){ flush(); cur=marks[k]; } buf+=ch; }); flush(); return h; };
+function markAnswer(val, targets){
+  const S = splitTok(val), Sc = S.map(w=>coreOf(w).core.toLowerCase());
+  let best=null;
+  targets.forEach(tg=>{ const T=splitTok(tg), Tc=T.map(w=>coreOf(w).core.toLowerCase()); const a=alignWords(Sc,Tc); if(!best||a.cost<best.cost) best={...a,T,Tc,tg}; });
+  if(best.cost===0) return {ok:true};
+  const eq = best.ops.filter(o=>o.op==="eq"||o.op==="near").length;
+  if(eq/Math.max(best.T.length,1) < 0.34) return {ok:false, plain:true, target:best.tg};
+  let you=[], fix=[];
+  best.ops.forEach(o=>{
+    if(o.op==="eq"){ const s=coreOf(S[o.i]); you.push(esc(s.lead)+`<span class="good">${esc(s.core)}</span>`+esc(s.trail)); fix.push(esc(best.T[o.j])); }
+    else if(o.op==="near"){ const s=coreOf(S[o.i]), t=coreOf(best.T[o.j]), {ma,mb}=charMarks(s.core,t.core);
+      you.push(esc(s.lead)+runs(s.core,ma,"wrong")+esc(s.trail)); fix.push(esc(t.lead)+runs(t.core,mb,"fix")+esc(t.trail)); }
+    else if(o.op==="sub"){ you.push(`<span class="wrong">${esc(S[o.i])}</span>`); fix.push(`<span class="fix">${esc(best.T[o.j])}</span>`); }
+    else if(o.op==="extra"){ you.push(`<span class="wrong">${esc(S[o.i])}</span>`); }
+    else { fix.push(`<span class="fix">${esc(best.T[o.j])}</span>`); }
+  });
+  return {ok:false, you:you.join(" "), fix:fix.join(" ")};
+}
+/* if the student also typed words of the sentence around the gap, leave those out of the marking */
+function stripFrame(val, r){
+  const key = w => coreOf(w).core.toLowerCase().replace(/'/g,"");
+  let S = splitTok(val);
+  const P = splitTok(r.pre).map(key).filter(Boolean), Q = splitTok(r.post).map(key).filter(Boolean);
+  for(let k=Math.min(P.length,S.length-1); k>0; k--){ if(S.slice(0,k).every((w,i)=>key(w)===P[P.length-k+i])){ S=S.slice(k); break; } }
+  for(let k=Math.min(Q.length,S.length-1); k>0; k--){ if(S.slice(S.length-k).every((w,i)=>key(w)===Q[i])){ S=S.slice(0,S.length-k); break; } }
+  return S.join(" ");
+}
+function verdictHTML(val, r){
+  if(!val) return "";
+  const core = stripFrame(val, r);
+  const expand = s => " "+String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/won't/g,"will not").replace(/can't/g,"can not").replace(/cannot/g,"can not")
+    .replace(/n't/g," not").replace(/'ve/g," have").replace(/'ll/g," will").replace(/'re/g," are").replace(/'m/g," am").replace(/'d/g," would")
+    .replace(/[.!?,;:]+/g," ").replace(/\s+/g," ").trim()+" ";
+  const sameAs = a => [expand(r.pre+val+r.post), expand(val), expand(r.pre+core+r.post)].includes(expand(r.pre+a+r.post));
+  const m = r.acc.some(sameAs) ? {ok:true} : markAnswer(core, r.acc);
+  if(m.ok) return `<div class="verdict ok"><span class="chip">✓ Correct!</span><p>${esc(val)}</p></div>`;
+  if(m.plain) return `<div class="verdict no"><span class="chip">✗ Not quite</span><p>${esc(core)}</p><span class="small">Compare it with the answer above.</span></div>`;
+  return `<div class="verdict no"><span class="chip">✗ Not quite</span>
+    <p>${m.you}</p><p>→ ${m.fix}</p>
+    <span class="legend">green = good · grey = the part to change · blue = the change. Other answers may also be possible.</span></div>`;
+}
+
+function renderRewrite(st, count, pct){
+  const r = st.r, key = current.id+"-"+stepIdx, val = (typed[key]||"").trim();
+  const yours = checked ? verdictHTML(val, r) : "";
+  const br = s => esc(s).replace(/\n/g,"<br>");
+  const hint = r.hint ? ` <span class="ru">(${esc(r.hint)})</span>` : "";
+  const body = `
+    <div class="panel ${checked?"checked":""}">
+      ${r.o?`<p class="orig">${esc(r.o)}</p>`:""}
+      ${r.k?`<p class="key">${r.k}</p>`:""}
+      <p class="target">${br(r.pre)}${checked?`<span class="ans">${esc(r.a)}</span>`:
+        `<input id="rw" class="gap-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="Type the missing part" placeholder="type or say it" value="${esc(typed[key]||"")}">`}${hint}${br(r.post)}${checked?markBtn(String(stepIdx), plainText(r.pre + r.a + r.post)):""}</p>
+      ${checked?markHint():""}
+      ${yours}
+      ${checked?`<p class="note">${r.n}</p>`:""}
+    </div>${checked&&st.box?box(st.box):""}`;
+  const instr = st.first ? (st.instrFirst || "Rewrite the sentence. Use the word in capitals. Type the missing part or say it aloud, then tap Check.") : (st.instr || "Rewrite the sentence.");
+  shell({count, pct, instr, stageHTML: body, withBox: checked && !!st.box, actionsHTML: navButtons()});
+  const inp = document.getElementById("rw");
+  if(inp){
+    inp.addEventListener("input",()=>{ typed[key] = inp.value; });
+    inp.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); document.getElementById("go").click(); }});
+  }
+  wireNav(()=>renderTaskKeep());
+}
+/* re-render the same step after Check without resetting */
+function renderTaskKeep(){ const keep = checked; renderTask(); checked = keep; }
+
+/* ---------- say it in English ---------- */
+function renderSayit(st, count, pct){
+  const s = st.s;
+  const bx = st.box !== undefined ? st.box : (typeof BOX_CLOCKS !== "undefined" ? BOX_CLOCKS : "");
+  shell({count, pct,
+    instr: st.first ? "Say it in English — aloud. Then tap the yellow box to check." : "Say it in English.",
+    stageHTML: `
+      <div class="panel">
+        <div class="say">
+          ${s.rows.map((row,i)=>`<div class="say-row"><span class="q">${row[0]}</span>
+            <span class="say-a"><button class="reveal ${checked?"open":""}" data-r="${i}" aria-label="Show the English">${esc(row[1])}</button>${checked?markBtn(stepIdx+"-"+i, row[1]):""}</span></div>`).join("")}
+        </div>
+        ${checked?markHint():""}
+        ${checked&&s.note?`<p class="small">${s.note}</p>`:""}
+      </div>${checked&&bx?box(bx):""}`,
+    withBox: checked && !!bx, actionsHTML: navButtons()});
+  app.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>b.classList.toggle("open")));
+  wireNav(()=>renderTaskKeep());
+}
+
+/* ---------- share your reaction and ask ---------- */
+function renderShare(st, count, pct){
+  const s = st.s;
+  const bBubble = checked
+    ? `<span class="mark-s">${s.s}</span> <span class="mark-a">${s.q}</span>`
+    : (s.hint ? `<span class="hint"><span class="s">[share your reaction]</span> <span class="a">[ask a question]</span></span>` : `<span class="dots" aria-label="Your turn">• • •</span>`);
+  shell({count, pct, instr: s.i,
+    stageHTML: `
+      <div class="panel convo">
+        <div class="turn a"><img class="fig" src="${IMG_A}" alt=""><div class="bubble">${esc(s.a)}</div></div>
+        ${checked?"":`<p class="situation">${esc(s.sit)}</p>${s.use?`<p class="use">Use: <b>${s.use}</b></p>`:""}`}
+        <div class="turn b"><div class="bubble">${bBubble}</div><img class="fig" src="${IMG_B}" alt=""></div>
+        ${checked?`<p class="mk-row mk-right">${markBtn(String(stepIdx), plainText(s.s+" "+s.q))}</p>${markHint()}`:""}
+        ${checked?`<div class="turn a next-line"><img class="fig" src="${IMG_A}" alt=""><div class="bubble">${esc(s.next)}</div></div>
+          <div class="notes">${s.notes.map(n=>`<div>${n}</div>`).join("")}</div>`:""}
+      </div>${box(BOX_SHARE)}`,
+    withBox: true, actionsHTML: navButtons()});
+  wireNav(()=>renderTaskKeep());
+}
+
+/* ---------- listening (clips from TubeQuizard, played from YouTube) ---------- */
+let ytPromise = null, ytPlayer = null, ytTimer = null, ytWatch = null, ytReady = false, ytVideo = "";
+function loadYT(){
+  if(window.YT && window.YT.Player) return Promise.resolve();
+  if(!ytPromise){
+    ytPromise = new Promise((res, rej)=>{
+      const prev = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => { if(typeof prev === "function") prev(); res(); };
+      const s = document.createElement("script"); s.src = "https://www.youtube.com/iframe_api"; s.async = true;
+      s.onerror = () => rej(new Error("blocked")); document.head.appendChild(s);
+      setTimeout(()=>{ if(!(window.YT && window.YT.Player)) rej(new Error("timeout")); }, 7000);
+    });
+  }
+  return ytPromise;
+}
+function stopPlayer(){
+  clearInterval(ytTimer); clearTimeout(ytWatch);
+  if(ytPlayer){ try{ ytPlayer.destroy(); }catch(e){} ytPlayer = null; }
+  ytReady = false; ytVideo = "";
+}
+/* one player for the whole listening task, as TubeQuizard does: a new player for every clip
+   counts as a new viewing for YouTube, and that is when the ads come */
+function pausePlayer(){ clearInterval(ytTimer); clearTimeout(ytWatch); try{ ytPlayer && ytPlayer.pauseVideo(); }catch(e){} }
+const playerOnScreen = () => !!(ytPlayer && app.querySelector(".video iframe"));
+function clipEnd(lines, i){ return (i+1 < lines.length ? lines[i+1][1] : lines[i][1] + lines[i][2]) + 0.15; }
+function partsHTML(parts){
+  return parts.map(p => typeof p === "string" ? esc(p) : `<span class="gapbox ${checked?"open":""}">${esc(p.gap)}</span>`).join("");
+}
+function renderListen(st, count, pct){
+  const lines = st.clip;
+  const instr = st.first
+    ? "Tap the top line to hear the whole clip. Then tap the line with the gap and try to catch the missing words. Type them if you like, then tap Check answers."
+    : "Listen and catch the missing words. Then tap Check answers.";
+  let gk = 0;
+  const keyOf = k => current.id+"-"+stepIdx+"-g"+k;
+  const lineHTML = (l,i) => `<div class="ln ${l[3].some(p=>typeof p!=="string")?"has-gap":""}" data-i="${i}">
+      <button class="pl" aria-label="${i===0?"Play the whole clip":"Play this line"}">▶</button>
+      <span class="ln-text">${l[3].map(p => typeof p === "string" ? esc(p)
+        : (k => `<input class="gap-in" data-k="${k}" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"
+             aria-label="Type the missing words" style="width:min(100%, ${p.gap.length + 3}ch)" value="${esc(typed[keyOf(k)]||"")}">`)(gk++)).join("")}${i===0?` <span class="whole-note">· whole clip</span>`:""}</span>
+    </div>`;
+  const rest = `
+        <div class="slow-row"><button class="slow" id="slow" aria-pressed="${!!ls.get("hw-slow")}">🐢 Slower</button><span class="small">${ls.get("hw-slow")?"playing at 0.75":"tap to slow the clips down"}</span></div>
+        <div class="lines">${lines.map(lineHTML).join("")}</div>
+        <p class="small tap-hint" id="hint" hidden>Nothing playing? Tap the video once, then tap the line again.</p>
+        <p class="small" id="after" ${checked?"":"hidden"}>Listen again: how did the expression sound? Try to say it like the speaker.${stepIdx===current.steps.length-1&&current.takeaway?`<br><b>${current.takeaway}</b>`:""}</p>`;
+  if(playerOnScreen()){
+    /* the same player stays; only the lines, the counter and the buttons change */
+    const bar = app.querySelector(".taskbar .count"); if(bar) bar.textContent = count;
+    const fill = app.querySelector(".taskbar .bar i"); if(fill) fill.style.width = pct + "%";
+    const ins = app.querySelector(".instr"); if(ins) ins.innerHTML = instr;
+    const panel = app.querySelector(".stage .panel");
+    [...panel.children].forEach(ch=>{ if(!ch.classList.contains("video")) ch.remove(); });
+    panel.insertAdjacentHTML("beforeend", rest);
+    app.querySelector(".actions").innerHTML = navButtons("Check answers");
+    if(ytVideo !== lines[0][0]){ ytVideo = lines[0][0]; try{ ytPlayer.cueVideoById({videoId: lines[0][0], startSeconds: Math.floor(lines[0][1])}); }catch(e){} }
+  } else {
+    shell({count, pct, instr,
+      stageHTML: `
+      <div class="panel">
+        <div class="video"><div id="yt"></div><p class="vmsg" id="vmsg" hidden></p></div>${rest}
+      </div>`,
+      actionsHTML: navButtons("Check answers")});
+    const msg = document.getElementById("vmsg");
+    loadYT().then(()=>{
+      if(!document.getElementById("yt")) return;
+      ytVideo = lines[0][0];
+      ytPlayer = new YT.Player("yt", {
+        videoId: lines[0][0], width: "100%", height: "100%",
+        playerVars: { playsinline: 1, rel: 0, modestbranding: 1, start: Math.floor(lines[0][1]) },
+        events: { onReady: () => { ytReady = true; } }
+      });
+    }).catch(()=>{ msg.hidden = false; msg.textContent = "The video can't play in this preview. On the published page it plays right here."; });
+  }
+  const rows = [...app.querySelectorAll(".ln")];
+  const play = (from, to, i) => {
+    if(!ytPlayer || !ytReady) return;
+    clearInterval(ytTimer); clearTimeout(ytWatch);
+    rows.forEach((m,k)=>m.classList.toggle("playing", k===i));
+    try{ ytPlayer.setPlaybackRate(ls.get("hw-slow") ? 0.75 : 1); }catch(e){}
+    ytPlayer.seekTo(from, true); ytPlayer.playVideo();
+    ytWatch = setTimeout(()=>{ try{ if(ytPlayer.getPlayerState() !== 1) document.getElementById("hint").hidden = false; }catch(e){} }, 2000);
+    ytTimer = setInterval(()=>{
+      let tnow = 0; try{ tnow = ytPlayer.getCurrentTime(); }catch(e){}
+      if(tnow >= to){ ytPlayer.pauseVideo(); clearInterval(ytTimer); rows.forEach(m=>m.classList.remove("playing")); }
+    }, 100);
+  };
+  rows.forEach((row,i)=>row.addEventListener("click",ev=>{
+    if(ev.target.closest("input")) return;
+    if(i===0) play(lines[0][1], clipEnd(lines, lines.length-1), 0);   /* top line: the whole clip, as in TubeQuizard */
+    else play(lines[i][1], clipEnd(lines,i), i);
+  }));
+  const slowBtn = document.getElementById("slow");
+  if(slowBtn) slowBtn.addEventListener("click",()=>{
+    const on = !ls.get("hw-slow"); ls.set("hw-slow", on ? "1" : "");
+    slowBtn.setAttribute("aria-pressed", on); slowBtn.nextElementSibling.textContent = on ? "playing at 0.75" : "tap to slow the clips down";
+    try{ ytPlayer && ytPlayer.setPlaybackRate(on ? 0.75 : 1); }catch(e){}
+  });
+  const answers = lines.flatMap(l => l[3].filter(p=>typeof p!=="string").map(p=>p.gap));
+  app.querySelectorAll(".gap-in").forEach(inp=>{
+    inp.addEventListener("click", ev=>ev.stopPropagation());
+    inp.addEventListener("input", ()=>{ typed[keyOf(+inp.dataset.k)] = inp.value; });
+    inp.addEventListener("keydown", ev=>{ if(ev.key==="Enter"){ ev.preventDefault(); inp.blur(); } });
+  });
+  wireNav(()=>{
+    app.querySelectorAll(".gap-in").forEach(inp=>{
+      const k = +inp.dataset.k, ans = answers[k], val = inp.value.trim();
+      const res = document.createElement("span");
+      if(!val){ res.className = "gap-res ans"; res.textContent = ans; }
+      else {
+        const m = markAnswer(val, [ans]);
+        if(m.ok){ res.className = "gap-res ok"; res.textContent = ans + " ✓"; }
+        else {
+          res.className = "gap-res ans"; res.textContent = ans;
+          const fb = document.createElement("div"); fb.className = "gap-fb";
+          fb.innerHTML = m.plain ? `<span class="chip-x">✗</span> You: ${esc(val)}` : `<span class="chip-x">✗</span> ${m.you} → ${m.fix}`;
+          inp.closest(".ln").appendChild(fb);
+        }
+      }
+      inp.replaceWith(res);
+    });
+    if(canMark()){
+      app.querySelectorAll(".ln").forEach((row,i)=>{
+        const l = lines[i], txt = l[3].map(p=>typeof p==="string"?p:p.gap).join("");
+        row.insertAdjacentHTML("beforeend", markBtn(stepIdx+"-"+i, txt, `https://youtu.be/${l[0]}?t=${Math.floor(l[1])}`)); row.classList.add("has-mk");
+      });
+      const hint = markHint(); if(hint) document.getElementById("after").insertAdjacentHTML("beforebegin", hint.replace("Not sure about something?","Hard to hear?"));
+    }
+    document.getElementById("after").hidden = false;
+    const last = stepIdx === current.steps.length-1;
+    document.getElementById("go").textContent = last ? "Finish" : "Next";
+  });
+}
+
+/* ---------- look back ---------- */
+function renderLookback(st, count, pct){
+  shell({count, pct, instr:"Look back at your answers: how did the box phrases change? Then tap the yellow boxes to check.",
+    stageHTML: `
+      <div class="panel lb">
+        ${LOOKBACK.map(gp=>`<div class="lb-group"><div class="phrase">${esc(gp.p)}</div>
+          ${gp.qa.map(([q,a])=>`<div>${esc(q)}</div><button class="reveal ${checked?"open":""}" aria-label="Show the answer">${esc(a)}</button>`).join("")}</div>`).join("")}
+      </div>`,
+    actionsHTML: navButtons("Show all")});
+  app.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>b.classList.toggle("open")));
+  wireNav(()=>renderTaskKeep());
+}
+
+/* ---------- end ---------- */
+function renderEnd(t){
+  finish(t);
+  shell({stageHTML:`
+    <div class="end">
+      <div class="cloud">This is the end of the task.<br>Takeaways?</div>
+      <p>Mark it in our spreadsheet in your colour.</p>
+    </div>`,
+    actionsHTML:`${t.kind==="steps"?`<button class="btn" id="again">Do it again</button>`:""}<button class="btn primary grow" id="list">All tasks</button>`});
+  document.getElementById("list").addEventListener("click",goHome);
+  const again = document.getElementById("again"); if(again) again.addEventListener("click",()=>openTask(t.id,0));
+  window.scrollTo(0,0);
+}
+
+/* ---------- link-out tasks ---------- */
+function renderLink(t){
+  shell({instr:"For each gap:",
+    stageHTML:`
+      <div class="panel">
+        <p class="pc-note"><b>Best on a computer.</b> TubeQuizard is hard to use on a phone. If you're on your phone now, do this one later at your computer.</p>
+        <ol class="steps-list">${TQ_STEPS.map(s=>`<li>${esc(s)}</li>`).join("")}</ol>
+        <p class="small">TubeQuizard opens in a new tab. Come back here when you've finished.</p>
+        <a class="cta" href="${t.url}" target="_blank" rel="noopener">Open ${esc(t.title.replace("TubeQuizard: ",""))} in TubeQuizard</a>
+      </div>`,
+    actionsHTML:`<button class="btn primary grow" id="fin">I've done it</button>`});
+  document.getElementById("fin").addEventListener("click",()=>{ finish(t); goHome(true); });
+  window.scrollTo(0,0);
+}
+
+/* ---------- over to you: your task → plan (pick phrases) → record and send ---------- */
+const LESSON_TAG = "23.10";
+let recState = {rec:null, stream:null, chunks:[], tick:null, t0:0, file:null, url:null};
+function stopRecorder(){
+  clearInterval(recState.tick);
+  try{ if(recState.rec && recState.rec.state !== "inactive"){ recState.rec.onstop = null; recState.rec.stop(); } }catch(e){}
+  if(recState.stream) recState.stream.getTracks().forEach(tr=>tr.stop());
+  recState.rec = null; recState.stream = null;
+}
+/* ls is defined near the top (progress) */
+const fileBase = name => `${(name||"student").trim().replace(/[^\p{L}\p{N}]+/gu,"-")}_${LESSON_TAG.replace(".","-")}_conversation`;
+const mmss = s => `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
+async function toWav(blob){
+  const AC = window.AudioContext || window.webkitAudioContext; const ctx = new AC();
+  const audio = await ctx.decodeAudioData(await blob.arrayBuffer()); try{ ctx.close(); }catch(e){}
+  const rate = 16000, off = new OfflineAudioContext(1, Math.ceil(audio.duration*rate), rate);
+  const src = off.createBufferSource(); src.buffer = audio; src.connect(off.destination); src.start();
+  const pcm = (await off.startRendering()).getChannelData(0);
+  const out = new DataView(new ArrayBuffer(44 + pcm.length*2));
+  const w = (o,s)=>[...s].forEach((c,i)=>out.setUint8(o+i,c.charCodeAt(0)));
+  w(0,"RIFF"); out.setUint32(4,36+pcm.length*2,true); w(8,"WAVE"); w(12,"fmt "); out.setUint32(16,16,true); out.setUint16(20,1,true); out.setUint16(22,1,true);
+  out.setUint32(24,rate,true); out.setUint32(28,rate*2,true); out.setUint16(32,2,true); out.setUint16(34,16,true); w(36,"data"); out.setUint32(40,pcm.length*2,true);
+  pcm.forEach((v,i)=>{ const x=Math.max(-1,Math.min(1,v)); out.setInt16(44+i*2, x<0?x*0x8000:x*0x7FFF, true); });
+  return new Blob([out], {type:"audio/wav"});
+}
+const draftKey = () => "hw-draft-"+PAGE_KEY;
+const picksKey = () => "hw-picks-"+PAGE_KEY;
+const usedKey = () => "hw-used-"+PAGE_KEY;
+const getList = k => { try{ return JSON.parse(ls.get(k) || "[]"); }catch(e){ return []; } };
+function plainNext(){ checked = true; return navButtons(); }   /* nothing to check on these screens: the button is Next / Finish */
+const taskPeek = () => `<details class="task-peek"><summary><b>Your task</b> <span class="small">tap to see</span></summary><div class="task-card">${TASK_HTML}</div></details>`;
+const modelHTML = () => `<details class="model-peek"><summary><b>The conversation from class</b></summary>
+  <p class="situation">${READ_INTRO}</p><div class="model">${MODEL.map(([sp,line])=>`<p><span class="spk">${sp}:</span> ${line}</p>`).join("")}</div></details>`;
+
+/* 1. the task, short enough to keep in your head */
+function renderTaskCard(st, count, pct){
+  shell({count, pct, instr:"Here's your task. Keep it in mind.",
+    stageHTML:`<div class="panel task-card">${TASK_HTML}</div>`, actionsHTML: plainNext()});
+  wireNav(()=>{});
+}
+
+/* 2. plan: tap the phrases you'll use */
+function renderPlan(st, count, pct){
+  const picks = new Set(getList(picksKey()));
+  const list = MAP.map((g,gi)=>`<h4 class="pick-h">${g.h}</h4>${g.items.map((it,ii)=>{ const [en,r,mean] = it, id = gi+"-"+ii;
+      return `<button class="pick ${picks.has(id)?"on":""}" data-id="${id}" aria-pressed="${picks.has(id)}"><span class="tick" aria-hidden="true"></span>
+        <span class="p-txt"><span class="p-en">${en}</span>${mean?` <span class="mean">— ${mean}</span>`:""}${ru(r)}</span></button>`; }).join("")}`).join("");
+  shell({count, pct, instr:PLAN_INSTR,
+    stageHTML:`<div class="panel">
+        ${taskPeek()}
+        <div class="pick-count small" id="pc" aria-live="polite"></div>
+        <div class="picks">${list}</div>
+        <p class="small tenses"><b>Tenses:</b> ${TENSES}</p>
+        ${modelHTML()}
+      </div>`,
+    actionsHTML: plainNext()});
+  const pc = document.getElementById("pc");
+  const upd = () => { const n = picks.size; pc.textContent = n ? `Picked: ${n}${n>=3?" ✓":""}` : "Nothing picked yet"; };
+  upd();
+  app.querySelectorAll(".pick").forEach(b=>b.addEventListener("click",()=>{
+    const id = b.dataset.id; if(picks.has(id)) picks.delete(id); else picks.add(id);
+    b.classList.toggle("on", picks.has(id)); b.setAttribute("aria-pressed", picks.has(id));
+    ls.set(picksKey(), JSON.stringify([...picks])); upd();
+  }));
+  wireNav(()=>{});
+}
+
+/* 3. record it (or write it), tick the phrases you used, send it */
+function renderProduce(st, count, pct){
+  const mode = ls.get("hw-mode") || "write";
+  const picks = getList(picksKey()), used = new Set(getList(usedKey()));
+  const picked = picks.map(id=>{ const [gi,ii] = id.split("-").map(Number); const it = MAP[gi] && MAP[gi].items[ii]; return it ? {id, en:it[0]} : null; }).filter(Boolean);
+  shell({count, pct, instr:PRODUCE_INSTR,
+    stageHTML:`<div class="panel">
+        ${taskPeek()}
+        <div class="seg" role="tablist">
+          <button class="seg-btn ${mode==="write"?"on":""}" data-mode="write" role="tab" aria-selected="${mode==="write"}">Write it</button>
+          <button class="seg-btn ${mode==="record"?"on":""}" data-mode="record" role="tab" aria-selected="${mode==="record"}">Record it</button>
+        </div>
+        <div id="m-record" ${mode==="record"?"":"hidden"} class="mode">
+          <div class="rec-row" id="rec-row">
+            <button class="rec-btn" id="rec"><span class="dot" aria-hidden="true"></span><span id="rec-label">Start recording</span></button>
+            <span class="count" id="rec-time" aria-live="polite"></span>
+          </div>
+          <div id="rec-review" hidden class="mode">
+            <audio id="rec-audio" controls preload="metadata"></audio>
+            <div class="row-btns"><button class="btn" id="rec-again">Record again</button></div>
+            ${PRODUCE_NOTE}
+          </div>
+          <p class="small" id="rec-msg" hidden></p>
+        </div>
+        <div id="m-write" ${mode==="write"?"":"hidden"} class="mode">
+          <textarea id="txt" rows="7" placeholder="A: …&#10;B: …&#10;(Tap the microphone on your keyboard to dictate.)">${esc(ls.get(draftKey()))}</textarea>
+        </div>
+        <fieldset class="check">
+          <legend>Your phrases</legend>
+          ${picked.length ? `<span class="small">Did you use them? Tick the ones you did.</span>
+            ${picked.map(p=>`<label><input type="checkbox" data-u="${p.id}" ${used.has(p.id)?"checked":""}><span>${p.en}</span></label>`).join("")}`
+            : `<span class="small">You didn't pick any phrases. Tap Back to choose some — or just go ahead.</span>`}
+        </fieldset>
+        <label class="field"><span class="small">Your name</span><input id="who" type="text" autocomplete="given-name" placeholder="Your name" value="${esc(ls.get("hw-name"))}"></label>
+        <div class="row-btns">
+          <button class="btn" id="copy" ${mode==="write"?"":"hidden"}>Copy</button>
+          <button class="btn primary grow" id="send">Send to Olya</button>
+        </div>
+        <p class="small" id="msg" hidden></p>
+      </div>`,
+    actionsHTML: plainNext()});
+  const $ = id => document.getElementById(id), who = $("who");
+  const say = (id, html) => { const el=$(id); el.hidden=false; el.innerHTML=html; };
+  let curMode = mode;
+  app.querySelectorAll(".seg-btn").forEach(b=>b.addEventListener("click",()=>{
+    curMode = b.dataset.mode; ls.set("hw-mode", curMode);
+    app.querySelectorAll(".seg-btn").forEach(x=>{ x.classList.toggle("on", x===b); x.setAttribute("aria-selected", x===b); });
+    $("m-record").hidden = curMode!=="record"; $("m-write").hidden = curMode!=="write"; $("copy").hidden = curMode!=="write";
+  }));
+  who.addEventListener("input",()=>ls.set("hw-name", who.value.trim()));
+  app.querySelectorAll(".check input").forEach(cb=>cb.addEventListener("change",()=>{
+    ls.set(usedKey(), JSON.stringify([...app.querySelectorAll(".check input")].filter(x=>x.checked).map(x=>x.dataset.u)));
+  }));
+  const txt = $("txt"); txt.addEventListener("input",()=>ls.set(draftKey(), txt.value));
+
+  /* recording */
+  const recBtn = $("rec"), label = $("rec-label"), time = $("rec-time");
+  const showReview = () => { $("rec-review").hidden = false; $("rec-row").hidden = true; $("rec-audio").src = recState.url; };
+  if(recState.url) showReview();
+  recBtn.addEventListener("click", async ()=>{
+    if(recState.rec){ recState.rec.stop(); return; }
+    if(!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder)){
+      say("rec-msg","Recording doesn't work in this browser. Open the page in Chrome or Safari on your phone."); return; }
+    try{ recState.stream = await navigator.mediaDevices.getUserMedia({audio:true}); }
+    catch(e){ say("rec-msg","The microphone isn't available here. On your phone, allow the microphone when the browser asks."); return; }
+    const mime = ["audio/mp4","audio/webm;codecs=opus","audio/webm"].find(m=>MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(m)) || "";
+    const rec = new MediaRecorder(recState.stream, mime?{mimeType:mime}:undefined);
+    recState.rec = rec; recState.chunks = [];
+    rec.ondataavailable = ev => { if(ev.data && ev.data.size) recState.chunks.push(ev.data); };
+    rec.onstop = async () => {
+      clearInterval(recState.tick); recState.stream.getTracks().forEach(tr=>tr.stop());
+      const type = rec.mimeType || (recState.chunks[0] && recState.chunks[0].type) || "audio/webm";
+      const blob = new Blob(recState.chunks, {type});
+      recState.rec = null; recState.stream = null;
+      recBtn.classList.remove("on"); label.textContent = "Processing…"; recBtn.disabled = true;
+      let file;
+      if(/mp4|aac|m4a/.test(type)) file = new File([blob], "recording.m4a", {type:"audio/mp4"});
+      else { try{ file = new File([await toWav(blob)], "recording.wav", {type:"audio/wav"}); }catch(e){ file = new File([blob], "recording.webm", {type:"audio/webm"}); } }
+      if(recState.url) URL.revokeObjectURL(recState.url);
+      recState.file = file; recState.url = URL.createObjectURL(file);
+      recBtn.disabled = false; label.textContent = "Start recording"; time.textContent = "";
+      showReview();
+    };
+    rec.start(); recState.t0 = Date.now();
+    recBtn.classList.add("on"); label.textContent = "Stop"; $("rec-msg").hidden = true;
+    recState.tick = setInterval(()=>{ const s=(Date.now()-recState.t0)/1000; time.textContent = mmss(s); if(s>=300) rec.stop(); }, 250);
+  });
+  $("rec-again").addEventListener("click",()=>{ $("rec-review").hidden = true; $("rec-row").hidden = false; recBtn.click(); });
+
+  /* sending */
+  const synced = () => !!myCode() && syncState!=="unknown" && !isTeacher();
+  const usedPhrases = () => [...app.querySelectorAll(".check input")].filter(x=>x.checked).map(x=>{ const l=x.closest("label"); return l ? l.textContent.trim() : ""; }).filter(Boolean);
+  const sentMsg = "Sent ✓ Olya's feedback will appear on the homework page — look for 💬. Now tap Finish.";
+  async function toTable(type, text){
+    const res = await post({action:"submit", code:myCode(), page:PAGE_KEY, date:LESSON.date, task:current.id, title:current.title, type, text, phrases:usedPhrases()});
+    if(res.ok){
+      const list = work[current.id] = work[current.id] || [];
+      const d = new Date(), p2 = n=>String(n).padStart(2,"0");
+      const item = {id:res.id, sent:`${p2(d.getDate())}.${p2(d.getMonth()+1)} ${p2(d.getHours())}:${p2(d.getMinutes())}`, type:type==="recording"?"recording":"text", text, feedback:"", seen:false};
+      const i = list.findIndex(w=>String(w.id)===String(res.id));
+      if(i>-1) list[i] = item; else list.push(item);
+      saveWork();
+    }
+    return res;
+  }
+  const tag = () => `Over to you · ${LESSON_TAG}${who.value.trim()?" · "+who.value.trim():""}`;
+  const done = "If you sent it to Olya, mark the task in our spreadsheet in your colour.";
+  $("copy").addEventListener("click", async ()=>{
+    const text = txt.value.trim(); if(!text){ say("msg","Write or dictate it first."); return; }
+    try{ await navigator.clipboard.writeText(tag()+"\n\n"+text); say("msg","Copied. Paste it into your chat with Olya or into our spreadsheet."); }
+    catch(e){ txt.select(); say("msg","Copying didn't work here. Select the text and copy it."); }
+  });
+  $("send").addEventListener("click", async ()=>{
+    if(curMode==="write"){
+      const text = txt.value.trim(); if(!text){ say("msg","Write or dictate it first."); return; }
+      if(synced()){
+        const b = $("send"); b.disabled = true; say("msg","Sending…");
+        const res = await toTable("text", text); b.disabled = false;
+        say("msg", res.ok ? sentMsg : "It didn't go through — no connection right now. Your text is saved here, so try again in a minute.");
+        return;
+      }
+      if(navigator.share){ try{ await navigator.share({title:tag(), text:tag()+"\n\n"+text}); say("msg",done); return; }catch(e){ if(e && e.name==="AbortError") return; } }
+      $("copy").click(); return;
+    }
+    const f = recState.file; if(!f){ say("msg","Record it first."); return; }
+    const named = new File([f], fileBase(who.value)+f.name.slice(f.name.lastIndexOf(".")), {type:f.type});
+    if(navigator.canShare && navigator.canShare({files:[named]})){
+      try{ await navigator.share({files:[named], title:tag(), text:tag()});
+        if(synced()){ const res = await toTable("recording", ""); say("msg", res.ok ? sentMsg : done); } else say("msg",done);
+        return; }
+      catch(e){ if(e && e.name==="AbortError") return; }
+    }
+    say("msg", `This browser can't send the file directly. <a href="${recState.url}" download="${esc(named.name)}" id="save-rec">Save the recording</a>, then send it to Olya in Telegram.`);
+    const sv = $("save-rec"); if(sv && synced()) sv.addEventListener("click",()=>{ toTable("recording",""); });
+  });
+  wireNav(()=>{});
+}
+
+/* ---------- start ---------- */
+const start = (location.hash||"").replace("#","");
+if(start && TASKS.some(t=>t.id===start)) openTask(start); else renderHome();
+if(myCode()) syncNow();
+</script>
+
+</body>
+</html>
