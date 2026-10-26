@@ -236,7 +236,7 @@ let tdata = null, tpending = 0, tfailed = 0;
 const teacherView = () => !!(myCode() && ls.get("hw-role")==="teacher" && !asStudent() && syncState!=="unknown");
 function tcounts(res){
   const w = res.work || [], ticked = new Set(); Object.values(res.done || {}).forEach(a => a.forEach(i => ticked.add(i)));
-  return { toAnswer: w.filter(x=>!String(x.feedback||"").trim()).length, marked: w.filter(x=>x.type==="marked").length,
+  return { toAnswer: w.filter(x=>!String(x.feedback||"").trim() && (x.type!=="marked" || /\n— /.test(String(x.text||"")))).length, marked: w.filter(x=>x.type==="marked").length,
            questions: w.filter(x=>x.type==="question").length, work: w.filter(x=>x.type==="text"||x.type==="recording").length,
            started: ticked.size, students: (res.students || []).length };
 }
