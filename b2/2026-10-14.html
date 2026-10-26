@@ -130,8 +130,13 @@ details.summary[open] summary::after{content:"Hide"}
 .hot{background:var(--card);border-radius:var(--radius);padding:12px 14px;margin:0 0 16px;border-left:5px solid var(--label)}
 .hot ul{margin:6px 0 0;padding-left:18px;display:grid;gap:4px}
 .hot .small{margin:4px 0 0}
+.hot.wait{border-left-color:var(--instr)}
+.hot.wait li span{color:var(--muted);font-size:.9rem}
+.t-item.t-focus{outline:3px solid var(--instr);outline-offset:2px}
 .t-panel p{margin:0}
 .t-item{margin-top:12px}
+.t-task{margin-bottom:12px}
+.t-item .task-peek{margin:6px 0 8px}
 .t-text{background:var(--ground);border-radius:10px;padding:10px 12px;line-height:1.6}
 .t-link{color:var(--instr);font-weight:700}
 .t-tools{display:flex;gap:6px;flex-wrap:wrap}
@@ -886,13 +891,24 @@ function hotHTML(){
   const hot = TASKS.map(t=>({t, c:teacherCounts(t.id)})).filter(x=>x.c.marked+x.c.questions+x.c.hard>0).sort((a,b)=>(b.c.marked+b.c.questions+b.c.hard)-(a.c.marked+a.c.questions+a.c.hard));
   return `<section class="hot"><b>Where they got stuck</b>${hot.length ? `<ul>${hot.map(x=>`<li><button class="linklike" data-teach="${x.t.id}">${esc(x.t.title)}</button> <span>${[x.c.marked?`🔖 ${x.c.marked}`:"", x.c.questions?`❓ ${x.c.questions}`:"", x.c.hard?`😓 ${x.c.hard} hard`:""].filter(Boolean).join(" · ")}</span></li>`).join("")}</ul>` : `<p class="small">No questions or marks yet.</p>`}</section>`;
 }
+const WAIT_ICON = {text:"✍️ text", recording:"🎙 recording", question:"❓ question", marked:"🔖 marked"};
+function waitHTML(){
+  if(!isTeacher() || !teacherData) return "";
+  const st = teacherData.students || [], hn = hideNames(), pos = Object.fromEntries(TASKS.map((t,i)=>[t.id,i]));
+  const order = {text:0, recording:1, question:2, marked:3};
+  const open = (teacherData.work||[]).filter(w=>!String(w.feedback||"").trim() && pos[w.task] !== undefined)
+    .sort((a,b)=>(pos[a.task]-pos[b.task]) || (order[a.type]-order[b.type]));
+  return `<section class="hot wait"><b>💬 Waiting for your answer${open.length?`: ${open.length}`:""}</b>${open.length
+    ? `<ul>${open.map(w=>`<li><button class="linklike" data-teach="${w.task}" data-wid="${w.id}">${hn ? "" : esc((st[w.s]||{}).name||"") + " — "}${esc(TASKS[pos[w.task]].title)}</button> <span>${WAIT_ICON[w.type]||""}</span></li>`).join("")}</ul>`
+    : `<p class="small">Nothing to answer on this homework.</p>`}</section>`;
+}
 function wireTeacher(){
-  document.querySelectorAll("[data-teach]").forEach(b=>{ if(b._t) return; b._t = 1; b.addEventListener("click",()=>renderTeacherTask(b.dataset.teach)); });
+  document.querySelectorAll("[data-teach]").forEach(b=>{ if(b._t) return; b._t = 1; b.addEventListener("click",()=>renderTeacherTask(b.dataset.teach, b.dataset.wid)); });
   const h = document.getElementById("hide-names");
   if(h && !h._t){ h._t = 1; h.addEventListener("click",()=>{ ls.set("hw-hide", hideNames() ? "" : "1"); const y = scrollY; renderHome(); scrollTo(0,y); }); }
 }
 const wrapSel = (ta, a, b) => { const s = ta.selectionStart, e = ta.selectionEnd, v = ta.value; if(s===e) return; ta.value = v.slice(0,s) + a + v.slice(s,e) + b + v.slice(e); ta.focus(); ta.setSelectionRange(s, e + a.length + b.length); ta.dispatchEvent(new Event("input")); };
-function renderTeacherTask(id){
+function renderTeacherTask(id, wid){
   const t = TASKS.find(x=>x.id===id); if(!t || !teacherData) return;
   stopPlayer(); stopRecorder(); current = t; stepIdx = 0; checked = false;
   const st = teacherData.students || [], dn = new Set((teacherData.done||{})[id] || []), hn = hideNames();
@@ -901,14 +917,15 @@ function renderTeacherTask(id){
   const order = {marked:0, question:1, text:2, recording:3};
   const items = (teacherData.work||[]).filter(x=>x.task===id).sort((a,b)=>order[a.type]-order[b.type]);
   const icon = {marked:"🔖 Marked", question:"❓ Question", text:"✍️ Their text", recording:"🎙 Recording"};
+  const taskCard = (t.steps||[]).some(s=>s.type==="task") && String(TASK_HTML||"").trim();   /* Over to you: the task in front of her */
   const body = w => {
     const lines = String(w.text||"").split("\n"), links = lines.filter(l=>/^https?:/.test(l)), txt = lines.filter(l=>!/^https?:/.test(l)).join("\n");
     if(w.type==="recording") return `<p class="small">Sent in Telegram.</p>`;
-    if(w.type==="text") return `<div class="t-text">${esc(txt).replace(/\n/g,"<br>")}</div>${w.phrases?`<p class="small">Phrases they planned to use: ${esc(w.phrases.replace(/\n/g," · "))}</p>`:""}`;
+    if(w.type==="text") return `${taskCard?`<details class="task-peek"><summary><b>The task</b> <span class="small">tap to see</span></summary><div class="task-card">${TASK_HTML}</div></details>`:""}<div class="t-text">${esc(txt).replace(/\n/g,"<br>")}</div>${w.phrases?`<p class="small">Phrases they planned to use: ${esc(w.phrases.replace(/\n/g," · "))}</p>`:""}`;
     return `<p class="fb-q">${esc(txt).replace(/\n/g,"<br>")}</p>${links.map(l=>`<a class="t-link" href="${esc(l)}" target="_blank" rel="noopener">▶ Listen to this line on YouTube</a>`).join("")}`;
   };
   shell({instr: hn ? "Names are hidden — good for sharing your screen." : "Your group on this task. Tap Write feedback to answer — the student sees it under the task.",
-    stageHTML: `<div class="panel t-panel">
+    stageHTML: `${taskCard?`<div class="panel task-card t-task">${TASK_HTML}</div>`:""}<div class="panel t-panel">
         <p><b>Done:</b> ${hn ? `${dn.size} of ${st.length}` : st.map((s,i)=>`<span class="t-chip wide ${dn.has(i)?"on":""}">${esc(s.name)}</span>`).join(" ")}</p>
         ${r.easy.length+r.ok.length+r.hard.length ? `<p><b>How was it:</b> Easy ${r.easy.length} · OK ${r.ok.length} · Hard ${r.hard.length}${!hn && r.hard.length ? ` (${r.hard.map(i=>esc((st[i]||{}).name||"")).join(", ")})` : ""}</p>` : ""}
       </div>
@@ -941,6 +958,8 @@ function renderTeacherTask(id){
     ta.focus();
   }));
   window.scrollTo(0,0);
+  const focus = wid && app.querySelector(`.t-item[data-w="${wid}"]`);
+  if(focus){ focus.classList.add("t-focus"); focus.scrollIntoView({block:"center"}); }
 }
 function refreshMeter(){ const m = document.getElementById("meter-slot"); if(m && !current) m.innerHTML = (myCode() && syncState!=="unknown") ? meterHTML(groupStats) : ""; }
 function footHTML(){
@@ -967,7 +986,7 @@ function renderHome(justDone){
             <button class="status" data-toggle="${t.id}" aria-pressed="${done.has(t.id)}" aria-label="${done.has(t.id)?"Done — tap to untick":"Tap to mark as done"}">✓</button>
           </div><div data-fbslot="${t.id}">${isTeacher() ? teacherLine(t.id) : fbLine(t.id)}</div></div>`;
   app.innerHTML = `
-    ${justDone?`<div class="done-banner" role="status">✓ Done!${lastDone && myCode() && syncState!=="unknown" ? ` +${framesOf(lastDone)} 🎞 for our group.` : " Mark it in our spreadsheet in your colour."}${reactHTML()}</div>`:""}
+    ${justDone?`<div class="done-banner" role="status">✓ Done!${isTeacher() ? " Teacher view: nothing was sent and nothing counts for the group." : lastDone && myCode() && syncState!=="unknown" ? ` +${framesOf(lastDone)} 🎞 for our group.` : " Mark it in our spreadsheet in your colour."}${reactHTML()}</div>`:""}
     <header class="lesson-head">
       ${ON_SITE?`<a class="all-hw" href="index.html">← All homework</a>`:""}
       <span class="date">${LESSON.date}</span>
@@ -977,7 +996,7 @@ function renderHome(justDone){
     </header>
     <div id="sync-slot">${syncHTML()}</div>
     <div id="meter-slot">${(myCode() && syncState!=="unknown") ? meterHTML(groupStats) : ""}</div>
-    ${hotHTML()}
+    ${waitHTML()}${hotHTML()}
     ${TOPICS.map((tp,ti)=>`
       <section class="topic ${tp.id==="earlier"?"topic-earlier":"topic-"+(ti%2)}">
         <div class="topic-head"><span class="topic-n">${tp.id==="earlier"?"Look back":"Topic "+(ti+1)}</span><h2>${esc(tp.title)}</h2><p>${esc(tp.sub)}</p></div>
@@ -987,12 +1006,12 @@ function renderHome(justDone){
           return ts.length ? `<div class="sec"><h3 class="sec-label">${sec}</h3>${ts.map(taskBtn).join("")}</div>` : ""; }).join("")}
       </section>`).join("")}
     <div class="foot" id="foot">${footHTML()}</div>`;
-  app.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>openTask(b.dataset.open)));
+  app.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=> isTeacher() && teacherData ? renderTeacherTask(b.dataset.open) : openTask(b.dataset.open)));
   app.querySelectorAll("[data-toggle]").forEach(b=>b.addEventListener("click",()=>{
     const id = b.dataset.toggle; setMark(id, !done.has(id)); refreshTicks();
   }));
   app.classList.toggle("teacher", isTeacher()); wireTeacher();
-  wireSync(); wireFb(); if(justDone){ wireReact(); setTimeout(()=>confetti(false), 120); } else lastDone = null;
+  wireSync(); wireFb(); if(justDone){ wireReact(); if(!isTeacher()) setTimeout(()=>confetti(false), 120); } else lastDone = null;
   window.scrollTo(0,0);
 }
 
@@ -1344,10 +1363,12 @@ function renderListen(st, count, pct){
       if(tnow >= to){ ytPlayer.pauseVideo(); clearInterval(ytTimer); rows.forEach(m=>m.classList.remove("playing")); }
     }, 100);
   };
+  /* as in TubeQuizard (its offset = 1): start a second before the line and stop a second after it, so the first words are never cut off */
+  const LEAD = 1;
   rows.forEach((row,i)=>row.addEventListener("click",ev=>{
     if(ev.target.closest("input")) return;
-    if(i===0) play(lines[0][1], clipEnd(lines, lines.length-1), 0);   /* top line: the whole clip, as in TubeQuizard */
-    else play(lines[i][1], clipEnd(lines,i), i);
+    if(i===0) play(Math.max(0, lines[0][1] - LEAD), clipEnd(lines, lines.length-1) + LEAD, 0);   /* top line: the whole clip, as in TubeQuizard */
+    else play(Math.max(0, lines[i][1] - LEAD), lines[i][1] + lines[i][2] + LEAD, i);
   }));
   const slowBtn = document.getElementById("slow");
   if(slowBtn) slowBtn.addEventListener("click",()=>{
@@ -1381,7 +1402,7 @@ function renderListen(st, count, pct){
     if(canMark()){
       app.querySelectorAll(".ln").forEach((row,i)=>{
         const l = lines[i], txt = l[3].map(p=>typeof p==="string"?p:p.gap).join("");
-        row.insertAdjacentHTML("beforeend", markBtn(stepIdx+"-"+i, txt, `https://youtu.be/${l[0]}?t=${Math.floor(l[1])}`)); row.classList.add("has-mk");
+        row.insertAdjacentHTML("beforeend", markBtn(stepIdx+"-"+i, txt, `https://youtu.be/${l[0]}?t=${Math.max(0, Math.floor(l[1]) - 1)}`)); row.classList.add("has-mk");
       });
       const hint = markHint(); if(hint) document.getElementById("after").insertAdjacentHTML("beforebegin", hint.replace("Not sure about something?","Hard to hear?"));
     }
