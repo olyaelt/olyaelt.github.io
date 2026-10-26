@@ -120,6 +120,9 @@ details.summary[open] summary::after{content:"Hide"}
 .preview-bar{align-items:center;background:var(--card);border:2px dashed var(--instr);border-radius:12px;padding:8px 12px;color:var(--ink)}
 .chip-t{font:inherit;font-size:.9rem;font-weight:700;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:3px 12px;cursor:pointer}
 .chip-t[aria-pressed="true"]{border-color:var(--instr);background:var(--instr);color:var(--instr-ink)}
+.t-strip{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 12px;width:100%;margin:0 0 12px;padding:9px 12px;text-align:left;font:inherit;font-size:.95rem;color:var(--ink);background:var(--card);border:1px solid var(--line);border-left:5px solid var(--line);border-radius:10px;cursor:pointer}
+.t-strip.open{border-left-color:var(--instr)}
+.t-strip-go{color:var(--instr);font-weight:700;white-space:nowrap}
 .t-line{display:flex;flex-wrap:wrap;align-items:center;gap:5px;width:100%;text-align:left;background:transparent;border:0;padding:8px 4px 2px;cursor:pointer;font:inherit}
 .t-chip{display:inline-grid;place-items:center;min-width:30px;height:26px;padding:0 6px;border-radius:7px;border:1.5px solid var(--line);background:var(--card);color:var(--muted);font-size:.8rem;font-weight:700}
 .t-chip.on{background:var(--done);border-color:var(--done);color:#fff}
@@ -143,9 +146,15 @@ details.summary[open] summary::after{content:"Hide"}
 .tool{font:inherit;font-weight:700;border-radius:8px;padding:5px 10px;cursor:pointer;border:2px solid var(--line);background:var(--card)}
 .tool.good{background:var(--good-hl);color:var(--hl-ink)}
 .tool.del{color:var(--strike);text-decoration:line-through}
-.tool.ins{color:var(--answer);background:var(--fix-bg)}
+.tool.ins{color:#0000FF;background:var(--hl)}
+.tool.cmt{color:var(--answer);background:var(--fix-bg)}
 .t-ta{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
 .t-prev{border:1px dashed var(--line);border-radius:10px;padding:10px 12px;min-height:2em}
+.t-fb{display:grid;gap:8px;margin-top:8px}
+.t-prev-h{margin-bottom:-4px}
+.t-copy{margin-left:auto}
+.t-msg{align-self:center}
+.hot.wait .tool{margin-left:8px;font-size:.9rem;padding:3px 8px}
 .t-prev:empty{display:none}
 .t-msg:empty{display:none}
 .mk{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--instr);font:inherit;font-weight:900;font-size:.95rem;line-height:1;cursor:pointer;display:inline-grid;place-items:center;vertical-align:middle;margin-left:6px;padding:0}
@@ -187,7 +196,8 @@ details.summary[open] summary::after{content:"Hide"}
 .fb-text{font-size:var(--step-1);line-height:1.6}
 .fb-good{background:var(--good-hl);color:var(--hl-ink);border-radius:2px;padding:0 2px;font-weight:inherit;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .fb-del{text-decoration:line-through;text-decoration-thickness:2px;color:var(--strike)}
-.fb-ins{color:var(--answer);font-weight:900;background:var(--fix-bg);border-radius:3px;padding:0 2px;text-decoration:none}
+.fb-ins{color:#0000FF;font-weight:900;background:var(--hl);border-radius:3px;padding:0 2px;text-decoration:none;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.fb-note{color:var(--answer);font-weight:700;background:var(--fix-bg);border-radius:3px;padding:0 3px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .fb-orig summary{cursor:pointer;color:var(--muted)}
 .fb-sent{margin-top:6px;white-space:normal}
 .task-row{position:relative}
@@ -1704,7 +1714,7 @@ function syncHTML(){
       <button class="chip-t" id="as-teacher">Back to teacher view</button></div>`;
   if(code && syncState!=="unknown" && ls.get("hw-role")==="teacher") return `<div class="sync sync-on teacher-bar">
       <span>👩‍🏫 <b>Teacher view</b>${who?` — ${esc(who)}`:""}${teacherData?"":" · loading…"}</span>
-      <button class="chip-t" id="hide-names" aria-pressed="${hideNames()}">🙈 Hide names</button>
+      <button class="chip-t" id="hide-names" aria-pressed="${hideNames()}">👁️ Hide names</button>
       <button class="chip-t" id="as-student">👀 Student view</button>
       <button class="linklike" id="code-change">Not you?</button></div>`;
   if(code && syncState!=="unknown") return `<div class="sync sync-on">
@@ -1765,6 +1775,7 @@ function wireFb(){ document.querySelectorAll("[data-fb]").forEach(b=>{ if(b._w) 
 const fbHTML = s => esc(s)
   .replace(/\*\*([\s\S]+?)\*\*/g,'<b class="fb-good">$1</b>')
   .replace(/~~([\s\S]+?)~~/g,'<s class="fb-del">$1</s>')
+  .replace(/\[\[([\s\S]+?)\]\]/g,'<span class="fb-note">$1</span>')
   .replace(/\{([\s\S]+?)\}/g,'<ins class="fb-ins">$1</ins>')
   .replace(/\n/g,"<br>");
 function renderFeedback(id){
@@ -1772,7 +1783,7 @@ function renderFeedback(id){
   stopPlayer(); stopRecorder(); current = t;
   const list = (work[id]||[]).slice().reverse();
   shell({instr:"Here's Olya's feedback on your work.",
-    stageHTML: `<p class="fb-key small"><b class="fb-good">green</b> = great, keep it · <s class="fb-del">grey</s> = change this · <ins class="fb-ins">blue</ins> = Olya's words</p>` +
+    stageHTML: `<p class="fb-key small"><b class="fb-good">green</b> = great, keep it · <s class="fb-del">grey</s> = change this · <ins class="fb-ins">yellow</ins> = a better way to say it · <span class="fb-note">blue</span> = Olya's comment</p>` +
       list.map(w=>`<div class="panel fb-item">
         <div class="small">${w.type==="recording"?"🎙 Your recording":w.type==="question"?"❓ Your question":w.type==="marked"?"🔖 You marked":"✍️ Your text"} · sent ${esc(w.sent||"")}</div>
         ${(w.type==="question"||w.type==="marked") ? `<p class="fb-q">${esc(String(w.text||"").split("\n").filter(l=>!/^https?:/.test(l)).join(" "))}</p>` : ""}
@@ -1953,16 +1964,42 @@ function waitHTML(){
   const order = {text:0, recording:1, question:2, marked:3};
   const open = (teacherData.work||[]).filter(w=>!String(w.feedback||"").trim() && pos[w.task] !== undefined)
     .sort((a,b)=>(pos[a.task]-pos[b.task]) || (order[a.type]-order[b.type]));
-  return `<section class="hot wait"><b>💬 Waiting for your answer${open.length?`: ${open.length}`:""}</b>${open.length
+  return `<section class="hot wait"><b>💬 Waiting for your answer${open.length?`: ${open.length}`:""}</b>${open.length?` <button class="tool" id="copy-wait">📋 Copy all for Claude</button>`:""}${open.length
     ? `<ul>${open.map(w=>`<li><button class="linklike" data-teach="${w.task}" data-wid="${w.id}">${hn ? "" : esc((st[w.s]||{}).name||"") + " — "}${esc(TASKS[pos[w.task]].title)}</button> <span>${WAIT_ICON[w.type]||""}</span></li>`).join("")}</ul>`
     : `<p class="small">Nothing to answer on this homework.</p>`}</section>`;
 }
 function wireTeacher(){
   document.querySelectorAll("[data-teach]").forEach(b=>{ if(b._t) return; b._t = 1; b.addEventListener("click",()=>renderTeacherTask(b.dataset.teach, b.dataset.wid)); });
+  const cw = document.getElementById("copy-wait");
+  if(cw && !cw._t){ cw._t = 1; cw.addEventListener("click",()=>{
+    const pos = Object.fromEntries(TASKS.map((t,i)=>[t.id,i]));
+    const open = (teacherData.work||[]).filter(w=>!String(w.feedback||"").trim() && pos[w.task] !== undefined);
+    const text = TASKS.filter(t=>open.some(w=>w.task===t.id)).map(t=>taskForClaude(t) + "\n\n" + open.filter(w=>w.task===t.id).map(w=>itemForClaude(w)).join("\n\n")).join("\n\n----------\n\n");
+    copyText(text, cw);
+  }); }
   const h = document.getElementById("hide-names");
   if(h && !h._t){ h._t = 1; h.addEventListener("click",()=>{ ls.set("hw-hide", hideNames() ? "" : "1"); const y = scrollY; renderHome(); scrollTo(0,y); }); }
 }
 const wrapSel = (ta, a, b) => { const s = ta.selectionStart, e = ta.selectionEnd, v = ta.value; if(s===e) return; ta.value = v.slice(0,s) + a + v.slice(s,e) + b + v.slice(e); ta.focus(); ta.setSelectionRange(s, e + a.length + b.length); ta.dispatchEvent(new Event("input")); };
+/* ---------- copying for Claude: the homework, the task, each student's text with its ID ---------- */
+const htmlLines = h => { const d = document.createElement("div");
+  d.innerHTML = String(h||"").replace(/<li[^>]*>/gi,"\n- ").replace(/<\/(p|h\d|div|ul|ol)>/gi,"\n").replace(/<br\s*\/?>/gi,"\n");
+  return d.textContent.split("\n").map(l=>l.replace(/\s+/g," ").trim()).filter(Boolean).join("\n"); };
+const hasTaskCard = t => (t.steps||[]).some(s=>s.type==="task") && !!String(TASK_HTML||"").trim();
+const taskForClaude = t => `Homework ${LESSON.date} (${GROUP_ID.toUpperCase()}) · ${t.title}` + (hasTaskCard(t) ? `\n${htmlLines(TASK_HTML).replace(/^Your task\n/,"Task:\n")}` : "");
+const textOf = w => String(w.text||"").split("\n").filter(l=>!/^https?:/.test(l)).join("\n");
+function itemForClaude(w, draft){
+  const st = teacherData.students || [], name = hideNames() ? "Student" : ((st[w.s]||{}).name || "Student");
+  const d = String(draft == null ? (w.feedback||"") : draft).trim();
+  return `### ${name} — ${WAIT_ICON[w.type]||w.type} · ID ${w.id}\n${textOf(w)}` + (d && d !== textOf(w).trim() ? `\n— my draft feedback:\n${d}` : "");
+}
+async function copyText(s, btn){
+  let ok = false;
+  try{ await navigator.clipboard.writeText(s); ok = true; }catch(e){}
+  if(!ok){ const ta = document.createElement("textarea"); ta.value = s; ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select();
+    try{ ok = document.execCommand("copy"); }catch(e){} ta.remove(); }
+  if(btn){ const was = btn.textContent; btn.textContent = ok ? "✓ Copied" : "Couldn't copy"; setTimeout(()=>{ btn.textContent = was; }, 1600); }
+}
 function renderTeacherTask(id, wid){
   const t = TASKS.find(x=>x.id===id); if(!t || !teacherData) return;
   stopPlayer(); stopRecorder(); current = t; stepIdx = 0; checked = false;
@@ -1972,46 +2009,54 @@ function renderTeacherTask(id, wid){
   const order = {marked:0, question:1, text:2, recording:3};
   const items = (teacherData.work||[]).filter(x=>x.task===id).sort((a,b)=>order[a.type]-order[b.type]);
   const icon = {marked:"🔖 Marked", question:"❓ Question", text:"✍️ Their text", recording:"🎙 Recording"};
-  const taskCard = (t.steps||[]).some(s=>s.type==="task") && String(TASK_HTML||"").trim();   /* Over to you: the task in front of her */
-  const body = w => {
-    const lines = String(w.text||"").split("\n"), links = lines.filter(l=>/^https?:/.test(l)), txt = lines.filter(l=>!/^https?:/.test(l)).join("\n");
+  const taskCard = hasTaskCard(t);   /* Over to you: the task in front of her */
+  const startOf = w => String(w.feedback||"").trim() ? w.feedback : (w.type==="text" ? textOf(w) : "");
+  const rowsOf = s => Math.min(18, Math.max(3, String(s).split("\n").length + 1));
+  const sentAs = w => {
+    const lines = String(w.text||"").split("\n"), links = lines.filter(l=>/^https?:/.test(l));
     if(w.type==="recording") return `<p class="small">Sent in Telegram.</p>`;
-    if(w.type==="text") return `${taskCard?`<details class="task-peek"><summary><b>The task</b> <span class="small">tap to see</span></summary><div class="task-card">${TASK_HTML}</div></details>`:""}<div class="t-text">${esc(txt).replace(/\n/g,"<br>")}</div>${w.phrases?`<p class="small">Phrases they planned to use: ${esc(w.phrases.replace(/\n/g," · "))}</p>`:""}`;
-    return `<p class="fb-q">${esc(txt).replace(/\n/g,"<br>")}</p>${links.map(l=>`<a class="t-link" href="${esc(l)}" target="_blank" rel="noopener">▶ Listen to this line on YouTube</a>`).join("")}`;
+    if(w.type==="text") return `${taskCard?`<details class="task-peek"><summary><b>The task</b> <span class="small">tap to see</span></summary><div class="task-card">${TASK_HTML}</div></details>`:""}`
+      + `<details class="task-peek"><summary><b>What they sent</b> <span class="small">tap to see</span></summary><div class="t-text">${esc(textOf(w)).replace(/\n/g,"<br>")}</div>${w.phrases?`<p class="small">Phrases they planned to use: ${esc(w.phrases.replace(/\n/g," · "))}</p>`:""}</details>`;
+    return `<p class="fb-q">${esc(textOf(w)).replace(/\n/g,"<br>")}</p>${links.map(l=>`<a class="t-link" href="${esc(l)}" target="_blank" rel="noopener">▶ Listen to this line on YouTube</a>`).join("")}`;
   };
-  shell({instr: hn ? "Names are hidden — good for sharing your screen." : "Your group on this task. Tap Write feedback to answer — the student sees it under the task.",
+  const saved = w => String(w.feedback||"").trim();
+  shell({instr: hn ? "Names are hidden — good for sharing your screen." : "Select words, then ✓ Good or ✗ Change. ✎ Correction (yellow) and 💬 Comment (blue) go round the selected words or open where the cursor is. Save — the student sees it under the task.",
     stageHTML: `${taskCard?`<div class="panel task-card t-task">${TASK_HTML}</div>`:""}<div class="panel t-panel">
         <p><b>Done:</b> ${hn ? `${dn.size} of ${st.length}` : st.map((s,i)=>`<span class="t-chip wide ${dn.has(i)?"on":""}">${esc(s.name)}</span>`).join(" ")}</p>
         ${r.easy.length+r.ok.length+r.hard.length ? `<p><b>How was it:</b> Easy ${r.easy.length} · OK ${r.ok.length} · Hard ${r.hard.length}${!hn && r.hard.length ? ` (${r.hard.map(i=>esc((st[i]||{}).name||"")).join(", ")})` : ""}</p>` : ""}
+        ${items.length ? `<p><button class="tool" id="t-copy-all">📋 Copy all for Claude</button></p>` : ""}
       </div>
       ${items.length ? items.map(w=>`<div class="panel t-item" data-w="${w.id}">
           <div class="small">${icon[w.type]} · ${who(w.s)}${esc(w.sent||"")}${w.seen?" · seen ✓":""}</div>
-          ${body(w)}
-          <div class="t-fb">${String(w.feedback||"").trim() ? `<div class="fb-text">${fbHTML(w.feedback)}</div><button class="btn t-edit" data-edit="${w.id}">Edit feedback</button>` : `<button class="btn primary t-edit" data-edit="${w.id}">Write feedback</button>`}</div>
+          ${sentAs(w)}
+          <div class="t-fb">
+            <div class="t-tools"><button class="tool good" data-wrap="**|**">✓ Good</button><button class="tool del" data-wrap="~~|~~">✗ Change</button><button class="tool ins" data-mark="ins">✎ Correction</button><button class="tool cmt" data-mark="note">💬 Comment</button><button class="tool t-copy" data-copy="${w.id}">📋 Copy</button></div>
+            <textarea class="t-ta" rows="${rowsOf(startOf(w))}" aria-label="Feedback for this student">${esc(startOf(w))}</textarea>
+            <div class="small t-prev-h">What the student sees:</div>
+            <div class="fb-text t-prev"></div>
+            <div class="row-btns"><button class="btn primary" data-save>Save</button><span class="small t-msg">${saved(w) ? "✓ Saved" : "Not saved yet"}</span></div>
+          </div>
         </div>`).join("") : `<div class="panel"><p class="small">Nothing sent for this task yet.</p></div>`}`,
-    actionsHTML: `<button class="btn" id="t-open">Open the task</button><button class="btn primary grow" id="t-home">Back to all tasks</button>`});
+    actionsHTML: `<button class="btn" id="t-open">Open the task</button><button class="btn primary grow" id="t-home">Back to all tasks</button>`, panel: true});
   document.getElementById("t-home").addEventListener("click", goHome);
   document.getElementById("t-open").addEventListener("click", ()=>openTask(id));
-  app.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>{
-    const w = items.find(x=>String(x.id)===b.dataset.edit), box = b.closest(".t-fb");
-    const start = String(w.feedback||"").trim() ? w.feedback : (w.type==="text" ? String(w.text||"") : "");
-    box.innerHTML = `<div class="t-tools"><button class="tool good" data-wrap="**|**">✓ Good</button><button class="tool del" data-wrap="~~|~~">✗ Change</button><button class="tool ins" data-wrap="{|}">✎ Your words</button></div>
-      <textarea class="t-ta" rows="6">${esc(start)}</textarea>
-      <div class="fb-text t-prev"></div>
-      <div class="row-btns"><button class="btn" data-cancel>Cancel</button><button class="btn primary grow" data-save>Save</button></div><p class="small t-msg"></p>`;
-    const ta = box.querySelector(".t-ta"), prev = box.querySelector(".t-prev");
-    const upd = () => { prev.innerHTML = fbHTML(ta.value); }; upd(); ta.addEventListener("input", upd);
-    box.querySelectorAll("[data-wrap]").forEach(x=>x.addEventListener("mousedown", e=>e.preventDefault()));
-    box.querySelectorAll("[data-wrap]").forEach(x=>x.addEventListener("click",()=>{ const [a,c] = x.dataset.wrap.split("|"); wrapSel(ta, a, c); }));
-    box.querySelector("[data-cancel]").addEventListener("click",()=>{ const y = scrollY; renderTeacherTask(id); scrollTo(0,y); });
-    box.querySelector("[data-save]").addEventListener("click", async ()=>{
-      const msg = box.querySelector(".t-msg"); msg.textContent = "Saving…";
+  const all = document.getElementById("t-copy-all");
+  if(all) all.addEventListener("click", ()=>copyText(taskForClaude(t) + "\n\n" + items.map(w=>itemForClaude(w, app.querySelector(`.t-item[data-w="${w.id}"] .t-ta`).value)).join("\n\n"), all));
+  app.querySelectorAll(".t-item").forEach(card=>{
+    const w = items.find(x=>String(x.id)===card.dataset.w), ta = card.querySelector(".t-ta"), prev = card.querySelector(".t-prev"), msg = card.querySelector(".t-msg");
+    const upd = () => { prev.innerHTML = fbHTML(ta.value); }; upd();
+    ta.addEventListener("input", ()=>{ upd(); msg.textContent = ta.value === String(w.feedback||"") ? (saved(w) ? "✓ Saved" : "Not saved yet") : "Changes not saved"; });
+    card.querySelectorAll("[data-wrap]").forEach(x=>x.addEventListener("mousedown", e=>e.preventDefault()));
+    card.querySelectorAll("[data-wrap]").forEach(x=>x.addEventListener("click",()=>{ const [a,c] = x.dataset.wrap.split("|"); wrapSel(ta, a, c); }));
+    card.querySelectorAll("[data-mark]").forEach(x=>{ x.addEventListener("mousedown", e=>e.preventDefault()); x.addEventListener("click",()=>markSel(ta, x.dataset.mark)); });
+    card.querySelector("[data-copy]").addEventListener("click", e=>copyText(taskForClaude(t) + "\n\n" + itemForClaude(w, ta.value), e.currentTarget));
+    card.querySelector("[data-save]").addEventListener("click", async ()=>{
+      msg.textContent = "Saving…";
       const res = await post({action:"feedback", code:myCode(), page:PAGE_KEY, id:w.id, text:ta.value});
-      if(res.ok){ w.feedback = ta.value; const y = scrollY; renderTeacherTask(id); scrollTo(0,y); }
+      if(res.ok){ w.feedback = ta.value; msg.textContent = "✓ Saved — the student sees it"; }
       else msg.textContent = "It didn't save — no connection. Your text is still here.";
     });
-    ta.focus();
-  }));
+  });
   window.scrollTo(0,0);
   const focus = wid && app.querySelector(`.t-item[data-w="${wid}"]`);
   if(focus){ focus.classList.add("t-focus"); focus.scrollIntoView({block:"center"}); }
@@ -2026,6 +2071,17 @@ function refreshFoot(){ const f = document.getElementById("foot"); if(f) f.inner
 
 const app = document.getElementById("app");
 let current = null, stepIdx = 0, checked = false;
+/* ✎ Correction = {…}, 💬 Comment = [[…]]: inside the other kind → switch it; words selected → wrap them; nothing selected → an empty pair at the cursor */
+function markSel(ta, kind){
+  const [a, b] = kind === "note" ? ["[[", "]]"] : ["{", "}"], other = kind === "note" ? /\{([^{}]*)\}/g : /\[\[([\s\S]*?)\]\]/g;
+  const v = ta.value, s = ta.selectionStart, e = ta.selectionEnd;
+  const put = (val, from, to) => { ta.value = val; ta.focus(); ta.setSelectionRange(from, to); ta.dispatchEvent(new Event("input")); };
+  let m;
+  while((m = other.exec(v))){ const from = m.index, to = from + m[0].length;
+    if(s >= from && e <= to) return put(v.slice(0, from) + a + m[1] + b + v.slice(to), from + a.length, from + a.length + m[1].length); }
+  if(s === e){ const sp = s > 0 && !/\s/.test(v[s-1]) ? " " : ""; return put(v.slice(0, s) + sp + a + b + v.slice(s), s + sp.length + a.length, s + sp.length + a.length); }
+  wrapSel(ta, a, b);
+}
 const typed = {};   /* what the student typed, kept while the page is open */
 const norm = s => String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/[.!?,;:]+$/,"").replace(/\s+/g," ").trim();
 
@@ -2061,7 +2117,7 @@ function renderHome(justDone){
           return ts.length ? `<div class="sec"><h3 class="sec-label">${sec}</h3>${ts.map(taskBtn).join("")}</div>` : ""; }).join("")}
       </section>`).join("")}
     <div class="foot" id="foot">${footHTML()}</div>`;
-  app.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=> isTeacher() && teacherData ? renderTeacherTask(b.dataset.open) : openTask(b.dataset.open)));
+  app.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>openTask(b.dataset.open)));
   app.querySelectorAll("[data-toggle]").forEach(b=>b.addEventListener("click",()=>{
     const id = b.dataset.toggle; setMark(id, !done.has(id)); refreshTicks();
   }));
@@ -2077,17 +2133,25 @@ function openTask(id, idx=0){
   try{ if(location.hash !== "#"+id) history.replaceState(null,"","#"+id); }catch(e){}
   renderTask();
 }
-function shell({count, pct, instr, stageHTML, withBox, actionsHTML}){
+function teacherStrip(id){
+  if(!isTeacher() || !teacherData) return "";
+  const st = teacherData.students || [], dn = ((teacherData.done||{})[id] || []).length, c = teacherCounts(id);
+  const bits = [`${dn} of ${st.length} done`, c.questions?`❓ ${c.questions}`:"", c.marked?`🔖 ${c.marked}`:"", c.work?`✍️ ${c.work}`:"", c.hard?`😓 ${c.hard}`:"", c.open?`<b>💬 ${c.open} to answer</b>`:""].filter(Boolean).join(" · ");
+  return `<button class="t-strip ${c.open?"open":""}" id="t-strip" data-strip="${id}"><span>👩‍🏫 ${bits}</span><span class="t-strip-go">Students' work →</span></button>`;
+}
+function shell({count, pct, instr, stageHTML, withBox, actionsHTML, panel}){
   app.innerHTML = `
     <div class="taskbar">
       <div class="taskbar-row"><button class="back" id="home">← All tasks</button>${count?`<span class="count">${count}</span>`:""}</div>
       ${pct!=null?`<div class="bar" aria-hidden="true"><i style="width:${pct}%"></i></div>`:""}
       <h2 class="task-title">${esc(current.title)}</h2>
     </div>
+    ${panel ? "" : teacherStrip(current.id)}
     ${instr?`<div class="instr">${instr}</div>`:""}
     <div class="stage ${withBox?"with-box":""}">${stageHTML}</div>
     <div class="actions">${actionsHTML}</div>`;
   document.getElementById("home").addEventListener("click",goHome);
+  const ts = document.getElementById("t-strip"); if(ts) ts.addEventListener("click",()=>renderTeacherTask(ts.dataset.strip));
 }
 function goHome(justDone){ stopPlayer(); stopRecorder(); try{ history.replaceState(null,"",location.pathname+location.search); }catch(e){} renderHome(justDone===true); }
 

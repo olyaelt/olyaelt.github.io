@@ -111,6 +111,7 @@ h1{margin:0;font-size:var(--step-2);line-height:1.2;font-weight:900}
 .tb b{color:var(--label)}
 .t-sum{margin:0 0 14px;font-weight:900;color:var(--label)}
 .t-sum.none{color:var(--done)}
+.t-sum.checking{color:var(--muted)}
 .fb{font-weight:700;color:var(--answer);background:var(--fix-bg);border-radius:10px;padding:8px 12px;font-size:.95rem}
 .fb.new::after{content:" • new";color:var(--label)}
 .foot{color:var(--muted);font-size:.88rem;margin-top:22px}
@@ -227,7 +228,7 @@ function stats(h){
   return { done: h.tasks.filter(id=>d.has(id)).length, fb: w.length, fbNew: w.filter(x=>!x.seen).length };
 }
 /* teacher view: what waits for Olya on each homework (the same data the homework page shows her) */
-let tdata = null;
+let tdata = null, tpending = 0, tfailed = 0;
 const teacherView = () => !!(myCode() && ls.get("hw-role")==="teacher" && !asStudent() && syncState!=="unknown");
 function tcounts(res){
   const w = res.work || [], ticked = new Set(); Object.values(res.done || {}).forEach(a => a.forEach(i => ticked.add(i)));
@@ -235,22 +236,57 @@ function tcounts(res){
            questions: w.filter(x=>x.type==="question").length, work: w.filter(x=>x.type==="text"||x.type==="recording").length,
            started: ticked.size, students: (res.students || []).length };
 }
+/* her table answers one request at a time: ask two homeworks at a time, try again once if it was busy */
+async function inTurn(items, fn, width=2){
+  let next = 0;
+  const worker = async () => { while(next < items.length){ const it = items[next++]; await fn(it); } };
+  await Promise.all(Array.from({length: Math.min(width, items.length)}, worker));
+}
+async function teacherSync(code, key){
+  for(let attempt = 0; attempt < 2; attempt++){
+    const res = await post({action:"sync", code, page:key});
+    if(res.ok || res.error === "unknown-code" || res.error === "other-group") return res;
+  }
+  return {ok:false, error:"busy"};
+}
+/* one request for all the homework; an older Code.gs answers "no-page", and then each homework is asked in turn */
+async function overview(code, keys, stats){
+  let res = {ok:false};
+  for(let attempt = 0; attempt < 2 && !res.ok; attempt++){
+    res = await post({action:"overview", code, pages:keys, stats:!!stats});
+    if(res.error === "no-page" || res.error === "unknown-code") break;
+  }
+  return res;
+}
 async function loadTeacher(){
-  const code = myCode(), got = {};
-  await Promise.all(HW.map(h => post({action:"sync", code, page:h.key}).then(res => { if(res.ok && res.role==="teacher") got[h.key] = tcounts(res); })));
+  const code = myCode(); tdata = {}; tpending = HW.length; tfailed = 0; render();
+  const all = await overview(code, HW.map(h=>h.key));
   if(code !== myCode() || !teacherView()) return;
-  tdata = got; render();
+  if(all.ok && all.pages){ HW.forEach(h=>{ if(all.pages[h.key]) tdata[h.key] = all.pages[h.key]; else tfailed++; }); tpending = 0; render(); return; }
+  if(all.error !== "no-page"){ tpending = 0; tfailed = HW.length; render(); return; }
+  await inTurn(HW, async h => {
+    const res = await teacherSync(code, h.key);
+    if(code !== myCode() || !teacherView()) return;
+    tpending--;
+    if(res.ok && res.role==="teacher") tdata[h.key] = tcounts(res); else tfailed++;
+    render();
+  });
 }
 function teacherSum(){
-  if(!teacherView() || !tdata) return teacherView() ? `<p class="t-sum none">Checking what waits for your answer…</p>` : "";
+  if(!teacherView()) return "";
+  if(!tdata) return `<p class="t-sum checking">Checking what waits for your answer…</p>`;
   const total = Object.values(tdata).reduce((s,c)=>s+c.toAnswer, 0);
+  /* never say "nothing waiting" before every homework has answered */
+  if(tpending === HW.length) return `<p class="t-sum checking">Checking what waits for your answer…</p>`;
+  if(tpending) return `<p class="t-sum checking">${total ? `💬 ${total} waiting for your answer so far · ` : ""}checking… ${HW.length - tpending} of ${HW.length}</p>`;
+  if(tfailed) return `<p class="t-sum">${total ? `💬 ${total} waiting for your answer · ` : ""}⚠️ ${tfailed} homework didn't answer — reload the page</p>`;
   return `<p class="t-sum ${total?"":"none"}">${total ? `💬 ${total} waiting for your answer — open the homework with the red frame` : "✓ Nothing waiting for your answer"}</p>`;
 }
 function card(h, i){
   const st = stats(h), n = h.tasks.length, all = n && st.done >= n;
   if(teacherView()){
     const c = tdata && tdata[h.key];
-    const badges = c ? [c.toAnswer?`<b>💬 ${c.toAnswer} to answer</b>`:"", `${c.started} of ${c.students} started`, c.marked?`🔖 ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:""].filter(Boolean).join(" · ") : "loading…";
+    const badges = c ? [c.toAnswer?`<b>💬 ${c.toAnswer} to answer</b>`:"", `${c.started} of ${c.students} started`, c.marked?`🔖 ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:""].filter(Boolean).join(" · ") : (tpending ? "checking…" : "didn't answer — reload the page");
     return `<a class="hw ${i===0?"latest":""} ${c && c.toAnswer ? "todo" : ""}" href="${esc(h.file)}">
     <div class="hw-top"><span class="date">${esc(h.date)}</span>${i===0?`<span class="tag">Latest</span>`:""}<span class="go" aria-hidden="true">→</span></div>
     <div class="topics">${h.topics.map((tp,k)=>`<div class="topic t${k%2}"><b>${esc(tp.title)}</b><span>${esc(tp.sub)}</span></div>`).join("")}</div>

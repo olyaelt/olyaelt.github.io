@@ -107,6 +107,7 @@ h2{margin:0;font-size:var(--step-1);font-weight:900}
 .todo .badges b{color:var(--label)}
 .total-todo{font-weight:900;color:var(--label)}
 .total-todo.none{color:var(--done)}
+.total-todo.checking{color:var(--muted)}
 .legal{max-width:var(--maxw,760px);margin:0 auto;padding:18px 16px 28px;color:var(--muted);font-size:.85rem;text-align:center}
 .legal a{color:inherit}
 </style>
@@ -125,7 +126,7 @@ const app = document.getElementById("app");
 const myCode = () => SYNC_URL ? ls.get("hw-code") : "";
 const isTeacher = () => !!(myCode() && ls.get("hw-role") === "teacher");
 const NAMES = {"b2": "Wed Fri 18.30", "c1": "Wed Fri 20.15"};
-let data = {};     /* group -> {stats, pages: {key: counts}} */
+let data = {};     /* group -> {stats, pages: {key: counts}, failed, pending} */
 let state = "";
 
 async function post(payload){
@@ -145,34 +146,72 @@ function counts(res){
            questions: w.filter(x=>x.type==="question").length, work: w.filter(x=>x.type==="text"||x.type==="recording").length,
            started: ticked.size, students };
 }
+/* her table answers one request at a time: ask two homeworks at a time, try again once if it was busy */
+async function inTurn(items, fn, width=2){
+  let next = 0;
+  const worker = async () => { while(next < items.length){ const it = items[next++]; await fn(it); } };
+  await Promise.all(Array.from({length: Math.min(width, items.length)}, worker));
+}
+async function teacherSync(code, key){
+  for(let attempt = 0; attempt < 2; attempt++){
+    const res = await post({action:"sync", code, page:key});
+    if(res.ok || res.error === "unknown-code" || res.error === "other-group") return res;
+  }
+  return {ok:false, error:"busy"};
+}
+/* one request for all the homework; an older Code.gs answers "no-page", and then each homework is asked in turn */
+async function overview(code, keys, stats){
+  let res = {ok:false};
+  for(let attempt = 0; attempt < 2 && !res.ok; attempt++){
+    res = await post({action:"overview", code, pages:keys, stats:!!stats});
+    if(res.error === "no-page" || res.error === "unknown-code") break;
+  }
+  return res;
+}
 async function load(){
   if(!isTeacher()) return;
+  const code = myCode(), items = [];
+  for(const g of Object.keys(GROUPS)){ data[g] = { stats: null, pages: {}, failed: 0, pending: GROUPS[g].length }; GROUPS[g].forEach(h => items.push([g, h])); }
   state = "loading"; render();
-  const jobs = [];
-  for(const g of Object.keys(GROUPS)){
-    data[g] = { stats: null, pages: {} };
-    for(const h of GROUPS[g]) jobs.push(post({action:"sync", code:myCode(), page:h.key}).then(res=>{
-      if(res.ok && res.role === "teacher"){ data[g].pages[h.key] = counts(res); if(res.group) data[g].stats = res.group; }
-      else if(res.error === "unknown-code") state = "unknown";
-    }));
+  const all = await overview(code, items.map(([g, h]) => h.key), true);
+  if(code !== myCode()) return;
+  if(all.ok && all.pages){
+    for(const g of Object.keys(GROUPS)){ const d = data[g]; d.pending = 0; d.stats = (all.groups || {})[g.toUpperCase()] || null;
+      GROUPS[g].forEach(h => { if(all.pages[h.key]) d.pages[h.key] = all.pages[h.key]; else d.failed++; }); }
+    state = "ok"; render(); return;
   }
-  await Promise.all(jobs);
+  if(all.error === "unknown-code"){ state = "unknown"; render(); return; }
+  if(all.error !== "no-page"){ for(const g of Object.keys(GROUPS)){ data[g].pending = 0; data[g].failed = GROUPS[g].length; } state = "ok"; render(); return; }
+  await inTurn(items, async ([g, h]) => {
+    const res = await teacherSync(code, h.key);
+    if(code !== myCode()) return;
+    data[g].pending--;
+    if(res.ok && res.role === "teacher"){ data[g].pages[h.key] = counts(res); if(res.group) data[g].stats = res.group; }
+    else if(res.error === "unknown-code") state = "unknown";
+    else data[g].failed++;
+    render();
+  });
   if(state !== "unknown") state = "ok";
   render();
 }
 function groupCard(g){
-  const list = GROUPS[g] || [], d = data[g] || {pages:{}};
+  const list = GROUPS[g] || [], d = data[g] || {pages:{}, failed:0, pending:0};
   const total = Object.values(d.pages).reduce((s,c)=>s+c.toAnswer, 0);
+  /* never say "nothing waiting" before every homework has answered */
+  const todo = d.pending && d.pending === list.length ? `<p class="total-todo checking">Checking what waits for your answer…</p>`
+    : d.pending ? `<p class="total-todo checking">${total ? `💬 ${total} waiting for your answer so far · ` : ""}checking… ${list.length - d.pending} of ${list.length}</p>`
+    : d.failed ? `<p class="total-todo">${total ? `💬 ${total} waiting for your answer · ` : ""}⚠️ ${d.failed} homework didn't answer — tap Refresh</p>`
+    : `<p class="total-todo ${total?"":"none"}">${total ? `💬 ${total} waiting for your answer` : "✓ Nothing waiting for your answer"}</p>`;
   return `<section class="group">
     <div class="group-top"><h2>${NAMES[g] || g.toUpperCase()}</h2><a href="${g}/">All homework →</a></div>
     ${isTeacher() ? meterHTML(d.stats) : ""}
-    ${isTeacher() && state === "ok" ? `<p class="total-todo ${total?"":"none"}">${total ? `💬 ${total} waiting for your answer` : "✓ Nothing waiting for your answer"}</p>` : ""}
+    ${isTeacher() && (state === "ok" || state === "loading") ? todo : ""}
     <div class="hws">${list.filter((h,i)=>i < 6 || (d.pages[h.key] && d.pages[h.key].toAnswer)).map((h,i)=>{   /* the latest 6, and any older one where something waits */
       const c = d.pages[h.key];
       const badges = c ? [c.toAnswer?`<b>💬 ${c.toAnswer} to answer</b>`:"", `${c.started} of ${c.students} started`, c.marked?`🔖 ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:""].filter(Boolean).join(" · ") : "";
       return `<a class="hw ${c && c.toAnswer ? "todo" : ""}" href="${g}/${esc(h.file)}">
         <span class="hw-line"><span class="date">${esc(h.date)}</span><span class="hw-title">${esc(h.topics.map(t=>t.title).join(" · "))}</span></span>
-        ${badges ? `<span class="badges">${badges}</span>` : ""}</a>`; }).join("")}</div>
+        <span class="badges">${badges || (d.pending ? "checking…" : "")}</span></a>`; }).join("")}</div>
   </section>`;
 }
 /* students see only their own group: a student code opens that group's list straight away */
