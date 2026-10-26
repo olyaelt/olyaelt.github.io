@@ -218,10 +218,16 @@ details.summary[open] summary::after{content:"Hide"}
 .dlg p{margin:0;line-height:1.9}
 .spk{font-style:italic;color:var(--muted)}
 .chunk{cursor:pointer;border-radius:3px}
+.chunk,.gap,.gap .f,.gap .r,.gap-input,.gap-in{font-variant-ligatures:none;font-feature-settings:"liga" 0,"clig" 0}   /* a ligature (ti, fi) would show a hidden letter */
 .gap .f{font-weight:700;color:var(--answer)}
 .gap .r{font-weight:700;background:var(--hl);color:transparent;padding:1px 0;border-radius:2px;transition:color .15s ease}
 .gap .r:empty{display:none}
 .chunk.open .gap .r{color:var(--hl-ink)}
+.gap.o .r{background:#F6B26B;font-weight:400}
+.chunk.open .gap.o .r{color:#3B2300}
+.box.gloss p{line-height:1.7}
+.trap{color:var(--muted);text-decoration:line-through}
+.say-row .q .en{font-style:normal;color:var(--ink)}
 .gap .r::selection{background:var(--hl)}
 
 /* rewrite */
@@ -257,6 +263,7 @@ details.summary[open] summary::after{content:"Hide"}
 .say-row .q{font-style:italic;color:var(--muted)}
 .reveal{display:block;width:100%;text-align:left;font-weight:700;background:var(--hl);color:transparent;border:0;border-radius:3px;padding:6px 8px;cursor:pointer;min-height:2.2em}
 .reveal.open{color:var(--hl-ink)}
+.reveal:not(.open) *{color:transparent !important}   /* marked answers stay hidden until tapped */
 .small{font-size:.9rem;color:var(--muted)}
 s{color:var(--muted)}
 
@@ -625,7 +632,7 @@ if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
       : {type:"sayit", s:e.s, first:i===0, box:""})});
 }
 /* rough minutes per step, so students can plan their time */
-const EST = {gaps:5, rewrite:1, sayit:1.5, share:1.5, lookback:2, listen:1.2, task:1, plan:3, produce:12};
+const EST = {gaps:5, dlg:2.5, rewrite:1, sayit:1.5, share:1.5, lookback:2, listen:1.2, task:1, plan:3, produce:12};
 const framesOf = t => minutesOf(t) * ((t.steps||[]).some(s=>s.type==="produce") ? 2 : 1);   /* group goal: a frame per minute, Over to you double */
 const GROUP_ID = PAGE_KEY.split("-")[2] || "group";
 let groupStats = (()=>{ try{ return JSON.parse(localStorage.getItem("hw-group-"+GROUP_ID)||"null"); }catch(e){ return null; } })();
@@ -1097,7 +1104,7 @@ function renderTask(){
   const st = t.steps[stepIdx];
   const count = `${stepIdx+1} of ${t.steps.length}`;
   const pct = Math.round((stepIdx)/t.steps.length*100);
-  ({rewrite:renderRewrite, sayit:renderSayit, share:renderShare, lookback:renderLookback, listen:renderListen, task:renderTaskCard, plan:renderPlan, produce:renderProduce})[st.type](st, count, pct);
+  ({dlg:renderDlg, rewrite:renderRewrite, sayit:renderSayit, share:renderShare, lookback:renderLookback, listen:renderListen, task:renderTaskCard, plan:renderPlan, produce:renderProduce})[st.type](st, count, pct);
   window.scrollTo(0,0);
 }
 function navButtons(checkLabel="Check"){
@@ -1124,7 +1131,7 @@ function gapLineHTML(line){
       let chunk = "";
       while(i < parts.length){
         const y = parts[i];
-        if(typeof y === "object" && "r" in y){ chunk += `<span class="gap"><span class="f">${esc(y.f)}</span><span class="r">${esc(y.r)}</span></span>`; i++; }
+        if(typeof y === "object" && "r" in y){ chunk += `<span class="gap${y.o?" o":""}"><span class="f">${esc(y.f)}</span><span class="r">${esc(y.r)}</span></span>`; i++; }
         else if(typeof y === "string" && /^\s+$/.test(y) && typeof parts[i+1] === "object" && parts[i+1] && "r" in parts[i+1]){ chunk += y; i++; }
         else break;
       }
@@ -1154,6 +1161,24 @@ function renderGaps(t){
   });
   document.getElementById("fin").addEventListener("click",()=>{ finish(t); goHome(true); });
   window.scrollTo(0,0);
+}
+
+/* ---------- a gapped dialogue as one step: with a box of phrases, with a glossary, or on its own ---------- */
+const glossLineHTML = g => gapLineHTML({p:g.p}).replace(/<\/p>$/, `${g.m?` <span class="mean">— ${esc(g.m)}</span>`:""}${g.ru?` ${ru(esc(g.ru))}`:""}</p>`);
+function renderDlg(st, count, pct){
+  const side = st.box ? box(st.box)
+    : st.gloss ? `<aside class="box gloss" aria-label="Glossary"><h4>GLOSSARY</h4>${st.gloss.map(glossLineHTML).join("")}</aside>` : "";
+  shell({count, pct, instr: st.instr,
+    stageHTML:`<div class="panel">${st.intro?`<p class="situation">${esc(st.intro)}</p>`:""}<div class="dlg">${st.lines.map(gapLineHTML).join("")}</div></div>${side}`,
+    withBox: !!side, actionsHTML: navButtons(st.checkLabel || "Show the answers")});
+  const chunks = [...app.querySelectorAll(".chunk")];
+  const toggle = c => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); };
+  chunks.forEach(c=>{
+    if(checked) c.classList.add("open");
+    c.addEventListener("click",()=>toggle(c));
+    c.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggle(c); }});
+  });
+  wireNav(()=>renderTaskKeep());
 }
 
 /* ---------- rewrite the sentence ---------- */
@@ -1258,17 +1283,17 @@ function renderSayit(st, count, pct){
   const s = st.s;
   const bx = st.box !== undefined ? st.box : (typeof BOX_CLOCKS !== "undefined" ? BOX_CLOCKS : "");
   shell({count, pct,
-    instr: st.first ? "Say it in English — aloud. Then tap the yellow box to check." : "Say it in English.",
+    instr: st.instr || (st.first ? "Say it in English — aloud. Then tap the yellow box to check." : "Say it in English."),
     stageHTML: `
       <div class="panel">
         <div class="say">
           ${s.rows.map((row,i)=>`<div class="say-row"><span class="q">${row[0]}</span>
-            <span class="say-a"><button class="reveal ${checked?"open":""}" data-r="${i}" aria-label="Show the English">${esc(row[1])}</button>${checked?markBtn(stepIdx+"-"+i, row[1]):""}</span></div>`).join("")}
+            <span class="say-a"><button class="reveal ${checked?"open":""}" data-r="${i}" aria-label="Show the English">${s.html ? row[1] : esc(row[1])}</button>${checked?markBtn(stepIdx+"-"+i, s.html ? plainText(row[1]) : row[1]):""}</span></div>`).join("")}
         </div>
         ${checked?markHint():""}
         ${checked&&s.note?`<p class="small">${s.note}</p>`:""}
-      </div>${checked&&bx?box(bx):""}`,
-    withBox: checked && !!bx, actionsHTML: navButtons()});
+      </div>${(checked||st.boxAlways)&&bx?box(bx):""}`,
+    withBox: (checked||st.boxAlways) && !!bx, actionsHTML: navButtons()});
   app.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>b.classList.toggle("open")));
   wireNav(()=>renderTaskKeep());
 }
@@ -1464,6 +1489,15 @@ function renderEnd(t){
 
 /* ---------- link-out tasks ---------- */
 function renderLink(t){
+  if(t.body){   /* any other site: what to do there, the button, and a question to think about */
+    shell({instr: t.instr || "",
+      stageHTML:`<div class="panel">${t.body}
+        <a class="cta" href="${t.url}" ${t.same?"":`target="_blank" rel="noopener"`}>${esc(t.cta || "Open")}</a>
+        ${t.after?`<p class="small">${t.after}</p>`:""}</div>`,
+      actionsHTML:`<button class="btn primary grow" id="fin">I've done it</button>`});
+    document.getElementById("fin").addEventListener("click",()=>{ finish(t); goHome(true); });
+    window.scrollTo(0,0); return;
+  }
   shell({instr:"For each gap:",
     stageHTML:`
       <div class="panel">
@@ -1478,7 +1512,7 @@ function renderLink(t){
 }
 
 /* ---------- over to you: your task → plan (pick phrases) → record and send ---------- */
-const LESSON_TAG = "23.10";
+const LESSON_TAG = LESSON.date.slice(0,5);
 let recState = {rec:null, stream:null, chunks:[], tick:null, t0:0, file:null, url:null};
 function stopRecorder(){
   clearInterval(recState.tick);
@@ -1534,7 +1568,7 @@ function renderPlan(st, count, pct){
       </div>`,
     actionsHTML: plainNext()});
   const pc = document.getElementById("pc");
-  const upd = () => { const n = picks.size; pc.textContent = n ? `Picked: ${n}${n>=3?" ✓":""}` : "Nothing picked yet"; };
+  const upd = () => { const n = picks.size; pc.textContent = n ? `Picked: ${n}${n>=(typeof PICK_MIN!=="undefined"?PICK_MIN:3)?" ✓":""}` : "Nothing picked yet"; };
   upd();
   app.querySelectorAll(".pick").forEach(b=>b.addEventListener("click",()=>{
     const id = b.dataset.id; if(picks.has(id)) picks.delete(id); else picks.add(id);
