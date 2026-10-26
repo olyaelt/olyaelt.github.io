@@ -122,7 +122,7 @@ details.summary[open] summary::after{content:"Hide"}
 .chip-t[aria-pressed="true"]{border-color:var(--instr);background:var(--instr);color:var(--instr-ink)}
 .t-strip{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 12px;width:100%;margin:0 0 12px;padding:9px 12px;text-align:left;font:inherit;font-size:.95rem;color:var(--ink);background:var(--card);border:1px solid var(--line);border-left:5px solid var(--line);border-radius:10px;cursor:pointer}
 .t-strip.open{border-left-color:var(--instr)}
-.t-review{display:block;margin:-6px 0 12px;font-weight:700}
+
 .t-strip-go{color:var(--instr);font-weight:700;white-space:nowrap}
 .t-line{display:flex;flex-wrap:wrap;align-items:center;gap:5px;width:100%;text-align:left;background:transparent;border:0;padding:8px 4px 2px;cursor:pointer;font:inherit}
 .t-chip{display:inline-grid;place-items:center;min-width:30px;height:26px;padding:0 6px;border-radius:7px;border:1.5px solid var(--line);background:var(--card);color:var(--muted);font-size:.8rem;font-weight:700}
@@ -134,26 +134,18 @@ details.summary[open] summary::after{content:"Hide"}
 .hot{background:var(--card);border-radius:var(--radius);padding:12px 14px;margin:0 0 16px;border-left:5px solid var(--label)}
 .hot ul{margin:6px 0 0;padding-left:18px;display:grid;gap:4px}
 .hot .small{margin:4px 0 0}
-.rv-sum p{margin:0}
-.rv-jumps{display:flex;flex-wrap:wrap;gap:6px}
-.rv-acts{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.rv-only-l{display:flex;gap:8px;align-items:center;font-size:.95rem;cursor:pointer}
-.rv-ok{background:var(--good-hl);color:var(--hl-ink)}
-.rv-item{margin:0 0 10px;gap:6px}
-.rv-item.rv-hot{box-shadow:inset 0 0 0 3px var(--label)}
-.rv-item.rv-done{box-shadow:inset 0 0 0 2px var(--line)}
-.rv-item.rv-plain{padding:10px 16px;font-size:.95rem}
-.rv-only .rv-plain{display:none}
-.rv-top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
-.rv-top .small{margin:0}
-.rv-who{font-weight:700;color:var(--label)}
-.rv-done .rv-who{color:var(--muted)}
-.rv-body p{margin:2px 0}
-.rv-q{color:var(--muted)}
-.rv-note{margin:0;font-size:.95rem}
-.rv-qs{gap:8px}
-.rv-qrow p{margin:0}
-.rv-qdone{opacity:.65}
+.tool.rv-ok{background:var(--good-hl);color:var(--hl-ink)}
+.t-mkbar{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin:-4px 0 12px}
+.t-mkbar:empty{display:none}
+.t-mk-h{font-weight:700;color:var(--label);font-size:.95rem}
+.t-mk-go.on{box-shadow:inset 0 0 0 2px var(--label)}
+.t-mk-go.is-done{opacity:.6}
+.t-marked{box-shadow:inset 0 0 0 3px var(--label);border-radius:10px}
+.say-row.t-marked{padding-left:10px;padding-right:10px}
+.t-marked-done{box-shadow:inset 0 0 0 2px var(--line)}
+.t-mk-who{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;font-size:.9rem;font-weight:700;color:var(--label);margin:0 0 4px}
+.t-mk-who.is-done{color:var(--muted)}
+.t-mk-note{font-weight:400;color:var(--ink)}
 .hot.fbnew{border:2px solid var(--label);border-left-width:6px}
 .hot.fbnew>b{color:var(--label)}
 .hot.fbnew li span{color:var(--muted);font-size:.9rem}
@@ -1034,81 +1026,86 @@ function hotHTML(){
   return `<section class="hot"><b>Where they got stuck</b>${hot.length ? `<ul>${hot.map(x=>`<li><button class="linklike" data-stuck="${x.t.id}">${esc(x.t.title)}</button> <span>${[x.c.marked?`🔖 ${x.c.marked}`:"", x.c.questions?`❓ ${x.c.questions}`:"", x.c.hard?`😓 ${x.c.hard} hard`:""].filter(Boolean).join(" · ")}</span></li>`).join("")}</ul>
     <p class="small">Tap a task to go through it together — the marked lines are framed red.</p>` : `<p class="small">Nothing new: no marks or questions waiting.</p>`}</section>`;
 }
-/* every line a student could mark, with its answer (the same text the ? button sends) */
+/* every line a student could mark: step, row (-1 = the whole card) and the text the ? button sends */
 function stuckItems(t){
   const out = [];
   (t.steps||[]).forEach((st, si)=>{
-    if(st.type==="rewrite"){ const r = st.r, br = s => esc(s).replace(/\n/g,"<br>");
-      out.push({si, snippet: plainText(r.pre + r.a + r.post), html: `${r.o?`<p class="orig">${esc(r.o)}</p>`:""}${r.k?`<p class="key">${r.k}</p>`:""}<p>${br(r.pre)}<span class="ans">${esc(r.a)}</span>${br(r.post)}</p>`}); }
-    else if(st.type==="sayit") (st.s.rows||[]).forEach(row=>out.push({si, snippet: st.s.html ? plainText(row[1]) : row[1], html: `<p class="rv-q">${row[0]}</p><p class="ans">${st.s.html ? row[1] : esc(row[1])}</p>`}));
-    else if(st.type==="share"){ const s = st.s, q = s.q || "";
-      out.push({si, snippet: plainText(s.s+(q?" "+q:"")), html: `${s.ctx?`<p class="rv-q">${esc(s.ctx)}</p>`:""}<p>A: ${esc(s.a)}</p><p>B: <span class="ans">${s.s}${q?" "+q:""}</span></p>`}); }
-    else if(st.type==="listen") (st.clip||[]).forEach(l=>{ if(!l[3].some(p=>typeof p!=="string")) return;
-      out.push({si, snippet: l[3].map(p=>typeof p==="string"?p:p.gap).join(""), link: `https://youtu.be/${l[0]}?t=${Math.max(0, Math.floor(l[1]) - 1)}`,
-                html: `<p>${l[3].map(p=>typeof p==="string"?esc(p):`<span class="ans">${esc(p.gap)}</span>`).join("")}</p>`}); });
+    if(st.type==="rewrite"){ const r = st.r; out.push({si, row:-1, snippet: plainText(r.pre + r.a + r.post)}); }
+    else if(st.type==="sayit") (st.s.rows||[]).forEach((row,i)=>out.push({si, row:i, snippet: st.s.html ? plainText(row[1]) : row[1]}));
+    else if(st.type==="share"){ const s = st.s, q = s.q || ""; out.push({si, row:-1, snippet: plainText(s.s+(q?" "+q:""))}); }
+    else if(st.type==="listen") (st.clip||[]).forEach((l,i)=>out.push({si, row:i, snippet: l[3].map(p=>typeof p==="string"?p:p.gap).join("")}));
   });
   return out;
 }
 const rvKey = s => norm(plainText(s));
 const noteOf = w => String(w.text||"").split("\n").filter(l=>/^— /.test(l)).map(l=>l.slice(2)).join(" ");
+function markedItems(id){
+  const t = TASKS.find(x=>x.id===id); if(!t || !teacherData) return [];
+  const marks = (teacherData.work||[]).filter(w=>w.task===id && w.type==="marked");
+  const items = stuckItems(t);
+  items.forEach(it=>{ const k = rvKey(it.snippet); it.marks = marks.filter(w=>rvKey(String(w.text||"").split("\n")[0]) === k); });
+  return items.filter(it=>it.marks.length);
+}
 async function setDiscussed(id, body){
   const res = await post(Object.assign({action:"discussed", code:myCode(), page:PAGE_KEY, task:id}, body));
   if(res.ok && res.saved){ teacherData.discussed = teacherData.discussed || {}; teacherData.discussed[id] = res.discussed; return true; }
   toast(res.ok ? "Not saved: the script in your table needs updating (see Claude's note)." : "Not saved — no connection. Try again.");
   return false;
 }
-function renderStuck(id, keepY){
-  const t = TASKS.find(x=>x.id===id); if(!t || !teacherData) return;
-  stopPlayer(); stopRecorder(); current = t; stepIdx = 0; checked = false;
-  const st = teacherData.students || [], hn = hideNames(), d = discOf(id), gone = new Set((d.ids||[]).map(String));
-  const nm = w => esc((st[w.s]||{}).name || "");
-  const all = (teacherData.work||[]).filter(w=>w.task===id);
-  const marks = all.filter(w=>w.type==="marked"), qs = all.filter(w=>w.type==="question");
-  const r = (teacherData.reactions||{})[id] || {easy:[],ok:[],hard:[]};
-  const open = w => !gone.has(String(w.id));
-  const items = stuckItems(t);
-  items.forEach(it=>{ const k = rvKey(it.snippet); it.marks = marks.filter(w=>rvKey(String(w.text||"").split("\n")[0]) === k); });
-  const used = new Set(items.flatMap(it=>it.marks.map(w=>w.id)));
-  marks.filter(w=>!used.has(w.id)).forEach(w=>items.push({si:-1, html:`<p>${esc(String(w.text||"").split("\n")[0])}</p>`, marks:[w],
-    link:(String(w.text||"").split("\n").find(l=>/^https?:/.test(l))||"")}));
-  const who = ws => hn ? `${ws.length} ${ws.length===1?"student":"students"}` : ws.map(nm).join(", ");
-  const hot = items.filter(it=>it.marks.some(open)), hardNew = Math.max(0, r.hard.length - (Number(d.hard)||0));
-  const openQs = qs.filter(open), openIds = marks.filter(open).concat(openQs).map(w=>w.id);
-  const only = ls.get("hw-rv-only") === "1";
-  const itemHTML = (it, k) => {
-    const cls = it.marks.length ? (it.marks.some(open) ? "rv-hot" : "rv-done") : "rv-plain";
-    const ids = it.marks.map(w=>w.id).join(",");
-    return `<div class="panel rv-item ${cls}" id="rv-${k}">
-      <div class="rv-top"><span class="small">${it.si >= 0 ? `Step ${it.si+1}` : "Marked line"}</span>${it.marks.length?`<span class="rv-who">🔖 ${who(it.marks)}</span>`:""}</div>
-      <div class="rv-body">${it.html}</div>
-      ${it.marks.filter(w=>noteOf(w)).map(w=>`<p class="rv-note">💬 ${hn ? "" : `<b>${nm(w)}:</b> `}${esc(noteOf(w))}</p>`).join("")}
-      ${it.marks.length ? `<div class="rv-acts">${it.link?`<a class="t-link" href="${esc(it.link)}" target="_blank" rel="noopener">▶ YouTube</a>`:""}${it.si >= 0 ? `<button class="tool" data-step="${it.si}">Open in the task</button>` : ""}
-        ${it.marks.some(open) ? `<button class="tool rv-ok" data-disc="${ids}">✓ Discussed</button>` : `<span class="small">✓ discussed</span> <button class="linklike" data-undisc="${ids}">undo</button>`}</div>` : ""}
-    </div>`;
-  };
-  shell({instr: hn ? "Names are hidden — good for sharing your screen." : "The whole task, with the lines your students marked framed red. After the class tap ✓ Discussed — the task leaves “Where they got stuck” until something new comes in.",
-    stageHTML: `<div class="panel rv-sum">
-        <p><b>${marks.filter(open).length ? `🔖 ${marks.filter(open).length} ${marks.filter(open).length===1?"mark":"marks"}` : "🔖 No new marks"}</b>${openQs.length?` · ❓ ${openQs.length}`:""}${hardNew?` · 😓 ${hardNew} hard${hn?"":` (${r.hard.map(i=>esc((st[i]||{}).name||"")).join(", ")})`}`:""}</p>
-        ${hot.length ? `<div class="rv-jumps">${hot.map(it=>`<button class="tool" data-jump="${items.indexOf(it)}">${it.si>=0?`Step ${it.si+1}`:"Line"} · 🔖 ${it.marks.filter(open).length}</button>`).join("")}</div>` : ""}
-        <label class="rv-only-l"><input type="checkbox" id="rv-only" ${only?"checked":""}> Show only the marked lines</label>
-        <div class="rv-acts"><button class="tool" id="rv-names">${hn ? "👁️ Show names" : "👁️ Hide names"}</button>${openIds.length || hardNew ? `<button class="tool rv-ok" id="rv-all">✓ All discussed</button>` : ""}</div>
-      </div>
-      ${qs.length ? `<div class="panel rv-qs"><b>❓ Questions</b>${qs.map(w=>`<div class="rv-qrow ${open(w)?"":"rv-qdone"}"><p>${hn?"":`<b>${nm(w)}:</b> `}${esc(String(w.text||"").split("\n").filter(l=>!/^https?:/.test(l)).join(" "))}</p>
-          <span class="small">${String(w.feedback||"").trim() ? "answered ✓" : "not answered yet"}${open(w) ? "" : " · discussed ✓"}</span></div>`).join("")}</div>` : ""}
-      ${items.length ? `<div class="rv-list ${only?"rv-only":""}">${items.map(itemHTML).join("")}</div>` : `<div class="panel"><p class="small">This task has no lines to mark — only questions and how it felt.</p></div>`}`,
-    actionsHTML: `<button class="btn" id="t-open">Open the task</button><button class="btn primary grow" id="t-home">Back to all tasks</button>`, panel: true});
-  document.getElementById("t-home").addEventListener("click", goHome);
-  document.getElementById("t-open").addEventListener("click", ()=>openTask(id));
-  const again = () => renderStuck(id, scrollY);
-  app.querySelectorAll("[data-jump]").forEach(b=>b.addEventListener("click",()=>{ const el = document.getElementById("rv-"+b.dataset.jump); if(el) el.scrollIntoView({block:"center", behavior:"smooth"}); }));
-  app.querySelectorAll("[data-step]").forEach(b=>b.addEventListener("click",()=>openTask(id, +b.dataset.step)));
-  app.querySelectorAll("[data-disc]").forEach(b=>b.addEventListener("click", async ()=>{ b.disabled = true; if(await setDiscussed(id, {ids: b.dataset.disc.split(",")})) again(); else b.disabled = false; }));
-  app.querySelectorAll("[data-undisc]").forEach(b=>b.addEventListener("click", async ()=>{ if(await setDiscussed(id, {undo: b.dataset.undisc.split(",")})) again(); }));
-  const ab = document.getElementById("rv-all");
-  if(ab) ab.addEventListener("click", async ()=>{ ab.disabled = true; if(await setDiscussed(id, {ids: openIds.map(String), hard: r.hard.length})) again(); else ab.disabled = false; });
-  document.getElementById("rv-only").addEventListener("change", e=>{ ls.set("hw-rv-only", e.target.checked ? "1" : ""); app.querySelector(".rv-list") && app.querySelector(".rv-list").classList.toggle("rv-only", e.target.checked); });
-  document.getElementById("rv-names").addEventListener("click", ()=>{ ls.set("hw-hide", hideNames() ? "" : "1"); again(); });
-  window.scrollTo(0, keepY || 0);
+const isOpenMark = id => { const gone = new Set((discOf(id).ids||[]).map(String)); return w => !gone.has(String(w.id)); };
+const whoMarked = ws => hideNames() ? `${ws.length} ${ws.length===1?"student":"students"}` : ws.map(w=>esc((teacherData.students||[])[w.s] ? teacherData.students[w.s].name : "")).join(", ");
+/* the bar under the teacher strip: which steps were hard, questions, "hard", All discussed */
+function mkBarHTML(id){
+  if(!isTeacher() || !teacherData) return "";
+  const items = markedItems(id), open = isOpenMark(id), c = stuckCounts(id);
+  const steps = [...new Set(items.map(it=>it.si))].sort((a,b)=>a-b);
+  if(!steps.length && !c.questions && !c.hard) return "";
+  const anyOpen = items.some(it=>it.marks.some(open)) || c.questions || c.hard;
+  return `<span class="t-mk-h">Hard for them:</span>${steps.map(si=>{ const ws = items.filter(it=>it.si===si).flatMap(it=>it.marks);
+      return `<button class="tool t-mk-go ${ws.some(open)?"":"is-done"}" data-mkgo="${si}">Step ${si+1} · 🔖 ${whoMarked(ws)}</button>`; }).join("")}
+    ${c.questions?`<button class="linklike" data-mkq>❓ ${c.questions} ${c.questions===1?"question":"questions"}</button>`:""}${c.hard?`<span class="small">😓 ${c.hard} found it hard</span>`:""}
+    <button class="linklike" id="t-mk-names">${hideNames() ? "👁️ Show names" : "👁️ Hide names"}</button>
+    ${anyOpen ? `<button class="tool rv-ok" id="t-mk-all">✓ All discussed</button>` : `<span class="small">✓ all discussed</span>`}`;
+}
+function wireMkBar(id){
+  app.querySelectorAll("[data-mkgo]").forEach(b=>b.addEventListener("click",()=>openTask(id, +b.dataset.mkgo)));
+  app.querySelectorAll("[data-mkq]").forEach(b=>b.addEventListener("click",()=>renderTeacherTask(id)));
+  const nb = document.getElementById("t-mk-names"); if(nb) nb.addEventListener("click",()=>{ ls.set("hw-hide", hideNames() ? "" : "1"); refreshMarks(); });
+  const all = document.getElementById("t-mk-all");
+  if(all) all.addEventListener("click", async ()=>{
+    const open = isOpenMark(id), w = (teacherData.work||[]).filter(x=>x.task===id && (x.type==="marked" || (x.type==="question" && !String(x.feedback||"").trim())) && open(x));
+    const r = (teacherData.reactions||{})[id] || {hard:[]};
+    all.disabled = true; if(await setDiscussed(id, {ids: w.map(x=>String(x.id)), hard: (r.hard||[]).length})) refreshMarks(); else all.disabled = false;
+  });
+}
+/* in the step: a red frame and a label on each marked line (nothing of the answer) */
+function annotateMarks(){
+  if(!isTeacher() || !teacherData || !current) return;
+  app.querySelectorAll(".t-mk-who").forEach(x=>x.remove());
+  app.querySelectorAll(".t-marked").forEach(x=>x.classList.remove("t-marked", "t-marked-done"));
+  app.querySelectorAll("[data-mkgo]").forEach(b=>b.classList.toggle("on", +b.dataset.mkgo === stepIdx));
+  const id = current.id, open = isOpenMark(id), hn = hideNames();
+  markedItems(id).filter(it=>it.si === stepIdx).forEach(it=>{
+    const el = it.row < 0 ? app.querySelector(".stage > .panel") : (app.querySelectorAll(".ln")[it.row] || app.querySelectorAll(".say-row")[it.row]);
+    if(!el) return;
+    const o = it.marks.some(open), ids = it.marks.map(w=>w.id).join(",");
+    el.classList.add("t-marked"); if(!o) el.classList.add("t-marked-done");
+    const notes = it.marks.filter(w=>noteOf(w)).map(w=>`<span class="t-mk-note">💬 ${hn ? "" : `${esc(((teacherData.students||[])[w.s]||{}).name||"")}: `}${esc(noteOf(w))}</span>`).join("");
+    const lab = `<div class="t-mk-who ${o?"":"is-done"}"><span>🔖 ${whoMarked(it.marks)}</span>${notes}${o ? `<button class="linklike" data-mkdone="${ids}">✓ Discussed</button>` : `<span>✓ discussed</span><button class="linklike" data-mkundo="${ids}">undo</button>`}</div>`;
+    el.insertAdjacentHTML(it.row < 0 ? "afterbegin" : "afterend", lab);
+  });
+  app.querySelectorAll("[data-mkdone]").forEach(b=>b.addEventListener("click", async e=>{ e.stopPropagation(); if(await setDiscussed(id, {ids: b.dataset.mkdone.split(",")})) refreshMarks(); }));
+  app.querySelectorAll("[data-mkundo]").forEach(b=>b.addEventListener("click", async e=>{ e.stopPropagation(); if(await setDiscussed(id, {undo: b.dataset.mkundo.split(",")})) refreshMarks(); }));
+}
+function refreshMarks(){
+  const bar = document.getElementById("t-mkbar");
+  if(bar && current){ bar.innerHTML = mkBarHTML(current.id); wireMkBar(current.id); }
+  annotateMarks();
+}
+/* "Where they got stuck" → the task, at the first step with a mark not yet discussed */
+function renderStuck(id){
+  const open = isOpenMark(id), its = markedItems(id), first = its.find(it=>it.marks.some(open)) || its[0];
+  openTask(id, first ? first.si : 0);
 }
 const WAIT_ICON = {text:"✍️ text", recording:"🎙 recording", question:"❓ question", marked:"🔖 marked"};
 function waitHTML(){
@@ -1292,8 +1289,7 @@ function teacherStrip(id){
   if(!isTeacher() || !teacherData) return "";
   const st = teacherData.students || [], dn = ((teacherData.done||{})[id] || []).length, c = teacherCounts(id);
   const bits = [`${dn} of ${st.length} done`, c.questions?`❓ ${c.questions}`:"", c.marked?`🔖 ${c.marked}`:"", c.work?`✍️ ${c.work}`:"", c.hard?`😓 ${c.hard}`:"", c.open?`<b>💬 ${c.open} to answer</b>`:""].filter(Boolean).join(" · ");
-  const marked = (teacherData.work||[]).some(w=>w.task===id && (w.type==="marked" || w.type==="question"));
-  return `<button class="t-strip ${c.open?"open":""}" id="t-strip" data-strip="${id}"><span>👩‍🏫 ${bits}</span><span class="t-strip-go">Students' work →</span></button>${marked ? `<button class="linklike t-review" id="t-review">🔖 The lines they marked →</button>` : ""}`;
+  return `<button class="t-strip ${c.open?"open":""}" id="t-strip" data-strip="${id}"><span>👩‍🏫 ${bits}</span><span class="t-strip-go">Students' work →</span></button><div class="t-mkbar" id="t-mkbar">${mkBarHTML(id)}</div>`;
 }
 function shell({count, pct, instr, stageHTML, withBox, actionsHTML, panel}){
   app.innerHTML = `
@@ -1308,7 +1304,7 @@ function shell({count, pct, instr, stageHTML, withBox, actionsHTML, panel}){
     <div class="actions">${actionsHTML}</div>`;
   document.getElementById("home").addEventListener("click",goHome);
   const ts = document.getElementById("t-strip"); if(ts) ts.addEventListener("click",()=>renderTeacherTask(ts.dataset.strip));
-  const tr = document.getElementById("t-review"); if(tr) tr.addEventListener("click",()=>renderStuck(current.id));
+  if(document.getElementById("t-mkbar")) wireMkBar(current.id);
 }
 function goHome(justDone){ stopPlayer(); stopRecorder(); try{ history.replaceState(null,"",location.pathname+location.search); }catch(e){} renderHome(justDone===true); }
 
@@ -1324,6 +1320,7 @@ function renderTask(){
   const count = `${stepIdx+1} of ${t.steps.length}`;
   const pct = Math.round((stepIdx)/t.steps.length*100);
   ({dlg:renderDlg, rewrite:renderRewrite, sayit:renderSayit, share:renderShare, lookback:renderLookback, listen:renderListen, task:renderTaskCard, plan:renderPlan, produce:renderProduce})[st.type](st, count, pct);
+  annotateMarks();
   window.scrollTo(0,0);
 }
 function navButtons(checkLabel="Check"){
