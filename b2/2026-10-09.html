@@ -34,7 +34,7 @@
   --topic-a:#FFF3CF; --topic-b:#E2EFFB;
   --ok-bg:#EAF7EC; --ok-chip:#CDEFD3; --ok-ink:#1E6B2E;
   --no-bg:#FDECEB; --no-chip:#F9D2CF; --no-ink:#A1261B;
-  --good-hl:#BFF2B8; --strike:#9A9A9A; --fix-bg:#D6E6FF; --note-ink:#0B2F8F; --note-bg:#DCE9FF; --note-line:#7FA6E8;
+  --good-hl:#BFF2B8; --strike:#9A9A9A; --fix-bg:#D6E6FF; --note-ink:#0B2F8F; --note-bg:#DCE9FF; --note-line:#7FA6E8; --next-line:#6DBA7C;
   --date-ink:#1D1D1B;
   --fig-filter:none;
   --font-body:"Homework Sans","Calibri","Carlito","Segoe UI",system-ui,sans-serif;
@@ -50,7 +50,7 @@
     --hl:#FFF34D; --hl-ink:#111111; --share:#52F552; --gloss:#5BB8F5; --ipa:#4CC5B3;
     --bubble:#3B391F; --bubble-ink:#F3F0D0; --bubble-line:#8C8760; --summary:#22362A; --done:#62C774;
     --fig-filter:invert(1) hue-rotate(180deg);
-    --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB; --good-hl:#BFF2B8; --strike:#8A8D91; --fix-bg:#22345A; --note-ink:#F2F5FF; --note-bg:#30518C; --note-line:#6F95D9; --topic-a:#2A2614; --topic-b:#162636;
+    --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB; --good-hl:#BFF2B8; --strike:#8A8D91; --fix-bg:#22345A; --note-ink:#F2F5FF; --note-bg:#30518C; --note-line:#6F95D9; --next-line:#6FC481; --topic-a:#2A2614; --topic-b:#162636;
     color-scheme:dark;
   }
 }
@@ -60,7 +60,7 @@
   --hl:#FFF34D; --hl-ink:#111111; --share:#52F552; --gloss:#5BB8F5; --ipa:#4CC5B3;
   --bubble:#3B391F; --bubble-ink:#F3F0D0; --bubble-line:#8C8760; --summary:#22362A; --done:#62C774;
   --fig-filter:invert(1) hue-rotate(180deg);
-  --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB; --good-hl:#BFF2B8; --strike:#8A8D91; --fix-bg:#22345A; --note-ink:#F2F5FF; --note-bg:#30518C; --note-line:#6F95D9; --topic-a:#2A2614; --topic-b:#162636;
+  --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB; --good-hl:#BFF2B8; --strike:#8A8D91; --fix-bg:#22345A; --note-ink:#F2F5FF; --note-bg:#30518C; --note-line:#6F95D9; --next-line:#6FC481; --topic-a:#2A2614; --topic-b:#162636;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -199,6 +199,7 @@ details.summary[open] summary::after{content:"Hide"}
 .fb-ins{color:#0000FF;font-weight:900;background:var(--hl);border-radius:3px;padding:0 2px;text-decoration:none;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .fb-note{color:var(--note-ink);font-weight:400;font-size:.95em;background:var(--note-bg);border-radius:3px;padding:1px 4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .fb-overall{margin:0 0 14px;padding:10px 14px 12px;border:2px solid var(--note-line);border-left-width:6px;border-radius:12px;background:var(--card);color:var(--ink);line-height:1.55}
+.fb-overall.fb-next{margin:14px 0 0;border-color:var(--next-line)}
 .fb-overall-h{font-size:.78rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .fb-orig summary{cursor:pointer;color:var(--muted)}
 .fb-sent{margin-top:6px;white-space:normal}
@@ -1780,14 +1781,17 @@ const fbMarks = s => esc(s)
   .replace(/\[\[([\s\S]+?)\]\]/g,'<span class="fb-note">$1</span>')
   .replace(/\{([\s\S]+?)\}/g,'<ins class="fb-ins">$1</ins>')
   .replace(/\n/g,"<br>");
-// the first line(s) that are one whole [[...]] comment = Olya's overall comment, shown in a framed box above the marked-up text
+// Olya's overall comment = the first line(s) that are one whole [[...]] comment (framed box above the marked-up text);
+// her follow-up task = the last line(s) that are one whole [[...]] comment (framed box below it)
 const fbHTML = s => {
-  const lines = String(s||"").trim().split("\n"), over = [];
-  while(lines.length){ const l = lines[0].trim();
-    if(!/^\[\[[\s\S]*\]\]$/.test(l) || /\]\][\s\S]*\[\[/.test(l.slice(2,-2))) break;
-    over.push(l.slice(2,-2)); lines.shift(); }
-  const body = fbMarks(lines.join("\n").trim());
-  return (over.length ? `<div class="fb-overall"><div class="fb-overall-h">💬 Overall</div>${over.map(fbMarks).join("<br>")}</div>` : "") + body;
+  const lines = String(s||"").trim().split("\n"), over = [], next = [];
+  const whole = l => /^\[\[[\s\S]*\]\]$/.test(l) && !/\]\][\s\S]*\[\[/.test(l.slice(2,-2));
+  while(lines.length && whole(lines[0].trim())) over.push(lines.shift().trim().slice(2,-2));
+  while(lines.length && whole(lines[lines.length-1].trim())){
+    next.unshift(lines.pop().trim().slice(2,-2));
+    while(lines.length && !lines[lines.length-1].trim()) lines.pop(); }
+  const box = (cls, h, xs) => xs.length ? `<div class="fb-overall ${cls}"><div class="fb-overall-h">${h}</div>${xs.map(fbMarks).join("<br>")}</div>` : "";
+  return box("", "💬 Overall", over) + fbMarks(lines.join("\n").trim()) + box("fb-next", "🎯 Follow-up", next);
 };
 function renderFeedback(id){
   const t = TASKS.find(x=>x.id===id); if(!t) return renderHome();
