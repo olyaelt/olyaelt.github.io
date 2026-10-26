@@ -34,7 +34,7 @@
   --topic-a:#FFF3CF; --topic-b:#E2EFFB;
   --ok-bg:#EAF7EC; --ok-chip:#CDEFD3; --ok-ink:#1E6B2E;
   --no-bg:#FDECEB; --no-chip:#F9D2CF; --no-ink:#A1261B;
-  --good-hl:#BFF2B8; --strike:#9A9A9A; --fix-bg:#D6E6FF;
+  --good-hl:#BFF2B8; --strike:#9A9A9A; --fix-bg:#D6E6FF; --note-ink:#0B2F8F; --note-bg:#DCE9FF; --note-line:#7FA6E8;
   --date-ink:#1D1D1B;
   --fig-filter:none;
   --font-body:"Homework Sans","Calibri","Carlito","Segoe UI",system-ui,sans-serif;
@@ -50,7 +50,7 @@
     --hl:#FFF34D; --hl-ink:#111111; --share:#52F552; --gloss:#5BB8F5; --ipa:#4CC5B3;
     --bubble:#3B391F; --bubble-ink:#F3F0D0; --bubble-line:#8C8760; --summary:#22362A; --done:#62C774;
     --fig-filter:invert(1) hue-rotate(180deg);
-    --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB; --good-hl:#BFF2B8; --strike:#8A8D91; --fix-bg:#22345A; --topic-a:#2A2614; --topic-b:#162636;
+    --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB; --good-hl:#BFF2B8; --strike:#8A8D91; --fix-bg:#22345A; --note-ink:#F2F5FF; --note-bg:#30518C; --note-line:#6F95D9; --topic-a:#2A2614; --topic-b:#162636;
     color-scheme:dark;
   }
 }
@@ -60,7 +60,7 @@
   --hl:#FFF34D; --hl-ink:#111111; --share:#52F552; --gloss:#5BB8F5; --ipa:#4CC5B3;
   --bubble:#3B391F; --bubble-ink:#F3F0D0; --bubble-line:#8C8760; --summary:#22362A; --done:#62C774;
   --fig-filter:invert(1) hue-rotate(180deg);
-  --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB; --good-hl:#BFF2B8; --strike:#8A8D91; --fix-bg:#22345A; --topic-a:#2A2614; --topic-b:#162636;
+  --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB; --good-hl:#BFF2B8; --strike:#8A8D91; --fix-bg:#22345A; --note-ink:#F2F5FF; --note-bg:#30518C; --note-line:#6F95D9; --topic-a:#2A2614; --topic-b:#162636;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -147,7 +147,7 @@ details.summary[open] summary::after{content:"Hide"}
 .tool.good{background:var(--good-hl);color:var(--hl-ink)}
 .tool.del{color:var(--strike);text-decoration:line-through}
 .tool.ins{color:#0000FF;background:var(--hl)}
-.tool.cmt{color:var(--answer);background:var(--fix-bg)}
+.tool.cmt{color:var(--note-ink);background:var(--note-bg)}
 .t-ta{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
 .t-prev{border:1px dashed var(--line);border-radius:10px;padding:10px 12px;min-height:2em}
 .t-fb{display:grid;gap:8px;margin-top:8px}
@@ -188,7 +188,7 @@ details.summary[open] summary::after{content:"Hide"}
 .toast.out{opacity:0}
 .topic-earlier{background:var(--card);border:2px dashed var(--line)}
 .task-wrap{display:grid;gap:0}
-.fb-line{display:block;width:100%;text-align:left;margin-top:-6px;padding:12px 14px 8px;border-radius:0 0 12px 12px;font:inherit;font-size:.92rem;font-weight:700;border:0;background:var(--fix-bg);color:var(--answer);cursor:pointer}
+.fb-line{display:block;width:100%;text-align:left;margin-top:-6px;padding:12px 14px 8px;border-radius:0 0 12px 12px;font:inherit;font-size:.92rem;font-weight:700;border:0;background:var(--note-bg);color:var(--note-ink);cursor:pointer}
 .fb-line.is-new::after{content:" • new";color:var(--label)}
 .fb-wait{background:transparent;color:var(--muted);font-weight:400;cursor:default;padding:8px 4px 0;margin-top:0}
 .fb-key{margin:0 0 10px}
@@ -197,7 +197,9 @@ details.summary[open] summary::after{content:"Hide"}
 .fb-good{background:var(--good-hl);color:var(--hl-ink);border-radius:2px;padding:0 2px;font-weight:inherit;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .fb-del{text-decoration:line-through;text-decoration-thickness:2px;color:var(--strike)}
 .fb-ins{color:#0000FF;font-weight:900;background:var(--hl);border-radius:3px;padding:0 2px;text-decoration:none;-webkit-box-decoration-break:clone;box-decoration-break:clone}
-.fb-note{color:var(--answer);font-weight:700;background:var(--fix-bg);border-radius:3px;padding:0 3px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.fb-note{color:var(--note-ink);font-weight:400;font-size:.95em;background:var(--note-bg);border-radius:3px;padding:1px 4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.fb-overall{margin-top:14px;padding:10px 14px 12px;border:2px solid var(--note-line);border-left-width:6px;border-radius:12px;background:var(--card);color:var(--ink);line-height:1.55}
+.fb-overall-h{font-size:.78rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .fb-orig summary{cursor:pointer;color:var(--muted)}
 .fb-sent{margin-top:6px;white-space:normal}
 .task-row{position:relative}
@@ -968,12 +970,21 @@ function refreshWork(){
   wireFb();
 }
 function wireFb(){ document.querySelectorAll("[data-fb]").forEach(b=>{ if(b._w) return; b._w = 1; b.addEventListener("click",()=>renderFeedback(b.dataset.fb)); }); }
-const fbHTML = s => esc(s)
+const fbMarks = s => esc(s)
   .replace(/\*\*([\s\S]+?)\*\*/g,'<b class="fb-good">$1</b>')
   .replace(/~~([\s\S]+?)~~/g,'<s class="fb-del">$1</s>')
   .replace(/\[\[([\s\S]+?)\]\]/g,'<span class="fb-note">$1</span>')
   .replace(/\{([\s\S]+?)\}/g,'<ins class="fb-ins">$1</ins>')
   .replace(/\n/g,"<br>");
+// the last line(s) that are one whole [[...]] comment = Olya's overall comment, shown in its own framed box
+const fbHTML = s => {
+  const lines = String(s||"").replace(/\s+$/,"").split("\n"), over = [];
+  while(lines.length){ const l = lines[lines.length-1].trim();
+    if(!/^\[\[[\s\S]*\]\]$/.test(l) || /\]\][\s\S]*\[\[/.test(l.slice(2,-2))) break;
+    over.unshift(l.slice(2,-2)); lines.pop(); }
+  const body = fbMarks(lines.join("\n").replace(/\s+$/,""));
+  return body + (over.length ? `<div class="fb-overall"><div class="fb-overall-h">💬 Overall</div>${over.map(fbMarks).join("<br>")}</div>` : "");
+};
 function renderFeedback(id){
   const t = TASKS.find(x=>x.id===id); if(!t) return renderHome();
   stopPlayer(); stopRecorder(); current = t;
