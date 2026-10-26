@@ -698,6 +698,8 @@ async function syncNow(code, opts={}){
       tasks: TASKS.map(t=>({id:t.id, title:t.title, frames:framesOf(t)})),
       events: Object.entries(marks).map(([task,m])=>({task, done:m.done, ts:m.ts})) }, opts);
   syncBusy = false;
+  if(!res.ok && res.error === "other-group" && res.gid){ ls.set("hw-code", code); ls.set("hw-role",""); ls.set("hw-who",""); ls.set("hw-gid", res.gid); toOwnGroup(res.gid); return res; }
+  if(res.ok) ls.set("hw-gid", res.role === "teacher" ? "" : (res.gid || ""));
   if(res.ok && res.role === "teacher"){
     if(code === myCode()){ ls.set("hw-role","teacher"); ls.set("hw-who", res.name||""); teacherData = res; if(res.group){ groupStats = res.group; } syncState = "ok";
       if(!current){ const y = scrollY; renderHome(); scrollTo(0,y); } }
@@ -745,7 +747,7 @@ function syncHTML(){
 function wireSync(){
   const box = document.getElementById("sync-slot"); if(!box) return;
   const ch = document.getElementById("code-change");
-  if(ch) ch.addEventListener("click",()=>{ ls.set("hw-code",""); ls.set("hw-who",""); ls.set("hw-role",""); teacherData = null; syncState=""; if(!current){ renderHome(); } refreshSync(); const i=document.getElementById("code"); if(i) i.focus(); });
+  if(ch) ch.addEventListener("click",()=>{ ls.set("hw-code",""); ls.set("hw-who",""); ls.set("hw-role",""); ls.set("hw-gid",""); teacherData = null; syncState=""; if(!current){ renderHome(); } refreshSync(); const i=document.getElementById("code"); if(i) i.focus(); });
   const go = document.getElementById("code-go"), inp = document.getElementById("code");
   if(go && inp){
     const save = async ()=>{
@@ -1690,9 +1692,16 @@ function renderProduce(st, count, pct){
 }
 
 /* ---------- start ---------- */
+/* a student sees only their own group: with a code from the other group, go to that group's list */
+function toOwnGroup(gid){
+  if(!gid || gid === GROUP_ID || isTeacher()) return false;
+  document.body.innerHTML = ""; location.replace("../" + gid + "/index.html"); return true;
+}
 const start = (location.hash||"").replace("#","");
-if(start && TASKS.some(t=>t.id===start)) openTask(start); else renderHome();
-if(myCode()) syncNow();
+if(!(myCode() && toOwnGroup(ls.get("hw-gid")))){
+  if(start && TASKS.some(t=>t.id===start)) openTask(start); else renderHome();
+  if(myCode()) syncNow();
+}
 </script>
 
 </body>
