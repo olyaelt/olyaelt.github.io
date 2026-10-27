@@ -38,8 +38,8 @@
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-/* the page grows with the screen, like a slide (her slides keep everything at 15 pt or more) */
-html{font-size:clamp(15px, 1.4vw, 28px)}
+/* the page grows with the screen, like a slide (her slides keep everything at 15 pt or more), and with its height: a laptop screen minus the browser bar is wider than 16:9, so the size is the smaller of the two (the Useful language box should fit without scrolling) */
+html{font-size:clamp(15px, min(1.4vw, 2.55vh), 28px)}
 html,body{background:var(--ground);margin:0}
 body{color:var(--ink);font-family:var(--font-body);line-height:1.45;padding:0 16px}
 button{font:inherit;color:inherit;cursor:pointer}
