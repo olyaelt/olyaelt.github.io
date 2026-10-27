@@ -95,6 +95,8 @@ h1{margin:0;font-size:var(--step-2);line-height:1.2;font-weight:900}
 .hw.latest{border-color:var(--instr)}
 .hw-top{display:flex;align-items:center;gap:10px}
 .date{display:inline-flex;font-weight:900;letter-spacing:.04em;font-size:.85rem;background:var(--date-bg);color:var(--date-ink);padding:3px 10px;border-radius:6px}
+.hw.unl{border-style:dashed}
+.unl-tag{color:var(--muted)}
 .tag{font-size:.78rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--instr)}
 .go{margin-left:auto;color:var(--instr);font-weight:900}
 .topics{display:grid;gap:8px}
@@ -142,10 +144,18 @@ h1{margin:0;font-size:var(--step-2);line-height:1.2;font-weight:900}
 <div class="wrap" id="app"></div>
 <footer class="legal"><a href="../impressum.html">Impressum</a> · <a href="../datenschutz.html">Datenschutz</a></footer>
 <script>
-const HW = [{"file": "2026-10-23.html", "key": "hw-ge-c1-2026-10-23", "date": "23.10.26", "topics": [{"title": "The clocks go back", "sub": "Moving a call when the clocks change"}, {"title": "How did you get into that?", "sub": "Talking about your studies and your career path"}], "tasks": ["clocks-text", "clock-listen", "clock-practice", "career-rewrite", "career-finish", "career-listen", "write"]}, {"file": "2026-10-21.html", "key": "hw-ge-c1-2026-10-21", "date": "21.10.26", "topics": [{"title": "How did you get into that?", "sub": "Talking about your studies and your career path"}], "tasks": ["traps", "dan-text", "ruth-text", "yg-get", "yg-easy", "yg-training"]}, {"file": "2026-10-16.html", "key": "hw-ge-c1-2026-10-16", "date": "16.10.26", "topics": [{"title": "Getting to know someone and catching up", "sub": "Meeting someone new, and catching up with someone you haven't seen for ages"}], "tasks": ["coffee-text", "later-text", "practice", "convos", "listen1", "listen2", "listen3", "write"]}];
+const HW_ALL = [{"file": "2026-10-23.html", "key": "hw-ge-c1-2026-10-23", "date": "23.10.26", "topics": [{"title": "The clocks go back", "sub": "Moving a call when the clocks change"}, {"title": "How did you get into that?", "sub": "Talking about your studies and your career path"}], "tasks": ["clocks-text", "clock-listen", "clock-practice", "career-rewrite", "career-finish", "career-listen", "write"]}, {"file": "2026-10-21.html", "key": "hw-ge-c1-2026-10-21", "date": "21.10.26", "topics": [{"title": "How did you get into that?", "sub": "Talking about your studies and your career path"}], "tasks": ["traps", "dan-text", "ruth-text", "yg-get", "yg-easy", "yg-training"]}, {"file": "2026-10-16.html", "key": "hw-ge-c1-2026-10-16", "date": "16.10.26", "topics": [{"title": "Getting to know someone and catching up", "sub": "Meeting someone new, and catching up with someone you haven't seen for ages"}], "tasks": ["coffee-text", "later-text", "practice", "convos", "listen1", "listen2", "listen3", "write"]}];
 const SYNC_URL = "https://script.google.com/macros/s/AKfycbwHqzwA-2z09POg7JSqiMhqglOKbD8bxs-UG-NcFKZPzTyzmdEW79ct3zHGktUGyLM_/exec";
 const lsMem = {};   /* if the browser blocks storage (private mode), remember things for this visit at least */
 const ls = { get:k=>{ try{ const v = localStorage.getItem(k); if(v != null) return v; }catch(e){} return lsMem[k] || ""; }, set:(k,v)=>{ lsMem[k] = v; try{ localStorage.setItem(k,v); }catch(e){} } };
+/* students see published homework only. A draft ("listed": false, 🔒 in her teacher view) joins their list
+   once she taps Publish on its page: her table says which drafts are published (remembered here for the next visit) */
+const PUB_KEY = "hw-pub-" + ((HW_ALL[0] && HW_ALL[0].key.split("-")[2]) || "group");
+let PUB = new Set((()=>{ try{ return JSON.parse(ls.get(PUB_KEY) || "[]"); }catch(e){ return []; } })());
+const isPub = h => !h.unlisted || PUB.has(h.key);
+let HW = HW_ALL.filter(isPub);
+function gotPub(list){ if(!Array.isArray(list)) return; PUB = new Set(list); ls.set(PUB_KEY, JSON.stringify(list)); HW = HW_ALL.filter(isPub); }
+const teacherList = () => teacherView() ? HW_ALL : HW;
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const app = document.getElementById("app");
 let server = null, syncState = "";
@@ -159,7 +169,7 @@ function setStudentView(on){
   location.reload();
 }
 document.addEventListener("click", ev => { const b = ev.target.closest && ev.target.closest("#as-student, #as-teacher"); if(b) setStudentView(b.id === "as-student"); });
-const GROUP_ID = (HW[0] && HW[0].key.split("-")[2]) || "group";
+const GROUP_ID = (HW_ALL[0] && HW_ALL[0].key.split("-")[2]) || "group";
 /* a student sees only their own group: with a code from the other group, go to that group's list */
 function toOwnGroup(gid){
   if(!gid || gid === GROUP_ID || ls.get("hw-role") === "teacher") return false;
@@ -263,12 +273,12 @@ async function overview(code, keys, stats){
   return res;
 }
 async function loadTeacher(){
-  const code = myCode(); tdata = {}; tpending = HW.length; tfailed = 0; render();
-  const all = await overview(code, HW.map(h=>h.key));
+  const code = myCode(), L = HW_ALL; tdata = {}; tpending = L.length; tfailed = 0; render();
+  const all = await overview(code, L.map(h=>h.key));
   if(code !== myCode() || !teacherView()) return;
-  if(all.ok && all.pages){ HW.forEach(h=>{ if(all.pages[h.key]) tdata[h.key] = all.pages[h.key]; else tfailed++; }); tpending = 0; render(); return; }
-  if(all.error !== "no-page"){ tpending = 0; tfailed = HW.length; render(); return; }
-  await inTurn(HW, async h => {
+  if(all.ok && all.pages){ gotPub(all.published); L.forEach(h=>{ if(all.pages[h.key]) tdata[h.key] = all.pages[h.key]; else tfailed++; }); tpending = 0; render(); return; }
+  if(all.error !== "no-page"){ tpending = 0; tfailed = L.length; render(); return; }
+  await inTurn(L, async h => {
     const res = await teacherSync(code, h.key);
     if(code !== myCode() || !teacherView()) return;
     tpending--;
@@ -281,8 +291,8 @@ function teacherSum(){
   if(!tdata) return `<p class="t-sum checking">Checking what waits for your answer…</p>`;
   const total = Object.values(tdata).reduce((s,c)=>s+c.toAnswer, 0);
   /* never say "nothing waiting" before every homework has answered */
-  if(tpending === HW.length) return `<p class="t-sum checking">Checking what waits for your answer…</p>`;
-  if(tpending) return `<p class="t-sum checking">${total ? `💬 ${total} waiting for your answer so far · ` : ""}checking… ${HW.length - tpending} of ${HW.length}</p>`;
+  if(tpending === HW_ALL.length) return `<p class="t-sum checking">Checking what waits for your answer…</p>`;
+  if(tpending) return `<p class="t-sum checking">${total ? `💬 ${total} waiting for your answer so far · ` : ""}checking… ${HW_ALL.length - tpending} of ${HW_ALL.length}</p>`;
   if(tfailed) return `<p class="t-sum">${total ? `💬 ${total} waiting for your answer · ` : ""}⚠️ ${tfailed} homework didn't answer — reload the page</p>`;
   return `<p class="t-sum ${total?"":"none"}">${total ? `💬 ${total} waiting for your answer — open the homework with the red frame` : "✓ Nothing waiting for your answer"}</p>`;
 }
@@ -298,8 +308,9 @@ function card(h, i){
   if(teacherView()){
     const c = tdata && tdata[h.key];
     const badges = c ? [c.toAnswer?`<b>💬 ${c.toAnswer} to answer</b>`:"", `${c.started} of ${c.students} started`, c.marked?`🔖 ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:""].filter(Boolean).join(" · ") : (tpending ? "checking…" : "didn't answer — reload the page");
-    return `<a class="hw ${i===0?"latest":""} ${c && c.toAnswer ? "todo" : ""}" href="${esc(h.file)}">
-    <div class="hw-top"><span class="date">${esc(h.date)}</span>${i===0?`<span class="tag">Latest</span>`:""}<span class="go" aria-hidden="true">→</span></div>
+    const latest = h === HW[0];
+    return `<a class="hw ${latest?"latest":""} ${c && c.toAnswer ? "todo" : ""} ${isPub(h)?"":"unl"}" href="${esc(h.file)}">
+    <div class="hw-top"><span class="date">${esc(h.date)}</span>${!isPub(h)?`<span class="tag unl-tag">🔒 Not published</span>`:latest?`<span class="tag">Latest</span>`:""}<span class="go" aria-hidden="true">→</span></div>
     <div class="topics">${h.topics.map((tp,k)=>`<div class="topic t${k%2}"><b>${esc(tp.title)}</b><span>${esc(tp.sub)}</span></div>`).join("")}</div>
     <div class="tb">${badges}</div>
   </a>`;
@@ -346,7 +357,7 @@ function render(){
     ${(myCode() && syncState!=="unknown") ? meterHTML(groupStats) : ""}
     ${tipHTML()}
     ${teacherSum()}
-    <div class="list">${HW.map(card).join("")}</div>
+    <div class="list">${teacherList().map(card).join("")}</div>
     <p class="foot">Open a homework page, do the tasks and tick them off. Your ticks show up here.</p>`;
   const x = document.getElementById("tip-x"); if(x) x.addEventListener("click",()=>{ ls.set("hw-tip-done","1"); document.getElementById("tip").remove(); });
   const ch = document.getElementById("code-change");
@@ -357,8 +368,9 @@ function render(){
       const code = inp.value.trim().toLowerCase(), msg = document.getElementById("sync-msg");
       if(!code){ msg.textContent = "Type the code Olya sent you."; return; }
       go.disabled = true; msg.textContent = "Checking…";
-      const res = await post({action:"summary", code, pages:HW.map(h=>h.key)});
+      const res = await post({action:"summary", code, pages:HW_ALL.map(h=>h.key)});
       go.disabled = false;
+      if(res.ok) gotPub(res.published);
       if(otherGroup(res, code)) return;
       if(res.ok){ ls.set("hw-code", code); ls.set("hw-gid", res.role==="teacher" ? "" : (res.gid||"")); ls.set("hw-role", res.role==="teacher" ? "teacher" : ""); ls.set("hw-who", res.name||""); if(!ls.get("hw-name") && res.name) ls.set("hw-name", res.name); server = res; syncState = "ok"; gotGroup(res.group); render(); if(teacherView()) loadTeacher(); }
       else msg.textContent = res.error==="unknown-code" ? "Hmm, Olya's list doesn't have this code. Check it with her." : "Can't reach Olya's list right now. Try again in a minute.";
@@ -369,11 +381,17 @@ function render(){
 }
 function gotGroup(g){ if(!g) return; groupStats = g; ls.set("hw-group-"+GROUP_ID, JSON.stringify(g)); setTimeout(()=>checkMilestone(g, GROUP_ID), 50); }
 async function refresh(){
-  const code = myCode(); if(!code || asStudent()) return;
-  const res = await post({action:"summary", code, pages:HW.map(h=>h.key)});
+  const code = myCode();
+  if(!code && SYNC_URL && HW_ALL.some(h=>h.unlisted)){   /* no code: only which drafts are published */
+    const res = await post({action:"published", pages:HW_ALL.filter(h=>h.unlisted).map(h=>h.key)});
+    if(res.ok && !myCode()){ gotPub(res.published); render(); }
+    return;
+  }
+  if(!code || asStudent()) return;
+  const res = await post({action:"summary", code, pages:HW_ALL.map(h=>h.key)});
   if(code !== myCode()) return;
   if(otherGroup(res, code)) return;
-  if(res.ok){ ls.set("hw-gid", res.role==="teacher" ? "" : (res.gid||"")); server = res.role==="teacher" ? null : res; syncState = "ok"; ls.set("hw-who", res.name||""); ls.set("hw-role", res.role==="teacher" ? "teacher" : ""); gotGroup(res.group); }
+  if(res.ok){ gotPub(res.published); ls.set("hw-gid", res.role==="teacher" ? "" : (res.gid||"")); server = res.role==="teacher" ? null : res; syncState = "ok"; ls.set("hw-who", res.name||""); ls.set("hw-role", res.role==="teacher" ? "teacher" : ""); gotGroup(res.group); }
   else syncState = res.error==="unknown-code" ? "unknown" : "offline";
   render();
   if(teacherView()) loadTeacher();
