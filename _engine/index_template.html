@@ -5,10 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-title" content="Homework">
 <meta name="theme-color" content="#F6F1DC">
-<title>Homework</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<title>Homework · __GROUP_NAME__</title>
+<link rel="stylesheet" href="../fonts/homework-sans.css">
 <style>
 :root{
   --ground:#F6F1DC;      /* the cream frame around her slides */
@@ -38,7 +36,7 @@
   --good-hl:#BFF2B8; --strike:#9A9A9A; --fix-bg:#D6E6FF;
   --date-ink:#1D1D1B;
   --fig-filter:none;
-  --font-body:"Lato","Calibri","Carlito","Segoe UI",system-ui,sans-serif;
+  --font-body:"Homework Sans","Calibri","Carlito","Segoe UI",system-ui,sans-serif;
   --step-0:clamp(1rem,0.96rem + 0.2vw,1.0625rem);
   --step-1:clamp(1.125rem,1.06rem + 0.3vw,1.25rem);
   --step-2:clamp(1.375rem,1.25rem + 0.6vw,1.625rem);
@@ -97,6 +95,8 @@ h1{margin:0;font-size:var(--step-2);line-height:1.2;font-weight:900}
 .hw.latest{border-color:var(--instr)}
 .hw-top{display:flex;align-items:center;gap:10px}
 .date{display:inline-flex;font-weight:900;letter-spacing:.04em;font-size:.85rem;background:var(--date-bg);color:var(--date-ink);padding:3px 10px;border-radius:6px}
+.hw.unl{border-style:dashed}
+.unl-tag{color:var(--muted)}
 .tag{font-size:.78rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--instr)}
 .go{margin-left:auto;color:var(--instr);font-weight:900}
 .topics{display:grid;gap:8px}
@@ -108,6 +108,16 @@ h1{margin:0;font-size:var(--step-2);line-height:1.2;font-weight:900}
 .prog .bar{flex:1;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
 .prog .bar i{display:block;height:100%;background:var(--done);border-radius:99px}
 .prog.all span{color:var(--done);font-weight:900}
+.hw.todo{border-color:var(--label)}
+.hw.fbnew{border-color:var(--label)}
+.fb-alert{background:var(--card);border:2px solid var(--label);border-left-width:6px;border-radius:var(--radius);padding:12px 14px;margin:0 0 16px;line-height:1.5}
+.fb-alert b{color:var(--label)}
+.fb-alert a{color:var(--answer);font-weight:700}
+.tb{font-size:.92rem;color:var(--muted)}
+.tb b{color:var(--label)}
+.t-sum{margin:0 0 14px;font-weight:900;color:var(--label)}
+.t-sum.none{color:var(--done)}
+.t-sum.checking{color:var(--muted)}
 .fb{font-weight:700;color:var(--answer);background:var(--fix-bg);border-radius:10px;padding:8px 12px;font-size:.95rem}
 .fb.new::after{content:" • new";color:var(--label)}
 .foot{color:var(--muted);font-size:.88rem;margin-top:22px}
@@ -124,20 +134,51 @@ h1{margin:0;font-size:var(--step-2);line-height:1.2;font-weight:900}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);max-width:min(92vw,520px);background:#1D1D1B;color:#fff;font-weight:700;padding:12px 16px;border-radius:12px;z-index:61;box-shadow:0 6px 20px rgba(0,0,0,.25);transition:opacity .5s}
 .toast.out{opacity:0}
 
+.legal{max-width:var(--maxw,760px);margin:0 auto;padding:18px 16px 28px;color:var(--muted);font-size:.85rem;text-align:center}
+.legal a{color:inherit}
+.chip-t{font:inherit;font-size:.9rem;font-weight:700;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:3px 12px;cursor:pointer}
+.preview-bar{align-items:center;background:var(--card);border:2px dashed var(--instr);border-radius:12px;padding:8px 12px;color:var(--ink)}
 </style>
 </head>
 <body>
 <div class="wrap" id="app"></div>
+<footer class="legal"><a href="../impressum.html">Impressum</a> · <a href="../datenschutz.html">Datenschutz</a></footer>
 <script>
-const HW = __HW_JSON__;
+const HW_ALL = __HW_JSON__;
 const SYNC_URL = "__SYNC_URL__";
 const lsMem = {};   /* if the browser blocks storage (private mode), remember things for this visit at least */
 const ls = { get:k=>{ try{ const v = localStorage.getItem(k); if(v != null) return v; }catch(e){} return lsMem[k] || ""; }, set:(k,v)=>{ lsMem[k] = v; try{ localStorage.setItem(k,v); }catch(e){} } };
+/* students see published homework only. A draft ("listed": false, 🔒 in her teacher view) joins their list
+   once she taps Publish on its page: her table says which drafts are published (remembered here for the next visit) */
+const PUB_KEY = "hw-pub-" + ((HW_ALL[0] && HW_ALL[0].key.split("-")[2]) || "group");
+let PUB = new Set((()=>{ try{ return JSON.parse(ls.get(PUB_KEY) || "[]"); }catch(e){ return []; } })());
+const isPub = h => !h.unlisted || PUB.has(h.key);
+let HW = HW_ALL.filter(isPub);
+function gotPub(list){ if(!Array.isArray(list)) return; PUB = new Set(list); ls.set(PUB_KEY, JSON.stringify(list)); HW = HW_ALL.filter(isPub); }
+const teacherList = () => teacherView() ? HW_ALL : HW;
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const app = document.getElementById("app");
 let server = null, syncState = "";
 const myCode = () => SYNC_URL ? ls.get("hw-code") : "";
-const GROUP_ID = (HW[0] && HW[0].key.split("-")[2]) || "group";
+/* Olya's "Student view": her own code, but the page behaves like a student's page, and nothing is sent to the table.
+   Switching in or out starts from a clean page (her own ticks and marks on this device are cleared). */
+const asStudent = () => !!(SYNC_URL && ls.get("hw-code") && ls.get("hw-role") === "teacher" && ls.get("hw-as-student"));
+function setStudentView(on){
+  ls.set("hw-as-student", on ? "1" : "");
+  try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
+  location.reload();
+}
+document.addEventListener("click", ev => { const b = ev.target.closest && ev.target.closest("#as-student, #as-teacher"); if(b) setStudentView(b.id === "as-student"); });
+const GROUP_ID = (HW_ALL[0] && HW_ALL[0].key.split("-")[2]) || "group";
+/* a student sees only their own group: with a code from the other group, go to that group's list */
+function toOwnGroup(gid){
+  if(!gid || gid === GROUP_ID || ls.get("hw-role") === "teacher") return false;
+  document.body.innerHTML = ""; location.replace("../" + gid + "/index.html"); return true;
+}
+function otherGroup(res, code){
+  if(res.ok || res.error !== "other-group" || !res.gid) return false;
+  ls.set("hw-code", code); ls.set("hw-role", ""); ls.set("hw-who", ""); ls.set("hw-gid", res.gid); return toOwnGroup(res.gid);
+}
 let groupStats = (()=>{ try{ return JSON.parse(localStorage.getItem("hw-group-"+GROUP_ID)||"null"); }catch(e){ return null; } })();
 /* ---------- group goal: film-strip meter, confetti, milestones ---------- */
 const fmtN = n => Number(n||0).toLocaleString("en-GB");
@@ -200,20 +241,95 @@ function stats(h){
   const w = Object.values(json(h.key+"-work") || {}).flat().filter(x=>x && String(x.feedback||"").trim());
   return { done: h.tasks.filter(id=>d.has(id)).length, fb: w.length, fbNew: w.filter(x=>!x.seen).length };
 }
+/* teacher view: what waits for Olya on each homework (the same data the homework page shows her) */
+let tdata = null, tpending = 0, tfailed = 0;
+const teacherView = () => !!(myCode() && ls.get("hw-role")==="teacher" && !asStudent() && syncState!=="unknown");
+function tcounts(res){
+  const w = res.work || [], ticked = new Set(); Object.values(res.done || {}).forEach(a => a.forEach(i => ticked.add(i)));
+  return { toAnswer: w.filter(x=>!String(x.feedback||"").trim() && (x.type!=="marked" || /\n— /.test(String(x.text||"")))).length, marked: w.filter(x=>x.type==="marked").length,
+           questions: w.filter(x=>x.type==="question").length, work: w.filter(x=>x.type==="text"||x.type==="recording").length,
+           started: ticked.size, students: (res.students || []).length };
+}
+/* her table answers one request at a time: ask two homeworks at a time, try again once if it was busy */
+async function inTurn(items, fn, width=2){
+  let next = 0;
+  const worker = async () => { while(next < items.length){ const it = items[next++]; await fn(it); } };
+  await Promise.all(Array.from({length: Math.min(width, items.length)}, worker));
+}
+async function teacherSync(code, key){
+  for(let attempt = 0; attempt < 2; attempt++){
+    const res = await post({action:"sync", code, page:key});
+    if(res.ok || res.error === "unknown-code" || res.error === "other-group") return res;
+  }
+  return {ok:false, error:"busy"};
+}
+/* one request for all the homework; an older Code.gs answers "no-page", and then each homework is asked in turn */
+async function overview(code, keys, stats){
+  let res = {ok:false};
+  for(let attempt = 0; attempt < 2 && !res.ok; attempt++){
+    res = await post({action:"overview", code, pages:keys, stats:!!stats});
+    if(res.error === "no-page" || res.error === "unknown-code") break;
+  }
+  return res;
+}
+async function loadTeacher(){
+  const code = myCode(), L = HW_ALL; tdata = {}; tpending = L.length; tfailed = 0; render();
+  const all = await overview(code, L.map(h=>h.key));
+  if(code !== myCode() || !teacherView()) return;
+  if(all.ok && all.pages){ gotPub(all.published); L.forEach(h=>{ if(all.pages[h.key]) tdata[h.key] = all.pages[h.key]; else tfailed++; }); tpending = 0; render(); return; }
+  if(all.error !== "no-page"){ tpending = 0; tfailed = L.length; render(); return; }
+  await inTurn(L, async h => {
+    const res = await teacherSync(code, h.key);
+    if(code !== myCode() || !teacherView()) return;
+    tpending--;
+    if(res.ok && res.role==="teacher") tdata[h.key] = tcounts(res); else tfailed++;
+    render();
+  });
+}
+function teacherSum(){
+  if(!teacherView()) return "";
+  if(!tdata) return `<p class="t-sum checking">Checking what waits for your answer…</p>`;
+  const total = Object.values(tdata).reduce((s,c)=>s+c.toAnswer, 0);
+  /* never say "nothing waiting" before every homework has answered */
+  if(tpending === HW_ALL.length) return `<p class="t-sum checking">Checking what waits for your answer…</p>`;
+  if(tpending) return `<p class="t-sum checking">${total ? `💬 ${total} waiting for your answer so far · ` : ""}checking… ${HW_ALL.length - tpending} of ${HW_ALL.length}</p>`;
+  if(tfailed) return `<p class="t-sum">${total ? `💬 ${total} waiting for your answer · ` : ""}⚠️ ${tfailed} homework didn't answer — reload the page</p>`;
+  return `<p class="t-sum ${total?"":"none"}">${total ? `💬 ${total} waiting for your answer — open the homework with the red frame` : "✓ Nothing waiting for your answer"}</p>`;
+}
+/* a student's new feedback, on top of the list (red) */
+function studentFbHTML(){
+  if(!myCode() || syncState==="unknown" || teacherView()) return "";
+  const list = HW.filter(h=>stats(h).fbNew);
+  if(!list.length) return "";
+  return `<div class="fb-alert" role="status"><b>💬 New feedback from Olya</b> on ${list.map(h=>`<a href="${esc(h.file)}">${esc(h.date)}</a>`).join(", ")}. Open the homework and tap the red box on top.</div>`;
+}
 function card(h, i){
   const st = stats(h), n = h.tasks.length, all = n && st.done >= n;
-  return `<a class="hw ${i===0?"latest":""}" href="${esc(h.file)}">
+  if(teacherView()){
+    const c = tdata && tdata[h.key];
+    const badges = c ? [c.toAnswer?`<b>💬 ${c.toAnswer} to answer</b>`:"", `${c.started} of ${c.students} started`, c.marked?`🔖 ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:""].filter(Boolean).join(" · ") : (tpending ? "checking…" : "didn't answer — reload the page");
+    const latest = h === HW[0];
+    return `<a class="hw ${latest?"latest":""} ${c && c.toAnswer ? "todo" : ""} ${isPub(h)?"":"unl"}" href="${esc(h.file)}">
+    <div class="hw-top"><span class="date">${esc(h.date)}</span>${!isPub(h)?`<span class="tag unl-tag">🔒 Not published</span>`:latest?`<span class="tag">Latest</span>`:""}<span class="go" aria-hidden="true">→</span></div>
+    <div class="topics">${h.topics.map((tp,k)=>`<div class="topic t${k%2}"><b>${esc(tp.title)}</b><span>${esc(tp.sub)}</span></div>`).join("")}</div>
+    <div class="tb">${badges}</div>
+  </a>`;
+  }
+  return `<a class="hw ${i===0?"latest":""} ${st.fbNew?"fbnew":""}" href="${esc(h.file)}">
     <div class="hw-top"><span class="date">${esc(h.date)}</span>${i===0?`<span class="tag">Latest</span>`:""}<span class="go" aria-hidden="true">→</span></div>
     <div class="topics">${h.topics.map((tp,k)=>`<div class="topic t${k%2}"><b>${esc(tp.title)}</b><span>${esc(tp.sub)}</span></div>`).join("")}</div>
     <div class="prog ${all?"all":""}"><div class="bar" aria-hidden="true"><i style="width:${n?Math.round(st.done/n*100):0}%"></i></div><span>${all?"All done ✓":`${st.done} of ${n} tasks done`}</span></div>
-    ${st.fbNew ? `<div class="fb new">💬 Feedback from Olya</div>` : st.fb ? `<div class="fb">💬 Feedback from Olya</div>` : ""}
+    ${st.fbNew ? `<div class="fb new">💬 New feedback from Olya — open to read</div>` : st.fb ? `<div class="fb">💬 Feedback from Olya</div>` : ""}
   </a>`;
 }
 function syncHTML(){
   if(!SYNC_URL) return "";
   const code = myCode(), who = ls.get("hw-who");
+  if(asStudent()) return `<div class="sync sync-on preview-bar"><span>👀 <b>Student view</b> — what your students see. Nothing is sent to the table.</span>
+      <button class="chip-t" id="as-teacher">Back to teacher view</button></div>`;
   if(code && syncState!=="unknown" && ls.get("hw-role")==="teacher") return `<div class="sync sync-on">
-      <span>👩‍🏫 <b>Teacher view</b>${who?` — ${esc(who)}`:""}. Open a homework to see your group on each task.</span>
+      <span>👩‍🏫 <b>Teacher view</b>${who?` — ${esc(who)}`:""}. Open a homework page to see your group on each task.</span>
+      <button class="chip-t" id="as-student">👀 Student view</button>
       <button class="linklike" id="code-change">Not you?</button></div>`;
   if(code && syncState!=="unknown") return `<div class="sync sync-on">
       <span>✓ ${who?`Hi, ${esc(who)}! `:""}Olya can see your progress${syncState==="offline"?" — no connection right now, so this shows what's saved on this device.":"."}</span>
@@ -235,24 +351,28 @@ function tipHTML(){
 }
 function render(){
   app.innerHTML = `
-    <header class="head"><h1>Homework</h1><p>All our homework in one place. The newest is at the top.</p></header>
+    <header class="head"><h1>Homework</h1><p><b>__GROUP_NAME__</b> · All our homework in one place. The newest is at the top.</p></header>
     <div id="sync-slot">${syncHTML()}</div>
+    ${studentFbHTML()}
     ${(myCode() && syncState!=="unknown") ? meterHTML(groupStats) : ""}
     ${tipHTML()}
-    <div class="list">${HW.map(card).join("")}</div>
-    <p class="foot">Open a homework, do the tasks, and tick them off. Your ticks show up here.</p>`;
+    ${teacherSum()}
+    <div class="list">${teacherList().map(card).join("")}</div>
+    <p class="foot">Open a homework page, do the tasks and tick them off. Your ticks show up here.</p>`;
   const x = document.getElementById("tip-x"); if(x) x.addEventListener("click",()=>{ ls.set("hw-tip-done","1"); document.getElementById("tip").remove(); });
   const ch = document.getElementById("code-change");
-  if(ch) ch.addEventListener("click",()=>{ ls.set("hw-code",""); ls.set("hw-who",""); ls.set("hw-role",""); server = null; syncState = ""; render(); const i=document.getElementById("code"); if(i) i.focus(); });
+  if(ch) ch.addEventListener("click",()=>{ ls.set("hw-code",""); ls.set("hw-who",""); ls.set("hw-role",""); ls.set("hw-gid",""); ls.set("hw-as-student",""); server = null; syncState = ""; render(); const i=document.getElementById("code"); if(i) i.focus(); });
   const go = document.getElementById("code-go"), inp = document.getElementById("code");
   if(go && inp){
     const save = async ()=>{
       const code = inp.value.trim().toLowerCase(), msg = document.getElementById("sync-msg");
       if(!code){ msg.textContent = "Type the code Olya sent you."; return; }
       go.disabled = true; msg.textContent = "Checking…";
-      const res = await post({action:"summary", code, pages:HW.map(h=>h.key)});
+      const res = await post({action:"summary", code, pages:HW_ALL.map(h=>h.key)});
       go.disabled = false;
-      if(res.ok){ ls.set("hw-code", code); ls.set("hw-role", res.role==="teacher" ? "teacher" : ""); ls.set("hw-who", res.name||""); if(!ls.get("hw-name") && res.name) ls.set("hw-name", res.name); server = res; syncState = "ok"; gotGroup(res.group); render(); }
+      if(res.ok) gotPub(res.published);
+      if(otherGroup(res, code)) return;
+      if(res.ok){ ls.set("hw-code", code); ls.set("hw-gid", res.role==="teacher" ? "" : (res.gid||"")); ls.set("hw-role", res.role==="teacher" ? "teacher" : ""); ls.set("hw-who", res.name||""); if(!ls.get("hw-name") && res.name) ls.set("hw-name", res.name); server = res; syncState = "ok"; gotGroup(res.group); render(); if(teacherView()) loadTeacher(); }
       else msg.textContent = res.error==="unknown-code" ? "Hmm, Olya's list doesn't have this code. Check it with her." : "Can't reach Olya's list right now. Try again in a minute.";
     };
     go.addEventListener("click", save);
@@ -261,15 +381,23 @@ function render(){
 }
 function gotGroup(g){ if(!g) return; groupStats = g; ls.set("hw-group-"+GROUP_ID, JSON.stringify(g)); setTimeout(()=>checkMilestone(g, GROUP_ID), 50); }
 async function refresh(){
-  const code = myCode(); if(!code) return;
-  const res = await post({action:"summary", code, pages:HW.map(h=>h.key)});
+  const code = myCode();
+  if(!code && SYNC_URL && HW_ALL.some(h=>h.unlisted)){   /* no code: only which drafts are published */
+    const res = await post({action:"published", pages:HW_ALL.filter(h=>h.unlisted).map(h=>h.key)});
+    if(res.ok && !myCode()){ gotPub(res.published); render(); }
+    return;
+  }
+  if(!code || asStudent()) return;
+  const res = await post({action:"summary", code, pages:HW_ALL.map(h=>h.key)});
   if(code !== myCode()) return;
-  if(res.ok){ server = res.role==="teacher" ? null : res; syncState = "ok"; ls.set("hw-who", res.name||""); ls.set("hw-role", res.role==="teacher" ? "teacher" : ""); gotGroup(res.group); }
+  if(otherGroup(res, code)) return;
+  if(res.ok){ gotPub(res.published); ls.set("hw-gid", res.role==="teacher" ? "" : (res.gid||"")); server = res.role==="teacher" ? null : res; syncState = "ok"; ls.set("hw-who", res.name||""); ls.set("hw-role", res.role==="teacher" ? "teacher" : ""); gotGroup(res.group); }
   else syncState = res.error==="unknown-code" ? "unknown" : "offline";
   render();
+  if(teacherView()) loadTeacher();
 }
-render(); refresh();
-window.addEventListener("pageshow", e=>{ if(e.persisted){ render(); refresh(); } });
+if(!(myCode() && toOwnGroup(ls.get("hw-gid")))){ render(); refresh(); }
+window.addEventListener("pageshow", e=>{ if(e.persisted && !(myCode() && toOwnGroup(ls.get("hw-gid")))){ render(); refresh(); } });
 </script>
 </body>
 </html>

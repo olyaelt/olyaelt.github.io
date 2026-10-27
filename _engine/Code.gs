@@ -21,6 +21,10 @@ const SETTINGS_DEFAULTS = [["B2", 2700, 1182, new Date(2026, 8, 30), "a series l
 const STATE_HEAD = ["Key", "Code", "Page", "Task", "Done", "Time", "Title", "Frames"];
 const TEACHER = "TEACHER";     // a Students row with Group = Teacher: Olya's own code, opens the teacher view on the pages
 const REACT = "Reactions";      // Easy / OK / Hard after each task
+const DISC = "Discussed";       // what Olya went through in class ("Where they got stuck"): Key (page|task) | Page | Task | Data | Date
+const DISC_HEAD = ["Key", "Page", "Task", "Data (marks gone through)", "Date"];
+const PUB = "Published";        // drafts ("listed": false) Olya published with the button on the page: Page | Published | Date
+const PUB_HEAD = ["Page", "Published", "Date"];
 const LEVELS = { easy: "easy", ok: "ok", hard: "hard" };
 const FIRST_STUDENT_ROW = 4;   // progress tabs: row 1 hidden keys, row 2 date, row 3 task names
 const WORDS = ["apple","berry","cloud","daisy","eagle","fern","grape","honey","iris","kite",
@@ -34,6 +38,7 @@ function onOpen() {
     .addItem("Make codes for new students", "makeCodes")
     .addSeparator()
     .addItem("Apply imported feedback", "applyImportedFeedback")
+    .addItem("Apply imported ticks (old homework)", "applyImportedTicks")
     .addToUi();
 }
 
@@ -212,7 +217,7 @@ function coloured_(st) {
 // paste a feedback file from Claude: File → Import → Upload → "Insert new sheet(s)", then Homework → Apply imported feedback
 function applyImportedFeedback() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const imports = ss.getSheets().filter(s => /^import/i.test(s.getName()));
+  const imports = ss.getSheets().filter(s => /^import/i.test(s.getName()) && String(s.getRange(1, 1).getValue()).trim() !== "Type");
   if (!imports.length) { say_("No Import tab found. Import Claude's feedback file first: File → Import → Upload → Insert new sheet(s)."); return; }
   const sh = work_();
   const n = sh.getLastRow() - 1;
@@ -238,6 +243,101 @@ function applyImportedFeedback() {
     (!skipped.length && !missing.length ? " The Import tab is removed." : " The Import tab is kept so you can check."));
 }
 
+// old homework moved onto the pages: a file from Claude with what each student had done in the old spreadsheet.
+// File → Import → Upload → "Insert new sheet(s)", then Homework → Apply imported ticks (old homework).
+// Rows: Type = task (a column in the Progress tab) · tick (a done task) · text (a student's text, with your feedback).
+// Safe to run twice: what is already in the table is left as it is.
+function applyImportedTicks() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const imports = ss.getSheets().filter(s => /^import/i.test(s.getName()) && String(s.getRange(1, 1).getValue()).trim() === "Type");
+  if (!imports.length) { say_("No Import tab with old ticks found. Import Claude's file first: File → Import → Upload → Insert new sheet(s)."); return; }
+  const lock = LockService.getScriptLock(); lock.waitLock(30000);
+  try {
+    const st = ss.getSheetByName(STUDENTS);
+    const people = {};
+    if (st && st.getLastRow() > 1) st.getRange(2, 1, st.getLastRow() - 1, 3).getValues().forEach((r, i) => {
+      const name = String(r[1]).trim(), group = String(r[2]).trim().toUpperCase();
+      if (name) people[group + "|" + name.toLowerCase()] = { row: i + 2, code: String(r[0]).trim().toLowerCase(), name: name, group: group };
+    });
+    const state = sheet_(STATE, STATE_HEAD);
+    const sn = state.getLastRow() - 1;
+    const have = {};
+    (sn > 0 ? state.getRange(2, 1, sn, 1).getValues() : []).forEach(r => { have[r[0]] = true; });
+    const work = work_();
+    const wn = work.getLastRow() - 1;
+    const wrows = wn > 0 ? work.getRange(2, 1, wn, WORK_HEAD.length).getValues() : [];
+    let maxId = 1000; wrows.forEach(r => { maxId = Math.max(maxId, Number(r[W.id - 1]) || 0); });
+    const noon = d => { const t = parseDate_(d); return t ? t + 12 * 3600000 : Date.now(); };
+    let ticks = 0, texts = 0, kept = 0; const unknown = {}, nocode = {}, fewer = {};
+    imports.forEach(imp => {
+      const head = imp.getRange(1, 1, 1, imp.getLastColumn()).getValues()[0].map(h => String(h).trim());
+      const c = name => head.indexOf(name);
+      const rows = imp.getLastRow() > 1 ? imp.getRange(2, 1, imp.getLastRow() - 1, head.length).getValues() : [];
+      const val = (r, name) => c(name) < 0 ? "" : r[c(name)];
+      // 1. the Progress columns, in the pages' own task order
+      const pages = {};
+      rows.filter(r => String(val(r, "Type")).trim() === "task").forEach(r => {
+        const page = String(val(r, "Homework")).trim();
+        (pages[page] = pages[page] || { group: String(val(r, "Group")).trim().toUpperCase(), date: val(r, "Date"), tasks: [] })
+          .tasks.push({ id: String(val(r, "Task")).trim(), title: String(val(r, "Title")).trim() });
+      });
+      Object.keys(pages).forEach(page => {
+        const d = pages[page].date;
+        ensureColumns_(progress_(pages[page].group), page, d instanceof Date ? Utilities.formatDate(d, TZ, "dd.MM.yy") : String(d), pages[page].tasks);
+      });
+      // 2. ticks and texts
+      rows.forEach(r => {
+        const type = String(val(r, "Type")).trim();
+        if (type !== "tick" && type !== "text") return;
+        const group = String(val(r, "Group")).trim().toUpperCase(), name = String(val(r, "Student")).trim();
+        const stu = people[group + "|" + name.toLowerCase()];
+        if (!stu) { unknown[name + " (" + group + ")"] = true; return; }
+        if (!stu.code) { nocode[stu.name] = true; return; }
+        const page = String(val(r, "Homework")).trim(), task = String(val(r, "Task")).trim();
+        const key = stu.code + "|" + page + "|" + task;
+        if (type === "tick") {
+          if (have[key]) { kept++; return; }
+          const ts = noon(val(r, "Date")), frames = Number(val(r, "Frames")) || 0;
+          state.appendRow([key, stu.code, page, task, true, ts, String(val(r, "Title")).trim() || task, frames]); have[key] = true;
+          const prog = progress_(group), col = colsByKey_(prog)[page + "|" + task];
+          if (col) {
+            const cell = prog.getRange(ensureRow_(prog, stu.name), col);
+            cell.setValue("✓ " + Utilities.formatDate(new Date(ts), TZ, "dd.MM")); cell.setBackground("#D9F2D0");
+          }
+          if (/^y/i.test(String(val(r, "In old count")))) fewer[group] = (fewer[group] || 0) + frames;
+          ticks++;
+        } else {
+          const text = String(val(r, "Text")).replace(/\r/g, "");
+          if (wrows.some(w => w[W.key - 1] === key && String(w[W.text - 1]).replace(/^'/, "") === text)) { kept++; return; }
+          const d = val(r, "Date");
+          const values = [++maxId, fmtDate_(Date.now()), stu.name, stu.group, d instanceof Date ? Utilities.formatDate(d, TZ, "dd.MM.yy") : String(d),
+            String(val(r, "Title")).trim() || task, "✍️ text", safeText_(text), "", String(val(r, "Feedback") || ""), "", key];
+          work.appendRow(values); wrows.push(values); texts++;
+        }
+      });
+    });
+    // 3. the old spreadsheet's frames are now real ticks: take them off "Frames before the pages", so nothing counts twice
+    const set = settings_();
+    const sr = set.getRange(2, 1, Math.max(1, set.getLastRow() - 1), 3).getValues();
+    const changed = [];
+    Object.keys(fewer).forEach(g => {
+      const i = sr.findIndex(r => String(r[0]).trim().toUpperCase() === g);
+      if (i < 0) return;
+      const before = Number(sr[i][2]) || 0, now = Math.max(0, before - fewer[g]);
+      set.getRange(i + 2, 3).setValue(now);
+      changed.push(g + ": " + before + " → " + now);
+      groupStats_(g);
+    });
+    const left = Object.keys(unknown), noCodes = Object.keys(nocode);
+    if (!left.length && !noCodes.length) imports.forEach(imp => ss.deleteSheet(imp));
+    say_("Ticks added: " + ticks + ". Texts added: " + texts + "." + (kept ? " Already in the table, left as they were: " + kept + "." : "") +
+      (changed.length ? " Frames before the pages, " + changed.join(", ") + " (the old ticks are counted on the pages now)." : "") +
+      (left.length ? " Not found on the Students tab: " + left.join(", ") + " — fix the name on the Import tab (or on Students) and run this again." : "") +
+      (noCodes.length ? " No code yet: " + noCodes.join(", ") + " — choose Homework → Make codes for new students, then run this again." : "") +
+      (!left.length && !noCodes.length ? " The Import tab is removed." : " The Import tab is kept."));
+  } finally { lock.releaseLock(); }
+}
+
 // for the list of all homework: what this student has done on each page, and any feedback waiting
 function summary_(stu, pages) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -261,7 +361,7 @@ function summary_(stu, pages) {
       if (String(r[W.feedback - 1]).trim()) { o.fb++; if (!r[W.seen - 1]) o.fbNew++; }
     });
   }
-  return { ok: true, name: stu.name, pages: out, group: groupStats_(stu.group) };
+  return { ok: true, name: stu.name, gid: isGroup_(stu.group) ? stu.group.toLowerCase() : "", pages: out, group: groupStats_(stu.group), published: published_(pages) };
 }
 
 // Easy / OK / Hard after a task: one row per student + task in Reactions, and shown next to the tick in Progress
@@ -343,13 +443,21 @@ function groupStats_(group) {
 
 // ---------- the teacher view ----------
 const groupOfPage_ = page => (String(page || "").split("-")[2] || "").toUpperCase();
+// a real group is one with a row in Settings (B2, C1); a student works only on their own group's pages
+function isGroup_(g) {
+  const set = settings_();
+  return set.getRange(2, 1, Math.max(1, set.getLastRow() - 1), 1).getValues().some(r => String(r[0]).trim().toUpperCase() === g);
+}
 const typeKey_ = s => { s = String(s); return s.indexOf("recording") > -1 ? "recording" : s.indexOf("question") > -1 ? "question" : s.indexOf("marked") > -1 ? "marked" : "text"; };
 
 function teacher_(stu, p) {
-  if (p.action === "summary") { const g = groupOfPage_((p.pages || [])[0]); return { ok: true, role: "teacher", name: stu.name, pages: {}, group: g ? groupStats_(g) : null }; }
+  if (p.action === "summary") { const g = groupOfPage_((p.pages || [])[0]); return { ok: true, role: "teacher", name: stu.name, pages: {}, group: g ? groupStats_(g) : null, published: published_(p.pages) }; }
+  if (p.action === "overview") return overview_(p);
   const page = clean_(p.page, 80);
   if (!page) return { ok: false, error: "no-page" };
   if (p.action === "feedback") return setFeedback_(p.id, p.text);
+  if (p.action === "discussed") return discussed_(page, p);
+  if (p.action === "publish") return publish_(page, p.on === true);
   if (p.action !== "sync") return { ok: true, role: "teacher" };     // the teacher's own ticks, reactions and marks are not recorded
   const G = groupOfPage_(page), ss = SpreadsheetApp.getActiveSpreadsheet();
   const students = [], idx = {};
@@ -386,8 +494,81 @@ function teacher_(stu, p) {
     reactions[task] = reactions[task] || { easy: [], ok: [], hard: [] };
     if (reactions[task][lv]) reactions[task][lv].push(idx[k[0]]);
   });
+  const discussed = {};
+  const ds = ss.getSheetByName(DISC);
+  if (ds && ds.getLastRow() > 1) ds.getRange(2, 1, ds.getLastRow() - 1, 4).getValues().forEach(r => {
+    if (String(r[1]) !== page) return;
+    try { discussed[String(r[2])] = JSON.parse(String(r[3])); } catch (err) {}
+  });
   st_touch_(stu);
-  return { ok: true, role: "teacher", name: stu.name, students: students, done: done, work: work, reactions: reactions, group: groupStats_(G) };
+  return { ok: true, role: "teacher", name: stu.name, students: students, done: done, work: work, reactions: reactions, discussed: discussed, published: published_([page]).length > 0, group: groupStats_(G) };
+}
+
+// the start page and the group lists: what waits for Olya on every homework, in ONE request
+// (each sheet is read once, whatever the number of homeworks; texts are not sent, only the numbers)
+function overview_(p) {
+  const keys = (Array.isArray(p.pages) ? p.pages : []).map(k => clean_(k, 80)).filter(Boolean).slice(0, 500);
+  const ss = SpreadsheetApp.getActiveSpreadsheet(), pages = {}, groupOf = {}, size = {};
+  const set = settings_(), real = {};
+  set.getRange(2, 1, Math.max(1, set.getLastRow() - 1), 1).getValues().forEach(r => { const g = String(r[0]).trim().toUpperCase(); if (g) real[g] = true; });
+  const st = ss.getSheetByName(STUDENTS);
+  if (st && st.getLastRow() > 1) st.getRange(2, 1, st.getLastRow() - 1, 3).getValues().forEach(r => {
+    const code = String(r[0]).trim().toLowerCase(), name = String(r[1]).trim(), g = String(r[2]).trim().toUpperCase();
+    if (code && name && real[g]) { groupOf[code] = g; size[g] = (size[g] || 0) + 1; }
+  });
+  keys.forEach(k => { pages[k] = { toAnswer: 0, marked: 0, questions: 0, work: 0, started: 0, students: size[groupOfPage_(k)] || 0 }; });
+  const started = {};
+  const state = ss.getSheetByName(STATE);
+  if (state && state.getLastRow() > 1) state.getRange(2, 1, state.getLastRow() - 1, 5).getValues().forEach(r => {
+    const k = String(r[2]);
+    if (!pages[k] || r[4] !== true || groupOf[r[1]] !== groupOfPage_(k)) return;
+    (started[k] = started[k] || {})[r[1]] = true;
+  });
+  Object.keys(started).forEach(k => { pages[k].started = Object.keys(started[k]).length; });
+  const wk = ss.getSheetByName(WORK);
+  if (wk && wk.getLastRow() > 1) wk.getRange(2, 1, wk.getLastRow() - 1, WORK_HEAD.length).getValues().forEach(r => {
+    const k = String(r[W.key - 1]).split("|"), c = pages[k[1]];
+    if (!c || groupOf[k[0]] !== groupOfPage_(k[1])) return;
+    const t = typeKey_(r[W.type - 1]);
+    // a 🔖 mark waits for an answer only when the student added a note ("— …" after the marked line)
+    if (!String(r[W.feedback - 1] || "").trim() && (t !== "marked" || /\n— /.test(String(r[W.text - 1] || "")))) c.toAnswer++;
+    if (t === "marked") c.marked++; else if (t === "question") c.questions++; else c.work++;
+  });
+  const groups = {};
+  if (p.stats) Object.keys(real).forEach(g => { if (keys.some(k => groupOfPage_(k) === g)) groups[g] = groupStats_(g); });
+  return { ok: true, role: "teacher", pages: pages, groups: groups, published: published_(keys) };
+}
+
+// drafts she published with the button ("🔒 Not published yet" → Publish): which of these pages are published now
+function published_(keys) {
+  const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(PUB), on = {};
+  if (sh && sh.getLastRow() > 1) sh.getRange(2, 1, sh.getLastRow() - 1, 2).getValues().forEach(r => { if (r[1] === true) on[String(r[0])] = true; });
+  return (Array.isArray(keys) ? keys : []).map(k => clean_(k, 80)).filter(k => on[k]);
+}
+function publish_(page, on) {
+  const sh = sheet_(PUB, PUB_HEAD), n = sh.getLastRow() - 1;
+  const keys = n > 0 ? sh.getRange(2, 1, n, 1).getValues().map(r => String(r[0])) : [];
+  const i = keys.indexOf(page), row = [page, on === true, fmtDate_(Date.now())];
+  sh.getRange((i > -1 ? i : Math.max(n, 0)) + 2, 1, 1, 3).setValues([row]);   // her row for this page, or a new one
+  return { ok: true, saved: true, published: on === true };
+}
+
+// "Where they got stuck" → ✓ Discussed: the marks and questions she went through in class (by work ID), and how many "hard" she has seen
+function discussed_(page, p) {
+  const task = clean_(p.task, 80);
+  if (!task) return { ok: false, error: "no-task" };
+  const sh = sheet_(DISC, DISC_HEAD), key = page + "|" + task, n = sh.getLastRow() - 1;
+  const keys = n > 0 ? sh.getRange(2, 1, n, 1).getValues().map(r => String(r[0])) : [];
+  const i = keys.indexOf(key);
+  let d = { ids: [], hard: 0 };
+  if (i > -1) { try { d = JSON.parse(String(sh.getRange(i + 2, 4).getValue())) || d; } catch (err) {} }
+  const add = (Array.isArray(p.ids) ? p.ids : []).map(String).slice(0, 500);
+  const undo = (Array.isArray(p.undo) ? p.undo : []).map(String);
+  const ids = {}; (d.ids || []).map(String).concat(add).forEach(x => { if (undo.indexOf(x) < 0) ids[x] = true; });
+  d = { ids: Object.keys(ids), hard: p.hard != null ? Math.max(0, Number(p.hard) || 0) : (Number(d.hard) || 0) };
+  const row = [key, page, task, JSON.stringify(d), fmtDate_(Date.now())];
+  if (i > -1) sh.getRange(i + 2, 1, 1, row.length).setValues([row]); else sh.getRange(n + 2, 1, 1, row.length).setValues([row]);
+  return { ok: true, saved: true, discussed: d };
 }
 
 // the teacher writes or edits feedback from the page; the marks (**good**, ~~change~~, {her words}) stay as typed
@@ -408,9 +589,12 @@ function sync_(p) {
   const lock = LockService.getScriptLock();
   try { lock.waitLock(20000); } catch (err) { return { ok: false, error: "busy" }; }
   try {
+    if (p.action === "published") return { ok: true, published: published_(p.pages) };   // the group list without a code: page keys only
     const stu = findStudent_(p.code);
     if (!stu) return { ok: false, error: "unknown-code" };
     if (stu.group === TEACHER) return teacher_(stu, p);
+    const asked = groupOfPage_(p.action === "summary" ? (Array.isArray(p.pages) ? p.pages[0] : "") : p.page);
+    if (asked && asked !== stu.group && isGroup_(stu.group)) return { ok: false, error: "other-group", gid: stu.group.toLowerCase() };
     if (p.action === "summary") { st_touch_(stu); return summary_(stu, p.pages); }
     const page = clean_(p.page, 80);
     if (!page) return { ok: false, error: "no-page" };
@@ -464,7 +648,7 @@ function sync_(p) {
     st_touch_(stu);
     const tasks = {};
     data.forEach(r => { if (r[1] === stu.code && r[2] === page) tasks[r[3]] = { done: r[4] === true, ts: Number(r[5]) }; });
-    return { ok: true, name: stu.name, tasks: tasks, work: workFor_(stu, page), group: groupStats_(stu.group) };
+    return { ok: true, name: stu.name, gid: isGroup_(stu.group) ? stu.group.toLowerCase() : "", tasks: tasks, work: workFor_(stu, page), group: groupStats_(stu.group) };
   } finally {
     lock.releaseLock();
   }
@@ -531,7 +715,9 @@ function ensureColumns_(sh, page, date, tasks) {
   const missing = list.filter(t => !have[page + "|" + t.id]);
   if (!missing.length) return;
   const pageCols = Object.keys(have).filter(k => k.indexOf(page + "|") === 0).map(k => have[k]);
-  const after = pageCols.length ? Math.max.apply(null, pageCols) : 1;
+  const dateOf = key => String(key).split("|")[0].slice(-10);          // hw-ge-c1-2026-10-16 → 2026-10-16
+  const newer = Object.keys(have).filter(k => dateOf(k) > dateOf(page)).map(k => have[k]);
+  const after = pageCols.length ? Math.max.apply(null, pageCols) : newer.length ? Math.max.apply(null, newer) : 1;
   sh.insertColumnsAfter(after, missing.length);
   const firstNew = after + 1;
   sh.getRange(1, firstNew, 3, missing.length).setValues([

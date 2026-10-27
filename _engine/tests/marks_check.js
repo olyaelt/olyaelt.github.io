@@ -40,6 +40,6 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
   const W = env.sheets.Work; out.workRows = W.d.slice(1).map(r => `${r[0]} | ${r[6]} | ${String(r[7]).replace(/\n/g, ' ⏎ ')}`);
   W.set(2, 10, 'It **goes back** by default — {an hour} is optional.');
   await p.reload(); await p.waitForTimeout(500);
-  out.answerLine = await p.locator(`[data-fb="${ids.rw}"]`).count() ? await p.locator(`[data-fb="${ids.rw}"]`).innerText() : 'none';
+  out.answerLine = await p.locator(`.fb-line[data-fb="${ids.rw}"]`).count() ? await p.locator(`.fb-line[data-fb="${ids.rw}"]`).innerText() : 'none';
   out.errors = errs; console.log(JSON.stringify(out, null, 1)); await b.close();
 })();

@@ -12,7 +12,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
   const names = G === 'B2' ? ['Julia','Elena','Katerina','Liudmila','Natalia','Oleg','Olga','Vladimir','Victoria'] : ['Alena','Artyom','Ekaterina','Julia','Ksenia T','Ksenia L','Marina','Peter Smirnov','Petr S'];
   S.getRange(3, 1, names.length, 3).setValues(names.map((n, i) => ['s' + i, n, G]));
   const b = await chromium.launch(); const errs = []; const out = {};
-  const ctx = await b.newContext({viewport: {width: 1100, height: 1000}});
+  const ctx = await b.newContext({viewport: {width: 1100, height: 1000}, colorScheme: process.env.DARK ? 'dark' : 'light'});
   await ctx.route(URL_ + '**', r => r.fulfill({status: 200, contentType: 'application/json', headers: {'Access-Control-Allow-Origin': '*'}, body: JSON.stringify(env.post(r.request().postData()))}));
   const p = await ctx.newPage(); p.on('pageerror', e => errs.push(e.message));
   await p.goto('file://' + path.join(dir, path.basename(src))); await p.waitForTimeout(200);
@@ -31,25 +31,55 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
   out.bar = (await p.locator('.teacher-bar').innerText()).replace(/\s+/g, ' ').trim();
   out.statusHidden = !(await p.locator('.status').first().isVisible());
   out.firstTaskChips = await p.locator(`[data-teach="${meta.tasks[0].id}"] .t-chip`).evaluateAll(xs => xs.map(x => x.textContent + (x.classList.contains('on') ? '✓' : '')));
-  out.hot = (await p.locator('section.hot').innerText()).replace(/\s+/g, ' ');
+  out.hot = (await p.locator('section.hot:not(.wait)').innerText()).replace(/\s+/g, ' ');
+  out.wait = (await p.locator('section.hot.wait').innerText()).replace(/\s+/g, ' ');
+  // a waiting item opens its task's panel at that item
+  await p.locator('section.hot.wait [data-wid]').last().click(); await p.waitForTimeout(150);
+  out.waitOpens = (await p.locator('.t-item.t-focus .small').first().innerText().catch(() => 'no focused item')).replace(/\s+/g, ' ');
+  await p.click('#t-home');
+  // a tap on a task's title opens the task, with a strip on top that leads to the students' work (and back via "Open the task")
+  await p.click(`[data-open="${meta.rw}"]`); await p.waitForTimeout(150);
+  out.taskTapOpensTask = {panel: await p.locator('.t-panel').count(), strip: (await p.locator('#t-strip').innerText().catch(() => 'no strip')).replace(/\s+/g, ' ')};
+  if (shots) await p.screenshot({path: path.join(shots, 'teacher_strip.png')});
+  await p.click('#t-strip'); await p.waitForTimeout(150);
+  out.stripOpensPanel = {panel: await p.locator('.t-panel').count(), strip: await p.locator('#t-strip').count()};
+  await p.click('#t-home'); await p.click(`[data-open="${meta.write}"]`); await p.waitForTimeout(150);
+  // finishing a task as the teacher counts nothing
+  for (let i = 0; i < 6 && !(await p.locator('.lesson-head').count()); i++) { await p.locator('#go').click(); await p.waitForTimeout(60); }
+  out.finishBanner = (await p.locator('.done-banner').innerText().catch(() => 'no banner')).replace(/\s+/g, ' ');
   if (shots) await p.screenshot({path: path.join(shots, 'teacher_home.png'), fullPage: false});
   await p.click(`.t-line[data-teach="${meta.rw}"]`); await p.waitForTimeout(150);
   out.items = await p.locator('.t-item .small').first().innerText();
   if (shots) await p.screenshot({path: path.join(shots, 'teacher_task.png'), fullPage: true});
-  // feedback on the Over to you text, marked up with the buttons
+  // feedback on the Over to you text: the box is ready to mark up straight away
   await p.click('#t-home'); await p.click(`.t-line[data-teach="${meta.write}"]`); await p.waitForTimeout(150);
-  await p.click('[data-edit]');
-  await p.evaluate(() => { const ta = document.querySelector('.t-ta'); const s = ta.value.indexOf('have went'); ta.setSelectionRange(s, s + 9); });
-  await p.click('.tool.del');
-  await p.evaluate(() => { const ta = document.querySelector('.t-ta'); ta.setRangeText(' {went}', ta.selectionEnd, ta.selectionEnd); ta.dispatchEvent(new Event('input')); const s = ta.value.indexOf('Hi!'); ta.setSelectionRange(s, s + 3); });
-  await p.click('.tool.good');
-  out.preview = await p.locator('.t-prev').innerHTML();
+  const card = p.locator('.t-item').filter({has: p.locator('.t-ta')}).last();
+  out.editorReady = await card.locator('.t-ta').inputValue();
+  await card.locator('.t-ta').evaluate(ta => { const s = ta.value.indexOf('have went'); ta.focus(); ta.setSelectionRange(s, s + 9); });
+  await card.locator('.tool.del').click();
+  await card.locator('.t-ta').evaluate(ta => { ta.setRangeText(' {went}', ta.selectionEnd, ta.selectionEnd); ta.dispatchEvent(new Event('input')); const s = ta.value.indexOf('Hi!'); ta.setSelectionRange(s, s + 3); });
+  await card.locator('.tool.good').click();
+  // ✎ Correction / 💬 Comment: inside {went} the comment button turns it into [[went]], and back; at the end of the text it opens [[ ]] for a comment
+  const ta = card.locator('.t-ta'), at = async i => ta.evaluate((el, i) => { el.focus(); const k = i < 0 ? el.value.length : el.value.indexOf('{went}') + 2; el.setSelectionRange(k, k); }, i);
+  await at(0); await card.locator('.tool.cmt').click(); out.toNote = (await ta.inputValue()).includes('[[went]]');
+  await card.locator('.tool.ins').click(); out.backToIns = (await ta.inputValue()).includes('{went}') && !(await ta.inputValue()).includes('[[');
+  await at(-1); await card.locator('.tool.cmt').click(); await p.keyboard.type('Last week = past simple.');
+  out.preview = await card.locator('.t-prev').innerHTML();
+  out.msgBefore = await card.locator('.t-msg').innerText();
+  await ctx.grantPermissions(['clipboard-read', 'clipboard-write']).catch(() => {});
+  await card.locator('.t-copy').click(); await p.waitForTimeout(150);
+  out.copied = await p.evaluate(() => navigator.clipboard.readText()).catch(e => 'clipboard: ' + e.message);
   if (shots) await p.screenshot({path: path.join(shots, 'teacher_editor.png'), fullPage: true});
-  await p.click('[data-save]'); await p.waitForTimeout(300);
+  await card.locator('[data-save]').click(); await p.waitForTimeout(300);
+  out.msgAfter = await card.locator('.t-msg').innerText();
   out.savedCell = env.sheets.Work.d.find(r => String(r[6]).includes('text'))[9];
-  out.afterSave = await p.locator('.t-item .fb-text').first().innerHTML();
+  out.afterSave = await card.locator('.t-prev').innerHTML();
+  await p.click('#t-home'); await p.waitForTimeout(100);
+  out.waitAfterSave = (await p.locator('section.hot.wait').innerText()).replace(/\s+/g, ' ');
+  await p.click('#copy-wait'); await p.waitForTimeout(150);
+  out.copiedWait = await p.evaluate(() => navigator.clipboard.readText()).catch(e => 'clipboard: ' + e.message);
   // hide names for the screen
-  await p.click('#t-home'); await p.click('#hide-names'); await p.waitForTimeout(150);
+  await p.click('#hide-names'); await p.waitForTimeout(150);
   out.hiddenLine = (await p.locator(`[data-teach="${meta.tasks[0].id}"]`).first().innerText()).replace(/\s+/g, ' ');
   if (shots) await p.screenshot({path: path.join(shots, 'teacher_hidden.png')});
   out.teacherTicksInState = env.sheets.State.d.filter(r => r[1] === teacherCode).length;

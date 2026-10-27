@@ -1,13 +1,25 @@
 """Build one homework page.
    python3 build.py lessons/b2-2026-10-30            -> writes ../b2/2026-10-30.html (the site folder is the parent of _engine)
    python3 build.py lessons/b2-2026-10-30 SITE_DIR   -> writes SITE_DIR/b2/2026-10-30.html
+The page = the shared engine (engine/page_template.html, version in engine/VERSION) + this lesson's
+content.js (what goes between LESSON CONTENT: START and END) + page.json (title, group, file, assets;
+"listed": false = an unlisted page, left out of the lists until set to true).
 Also writes lessons/<name>/build/preview.html for the Claude artifact preview."""
 import base64, json, mimetypes, os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 lesson = sys.argv[1] if os.path.isabs(sys.argv[1]) else os.path.join(HERE, sys.argv[1]) if not os.path.isdir(sys.argv[1]) else sys.argv[1]
 site = sys.argv[2] if len(sys.argv) > 2 else os.path.dirname(HERE)
 cfg = json.load(open(os.path.join(lesson, 'page.json'), encoding='utf-8'))
-t = open(os.path.join(lesson, 'page.html'), encoding='utf-8').read()
+def assemble(lesson_dir):
+    """the full page source of a lesson (before its assets are filled in)"""
+    c = json.load(open(os.path.join(lesson_dir, 'page.json'), encoding='utf-8'))
+    tpl = open(os.path.join(HERE, 'engine', 'page_template.html'), encoding='utf-8').read()
+    content = open(os.path.join(lesson_dir, 'content.js'), encoding='utf-8').read()
+    if not content.endswith('\n'): content += '\n'
+    version = open(os.path.join(HERE, 'engine', 'VERSION'), encoding='utf-8').read().strip()
+    return (tpl.replace('@@LESSON_CONTENT@@\n', content, 1).replace('<title>__TITLE__</title>', '<title>%s</title>' % c['title'], 1)
+               .replace('__ENGINE_VERSION__', version, 1))
+t = assemble(lesson)
 for key, fname in cfg['assets'].items():
     path = os.path.join(lesson, fname)
     if os.path.splitext(fname)[1].lower() in ('.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg'):
@@ -21,13 +33,14 @@ if '__EARLIER__' in t:
     name = os.path.basename(os.path.normpath(lesson)); m = re.match(r'(\w+)-(\d{4}-\d{2}-\d{2})$', name)
     if m and cfg.get('earlier', True):
         lessons_dir = os.path.dirname(os.path.normpath(lesson))
-        older = sorted(d for d in os.listdir(lessons_dir) if re.match(m.group(1) + r'-\d{4}-\d{2}-\d{2}$', d) and d < name)
+        listed = lambda d: json.load(open(os.path.join(lessons_dir, d, 'page.json'), encoding='utf-8')).get('listed', True) is not False
+        older = sorted(d for d in os.listdir(lessons_dir) if re.match(m.group(1) + r'-\d{4}-\d{2}-\d{2}$', d) and d < name and listed(d))   # unlisted = not given yet
         chosen = []
         for k in (1, 2, 4, 8):                      # the last lesson, the one before, two weeks back, a month back
             if len(older) >= k and older[-k] not in chosen: chosen.append(older[-k])
         if chosen:
             import subprocess, random
-            data = json.loads(subprocess.run(['node', os.path.join(HERE, 'earlier.js')] + [os.path.join(lessons_dir, d, 'page.html') for d in chosen],
+            data = json.loads(subprocess.run(['node', os.path.join(HERE, 'earlier.js')] + [os.path.join(lessons_dir, d, 'content.js') for d in chosen],
                                              capture_output=True, text=True, check=True).stdout)
             rnd = random.Random(name); want = int(cfg.get('earlier_count', 4))
             pools = [[dict(it, frm=d['date']) for it in d['items']] for d in data if d['items']]
@@ -44,6 +57,9 @@ open(os.path.join(lesson, 'build', 'preview.html'), 'w', encoding='utf-8').write
 head = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
         '<style>body{margin:0}img{max-width:100%}</style>\n')
+if cfg.get('listed', True) is False:   # an unlisted page: built and uploadable, opens by its link, left out of the lists and the start page
+    head += '<meta name="hw-unlisted" content="1">\n<meta name="robots" content="noindex">\n'
+    print('unlisted: not in the group list or on the start page until "listed" is true and build_index.py runs')
 i = t.index('<div class="wrap" id="app"></div>')
 out_dir = os.path.join(site, cfg['group']); os.makedirs(out_dir, exist_ok=True)
 out = os.path.join(out_dir, cfg['file'])

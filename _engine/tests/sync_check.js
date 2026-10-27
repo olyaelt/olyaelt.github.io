@@ -6,7 +6,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
 (async () => {
   const src = fs.readFileSync(path.resolve(process.argv[2]), 'utf8').replace(/const SYNC_URL = "[^"]*";/, `const SYNC_URL = "${URL_}";`);
   const tmp = path.join(os.tmpdir(), 'sync_check_page.html'); fs.writeFileSync(tmp, src);
-  const env = makeEnv(); env.ctx.setUp(); env.sheets.Students.getRange(2, 1, 1, 3).setValues([['test11', 'Tester', 'B2']]);
+  const env = makeEnv(); env.ctx.setUp(); const G = /hw-ge-c1-/.test(src) ? 'C1' : 'B2'; env.sheets.Students.getRange(2, 1, 1, 3).setValues([['test11', 'Tester', G]]);
   const b = await chromium.launch(); const out = {}; const errs = [];
   const open = async dev => { const ctx = await b.newContext(dev); await ctx.route(URL_ + '**', r => r.fulfill({status: 200, contentType: 'application/json', headers: {'Access-Control-Allow-Origin': '*'}, body: JSON.stringify(env.post(r.request().postData()))}));
     const p = await ctx.newPage(); p.on('pageerror', e => errs.push(e.message)); await p.goto('file://' + tmp); await p.waitForTimeout(200);
@@ -38,10 +38,11 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
     out.reactionsTab = (env.sheets.Reactions.d[1] || []).slice(1, 6).join(' | ');
   }
   const laptop = await open({viewport: {width: 1100, height: 900}});
-  out.questionAnswered = (await laptop.locator(`[data-fb="${ids[1]}"]`).count()) === 1 ? (await laptop.locator(`[data-fb="${ids[1]}"]`).innerText()) : 'no';
+  out.questionAnswered = (await laptop.locator(`.fb-line[data-fb="${ids[1]}"]`).count()) === 1 ? (await laptop.locator(`.fb-line[data-fb="${ids[1]}"]`).innerText()) : 'no';
   out.tickArrived = await laptop.locator(`.task-row.is-done [data-toggle="${ids[0]}"]`).count() === 1;
-  if (prodTask) { out.feedbackShown = await laptop.locator(`[data-fb="${prodTask}"]`).count() === 1;
-    await laptop.click(`[data-fb="${prodTask}"]`); out.feedbackHTML = await laptop.locator('.fb-text').first().innerHTML(); out.seen = !!env.sheets.Work.get(2, 11); }
-  out.progressCell = (env.sheets['Progress B2'].d[3] || []).filter(Boolean).join(' | ');
+  if (prodTask) { out.feedbackShown = await laptop.locator(`.fb-line[data-fb="${prodTask}"]`).count() === 1;
+    await laptop.click(`.fb-line[data-fb="${prodTask}"]`); out.feedbackHTML = await laptop.locator('.fb-text').first().innerHTML(); out.seenOnOpen = !!env.sheets.Work.get(2, 11);
+    await laptop.locator('[data-read]').first().click(); await laptop.waitForTimeout(100); out.seen = !!env.sheets.Work.get(2, 11); }
+  out.progressCell = (env.sheets['Progress ' + G].d[3] || []).filter(Boolean).join(' | ');
   out.errors = errs; console.log(JSON.stringify(out, null, 1)); await b.close();
 })();

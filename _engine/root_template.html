@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-title" content="Homework">
+<meta name="theme-color" content="#F6F1DC">
+<title>Homework</title>
+<link rel="stylesheet" href="fonts/homework-sans.css">
+<style>
+:root{
+  --ground:#F6F1DC;      /* the cream frame around her slides */
+  --card:#FFFFFF;
+  --ink:#1D1D1B;
+  --muted:#6B6B6B;
+  --line:#D9D2B8;
+  --instr:#0693E3;       /* blue instruction box */
+  --instr-ink:#FFFFFF;
+  --answer:#0000FF;      /* blue answers */
+  --label:#E00000;       /* red category labels, key words */
+  --hl:#FFFF00;          /* yellow hidden answers */
+  --hl-ink:#1D1D1B;
+  --share:#00FF00;       /* green: share your reaction */
+  --gloss:#0693E3;
+  --ipa:#0E8A7E;
+  --bubble:#FFFF8C;
+  --bubble-ink:#1D1D1B;
+  --bubble-line:#1D1D1B;
+  --summary:#D9EAD3;     /* green box from the spreadsheet */
+  --done:#2E8B3E;
+  --date-bg:#FF9900;
+  --rec:#D93025;
+  --topic-a:#FFF3CF; --topic-b:#E2EFFB;
+  --ok-bg:#EAF7EC; --ok-chip:#CDEFD3; --ok-ink:#1E6B2E;
+  --no-bg:#FDECEB; --no-chip:#F9D2CF; --no-ink:#A1261B;
+  --good-hl:#BFF2B8; --strike:#9A9A9A; --fix-bg:#D6E6FF;
+  --date-ink:#1D1D1B;
+  --fig-filter:none;
+  --font-body:"Homework Sans","Calibri","Carlito","Segoe UI",system-ui,sans-serif;
+  --step-0:clamp(1rem,0.96rem + 0.2vw,1.0625rem);
+  --step-1:clamp(1.125rem,1.06rem + 0.3vw,1.25rem);
+  --step-2:clamp(1.375rem,1.25rem + 0.6vw,1.625rem);
+  --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D;
+    --instr:#1578C0; --instr-ink:#FFFFFF; --answer:#8FB0FF; --label:#FF7A7A;
+    --hl:#FFF34D; --hl-ink:#111111; --share:#52F552; --gloss:#5BB8F5; --ipa:#4CC5B3;
+    --bubble:#3B391F; --bubble-ink:#F3F0D0; --bubble-line:#8C8760; --summary:#22362A; --done:#62C774;
+    --fig-filter:invert(1) hue-rotate(180deg);
+    --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB; --good-hl:#BFF2B8; --strike:#8A8D91; --fix-bg:#22345A; --topic-a:#2A2614; --topic-b:#162636;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D;
+  --instr:#1578C0; --instr-ink:#FFFFFF; --answer:#8FB0FF; --label:#FF7A7A;
+  --hl:#FFF34D; --hl-ink:#111111; --share:#52F552; --gloss:#5BB8F5; --ipa:#4CC5B3;
+  --bubble:#3B391F; --bubble-ink:#F3F0D0; --bubble-line:#8C8760; --summary:#22362A; --done:#62C774;
+  --fig-filter:invert(1) hue-rotate(180deg);
+  --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB; --good-hl:#BFF2B8; --strike:#8A8D91; --fix-bg:#22345A; --topic-a:#2A2614; --topic-b:#162636;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{background:var(--ground);margin:0}
+body{color:var(--ink);font-family:var(--font-body);font-size:var(--step-0);line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:980px;margin:0 auto;padding-block:24px 48px}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--instr);outline-offset:2px;border-radius:6px}
+h1{margin:0;font-size:var(--step-2);line-height:1.2;font-weight:900}
+h2{margin:0;font-size:var(--step-1);font-weight:900}
+.head{display:grid;gap:4px;padding-block:4px 18px}
+.head p,.small{margin:0;color:var(--muted)}
+.small{font-size:.9rem}
+.btn{min-height:48px;padding:0 20px;border-radius:12px;border:2px solid var(--instr);background:transparent;color:var(--instr);font-weight:900;cursor:pointer}
+.btn.primary{background:var(--instr);color:var(--instr-ink)}
+.linklike{background:none;border:0;padding:0;color:var(--instr);font:inherit;font-weight:700;text-decoration:underline;cursor:pointer}
+.sync{margin:0 0 16px}
+.sync-on{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;color:var(--muted);font-size:.95rem}
+.sync-card{background:var(--card);border:2px solid var(--instr);border-radius:14px;padding:12px 14px;display:grid;gap:8px;max-width:560px}
+.sync-row{display:flex;gap:8px}
+.sync-row input{flex:1;min-width:0;font:inherit;font-size:1.05rem;color:var(--ink);background:var(--ground);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.sync-msg:empty{display:none}
+.groups{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.group{background:var(--card);border-radius:var(--radius);padding:14px 16px;display:grid;gap:12px;align-content:start}
+.group-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.group-top a{color:var(--instr);font-weight:700}
+.meter{display:grid;gap:6px}
+.meter-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;font-size:.95rem}
+.meter-top span{font-weight:900}
+.strip{display:flex;gap:3px;background:#1D1D1B;border-radius:6px;padding:8px 6px;position:relative}
+.strip::before,.strip::after{content:"";position:absolute;left:6px;right:6px;height:3px;background:repeating-linear-gradient(90deg,#F6F1DC 0 5px,transparent 5px 11px);opacity:.55}
+.strip::before{top:2px}.strip::after{bottom:2px}
+.strip i{flex:1;height:18px;border-radius:2px;background:#3A3A36}
+.strip i.on{background:linear-gradient(180deg,#FFE066,#FF9900)}
+.hws{display:grid;gap:8px}
+.hw{display:grid;gap:4px;text-decoration:none;color:inherit;border:2px solid var(--line);border-radius:12px;padding:10px 12px}
+.hw:hover{border-color:var(--instr)}
+.hw.todo{border-color:var(--label)}
+.hw.unl{border-style:dashed}
+.unl-tag{font-size:.78rem;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.hw-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.date{display:inline-flex;font-weight:900;letter-spacing:.04em;font-size:.8rem;background:var(--date-bg);color:var(--date-ink);padding:2px 8px;border-radius:6px}
+.hw-title{font-weight:700}
+.badges{font-size:.9rem;color:var(--muted)}
+.todo .badges b{color:var(--label)}
+.total-todo{font-weight:900;color:var(--label)}
+.total-todo.none{color:var(--done)}
+.total-todo.checking{color:var(--muted)}
+.legal{max-width:var(--maxw,760px);margin:0 auto;padding:18px 16px 28px;color:var(--muted);font-size:.85rem;text-align:center}
+.legal a{color:inherit}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<footer class="legal"><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></footer>
+<script>
+const GROUPS = __GROUPS_JSON__;
+const SYNC_URL = "__SYNC_URL__";
+const lsMem = {};
+const ls = { get:k=>{ try{ const v = localStorage.getItem(k); if(v != null) return v; }catch(e){} return lsMem[k] || ""; }, set:(k,v)=>{ lsMem[k] = v; try{ localStorage.setItem(k,v); }catch(e){} } };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmtN = n => Number(n||0).toLocaleString("en-GB");
+const app = document.getElementById("app");
+const myCode = () => SYNC_URL ? ls.get("hw-code") : "";
+const isTeacher = () => !!(myCode() && ls.get("hw-role") === "teacher");
+const NAMES = __NAMES_JSON__;
+let data = {};     /* group -> {stats, pages: {key: counts}, failed, pending} */
+let PUB = new Set();   /* drafts ("listed": false) she has published with the button on the page, from her table */
+const draft = h => h.unlisted && !PUB.has(h.key);
+let state = "";
+
+async function post(payload){
+  try{ const r = await fetch(SYNC_URL, {method:"POST", body:JSON.stringify(payload), headers:{"Content-Type":"text/plain;charset=utf-8"}}); return await r.json(); }
+  catch(e){ return {ok:false, error:"offline"}; }
+}
+function meterHTML(gs){
+  if(!gs || !gs.goal) return "";
+  const pct = Math.min(1, gs.total/gs.goal), n = 20, filled = Math.min(n, Math.round(pct*n));
+  return `<div class="meter"><div class="meter-top"><span>🎬 ${gs.reached ? "Goal reached!" : `${fmtN(gs.total)} / ${fmtN(gs.goal)} 🎞`}</span><span class="small">${gs.size ? `${gs.week} of ${gs.size} active this week` : ""}</span></div>
+    <div class="strip" role="img" aria-label="${Math.round(pct*100)}% of the way">${Array.from({length:n},(_,i)=>`<i class="${i<filled?"on":""}"></i>`).join("")}</div></div>`;
+}
+function counts(res){
+  const w = res.work || [], students = (res.students || []).length;
+  const ticked = new Set(); Object.values(res.done || {}).forEach(a => a.forEach(i => ticked.add(i)));
+  return { toAnswer: w.filter(x=>!String(x.feedback||"").trim() && (x.type!=="marked" || /\n— /.test(String(x.text||"")))).length, marked: w.filter(x=>x.type==="marked").length,
+           questions: w.filter(x=>x.type==="question").length, work: w.filter(x=>x.type==="text"||x.type==="recording").length,
+           started: ticked.size, students };
+}
+/* her table answers one request at a time: ask two homeworks at a time, try again once if it was busy */
+async function inTurn(items, fn, width=2){
+  let next = 0;
+  const worker = async () => { while(next < items.length){ const it = items[next++]; await fn(it); } };
+  await Promise.all(Array.from({length: Math.min(width, items.length)}, worker));
+}
+async function teacherSync(code, key){
+  for(let attempt = 0; attempt < 2; attempt++){
+    const res = await post({action:"sync", code, page:key});
+    if(res.ok || res.error === "unknown-code" || res.error === "other-group") return res;
+  }
+  return {ok:false, error:"busy"};
+}
+/* one request for all the homework; an older Code.gs answers "no-page", and then each homework is asked in turn */
+async function overview(code, keys, stats){
+  let res = {ok:false};
+  for(let attempt = 0; attempt < 2 && !res.ok; attempt++){
+    res = await post({action:"overview", code, pages:keys, stats:!!stats});
+    if(res.error === "no-page" || res.error === "unknown-code") break;
+  }
+  return res;
+}
+async function load(){
+  if(!isTeacher()) return;
+  const code = myCode(), items = [];
+  for(const g of Object.keys(GROUPS)){ data[g] = { stats: null, pages: {}, failed: 0, pending: GROUPS[g].length }; GROUPS[g].forEach(h => items.push([g, h])); }
+  state = "loading"; render();
+  const all = await overview(code, items.map(([g, h]) => h.key), true);
+  if(code !== myCode()) return;
+  if(all.ok && all.pages){
+    if(Array.isArray(all.published)) PUB = new Set(all.published);
+    for(const g of Object.keys(GROUPS)){ const d = data[g]; d.pending = 0; d.stats = (all.groups || {})[g.toUpperCase()] || null;
+      GROUPS[g].forEach(h => { if(all.pages[h.key]) d.pages[h.key] = all.pages[h.key]; else d.failed++; }); }
+    state = "ok"; render(); return;
+  }
+  if(all.error === "unknown-code"){ state = "unknown"; render(); return; }
+  if(all.error !== "no-page"){ for(const g of Object.keys(GROUPS)){ data[g].pending = 0; data[g].failed = GROUPS[g].length; } state = "ok"; render(); return; }
+  await inTurn(items, async ([g, h]) => {
+    const res = await teacherSync(code, h.key);
+    if(code !== myCode()) return;
+    data[g].pending--;
+    if(res.ok && res.role === "teacher"){ data[g].pages[h.key] = counts(res); if(res.group) data[g].stats = res.group; }
+    else if(res.error === "unknown-code") state = "unknown";
+    else data[g].failed++;
+    render();
+  });
+  if(state !== "unknown") state = "ok";
+  render();
+}
+function groupCard(g){
+  const list = GROUPS[g] || [], d = data[g] || {pages:{}, failed:0, pending:0};
+  const total = Object.values(d.pages).reduce((s,c)=>s+c.toAnswer, 0);
+  /* never say "nothing waiting" before every homework has answered */
+  const todo = d.pending && d.pending === list.length ? `<p class="total-todo checking">Checking what waits for your answer…</p>`
+    : d.pending ? `<p class="total-todo checking">${total ? `💬 ${total} waiting for your answer so far · ` : ""}checking… ${list.length - d.pending} of ${list.length}</p>`
+    : d.failed ? `<p class="total-todo">${total ? `💬 ${total} waiting for your answer · ` : ""}⚠️ ${d.failed} homework didn't answer — tap Refresh</p>`
+    : `<p class="total-todo ${total?"":"none"}">${total ? `💬 ${total} waiting for your answer` : "✓ Nothing waiting for your answer"}</p>`;
+  return `<section class="group">
+    <div class="group-top"><h2>${NAMES[g] || g.toUpperCase()}</h2><a href="${g}/">All homework →</a></div>
+    ${isTeacher() ? meterHTML(d.stats) : ""}
+    ${isTeacher() && (state === "ok" || state === "loading") ? todo : ""}
+    <div class="hws">${list.filter((h,i)=>i < 6 || (d.pages[h.key] && d.pages[h.key].toAnswer)).map((h,i)=>{   /* the latest 6, and any older one where something waits */
+      const c = d.pages[h.key];
+      const badges = c ? [c.toAnswer?`<b>💬 ${c.toAnswer} to answer</b>`:"", `${c.started} of ${c.students} started`, c.marked?`🔖 ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:""].filter(Boolean).join(" · ") : "";
+      return `<a class="hw ${c && c.toAnswer ? "todo" : ""} ${draft(h)?"unl":""}" href="${g}/${esc(h.file)}">
+        <span class="hw-line"><span class="date">${esc(h.date)}</span>${draft(h)?`<span class="unl-tag">🔒 Not published</span>`:""}<span class="hw-title">${esc(h.topics.map(t=>t.title).join(" · "))}</span></span>
+        <span class="badges">${badges || (d.pending ? "checking…" : "")}</span></a>`; }).join("")}</div>
+  </section>`;
+}
+/* students see only their own group: a student code opens that group's list straight away */
+function toOwnGroup(gid){
+  if(!gid || isTeacher() || !GROUPS[gid]) return false;
+  document.body.innerHTML = ""; location.replace(gid + "/index.html"); return true;
+}
+function student(res, c){
+  const gid = res.ok ? (res.gid || "") : (res.error === "other-group" ? (res.gid || "") : "");
+  if(!res.ok && !gid) return false;
+  ls.set("hw-code", c); ls.set("hw-role", ""); ls.set("hw-who", res.ok ? (res.name || "") : ""); ls.set("hw-gid", gid);
+  return toOwnGroup(gid) || "stay";
+}
+async function whoAmI(){
+  const c = myCode(), first = Object.values(GROUPS).flat()[0];
+  state = "checking"; render();
+  const res = await post({action:"sync", code:c, page: first ? first.key : ""});
+  if(c !== myCode()) return;
+  if(res.ok && res.role === "teacher"){ ls.set("hw-role", "teacher"); ls.set("hw-who", res.name||""); ls.set("hw-gid", ""); state = ""; load(); return; }
+  const r = student(res, c); if(r === true) return;
+  state = r ? "ok" : (res.error === "unknown-code" ? "unknown" : "offline");
+  render();
+}
+function render(){
+  const code = myCode(), who = ls.get("hw-who"), teacher = isTeacher() && state !== "unknown";
+  let top = "";
+  if(SYNC_URL && teacher) top = `<div class="sync sync-on"><span>👩‍🏫 <b>Teacher view</b>${who?` — ${esc(who)}`:""}${state==="loading"?" · loading…":""}</span><button class="linklike" id="reload">Refresh</button><button class="linklike" id="code-change">Not you?</button></div>`;
+  else if(SYNC_URL && code && state !== "unknown") top = `<div class="sync sync-on"><span>${state==="checking" ? "Checking your code…" : state==="offline" ? "Can't reach Olya's list right now. Open your homework from the link Olya sent you." : `✓ ${who?`Hi, ${esc(who)}! `:""}Open your homework from the link Olya sent you.`}</span><button class="linklike" id="code-change">Not you?</button></div>`;
+  else if(SYNC_URL) top = `<div class="sync sync-card"><label for="code"><b>Your code from Olya</b></label>
+      <div class="sync-row"><input id="code" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="e.g. lemon42" value="${esc(code)}"><button class="btn primary" id="code-go">Save</button></div>
+      <p class="small">Type your code, and your group's homework opens.</p><p class="small sync-msg" id="sync-msg">${state==="unknown"?"Hmm, Olya's list doesn't have this code. Check it with her.":""}</p></div>`;
+  const showGroups = teacher || !SYNC_URL;
+  app.innerHTML = `<header class="head"><h1>Homework</h1><p>${teacher ? "Both groups at a glance." : "Your homework from Olya."}</p></header>${top}
+    ${showGroups ? `<div class="groups">${Object.keys(GROUPS).map(groupCard).join("")}</div>` : ""}`;
+  const rl = document.getElementById("reload"); if(rl) rl.addEventListener("click", load);
+  const ch = document.getElementById("code-change"); if(ch) ch.addEventListener("click",()=>{ ls.set("hw-code",""); ls.set("hw-who",""); ls.set("hw-role",""); ls.set("hw-gid",""); data = {}; state = ""; render(); });
+  const go = document.getElementById("code-go"), inp = document.getElementById("code");
+  if(go && inp){
+    const save = async ()=>{
+      const c = inp.value.trim().toLowerCase(), msg = document.getElementById("sync-msg"); if(!c){ msg.textContent = "Type the code Olya sent you."; return; }
+      go.disabled = true; msg.textContent = "Checking…";
+      const first = Object.values(GROUPS).flat()[0];
+      const res = await post({action:"sync", code:c, page: first ? first.key : ""});
+      go.disabled = false;
+      if(res.ok && res.role === "teacher"){ ls.set("hw-code", c); ls.set("hw-who", res.name||""); ls.set("hw-role", "teacher"); ls.set("hw-gid", ""); state = ""; load(); return; }
+      const r = student(res, c); if(r === true) return;
+      if(r){ state = "ok"; render(); }
+      else msg.textContent = res.error==="unknown-code" ? "Hmm, Olya's list doesn't have this code. Check it with her." : "Can't reach Olya's list right now. Try again in a minute.";
+    };
+    go.addEventListener("click", save); inp.addEventListener("keydown", e=>{ if(e.key==="Enter") save(); });
+  }
+}
+function boot(){
+  if(isTeacher()) { render(); load(); return; }
+  if(SYNC_URL && myCode()){ if(!toOwnGroup(ls.get("hw-gid"))) whoAmI(); return; }
+  render();
+}
+boot();
+window.addEventListener("pageshow", e=>{ if(e.persisted) boot(); });
+</script>
+</body>
+</html>
