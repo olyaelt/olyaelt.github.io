@@ -458,6 +458,28 @@ audio{width:100%}
 .btn[disabled]{opacity:.35;cursor:default}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.next-line{opacity:1;transform:none}}
 .legal{max-width:var(--maxw,760px);margin:0 auto;padding:18px 16px 28px;color:var(--muted);font-size:.85rem;text-align:center}
+/* engine 29 (her wish, 27.10): on a computer the page grows with the screen, by width and by height, whichever is smaller,
+   so the text is big and the Useful language box fits without scrolling; the phone layout stays as it was */
+@media (min-width:900px){
+  html{font-size:clamp(16px, min(1.35vw, 2.5vh), 26px)}
+  .wrap{max-width:50rem}
+  .wrap:has(.stage.with-box){max-width:64rem}
+  .legal{max-width:64rem}
+  .stage.with-box{grid-template-columns:minmax(0,1fr) minmax(250px,22rem)}
+  .stage .box{font-size:1.15rem}   /* fitBoxes() lowers it until the box fits on the screen */
+  .stage .box h4{font-size:.76em}
+  .stage .box .ru,.stage .box .mean{font-size:.86em}
+  .box .sticker{width:9rem;margin-top:-1.6rem}
+  /* her catch (27.10): on a wide screen the Russian goes on the same line as the phrase (on a phone it stays below) */
+  .box .ru{display:inline}
+  .box.gloss p{line-height:1.4}
+  .box .ru.dash::before{content:"– "}
+  /* the topic's box on the task list: two columns on a wide screen */
+  .box-home{display:block;columns:2 20rem;column-gap:2.5rem;font-size:1.05rem}
+  .box-home h4{break-after:avoid}
+  .box-home h4:first-child{margin-top:0}
+  .box-home p{break-inside:avoid;margin-bottom:3px}
+}
 .legal a{color:inherit}
 </style>
 
@@ -589,7 +611,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = ["click on the top line to hear the context","click on the line with the gap and try to catch what's in the gap","check","listen again — how did the expression sound?","optional: pronounce the expression like the speaker"];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "28";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "29";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -1187,6 +1209,22 @@ function footHTML(){
 function refreshFoot(){ const f = document.getElementById("foot"); if(f) f.innerHTML = footHTML(); }
 
 const app = document.getElementById("app");
+/* engine 29: on a computer the Useful language box beside a task gets the biggest text that still fits on the screen
+   (from 1.15rem down to 0.9rem; below that it scrolls); phones keep their layout */
+const BIG_SCREEN = window.matchMedia ? matchMedia("(min-width:900px)") : {matches: false};
+function fitBoxes(){
+  app.querySelectorAll(".stage .box").forEach(b => {
+    if(!BIG_SCREEN.matches){ b.style.fontSize = ""; return; }
+    let f = 1.15; b.style.fontSize = f + "rem";
+    while(f > .9 && b.getBoundingClientRect().bottom + scrollY > innerHeight - 12){ f = Math.round((f - .05) * 100) / 100; b.style.fontSize = f + "rem"; }
+  });
+}
+let fitQueued = false;
+/* a Russian gloss that starts with a word gets a dash before it when it sits on the phrase's line (wide screens) */
+const markRu = () => app.querySelectorAll(".box .ru:not(.dash)").forEach(e => { if(/^[\p{L}]/u.test(e.textContent.trim())) e.classList.add("dash"); });
+const queueFit = () => { if(fitQueued) return; fitQueued = true; requestAnimationFrame(() => { fitQueued = false; markRu(); fitBoxes(); }); };
+if(window.MutationObserver) new MutationObserver(queueFit).observe(app, {childList: true});
+window.addEventListener("resize", queueFit);
 let current = null, stepIdx = 0, checked = false;
 /* ✎ Correction = {…}, 💬 Comment = [[…]]: inside the other kind → switch it; words selected → wrap them; nothing selected → an empty pair at the cursor */
 function markSel(ta, kind){
