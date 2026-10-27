@@ -17,7 +17,7 @@
       ],
       "against": [
        "**They're handing it over to AI** — why spend years on it at school?",
-       "**They've stopped hiring juniors** in tech, so why train kids for jobs that aren't there?"
+       "Lots of tech companies **have stopped hiring juniors**, so why train kids for jobs that may not be there?"
       ]
      }
     },
@@ -138,8 +138,8 @@
      "t": "working in a team",
      "ex": {
       "for": [
-       "**They've stopped hiring juniors**, so there's no first job to learn it in any more — school has to teach it.",
-       "It's **more important than you'd think** — most projects fail because people can't work together, not because they lack skills."
+       "A lot of companies **have stopped hiring juniors**, so school is even more important as a place to learn teamwork.",
+       "It's **more important than you'd think** — even strong teams struggle when people can't work together."
       ],
       "against": [
        "They already do group projects all the time — **what's the point of** a whole subject?",
@@ -193,9 +193,10 @@
  ],
  "speaking": [
   "A 20-year-old relative asks: \"What should I study, now that AI can do half the jobs out there?\" Agree on three pieces of advice, a phrase from the box for each.",
-  "Each of you: two skills AI can't replace and one that's already **out of date**. Then agree on the most future-proof one.",
+  "Each of you: two skills you think will stay valuable as AI develops, and one that's already **out of date**. Then agree on the one you'd most recommend learning, and why.",
   "Rank from most to least useful in ten years: coding · essay writing · foreign languages · mental maths · working in a team. Agree on your top two.",
   "Each of you: something you **picked up the hard way** — at work or anywhere else. Three sentences, two phrases from the box. Your partner asks one question.",
   "**They've stopped hiring juniors.** Agree on three ways a young person can still get experience, a phrase from the box for each."
- ]
+ ],
+ "hint": "The dice tells you how many reasons to give, for and against — a phrase from the box for each, changed to fit."
 }

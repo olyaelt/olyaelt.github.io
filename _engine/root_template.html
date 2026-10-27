@@ -213,7 +213,7 @@ function groupCard(g){
     ${isTeacher() && (state === "ok" || state === "loading") ? todo : ""}
     <div class="hws">${list.filter((h,i)=>i < 6 || (d.pages[h.key] && d.pages[h.key].toAnswer)).map((h,i)=>{   /* the latest 6, and any older one where something waits */
       const c = d.pages[h.key];
-      const badges = c ? [c.toAnswer?`<b>💬 ${c.toAnswer} to answer</b>`:"", `${c.started} of ${c.students} started`, c.marked?`🔖 ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:""].filter(Boolean).join(" · ") : "";
+      const badges = c ? [c.toAnswer?`<b>💬 ${c.toAnswer} to answer</b>`:"", `${c.started} of ${c.students} started`, c.marked?`❔ ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:""].filter(Boolean).join(" · ") : "";
       return `<a class="hw ${c && c.toAnswer ? "todo" : ""} ${draft(h)?"unl":""}" href="${g}/${esc(h.file)}">
         <span class="hw-line"><span class="date">${esc(h.date)}</span>${draft(h)?`<span class="unl-tag">🔒 Not published</span>`:""}<span class="hw-title">${esc(h.topics.map(t=>t.title).join(" · "))}</span></span>
         <span class="badges">${badges || (d.pending ? "checking…" : "")}</span></a>`; }).join("")}</div>

@@ -30,7 +30,7 @@
        "**You never know when it might come in handy** — in a quiz, for example."
       ],
       "against": [
-       "It's fun, but it's **out of touch with real life**.",
+       "It's fun, but the way it's taught is **out of touch with real life** — just names to memorise.",
        "**You pick it up along the way** — from films and games."
       ]
      }
@@ -52,11 +52,11 @@
      "t": "memorising dates in history",
      "ex": {
       "for": [
-       "It's **more useful than you'd think**: dates show you what came first and what caused what.",
+       "It's **more useful than you'd think**: key dates help you put events in order and see how they're connected.",
        "**You never know when it might come in handy** — like when your kids need help with their homework."
       ],
       "against": [
-       "We learned hundreds of dates **by heart**, and **it was a complete waste of time**.",
+       "We learned hundreds of dates **by heart**, but never talked about why they mattered — **a complete waste of time**.",
        "**What's the point of** memorising dates? You can look them up."
       ]
      }
@@ -114,7 +114,7 @@
      "ex": {
       "for": [
        "**Nobody ever taught us how to** make a budget, and my first credit card was a disaster.",
-       "It's **more important than you'd think** — one bad loan can cost you years."
+       "It's **more important than you'd think** — one bad loan can leave you in debt for years."
       ],
       "against": [
        "**You pick it up along the way**, like everyone does.",
@@ -131,7 +131,7 @@
        "**Nobody ever taught us how to** help someone who's choking."
       ],
       "against": [
-       "**School only gets you so far** — you need a refresher course every few years anyway.",
+       "**School only gets you so far** — if you don't practise it, you forget it within a year.",
        "**My kids' school is very hands-on** — they already have a first-aid day every year."
       ]
      }
@@ -145,7 +145,7 @@
       ],
       "against": [
        "**You pick it up along the way** — from your parents or from YouTube.",
-       "**Back in my day**, we had cooking classes, and **it was a complete waste of time**."
+       "**Back in my day**, we had cooking classes, but we spent most of the lesson waiting for the oven — **a complete waste of time**."
       ]
      }
     },
@@ -158,7 +158,7 @@
       ],
       "against": [
        "**What's the point of** teaching it at fifteen? The rules change every year.",
-       "When we moved abroad, **none of it counted** — every country has its own rules."
+       "When we moved abroad, **I had to start from scratch** — the tax system was completely different."
       ]
      }
     },
@@ -171,7 +171,7 @@
        "It's **more useful than you'd think** — we all type all day."
       ],
       "against": [
-       "**You pick it up along the way** — I never had a lesson, and I type fine.",
+       "**You pick it up along the way** — there are free apps for it, so why make it a school subject?",
        "It's a bit **out of touch with real life** — kids do everything on their phones now."
       ]
      }
@@ -185,7 +185,7 @@
       ],
       "against": [
        "**What's the point of** making every shy kid give speeches?",
-       "**School only gets you so far** — you need a real audience, not your classmates."
+       "**School only gets you so far** — confidence comes from doing it for real, not from one lesson a week."
       ]
      }
     },
@@ -242,7 +242,7 @@
  "boxHidden": false,
  "report": "We've decided to cut … and … and add … and … . We'd rather keep … because …",
  "followUp": [
-  "The head teacher says no to one of your four changes. Agree which one she'd most likely reject, then two arguments to change her mind — a phrase from the box for each.",
+  "The head teacher says no to one of your four changes. Agree on which one she'd most likely reject. Then agree on two arguments to change her mind — a phrase from the box for each.",
   "A parent says: \"We learned Latin and it never did us any harm.\" Do you agree? Agree on two things you'd say to this parent.",
   "Rank your four changes from most to least important. Agree on the order, with one reason for your top one."
  ],
@@ -251,6 +251,7 @@
   "When you were at school: each of you, two subjects you would have cut and one you would have added. Anything in common?",
   "Rank these from most to least useful for a 16-year-old today: cooking · public speaking · managing money · Latin · trigonometry. Agree on your top two.",
   "\"**Nobody ever taught us how to** …\" Each of you: finish it in three different ways. Then agree on the one schools should add first.",
-  "**School only gets you so far.** Agree on three things you can only learn outside school, and where people **pick them up**."
- ]
+  "**School only gets you so far.** Agree on three things you mostly learn outside school, and where people **pick them up**."
+ ],
+ "hint": "The dice tells you how many reasons to give, for and against — a phrase from the box for each, changed to fit."
 }

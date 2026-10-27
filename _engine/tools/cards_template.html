@@ -33,6 +33,9 @@ __BASE_CSS__
 .card .lbl{font-size:.82rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
 .card .say{font-size:2.05rem;font-weight:700;line-height:1.25;margin:0}
 .say .ctx{color:var(--muted);font-weight:500}
+/* the key word (tools 4, her decision 27.10): red bold capitals after the sentence, as on her slides and in the homework rewrites */
+.kw{color:var(--label);font-weight:900;letter-spacing:.03em;text-transform:uppercase;white-space:nowrap;margin-left:.45em}
+.back-list .f .kw,.all-row .f .kw{font-size:.9em}
 .ans{display:grid;gap:6px;border-top:2px dashed var(--line);padding-top:14px}
 .ans .say{color:var(--flip-ink);font-weight:900}
 .ans.show{animation:reveal .45s cubic-bezier(.2,.8,.2,1)}
@@ -69,11 +72,11 @@ let useReview = !!(REVIEW && (params.get("review") === "1"));
 let boxOpen = true, settings = false;
 let S;
 function deck(){
-  const own = D.cards.map(([f, b], i) => ({id: "o" + i, f, b}));
+  const own = D.cards.map(([f, b, k], i) => ({id: "o" + i, f, b, k}));
   if(!useReview || !REVIEW) return shuffle(own);
   /* review: first the cards this device marked "Again" in the earlier part, then random ones */
   const again = store.get(AGAIN_KEY(REVIEW.page)) || [];
-  const all = REVIEW.cards.map(([f, b], i) => ({id: "r" + i, f, b, review: true}));
+  const all = REVIEW.cards.map(([f, b, k], i) => ({id: "r" + i, f, b, k, review: true}));
   const first = shuffle(all.filter((c, i) => again.includes(i))), rest = shuffle(all.filter((c, i) => !again.includes(i)));
   return shuffle(own.concat(first.concat(rest).slice(0, REVIEW.n)));
 }
@@ -94,7 +97,8 @@ function flip(){
   act.innerHTML = actionsHTML(); wireActions();
   const first = act.querySelector("[data-got]"); if(first) first.focus({preventScroll: true});
 }
-const fHTML = s => esc(s).replace(/\(\((.+?)\)\)/g, '<span class="ctx">$1</span>');
+/* the front: ((…)) is grey context; a card's key word (cards: [[front, back, key]]) follows the sentence in red capitals */
+const fHTML = (s, k) => esc(s).replace(/\(\((.+?)\)\)/g, '<span class="ctx">$1</span>') + (k ? ` <span class="kw">${esc(k)}</span>` : "");
 /* Got it / Again: the card lights up green or orange, grows a little and flies into its dot, which fills with that colour */
 function answer(ok){
   if(S.busy || !S.queue.length) return;
@@ -135,7 +139,7 @@ function lookHTML(){
   const c = byId(S.look), wasGot = S.got.has(c.id);
   return `<div class="scene"><div class="card open lookback ${S.fresh ? "back-in" : ""}">
       <span class="lbl">Looking back</span>
-      <p class="say">${fHTML(c.f)}</p>
+      <p class="say">${fHTML(c.f, c.k)}</p>
       <div class="ans"><p class="say">${esc(c.b)}</p></div>
     </div></div>
     <div class="actions">${wasGot ? `<button class="btn again" data-look-again>↺ Again — back into the deck</button>` : ""}<button class="btn primary" data-look-done>Back to the cards →</button></div>`;
@@ -149,7 +153,7 @@ function cardHTML(){
   const c = byId(S.queue[0]);
   return `<div class="scene"><div class="card ${S.flipped ? "open" : ""} ${S.fresh ? "enter" : ""}" data-flip ${S.flipped ? "" : `role="button" tabindex="0" aria-label="Show the answer"`}>
       <span class="lbl">${c.review ? `From ${esc(REVIEW.part)}` : "Say it another way"}</span>
-      <p class="say">${fHTML(c.f)}</p>
+      <p class="say">${fHTML(c.f, c.k)}</p>
       <div class="ans" ${S.flipped ? "" : "hidden"}><p class="say">${esc(c.b)}</p></div>
       ${S.flipped ? "" : `<span class="corner">tap to check ↓</span>`}
     </div></div>
@@ -164,7 +168,7 @@ function wireActions(){
 function endHTML(){
   const back = S.cards.filter(c => S.again.has(c.id));
   return `<section class="end"><h2>${back.length ? "Done! Come back to these" : "Done! You got them all"}</h2>
-    ${back.length ? `<ul class="back-list">${back.map(c => `<li><span class="f">${fHTML(c.f)}</span><span class="b">${esc(c.b)}</span></li>`).join("")}</ul>`
+    ${back.length ? `<ul class="back-list">${back.map(c => `<li><span class="f">${fHTML(c.f, c.k)}</span><span class="b">${esc(c.b)}</span></li>`).join("")}</ul>`
       : `<p>No cards to come back to this time.</p>`}
     <div class="row-actions">${back.length ? `<button class="btn" data-redo>Go through these again</button>` : ""}${D.speaking && D.speaking.length ? `<button class="btn primary" data-speak>💬 Speaking →</button>` : `<button class="btn" data-restart>All the cards again</button>`}</div></section>`;
 }
@@ -180,7 +184,7 @@ function render(){
   /* 📋 under the box: a fallback for her, not something to invite a click (27.10) */
   const st = side.scrollTop;
   side.innerHTML = (boxOpen ? boxHTML(D.box, {clickable: true, collapsible: true}) : `<div class="peek"><button class="btn" data-box-show>Show the box</button></div>`)
-    + allHTML("All the cards", S.cards.map(c => `<div class="all-row"><span class="f">${fHTML(c.f)}</span><span class="b">${esc(c.b)}</span></div>`).join(""));
+    + allHTML("All the cards", S.cards.map(c => `<div class="all-row"><span class="f">${fHTML(c.f, c.k)}</span><span class="b">${esc(c.b)}</span></div>`).join(""));
   side.scrollTop = st; wireAll(side); wireBox(side, render);
   S.fresh = false; S.popId = null; S.stageIn = false;
   const on = (sel, fn) => document.querySelectorAll(sel).forEach(b => b.addEventListener("click", () => fn(b)));

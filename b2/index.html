@@ -308,7 +308,7 @@ function card(h, i){
   const st = stats(h), n = h.tasks.length, all = n && st.done >= n;
   if(teacherView()){
     const c = tdata && tdata[h.key];
-    const badges = c ? [c.toAnswer?`<b>💬 ${c.toAnswer} to answer</b>`:"", `${c.started} of ${c.students} started`, c.marked?`🔖 ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:""].filter(Boolean).join(" · ") : (tpending ? "checking…" : "didn't answer — reload the page");
+    const badges = c ? [c.toAnswer?`<b>💬 ${c.toAnswer} to answer</b>`:"", `${c.started} of ${c.students} started`, c.marked?`❔ ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:""].filter(Boolean).join(" · ") : (tpending ? "checking…" : "didn't answer — reload the page");
     const latest = h === HW[0];
     return `<a class="hw ${latest?"latest":""} ${c && c.toAnswer ? "todo" : ""} ${isPub(h)?"":"unl"}" href="${esc(h.file)}">
     <div class="hw-top"><span class="date">${esc(h.date)}</span>${!isPub(h)?`<span class="tag unl-tag">🔒 Not published</span>`:latest?`<span class="tag">Latest</span>`:""}<span class="go" aria-hidden="true">→</span></div>

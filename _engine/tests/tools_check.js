@@ -36,10 +36,22 @@ const {chromium} = require('playwright'); const path = require('path');
     await p.waitForTimeout(700);   // the example comes in a moment after the last tick
     out.c.step1 = {done: await p.locator('.st').first().evaluate(e => e.classList.contains('done')), exampleOpen: await p.locator('.ex-step').count()};
     expect('step 1 done + example opens by itself', out.c.step1.done && out.c.step1.exampleOpen === 1);
-    await p.click('[data-roll="1"]'); await p.waitForTimeout(2000);
-    if (await p.locator('[data-giveup="1"]').count()) { await p.click('[data-giveup="1"]'); await p.waitForTimeout(150);
-      out.c.gaveUp = {gave: await p.locator('.st').nth(1).evaluate(e => e.classList.contains('gave')), monkey: await p.locator('.st').nth(1).locator('.n').innerText()};
-      expect('give up -> 🙈', out.c.gaveUp.gave && out.c.gaveUp.monkey.includes('🙈')); }
+    // the die (her husband's point, 27.10): it slows down and simply stops — the result already shows during the last slow turns, no scale bounce
+    await p.click('[data-roll="1"]');
+    const dieAt = () => p.locator('[data-die-slot="1"] .die').evaluate(d => ({pips: d.querySelectorAll('i.p').length, tr: getComputedStyle(d).transform}));
+    await p.waitForTimeout(1150); const late1 = await dieAt(); await p.waitForTimeout(350); const late2 = await dieAt();
+    await p.waitForTimeout(500); const rolled = await p.locator('.st').nth(1).locator('.dot').count();
+    out.c.die = {late1, late2, rolled};
+    const scaled = tr => { const m = /matrix\(([^,]+), ([^,]+)/.exec(tr); return m && Math.abs(Math.hypot(+m[1], +m[2]) - 1) > .01; };
+    expect('die keeps its result for the last slow turns', late1.pips === late2.pips && late2.pips === rolled && !scaled(late1.tr) && !scaled(late2.tr));
+    // the example opens every time a row is done, even after it was opened early and hidden
+    if (await p.locator('[data-giveup="1"]').count()) {
+      await p.click('[data-ex="1"]'); await p.waitForTimeout(150); await p.click('[data-ex-hide="1"]'); await p.waitForTimeout(150);
+      const hidden = await p.locator('.ex-step').count();
+      await p.click('[data-giveup="1"]'); await p.waitForTimeout(150);
+      out.c.gaveUp = {gave: await p.locator('.st').nth(1).evaluate(e => e.classList.contains('gave')), monkey: await p.locator('.st').nth(1).locator('.n').innerText(), exBefore: hidden, exAfter: await p.locator('.ex-step').count()};
+      expect('give up -> 🙈', out.c.gaveUp.gave && out.c.gaveUp.monkey.includes('🙈'));
+      expect('give up opens the example again after a hide', out.c.gaveUp.exAfter === hidden + 1); }
     expect('next locked before a decision', await p.locator('[data-next]').isDisabled());
     await p.locator('.ph').nth(1).click(); out.c.phraseUsed = await p.locator('.ph.used').count(); expect('box phrase clickable', out.c.phraseUsed === 1);
     await p.click('[data-dec="agree"]'); await shot(p, 'council-turn');
@@ -101,6 +113,14 @@ const {chromium} = require('playwright'); const path = require('path');
     out.k = {stages: await p.locator('.stage-btn').allInnerTexts(), dots: await p.locator('.pd').count(), flipBtn: await p.locator('[data-flip-btn]').count(), hint: await p.locator('.hint-top').innerText(),
       label: await p.locator('.card .lbl').innerText(), list: {side: await p.locator('#side details.all').count(), main: await p.locator('#main details.all').count()}};
     expect('cards stages + no Flip button + list under the box', out.k.stages.join('|') === '🃏 Cards|💬 Speaking' && !out.k.flipBtn && out.k.list.side === 1 && !out.k.list.main);
+    // the key word (tools 4): after the sentence, red bold capitals, the same word as in the data; in the 📋 list too
+    out.k.kw = await p.evaluate(() => { const k = document.querySelector('.card .say .kw'), c = S.cards.find(x => x.id === S.queue[0]), st = k && getComputedStyle(k);
+      const lab = getComputedStyle(document.documentElement).getPropertyValue('--label').trim();
+      return {text: k && k.textContent, data: c.k, weight: st && st.fontWeight, color: st && st.color, label: lab, last: k && k === k.parentElement.lastElementChild,
+        listKw: document.querySelectorAll('#side .all-row .kw').length, cards: S.cards.length}; });
+    const hex = h => { const m = /^#(..)(..)(..)$/.exec(h); return m ? `rgb(${parseInt(m[1], 16)}, ${parseInt(m[2], 16)}, ${parseInt(m[3], 16)})` : h; };
+    expect('key word in red after the sentence', out.k.kw.text === out.k.kw.data && /^[A-Z]+$/.test(out.k.kw.text) && +out.k.kw.weight >= 800 && out.k.kw.color === hex(out.k.kw.label) && out.k.kw.last && out.k.kw.listKw === out.k.kw.cards);
+    expect('hint mentions the word in red', /word in red/.test(out.k.hint));
     await p.click('.card'); await p.waitForTimeout(300); await shot(p, 'cards-open');
     out.k.open = {ans: await p.locator('.ans:not([hidden])').count(), sentenceStays: (await front()) === f0};
     expect('tap opens the answer under the sentence', out.k.open.ans === 1 && out.k.open.sentenceStays);
@@ -137,7 +157,7 @@ const {chromium} = require('playwright'); const path = require('path');
     out.k2 = {dots: await p.locator('.pd').count()};
     await p.click('[data-settings]'); await p.check('[data-review]'); await p.waitForTimeout(100);
     out.k2.withReview = await p.locator('.pd').count();
-    const fronts = await p.evaluate(() => S.cards.filter(c => c.review).map(c => c.f.replace(/\(\(|\)\)/g, '').replace(/\s+/g, ' ').trim()));   // the grey ((context)) shows without its brackets
+    const fronts = await p.evaluate(() => S.cards.filter(c => c.review).map(c => (c.f.replace(/\(\(|\)\)/g, '') + (c.k ? ' ' + c.k : '')).replace(/\s+/g, ' ').trim()));   // the grey ((context)) shows without its brackets; the key word after it
     out.k2.againIncluded = fronts.includes(f0);
     await p.goto('file://' + path.join(site, 'tools/c1-schools/cards-2.html?review=1')); await p.waitForTimeout(150);
     out.k2.viaLink = await p.locator('.pd').count();

@@ -150,7 +150,7 @@ function draw(sameKind){
   if(!S.pools[kind].length) kind = ORDER.find(k => S.pools[k].length);
   if(!kind){ S.cur = null; return; }
   const i = S.pools[kind].shift();
-  S.cur = {kind, i, r: [{n: null, got: 0}, {n: null, got: 0}], dec: null, exOpen: [false, false], exSeen: [false, false]};
+  S.cur = {kind, i, r: [{n: null, got: 0}, {n: null, got: 0}], dec: null, exOpen: [false, false]};
   if(!sameKind) S.draws++;
 }
 function swap(){
@@ -172,11 +172,13 @@ function next(){
 /* ---------- the die ---------- */
 const PIPS = {1:[5], 2:[1,9], 3:[1,5,9], 4:[1,3,7,9], 5:[1,3,5,7,9], 6:[1,3,4,6,7,9]};
 const dieHTML = n => `<span class="die" aria-label="${n}">${Array.from({length: 9}, (_, k) => `<i class="${PIPS[n].includes(k + 1) ? "p" : ""}"></i>`).join("")}</span>`;
-/* the example opens by itself only the first time a row is finished */
-function openEx(k, auto){ const c = S.cur; if(!c || !exOf(k) || (auto && c.exSeen[k])) return; c.exOpen[k] = true; c.exSeen[k] = true; S.exAnim = k; }
+/* the example opens by itself every time a row is finished (all ticked or "We give up"), even if it was opened and hidden before:
+   that is the moment to look at it (her wish, 27.10). Already open → it stays as it is, no re-animation */
+function openEx(k){ const c = S.cur; if(!c || !exOf(k) || c.exOpen[k]) return; c.exOpen[k] = true; S.exAnim = k; }
 const setFace = (die, n) => die.querySelectorAll("i").forEach((p, j) => p.classList.toggle("p", PIPS[n].includes(j + 1)));
-/* the roll: the die tumbles and slows down (faces change more and more slowly), lands with a bounce,
-   then the ticks for the reasons appear one by one */
+/* the roll: the die rolls over one face at a time (a quarter turn, its middle lifted as on an edge), slower and slower,
+   and the last quarter turn lands on the result and simply stops there — no bounce, no late change (her husband's point, 27.10:
+   the slowing down is the nicest part, a real die just stops). Then the ticks for the reasons appear one by one */
 function roll(k){
   const r = S.cur.r[k]; if(r.n !== null || S.busy) return;
   const final = 1 + Math.floor(Math.random() * faces), any = () => 1 + Math.floor(Math.random() * faces);
@@ -184,19 +186,24 @@ function roll(k){
   if(!slot || calm()){ r.n = final; S.justRolled = k; render(); S.justRolled = null; return; }
   S.busy = true;
   slot.closest(".st").querySelectorAll("button").forEach(b => b.disabled = true);
-  slot.innerHTML = dieHTML(any());
-  const die = slot.firstElementChild, gaps = [50, 55, 60, 70, 80, 95, 115, 140, 175, 220, 280];
-  const total = gaps.reduce((a, b) => a + b, 0);
-  die.animate([
-    {transform: "translate(0, 0) rotate(0deg)"},
-    {transform: "translate(-8px, -22px) rotate(-240deg)", offset: .22},
-    {transform: "translate(4px, 0) rotate(-470deg)", offset: .5},
-    {transform: "translate(-2px, -8px) rotate(-610deg)", offset: .74},
-    {transform: "translate(0, 0) rotate(-700deg)", offset: .9},
-    {transform: "translate(0, 0) rotate(-720deg)"}], {duration: total, easing: "cubic-bezier(.12,.75,.3,1)"});
-  let t = 0; gaps.forEach((g, i) => { t += g; setTimeout(() => { let f = i === gaps.length - 1 ? final : any(); setFace(die, f); }, t); });
-  setTimeout(() => die.animate([{transform: "scale(1)"}, {transform: "scale(1.22)"}, {transform: "scale(.94)"}, {transform: "scale(1)"}], {duration: 360, easing: "ease-out"}), t);
-  setTimeout(() => { S.busy = false; r.n = final; S.justRolled = k; render(); S.justRolled = null; }, t + 420);
+  const first = any(); slot.innerHTML = dieHTML(first);
+  const die = slot.firstElementChild, gaps = [60, 65, 72, 82, 95, 112, 135, 165, 205, 260, 340];
+  const total = gaps.reduce((a, b) => a + b, 0), n = gaps.length, lift = die.offsetHeight * .2;
+  /* one keyframe on its edge (45°, lifted; higher at the start, as if thrown) and one flat on a face per quarter turn */
+  const frames = [{transform: "translateY(0) rotate(0deg)", offset: 0}];
+  let t = 0, prev = first;
+  gaps.forEach((g, i) => { const e = 1 - i / n, up = lift + 16 * e * e;
+    frames.push({transform: `translateY(${-up.toFixed(1)}px) rotate(${-(90 * i + 45)}deg)`, offset: (t + g / 2) / total});
+    t += g;
+    frames.push({transform: `translateY(0) rotate(${-90 * (i + 1)}deg)`, offset: t / total}); });
+  /* the last quarter turn: it slows down on its way up onto the edge, then tips over and lies still */
+  frames[frames.length - 3].easing = "ease-out"; frames[frames.length - 2].easing = "ease-in-out";
+  die.animate(frames, {duration: total, easing: "linear"});
+  /* while it's fast, a new face shows each time the die lies flat; for the last two, slowest quarter turns it already shows
+     the result and keeps it, so it just rolls slower and slower and stops (no change at the very end) */
+  t = 0; gaps.forEach((g, i) => { t += g; if(i > n - 3) return;
+    setTimeout(() => { let f = final; if(i < n - 3){ do f = any(); while(faces > 1 && (f === prev || (i === n - 4 && f === final))); } prev = f; setFace(die, f); }, t - 8); });
+  setTimeout(() => { S.busy = false; r.n = final; S.justRolled = k; render(); S.justRolled = null; }, total + 380);
 }
 
 /* ---------- views ---------- */
@@ -277,7 +284,7 @@ function goStage(v){ if(S.view === v || S.busy) return; S.view = v; S.enter = tr
 function headHTML(){
   return `<header class="head"><span class="part">${esc(D.part)}</span><h1>${esc(D.title)}</h1>
       ${stagesHTML([["game", "🎲 Reasons"], ["decide", "🤝 Decide"], ["speak", "💬 Extra speaking"]], S.view)}</header>
-    ${S.view !== "game" ? "" : `<div class="hint-top dice-hint"><span>🎲 The dice tells you how many reasons to give, for and against — a phrase from the box for each.</span>
+    ${S.view !== "game" ? "" : `<div class="hint-top dice-hint"><span>🎲 ${esc(D.hint || "The dice tells you how many reasons to give, for and against — a phrase from the box for each, changed to fit.")}</span>
       <span class="seg" role="group" aria-label="Dice">${DIE_OPTIONS.map(n => `<button data-faces="${n}" aria-pressed="${faces === n}">1–${n}</button>`).join("")}</span></div>`}
 `;
 }
@@ -294,9 +301,9 @@ function render(anim){
   wireAll(side); wireBox(side); wireSpeak(main, render); S.exAnim = null;
   const on = (sel, fn) => document.querySelectorAll(sel).forEach(b => b.addEventListener("click", () => fn(b)));
   on("[data-roll]", b => roll(+b.dataset.roll));
-  on("[data-giveup]", b => { const k = +b.dataset.giveup, r = S.cur.r[k]; r.gaveUp = !r.gaveUp; if(r.gaveUp){ S.justGave = k; openEx(k, true); } render(); S.justGave = null; });
+  on("[data-giveup]", b => { const k = +b.dataset.giveup, r = S.cur.r[k]; r.gaveUp = !r.gaveUp; if(r.gaveUp){ S.justGave = k; openEx(k); } render(); S.justGave = null; });
   on("[data-dot]", b => { const [k, j] = b.dataset.dot.split(".").map(Number), r = S.cur.r[k]; r.got = j < r.got ? j : j + 1; S.popTick = j < r.got ? `${k}.${j}` : null;
-    const complete = r.got >= r.n; if(complete) setTimeout(() => { openEx(k, true); render(); pop(document.querySelectorAll(".st .n")[k]); }, 420);
+    const complete = r.got >= r.n; if(complete) setTimeout(() => { openEx(k); render(); pop(document.querySelectorAll(".st .n")[k]); }, 420);
     render(); S.popTick = null; });
   on("[data-dec]", b => { S.cur.dec = b.dataset.dec === "agree" ? "agree" : b.dataset.dec === "1"; render(); pop(document.querySelector(`[data-dec="${b.dataset.dec}"]`)); pop(document.querySelectorAll(".st .n")[2]); });
   on("[data-next]", next);

@@ -264,6 +264,29 @@ details.summary[open] summary::after{content:"Hide"}
 .gap .r{font-weight:700;background:var(--hl);color:transparent;padding:1px 0;border-radius:2px;transition:color .15s ease}
 .gap .r:empty{display:none}
 .chunk.open .gap .r{color:var(--hl-ink)}
+/* engine 30: "!" after an opened gap = "I want to revise this" (kept on this device) */
+/* engine 32 (her decision 27.10): a green bookmark, not a second round sign next to "?" — "?" asks Olya, the bookmark is for me */
+.rev{display:inline-grid;place-items:center;width:1.25em;height:1.5em;margin:0 1px 0 2px;padding:0;border:0;border-radius:4px;background:none;color:var(--done);vertical-align:-.3em;cursor:pointer}
+.rev svg{width:.78em;height:1.05em;overflow:visible}
+.rev path{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round}
+.rev.on path{fill:currentColor}
+.rev:hover{background:color-mix(in srgb, var(--done) 14%, transparent)}
+.rev.demo{cursor:default;height:1.2em}
+.rev-hint{margin:0;font-size:.88rem;color:var(--muted);text-align:right}
+/* engine 33: the bookmark on every practice item; next to a hidden answer it shows once the answer is open */
+.reveal:not(.open) ~ .rev:not(.on){display:none}
+.say-a .rev,.lb .rev{flex:none;font-size:1.15rem}
+.lb-item{display:flex;align-items:center;gap:6px}
+.lb-item .reveal{flex:1}
+.ln .rev{position:absolute;right:8px;top:9px;font-size:1.1rem}
+.ln.has-mk .rev{right:46px}
+.ln.has-rev{padding-right:40px}
+.ln.has-mk.has-rev{padding-right:80px}
+.mk-row .rev{font-size:1.25rem;margin-left:6px}
+.target .rev{font-size:1.1rem}
+.chunk:not(.open) + .rev:not(.on){display:none}
+.chunk.plain{cursor:default}
+.chunk.plain .gap .f,.chunk.plain .gap .r,.chunk.plain .gap.o .r{font-weight:inherit;color:inherit;background:none}
 .gap.o .r{background:#F6B26B;font-weight:400}
 .chunk.open .gap.o .r{color:#3B2300}
 .box.gloss p{line-height:1.7}
@@ -399,6 +422,12 @@ s{color:var(--muted)}
 .picks{display:grid;gap:6px}
 .pick-h{margin:10px 0 2px;color:var(--label);font-size:.8rem;letter-spacing:.06em;font-weight:900;text-transform:uppercase}
 .pick-h:first-child{margin-top:0}
+/* engine 31: "Your phrases" grouped by the parts of the conversation; an empty part shows in red, nothing is blocked */
+.ph-part{display:grid;gap:6px}
+.ph-h{margin:6px 0 0;color:var(--muted);font-size:.8rem;letter-spacing:.06em;font-weight:900;text-transform:uppercase}
+.ph-part.empty .ph-h,.ph-part.empty .ph-zero{color:var(--no-ink)}
+.ph-back{font:inherit;color:inherit;letter-spacing:inherit;text-transform:inherit;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.ph-zero{margin-top:-4px}
 .pick{display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;align-items:start;text-align:left;width:100%;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px;cursor:pointer;line-height:1.4}
 .pick .tick{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);margin-top:1px;display:grid;place-items:center;font-size:.8rem;font-weight:900;color:transparent}
 .pick.on{background:var(--ok-bg);border-color:var(--done)}
@@ -611,7 +640,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = ["click on the top line to hear the context","click on the line with the gap and try to catch what's in the gap","check","listen again — how did the expression sound?","optional: pronounce the expression like the speaker"];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "29";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "33";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -664,7 +693,7 @@ const myCode = () => SYNC_URL ? ls.get("hw-code") : "";
 const asStudent = () => !!(SYNC_URL && ls.get("hw-code") && ls.get("hw-role") === "teacher" && ls.get("hw-as-student"));
 function setStudentView(on){
   ls.set("hw-as-student", on ? "1" : "");
-  try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
+  try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || /^hw-rev-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
   location.reload();
 }
 document.addEventListener("click", ev => { const b = ev.target.closest && ev.target.closest("#as-student, #as-teacher"); if(b) setStudentView(b.id === "as-student"); });
@@ -806,7 +835,7 @@ function renderFeedback(id){
   shell({instr:"Here's Olya's feedback on your work.",
     stageHTML: `<p class="fb-key small"><b class="fb-good">green</b> = great, keep it · <s class="fb-del">grey</s> = change this · <ins class="fb-ins">yellow</ins> = a better way to say it · <span class="fb-note">blue</span> = Olya's comment</p>` +
       list.map(w=>`<div class="panel fb-item">
-        <div class="small">${w.type==="recording"?"🎙 Your recording":w.type==="question"?"❓ Your question":w.type==="marked"?"🔖 You marked":"✍️ Your text"} · sent ${esc(w.sent||"")}</div>
+        <div class="small">${w.type==="recording"?"🎙 Your recording":w.type==="question"?"❓ Your question":w.type==="marked"?`<span class="mk demo" aria-hidden="true">?</span> You asked about`:"✍️ Your text"} · sent ${esc(w.sent||"")}</div>
         ${(w.type==="question"||w.type==="marked") ? `<p class="fb-q">${esc(String(w.text||"").split("\n").filter(l=>!/^https?:/.test(l)).join(" "))}</p>` : ""}
         ${String(w.feedback||"").trim() ? `<div class="fb-text">${fbHTML(w.feedback)}</div>` : `<p class="small">Olya hasn't written feedback on this one yet.</p>`}
         ${w.type==="text" && w.text ? `<details class="fb-orig"><summary>What you sent</summary><div class="fb-sent">${esc(w.text).replace(/\n/g,"<br>")}</div></details>` : ""}
@@ -824,7 +853,7 @@ function renderFeedback(id){
 function reactHTML(){
   if(!lastDone || !myCode() || syncState==="unknown" || isTeacher()) return "";
   const n = lastFlagged.length;
-  const fl = n ? `<div class="flagged"><b>🔖 You marked ${n} ${n===1?"thing":"things"} — Olya will see ${n===1?"it":"them"}.</b>
+  const fl = n ? `<div class="flagged"><b><span class="mk demo" aria-hidden="true">?</span> You asked about ${n} ${n===1?"thing":"things"} — Olya will see ${n===1?"it":"them"}.</b>
       ${lastFlagged.map((f,i)=>`<div class="fl"><span class="fl-s">${esc(f.s.length>90?f.s.slice(0,88)+"…":f.s)}</span>
         <button class="linklike" data-note="${i}">add a note</button>
         <span class="note-box" data-nb="${i}" hidden><input type="text" placeholder="What's unclear? (optional)" data-ni="${i}"><button class="btn" data-ng="${i}">Add</button></span></div>`).join("")}</div>` : "";
@@ -917,11 +946,11 @@ const saveFlags = () => { try{ localStorage.setItem(PAGE_KEY+"-flags", JSON.stri
 const canMark = () => !!(myCode() && syncState!=="unknown" && !isTeacher());
 const plainText = s => { const d = document.createElement("div"); d.innerHTML = String(s||""); return d.textContent.replace(/\s+/g," ").trim(); };
 function markBtn(key, snippet, link){
-  if(!canMark() || !current) return "";
+  if(!canMark() || !current || current._once) return "";
   const on = !!(flags[current.id] && flags[current.id][key]);
   return `<button class="mk ${on?"on":""}" data-mk="${esc(key)}" data-s="${esc(snippet)}" data-l="${esc(link||"")}" aria-pressed="${on}" aria-label="${on?"Marked for Olya — tap to unmark":"Not sure? Mark it for Olya"}">?</button>`;
 }
-function markHint(){ return canMark() && !ls.get("hw-mark-used") ? `<p class="mk-hint">Not sure about something? Tap <span class="mk demo">?</span> — Olya will see it.</p>` : ""; }
+function markHint(){ return canMark() && !(current && current._once) && !ls.get("hw-mark-used") ? `<p class="mk-hint">Not sure about something? Tap <span class="mk demo">?</span> — Olya will see it.</p>` : ""; }
 document.addEventListener("click", ev=>{
   const b = ev.target.closest(".mk[data-mk]"); if(!b || !current) return;
   ev.stopPropagation();
@@ -963,7 +992,7 @@ function labelsFor(students){
     return s.name;
   });
 }
-/* what waits for Olya's answer: texts, recordings, questions, and a 🔖 mark only when the student added a note */
+/* what waits for Olya's answer: texts, recordings, questions, and a ❔ mark ("?" on a line) only when the student added a note */
 const hasNote = w => /\n— /.test(String(w.text||""));   /* the note goes after the marked line */
 const needsAnswer = w => !String(w.feedback||"").trim() && (w.type !== "marked" || hasNote(w));
 function teacherCounts(id){
@@ -977,7 +1006,7 @@ function teacherLine(id){
   const st = teacherData.students || [], lab = labelsFor(st), dn = new Set((teacherData.done||{})[id] || []), c = teacherCounts(id);
   const chips = hideNames() ? `<span class="t-count">${dn.size} of ${st.length} done</span>`
     : st.map((s,i)=>`<span class="t-chip ${dn.has(i)?"on":""}" title="${esc(s.name)}">${esc(lab[i])}</span>`).join("");
-  const badges = [c.marked?`🔖 ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:"", c.hard?`😓 ${c.hard}`:""].filter(Boolean).join(" · ");
+  const badges = [c.marked?`❔ ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:"", c.hard?`😓 ${c.hard}`:""].filter(Boolean).join(" · ");
   return `<button class="t-line ${c.marked+c.questions?"hot":""}" data-teach="${id}">${chips}${badges?`<span class="t-badges">${badges}${c.open?` · <b>${c.open} to answer</b>`:""}</span>`:""}</button>`;
 }
 /* ---------- "Where they got stuck": what hasn't been gone through in class yet ---------- */
@@ -992,7 +1021,7 @@ function stuckCounts(id){
 function hotHTML(){
   if(!isTeacher() || !teacherData) return "";
   const hot = TASKS.map(t=>({t, c:stuckCounts(t.id)})).filter(x=>x.c.marked+x.c.questions+x.c.hard>0).sort((a,b)=>(b.c.marked+b.c.questions+b.c.hard)-(a.c.marked+a.c.questions+a.c.hard));
-  return `<section class="hot"><b>Where they got stuck</b>${hot.length ? `<ul>${hot.map(x=>`<li><button class="linklike" data-stuck="${x.t.id}">${esc(x.t.title)}</button> <span>${[x.c.marked?`🔖 ${x.c.marked}`:"", x.c.questions?`❓ ${x.c.questions}`:"", x.c.hard?`😓 ${x.c.hard} hard`:""].filter(Boolean).join(" · ")}</span></li>`).join("")}</ul>
+  return `<section class="hot"><b>Where they got stuck</b>${hot.length ? `<ul>${hot.map(x=>`<li><button class="linklike" data-stuck="${x.t.id}">${esc(x.t.title)}</button> <span>${[x.c.marked?`❔ ${x.c.marked}`:"", x.c.questions?`❓ ${x.c.questions}`:"", x.c.hard?`😓 ${x.c.hard} hard`:""].filter(Boolean).join(" · ")}</span></li>`).join("")}</ul>
     <p class="small">Tap a task to go through it together — the marked lines are framed red.</p>` : `<p class="small">Nothing new: no marks or questions waiting.</p>`}</section>`;
 }
 /* every line a student could mark: step, row (-1 = the whole card) and the text the ? button sends */
@@ -1031,7 +1060,7 @@ function mkBarHTML(id){
   if(!steps.length && !c.questions && !c.hard) return "";
   const anyOpen = items.some(it=>it.marks.some(open)) || c.questions || c.hard;
   return `<span class="t-mk-h">Hard for them:</span>${steps.map(si=>{ const ws = items.filter(it=>it.si===si).flatMap(it=>it.marks);
-      return `<button class="tool t-mk-go ${ws.some(open)?"":"is-done"}" data-mkgo="${si}">Step ${si+1} · 🔖 ${whoMarked(ws)}</button>`; }).join("")}
+      return `<button class="tool t-mk-go ${ws.some(open)?"":"is-done"}" data-mkgo="${si}">Step ${si+1} · ❔ ${whoMarked(ws)}</button>`; }).join("")}
     ${c.questions?`<button class="linklike" data-mkq>❓ ${c.questions} ${c.questions===1?"question":"questions"}</button>`:""}${c.hard?`<span class="small">😓 ${c.hard} found it hard</span>`:""}
     <button class="linklike" id="t-mk-names">${hideNames() ? "👁️ Show names" : "👁️ Hide names"}</button>
     ${anyOpen ? `<button class="tool rv-ok" id="t-mk-all">✓ All discussed</button>` : `<span class="small">✓ all discussed</span>`}`;
@@ -1060,7 +1089,7 @@ function annotateMarks(){
     const o = it.marks.some(open), ids = it.marks.map(w=>w.id).join(",");
     el.classList.add("t-marked"); if(!o) el.classList.add("t-marked-done");
     const notes = it.marks.filter(w=>noteOf(w)).map(w=>`<span class="t-mk-note">💬 ${hn ? "" : `${esc(((teacherData.students||[])[w.s]||{}).name||"")}: `}${esc(noteOf(w))}</span>`).join("");
-    const lab = `<div class="t-mk-who ${o?"":"is-done"}"><span>🔖 ${whoMarked(it.marks)}</span>${notes}${o ? `<button class="linklike" data-mkdone="${ids}">✓ Discussed</button>` : `<span>✓ discussed</span><button class="linklike" data-mkundo="${ids}">undo</button>`}</div>`;
+    const lab = `<div class="t-mk-who ${o?"":"is-done"}"><span>❔ ${whoMarked(it.marks)}</span>${notes}${o ? `<button class="linklike" data-mkdone="${ids}">✓ Discussed</button>` : `<span>✓ discussed</span><button class="linklike" data-mkundo="${ids}">undo</button>`}</div>`;
     el.insertAdjacentHTML(it.row < 0 ? "afterbegin" : "afterend", lab);
   });
   app.querySelectorAll("[data-mkdone]").forEach(b=>b.addEventListener("click", async e=>{ e.stopPropagation(); if(await setDiscussed(id, {ids: b.dataset.mkdone.split(",")})) refreshMarks(); }));
@@ -1093,7 +1122,7 @@ async function setPublished(b){
   else toast(res.ok ? "Your table's script is older than this page: update it (Deploy → Manage deployments → New version), then tap again." : "Couldn't reach your table. Try again in a minute.");
   if(!current){ const y = scrollY; renderHome(); scrollTo(0,y); }
 }
-const WAIT_ICON = {text:"✍️ text", recording:"🎙 recording", question:"❓ question", marked:"🔖 marked"};
+const WAIT_ICON = {text:"✍️ text", recording:"🎙 recording", question:"❓ question", marked:"❔ marked"};
 function waitHTML(){
   if(!isTeacher() || !teacherData) return "";
   const st = teacherData.students || [], hn = hideNames(), pos = Object.fromEntries(TASKS.map((t,i)=>[t.id,i]));
@@ -1101,7 +1130,7 @@ function waitHTML(){
   const open = (teacherData.work||[]).filter(w=>needsAnswer(w) && pos[w.task] !== undefined)
     .sort((a,b)=>(pos[a.task]-pos[b.task]) || (order[a.type]-order[b.type]));
   return `<section class="hot wait"><b>💬 Waiting for your answer${open.length?`: ${open.length}`:""}</b>${open.length?` <button class="tool" id="copy-wait">📋 Copy all for Claude</button>`:""}${open.length
-    ? `<ul>${open.map(w=>`<li><button class="linklike" data-teach="${w.task}" data-wid="${w.id}">${hn ? "" : esc((st[w.s]||{}).name||"") + " — "}${esc(TASKS[pos[w.task]].title)}</button> <span>${w.type==="marked" ? "🔖 marked, with a note" : WAIT_ICON[w.type]||""}</span></li>`).join("")}</ul>`
+    ? `<ul>${open.map(w=>`<li><button class="linklike" data-teach="${w.task}" data-wid="${w.id}">${hn ? "" : esc((st[w.s]||{}).name||"") + " — "}${esc(TASKS[pos[w.task]].title)}</button> <span>${w.type==="marked" ? "❔ marked, with a note" : WAIT_ICON[w.type]||""}</span></li>`).join("")}</ul>`
     : `<p class="small">Nothing to answer on this homework.</p>`}</section>`;
 }
 function wireTeacher(){
@@ -1147,7 +1176,7 @@ function renderTeacherTask(id, wid){
   const r = (teacherData.reactions||{})[id] || {easy:[],ok:[],hard:[]};
   const order = {marked:0, question:1, text:2, recording:3};
   const items = (teacherData.work||[]).filter(x=>x.task===id).sort((a,b)=>order[a.type]-order[b.type]);
-  const icon = {marked:"🔖 Marked", question:"❓ Question", text:"✍️ Their text", recording:"🎙 Recording"};
+  const icon = {marked:"❔ Marked", question:"❓ Question", text:"✍️ Their text", recording:"🎙 Recording"};
   const taskCard = hasTaskCard(t);   /* Over to you: the task in front of her */
   const startOf = w => String(w.feedback||"").trim() ? w.feedback : (w.type==="text" ? textOf(w) : "");
   const rowsOf = s => Math.min(18, Math.max(3, String(s).split("\n").length + 1));
@@ -1292,7 +1321,7 @@ function openTask(id, idx=0){
 function teacherStrip(id){
   if(!isTeacher() || !teacherData) return "";
   const st = teacherData.students || [], dn = ((teacherData.done||{})[id] || []).length, c = teacherCounts(id);
-  const bits = [`${dn} of ${st.length} done`, c.questions?`❓ ${c.questions}`:"", c.marked?`🔖 ${c.marked}`:"", c.work?`✍️ ${c.work}`:"", c.hard?`😓 ${c.hard}`:"", c.open?`<b>💬 ${c.open} to answer</b>`:""].filter(Boolean).join(" · ");
+  const bits = [`${dn} of ${st.length} done`, c.questions?`❓ ${c.questions}`:"", c.marked?`❔ ${c.marked}`:"", c.work?`✍️ ${c.work}`:"", c.hard?`😓 ${c.hard}`:"", c.open?`<b>💬 ${c.open} to answer</b>`:""].filter(Boolean).join(" · ");
   return `<button class="t-strip ${c.open?"open":""}" id="t-strip" data-strip="${id}"><span>👩‍🏫 ${bits}</span><span class="t-strip-go">Students' work →</span></button><div class="t-mkbar" id="t-mkbar">${mkBarHTML(id)}</div>`;
 }
 function shell({count, pct, instr, stageHTML, withBox, actionsHTML, panel}){
@@ -1319,12 +1348,18 @@ function renderTask(){
   stopRecorder();
   if(t.kind==="gaps") return renderGaps(t);
   if(t.kind==="link") return renderLink(t);
-  if(stepIdx >= t.steps.length){ finish(t); return goHome(true); }
+  if(stepIdx >= t.steps.length){
+    if(t._once){ current = t._base; return goHome(true); }
+    finish(t);
+    const again = onceMoreTask(t);
+    if(again){ current = again; stepIdx = 0; checked = false; return renderTask(); }
+    return goHome(true);
+  }
   const st = t.steps[stepIdx];
-  const count = `${stepIdx+1} of ${t.steps.length}`;
+  const count = t._once ? `Once more: your bookmarks · ${stepIdx+1} of ${t.steps.length}` : `${stepIdx+1} of ${t.steps.length}`;
   const pct = Math.round((stepIdx)/t.steps.length*100);
   ({dlg:renderDlg, rewrite:renderRewrite, sayit:renderSayit, share:renderShare, lookback:renderLookback, listen:renderListen, task:renderTaskCard, plan:renderPlan, produce:renderProduce})[st.type](st, count, pct);
-  annotateMarks();
+  if(!t._once) annotateMarks();
   window.scrollTo(0,0);
 }
 function navButtons(checkLabel="Check"){
@@ -1361,25 +1396,91 @@ function gapLineHTML(line){
   }
   return `<p>${line.s?`<span class="spk">${esc(line.s)}:</span> `:""}${html}</p>`;
 }
+/* ---------- engine 30: "!" = my own revision list (her decision 27.10: "?" asks Olya, "!" is for me); nothing is sent ---------- */
+const BOOKMARK = `<svg viewBox="0 0 12 16" aria-hidden="true"><path d="M1.6 1.6h8.8v12.8L6 11.2l-4.4 3.2z"/></svg>`;
+/* a one-line hint until the first bookmark (as for "?") */
+const revHint = () => ls.get("hw-rev-used") ? "" : `<p class="rev-hint">Want to practise something again? Tap <span class="rev demo" aria-hidden="true">${BOOKMARK}</span> after it — only you will see it.</p>`;
+/* the step as it is in the task (in "Once more" the steps are a subset) */
+const curS = () => { const st = current && current.steps && current.steps[stepIdx]; return st && st._orig != null ? st._orig : stepIdx; };
+const bmBtn = (s, r) => { const on = getRev(current.id, s).has(r);
+  return `<button type="button" class="rev ${on?"on":""}" data-bm="${s}.${r}" aria-pressed="${on}" aria-label="Bookmark: practise this again" title="Bookmark: practise this again">${BOOKMARK}</button>`; };
+document.addEventListener("click", ev => {
+  const b = ev.target.closest && ev.target.closest("[data-bm]"); if(!b || !current) return;
+  ev.stopPropagation(); ev.preventDefault();
+  const [s, r] = b.dataset.bm.split(".").map(Number), revs = getRev(current.id, s);
+  revs.has(r) ? revs.delete(r) : revs.add(r);
+  ls.set(revKey(current.id, s), JSON.stringify([...revs].sort((x, y) => x - y))); if(revs.size) ls.set("hw-rev-used", "1");
+  b.classList.toggle("on", revs.has(r)); b.setAttribute("aria-pressed", revs.has(r));
+}, true);
+/* "Once more" for a steps task: the bookmarked steps again, each with only its bookmarked items to do */
+const REV_TYPES = new Set(["dlg", "rewrite", "sayit", "share", "listen", "lookback"]);
+function onceMoreTask(t){
+  const steps = (t.steps || []).map((st, s) => ({st, s, revs: REV_TYPES.has(st.type) ? getRev(t.id, s) : new Set()})).filter(x => x.revs.size)
+    .map(x => ({...x.st, _orig: x.s, _rows: x.revs}));
+  return steps.length ? {...t, steps, _once: true, _base: t} : null;
+}
+const revKey = (id, s) => "hw-rev-" + PAGE_KEY + "-" + id + (s == null ? "" : "-s" + s);
+function getRev(id, s){ try{ return new Set(JSON.parse(ls.get(revKey(id, s)) || "[]")); }catch(e){ return new Set(); } }
+function addRevButtons(chunks, id, s, only){
+  const revs = getRev(id, s);
+  chunks.forEach((c, k) => {
+    if(only && !only.has(k)) return;
+    const b = document.createElement("button"); b.type = "button"; b.className = "rev" + (revs.has(k) ? " on" : ""); b.innerHTML = BOOKMARK;
+    b.title = "Bookmark: practise this again"; b.setAttribute("aria-label", "Bookmark: practise this again"); b.setAttribute("aria-pressed", revs.has(k));
+    b.addEventListener("click", () => { revs.has(k) ? revs.delete(k) : revs.add(k); b.classList.toggle("on", revs.has(k)); b.setAttribute("aria-pressed", revs.has(k)); if(revs.size) ls.set("hw-rev-used", "1");
+      ls.set(revKey(id, s), JSON.stringify([...revs].sort((x, y) => x - y))); });
+    c.after(b);
+  });
+  return revs;
+}
+const wireChunk = c => {
+  const toggle = () => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); };
+  c.addEventListener("click", toggle);
+  c.addEventListener("keydown", e => { if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggle(); }});
+};
+/* after Finish: the same text again, only the marked gaps closed, everything else already open and plain */
+function renderOnceMore(t){
+  const parts = [{lines: t.lines, s: null, revs: getRev(t.id)}];   /* gaps tasks; steps tasks go through onceMoreTask() */
+  const n = parts.reduce((a, p) => a + p.revs.size, 0);
+  shell({
+    instr: `Once more: your bookmarks (${n})<br>Say the missing words, then tap to check.`,
+    stageHTML: parts.map(p => `<div class="panel once"><div class="dlg">${p.lines.map(gapLineHTML).join("")}</div></div>`).join(""),
+    actionsHTML: `<button class="btn" id="all">Show all</button><button class="btn primary grow" id="fin">Finish</button>`
+  });
+  const hidden = [];
+  app.querySelectorAll(".panel.once").forEach((panel, pi) => {
+    const p = parts[pi], chunks = [...panel.querySelectorAll(".chunk")];
+    chunks.forEach((c, k) => {
+      if(p.revs.has(k)){ hidden.push(c); wireChunk(c); }
+      else { c.classList.add("open", "plain"); ["role", "tabindex", "aria-label"].forEach(a => c.removeAttribute(a)); }
+    });
+    addRevButtons(chunks, t.id, p.s, new Set(p.revs));   /* a "!" can be taken off here once it's learned */
+  });
+  const all = document.getElementById("all");
+  all.addEventListener("click", () => {
+    const open = all.dataset.open !== "1";
+    hidden.forEach(c => c.classList.toggle("open", open));
+    all.dataset.open = open ? "1" : "0"; all.textContent = open ? "Hide all" : "Show all";
+  });
+  document.getElementById("fin").addEventListener("click", () => goHome(true));
+  window.scrollTo(0,0);
+}
 function renderGaps(t){
   shell({
     instr:`${esc(t.lead)}<br>${esc(t.instr)}`,
-    stageHTML:`<div class="panel"><div class="dlg">${t.lines.map(gapLineHTML).join("")}</div></div>`,
+    stageHTML:`<div class="panel"><div class="dlg">${t.lines.map(gapLineHTML).join("")}</div>${revHint()}</div>`,
     actionsHTML:`<button class="btn" id="all">Show all</button><button class="btn primary grow" id="fin">Finish</button>`
   });
   const chunks = [...app.querySelectorAll(".chunk")];
-  const toggle = c => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); };
-  chunks.forEach(c=>{
-    c.addEventListener("click",()=>toggle(c));
-    c.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggle(c); }});
-  });
+  chunks.forEach(wireChunk);
+  const revs = addRevButtons(chunks, t.id);
   const all = document.getElementById("all");
   all.addEventListener("click",()=>{
     const open = all.dataset.open !== "1";
     chunks.forEach(c=>c.classList.toggle("open",open));
     all.dataset.open = open ? "1" : "0"; all.textContent = open ? "Hide all" : "Show all";
   });
-  document.getElementById("fin").addEventListener("click",()=>{ finish(t); goHome(true); });
+  document.getElementById("fin").addEventListener("click",()=>{ finish(t); if(revs.size) renderOnceMore(t); else goHome(true); });
   window.scrollTo(0,0);
 }
 
@@ -1389,7 +1490,7 @@ function renderDlg(st, count, pct){
   const side = st.box ? box(st.box)
     : st.gloss ? `<aside class="box gloss" aria-label="Glossary"><h4>GLOSSARY</h4>${st.gloss.map(g=>g.h?`<h4>${esc(g.h)}</h4>`:glossLineHTML(g)).join("")}</aside>` : "";
   shell({count, pct, instr: st.instr,
-    stageHTML:`<div class="panel">${st.intro?`<p class="situation">${esc(st.intro)}</p>`:""}<div class="dlg">${st.lines.map(gapLineHTML).join("")}</div>${checked&&st.note?`<p class="small">${st.note}</p>`:""}</div>${side}`,
+    stageHTML:`<div class="panel">${st.intro?`<p class="situation">${esc(st.intro)}</p>`:""}<div class="dlg">${st.lines.map(gapLineHTML).join("")}</div>${checked&&st.note?`<p class="small">${st.note}</p>`:""}${checked?revHint():""}</div>${side}`,
     withBox: !!side, actionsHTML: navButtons(st.checkLabel || "Show the answers")});
   const chunks = [...app.querySelectorAll(".chunk")];
   const toggle = c => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); };
@@ -1398,6 +1499,9 @@ function renderDlg(st, count, pct){
     c.addEventListener("click",()=>toggle(c));
     c.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggle(c); }});
   });
+  const dlgChunks = [...app.querySelectorAll(".panel .dlg .chunk")];   /* the dialogue's gaps, not the glossary's */
+  if(st._rows) dlgChunks.forEach((c, k) => { if(!st._rows.has(k)){ c.classList.add("open", "plain"); ["role", "tabindex", "aria-label"].forEach(a => c.removeAttribute(a)); } });
+  addRevButtons(dlgChunks, current.id, curS(), st._rows ? new Set(st._rows) : null);
   wireNav(()=>renderTaskKeep());
 }
 
@@ -1472,7 +1576,7 @@ function verdictHTML(val, r){
 }
 
 function renderRewrite(st, count, pct){
-  const r = st.r, key = current.id+"-"+stepIdx, val = (typed[key]||"").trim();
+  const r = st.r, key = current.id+"-"+curS()+(current._once?"-again":""), val = (typed[key]||"").trim();
   const yours = checked ? verdictHTML(val, r) : "";
   const br = s => esc(s).replace(/\n/g,"<br>");
   const hint = r.hint ? ` <span class="ru">(${esc(r.hint)})</span>` : "";
@@ -1481,8 +1585,8 @@ function renderRewrite(st, count, pct){
       ${r.o?`<p class="orig">${esc(r.o)}</p>`:""}
       ${r.k?`<p class="key">${r.k}</p>`:""}
       <p class="target">${br(r.pre)}${checked?`<span class="ans">${esc(r.a)}</span>`:
-        `<input id="rw" class="gap-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="Type the missing part" placeholder="type or say it" value="${esc(typed[key]||"")}">`}${hint}${br(r.post)}${checked?markBtn(String(stepIdx), plainText(r.pre + r.a + r.post)):""}</p>
-      ${checked?markHint():""}
+        `<input id="rw" class="gap-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="Type the missing part" placeholder="type or say it" value="${esc(typed[key]||"")}">`}${hint}${br(r.post)}${checked?markBtn(String(stepIdx), plainText(r.pre + r.a + r.post))+bmBtn(curS(), 0):""}</p>
+      ${checked?markHint()+revHint():""}
       ${yours}
       ${checked?`<p class="note">${r.n}</p>`:""}
     </div>${checked&&st.box?box(st.box):""}`;
@@ -1507,10 +1611,10 @@ function renderSayit(st, count, pct){
     stageHTML: `
       <div class="panel">
         <div class="say">
-          ${s.rows.map((row,i)=>`<div class="say-row"><span class="q">${row[0]}</span>
-            <span class="say-a"><button class="reveal ${checked?"open":""}" data-r="${i}" aria-label="Show the English">${s.html ? row[1] : esc(row[1])}</button>${checked?markBtn(stepIdx+"-"+i, s.html ? plainText(row[1]) : row[1]):""}</span></div>`).join("")}
+          ${s.rows.map((row,i)=> st._rows && !st._rows.has(i) ? "" : `<div class="say-row"><span class="q">${row[0]}</span>
+            <span class="say-a"><button class="reveal ${checked?"open":""}" data-r="${i}" aria-label="Show the English">${s.html ? row[1] : esc(row[1])}</button>${checked?markBtn(stepIdx+"-"+i, s.html ? plainText(row[1]) : row[1]):""}${bmBtn(curS(), i)}</span></div>`).join("")}
         </div>
-        ${checked?markHint():""}
+        ${checked?markHint()+revHint():""}
         ${checked&&s.note?`<p class="small">${s.note}</p>`:""}
       </div>${(checked||st.boxAlways)&&bx?box(bx):""}`,
     withBox: (checked||st.boxAlways) && !!bx, actionsHTML: navButtons()});
@@ -1537,7 +1641,7 @@ function renderShare(st, count, pct){
         ${turn("a", s.a)}
         ${checked||!s.sit?"":`<p class="situation">${esc(s.sit)}</p>`}${checked||!s.use?"":`<p class="use">Use: <b>${s.use}</b></p>`}
         <div class="turn b"><div class="bubble">${bBubble}</div><img class="fig" src="${IMG_B}" alt=""></div>
-        ${checked?`<p class="mk-row mk-right">${markBtn(String(stepIdx), plainText(s.s+(q?" "+q:"")))}</p>${markHint()}`:""}
+        ${checked?`<p class="mk-row mk-right">${markBtn(String(stepIdx), plainText(s.s+(q?" "+q:"")))}${bmBtn(curS(), 0)}</p>${markHint()}${revHint()}`:""}
         ${checked?`<div class="turn a next-line"><img class="fig" src="${IMG_A}" alt=""><div class="bubble">${s.nextHtml || esc(s.next)}</div></div>
           ${(s.notes||[]).length?`<div class="notes">${s.notes.map(n=>`<div>${n}</div>`).join("")}</div>`:""}`:""}
       </div>${bx?box(bx):""}`,
@@ -1596,13 +1700,13 @@ function renderListen(st, count, pct){
     ? "Tap the top line to hear the whole clip. Then tap the line with the gap and try to catch the missing words. Type them if you like, then tap Check answers."
     : "Listen and catch the missing words. Then tap Check answers.";
   let gk = 0;
-  const keyOf = k => current.id+"-"+stepIdx+"-g"+k;
-  const lineHTML = (l,i) => `<div class="ln ${l[3].some(p=>typeof p!=="string")?"has-gap":""}" data-i="${i}">
+  const keyOf = k => current.id+"-"+curS()+(current._once?"-again":"")+"-g"+k;
+  const lineHTML = (l,i) => { const skip = st._rows && !st._rows.has(i); return `<div class="ln ${l[3].some(p=>typeof p!=="string")?"has-gap":""}" data-i="${i}">
       <button class="pl" aria-label="${i===0?"Play the whole clip":"Play this line"}">▶</button>
       <span class="ln-text">${l[3].map(p => typeof p === "string" ? esc(p)
-        : (k => `<input class="gap-in" data-k="${k}" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"
+        : (k => skip ? `<b>${esc(p.gap)}</b>` : `<input class="gap-in" data-k="${k}" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"
              aria-label="Type the missing words" style="width:min(100%, ${p.gap.length + 3}ch)" value="${esc(typed[keyOf(k)]||"")}">`)(gk++)).join("")}${i===0?` <span class="whole-note">· whole clip</span>`:""}</span>
-    </div>`;
+    </div>`; };
   const rest = `
         <div class="slow-row"><button class="slow" id="slow" aria-pressed="${!!ls.get("hw-slow")}">🐢 Slower</button><span class="small">${ls.get("hw-slow")?"playing at 0.75":"tap to slow the clips down"}</span></div>
         <div class="lines">${lines.map(lineHTML).join("")}</div>
@@ -1655,7 +1759,7 @@ function renderListen(st, count, pct){
   /* as in TubeQuizard (its offset = 1): start a second before the line and stop a second after it, so the first words are never cut off */
   const LEAD = 1;
   rows.forEach((row,i)=>row.addEventListener("click",ev=>{
-    if(ev.target.closest("input")) return;
+    if(ev.target.closest("input, .rev, .mk")) return;
     if(i===0) play(Math.max(0, lines[0][1] - LEAD), clipEnd(lines, lines.length-1) + LEAD, 0);   /* top line: the whole clip, as in TubeQuizard */
     else play(Math.max(0, lines[i][1] - LEAD), lines[i][1] + lines[i][2] + LEAD, i);
   }));
@@ -1695,6 +1799,8 @@ function renderListen(st, count, pct){
       });
       const hint = markHint(); if(hint) document.getElementById("after").insertAdjacentHTML("beforebegin", hint.replace("Not sure about something?","Hard to hear?"));
     }
+    app.querySelectorAll(".ln.has-gap").forEach(row => { row.insertAdjacentHTML("beforeend", bmBtn(curS(), +row.dataset.i)); row.classList.add("has-rev"); });
+    const rh = revHint(); if(rh) document.getElementById("after").insertAdjacentHTML("beforebegin", rh);
     document.getElementById("after").hidden = false;
     const last = stepIdx === current.steps.length-1;
     document.getElementById("go").textContent = last ? "Finish" : "Next";
@@ -1706,8 +1812,10 @@ function renderLookback(st, count, pct){
   shell({count, pct, instr:"Look back at your answers: how did the box phrases change? Then tap the yellow boxes to check.",
     stageHTML: `
       <div class="panel lb">
-        ${LOOKBACK.map(gp=>`<div class="lb-group"><div class="phrase">${esc(gp.p)}</div>
-          ${gp.qa.map(([q,a])=>`<div>${esc(q)}</div><button class="reveal ${checked?"open":""}" aria-label="Show the answer">${esc(a)}</button>`).join("")}</div>`).join("")}
+        ${(() => { let k = 0; return LOOKBACK.map(gp => { const items = gp.qa.map(([q,a]) => { const i = k++; return st._rows && !st._rows.has(i) ? "" :
+            `<div>${esc(q)}</div><div class="lb-item"><button class="reveal ${checked?"open":""}" aria-label="Show the answer">${esc(a)}</button>${bmBtn(curS(), i)}</div>`; }).join("");
+          return items ? `<div class="lb-group"><div class="phrase">${esc(gp.p)}</div>${items}</div>` : ""; }).join(""); })()}
+        ${checked?revHint():""}
       </div>`,
     actionsHTML: navButtons("Show all")});
   app.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>b.classList.toggle("open")));
@@ -1827,7 +1935,15 @@ function renderProduce(st, count, pct){
   const mode = modes.includes(ls.get("hw-mode")) ? ls.get("hw-mode") : modes[0];
   const instr = modes.includes("record") ? PRODUCE_INSTR : String(PRODUCE_INSTR||"").replace(/\s*\(Prefer to talk\? Tap Record it\.\)/, "");
   const picks = getList(picksKey()), used = new Set(getList(usedKey()));
-  const picked = picks.map(id=>{ const [gi,ii] = id.split("-").map(Number); const it = MAP[gi] && MAP[gi].items[ii]; return it ? {id, en:it[0]} : null; }).filter(Boolean);
+  const picked = picks.map(id=>{ const [gi,ii] = id.split("-").map(Number); const it = MAP[gi] && MAP[gi].items[ii]; return it ? {id, gi, ii, en:it[0]} : null; }).filter(Boolean);
+  /* engine 31 (her decision 27.10): the parts are the moves of the conversation, so the phrases are checked against the same moves;
+     on when MAP has 2+ parts, PICK_EACH = false in the homework data = the flat list (menu-style tasks) */
+  const byPart = MAP.length > 1 && (typeof PICK_EACH === "undefined" || PICK_EACH !== false);
+  const cbHTML = p => `<label><input type="checkbox" data-u="${p.id}" ${used.has(p.id)?"checked":""}><span>${p.en}</span></label>`;
+  const planAt = (current.steps || []).findIndex(s => s.type === "plan");
+  const partsHTML = () => MAP.map((g, gi) => { const ps = picked.filter(p => p.gi === gi).sort((a, b) => a.ii - b.ii);
+      return `<div class="ph-part ${ps.length ? "" : "empty"}"><h4 class="ph-h">${!ps.length && planAt >= 0 ? `<button class="ph-back" data-plan aria-label="${esc(String(g.h).replace(/<[^>]+>/g, ""))}: choose phrases">${g.h}</button>` : g.h}</h4>
+        ${ps.length ? ps.map(cbHTML).join("") : `<span class="small ph-zero">0 phrases</span>`}</div>`; }).join("");
   shell({count, pct, instr,
     stageHTML:`<div class="panel">
         ${taskPeek()}
@@ -1853,9 +1969,8 @@ function renderProduce(st, count, pct){
         </div>
         <fieldset class="check">
           <legend>Your phrases</legend>
-          ${picked.length ? `<span class="small">Did you use them? Tick the ones you did.</span>
-            ${picked.map(p=>`<label><input type="checkbox" data-u="${p.id}" ${used.has(p.id)?"checked":""}><span>${p.en}</span></label>`).join("")}`
-            : `<span class="small">You didn't pick any phrases. Tap Back to choose some — or just go ahead.</span>`}
+          ${picked.length ? `<span class="small">Did you use them? Tick the ones you did.</span>` : `<span class="small">You didn't pick any phrases. Tap Back to choose some — or just go ahead.</span>`}
+          ${byPart ? partsHTML() : picked.map(cbHTML).join("")}
         </fieldset>
         <label class="field"><span class="small">Your name</span><input id="who" type="text" autocomplete="given-name" placeholder="Your name" value="${esc(ls.get("hw-name"))}"></label>
         <div class="row-btns">
@@ -1874,6 +1989,7 @@ function renderProduce(st, count, pct){
     $("m-record").hidden = curMode!=="record"; $("m-write").hidden = curMode!=="write"; $("copy").hidden = curMode!=="write";
   }));
   who.addEventListener("input",()=>ls.set("hw-name", who.value.trim()));
+  app.querySelectorAll("[data-plan]").forEach(b=>b.addEventListener("click",()=>{ if(planAt >= 0){ stepIdx = planAt; checked = false; renderTask(); } }));
   app.querySelectorAll(".check input").forEach(cb=>cb.addEventListener("change",()=>{
     ls.set(usedKey(), JSON.stringify([...app.querySelectorAll(".check input")].filter(x=>x.checked).map(x=>x.dataset.u)));
   }));

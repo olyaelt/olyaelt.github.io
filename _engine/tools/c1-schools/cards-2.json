@@ -4,40 +4,49 @@
  "part": "Part 2",
  "cards": [
   [
-   "Companies don't take on beginners anymore.",
-   "They've stopped hiring juniors."
+   "Companies don't take on people straight out of university anymore.",
+   "They've stopped hiring juniors.",
+   "HIRING"
   ],
   [
    "Companies are giving that work to AI now.",
-   "They're handing that work over to AI."
+   "They're handing that work over to AI.",
+   "HANDING"
   ],
   [
-   "What you learn at university might be useless by the time you finish.",
-   "It could be out of date by the time you graduate."
+   "What you learn at university might not be current any more by the time you finish.",
+   "It could be out of date by the time you graduate.",
+   "DATE"
   ],
   [
    "What matters is that you can change when things change.",
-   "What matters is being able to adapt."
+   "What matters is being able to adapt.",
+   "ADAPT"
   ],
   [
    "((Before the meeting,)) I spent the weekend going through articles about the new system.",
-   "I read up on the new system."
+   "I read up on the new system.",
+   "READ"
   ],
   [
    "Prepare before you talk to the client((, so you don't look clueless.))",
-   "Do your homework before you talk to the client."
+   "Do your homework before you talk to the client.",
+   "HOMEWORK"
   ],
   [
    "((In my first job,)) there was so much new stuff, and I had to get up to speed very fast.",
-   "It was a really steep learning curve."
+   "It was a really steep learning curve.",
+   "CURVE"
   ],
   [
-   "((Nobody taught me.)) I learned it at work, through my own mistakes.",
-   "I picked it up on the job, the hard way."
+   "I learned it at work, by making my own mistakes.",
+   "I picked it up on the job, the hard way.",
+   "JOB"
   ],
   [
    "Nobody showed me — I learned it all from books and videos.",
-   "I taught myself."
+   "I taught myself.",
+   "TAUGHT"
   ]
  ],
  "box": [
@@ -79,9 +88,10 @@
  },
  "speaking": [
   "Each of you: two things you **taught yourself** and one you **picked up on the job**. Which took the longest?",
-  "Think of a time something was **a steep learning curve** for you. What helped most — a course, **reading up on it**, or someone showing you? Each of you: rank the three and say why.",
+  "Think of a time something was **a steep learning curve** for you. Each of you: say what actually helped. Then rank a course, **reading up on it** and someone showing you — and agree which works best.",
   "\"**They're handing it over to AI.**\" Each of you: two tasks — at work or at home — that AI could do, and one it never should. Agree on the riskiest one to hand over.",
-  "Agree on two subjects that could be **out of date** by the time today's ten-year-olds graduate, and one that never will be.",
+  "Agree on two things taught at school today that could be **out of date** by the time today's ten-year-olds graduate, and one skill that will still be useful — a reason for each.",
   "Which card was the hardest? Each of you: two new sentences with it about your own work or life."
- ]
+ ],
+ "hint": "Think together. Take turns to say it another way, with the word in red — the others agree or not. Then tap the card to check."
 }
