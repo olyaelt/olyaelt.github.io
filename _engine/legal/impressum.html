@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F6F1DC">
+<meta name="robots" content="noindex">
+<title>Impressum</title>
+<link rel="stylesheet" href="fonts/homework-sans.css">
+<style>
+:root{--ground:#F6F1DC;--card:#FFFFFF;--ink:#1D1D1B;--muted:#6B6B6B;--line:#E2DCC4;--link:#1578C0;
+  --font-body:"Homework Sans","Calibri","Carlito","Segoe UI",system-ui,sans-serif}
+@media (prefers-color-scheme: dark){:root{--ground:#121416;--card:#1C1F23;--ink:#ECECEA;--muted:#A4A7AB;--line:#33373D;--link:#8FB0FF}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font-body);font-size:1.05rem;line-height:1.55}
+.wrap{max-width:720px;margin:0 auto;padding:24px 16px 8px}
+.card{background:var(--card);border-radius:14px;padding:18px 18px 8px;margin:14px 0}
+h1{font-size:1.7rem;margin:0 0 4px}
+h2{font-size:1.05rem;margin:16px 0 4px}
+p{margin:0 0 12px}
+a{color:var(--link)}
+.small{font-size:.9rem;color:var(--muted)}
+.legal{max-width:720px;margin:0 auto;padding:18px 16px 28px;color:var(--muted);font-size:.85rem;text-align:center}
+.legal a{color:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="small"><a href="./" onclick="if(history.length>1){history.back();return false}">← Back</a></p>
+  <h1>Impressum</h1>
+  <p class="small">Legal notice, as required by German law.</p>
+  <div class="card">
+    <h2>Angaben gemäß § 5 DDG</h2>
+<!-- ===== Fill in: replace the words in CAPITALS (name, street, postcode and city, e-mail). ===== -->
+    <p>VORNAME NACHNAME<br>
+    Englischkurse online<br>
+    STRASSE HAUSNUMMER<br>
+    PLZ ORT<br>
+    Deutschland</p>
+    <h2>Kontakt</h2>
+    <p>E-Mail: <a href="mailto:E-MAIL-ADRESSE">E-MAIL-ADRESSE</a></p>
+<!-- ===== Wirtschafts-Identifikationsnummer: if the Federal Central Tax Office (BZSt) has sent you one, put it here; if not, delete the next two lines. ===== -->
+    <h2>Wirtschafts-Identifikationsnummer</h2>
+    <p>W-IDNR</p>
+<!-- ===== End of the part to fill in. ===== -->
+  </div>
+  <p class="small">Stand: Oktober 2026</p>
+</div>
+<footer class="legal"><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></footer>
+</body>
+</html>

@@ -1,0 +1,113 @@
+{
+ "anna": [
+  {
+   "s": "A",
+   "p": [
+    "Anna! I (1) ",
+    {
+     "f": "",
+     "r": "haven't seen"
+    },
+    " (not / see) you for ages! How (2) ",
+    {
+     "f": "",
+     "r": "have you been"
+    },
+    " (you / be)?"
+   ]
+  },
+  {
+   "s": "B",
+   "p": [
+    "Good, thanks — just a bit tired. I (3) ",
+    {
+     "f": "",
+     "r": "have been painting"
+    },
+    " (paint) my flat since Saturday!"
+   ]
+  },
+  {
+   "s": "A",
+   "p": [
+    "Oh, you (4) ",
+    {
+     "f": "",
+     "r": "moved"
+    },
+    " (move) in the spring, (5) ",
+    {
+     "f": "",
+     "r": "didn't you"
+    },
+    " (tag)?"
+   ]
+  },
+  {
+   "s": "B",
+   "p": [
+    "That's right, in April. And I still (6) ",
+    {
+     "f": "",
+     "r": "haven't finished"
+    },
+    " (not / finish) unpacking!"
+   ]
+  },
+  {
+   "s": "A",
+   "p": [
+    "Ha! Moving is exhausting, (7) ",
+    {
+     "f": "",
+     "r": "isn't it"
+    },
+    " (tag)?"
+   ]
+  },
+  {
+   "s": "B",
+   "p": [
+    "Totally. What about you? (8) ",
+    {
+     "f": "",
+     "r": "Have you been"
+    },
+    " (you / be) anywhere nice this year?"
+   ]
+  },
+  {
+   "s": "A",
+   "p": [
+    "Yes, we (9) ",
+    {
+     "f": "",
+     "r": "went"
+    },
+    " (go) to Portugal in August. It (10) ",
+    {
+     "f": "",
+     "r": "was"
+    },
+    " (be) amazing!"
+   ]
+  },
+  {
+   "s": "B",
+   "p": [
+    "Lucky you! There are some great beaches there, (11) ",
+    {
+     "f": "",
+     "r": "aren't there"
+    },
+    " (tag)?"
+   ]
+  },
+  {
+   "s": "A",
+   "p": [
+    "There really are!"
+   ]
+  }
+ ]
+}

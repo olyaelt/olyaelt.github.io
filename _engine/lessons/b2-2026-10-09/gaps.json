@@ -1,0 +1,1070 @@
+{
+ "lin1": {
+  "intro": "LINDEN STREET NEIGHBOURS  (group chat)",
+  "lines": [
+   {
+    "s": "Anna",
+    "p": [
+     "Heads up, everyone — two cars ",
+     {
+      "f": "g",
+      "r": "ot"
+     },
+     " ",
+     {
+      "f": "b",
+      "r": "roken"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " on our street last night."
+    ]
+   },
+   {
+    "s": "Tom",
+    "p": [
+     "Oh no! Whose cars?"
+    ]
+   },
+   {
+    "s": "Anna",
+    "p": [
+     "Mine and the ",
+     {
+      "f": "v",
+      "r": "an"
+     },
+     " outside number 12. They took my laptop and a bag. The police say there have been a lot of ",
+     {
+      "f": "b",
+      "r": "urglaries"
+     },
+     " in the ",
+     {
+      "f": "a",
+      "r": "rea"
+     },
+     " recently."
+    ]
+   },
+   {
+    "s": "Tom",
+    "p": [
+     {
+      "f": "S",
+      "r": "orry"
+     },
+     " to ",
+     {
+      "f": "h",
+      "r": "ear"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "hat"
+     },
+     ", Anna!"
+    ]
+   },
+   {
+    "s": "Ben",
+    "p": [
+     {
+      "f": "S",
+      "r": "ame"
+     },
+     " ",
+     {
+      "f": "h",
+      "r": "ere"
+     },
+     ", actually. Someone ",
+     {
+      "f": "b",
+      "r": "roke"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " the flat above ours last month and ",
+     {
+      "f": "s",
+      "r": "tole"
+     },
+     " some ",
+     {
+      "f": "j",
+      "r": "ewellery"
+     },
+     "."
+    ]
+   },
+   {
+    "s": "Lucy",
+    "p": [
+     "Seriously?! Has anyone else ",
+     {
+      "f": "h",
+      "r": "ad"
+     },
+     " their bike ",
+     {
+      "f": "s",
+      "r": "tolen"
+     },
+     " from the ",
+     {
+      "f": "c",
+      "r": "ourtyard"
+     },
+     "? Mine disappeared on Saturday."
+    ]
+   },
+   {
+    "s": "Tom",
+    "p": [
+     "Not mine, ",
+     {
+      "f": "l",
+      "r": "uckily"
+     },
+     ". But did you hear about the ",
+     {
+      "f": "p",
+      "r": "etrol"
+     },
+     " ",
+     {
+      "f": "s",
+      "r": "tation"
+     },
+     "? It ",
+     {
+      "f": "w",
+      "r": "as"
+     },
+     " ",
+     {
+      "f": "r",
+      "r": "obbed"
+     },
+     " on Sunday night — the guy had a knife!"
+    ]
+   },
+   {
+    "s": "Anna",
+    "p": [
+     "That's scary!"
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     "two cars ",
+     {
+      "f": "g",
+      "r": "ot"
+     },
+     " ",
+     {
+      "f": "b",
+      "r": "roken"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ɡɒt ˈbrəʊkən ˈɪntə/",
+      "o": 1
+     }
+    ],
+    "m": "",
+    "ru": "вскрыли две машины"
+   },
+   {
+    "p": [
+     "a ",
+     {
+      "f": "v",
+      "r": "an"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/væn/",
+      "o": 1
+     }
+    ],
+    "m": "",
+    "ru": "фургон"
+   },
+   {
+    "p": [
+     {
+      "f": "b",
+      "r": "urglaries"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˈbɜːɡləriz/",
+      "o": 1
+     }
+    ],
+    "m": "cases of breaking into homes to steal things",
+    "ru": ""
+   },
+   {
+    "p": [
+     "the ",
+     {
+      "f": "a",
+      "r": "rea"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˈeəriə/",
+      "o": 1
+     }
+    ],
+    "m": "",
+    "ru": "район"
+   },
+   {
+    "p": [
+     {
+      "f": "S",
+      "r": "ame"
+     },
+     " ",
+     {
+      "f": "h",
+      "r": "ere"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˌseɪm ˈhɪə/",
+      "o": 1
+     }
+    ],
+    "m": "",
+    "ru": "у меня тоже"
+   },
+   {
+    "p": [
+     "someone ",
+     {
+      "f": "b",
+      "r": "roke"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˌbrəʊk ˈɪntə/",
+      "o": 1
+     },
+     " the flat"
+    ],
+    "m": "got into it by force to steal things",
+    "ru": ""
+   },
+   {
+    "p": [
+     {
+      "f": "j",
+      "r": "ewellery"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˈdʒuːəlri/",
+      "o": 1
+     }
+    ],
+    "m": "",
+    "ru": "украшения"
+   },
+   {
+    "p": [
+     "a ",
+     {
+      "f": "c",
+      "r": "ourtyard"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˈkɔːtjɑːd/",
+      "o": 1
+     }
+    ],
+    "m": "",
+    "ru": "двор"
+   },
+   {
+    "p": [
+     {
+      "f": "l",
+      "r": "uckily"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˈlʌkɪli/",
+      "o": 1
+     }
+    ],
+    "m": "",
+    "ru": "к счастью"
+   },
+   {
+    "p": [
+     "a ",
+     {
+      "f": "p",
+      "r": "etrol"
+     },
+     " ",
+     {
+      "f": "s",
+      "r": "tation"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˈpetrəl ˌsteɪʃn/",
+      "o": 1
+     }
+    ],
+    "m": "",
+    "ru": "заправка (AmE: gas station)"
+   }
+  ]
+ },
+ "lin2": {
+  "lines": [
+   {
+    "s": "Ben",
+    "p": [
+     "And a teenager ",
+     {
+      "f": "w",
+      "r": "as"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "aught"
+     },
+     " ",
+     {
+      "f": "s",
+      "r": "hoplifting"
+     },
+     " at the supermarket yesterday."
+    ]
+   },
+   {
+    "s": "Anna",
+    "p": [
+     "What's going on with this street?!"
+    ]
+   },
+   {
+    "s": "Lucy",
+    "p": [
+     "Be careful on the tram, too. My neighbour ",
+     {
+      "f": "g",
+      "r": "ot"
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "ickpocketed"
+     },
+     " there last week."
+    ]
+   },
+   {
+    "s": "Tom",
+    "p": [
+     {
+      "f": "T",
+      "r": "hanks"
+     },
+     " for the ",
+     {
+      "f": "h",
+      "r": "eads-up"
+     },
+     ". My phone lives in my front pocket now."
+    ]
+   },
+   {
+    "s": "Anna",
+    "p": [
+     "And ",
+     {
+      "f": "w",
+      "r": "atch"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "ut"
+     },
+     " — there's a new ",
+     {
+      "f": "s",
+      "r": "cam"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "oing"
+     },
+     " ",
+     {
+      "f": "r",
+      "r": "ound"
+     },
+     ". Someone ",
+     {
+      "f": "p",
+      "r": "retends"
+     },
+     " to ",
+     {
+      "f": "b",
+      "r": "e"
+     },
+     " from the gas company and asks to come in and check the ",
+     {
+      "f": "m",
+      "r": "eter"
+     },
+     "."
+    ]
+   },
+   {
+    "s": "Ben",
+    "p": [
+     {
+      "f": "G",
+      "r": "ood"
+     },
+     " to ",
+     {
+      "f": "k",
+      "r": "now"
+     },
+     ". I'm not opening the door to anyone!"
+    ]
+   },
+   {
+    "s": "Lucy",
+    "p": [
+     {
+      "f": "U",
+      "r": "PDATE"
+     },
+     ": found my bike. My son borrowed it and didn't tell me."
+    ]
+   },
+   {
+    "s": "Tom",
+    "p": [
+     "Haha! ",
+     {
+      "f": "C",
+      "r": "ase"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "losed"
+     },
+     "!"
+    ]
+   },
+   {
+    "s": "Anna",
+    "p": [
+     "So… are we ",
+     {
+      "f": "r",
+      "r": "eporting"
+     },
+     " him to the police? 😄"
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     {
+      "f": "w",
+      "r": "as"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "aught"
+     },
+     " ",
+     {
+      "f": "s",
+      "r": "hoplifting"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/kɔːt ˈʃɒplɪftɪŋ/",
+      "o": 1
+     }
+    ],
+    "m": "was seen stealing in a shop",
+    "ru": ""
+   },
+   {
+    "p": [
+     {
+      "f": "g",
+      "r": "ot"
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "ickpocketed"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˈpɪkpɒkɪtɪd/",
+      "o": 1
+     }
+    ],
+    "m": "had sth stolen from a pocket or bag",
+    "ru": ""
+   },
+   {
+    "p": [
+     {
+      "f": "w",
+      "r": "atch"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "ut"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˌwɒtʃ ˈaʊt/",
+      "o": 1
+     }
+    ],
+    "m": "",
+    "ru": "будьте осторожны"
+   },
+   {
+    "p": [
+     {
+      "b": "a"
+     },
+     " ",
+     {
+      "f": "s",
+      "r": "cam"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/skæm/",
+      "o": 1
+     }
+    ],
+    "m": "a trick to cheat people out of money",
+    "ru": ""
+   },
+   {
+    "p": [
+     {
+      "f": "g",
+      "r": "oing"
+     },
+     " ",
+     {
+      "f": "r",
+      "r": "ound"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˌɡəʊɪŋ ˈraʊnd/",
+      "o": 1
+     }
+    ],
+    "m": "",
+    "ru": "распространяется"
+   },
+   {
+    "p": [
+     {
+      "f": "p",
+      "r": "retend"
+     },
+     " ",
+     {
+      "b": "to"
+     },
+     " ",
+     {
+      "f": "b",
+      "r": "e"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/prɪˈtend tə bi/",
+      "o": 1
+     }
+    ],
+    "m": "",
+    "ru": "выдавать себя за"
+   },
+   {
+    "p": [
+     "a ",
+     {
+      "f": "m",
+      "r": "eter"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˈmiːtə/",
+      "o": 1
+     }
+    ],
+    "m": "",
+    "ru": "счётчик"
+   },
+   {
+    "p": [
+     {
+      "f": "G",
+      "r": "ood"
+     },
+     " ",
+     {
+      "b": "to"
+     },
+     " ",
+     {
+      "f": "k",
+      "r": "now"
+     },
+     ". ",
+     {
+      "f": "",
+      "r": "/ˌɡʊd tə ˈnəʊ/",
+      "o": 1
+     }
+    ],
+    "m": "",
+    "ru": "буду знать!"
+   },
+   {
+    "p": [
+     {
+      "f": "U",
+      "r": "PDATE"
+     },
+     ": ",
+     {
+      "f": "",
+      "r": "/ˈʌpdeɪt/",
+      "o": 1
+     }
+    ],
+    "m": "",
+    "ru": "новости по теме"
+   },
+   {
+    "p": [
+     {
+      "f": "C",
+      "r": "ase"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "losed"
+     },
+     "! ",
+     {
+      "f": "",
+      "r": "/ˌkeɪs ˈkləʊzd/",
+      "o": 1
+     }
+    ],
+    "m": "",
+    "ru": "дело закрыто!"
+   },
+   {
+    "p": [
+     {
+      "f": "r",
+      "r": "eport"
+     },
+     " ",
+     {
+      "b": "sb"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/rɪˈpɔːt/",
+      "o": 1
+     }
+    ],
+    "m": "",
+    "ru": "заявить на кого-то"
+   }
+  ]
+ },
+ "parents": [
+  {
+   "intro": "CLASS 3B PARENTS  (group chat)",
+   "lines": [
+    {
+     "s": "Sarah",
+     "p": [
+      "Heads up, everyone — two cars (1) ",
+      {
+       "f": "",
+       "r": "got broken into"
+      },
+      " (break) outside the school yesterday afternoon. One of them was mine 😩"
+     ]
+    },
+    {
+     "s": "Dan",
+     "p": [
+      "(2) ",
+      {
+       "f": "",
+       "r": "Same here"
+      },
+      " (у нас тоже), actually. Not our car, though — someone (3) ",
+      {
+       "f": "",
+       "r": "broke into"
+      },
+      " (break) our garage last week and (4) ",
+      {
+       "f": "",
+       "r": "stole"
+      },
+      " (steal) all my tools."
+     ]
+    },
+    {
+     "s": "Mark",
+     "p": [
+      "Oh no! (5) ",
+      {
+       "f": "",
+       "r": "Sorry to hear that"
+      },
+      " (жаль это слышать), both of you. Did they take anything, Sarah?"
+     ]
+    },
+    {
+     "s": "Sarah",
+     "p": [
+      "My sunglasses and… the kids' snacks 🙄"
+     ]
+    },
+    {
+     "s": "Priya",
+     "p": [
+      "They stole the snacks?! 😂 Sorry, I know it's not funny."
+     ]
+    },
+    {
+     "s": "Sarah",
+     "p": [
+      "It's a little bit funny 😅 The broken window isn't, though."
+     ]
+    },
+    {
+     "s": "Emma",
+     "p": [
+      "Seriously?! What's going on around here? Did you call the police, Dan?"
+     ]
+    },
+    {
+     "s": "Dan",
+     "p": [
+      "Yes — they said there have been a lot of (6) ",
+      {
+       "f": "",
+       "r": "burglaries in the area"
+      },
+      " (burglary / район) recently."
+     ]
+    }
+   ],
+   "note": "also possible: (1) were broken into · (2) Us too! · (5) So sorry to hear that · (6) around here"
+  },
+  {
+   "intro": "CLASS 3B PARENTS  (group chat, continued)",
+   "lines": [
+    {
+     "s": "Emma",
+     "p": [
+      "Has anyone else (7) ",
+      {
+       "f": "",
+       "r": "had a parcel stolen"
+      },
+      " (have / parcel / steal)? Mine disappeared from outside my door on Monday."
+     ]
+    },
+    {
+     "s": "Priya",
+     "p": [
+      "Yes! Twice! Now I get everything delivered to the corner shop."
+     ]
+    },
+    {
+     "s": "Mark",
+     "p": [
+      "Er… did you hear about the corner shop? It (8) ",
+      {
+       "f": "",
+       "r": "was robbed"
+      },
+      " (rob) on Friday night 😬"
+     ]
+    },
+    {
+     "s": "Priya",
+     "p": [
+      "You're joking!"
+     ]
+    },
+    {
+     "s": "Dan",
+     "p": [
+      "No, it's true. Apparently it was (9) ",
+      {
+       "f": "",
+       "r": "an armed robbery"
+      },
+      " (armed) — the guy had a knife."
+     ]
+    },
+    {
+     "s": "Emma",
+     "p": [
+      "That's so scary! Is everyone OK?"
+     ]
+    },
+    {
+     "s": "Mark",
+     "p": [
+      "Yes, (10) ",
+      {
+       "f": "",
+       "r": "luckily"
+      },
+      " (luck) nobody was hurt."
+     ]
+    },
+    {
+     "s": "Priya",
+     "p": [
+      "OK, maybe the corner shop isn't so safe for my parcels after all 🙈"
+     ]
+    }
+   ],
+   "note": "also possible: (7) had their parcel stolen · (8) got robbed"
+  },
+  {
+   "intro": "CLASS 3B PARENTS  (group chat, continued)",
+   "lines": [
+    {
+     "s": "Dan",
+     "p": [
+      "And a teenager (11) ",
+      {
+       "f": "",
+       "r": "was caught shoplifting"
+      },
+      " (catch / shoplift) at the supermarket on Saturday."
+     ]
+    },
+    {
+     "s": "Emma",
+     "p": [
+      "Nobody we know, I hope! 😅"
+     ]
+    },
+    {
+     "s": "Dan",
+     "p": [
+      "No idea! But the manager called the police."
+     ]
+    },
+    {
+     "s": "Priya",
+     "p": [
+      "Be careful on the bus, too — my mum (12) ",
+      {
+       "f": "",
+       "r": "got pickpocketed"
+      },
+      " (pickpocket) on the number 8 last week."
+     ]
+    },
+    {
+     "s": "Sarah",
+     "p": [
+      "Oh no, poor her! Is she OK?"
+     ]
+    },
+    {
+     "s": "Priya",
+     "p": [
+      "She's fine, just really annoyed. They took her wallet and her bus pass 🙄"
+     ]
+    },
+    {
+     "s": "Emma",
+     "p": [
+      "(13) ",
+      {
+       "f": "",
+       "r": "Good to know"
+      },
+      " (полезно знать) — I take the number 8 every day! My bag's staying zipped from now on."
+     ]
+    }
+   ],
+   "note": "also possible: (11) got caught shoplifting · (12) was pickpocketed · (13) That's good to know"
+  },
+  {
+   "intro": "CLASS 3B PARENTS  (group chat, continued)",
+   "lines": [
+    {
+     "s": "Mark",
+     "p": [
+      "And (14) ",
+      {
+       "f": "",
+       "r": "watch out"
+      },
+      " (watch) — there's a new (15) ",
+      {
+       "f": "",
+       "r": "scam going round"
+      },
+      " (scam / go). Someone's sending messages (16) ",
+      {
+       "f": "",
+       "r": "pretending to be"
+      },
+      " (pretend) from the school office and asking parents to pay for a school trip."
+     ]
+    },
+    {
+     "s": "Sarah",
+     "p": [
+      "(17) ",
+      {
+       "f": "",
+       "r": "Thanks for the heads-up"
+      },
+      " (thanks / heads)! I almost paid yesterday 😅"
+     ]
+    },
+    {
+     "s": "Dan",
+     "p": [
+      "Sarah, the trip is to the park. It's free 😂"
+     ]
+    },
+    {
+     "s": "Sarah",
+     "p": [
+      "In my defence, the message said \"URGENT\" 🙈"
+     ]
+    },
+    {
+     "s": "Priya",
+     "p": [
+      "Last thing, I promise: there's been a man in a black hoodie hanging around the school car park every afternoon this week. Should we (18) ",
+      {
+       "f": "",
+       "r": "report him to the police"
+      },
+      " (report / police)?"
+     ]
+    },
+    {
+     "s": "Mark",
+     "p": [
+      "…That's me. Waiting for my son. Every. Single. Day. 😑"
+     ]
+    },
+    {
+     "s": "Emma",
+     "p": [
+      "(19) ",
+      {
+       "f": "",
+       "r": "Case closed"
+      },
+      " (дело закрыто)! 😂"
+     ]
+    },
+    {
+     "s": "Priya",
+     "p": [
+      "Sorry, Mark!! 🙈"
+     ]
+    },
+    {
+     "s": "Mark",
+     "p": [
+      "No worries. I'll wear a pink hoodie tomorrow 😂"
+     ]
+    }
+   ],
+   "note": "also possible: (15) going around"
+  }
+ ]
+}

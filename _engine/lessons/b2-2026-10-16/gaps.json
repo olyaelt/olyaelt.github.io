@@ -1,0 +1,595 @@
+{
+ "paul": [
+  {
+   "s": "Paul",
+   "p": [
+    "Did you see that reality crime show on TV last night?"
+   ]
+  },
+  {
+   "s": "Zoe",
+   "p": [
+    "The one about the young woman and the old man's credit card?"
+   ]
+  },
+  {
+   "s": "Paul",
+   "p": [
+    "Yeah. It made me really angry. It was like a lesson on how to commit a crime."
+   ]
+  },
+  {
+   "s": "Zoe",
+   "p": [
+    {
+     "f": "D",
+     "r": "o"
+    },
+    " ",
+    {
+     "f": "y",
+     "r": "ou"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "hink"
+    },
+    " ",
+    {
+     "f": "s",
+     "r": "o"
+    },
+    "? But it showed you'll get arrested in the end."
+   ]
+  },
+  {
+   "s": "",
+   "p": [
+    "…"
+   ]
+  },
+  {
+   "s": "Paul",
+   "p": [
+    {
+     "f": "B",
+     "r": "ut"
+    },
+    " ",
+    {
+     "b": "I"
+    },
+    " ",
+    {
+     "f": "s",
+     "r": "till"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "hink"
+    },
+    " the programme was saying it's OK to do this."
+   ]
+  },
+  {
+   "s": "Zoe",
+   "p": [
+    {
+     "f": "T",
+     "r": "hat's"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "rue"
+    },
+    ", ",
+    {
+     "f": "a",
+     "r": "nd"
+    },
+    " they hardly spoke to the old man."
+   ]
+  },
+  {
+   "s": "Paul",
+   "p": [
+    {
+     "f": "E",
+     "r": "xactly"
+    },
+    ", ",
+    {
+     "f": "a",
+     "r": "nd"
+    },
+    " he really didn't want to be on TV."
+   ]
+  },
+  {
+   "s": "",
+   "p": [
+    "…"
+   ]
+  },
+  {
+   "s": "Zoe",
+   "p": [
+    {
+     "f": "B",
+     "r": "ut"
+    },
+    " ",
+    {
+     "b": "I"
+    },
+    " ",
+    {
+     "f": "g",
+     "r": "uess"
+    },
+    " ",
+    {
+     "f": "y",
+     "r": "ou"
+    },
+    " ",
+    {
+     "f": "c",
+     "r": "ould"
+    },
+    " ",
+    {
+     "f": "s",
+     "r": "ay"
+    },
+    " the programme was a warning to people."
+   ]
+  },
+  {
+   "s": "Paul",
+   "p": [
+    {
+     "f": "H",
+     "r": "ardly"
+    },
+    "."
+   ]
+  },
+  {
+   "s": "Zoe",
+   "p": [
+    "But the presenter did say that at the very end."
+   ]
+  },
+  {
+   "s": "Paul",
+   "p": [
+    {
+     "f": "Y",
+     "r": "eah"
+    },
+    {
+     "b": ", I"
+    },
+    " ",
+    {
+     "f": "s",
+     "r": "uppose"
+    },
+    " ",
+    {
+     "f": "s",
+     "r": "o"
+    },
+    ". ",
+    {
+     "f": "B",
+     "r": "ut"
+    },
+    " the saddest thing — the old man still thought she was a 'nice girl'."
+   ]
+  },
+  {
+   "s": "Zoe",
+   "p": [
+    "Obviously not everyone knows that! If I were you, I wouldn't watch that show any more."
+   ]
+  }
+ ],
+ "k1": {
+  "intro": "Monday morning. Rob and Hannah are colleagues. They're making coffee in the office kitchen.",
+  "lines": [
+   {
+    "s": "Rob",
+    "p": [
+     "Morning! Good weekend?"
+    ]
+   },
+   {
+    "s": "Hannah",
+    "p": [
+     "Not bad, thanks. Well, apart from Saturday. Did I tell you what happened to my mum?"
+    ]
+   },
+   {
+    "s": "Rob",
+    "p": [
+     {
+      "f": "",
+      "r": "No, what happened?"
+     }
+    ]
+   },
+   {
+    "s": "Hannah",
+    "p": [
+     "Someone called her and said they were from her bank. They wanted her card details."
+    ]
+   },
+   {
+    "s": "Rob",
+    "p": [
+     {
+      "f": "",
+      "r": "Oh no, that's awful!"
+     },
+     " Did she give them anything?"
+    ]
+   },
+   {
+    "s": "Hannah",
+    "p": [
+     "Luckily, no. She got suspicious and ",
+     {
+      "b": "hung up"
+     },
+     ". Her real bank said it's ",
+     {
+      "b": "a scam that's going around"
+     },
+     "."
+    ]
+   },
+   {
+    "s": "Rob",
+    "p": [
+     {
+      "f": "",
+      "r": "Phew, that's a relief!"
+     },
+     " I should warn my dad. ",
+     {
+      "f": "",
+      "r": "Thanks for the heads-up."
+     }
+    ]
+   },
+   {
+    "s": "Hannah",
+    "p": [
+     "No problem. It reminded me of that new documentary, actually — The Charming Neighbour. Have you seen it?"
+    ]
+   },
+   {
+    "s": "Rob",
+    "p": [
+     {
+      "f": "",
+      "r": "The one about"
+     },
+     " the man who stole money from everyone on his street?"
+    ]
+   },
+   {
+    "s": "Hannah",
+    "p": [
+     "That's the one! I ",
+     {
+      "f": "",
+      "r": "binge-watched"
+     },
+     " the whole thing on Sunday."
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     {
+      "b": "binge-watch"
+     },
+     " /ˈbɪndʒ wɒtʃ/"
+    ],
+    "m": "",
+    "ru": "смотреть запоем"
+   },
+   {
+    "p": [
+     {
+      "b": "Thanks for the heads-up."
+     }
+    ],
+    "m": "",
+    "ru": "Спасибо, что предупредил(а)."
+   },
+   {
+    "p": [
+     {
+      "b": "No, what happened?"
+     }
+    ],
+    "m": "",
+    "ru": "Нет, а что случилось?"
+   },
+   {
+    "p": [
+     {
+      "b": "The one about…?"
+     }
+    ],
+    "m": "",
+    "ru": "Это тот, где…? / Это про…?"
+   },
+   {
+    "p": [
+     {
+      "b": "Phew, that's a relief!"
+     },
+     " /rɪˈliːf/"
+    ],
+    "m": "",
+    "ru": "Фух, ну слава богу!"
+   },
+   {
+    "p": [
+     {
+      "b": "Oh no, that's awful!"
+     },
+     " /ˈɔːfl/"
+    ],
+    "m": "",
+    "ru": "Ой, какой ужас!"
+   },
+   {
+    "h": "Also notice"
+   },
+   {
+    "p": [
+     {
+      "b": "a scam that's going around"
+     }
+    ],
+    "m": "",
+    "ru": "такая схема мошенников сейчас «гуляет»"
+   },
+   {
+    "p": [
+     {
+      "b": "hung up"
+     }
+    ],
+    "m": "",
+    "ru": "положила трубку"
+   }
+  ]
+ },
+ "k2": {
+  "lines": [
+   {
+    "s": "Hannah",
+    "p": [
+     "No problem. It reminded me of that new documentary, actually — The Charming Neighbour. Have you seen it?"
+    ]
+   },
+   {
+    "s": "Rob",
+    "p": [
+     "The one about the man who stole money from everyone on his street?"
+    ]
+   },
+   {
+    "s": "Hannah",
+    "p": [
+     "That's the one! I binge-watched the whole thing on Sunday."
+    ]
+   },
+   {
+    "s": "Rob",
+    "p": [
+     "I watched it last week! ",
+     {
+      "f": "",
+      "r": "It was crazy, wasn't it?"
+     }
+    ]
+   },
+   {
+    "s": "Hannah",
+    "p": [
+     "It really was. And the ending was brilliant, wasn't it?"
+    ]
+   },
+   {
+    "s": "Rob",
+    "p": [
+     {
+      "f": "",
+      "r": "Do you think so? I found it a bit"
+     },
+     " predictable. I guessed it in episode two."
+    ]
+   },
+   {
+    "s": "Hannah",
+    "p": [
+     "Really? ",
+     {
+      "b": "I didn't see it coming at all!"
+     },
+     " (= не ожидала такого вот конца)"
+    ]
+   },
+   {
+    "s": "Rob",
+    "p": [
+     "And some of the interviews went on forever."
+    ]
+   },
+   {
+    "s": "Hannah",
+    "p": [
+     {
+      "f": "",
+      "r": "Yeah, I suppose so. But I still think"
+     },
+     " it was really ",
+     {
+      "b": "well made"
+     },
+     "."
+    ]
+   },
+   {
+    "s": "Rob",
+    "p": [
+     "That's true, and ",
+     {
+      "b": "the main character"
+     },
+     " was so charming — I almost believed him myself!"
+    ]
+   },
+   {
+    "s": "Hannah",
+    "p": [
+     "Exactly. Although I felt a bit sorry for his family. Now everyone knows who they are. It's a bit ",
+     {
+      "f": "",
+      "r": "unfair on"
+     },
+     " them."
+    ]
+   },
+   {
+    "s": "Rob",
+    "p": [
+     "Hmm. ",
+     {
+      "f": "",
+      "r": "But I guess you could say"
+     },
+     " they agreed to be in it."
+    ]
+   },
+   {
+    "s": "Hannah",
+    "p": [
+     {
+      "f": "",
+      "r": "Fair enough."
+     },
+     " Anyway, my mum's watched it twice now. She says it's her “training”."
+    ]
+   },
+   {
+    "s": "Rob",
+    "p": [
+     "Good for her! Next time the “bank” calls, I almost feel sorry for them."
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     {
+      "b": "Fair enough."
+     },
+     " /feər ɪˈnʌf/"
+    ],
+    "m": "",
+    "ru": "Ну ладно, справедливо."
+   },
+   {
+    "p": [
+     {
+      "b": "It was crazy, wasn't it?"
+     },
+     " ↘"
+    ],
+    "m": "",
+    "ru": "С ума сойти, да?"
+   },
+   {
+    "p": [
+     {
+      "b": "But I guess you could say…"
+     }
+    ],
+    "m": "",
+    "ru": "Хотя, пожалуй, можно сказать…"
+   },
+   {
+    "p": [
+     {
+      "b": "Do you think so? I found it a bit…"
+     }
+    ],
+    "m": "",
+    "ru": "Думаешь? А мне показалось, немного…"
+   },
+   {
+    "p": [
+     {
+      "b": "unfair on sb"
+     },
+     " /ʌnˈfeə/"
+    ],
+    "m": "",
+    "ru": "нечестно по отношению к кому-то"
+   },
+   {
+    "p": [
+     {
+      "b": "Yeah, I suppose so. But I still think…"
+     },
+     " /səˈpəʊz/"
+    ],
+    "m": "",
+    "ru": "Ну да, наверное. Но я всё-таки считаю…"
+   },
+   {
+    "h": "Also notice"
+   },
+   {
+    "p": [
+     {
+      "b": "the main character"
+     }
+    ],
+    "m": "",
+    "ru": "главный герой"
+   },
+   {
+    "p": [
+     {
+      "b": "well made"
+     }
+    ],
+    "m": "",
+    "ru": "хорошо снят"
+   },
+   {
+    "p": [
+     {
+      "b": "I didn't see it coming!"
+     }
+    ],
+    "m": "",
+    "ru": "Вот этого я не ожидала!"
+   }
+  ]
+ }
+}

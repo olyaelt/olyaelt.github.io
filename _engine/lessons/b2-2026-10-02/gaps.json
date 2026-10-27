@@ -1,0 +1,258 @@
+{
+ "late": [
+  {
+   "s": "Nastya (7:20 pm)",
+   "p": [
+    "I'm at Luigi's 🍝 Got us a lovely table by the window 😊"
+   ]
+  },
+  {
+   "s": "Tom",
+   "p": [
+    "Just (1) ",
+    {
+     "f": "",
+     "r": "a heads-up"
+    },
+    " (heads-up) — I'll (2) ",
+    {
+     "f": "",
+     "r": "be 15 minutes late"
+    },
+    " (15 minutes / late). (3) ",
+    {
+     "f": "",
+     "r": "Stuck in"
+    },
+    " (stuck) traffic again 🙄"
+   ]
+  },
+  {
+   "s": "Nastya",
+   "p": [
+    "(4) ",
+    {
+     "f": "",
+     "r": "No worries"
+    },
+    " (worries)! I'll order some bread."
+   ]
+  },
+  {
+   "s": "Lena",
+   "p": [
+    "My train (5) ",
+    {
+     "f": "",
+     "r": "has been delayed by"
+    },
+    " (delay) 20 minutes, so I'm (6) ",
+    {
+     "f": "",
+     "r": "running"
+    },
+    " (run) about half an hour late. Sorry, guys! 😩"
+   ]
+  },
+  {
+   "s": "Nastya",
+   "p": [
+    "Oh no! 😬 No rush — see you when you get here."
+   ]
+  },
+  {
+   "s": "Max",
+   "p": [
+    "I (7) ",
+    {
+     "f": "",
+     "r": "might be a bit late"
+    },
+    " (might / a bit) too — my meeting is (8) ",
+    {
+     "f": "",
+     "r": "running over"
+    },
+    " (over) 🙈"
+   ]
+  },
+  {
+   "s": "Kate",
+   "p": [
+    "(9) ",
+    {
+     "f": "",
+     "r": "Me too"
+    },
+    " (too), probably. Still at work — my boss wants \"a quick chat\" 🙄"
+   ]
+  },
+  {
+   "s": "Tom",
+   "p": [
+    "Update: still not moving 🙃 (10) ",
+    {
+     "f": "",
+     "r": "Start without us"
+    },
+    " (start / we)!"
+   ]
+  },
+  {
+   "s": "Nastya",
+   "p": [
+    "OK, ordering now! Last one here buys dessert 😉🍰"
+   ]
+  },
+  {
+   "s": "Lena",
+   "p": [
+    "That's so unfair 😅 I'll (11) ",
+    {
+     "f": "",
+     "r": "be there in"
+    },
+    " (there) ten — save me some bread!"
+   ]
+  },
+  {
+   "s": "Nastya (8:05 pm)",
+   "p": [
+    "So… a table for five, and it's just me and the olives 🫒😂"
+   ]
+  }
+ ],
+ "kitchen": [
+  {
+   "s": "Helen",
+   "p": [
+    "Morning, Mark! You look stressed."
+   ]
+  },
+  {
+   "s": "Mark",
+   "p": [
+    "I am. Our team (1) ",
+    {
+     "f": "",
+     "r": "has been"
+    },
+    " (be) half-empty every morning (2) ",
+    {
+     "f": "",
+     "r": "for the last"
+    },
+    " two weeks!"
+   ]
+  },
+  {
+   "s": "Helen",
+   "p": [
+    "Tell me about it. Anna (3) ",
+    {
+     "f": "",
+     "r": "hasn't been"
+    },
+    " (not / be) on time once (4) ",
+    {
+     "f": "",
+     "r": "in / for the last"
+    },
+    " month."
+   ]
+  },
+  {
+   "s": "Mark",
+   "p": [
+    "Seriously? What's her excuse?"
+   ]
+  },
+  {
+   "s": "Helen",
+   "p": [
+    "Her train. It (5) ",
+    {
+     "f": "",
+     "r": "has been delayed"
+    },
+    " (be delayed) almost every day (6) ",
+    {
+     "f": "",
+     "r": "over / in the last"
+    },
+    " few weeks."
+   ]
+  },
+  {
+   "s": "Mark",
+   "p": [
+    "And Ben's always stuck in traffic. The traffic (7) ",
+    {
+     "f": "",
+     "r": "has got"
+    },
+    " (get) much worse (8) ",
+    {
+     "f": "",
+     "r": "over / in the last"
+    },
+    " few months — they're building a new bridge."
+   ]
+  },
+  {
+   "s": "Helen",
+   "p": [
+    "True. (9) ",
+    {
+     "f": "",
+     "r": "Last"
+    },
+    " week I (10) ",
+    {
+     "f": "",
+     "r": "was"
+    },
+    " (be) late for my own meeting! I (11) ",
+    {
+     "f": "",
+     "r": "left"
+    },
+    " (leave) home at eight and still missed the start."
+   ]
+  },
+  {
+   "s": "Mark",
+   "p": [
+    "Ha! Honestly, (12) ",
+    {
+     "f": "",
+     "r": "the last"
+    },
+    " few weeks (13) ",
+    {
+     "f": "",
+     "r": "have been"
+    },
+    " (be) a nightmare. Maybe we should just start at ten."
+   ]
+  },
+  {
+   "s": "Helen",
+   "p": [
+    "Or work from home! Oh — here's Ben. Running a bit late, Ben?"
+   ]
+  },
+  {
+   "s": "Ben",
+   "p": [
+    "Sorry, sorry! I was stuck in traffic!"
+   ]
+  },
+  {
+   "s": "Mark",
+   "p": [
+    "(to Helen) Told you."
+   ]
+  }
+ ]
+}

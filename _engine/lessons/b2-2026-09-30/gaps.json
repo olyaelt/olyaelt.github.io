@@ -1,0 +1,237 @@
+{
+ "anna": [
+  {
+   "s": "A",
+   "p": [
+    "Hi Anna! It's been ages! How (1) ",
+    {
+     "f": "",
+     "r": "have you been"
+    },
+    " (you / be)?"
+   ]
+  },
+  {
+   "s": "B",
+   "p": [
+    "Great, thanks! Actually, I (2) ",
+    {
+     "f": "",
+     "r": "have started"
+    },
+    " (start) a new job!"
+   ]
+  },
+  {
+   "s": "A",
+   "p": [
+    "Congratulations! When (3) ",
+    {
+     "f": "",
+     "r": "did you start"
+    },
+    " (you / start)?"
+   ]
+  },
+  {
+   "s": "B",
+   "p": [
+    "In August. The first few weeks (4) ",
+    {
+     "f": "",
+     "r": "were"
+    },
+    " (be) pretty stressful, but it's OK now."
+   ]
+  },
+  {
+   "s": "A",
+   "p": [
+    "(5) ",
+    {
+     "f": "",
+     "r": "Did you manage"
+    },
+    " (you / manage) to get away this summer?"
+   ]
+  },
+  {
+   "s": "B",
+   "p": [
+    "Yes, we (6) ",
+    {
+     "f": "",
+     "r": "spent"
+    },
+    " (spend) a week in Portugal. It (7) ",
+    {
+     "f": "",
+     "r": "was"
+    },
+    " (be) lovely."
+   ]
+  },
+  {
+   "s": "A",
+   "p": [
+    "Lucky you! I (8) ",
+    {
+     "f": "",
+     "r": "have never been"
+    },
+    " (never / be) to Portugal."
+   ]
+  },
+  {
+   "s": "B",
+   "p": [
+    "Oh, you should go! And what (9) ",
+    {
+     "f": "",
+     "r": "have you been"
+    },
+    " (you / be) up to?"
+   ]
+  },
+  {
+   "s": "A",
+   "p": [
+    "Not much. Work (10) ",
+    {
+     "f": "",
+     "r": "has been"
+    },
+    " (be) crazy since September!"
+   ]
+  }
+ ],
+ "kate": [
+  {
+   "s": "A",
+   "p": [
+    "Kate! I (1) ",
+    {
+     "f": "",
+     "r": "haven't seen"
+    },
+    " (not / see) you for ages! How are things?"
+   ]
+  },
+  {
+   "s": "B",
+   "p": [
+    "Pretty good, thanks! I can't believe it (2) ",
+    {
+     "f": "",
+     "r": "has been"
+    },
+    " (be) three months!"
+   ]
+  },
+  {
+   "s": "A",
+   "p": [
+    "I know! So, what's new?"
+   ]
+  },
+  {
+   "s": "B",
+   "p": [
+    "Well, I (3) ",
+    {
+     "f": "",
+     "r": "have started"
+    },
+    " (start) pottery classes!"
+   ]
+  },
+  {
+   "s": "A",
+   "p": [
+    "Oh, nice! Where (4) ",
+    {
+     "f": "",
+     "r": "did you find"
+    },
+    " (you / find) them?"
+   ]
+  },
+  {
+   "s": "B",
+   "p": [
+    "A friend (5) ",
+    {
+     "f": "",
+     "r": "recommended"
+    },
+    " (recommend) them in June. I (6) ",
+    {
+     "f": "",
+     "r": "have been"
+    },
+    " (be) to six classes since then!"
+   ]
+  },
+  {
+   "s": "A",
+   "p": [
+    "That sounds amazing! (7) ",
+    {
+     "f": "",
+     "r": "Did you go"
+    },
+    " (you / go) anywhere this summer?"
+   ]
+  },
+  {
+   "s": "B",
+   "p": [
+    "Yes, we (8) ",
+    {
+     "f": "",
+     "r": "spent"
+    },
+    " (spend) some time visiting family. It was lovely to catch up with everyone. What about you?"
+   ]
+  },
+  {
+   "s": "A",
+   "p": [
+    "Not much. I (9) ",
+    {
+     "f": "",
+     "r": "have been"
+    },
+    " (be) really busy over the last few months."
+   ]
+  },
+  {
+   "s": "B",
+   "p": [
+    "Oh no. (10) ",
+    {
+     "f": "",
+     "r": "Have you had"
+    },
+    " (you / have) any time off this year?"
+   ]
+  },
+  {
+   "s": "A",
+   "p": [
+    "Not really. I (11) ",
+    {
+     "f": "",
+     "r": "had"
+    },
+    " (have) a long weekend in June, and that's it."
+   ]
+  },
+  {
+   "s": "B",
+   "p": [
+    "You definitely need a change of scenery!"
+   ]
+  }
+ ]
+}
