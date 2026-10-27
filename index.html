@@ -100,6 +100,8 @@ h2{margin:0;font-size:var(--step-1);font-weight:900}
 .hw{display:grid;gap:4px;text-decoration:none;color:inherit;border:2px solid var(--line);border-radius:12px;padding:10px 12px}
 .hw:hover{border-color:var(--instr)}
 .hw.todo{border-color:var(--label)}
+.hw.unl{border-style:dashed}
+.unl-tag{font-size:.78rem;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 .hw-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .date{display:inline-flex;font-weight:900;letter-spacing:.04em;font-size:.8rem;background:var(--date-bg);color:var(--date-ink);padding:2px 8px;border-radius:6px}
 .hw-title{font-weight:700}
@@ -127,6 +129,8 @@ const myCode = () => SYNC_URL ? ls.get("hw-code") : "";
 const isTeacher = () => !!(myCode() && ls.get("hw-role") === "teacher");
 const NAMES = {"b2": "Wed Fri 18.30", "c1": "Wed Fri 20.15"};
 let data = {};     /* group -> {stats, pages: {key: counts}, failed, pending} */
+let PUB = new Set();   /* drafts ("listed": false) she has published with the button on the page, from her table */
+const draft = h => h.unlisted && !PUB.has(h.key);
 let state = "";
 
 async function post(payload){
@@ -142,7 +146,7 @@ function meterHTML(gs){
 function counts(res){
   const w = res.work || [], students = (res.students || []).length;
   const ticked = new Set(); Object.values(res.done || {}).forEach(a => a.forEach(i => ticked.add(i)));
-  return { toAnswer: w.filter(x=>!String(x.feedback||"").trim()).length, marked: w.filter(x=>x.type==="marked").length,
+  return { toAnswer: w.filter(x=>!String(x.feedback||"").trim() && (x.type!=="marked" || /\n— /.test(String(x.text||"")))).length, marked: w.filter(x=>x.type==="marked").length,
            questions: w.filter(x=>x.type==="question").length, work: w.filter(x=>x.type==="text"||x.type==="recording").length,
            started: ticked.size, students };
 }
@@ -176,6 +180,7 @@ async function load(){
   const all = await overview(code, items.map(([g, h]) => h.key), true);
   if(code !== myCode()) return;
   if(all.ok && all.pages){
+    if(Array.isArray(all.published)) PUB = new Set(all.published);
     for(const g of Object.keys(GROUPS)){ const d = data[g]; d.pending = 0; d.stats = (all.groups || {})[g.toUpperCase()] || null;
       GROUPS[g].forEach(h => { if(all.pages[h.key]) d.pages[h.key] = all.pages[h.key]; else d.failed++; }); }
     state = "ok"; render(); return;
@@ -209,8 +214,8 @@ function groupCard(g){
     <div class="hws">${list.filter((h,i)=>i < 6 || (d.pages[h.key] && d.pages[h.key].toAnswer)).map((h,i)=>{   /* the latest 6, and any older one where something waits */
       const c = d.pages[h.key];
       const badges = c ? [c.toAnswer?`<b>💬 ${c.toAnswer} to answer</b>`:"", `${c.started} of ${c.students} started`, c.marked?`🔖 ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:""].filter(Boolean).join(" · ") : "";
-      return `<a class="hw ${c && c.toAnswer ? "todo" : ""}" href="${g}/${esc(h.file)}">
-        <span class="hw-line"><span class="date">${esc(h.date)}</span><span class="hw-title">${esc(h.topics.map(t=>t.title).join(" · "))}</span></span>
+      return `<a class="hw ${c && c.toAnswer ? "todo" : ""} ${draft(h)?"unl":""}" href="${g}/${esc(h.file)}">
+        <span class="hw-line"><span class="date">${esc(h.date)}</span>${draft(h)?`<span class="unl-tag">🔒 Not published</span>`:""}<span class="hw-title">${esc(h.topics.map(t=>t.title).join(" · "))}</span></span>
         <span class="badges">${badges || (d.pending ? "checking…" : "")}</span></a>`; }).join("")}</div>
   </section>`;
 }
