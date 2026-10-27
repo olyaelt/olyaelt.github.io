@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>School council · Part 2</title>
+<link rel="stylesheet" href="../../fonts/homework-sans.css">
+<style>
+/* Lesson tools (pages students open in a breakout room and share on Zoom, ~1280×720).
+   Same colours and font as the homework pages; bigger type; task on the left, Useful language on the right. */
+:root{
+  --ground:#F6F1DC; --card:#FFFFFF; --ink:#1D1D1B; --muted:#6B6B6B; --line:#D9D2B8;
+  --instr:#0693E3; --instr-ink:#FFFFFF; --label:#E00000; --ipa:#0E8A7E;
+  --hl:#FFFF00; --hl-ink:#1D1D1B; --bubble:#FFFF8C; --bubble-ink:#1D1D1B;
+  --date-bg:#FF9900; --date-ink:#1D1D1B;
+  --ok:#2E8B3E; --ok-bg:#EAF7EC; --ok-chip:#CDEFD3; --ok-ink:#1E6B2E;
+  --no:#C0392B; --no-bg:#FDECEB; --no-chip:#F9D2CF; --no-ink:#A1261B;
+  --used:#BFF2B8; --used-ink:#1D1D1B;
+  --a:#0693E3; --a-ink:#FFFFFF; --b:#FF9900; --b-ink:#1D1D1B;
+  --again:#E67E00; --on-ok:#FFFFFF; --on-no:#FFFFFF; --flip-ink:#0679BD; --tick:#B9B092; --instr-text:#0693E3;
+  --shadow:0 2px 0 rgba(29,29,27,.08), 0 10px 28px rgba(29,29,27,.08);
+  --font-body:"Homework Sans","Calibri","Carlito","Segoe UI",system-ui,sans-serif;
+  --radius:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D;
+    --instr:#1578C0; --label:#FF7A7A; --ipa:#4CC5B3; --hl:#FFF34D; --hl-ink:#111111;
+    --bubble:#3B391F; --bubble-ink:#F3F0D0;
+    --ok:#62C774; --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8;
+    --no:#FF8A80; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB;
+    --used:#2F5E35; --used-ink:#F1FFF0; --a:#1578C0; --again:#FFB14A; --on-ok:#0F2412; --on-no:#2A0D0A; --flip-ink:#6CC3FF; --tick:#70757C; --instr-text:#6CC3FF;
+    --shadow:0 2px 0 rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D;
+  --instr:#1578C0; --label:#FF7A7A; --ipa:#4CC5B3; --hl:#FFF34D; --hl-ink:#111111;
+  --bubble:#3B391F; --bubble-ink:#F3F0D0;
+  --ok:#62C774; --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8;
+  --no:#FF8A80; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB;
+  --used:#2F5E35; --used-ink:#F1FFF0; --a:#1578C0; --again:#FFB14A; --on-ok:#0F2412; --on-no:#2A0D0A; --flip-ink:#6CC3FF; --tick:#70757C; --instr-text:#6CC3FF;
+  --shadow:0 2px 0 rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{font-size:clamp(15px, 0.55vw + 11px, 19px)}
+html,body{background:var(--ground);margin:0}
+body{color:var(--ink);font-family:var(--font-body);line-height:1.45;padding:0 16px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:disabled{cursor:default}
+:focus-visible{outline:3px solid var(--instr);outline-offset:2px;border-radius:8px}
+h1,h2,h3{margin:0;text-wrap:balance}
+.wrap{max-width:1240px;margin:0 auto;padding:12px 0 16px;display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,380px);gap:16px 26px;align-items:start}
+.main{display:grid;gap:12px;min-width:0}
+.side{position:sticky;top:10px;display:grid;gap:10px;max-height:calc(100vh - 20px);overflow:auto;padding:0 4px 4px 12px;margin-left:-12px}
+@media (max-width:860px){ .wrap{grid-template-columns:1fr} .side{position:static;max-height:none;overflow:visible} }
+
+/* header */
+.head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.part{font-weight:900;letter-spacing:.04em;font-size:.85rem;background:var(--date-bg);color:var(--date-ink);padding:3px 10px;border-radius:6px}
+.head h1{font-size:1.85rem;line-height:1.1;font-weight:900}
+.gear{margin-left:auto;border:2px solid var(--line);background:var(--card);border-radius:99px;padding:4px 12px;font-weight:700;font-size:1rem;color:var(--muted);min-height:38px}
+.instr{background:var(--instr);color:var(--instr-ink);border-radius:12px;padding:8px 14px;font-weight:700;font-size:1rem;margin:0}
+.hint-top{background:var(--card);border-left:6px solid var(--instr);border-radius:12px;padding:8px 14px;font-weight:700;font-size:1.02rem;margin:0;box-shadow:var(--shadow)}
+.situation{background:var(--card);border-left:6px solid var(--date-bg);border-radius:12px;padding:12px 16px;font-size:1.1rem;margin:0;box-shadow:var(--shadow)}
+.settings{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font-size:.95rem}
+.seg{display:inline-flex;border:2px solid var(--line);border-radius:99px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:3px 12px;font-weight:700}
+.seg button[aria-pressed="true"]{background:var(--instr);color:var(--instr-ink)}
+
+/* buttons */
+.btn{border:2px solid var(--instr);background:transparent;color:var(--instr-text);border-radius:12px;padding:10px 20px;font-weight:900;font-size:1.05rem;min-height:48px}
+.btn.primary{background:var(--instr);color:var(--instr-ink)}
+.btn.big{font-size:1.4rem;padding:16px 30px;border-radius:16px}
+.btn:disabled{opacity:.35}
+.btn.ok{border-color:var(--ok);color:var(--ok)}
+.btn.ok.on,.btn.ok.solid{background:var(--ok);color:var(--on-ok)}
+.btn.no{border-color:var(--no);color:var(--no)}
+.btn.no.on{background:var(--no);color:var(--on-no)}
+.btn.again{border-color:var(--again);color:var(--again)}
+.linkish{border:0;background:none;color:var(--instr-text);font-weight:700;text-decoration:underline;padding:4px}
+.row-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* Useful language box (as on her slides and the homework pages) */
+.box{background:var(--card);border:2px solid var(--ink);border-radius:4px;padding:10px 12px 12px;position:relative;display:grid;gap:2px;margin-top:34px}
+.box .sticker{width:150px;height:auto;margin:-32px 0 -2px -8px}
+.box-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.box-top .linkish{font-size:.9rem;margin-top:-6px}
+.box h4{margin:8px 0 1px;color:var(--label);font-size:.82rem;letter-spacing:.07em;font-weight:900;text-transform:uppercase}
+.box h4:first-of-type{margin-top:2px}
+.ph{display:block;width:100%;text-align:left;border:0;background:transparent;border-radius:8px;padding:2px 8px 2px 26px;margin:0 0 0 -8px;line-height:1.32;font-size:.97rem;position:relative}
+.ph::before{content:"";position:absolute;left:8px;top:.62em;width:9px;height:9px;border-radius:50%;border:2px solid var(--line)}
+button.ph:hover{background:color-mix(in srgb, var(--used) 35%, transparent)}
+.ph.used{background:var(--used);color:var(--used-ink)}
+.ph .gloss{color:var(--muted);font-style:italic;font-size:.9em}
+.ph .bx{font-weight:900}
+.ph.used::before{content:"✓";border:0;width:auto;height:auto;top:.18em;left:7px;font-weight:900;color:var(--ok)}
+.box.static .ph{cursor:default}
+.box.static .ph::before{display:none}
+.box.static .ph{padding-left:8px}
+.peek{display:grid;gap:8px;justify-items:start;background:var(--card);border:2px dashed var(--line);border-radius:12px;padding:14px 16px;margin-top:10px}
+.peek p{margin:0;color:var(--muted)}
+.extra{margin:0;font-weight:700;background:var(--bubble);color:var(--bubble-ink);border-radius:10px;padding:8px 12px}
+
+/* If you're done: the speaking tasks */
+.speak{background:var(--bubble);color:var(--bubble-ink);border-radius:18px;padding:18px 22px;display:grid;gap:12px;box-shadow:var(--shadow)}
+.speak.pop{animation:popsoft .35s ease-out}
+.speak-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.speak-h{font-size:.85rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
+.speak-dots{display:flex;gap:0;margin:-6px -5px}
+.speak-dots button{border:0;background:none;padding:6px 5px;line-height:0}
+.speak-dots button::before{content:"";display:block;width:.6rem;height:.6rem;border-radius:50%;background:color-mix(in srgb, var(--bubble-ink) 22%, transparent);transition:transform .15s}
+.speak-dots button.was::before{background:color-mix(in srgb, var(--bubble-ink) 50%, transparent)}
+.speak-dots button.on::before{background:var(--label);transform:scale(1.25)}
+.speak-dots button:hover::before{transform:scale(1.35)}
+.speak-task{margin:0;font-size:1.45rem;font-weight:700;line-height:1.35}
+.speak-task .bx,.follow-q .bx{color:var(--flip-ink);font-weight:900}
+/* the stages */
+.stages{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-left:auto}
+.stage-btn{border:2px solid var(--line);background:var(--card);color:var(--muted);border-radius:99px;padding:4px 14px;font-weight:900;font-size:.95rem}
+.stage-btn:hover{border-color:var(--instr);color:var(--instr-text)}
+.stage-btn[aria-current="step"]{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
+.stage-arrow{color:var(--muted);font-weight:900}
+@media (max-width:560px){ .stages{margin-left:0} }
+/* 📋 all of it, folded */
+details.all{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:4px 16px}
+.side details.all{background:transparent;border:2px dashed var(--line);font-size:.92rem;padding:2px 14px}
+.side details.all[open]{background:var(--card)}
+details.all summary{cursor:pointer;font-weight:900;padding:8px 0;color:var(--muted);list-style:none}
+details.all summary::-webkit-details-marker{display:none}
+details.all summary::after{content:" ▸";}
+details.all[open] summary::after{content:" ▾";}
+details.all[open] summary{color:var(--ink)}
+.all-in{display:grid;gap:10px;padding:2px 0 14px}
+.all-row{display:grid;gap:2px;border-top:1px solid var(--line);padding-top:8px}
+.all-row .f{color:var(--ink)} .all-row .f .ctx{color:var(--muted)}
+.all-row .b{color:var(--flip-ink);font-weight:900}
+.all-h{color:var(--label);font-size:.82rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;margin-top:6px}
+.all-sub{font-weight:900}
+.all-row p{margin:0}
+.all-row .bx{color:var(--flip-ink)}
+.all-side{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;font-weight:900;color:var(--muted)}
+/* tactile feedback */
+@keyframes pop{0%{transform:scale(1)}35%{transform:scale(1.18)}100%{transform:scale(1)}}
+@keyframes popsoft{0%{transform:scale(1)}35%{transform:scale(1.035)}100%{transform:scale(1)}}
+.pop{animation:pop .38s cubic-bezier(.3,1.4,.5,1)}
+.ph.pop{animation:popsoft .32s ease-out}
+.legal{max-width:1240px;margin:0 auto;padding:6px 0 18px;font-size:.8rem;color:var(--muted)}
+.legal a{color:var(--muted)}
+@media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
+
+/* ---------- the school council: draw a subject, roll for reasons, decide ---------- */
+.stage-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.head-btns{margin-left:auto;display:flex;gap:8px;align-items:center}
+.stage-wrap.enter{animation:enterR .45s cubic-bezier(.2,.8,.2,1)}
+.btn.slim{min-height:38px;padding:4px 14px;font-size:.95rem;border-radius:10px}
+.head-btns .gear{margin-left:0}
+.dice-hint{display:flex;justify-content:space-between;align-items:center;gap:8px 14px;flex-wrap:wrap}
+.dice-hint .seg{font-size:.85rem;font-weight:700;flex:none}
+.dice-hint .seg button{padding:2px 10px}
+@media (max-width:560px){ .head-btns{margin-left:0;flex-wrap:wrap} .stage{padding:14px} .stage-top{flex-wrap:wrap}
+  .st{grid-template-columns:1.8rem minmax(0,1fr) auto;gap:8px;padding:7px 9px} .st .choice{grid-column:2 / 4} .subj{font-size:1.8rem} }
+.stage{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px;display:grid;gap:12px;align-content:start;min-height:300px}
+.stage.empty{place-content:center;justify-items:center;text-align:center;gap:14px}
+.stage.empty p{margin:0;color:var(--muted);font-size:1.05rem}
+.stage.enter{animation:enterR .55s cubic-bezier(.2,.8,.2,1)}
+@keyframes enterR{from{opacity:0;transform:translateX(70px) rotate(1.5deg)}to{opacity:1;transform:none}}
+@keyframes enter{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.subj-top{display:grid;gap:2px}
+.subj-label{color:var(--label);font-weight:900;letter-spacing:.07em;text-transform:uppercase;font-size:.85rem}
+.subj{font-size:2.2rem;font-weight:900;line-height:1.08}
+.subj-meta{color:var(--muted);font-size:1.05rem}
+.subj-meta .ipa{color:var(--ipa);white-space:nowrap}
+.subj-meta .ru{font-style:italic}
+.steps{display:grid;gap:8px}
+.st{display:grid;grid-template-columns:2.1rem minmax(0,1fr) auto;align-items:center;gap:12px;padding:7px 12px;border-radius:12px;background:var(--ground);transition:opacity .25s;min-height:4.2rem}
+.st .n{width:2rem;height:2rem;border-radius:50%;display:grid;place-items:center;font-weight:900;background:var(--card);border:2px solid var(--line)}
+.st.done .n{background:var(--ok);border-color:var(--ok);color:#fff}
+.st.gave .n{background:var(--bubble);border-color:var(--again);font-size:1.05rem}
+.st.off{opacity:.42}
+.st-t{font-weight:900;font-size:1.15rem}
+.st-sub{color:var(--muted);font-size:.92rem}
+.dots{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:4px}
+/* one grey tick per reason: tap it when the reason has been given, it fills green */
+.dot{width:1.75rem;height:1.75rem;border-radius:50%;border:2px solid var(--tick);background:var(--card);color:var(--tick);padding:0;
+  font-weight:900;font-size:1rem;line-height:1;display:grid;place-items:center;transition:background .15s, transform .15s, color .15s}
+.dot:hover{border-color:var(--ok);color:var(--ok)}
+.dot{position:relative;overflow:hidden}
+.dot::before{content:"";position:absolute;inset:0;border-radius:50%;background:var(--ok);transform:scale(0)}
+.dot > span{position:relative;z-index:1}
+.dot.on{border-color:var(--ok);color:var(--on-ok);transform:scale(1.08)}
+.dot.on::before{transform:scale(1)}
+.dot.fill{animation:tickpop .45s cubic-bezier(.3,1.5,.5,1)}
+.dot.fill::before{animation:tickfill .3s ease-out}
+@keyframes tickfill{from{transform:scale(0)}to{transform:scale(1)}}
+@keyframes tickpop{0%{transform:scale(1)}45%{transform:scale(1.45)}100%{transform:scale(1.08)}}
+.dot.monkey{border-color:transparent;background:transparent;font-size:1.25rem;cursor:default}
+.dot.monkey::before{display:none}
+.giveup{border:2px dashed var(--line);background:transparent;color:var(--muted);border-radius:99px;padding:1px 12px;font-weight:700;font-size:.92rem;margin-left:4px}
+.giveup:hover{border-color:var(--again);color:var(--again)}
+.gave-tag{font-weight:700;font-size:.92rem;color:var(--again);margin-left:4px}
+.exbtn.sm{padding:2px 12px;font-size:.9rem;margin-left:4px}
+.ex-step{display:grid;gap:6px;background:var(--bubble);color:var(--bubble-ink);border-radius:12px;padding:10px 16px 12px 58px;margin:-4px 0 2px}
+.ex-step.opening{animation:enter .35s ease-out}
+.ex-step .ex-h{display:flex;justify-content:space-between;align-items:baseline}
+.ex-step p{margin:0;line-height:1.35}
+.ex-step .bx{color:var(--flip-ink)}
+.btn.meh{border-color:var(--muted);color:var(--muted)}
+.btn.meh.on{background:var(--muted);color:var(--card)}
+.chip.meh{background:var(--line);color:var(--ink)}
+.die{width:3.3rem;height:3.3rem;border-radius:11px;background:#FFFFFF;border:3px solid #1D1D1B;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:.45rem;box-shadow:0 4px 0 #1D1D1B}
+.die i{width:.62rem;height:.62rem;border-radius:50%;background:#1D1D1B;place-self:center;visibility:hidden}
+.die i.p{visibility:visible}
+.die-wrap{display:flex;align-items:center;gap:10px}
+.die-n{font-weight:900;font-size:1.05rem;color:var(--muted);min-width:5.5em}
+.choice{display:flex;gap:8px;flex-wrap:wrap}
+.choice .btn{min-height:44px;padding:6px 16px}
+.next-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.exbtn{border:2px solid var(--bubble-line, #E6D96A);background:var(--bubble);color:var(--bubble-ink);border-radius:99px;padding:6px 16px;font-weight:900;font-size:1rem}
+.ex{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;background:var(--bubble);color:var(--bubble-ink);border-radius:14px;padding:12px 16px;animation:enter .3s ease-out}
+@media (max-width:640px){ .ex{grid-template-columns:1fr} }
+.ex-col{display:grid;gap:6px;align-content:start}
+.ex-h{font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
+.ex p{margin:0;line-height:1.35}
+.ex .bx{color:var(--flip-ink)}
+.sofar{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center}
+.sofar b{margin-right:4px}
+.chip{border-radius:99px;padding:2px 12px;font-weight:700;font-size:.95rem}
+.chip-in{animation:chipin .5s cubic-bezier(.3,1.5,.5,1)}
+@keyframes chipin{from{opacity:0;transform:translateY(-14px) scale(.6)}to{opacity:1;transform:none}}
+.dot.appear,.giveup.appear{animation:appear .38s both cubic-bezier(.3,1.6,.5,1)}
+@keyframes appear{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:scale(1)}}
+.die{will-change:transform}
+.chip.yes{background:var(--ok-chip);color:var(--ok-ink)} .chip.nope{background:var(--no-chip);color:var(--no-ink)}
+.foot-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.panel{background:var(--bubble);color:var(--bubble-ink);border-radius:14px;padding:14px 18px;font-size:1.15rem}
+.panel b{display:block;font-size:.85rem;letter-spacing:.07em;text-transform:uppercase;margin-bottom:2px}
+/* decide */
+.decide-top{display:flex;align-items:baseline;gap:6px 14px;flex-wrap:wrap}
+.decide h2{font-size:1.6rem;font-weight:900}
+.decide .lead{margin:0;font-size:1.05rem;color:var(--muted)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:640px){ .cols{grid-template-columns:1fr} }
+.col{display:grid;gap:5px;align-content:start}
+.col-h{display:flex;justify-content:space-between;align-items:baseline}
+.col-h .cnt{color:var(--muted);font-weight:700}
+.pick{display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left;border:2px solid var(--line);background:var(--card);border-radius:10px;padding:4px 12px;font-size:1rem;font-weight:700}
+.pick .was{font-weight:400;font-size:.85rem;color:var(--muted);white-space:nowrap}
+.pick.on.cut{border-color:var(--no);background:var(--no-bg)}
+.pick.on.add{border-color:var(--ok);background:var(--ok-bg)}
+.pick .mark{font-weight:900}
+.frame{background:var(--bubble);color:var(--bubble-ink);border-radius:14px;padding:14px 18px;font-size:1.3rem;font-weight:700;line-height:1.4}
+.follow{background:var(--card);border:2px solid var(--bubble);border-left:8px solid var(--date-bg);border-radius:14px;padding:12px 18px;display:grid;gap:8px}
+.follow-in{animation:enterR .45s cubic-bezier(.2,.8,.2,1)}
+.follow-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.follow-h{font-size:.85rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
+.follow-q{margin:0;font-size:1.25rem;font-weight:700;line-height:1.35}
+.follow .speak-dots button::before{background:var(--line)} .follow .speak-dots button.was::before{background:var(--muted)} .follow .speak-dots button.on::before{background:var(--date-bg)}
+.frame small{display:block;font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;margin-bottom:4px}
+</style>
+</head>
+<body>
+<div class="wrap"><main class="main" id="main"></main><div class="side" id="side"></div></div>
+<footer class="legal"><a href="../../impressum.html">Impressum</a> · <a href="../../datenschutz.html">Datenschutz</a></footer>
+<script>
+const D = {"type": "dice-council", "title": "School council", "part": "Part 2", "situation": "A year later, at the same school. The head wants to cut coding and essay writing: “AI can do all that now.”", "lists": [{"kind": "cut", "label": "Could be cut", "items": [{"t": "coding", "ex": {"for": ["You need to understand code to check what AI writes — **that's where you really add value**.", "**It was a steep learning curve**, but it taught me to think step by step."], "against": ["**They're handing it over to AI** — why spend years on it at school?", "**They've stopped hiring juniors** in tech, so why train kids for jobs that aren't there?"]}}, {"t": "essay writing", "ex": {"for": ["It's **more important than you'd think** — writing helps you sort out your thoughts.", "When AI writes the first draft, I edit it — **that's where I really add value**."], "against": ["**They're handing it over to AI** — nobody writes reports from scratch any more.", "We did essay writing every week, and **I've never used it since**."]}}, {"t": "foreign languages", "ex": {"for": ["**You never know when it might come in handy** — I never thought I'd live abroad.", "Translation apps **only get you so far** — try making friends through one."], "against": ["AI translates everything now — **what's the point of** six years of French?", "I did French at school, but when I moved to France, **I had to start from scratch**."]}}, {"t": "spelling and handwriting", "ex": {"for": ["It's **more important than you'd think** — people judge you by your spelling.", "**You never know when it might come in handy** — when your battery dies, for example."], "against": ["It's **a complete waste of time** — spellcheck does it for us.", "**It's out of date.** Nobody writes by hand any more."]}}, {"t": "mental maths", "note": "AmE: math", "ru": "устный счёт", "ex": {"for": ["It's **more useful than you'd think** — in shops, with discounts, when you split a bill.", "**It was hard, but it paid off** — I notice at once when a bill doesn't look right."], "against": ["**What's the point of** mental maths when everyone has a phone?", "We spent hours on it, and **I've never used it since**."]}}]}, {"kind": "add", "label": "Could be added", "items": [{"t": "using AI well (and checking it)", "ex": {"for": ["**They're handing** more and more work **over to AI**, so someone has to check it.", "**I taught myself, the hard way** — kids shouldn't have to."], "against": ["The tools change every month, so what they learn will be **out of date** by the time they leave school.", "Kids **pick it up** on their own — and very fast."]}}, {"t": "how to learn", "ex": {"for": ["Everything goes **out of date**, so **you need to adapt** — and that means knowing how to learn.", "When I changed careers, **I had to start from scratch**, and nobody had ever shown me how to learn."], "against": ["**I picked it up on the job** — you learn how to learn by doing it, not in a lesson.", "**School only gets you so far** — everyone learns differently, so you have to find your own way."]}}, {"t": "fact-checking", "ru": "проверка фактов", "ex": {"for": ["AI makes things up, so checking the facts — **that's where you really add value**.", "Before I believe a big news story, **I read up on it** — kids should learn to do that too."], "against": ["**What's the point of** a separate subject? Every teacher can do it in their lessons.", "You just **do your homework** before you share something — that's a habit, not a subject."]}}, {"t": "dealing with difficult people", "ex": {"for": ["My first year as a manager **was a steep learning curve** — nobody had taught me any of it.", "**I picked it up on the job, the hard way**, and I'd love my kids to have it easier."], "against": ["**School only gets you so far** — you learn it from real people, not from role-plays.", "It's **more complicated than you'd think** — every difficult person is different, so a school course can't really prepare you."]}}, {"t": "working in a team", "ex": {"for": ["**They've stopped hiring juniors**, so there's no first job to learn it in any more — school has to teach it.", "It's **more important than you'd think** — most projects fail because people can't work together, not because they lack skills."], "against": ["They already do group projects all the time — **what's the point of** a whole subject?", "**I picked it up on the job** — you can't learn it from a textbook."]}}]}], "box": [{"h": "Useful or not?", "items": ["It was a complete waste of time.", "I've never used it since.", "You never know when it might come in handy.", "It's more … than you'd think.", "What's the point of …?", "None of it counted.", "I had to start from scratch.", "School only gets you so far.", "That's where I really add value."]}, {"h": "Learning", "items": ["It was a steep learning curve.", "I picked it up on the job, the hard way.", "I read up on it. I did my homework.", "I taught myself."]}, {"h": "Today", "items": ["They've stopped hiring juniors.", "They're handing it over to AI.", "It's out of date. You need to adapt."]}], "boxHidden": true, "extra": "Use two phrases you didn't use last time.", "report": "We've decided to cut … and … and add … and … . We'd rather keep … because …", "followUp": ["What did you decide about coding and essay writing? Give the head teacher two reasons, a phrase from the box for each.", "A student says: \"Why learn to write essays if AI does it better?\" Do you agree? Agree on two things you'd say to this student.", "Rank your four changes: which one will make the biggest difference in ten years' time? Agree on your top one, with two reasons."], "speaking": ["A 20-year-old relative asks: \"What should I study, now that AI can do half the jobs out there?\" Agree on three pieces of advice, a phrase from the box for each.", "Each of you: two skills AI can't replace and one that's already **out of date**. Then agree on the most future-proof one.", "Rank from most to least useful in ten years: coding · essay writing · foreign languages · mental maths · working in a team. Agree on your top two.", "Each of you: something you **picked up the hard way** — at work or anywhere else. Three sentences, two phrases from the box. Your partner asks one question.", "**They've stopped hiring juniors.** Agree on three ways a young person can still get experience, a phrase from the box for each."]};
+const STICKER = "data:image/png;base64,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";
+const TOOLS_VERSION = "2";
+/* shared by the lesson tools: the Useful language box, shuffling, small helpers */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle = a => { a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const store = { get(k){ try{ return JSON.parse(localStorage.getItem(k) || "null"); }catch(e){ return null; } }, set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} } };
+const params = new URLSearchParams(location.search);
+/* **box phrase** in a speaking task or a follow-up = shown like the box phrases in the examples (checklist 8.07) */
+const boxMarks = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>');
+const calm = () => !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+/* a small "pop" on whatever was just tapped (tactile feedback) */
+const pop = el => { if(!el || calm()) return; el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop"); };
+
+/* "If you're done": speaking tasks for fast finishers, one at a time (her rule, 27.10: a page can't be changed during the lesson,
+   so every tool ends with plenty of talk, and after it the task starts over — it never runs out) */
+let spk = 0;
+/* the dots under a run of tasks: each one is a button that opens that task */
+const dotsHTML = (n, i, attr, what) => `<span class="speak-dots">${Array.from({length: n}, (_, k) =>
+  `<button class="${k === i ? "on" : k < i ? "was" : ""}" ${attr}="${k}" aria-label="${what} ${k + 1}" ${k === i ? `aria-current="step"` : ""}></button>`).join("")}</span>`;
+function speakHTML(list, endButtons, label = "Speaking task"){
+  if(!list || !list.length) return "";
+  const i = Math.min(spk, list.length - 1), last = i === list.length - 1;
+  return `<section class="speak" aria-live="polite"><div class="speak-top"><span class="speak-h">💬 ${esc(label)}</span>
+      ${dotsHTML(list.length, i, "data-speak-go", "Speaking task")}</div>
+    <p class="speak-task">${boxMarks(list[i])}</p>
+    <div class="row-actions">${i ? `<button class="btn" data-speak-prev>← Previous task</button>` : ""}${last ? endButtons : `<button class="btn primary" data-speak-next>Next task →</button>`}</div></section>`;
+}
+function wireSpeak(root, rerender){
+  const go = k => { spk = k; rerender(); const t = document.querySelector(".speak"); if(t) pop(t); };
+  root.querySelectorAll("[data-speak-next]").forEach(b => b.addEventListener("click", () => go(spk + 1)));
+  root.querySelectorAll("[data-speak-prev]").forEach(b => b.addEventListener("click", () => go(Math.max(0, spk - 1))));
+  root.querySelectorAll("[data-speak-go]").forEach(b => b.addEventListener("click", () => go(+b.dataset.speakGo)));
+}
+
+/* the stages of the task (her rule, 27.10: every tool has stages — at least the practice and the speaking —
+   and a group can move between them at any time without clicking through) */
+const stagesHTML = (list, cur) => `<nav class="stages" aria-label="Stages">${list.map(([id, label], i) =>
+  `${i ? `<span class="stage-arrow" aria-hidden="true">→</span>` : ""}<button class="stage-btn" data-stage="${id}" ${id === cur ? `aria-current="step"` : ""}>${label}</button>`).join("")}</nav>`;
+
+/* 📋 everything on one screen, folded: to show a card or an example again later in the lesson */
+let allOpen = false;
+const allHTML = (title, inner) => `<details class="all" ${allOpen ? "open" : ""}><summary>📋 ${esc(title)}</summary><div class="all-in">${inner}</div></details>`;
+function wireAll(root){ root.querySelectorAll("details.all").forEach(d => d.addEventListener("toggle", () => { allOpen = d.open; })); }
+
+/* the box: tap a phrase when you've said it (it lights up green); "clickable:false" = a plain list.
+   A line may carry a short Russian gloss after " – " (as on her slides: grey italics) and **bold** key words. */
+const phHTML = t => { const k = t.indexOf(" – "), en = k < 0 ? t : t.slice(0, k), ru = k < 0 ? "" : t.slice(k + 3);
+  return boxMarks(en) + (ru ? ` <span class="gloss">– ${esc(ru)}</span>` : ""); };
+const usedPhrases = new Set();
+function boxHTML(box, {clickable = true, collapsible = false, open = true} = {}){
+  const items = box.map((g, gi) => `<h4>${esc(g.h)}</h4>` + g.items.map((t, ti) => clickable
+      ? `<button class="ph ${usedPhrases.has(gi + "." + ti) ? "used" : ""}" data-ph="${gi}.${ti}" aria-pressed="${usedPhrases.has(gi + "." + ti)}">${phHTML(t)}</button>`
+      : `<p class="ph">${phHTML(t)}</p>`).join("")).join("");
+  return `<aside class="box ${clickable ? "" : "static"}" aria-label="Useful language">
+    <div class="box-top"><img class="sticker" src="${STICKER}" alt="Useful language">${collapsible ? `<button class="linkish" data-box-toggle>Hide</button>` : ""}</div>
+    ${open ? items : ""}</aside>`;
+}
+function wireBox(root, rerender){
+  root.querySelectorAll("[data-ph]").forEach(b => b.addEventListener("click", () => {
+    const k = b.dataset.ph; usedPhrases.has(k) ? usedPhrases.delete(k) : usedPhrases.add(k);
+    b.classList.toggle("used", usedPhrases.has(k)); b.setAttribute("aria-pressed", usedPhrases.has(k)); if(usedPhrases.has(k)) pop(b);
+  }));
+}
+
+/* ---------- state ---------- */
+const DIE_OPTIONS = [3, 4, 6];
+let faces = DIE_OPTIONS.includes(+params.get("dice")) ? +params.get("dice") : 6;
+const LISTS = Object.fromEntries(D.lists.map(l => [l.kind, l]));
+const ORDER = D.lists.map(l => l.kind);            /* cut, add, cut, add… */
+let S;
+function newGame(){
+  S = { draws: 0, pools: Object.fromEntries(D.lists.map(l => [l.kind, shuffle(l.items.map((_, i) => i))])),
+        cur: null, done: [], view: "game", picks: {cut: new Set(), add: new Set()}, peek: false, fu: 0, fuShown: false };
+  draw();     /* the first subject is on the table straight away (her wish: no "Draw" button) */
+}
+newGame();
+const WORDS = {
+  /* no "it" / "that" in the labels (her point, 27.10): students lift wording from the screen, and the right pronoun depends on the subject */
+  cut: {keep: "Reasons to keep", drop: "Reasons to cut", q: "Keep or cut?", yes: "Keep", no: "Cut", yesTag: "keep", noTag: "cut"},
+  add: {keep: "Reasons to add", drop: "Reasons not to add", q: "Add or not?", yes: "Add", no: "Don't add", yesTag: "add", noTag: "don't add"}
+};
+const itemOf = (kind, i) => LISTS[kind].items[i];
+
+function draw(sameKind){
+  let kind = sameKind || ORDER[S.draws % ORDER.length];
+  if(!S.pools[kind].length) kind = ORDER.find(k => S.pools[k].length);
+  if(!kind){ S.cur = null; return; }
+  const i = S.pools[kind].shift();
+  S.cur = {kind, i, r: [{n: null, got: 0}, {n: null, got: 0}], dec: null, exOpen: [false, false], exSeen: [false, false]};
+  if(!sameKind) S.draws++;
+}
+function swap(){
+  if(!S.cur || S.cur.r[0].n !== null) return;
+  const {kind, i} = S.cur, pool = S.pools[kind];
+  if(!pool.length) return;
+  pool.splice(1 + Math.floor(Math.random() * pool.length), 0, i);
+  draw(kind); render(true);
+}
+function next(){
+  if(!S.cur || S.cur.dec === null || S.busy) return;
+  const go = () => { S.busy = false; S.done.push(S.cur); S.popChip = true; draw(); render(true); S.popChip = false; };
+  const stage = document.querySelector(".stage");
+  if(!stage || calm()){ go(); return; }
+  S.busy = true;   /* the subject slides away, the next one comes in */
+  stage.animate([{transform: "none", opacity: 1}, {transform: "translateX(-70px) rotate(-2deg)", opacity: 0}], {duration: 420, easing: "cubic-bezier(.5,0,.75,0)"}).onfinish = go;
+}
+
+/* ---------- the die ---------- */
+const PIPS = {1:[5], 2:[1,9], 3:[1,5,9], 4:[1,3,7,9], 5:[1,3,5,7,9], 6:[1,3,4,6,7,9]};
+const dieHTML = n => `<span class="die" aria-label="${n}">${Array.from({length: 9}, (_, k) => `<i class="${PIPS[n].includes(k + 1) ? "p" : ""}"></i>`).join("")}</span>`;
+/* the example opens by itself only the first time a row is finished */
+function openEx(k, auto){ const c = S.cur; if(!c || !exOf(k) || (auto && c.exSeen[k])) return; c.exOpen[k] = true; c.exSeen[k] = true; S.exAnim = k; }
+const setFace = (die, n) => die.querySelectorAll("i").forEach((p, j) => p.classList.toggle("p", PIPS[n].includes(j + 1)));
+/* the roll: the die tumbles and slows down (faces change more and more slowly), lands with a bounce,
+   then the ticks for the reasons appear one by one */
+function roll(k){
+  const r = S.cur.r[k]; if(r.n !== null || S.busy) return;
+  const final = 1 + Math.floor(Math.random() * faces), any = () => 1 + Math.floor(Math.random() * faces);
+  const slot = document.querySelector(`[data-die-slot="${k}"]`);
+  if(!slot || calm()){ r.n = final; S.justRolled = k; render(); S.justRolled = null; return; }
+  S.busy = true;
+  slot.closest(".st").querySelectorAll("button").forEach(b => b.disabled = true);
+  slot.innerHTML = dieHTML(any());
+  const die = slot.firstElementChild, gaps = [50, 55, 60, 70, 80, 95, 115, 140, 175, 220, 280];
+  const total = gaps.reduce((a, b) => a + b, 0);
+  die.animate([
+    {transform: "translate(0, 0) rotate(0deg)"},
+    {transform: "translate(-8px, -22px) rotate(-240deg)", offset: .22},
+    {transform: "translate(4px, 0) rotate(-470deg)", offset: .5},
+    {transform: "translate(-2px, -8px) rotate(-610deg)", offset: .74},
+    {transform: "translate(0, 0) rotate(-700deg)", offset: .9},
+    {transform: "translate(0, 0) rotate(-720deg)"}], {duration: total, easing: "cubic-bezier(.12,.75,.3,1)"});
+  let t = 0; gaps.forEach((g, i) => { t += g; setTimeout(() => { let f = i === gaps.length - 1 ? final : any(); setFace(die, f); }, t); });
+  setTimeout(() => die.animate([{transform: "scale(1)"}, {transform: "scale(1.22)"}, {transform: "scale(.94)"}, {transform: "scale(1)"}], {duration: 360, easing: "ease-out"}), t);
+  setTimeout(() => { S.busy = false; r.n = final; S.justRolled = k; render(); S.justRolled = null; }, t + 420);
+}
+
+/* ---------- views ---------- */
+const metaHTML = it => [it.ipa ? `<span class="ipa">${esc(it.ipa)}</span>` : "", it.note ? esc(it.note) : "", it.ru ? `<span class="ru">${esc(it.ru)}</span>` : ""].filter(Boolean).join(" · ");
+function stepHTML(k){
+  const c = S.cur, w = WORDS[c.kind], r = c.r[k];
+  const off = k === 1 && c.r[0].n === null, full = r.n !== null && r.got >= r.n, done = full || r.gaveUp;
+  const fresh = S.justRolled === k, delay = j => fresh ? ` style="animation-delay:${j * 90}ms"` : "";
+  const gave = r.gaveUp && !full, monkeys = S.justGave === k;
+  const dots = r.n === null ? "" : `<div class="dots">${Array.from({length: r.n}, (_, j) => j >= r.got && gave
+        ? `<span class="dot monkey ${monkeys ? "appear" : ""}"${monkeys ? ` style="animation-delay:${(j - r.got) * 110}ms"` : ""} aria-label="gave up">🙈</span>`
+        : `<button class="dot ${j < r.got ? "on" : ""} ${fresh ? "appear" : ""} ${S.popTick === k + "." + j ? "fill" : ""}"${delay(j)} data-dot="${k}.${j}" aria-label="reason ${j + 1}" aria-pressed="${j < r.got}"><span>✓</span></button>`).join("")}
+      ${full ? "" : gave ? `<button class="linkish" data-giveup="${k}">undo</button>` : `<button class="giveup ${fresh ? "appear" : ""}"${delay(r.n)} data-giveup="${k}">🙈 We give up</button>`}
+      ${exOf(k) && !c.exOpen[k] ? `<button class="exbtn sm" data-ex="${k}">💡 Example</button>` : ""}</div>`;
+  return `<div class="st ${off ? "off" : ""} ${done ? "done" : ""} ${gave ? "gave" : ""}">
+    <span class="n">${gave ? "🙈" : done ? "✓" : k + 1}</span>
+    <div><div class="st-t">${k === 0 ? w.keep : w.drop}${r.n !== null ? `: ${r.n}` : ""}</div>
+      ${r.n === null ? "" : dots}</div>
+    <div class="die-wrap" data-die-slot="${k}">${r.n === null ? `<button class="btn primary" data-roll="${k}" ${off ? "disabled" : ""}>🎲 Roll</button>` : dieHTML(r.n)}</div>
+  </div>`;
+}
+function gameHTML(anim){
+  const c = S.cur;
+  if(!c) return `<section class="stage empty ${anim ? "enter" : ""}"><p>That's all the subjects.</p>
+      <button class="btn primary big" data-decide>Time to decide →</button></section>${sofarHTML()}`;
+  const it = itemOf(c.kind, c.i), w = WORDS[c.kind], ready = c.r[1].n !== null;
+  return `<section class="stage ${anim ? "enter" : ""}">
+      <div class="stage-top"><div class="subj-top"><span class="subj-label">${esc(LISTS[c.kind].label)}</span>
+        <h2 class="subj">${esc(it.t)}</h2>${metaHTML(it) ? `<div class="subj-meta">${metaHTML(it)}</div>` : ""}</div></div>
+      <div class="steps">${stepHTML(0)}${exStepHTML(0)}${stepHTML(1)}${exStepHTML(1)}
+        <div class="st ${ready ? "" : "off"} ${c.dec !== null ? "done" : ""}"><span class="n">${c.dec !== null ? "✓" : 3}</span>
+          <div><div class="st-t">Together: ${w.q}</div></div>
+          <div class="choice"><button class="btn ok ${c.dec === true ? "on" : ""}" data-dec="1" ${ready ? "" : "disabled"}>${w.yes}</button>
+            <button class="btn no ${c.dec === false ? "on" : ""}" data-dec="0" ${ready ? "" : "disabled"}>${w.no}</button>
+            <button class="btn meh ${c.dec === "agree" ? "on" : ""}" data-dec="agree" ${ready ? "" : "disabled"}>🤝 Agree to disagree</button></div></div></div>
+      <div class="next-row">${c.r[0].n === null && S.pools[c.kind].length ? `<button class="linkish" data-swap>Another subject</button>` : "<span></span>"}
+        <button class="btn primary" data-next ${c.dec === null ? "disabled" : ""}>Next subject →</button></div>
+    </section>${sofarHTML()}`;
+}
+/* 💡 Example: two model reasons for each side, written in the lesson chat (box phrases in **bold**).
+   It opens by itself under a reason row once that row is done (all ticked, or "We give up"), so they try first; 💡 opens it earlier */
+const exLine = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>');
+const exOf = k => { const c = S.cur, it = c && itemOf(c.kind, c.i); return it && it.ex && c.r[k].n !== null ? (k === 0 ? it.ex.for : it.ex.against) : null; };
+const exStepHTML = k => { const lines = exOf(k); if(!lines || !S.cur.exOpen[k]) return "";
+  return `<div class="ex-step ${S.exAnim === k ? "opening" : ""}" role="region" aria-label="Example"><span class="ex-h"><span>💡 Example</span><button class="linkish" data-ex-hide="${k}">hide</button></span>${lines.map(s => `<p>${exLine(s)}</p>`).join("")}</div>`; };
+const allExamplesHTML = () => D.lists.some(l => l.items.some(it => it.ex)) ? allHTML("All the examples", D.lists.map(l => { const w = WORDS[l.kind];
+    return `<span class="all-h">${esc(l.label)}</span>` + l.items.filter(it => it.ex).map(it => `<div class="all-row"><span class="all-sub">${esc(it.t)}</span>
+      <span class="all-side">${w.keep}</span>${it.ex.for.map(s => `<p>${exLine(s)}</p>`).join("")}
+      <span class="all-side">${w.drop}</span>${it.ex.against.map(s => `<p>${exLine(s)}</p>`).join("")}</div>`).join(""); }).join("")) : "";
+const decTag = (d, w) => d.dec === "agree" ? "agree to disagree" : d.dec ? w.yesTag : w.noTag;
+const sofarHTML = () => S.done.length ? `<div class="sofar"><b>So far:</b>${S.done.map((d, i) => { const w = WORDS[d.kind];
+    return `<span class="chip ${d.dec === "agree" ? "meh" : d.dec ? "yes" : "nope"} ${S.popChip && i === S.done.length - 1 ? "chip-in" : ""}">${esc(itemOf(d.kind, d.i).t)} · ${decTag(d, w)}</span>`; }).join("")}</div>` : "";
+const speakStage = () => `<section class="stage-wrap ${S.enter ? "enter" : ""}">${speakHTML(D.speaking, `<button class="btn" data-back>← The subjects you haven't discussed</button><button class="btn primary" data-restart>Start again</button>`, "Extra speaking")}</section>`;
+/* follow-up questions: they come in once two to cut and two to add are picked, one at a time */
+function followHTML(){
+  const F = D.followUp || [];
+  if(!F.length || S.picks.cut.size < 2 || S.picks.add.size < 2) return "";
+  const i = Math.min(S.fu, F.length - 1), first = !S.fuShown; S.fuShown = true;
+  return `<div class="follow ${first ? "follow-in" : ""}"><div class="follow-top"><span class="follow-h">➕ Follow-up</span>
+      ${dotsHTML(F.length, i, "data-fu-go", "Follow-up")}</div>
+    <p class="follow-q">${boxMarks(F[i])}</p>
+    ${i || i < F.length - 1 ? `<div class="row-actions">${i ? `<button class="btn slim" data-fu-prev>← Previous</button>` : ""}${i < F.length - 1 ? `<button class="btn slim" data-fu-next>Next follow-up →</button>` : ""}</div>` : ""}</div>`;
+}
+function decideHTML(){
+  const col = kind => { const l = LISTS[kind], w = WORDS[kind], picked = S.picks[kind];
+    return `<div class="col"><div class="col-h"><span class="subj-label">${esc(l.label)}</span><span class="cnt">${kind === "cut" ? "two to cut" : "two to add"}${picked.size ? ` · ${picked.size} picked` : ""}</span></div>
+      ${l.items.map((it, i) => { const d = S.done.find(x => x.kind === kind && x.i === i), on = picked.has(i);
+        return `<button class="pick ${kind} ${on ? "on" : ""}" data-pick="${kind}.${i}" aria-pressed="${on}"><span>${on ? `<span class="mark">${kind === "cut" ? "✂" : "＋"}</span> ` : ""}${esc(it.t)}</span>${d ? `<span class="was">you said: ${decTag(d, w)}</span>` : ""}</button>`; }).join("")}</div>`; };
+  return `<section class="stage decide ${S.enter ? "enter" : ""}"><div class="decide-top"><h2>Decide together</h2>
+    <p class="lead">Agree on two to cut and two to add. Tap them.</p></div>
+    <div class="cols">${col("cut")}${col("add")}</div>
+    <div class="frame"><small>Your decision</small>${esc(D.report)}</div>
+    ${followHTML()}
+    <div class="row-actions"><button class="btn" data-back>← Back to the reasons</button>${D.speaking && D.speaking.length ? `<button class="btn" data-stage="speak">💬 Extra speaking →</button>` : ""}</div>
+  </section>`;
+}
+function goStage(v){ if(S.view === v || S.busy) return; S.view = v; S.enter = true; render(); S.enter = false; scrollTo(0, 0); }
+function headHTML(){
+  return `<header class="head"><span class="part">${esc(D.part)}</span><h1>${esc(D.title)}</h1>
+      ${stagesHTML([["game", "🎲 Reasons"], ["decide", "🤝 Decide"], ["speak", "💬 Extra speaking"]], S.view)}</header>
+    ${S.view !== "game" ? "" : `<div class="hint-top dice-hint"><span>🎲 The dice tells you how many reasons to give, for and against — a phrase from the box for each.</span>
+      <span class="seg" role="group" aria-label="Dice">${DIE_OPTIONS.map(n => `<button data-faces="${n}" aria-pressed="${faces === n}">1–${n}</button>`).join("")}</span></div>`}
+`;
+}
+function sideHTML(){
+  const extra = (D.situation ? `<p class="situation">${esc(D.situation)}</p>` : "") + (D.extra ? `<p class="extra">${esc(D.extra)}</p>` : "");
+  if(D.boxHidden && !S.peek) return `${extra}<div class="peek"><p>Try not to look at the box.</p><button class="btn" data-peek>👀 Peek</button></div>`;
+  return `${extra}${boxHTML(D.box, {clickable: true, collapsible: D.boxHidden})}`;
+}
+function render(anim){
+  const main = document.getElementById("main"), side = document.getElementById("side");
+  main.innerHTML = headHTML() + (S.view === "decide" ? decideHTML() : S.view === "speak" ? speakStage() : gameHTML(anim));
+  /* 📋 under the box: a fallback for her, not something to invite a click (27.10) */
+  const st = side.scrollTop; side.innerHTML = sideHTML() + allExamplesHTML(); side.scrollTop = st;
+  wireAll(side); wireBox(side); wireSpeak(main, render); S.exAnim = null;
+  const on = (sel, fn) => document.querySelectorAll(sel).forEach(b => b.addEventListener("click", () => fn(b)));
+  on("[data-roll]", b => roll(+b.dataset.roll));
+  on("[data-giveup]", b => { const k = +b.dataset.giveup, r = S.cur.r[k]; r.gaveUp = !r.gaveUp; if(r.gaveUp){ S.justGave = k; openEx(k, true); } render(); S.justGave = null; });
+  on("[data-dot]", b => { const [k, j] = b.dataset.dot.split(".").map(Number), r = S.cur.r[k]; r.got = j < r.got ? j : j + 1; S.popTick = j < r.got ? `${k}.${j}` : null;
+    const complete = r.got >= r.n; if(complete) setTimeout(() => { openEx(k, true); render(); pop(document.querySelectorAll(".st .n")[k]); }, 420);
+    render(); S.popTick = null; });
+  on("[data-dec]", b => { S.cur.dec = b.dataset.dec === "agree" ? "agree" : b.dataset.dec === "1"; render(); pop(document.querySelector(`[data-dec="${b.dataset.dec}"]`)); pop(document.querySelectorAll(".st .n")[2]); });
+  on("[data-next]", next);
+  on("[data-swap]", swap);
+  on("[data-ex]", b => { openEx(+b.dataset.ex); render(); });
+  on("[data-ex-hide]", b => { S.cur.exOpen[+b.dataset.exHide] = false; render(); });
+  on("[data-decide]", () => goStage("decide"));
+  on("[data-stage]", b => goStage(b.dataset.stage));
+  on("[data-back]", () => { S.view = "game"; render(); });
+  const fuGo = k => { S.fu = k; render(); pop(document.querySelector(".follow")); };
+  on("[data-fu-next]", () => fuGo(S.fu + 1));
+  on("[data-fu-prev]", () => fuGo(Math.max(0, S.fu - 1)));
+  on("[data-fu-go]", b => fuGo(+b.dataset.fuGo));
+  on("[data-pick]", b => { const [kind, i] = b.dataset.pick.split("."), set = S.picks[kind]; set.has(+i) ? set.delete(+i) : set.add(+i); render(); if(set.has(+i)) pop(document.querySelector(`[data-pick="${kind}.${i}"]`)); });
+  on("[data-faces]", b => { faces = +b.dataset.faces; render(); });
+  on("[data-restart]", () => { usedPhrases.clear(); spk = 0; newGame(); render(true); });
+  on("[data-peek]", () => { S.peek = true; render(); });
+  on("[data-box-toggle]", () => { S.peek = false; render(); });
+}
+render();
+</script>
+</body>
+</html>

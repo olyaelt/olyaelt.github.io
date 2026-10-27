@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>__TITLE__</title>
+<link rel="stylesheet" href="../../fonts/homework-sans.css">
+<style>
+__BASE_CSS__
+/* ---------- the school council: draw a subject, roll for reasons, decide ---------- */
+.stage-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.head-btns{margin-left:auto;display:flex;gap:8px;align-items:center}
+.stage-wrap.enter{animation:enterR .45s cubic-bezier(.2,.8,.2,1)}
+.btn.slim{min-height:38px;padding:4px 14px;font-size:.95rem;border-radius:10px}
+.head-btns .gear{margin-left:0}
+.dice-hint{display:flex;justify-content:space-between;align-items:center;gap:8px 14px;flex-wrap:wrap}
+.dice-hint .seg{font-size:.85rem;font-weight:700;flex:none}
+.dice-hint .seg button{padding:2px 10px}
+@media (max-width:560px){ .head-btns{margin-left:0;flex-wrap:wrap} .stage{padding:14px} .stage-top{flex-wrap:wrap}
+  .st{grid-template-columns:1.8rem minmax(0,1fr) auto;gap:8px;padding:7px 9px} .st .choice{grid-column:2 / 4} .subj{font-size:1.8rem} }
+.stage{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px;display:grid;gap:12px;align-content:start;min-height:300px}
+.stage.empty{place-content:center;justify-items:center;text-align:center;gap:14px}
+.stage.empty p{margin:0;color:var(--muted);font-size:1.05rem}
+.stage.enter{animation:enterR .55s cubic-bezier(.2,.8,.2,1)}
+@keyframes enterR{from{opacity:0;transform:translateX(70px) rotate(1.5deg)}to{opacity:1;transform:none}}
+@keyframes enter{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.subj-top{display:grid;gap:2px}
+.subj-label{color:var(--label);font-weight:900;letter-spacing:.07em;text-transform:uppercase;font-size:.85rem}
+.subj{font-size:2.2rem;font-weight:900;line-height:1.08}
+.subj-meta{color:var(--muted);font-size:1.05rem}
+.subj-meta .ipa{color:var(--ipa);white-space:nowrap}
+.subj-meta .ru{font-style:italic}
+.steps{display:grid;gap:8px}
+.st{display:grid;grid-template-columns:2.1rem minmax(0,1fr) auto;align-items:center;gap:12px;padding:7px 12px;border-radius:12px;background:var(--ground);transition:opacity .25s;min-height:4.2rem}
+.st .n{width:2rem;height:2rem;border-radius:50%;display:grid;place-items:center;font-weight:900;background:var(--card);border:2px solid var(--line)}
+.st.done .n{background:var(--ok);border-color:var(--ok);color:#fff}
+.st.gave .n{background:var(--bubble);border-color:var(--again);font-size:1.05rem}
+.st.off{opacity:.42}
+.st-t{font-weight:900;font-size:1.15rem}
+.st-sub{color:var(--muted);font-size:.92rem}
+.dots{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:4px}
+/* one grey tick per reason: tap it when the reason has been given, it fills green */
+.dot{width:1.75rem;height:1.75rem;border-radius:50%;border:2px solid var(--tick);background:var(--card);color:var(--tick);padding:0;
+  font-weight:900;font-size:1rem;line-height:1;display:grid;place-items:center;transition:background .15s, transform .15s, color .15s}
+.dot:hover{border-color:var(--ok);color:var(--ok)}
+.dot{position:relative;overflow:hidden}
+.dot::before{content:"";position:absolute;inset:0;border-radius:50%;background:var(--ok);transform:scale(0)}
+.dot > span{position:relative;z-index:1}
+.dot.on{border-color:var(--ok);color:var(--on-ok);transform:scale(1.08)}
+.dot.on::before{transform:scale(1)}
+.dot.fill{animation:tickpop .45s cubic-bezier(.3,1.5,.5,1)}
+.dot.fill::before{animation:tickfill .3s ease-out}
+@keyframes tickfill{from{transform:scale(0)}to{transform:scale(1)}}
+@keyframes tickpop{0%{transform:scale(1)}45%{transform:scale(1.45)}100%{transform:scale(1.08)}}
+.dot.monkey{border-color:transparent;background:transparent;font-size:1.25rem;cursor:default}
+.dot.monkey::before{display:none}
+.giveup{border:2px dashed var(--line);background:transparent;color:var(--muted);border-radius:99px;padding:1px 12px;font-weight:700;font-size:.92rem;margin-left:4px}
+.giveup:hover{border-color:var(--again);color:var(--again)}
+.gave-tag{font-weight:700;font-size:.92rem;color:var(--again);margin-left:4px}
+.exbtn.sm{padding:2px 12px;font-size:.9rem;margin-left:4px}
+.ex-step{display:grid;gap:6px;background:var(--bubble);color:var(--bubble-ink);border-radius:12px;padding:10px 16px 12px 58px;margin:-4px 0 2px}
+.ex-step.opening{animation:enter .35s ease-out}
+.ex-step .ex-h{display:flex;justify-content:space-between;align-items:baseline}
+.ex-step p{margin:0;line-height:1.35}
+.ex-step .bx{color:var(--flip-ink)}
+.btn.meh{border-color:var(--muted);color:var(--muted)}
+.btn.meh.on{background:var(--muted);color:var(--card)}
+.chip.meh{background:var(--line);color:var(--ink)}
+.die{width:3.3rem;height:3.3rem;border-radius:11px;background:#FFFFFF;border:3px solid #1D1D1B;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:.45rem;box-shadow:0 4px 0 #1D1D1B}
+.die i{width:.62rem;height:.62rem;border-radius:50%;background:#1D1D1B;place-self:center;visibility:hidden}
+.die i.p{visibility:visible}
+.die-wrap{display:flex;align-items:center;gap:10px}
+.die-n{font-weight:900;font-size:1.05rem;color:var(--muted);min-width:5.5em}
+.choice{display:flex;gap:8px;flex-wrap:wrap}
+.choice .btn{min-height:44px;padding:6px 16px}
+.next-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.exbtn{border:2px solid var(--bubble-line, #E6D96A);background:var(--bubble);color:var(--bubble-ink);border-radius:99px;padding:6px 16px;font-weight:900;font-size:1rem}
+.ex{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;background:var(--bubble);color:var(--bubble-ink);border-radius:14px;padding:12px 16px;animation:enter .3s ease-out}
+@media (max-width:640px){ .ex{grid-template-columns:1fr} }
+.ex-col{display:grid;gap:6px;align-content:start}
+.ex-h{font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
+.ex p{margin:0;line-height:1.35}
+.ex .bx{color:var(--flip-ink)}
+.sofar{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center}
+.sofar b{margin-right:4px}
+.chip{border-radius:99px;padding:2px 12px;font-weight:700;font-size:.95rem}
+.chip-in{animation:chipin .5s cubic-bezier(.3,1.5,.5,1)}
+@keyframes chipin{from{opacity:0;transform:translateY(-14px) scale(.6)}to{opacity:1;transform:none}}
+.dot.appear,.giveup.appear{animation:appear .38s both cubic-bezier(.3,1.6,.5,1)}
+@keyframes appear{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:scale(1)}}
+.die{will-change:transform}
+.chip.yes{background:var(--ok-chip);color:var(--ok-ink)} .chip.nope{background:var(--no-chip);color:var(--no-ink)}
+.foot-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.panel{background:var(--bubble);color:var(--bubble-ink);border-radius:14px;padding:14px 18px;font-size:1.15rem}
+.panel b{display:block;font-size:.85rem;letter-spacing:.07em;text-transform:uppercase;margin-bottom:2px}
+/* decide */
+.decide-top{display:flex;align-items:baseline;gap:6px 14px;flex-wrap:wrap}
+.decide h2{font-size:1.6rem;font-weight:900}
+.decide .lead{margin:0;font-size:1.05rem;color:var(--muted)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:640px){ .cols{grid-template-columns:1fr} }
+.col{display:grid;gap:5px;align-content:start}
+.col-h{display:flex;justify-content:space-between;align-items:baseline}
+.col-h .cnt{color:var(--muted);font-weight:700}
+.pick{display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left;border:2px solid var(--line);background:var(--card);border-radius:10px;padding:4px 12px;font-size:1rem;font-weight:700}
+.pick .was{font-weight:400;font-size:.85rem;color:var(--muted);white-space:nowrap}
+.pick.on.cut{border-color:var(--no);background:var(--no-bg)}
+.pick.on.add{border-color:var(--ok);background:var(--ok-bg)}
+.pick .mark{font-weight:900}
+.frame{background:var(--bubble);color:var(--bubble-ink);border-radius:14px;padding:14px 18px;font-size:1.3rem;font-weight:700;line-height:1.4}
+.follow{background:var(--card);border:2px solid var(--bubble);border-left:8px solid var(--date-bg);border-radius:14px;padding:12px 18px;display:grid;gap:8px}
+.follow-in{animation:enterR .45s cubic-bezier(.2,.8,.2,1)}
+.follow-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.follow-h{font-size:.85rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
+.follow-q{margin:0;font-size:1.25rem;font-weight:700;line-height:1.35}
+.follow .speak-dots button::before{background:var(--line)} .follow .speak-dots button.was::before{background:var(--muted)} .follow .speak-dots button.on::before{background:var(--date-bg)}
+.frame small{display:block;font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;margin-bottom:4px}
+</style>
+</head>
+<body>
+<div class="wrap"><main class="main" id="main"></main><div class="side" id="side"></div></div>
+<footer class="legal"><a href="../../impressum.html">Impressum</a> · <a href="../../datenschutz.html">Datenschutz</a></footer>
+<script>
+const D = __DATA__;
+const STICKER = "__STICKER__";
+const TOOLS_VERSION = "__TOOLS_VERSION__";
+__BASE_JS__
+/* ---------- state ---------- */
+const DIE_OPTIONS = [3, 4, 6];
+let faces = DIE_OPTIONS.includes(+params.get("dice")) ? +params.get("dice") : 6;
+const LISTS = Object.fromEntries(D.lists.map(l => [l.kind, l]));
+const ORDER = D.lists.map(l => l.kind);            /* cut, add, cut, add… */
+let S;
+function newGame(){
+  S = { draws: 0, pools: Object.fromEntries(D.lists.map(l => [l.kind, shuffle(l.items.map((_, i) => i))])),
+        cur: null, done: [], view: "game", picks: {cut: new Set(), add: new Set()}, peek: false, fu: 0, fuShown: false };
+  draw();     /* the first subject is on the table straight away (her wish: no "Draw" button) */
+}
+newGame();
+const WORDS = {
+  /* no "it" / "that" in the labels (her point, 27.10): students lift wording from the screen, and the right pronoun depends on the subject */
+  cut: {keep: "Reasons to keep", drop: "Reasons to cut", q: "Keep or cut?", yes: "Keep", no: "Cut", yesTag: "keep", noTag: "cut"},
+  add: {keep: "Reasons to add", drop: "Reasons not to add", q: "Add or not?", yes: "Add", no: "Don't add", yesTag: "add", noTag: "don't add"}
+};
+const itemOf = (kind, i) => LISTS[kind].items[i];
+
+function draw(sameKind){
+  let kind = sameKind || ORDER[S.draws % ORDER.length];
+  if(!S.pools[kind].length) kind = ORDER.find(k => S.pools[k].length);
+  if(!kind){ S.cur = null; return; }
+  const i = S.pools[kind].shift();
+  S.cur = {kind, i, r: [{n: null, got: 0}, {n: null, got: 0}], dec: null, exOpen: [false, false], exSeen: [false, false]};
+  if(!sameKind) S.draws++;
+}
+function swap(){
+  if(!S.cur || S.cur.r[0].n !== null) return;
+  const {kind, i} = S.cur, pool = S.pools[kind];
+  if(!pool.length) return;
+  pool.splice(1 + Math.floor(Math.random() * pool.length), 0, i);
+  draw(kind); render(true);
+}
+function next(){
+  if(!S.cur || S.cur.dec === null || S.busy) return;
+  const go = () => { S.busy = false; S.done.push(S.cur); S.popChip = true; draw(); render(true); S.popChip = false; };
+  const stage = document.querySelector(".stage");
+  if(!stage || calm()){ go(); return; }
+  S.busy = true;   /* the subject slides away, the next one comes in */
+  stage.animate([{transform: "none", opacity: 1}, {transform: "translateX(-70px) rotate(-2deg)", opacity: 0}], {duration: 420, easing: "cubic-bezier(.5,0,.75,0)"}).onfinish = go;
+}
+
+/* ---------- the die ---------- */
+const PIPS = {1:[5], 2:[1,9], 3:[1,5,9], 4:[1,3,7,9], 5:[1,3,5,7,9], 6:[1,3,4,6,7,9]};
+const dieHTML = n => `<span class="die" aria-label="${n}">${Array.from({length: 9}, (_, k) => `<i class="${PIPS[n].includes(k + 1) ? "p" : ""}"></i>`).join("")}</span>`;
+/* the example opens by itself only the first time a row is finished */
+function openEx(k, auto){ const c = S.cur; if(!c || !exOf(k) || (auto && c.exSeen[k])) return; c.exOpen[k] = true; c.exSeen[k] = true; S.exAnim = k; }
+const setFace = (die, n) => die.querySelectorAll("i").forEach((p, j) => p.classList.toggle("p", PIPS[n].includes(j + 1)));
+/* the roll: the die tumbles and slows down (faces change more and more slowly), lands with a bounce,
+   then the ticks for the reasons appear one by one */
+function roll(k){
+  const r = S.cur.r[k]; if(r.n !== null || S.busy) return;
+  const final = 1 + Math.floor(Math.random() * faces), any = () => 1 + Math.floor(Math.random() * faces);
+  const slot = document.querySelector(`[data-die-slot="${k}"]`);
+  if(!slot || calm()){ r.n = final; S.justRolled = k; render(); S.justRolled = null; return; }
+  S.busy = true;
+  slot.closest(".st").querySelectorAll("button").forEach(b => b.disabled = true);
+  slot.innerHTML = dieHTML(any());
+  const die = slot.firstElementChild, gaps = [50, 55, 60, 70, 80, 95, 115, 140, 175, 220, 280];
+  const total = gaps.reduce((a, b) => a + b, 0);
+  die.animate([
+    {transform: "translate(0, 0) rotate(0deg)"},
+    {transform: "translate(-8px, -22px) rotate(-240deg)", offset: .22},
+    {transform: "translate(4px, 0) rotate(-470deg)", offset: .5},
+    {transform: "translate(-2px, -8px) rotate(-610deg)", offset: .74},
+    {transform: "translate(0, 0) rotate(-700deg)", offset: .9},
+    {transform: "translate(0, 0) rotate(-720deg)"}], {duration: total, easing: "cubic-bezier(.12,.75,.3,1)"});
+  let t = 0; gaps.forEach((g, i) => { t += g; setTimeout(() => { let f = i === gaps.length - 1 ? final : any(); setFace(die, f); }, t); });
+  setTimeout(() => die.animate([{transform: "scale(1)"}, {transform: "scale(1.22)"}, {transform: "scale(.94)"}, {transform: "scale(1)"}], {duration: 360, easing: "ease-out"}), t);
+  setTimeout(() => { S.busy = false; r.n = final; S.justRolled = k; render(); S.justRolled = null; }, t + 420);
+}
+
+/* ---------- views ---------- */
+const metaHTML = it => [it.ipa ? `<span class="ipa">${esc(it.ipa)}</span>` : "", it.note ? esc(it.note) : "", it.ru ? `<span class="ru">${esc(it.ru)}</span>` : ""].filter(Boolean).join(" · ");
+function stepHTML(k){
+  const c = S.cur, w = WORDS[c.kind], r = c.r[k];
+  const off = k === 1 && c.r[0].n === null, full = r.n !== null && r.got >= r.n, done = full || r.gaveUp;
+  const fresh = S.justRolled === k, delay = j => fresh ? ` style="animation-delay:${j * 90}ms"` : "";
+  const gave = r.gaveUp && !full, monkeys = S.justGave === k;
+  const dots = r.n === null ? "" : `<div class="dots">${Array.from({length: r.n}, (_, j) => j >= r.got && gave
+        ? `<span class="dot monkey ${monkeys ? "appear" : ""}"${monkeys ? ` style="animation-delay:${(j - r.got) * 110}ms"` : ""} aria-label="gave up">🙈</span>`
+        : `<button class="dot ${j < r.got ? "on" : ""} ${fresh ? "appear" : ""} ${S.popTick === k + "." + j ? "fill" : ""}"${delay(j)} data-dot="${k}.${j}" aria-label="reason ${j + 1}" aria-pressed="${j < r.got}"><span>✓</span></button>`).join("")}
+      ${full ? "" : gave ? `<button class="linkish" data-giveup="${k}">undo</button>` : `<button class="giveup ${fresh ? "appear" : ""}"${delay(r.n)} data-giveup="${k}">🙈 We give up</button>`}
+      ${exOf(k) && !c.exOpen[k] ? `<button class="exbtn sm" data-ex="${k}">💡 Example</button>` : ""}</div>`;
+  return `<div class="st ${off ? "off" : ""} ${done ? "done" : ""} ${gave ? "gave" : ""}">
+    <span class="n">${gave ? "🙈" : done ? "✓" : k + 1}</span>
+    <div><div class="st-t">${k === 0 ? w.keep : w.drop}${r.n !== null ? `: ${r.n}` : ""}</div>
+      ${r.n === null ? "" : dots}</div>
+    <div class="die-wrap" data-die-slot="${k}">${r.n === null ? `<button class="btn primary" data-roll="${k}" ${off ? "disabled" : ""}>🎲 Roll</button>` : dieHTML(r.n)}</div>
+  </div>`;
+}
+function gameHTML(anim){
+  const c = S.cur;
+  if(!c) return `<section class="stage empty ${anim ? "enter" : ""}"><p>That's all the subjects.</p>
+      <button class="btn primary big" data-decide>Time to decide →</button></section>${sofarHTML()}`;
+  const it = itemOf(c.kind, c.i), w = WORDS[c.kind], ready = c.r[1].n !== null;
+  return `<section class="stage ${anim ? "enter" : ""}">
+      <div class="stage-top"><div class="subj-top"><span class="subj-label">${esc(LISTS[c.kind].label)}</span>
+        <h2 class="subj">${esc(it.t)}</h2>${metaHTML(it) ? `<div class="subj-meta">${metaHTML(it)}</div>` : ""}</div></div>
+      <div class="steps">${stepHTML(0)}${exStepHTML(0)}${stepHTML(1)}${exStepHTML(1)}
+        <div class="st ${ready ? "" : "off"} ${c.dec !== null ? "done" : ""}"><span class="n">${c.dec !== null ? "✓" : 3}</span>
+          <div><div class="st-t">Together: ${w.q}</div></div>
+          <div class="choice"><button class="btn ok ${c.dec === true ? "on" : ""}" data-dec="1" ${ready ? "" : "disabled"}>${w.yes}</button>
+            <button class="btn no ${c.dec === false ? "on" : ""}" data-dec="0" ${ready ? "" : "disabled"}>${w.no}</button>
+            <button class="btn meh ${c.dec === "agree" ? "on" : ""}" data-dec="agree" ${ready ? "" : "disabled"}>🤝 Agree to disagree</button></div></div></div>
+      <div class="next-row">${c.r[0].n === null && S.pools[c.kind].length ? `<button class="linkish" data-swap>Another subject</button>` : "<span></span>"}
+        <button class="btn primary" data-next ${c.dec === null ? "disabled" : ""}>Next subject →</button></div>
+    </section>${sofarHTML()}`;
+}
+/* 💡 Example: two model reasons for each side, written in the lesson chat (box phrases in **bold**).
+   It opens by itself under a reason row once that row is done (all ticked, or "We give up"), so they try first; 💡 opens it earlier */
+const exLine = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>');
+const exOf = k => { const c = S.cur, it = c && itemOf(c.kind, c.i); return it && it.ex && c.r[k].n !== null ? (k === 0 ? it.ex.for : it.ex.against) : null; };
+const exStepHTML = k => { const lines = exOf(k); if(!lines || !S.cur.exOpen[k]) return "";
+  return `<div class="ex-step ${S.exAnim === k ? "opening" : ""}" role="region" aria-label="Example"><span class="ex-h"><span>💡 Example</span><button class="linkish" data-ex-hide="${k}">hide</button></span>${lines.map(s => `<p>${exLine(s)}</p>`).join("")}</div>`; };
+const allExamplesHTML = () => D.lists.some(l => l.items.some(it => it.ex)) ? allHTML("All the examples", D.lists.map(l => { const w = WORDS[l.kind];
+    return `<span class="all-h">${esc(l.label)}</span>` + l.items.filter(it => it.ex).map(it => `<div class="all-row"><span class="all-sub">${esc(it.t)}</span>
+      <span class="all-side">${w.keep}</span>${it.ex.for.map(s => `<p>${exLine(s)}</p>`).join("")}
+      <span class="all-side">${w.drop}</span>${it.ex.against.map(s => `<p>${exLine(s)}</p>`).join("")}</div>`).join(""); }).join("")) : "";
+const decTag = (d, w) => d.dec === "agree" ? "agree to disagree" : d.dec ? w.yesTag : w.noTag;
+const sofarHTML = () => S.done.length ? `<div class="sofar"><b>So far:</b>${S.done.map((d, i) => { const w = WORDS[d.kind];
+    return `<span class="chip ${d.dec === "agree" ? "meh" : d.dec ? "yes" : "nope"} ${S.popChip && i === S.done.length - 1 ? "chip-in" : ""}">${esc(itemOf(d.kind, d.i).t)} · ${decTag(d, w)}</span>`; }).join("")}</div>` : "";
+const speakStage = () => `<section class="stage-wrap ${S.enter ? "enter" : ""}">${speakHTML(D.speaking, `<button class="btn" data-back>← The subjects you haven't discussed</button><button class="btn primary" data-restart>Start again</button>`, "Extra speaking")}</section>`;
+/* follow-up questions: they come in once two to cut and two to add are picked, one at a time */
+function followHTML(){
+  const F = D.followUp || [];
+  if(!F.length || S.picks.cut.size < 2 || S.picks.add.size < 2) return "";
+  const i = Math.min(S.fu, F.length - 1), first = !S.fuShown; S.fuShown = true;
+  return `<div class="follow ${first ? "follow-in" : ""}"><div class="follow-top"><span class="follow-h">➕ Follow-up</span>
+      ${dotsHTML(F.length, i, "data-fu-go", "Follow-up")}</div>
+    <p class="follow-q">${boxMarks(F[i])}</p>
+    ${i || i < F.length - 1 ? `<div class="row-actions">${i ? `<button class="btn slim" data-fu-prev>← Previous</button>` : ""}${i < F.length - 1 ? `<button class="btn slim" data-fu-next>Next follow-up →</button>` : ""}</div>` : ""}</div>`;
+}
+function decideHTML(){
+  const col = kind => { const l = LISTS[kind], w = WORDS[kind], picked = S.picks[kind];
+    return `<div class="col"><div class="col-h"><span class="subj-label">${esc(l.label)}</span><span class="cnt">${kind === "cut" ? "two to cut" : "two to add"}${picked.size ? ` · ${picked.size} picked` : ""}</span></div>
+      ${l.items.map((it, i) => { const d = S.done.find(x => x.kind === kind && x.i === i), on = picked.has(i);
+        return `<button class="pick ${kind} ${on ? "on" : ""}" data-pick="${kind}.${i}" aria-pressed="${on}"><span>${on ? `<span class="mark">${kind === "cut" ? "✂" : "＋"}</span> ` : ""}${esc(it.t)}</span>${d ? `<span class="was">you said: ${decTag(d, w)}</span>` : ""}</button>`; }).join("")}</div>`; };
+  return `<section class="stage decide ${S.enter ? "enter" : ""}"><div class="decide-top"><h2>Decide together</h2>
+    <p class="lead">Agree on two to cut and two to add. Tap them.</p></div>
+    <div class="cols">${col("cut")}${col("add")}</div>
+    <div class="frame"><small>Your decision</small>${esc(D.report)}</div>
+    ${followHTML()}
+    <div class="row-actions"><button class="btn" data-back>← Back to the reasons</button>${D.speaking && D.speaking.length ? `<button class="btn" data-stage="speak">💬 Extra speaking →</button>` : ""}</div>
+  </section>`;
+}
+function goStage(v){ if(S.view === v || S.busy) return; S.view = v; S.enter = true; render(); S.enter = false; scrollTo(0, 0); }
+function headHTML(){
+  return `<header class="head"><span class="part">${esc(D.part)}</span><h1>${esc(D.title)}</h1>
+      ${stagesHTML([["game", "🎲 Reasons"], ["decide", "🤝 Decide"], ["speak", "💬 Extra speaking"]], S.view)}</header>
+    ${S.view !== "game" ? "" : `<div class="hint-top dice-hint"><span>🎲 The dice tells you how many reasons to give, for and against — a phrase from the box for each.</span>
+      <span class="seg" role="group" aria-label="Dice">${DIE_OPTIONS.map(n => `<button data-faces="${n}" aria-pressed="${faces === n}">1–${n}</button>`).join("")}</span></div>`}
+`;
+}
+function sideHTML(){
+  const extra = (D.situation ? `<p class="situation">${esc(D.situation)}</p>` : "") + (D.extra ? `<p class="extra">${esc(D.extra)}</p>` : "");
+  if(D.boxHidden && !S.peek) return `${extra}<div class="peek"><p>Try not to look at the box.</p><button class="btn" data-peek>👀 Peek</button></div>`;
+  return `${extra}${boxHTML(D.box, {clickable: true, collapsible: D.boxHidden})}`;
+}
+function render(anim){
+  const main = document.getElementById("main"), side = document.getElementById("side");
+  main.innerHTML = headHTML() + (S.view === "decide" ? decideHTML() : S.view === "speak" ? speakStage() : gameHTML(anim));
+  /* 📋 under the box: a fallback for her, not something to invite a click (27.10) */
+  const st = side.scrollTop; side.innerHTML = sideHTML() + allExamplesHTML(); side.scrollTop = st;
+  wireAll(side); wireBox(side); wireSpeak(main, render); S.exAnim = null;
+  const on = (sel, fn) => document.querySelectorAll(sel).forEach(b => b.addEventListener("click", () => fn(b)));
+  on("[data-roll]", b => roll(+b.dataset.roll));
+  on("[data-giveup]", b => { const k = +b.dataset.giveup, r = S.cur.r[k]; r.gaveUp = !r.gaveUp; if(r.gaveUp){ S.justGave = k; openEx(k, true); } render(); S.justGave = null; });
+  on("[data-dot]", b => { const [k, j] = b.dataset.dot.split(".").map(Number), r = S.cur.r[k]; r.got = j < r.got ? j : j + 1; S.popTick = j < r.got ? `${k}.${j}` : null;
+    const complete = r.got >= r.n; if(complete) setTimeout(() => { openEx(k, true); render(); pop(document.querySelectorAll(".st .n")[k]); }, 420);
+    render(); S.popTick = null; });
+  on("[data-dec]", b => { S.cur.dec = b.dataset.dec === "agree" ? "agree" : b.dataset.dec === "1"; render(); pop(document.querySelector(`[data-dec="${b.dataset.dec}"]`)); pop(document.querySelectorAll(".st .n")[2]); });
+  on("[data-next]", next);
+  on("[data-swap]", swap);
+  on("[data-ex]", b => { openEx(+b.dataset.ex); render(); });
+  on("[data-ex-hide]", b => { S.cur.exOpen[+b.dataset.exHide] = false; render(); });
+  on("[data-decide]", () => goStage("decide"));
+  on("[data-stage]", b => goStage(b.dataset.stage));
+  on("[data-back]", () => { S.view = "game"; render(); });
+  const fuGo = k => { S.fu = k; render(); pop(document.querySelector(".follow")); };
+  on("[data-fu-next]", () => fuGo(S.fu + 1));
+  on("[data-fu-prev]", () => fuGo(Math.max(0, S.fu - 1)));
+  on("[data-fu-go]", b => fuGo(+b.dataset.fuGo));
+  on("[data-pick]", b => { const [kind, i] = b.dataset.pick.split("."), set = S.picks[kind]; set.has(+i) ? set.delete(+i) : set.add(+i); render(); if(set.has(+i)) pop(document.querySelector(`[data-pick="${kind}.${i}"]`)); });
+  on("[data-faces]", b => { faces = +b.dataset.faces; render(); });
+  on("[data-restart]", () => { usedPhrases.clear(); spk = 0; newGame(); render(true); });
+  on("[data-peek]", () => { S.peek = true; render(); });
+  on("[data-box-toggle]", () => { S.peek = false; render(); });
+}
+render();
+</script>
+</body>
+</html>

@@ -59,7 +59,7 @@ head = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
         '<style>body{margin:0}img{max-width:100%}</style>\n')
 if cfg.get('listed', True) is False:   # an unlisted page: built and uploadable, opens by its link, left out of the lists and the start page
     head += '<meta name="hw-unlisted" content="1">\n<meta name="robots" content="noindex">\n'
-    print('unlisted: not in the group list or on the start page until "listed" is true and build_index.py runs')
+    print('unlisted: students don\'t see it in their list until Olya taps 📢 Publish on the page (her teacher view shows it with 🔒); run build_index.py too')
 i = t.index('<div class="wrap" id="app"></div>')
 out_dir = os.path.join(site, cfg['group']); os.makedirs(out_dir, exist_ok=True)
 out = os.path.join(out_dir, cfg['file'])

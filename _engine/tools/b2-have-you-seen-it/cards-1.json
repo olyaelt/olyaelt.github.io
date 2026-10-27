@@ -1,0 +1,48 @@
+{
+ "type": "say-it-another-way",
+ "title": "Say it another way",
+ "part": "Have you seen it?",
+ "hint": "Think together. Take turns to say it another way — the others agree or not. Then tap the card to check.",
+ "cards": [
+  ["((Everyone at work)) talks about it all the time. It's getting a bit much.", "Everyone at work keeps going on about it."],
+  ["I stopped watching after the third episode.", "I gave up after episode three."],
+  ["It was slow at first, but from episode four it's much better.", "It really picks up in episode four."],
+  ["People say it's brilliant, but I don't think so.", "It's not as good as everyone says."],
+  ["I've watched a few short clips, not the whole thing.", "I've only seen bits of it."],
+  ["((Some of the jokes)) feel wrong today.", "Some of the jokes haven't aged well."],
+  ["It reminds me of when I was young.", "It takes me back."],
+  ["Don't waste your time on it.", "Honestly? I wouldn't bother."],
+  ["Watch an episode or two and see if you like it.", "Give it a try."],
+  ["OK, the music is good. I admit that.", "The music's good, I'll give it that."]
+ ],
+ "box": [
+  {"h": "HAVE YOU SEEN IT?", "items": [
+    "Everyone's talking about it. – все говорят ('s = is)",
+    "Everyone keeps going on about it. – твердят (надоело)",
+    "I've only seen bits of it. – видела отрывки",
+    "I gave up after episode 3. – бросила после",
+    "I couldn't get into it. – не втянулась"]},
+  {"h": "WHAT'S IT LIKE?", "items": [
+    "It really picks up in episode 4. – потом лучше",
+    "It's not as good as everyone says.",
+    "All the hype put me off. – оттолкнул",
+    "The acting's great, I'll give it that.",
+    "Well, it is a crime drama! – ну это же детектив"]},
+  {"h": "OLD FAVOURITES", "items": [
+    "It takes me back. – как в детстве",
+    "The jokes haven't aged well. – устарели",
+    "I see it in a different light now."]},
+  {"h": "SHOULD I WATCH IT?", "items": [
+    "Is it any good? – стоит смотреть?",
+    "Give it a try. – попробуй",
+    "I wouldn't bother. – не трать время (прямо)"]}
+ ],
+ "speaking": [
+  "Name two films or series everyone keeps going on about right now. Have you seen them — or only bits of them? Agree which one you'd tell a friend to give a try.",
+  "Which is the worst: a slow start, a disappointing ending, or jokes that haven't aged well? Put them in order and give a reason for each.",
+  "Think of a series you gave up on — or a popular one lots of people give up on. Give two reasons why it's hard to get into. Is it worth a second try?",
+  "Name one series that really picks up after a slow start and one that's not as good as everyone says — and say why. Haven't seen them? Say what you've heard.",
+  "An old film or cartoon that takes you back: name one thing that still works and one thing that hasn't aged well.",
+  "Name two films or series with a lot of hype. Agree which one is really good and which one is not as good as everyone says. Haven't seen one? Say if all the hype put you off."
+ ]
+}

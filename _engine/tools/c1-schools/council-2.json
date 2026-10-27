@@ -1,0 +1,201 @@
+{
+ "type": "dice-council",
+ "title": "School council",
+ "part": "Part 2",
+ "situation": "A year later, at the same school. The head wants to cut coding and essay writing: “AI can do all that now.”",
+ "lists": [
+  {
+   "kind": "cut",
+   "label": "Could be cut",
+   "items": [
+    {
+     "t": "coding",
+     "ex": {
+      "for": [
+       "You need to understand code to check what AI writes — **that's where you really add value**.",
+       "**It was a steep learning curve**, but it taught me to think step by step."
+      ],
+      "against": [
+       "**They're handing it over to AI** — why spend years on it at school?",
+       "**They've stopped hiring juniors** in tech, so why train kids for jobs that aren't there?"
+      ]
+     }
+    },
+    {
+     "t": "essay writing",
+     "ex": {
+      "for": [
+       "It's **more important than you'd think** — writing helps you sort out your thoughts.",
+       "When AI writes the first draft, I edit it — **that's where I really add value**."
+      ],
+      "against": [
+       "**They're handing it over to AI** — nobody writes reports from scratch any more.",
+       "We did essay writing every week, and **I've never used it since**."
+      ]
+     }
+    },
+    {
+     "t": "foreign languages",
+     "ex": {
+      "for": [
+       "**You never know when it might come in handy** — I never thought I'd live abroad.",
+       "Translation apps **only get you so far** — try making friends through one."
+      ],
+      "against": [
+       "AI translates everything now — **what's the point of** six years of French?",
+       "I did French at school, but when I moved to France, **I had to start from scratch**."
+      ]
+     }
+    },
+    {
+     "t": "spelling and handwriting",
+     "ex": {
+      "for": [
+       "It's **more important than you'd think** — people judge you by your spelling.",
+       "**You never know when it might come in handy** — when your battery dies, for example."
+      ],
+      "against": [
+       "It's **a complete waste of time** — spellcheck does it for us.",
+       "**It's out of date.** Nobody writes by hand any more."
+      ]
+     }
+    },
+    {
+     "t": "mental maths",
+     "note": "AmE: math",
+     "ru": "устный счёт",
+     "ex": {
+      "for": [
+       "It's **more useful than you'd think** — in shops, with discounts, when you split a bill.",
+       "**It was hard, but it paid off** — I notice at once when a bill doesn't look right."
+      ],
+      "against": [
+       "**What's the point of** mental maths when everyone has a phone?",
+       "We spent hours on it, and **I've never used it since**."
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "kind": "add",
+   "label": "Could be added",
+   "items": [
+    {
+     "t": "using AI well (and checking it)",
+     "ex": {
+      "for": [
+       "**They're handing** more and more work **over to AI**, so someone has to check it.",
+       "**I taught myself, the hard way** — kids shouldn't have to."
+      ],
+      "against": [
+       "The tools change every month, so what they learn will be **out of date** by the time they leave school.",
+       "Kids **pick it up** on their own — and very fast."
+      ]
+     }
+    },
+    {
+     "t": "how to learn",
+     "ex": {
+      "for": [
+       "Everything goes **out of date**, so **you need to adapt** — and that means knowing how to learn.",
+       "When I changed careers, **I had to start from scratch**, and nobody had ever shown me how to learn."
+      ],
+      "against": [
+       "**I picked it up on the job** — you learn how to learn by doing it, not in a lesson.",
+       "**School only gets you so far** — everyone learns differently, so you have to find your own way."
+      ]
+     }
+    },
+    {
+     "t": "fact-checking",
+     "ru": "проверка фактов",
+     "ex": {
+      "for": [
+       "AI makes things up, so checking the facts — **that's where you really add value**.",
+       "Before I believe a big news story, **I read up on it** — kids should learn to do that too."
+      ],
+      "against": [
+       "**What's the point of** a separate subject? Every teacher can do it in their lessons.",
+       "You just **do your homework** before you share something — that's a habit, not a subject."
+      ]
+     }
+    },
+    {
+     "t": "dealing with difficult people",
+     "ex": {
+      "for": [
+       "My first year as a manager **was a steep learning curve** — nobody had taught me any of it.",
+       "**I picked it up on the job, the hard way**, and I'd love my kids to have it easier."
+      ],
+      "against": [
+       "**School only gets you so far** — you learn it from real people, not from role-plays.",
+       "It's **more complicated than you'd think** — every difficult person is different, so a school course can't really prepare you."
+      ]
+     }
+    },
+    {
+     "t": "working in a team",
+     "ex": {
+      "for": [
+       "**They've stopped hiring juniors**, so there's no first job to learn it in any more — school has to teach it.",
+       "It's **more important than you'd think** — most projects fail because people can't work together, not because they lack skills."
+      ],
+      "against": [
+       "They already do group projects all the time — **what's the point of** a whole subject?",
+       "**I picked it up on the job** — you can't learn it from a textbook."
+      ]
+     }
+    }
+   ]
+  }
+ ],
+ "box": [
+  {
+   "h": "Useful or not?",
+   "items": [
+    "It was a complete waste of time.",
+    "I've never used it since.",
+    "You never know when it might come in handy.",
+    "It's more … than you'd think.",
+    "What's the point of …?",
+    "None of it counted.",
+    "I had to start from scratch.",
+    "School only gets you so far.",
+    "That's where I really add value."
+   ]
+  },
+  {
+   "h": "Learning",
+   "items": [
+    "It was a steep learning curve.",
+    "I picked it up on the job, the hard way.",
+    "I read up on it. I did my homework.",
+    "I taught myself."
+   ]
+  },
+  {
+   "h": "Today",
+   "items": [
+    "They've stopped hiring juniors.",
+    "They're handing it over to AI.",
+    "It's out of date. You need to adapt."
+   ]
+  }
+ ],
+ "boxHidden": true,
+ "extra": "Use two phrases you didn't use last time.",
+ "report": "We've decided to cut … and … and add … and … . We'd rather keep … because …",
+ "followUp": [
+  "What did you decide about coding and essay writing? Give the head teacher two reasons, a phrase from the box for each.",
+  "A student says: \"Why learn to write essays if AI does it better?\" Do you agree? Agree on two things you'd say to this student.",
+  "Rank your four changes: which one will make the biggest difference in ten years' time? Agree on your top one, with two reasons."
+ ],
+ "speaking": [
+  "A 20-year-old relative asks: \"What should I study, now that AI can do half the jobs out there?\" Agree on three pieces of advice, a phrase from the box for each.",
+  "Each of you: two skills AI can't replace and one that's already **out of date**. Then agree on the most future-proof one.",
+  "Rank from most to least useful in ten years: coding · essay writing · foreign languages · mental maths · working in a team. Agree on your top two.",
+  "Each of you: something you **picked up the hard way** — at work or anywhere else. Three sentences, two phrases from the box. Your partner asks one question.",
+  "**They've stopped hiring juniors.** Agree on three ways a young person can still get experience, a phrase from the box for each."
+ ]
+}

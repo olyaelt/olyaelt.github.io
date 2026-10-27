@@ -437,6 +437,8 @@ s{color:var(--muted)}
 .field input,textarea{font:inherit;color:var(--ink);background:var(--ground);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
 textarea{min-height:10em;resize:vertical;line-height:1.5}
 .mode{display:grid;gap:10px}
+.saved-note{margin:-4px 2px 0;color:var(--ok-ink);font-weight:700}
+.saved-note.warn{color:var(--muted);font-weight:400}
 .rec-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .rec-btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 22px;border-radius:999px;border:2px solid var(--rec);background:var(--card);color:var(--rec);font-weight:900;cursor:pointer}
 .rec-btn .dot{width:14px;height:14px;border-radius:50%;background:var(--rec)}
@@ -838,7 +840,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = ["click on the top line to hear the context","click on the line with the gap and try to catch what's in the gap","check","listen again — how did the expression sound?","optional: pronounce the expression like the speaker"];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "27";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "28";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -855,6 +857,8 @@ const GROUP_ID = PAGE_KEY.split("-")[2] || "group";
 let groupStats = (()=>{ try{ return JSON.parse(localStorage.getItem("hw-group-"+GROUP_ID)||"null"); }catch(e){ return null; } })();
 const minutesOf = t => t.min || (t.kind==="gaps" ? 5 : t.kind==="link" ? 10 : Math.max(2, Math.round((t.steps||[]).reduce((s,st)=>s+(EST[st.type]||1),0))));
 const lsMem = {};   /* if the browser blocks storage (private mode), remember things for this visit at least */
+/* can this browser keep things after the page is closed? (engine 28: "✓ Saved on this device" under her text) */
+const lsKeeps = (()=>{ try{ localStorage.setItem("hw-test","1"); localStorage.removeItem("hw-test"); return true; }catch(e){ return false; } })();
 const ls = { get:k=>{ try{ const v = localStorage.getItem(k); if(v != null) return v; }catch(e){} return lsMem[k] || ""; }, set:(k,v)=>{ lsMem[k] = v; try{ localStorage.setItem(k,v); }catch(e){} } };
 /* ---------- progress: kept on this device, and in Olya's table once the student enters their code ---------- */
 const SYNC_URL = "https://script.google.com/macros/s/AKfycbwHqzwA-2z09POg7JSqiMhqglOKbD8bxs-UG-NcFKZPzTyzmdEW79ct3zHGktUGyLM_/exec";   /* the address of Olya's progress table; empty = ticks stay on this device only */
@@ -2058,6 +2062,7 @@ function renderProduce(st, count, pct){
         </div>
         <div id="m-write" ${mode==="write"?"":"hidden"} class="mode">
           <textarea id="txt" rows="7" placeholder="${typeof PRODUCE_PH!=="undefined"?PRODUCE_PH:"A: …&#10;B: …"}&#10;(Tap the microphone on your keyboard to dictate.)">${esc(ls.get(draftKey()))}</textarea>
+          <p class="small saved-note" id="txt-saved" aria-live="polite" hidden></p>
         </div>
         <fieldset class="check">
           <legend>Your phrases</legend>
@@ -2085,7 +2090,13 @@ function renderProduce(st, count, pct){
   app.querySelectorAll(".check input").forEach(cb=>cb.addEventListener("change",()=>{
     ls.set(usedKey(), JSON.stringify([...app.querySelectorAll(".check input")].filter(x=>x.checked).map(x=>x.dataset.u)));
   }));
-  const txt = $("txt"); txt.addEventListener("input",()=>ls.set(draftKey(), txt.value));
+  const txt = $("txt"), savedNote = $("txt-saved");
+  /* her wish (27.10): the student sees that the text is kept if the page closes or the internet drops — no Save button */
+  const showSaved = () => { const has = txt.value.trim() !== ""; savedNote.hidden = !has;
+    savedNote.classList.toggle("warn", !lsKeeps);
+    savedNote.textContent = lsKeeps ? "✓ Saved on this device" : "This browser won't keep your text after you close the page — tap Copy first."; };
+  txt.addEventListener("input",()=>{ ls.set(draftKey(), txt.value); showSaved(); });
+  showSaved();
 
   /* recording */
   const recBtn = $("rec"), label = $("rec-label"), time = $("rec-time");

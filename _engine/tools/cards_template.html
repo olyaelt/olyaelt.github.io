@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>__TITLE__</title>
+<link rel="stylesheet" href="../../fonts/homework-sans.css">
+<style>
+__BASE_CSS__
+/* ---------- the deck: read, say it another way, flip, Got it / Again ---------- */
+.progress{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.pd{width:.95rem;height:.95rem;border-radius:50%;background:var(--line);transition:background .25s, transform .25s}
+.pd.got{background:var(--ok)}
+.pd.again{background:var(--again)}
+.pd.pop{animation:dotpop .55s cubic-bezier(.3,1.6,.5,1)}
+@keyframes dotpop{0%{transform:scale(.3)}55%{transform:scale(1.9)}100%{transform:scale(1)}}
+.card.tint-ok{border-color:var(--ok);background:color-mix(in srgb, var(--ok) 16%, var(--card))}
+.card.tint-again{border-color:var(--again);background:color-mix(in srgb, var(--again) 20%, var(--card))}
+.pd.now{transform:scale(1.35);box-shadow:0 0 0 2px var(--ground), 0 0 0 4px var(--instr)}
+.pd.tap{border:0;padding:0;cursor:pointer}
+.pd.tap:hover{transform:scale(1.4)}
+.pd.looked{transform:scale(1.35);box-shadow:0 0 0 2px var(--ground), 0 0 0 4px var(--muted)}
+.card.lookback{border-style:dashed;border-color:var(--muted)}
+.card.back-in{animation:dealback .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes dealback{from{opacity:0;transform:translateX(-60px) rotate(-2deg)}to{opacity:1;transform:none}}
+.card{position:relative;min-height:200px;background:var(--card);border-radius:20px;box-shadow:var(--shadow);border:2px solid var(--line);
+  display:grid;align-content:start;gap:12px;padding:28px 32px 34px;cursor:pointer;transition:border-color .18s, background .18s, transform .15s, box-shadow .15s}
+.card:not(.open):hover{transform:translateY(-2px);box-shadow:0 2px 0 rgba(29,29,27,.08), 0 16px 34px rgba(29,29,27,.12)}
+.card.open{cursor:default;border-color:var(--instr)}
+.card.enter{animation:deal .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes deal{from{opacity:0;transform:translateX(60px) rotate(2deg)}to{opacity:1;transform:none}}
+.card .lbl{font-size:.82rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
+.card .say{font-size:2.05rem;font-weight:700;line-height:1.25;margin:0}
+.say .ctx{color:var(--muted);font-weight:500}
+.ans{display:grid;gap:6px;border-top:2px dashed var(--line);padding-top:14px}
+.ans .say{color:var(--flip-ink);font-weight:900}
+.ans.show{animation:reveal .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes reveal{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+.card .corner{position:absolute;right:18px;bottom:10px;color:var(--muted);font-size:.9rem}
+.actions{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;min-height:64px}
+.actions .btn{min-width:11rem}
+.end{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:26px 30px;display:grid;gap:14px}
+.end h2{font-size:1.9rem;font-weight:900}
+.end p{margin:0}
+.back-list{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.back-list li{background:var(--ground);border-left:5px solid var(--again);border-radius:10px;padding:8px 14px}
+.back-list .f{color:var(--muted);display:block;font-size:.95rem}
+.back-list .f .ctx{opacity:.75}
+.back-list .b{font-weight:900;color:var(--flip-ink);font-size:1.15rem}
+.check{display:inline-flex;gap:8px;align-items:center;font-weight:700}
+.check input{width:1.1rem;height:1.1rem}
+.stage-wrap.enter{animation:deal .45s cubic-bezier(.2,.8,.2,1)}
+.head .gear{margin-left:0}
+</style>
+</head>
+<body>
+<div class="wrap"><main class="main" id="main"></main><div class="side" id="side"></div></div>
+<footer class="legal"><a href="../../impressum.html">Impressum</a> · <a href="../../datenschutz.html">Datenschutz</a></footer>
+<script>
+const D = __DATA__;
+const REVIEW = __REVIEW__;          /* cards from the earlier part, for "+ N from Part 1" (null if none) */
+const STICKER = "__STICKER__";
+const TOOLS_VERSION = "__TOOLS_VERSION__";
+const PAGE_ID = "__PAGE_ID__";       /* e.g. c1-schools/cards-1: the Again list is remembered on this device for the next part */
+__BASE_JS__
+const AGAIN_KEY = id => "tool-again-" + id;
+let useReview = !!(REVIEW && (params.get("review") === "1"));
+let boxOpen = true, settings = false;
+let S;
+function deck(){
+  const own = D.cards.map(([f, b], i) => ({id: "o" + i, f, b}));
+  if(!useReview || !REVIEW) return shuffle(own);
+  /* review: first the cards this device marked "Again" in the earlier part, then random ones */
+  const again = store.get(AGAIN_KEY(REVIEW.page)) || [];
+  const all = REVIEW.cards.map(([f, b], i) => ({id: "r" + i, f, b, review: true}));
+  const first = shuffle(all.filter((c, i) => again.includes(i))), rest = shuffle(all.filter((c, i) => !again.includes(i)));
+  return shuffle(own.concat(first.concat(rest).slice(0, REVIEW.n)));
+}
+function newRound(cards){
+  const list = cards || deck();
+  S = { cards: list, queue: list.map(c => c.id), got: new Set(), again: new Set(), shown: 0, flipped: false, fresh: true };
+}
+newRound();
+const byId = id => S.cards.find(c => c.id === id);
+/* flip in place, so the card turns over (a full re-render would just swap it) */
+function flip(){
+  if(!S.queue.length || S.flipped || S.busy) return; S.flipped = true;
+  const card = document.querySelector(".card"), act = document.querySelector(".actions");
+  if(!card || !act){ render(); return; }
+  card.classList.remove("enter"); card.classList.add("open"); card.removeAttribute("role"); card.removeAttribute("tabindex");
+  const ans = card.querySelector(".ans"); ans.hidden = false; ans.classList.add("show");
+  const corner = card.querySelector(".corner"); if(corner) corner.remove();
+  act.innerHTML = actionsHTML(); wireActions();
+  const first = act.querySelector("[data-got]"); if(first) first.focus({preventScroll: true});
+}
+const fHTML = s => esc(s).replace(/\(\((.+?)\)\)/g, '<span class="ctx">$1</span>');
+/* Got it / Again: the card lights up green or orange, grows a little and flies into its dot, which fills with that colour */
+function answer(ok){
+  if(S.busy || !S.queue.length) return;
+  const id = S.queue[0], scene = document.querySelector(".scene"), back = document.querySelector(".card"), dot = document.querySelector(`.pd[data-id="${id}"]`);
+  if(!scene || !dot || calm()){ commit(ok); return; }
+  S.busy = true;
+  document.querySelectorAll(".actions button").forEach(b => b.disabled = true);
+  if(back) back.classList.add(ok ? "tint-ok" : "tint-again");
+  const a = scene.getBoundingClientRect(), d = dot.getBoundingClientRect();
+  const dx = d.left + d.width / 2 - (a.left + a.width / 2), dy = d.top + d.height / 2 - (a.top + a.height / 2);
+  scene.animate([
+    {transform: "none", opacity: 1},
+    {transform: "scale(1.05)", opacity: 1, offset: .32},
+    {transform: `translate(${dx}px, ${dy}px) scale(.03)`, opacity: .35}], {duration: 720, easing: "cubic-bezier(.55,0,.25,1)"}).onfinish = () => { S.busy = false; commit(ok); };
+}
+function commit(ok){
+  const id = S.queue.shift();
+  if(ok) S.got.add(id);
+  else { S.again.add(id); const k = 2 + Math.floor(Math.random() * 2); if(S.queue.length >= k) S.queue.splice(k, 0, id); else S.queue.push(id); }
+  S.flipped = false; S.shown++; S.fresh = true; S.popId = id;
+  if(!S.queue.length){ const mine = [...S.again].filter(x => x[0] === "o").map(x => +x.slice(1)); store.set(AGAIN_KEY(PAGE_ID), mine); }
+  render();
+}
+function headHTML(){
+  return `<header class="head"><span class="part">${esc(D.part)}</span><h1>${esc(D.title)}</h1>
+      ${D.speaking && D.speaking.length ? stagesHTML([["cards", "🃏 Cards"], ["speak", "💬 Speaking"]], S.speak ? "speak" : "cards") : ""}
+      ${REVIEW ? `<button class="gear" data-settings aria-expanded="${settings}" aria-label="Settings" title="Settings">⚙</button>` : ""}</header>
+    ${settings ? `<div class="settings"><label class="check"><input type="checkbox" data-review ${useReview ? "checked" : ""}> Add ${REVIEW.n} cards from ${esc(REVIEW.part)}</label></div>` : ""}
+    ${S.speak ? "" : `<p class="hint-top">${esc(D.hint || "Think together. Take turns to say it another way — the others agree or not. Then tap the card to check.")}</p>`}`;
+}
+/* the dots: a card already answered can be tapped to look at it again (her case: one student pressed Got it, the other hadn't finished reading) */
+function progressHTML(){
+  const now = S.queue[0];
+  return `<div class="progress">${S.cards.map(c => { const seen = S.got.has(c.id) || S.again.has(c.id), cls = `pd ${S.got.has(c.id) ? "got" : S.again.has(c.id) ? "again" : ""} ${c.id === now && !S.look ? "now" : ""} ${c.id === S.look ? "looked" : ""} ${c.id === S.popId ? "pop" : ""}`;
+    return seen && c.id !== now ? `<button data-id="${c.id}" data-look="${c.id}" class="${cls} tap" aria-label="Look at this card again"></button>` : `<span data-id="${c.id}" class="${cls}" aria-hidden="true"></span>`; }).join("")}</div>`;
+}
+function lookHTML(){
+  const c = byId(S.look), wasGot = S.got.has(c.id);
+  return `<div class="scene"><div class="card open lookback ${S.fresh ? "back-in" : ""}">
+      <span class="lbl">Looking back</span>
+      <p class="say">${fHTML(c.f)}</p>
+      <div class="ans"><p class="say">${esc(c.b)}</p></div>
+    </div></div>
+    <div class="actions">${wasGot ? `<button class="btn again" data-look-again>↺ Again — back into the deck</button>` : ""}<button class="btn primary" data-look-done>Back to the cards →</button></div>`;
+}
+function lookAgain(){   /* it was "Got it", but they want it once more: it goes back into the deck, 2–3 cards later */
+  const id = S.look; S.got.delete(id); S.again.add(id);
+  if(!S.queue.includes(id)){ const k = 2 + Math.floor(Math.random() * 2); if(S.queue.length >= k) S.queue.splice(k, 0, id); else S.queue.push(id); }
+  S.look = null; S.popId = id; render();
+}
+function cardHTML(){
+  const c = byId(S.queue[0]);
+  return `<div class="scene"><div class="card ${S.flipped ? "open" : ""} ${S.fresh ? "enter" : ""}" data-flip ${S.flipped ? "" : `role="button" tabindex="0" aria-label="Show the answer"`}>
+      <span class="lbl">${c.review ? `From ${esc(REVIEW.part)}` : "Say it another way"}</span>
+      <p class="say">${fHTML(c.f)}</p>
+      <div class="ans" ${S.flipped ? "" : "hidden"}><p class="say">${esc(c.b)}</p></div>
+      ${S.flipped ? "" : `<span class="corner">tap to check ↓</span>`}
+    </div></div>
+    <div class="actions">${actionsHTML()}</div>`;
+}
+const actionsHTML = () => S.flipped
+  ? `<button class="btn again" data-again>↺ Again</button><button class="btn ok solid" data-got>✓ Got it</button>` : "";
+function wireActions(){
+  document.querySelectorAll("[data-again]").forEach(b => b.addEventListener("click", () => answer(false)));
+  document.querySelectorAll("[data-got]").forEach(b => b.addEventListener("click", () => answer(true)));
+}
+function endHTML(){
+  const back = S.cards.filter(c => S.again.has(c.id));
+  return `<section class="end"><h2>${back.length ? "Done! Come back to these" : "Done! You got them all"}</h2>
+    ${back.length ? `<ul class="back-list">${back.map(c => `<li><span class="f">${fHTML(c.f)}</span><span class="b">${esc(c.b)}</span></li>`).join("")}</ul>`
+      : `<p>No cards to come back to this time.</p>`}
+    <div class="row-actions">${back.length ? `<button class="btn" data-redo>Go through these again</button>` : ""}${D.speaking && D.speaking.length ? `<button class="btn primary" data-speak>💬 Speaking →</button>` : `<button class="btn" data-restart>All the cards again</button>`}</div></section>`;
+}
+/* after the speaking tasks: the hard cards again, or all of them — so the task never runs out */
+function speakView(){
+  const hard = S.cards.filter(c => S.again.has(c.id)).length;
+  return speakHTML(D.speaking, `${hard ? `<button class="btn" data-redo>The hard cards again</button>` : ""}<button class="btn primary" data-restart>All the cards again</button>`);
+}
+function render(){
+  const main = document.getElementById("main"), side = document.getElementById("side");
+  main.innerHTML = headHTML() + (S.speak ? `<section class="stage-wrap ${S.stageIn ? "enter" : ""}">${speakView()}</section>` : progressHTML() + (S.look ? lookHTML() : S.queue.length ? cardHTML() : endHTML()));
+  wireSpeak(main, render);
+  /* 📋 under the box: a fallback for her, not something to invite a click (27.10) */
+  const st = side.scrollTop;
+  side.innerHTML = (boxOpen ? boxHTML(D.box, {clickable: true, collapsible: true}) : `<div class="peek"><button class="btn" data-box-show>Show the box</button></div>`)
+    + allHTML("All the cards", S.cards.map(c => `<div class="all-row"><span class="f">${fHTML(c.f)}</span><span class="b">${esc(c.b)}</span></div>`).join(""));
+  side.scrollTop = st; wireAll(side); wireBox(side, render);
+  S.fresh = false; S.popId = null; S.stageIn = false;
+  const on = (sel, fn) => document.querySelectorAll(sel).forEach(b => b.addEventListener("click", () => fn(b)));
+  on("[data-flip]", flip); wireActions();
+  on("[data-look]", b => { S.look = b.dataset.look === S.look ? null : b.dataset.look; S.fresh = true; render(); });
+  on("[data-look-done]", () => { S.look = null; S.fresh = true; render(); });
+  on("[data-look-again]", lookAgain);
+  on("[data-speak]", () => { S.speak = true; spk = 0; S.look = null; S.stageIn = true; render(); scrollTo(0, 0); });
+  on("[data-stage]", b => { const sp = b.dataset.stage === "speak"; if(sp === !!S.speak || S.busy) return; S.speak = sp; S.look = null; S.fresh = true; S.stageIn = sp; render(); scrollTo(0, 0); });
+  on("[data-redo]", () => { newRound(shuffle(S.cards.filter(c => S.again.has(c.id)))); render(); });
+  on("[data-restart]", () => { newRound(); render(); });
+  on("[data-settings]", () => { settings = !settings; render(); });
+  on("[data-box-toggle]", () => { boxOpen = false; render(); });
+  on("[data-box-show]", () => { boxOpen = true; render(); });
+  document.querySelectorAll("[data-review]").forEach(x => x.addEventListener("change", () => { useReview = x.checked; newRound(); render(); }));
+}
+document.addEventListener("keydown", e => {
+  if(e.target.closest && e.target.closest("input, textarea")) return;
+  if(S.speak) return;
+  if(S.look){ if(e.key === "Escape"){ S.look = null; S.fresh = true; render(); } return; }
+  if(!S.queue.length) return;
+  if(e.key === " " || e.key === "Enter"){ if(e.target.closest && e.target.closest("button, a, label")) return; e.preventDefault(); flip(); }
+  else if(S.flipped && (e.key === "1" || e.key === "ArrowLeft")) answer(false);
+  else if(S.flipped && (e.key === "2" || e.key === "ArrowRight")) answer(true);
+});
+render();
+</script>
+</body>
+</html>

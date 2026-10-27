@@ -1,0 +1,111 @@
+{
+ "type": "say-it-another-way",
+ "title": "Say it another way",
+ "part": "Part 1",
+ "cards": [
+  [
+   "When I was at school, we memorised lots of dates.",
+   "Back in my day, we learned lots of dates by heart."
+  ],
+  [
+   "Most of what we did had nothing to do with real life.",
+   "Most of it was completely out of touch with real life."
+  ],
+  [
+   "At my kids' school, they learn by doing things themselves.",
+   "My kids' school is very hands-on."
+  ],
+  [
+   "We spent months on those dates, and it was all for nothing.",
+   "It was a complete waste of time."
+  ],
+  [
+   "I use my Latin surprisingly often.",
+   "I use it more often than you'd think."
+  ],
+  [
+   "It might be useful one day. Who knows?",
+   "You never know when it might come in handy."
+  ],
+  [
+   "((Software does a lot of the drawing.)) My real strength is the thinking.",
+   "The thinking — that's where I really add value."
+  ],
+  [
+   "((My law degree?)) I haven't needed it once in all these years.",
+   "I've never used it since."
+  ],
+  [
+   "((In the new country,)) my degree and my experience didn't matter.",
+   "None of it counted."
+  ],
+  [
+   "I had to start all over again, from nothing.",
+   "I had to start from scratch."
+  ],
+  [
+   "Retraining was hard, but in the end it was worth it.",
+   "It was hard, but it paid off."
+  ],
+  [
+   "A course helps, but only up to a point.",
+   "A course only gets you so far."
+  ],
+  [
+   "My grandmother learned dozens of poems at school, word for word.",
+   "Back in her day, they learned poems by heart."
+  ],
+  [
+   "School never covered contracts. We had to work them out ourselves.",
+   "Nobody ever taught us how to read a contract."
+  ],
+  [
+   "Why do we even learn Latin? It's useless.",
+   "What's the point of Latin?"
+  ],
+  [
+   "((You don't need a course for that.)) You learn it as you go.",
+   "You pick it up along the way."
+  ]
+ ],
+ "box": [
+  {
+   "h": "Back then",
+   "items": [
+    "Back in my day, …",
+    "It was out of touch with real life.",
+    "We learned it by heart.",
+    "Nobody ever taught us how to …",
+    "My kids' school is very hands-on."
+   ]
+  },
+  {
+   "h": "Useful or not?",
+   "items": [
+    "It was a complete waste of time.",
+    "I've never used it since.",
+    "You never know when it might come in handy.",
+    "I use it more often than you'd think.",
+    "What's the point of …?",
+    "That's where I really add value.",
+    "You pick it up along the way."
+   ]
+  },
+  {
+   "h": "Starting again",
+   "items": [
+    "None of it counted.",
+    "I had to start from scratch.",
+    "It was hard, but it paid off.",
+    "School only gets you so far."
+   ]
+  }
+ ],
+ "speaking": [
+  "Each of you: three things you learned at school — one that **came in handy**, one that was **a complete waste of time**, one **you've never used since**. Whose school was more useful?",
+  "\"**Back in my day** …\" Each of you: two ways school was different then. Agree on the one change that was for the better.",
+  "Think of someone who had to **start from scratch** — you, a friend, someone you've heard of. Tell the story in five sentences, with two phrases from the box. Your partner asks two questions.",
+  "\"**It was hard, but it paid off.**\" Each of you: two things that were hard to learn but **paid off**. Agree which one paid off most.",
+  "Which card was the hardest? Each of you: two new sentences with it about your own school or work."
+ ]
+}

@@ -73,6 +73,7 @@ button{font:inherit;color:inherit}
 h1{margin:0;font-size:var(--step-2);line-height:1.2;font-weight:900}
 .head{display:grid;gap:4px;padding-block:4px 18px}
 .head p{margin:0;color:var(--muted)}
+.to-start{justify-self:start;color:var(--instr);font-weight:700;text-decoration:none;margin-bottom:6px}
 .small{font-size:.9rem;color:var(--muted)}
 .btn{min-height:48px;padding:0 20px;border-radius:12px;border:2px solid var(--instr);background:transparent;color:var(--instr);font-weight:900;cursor:pointer}
 .btn.primary{background:var(--instr);color:var(--instr-ink)}
@@ -351,7 +352,7 @@ function tipHTML(){
 }
 function render(){
   app.innerHTML = `
-    <header class="head"><h1>Homework</h1><p><b>__GROUP_NAME__</b> · All our homework in one place. The newest is at the top.</p></header>
+    <header class="head">${teacherView() ? `<a class="to-start" href="../index.html">← Both groups</a>` : ""}<h1>Homework</h1><p><b>__GROUP_NAME__</b> · All our homework in one place. The newest is at the top.</p></header>
     <div id="sync-slot">${syncHTML()}</div>
     ${studentFbHTML()}
     ${(myCode() && syncState!=="unknown") ? meterHTML(groupStats) : ""}

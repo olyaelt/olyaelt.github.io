@@ -1,0 +1,87 @@
+{
+ "type": "say-it-another-way",
+ "title": "Say it another way",
+ "part": "Part 2",
+ "cards": [
+  [
+   "Companies don't take on beginners anymore.",
+   "They've stopped hiring juniors."
+  ],
+  [
+   "Companies are giving that work to AI now.",
+   "They're handing that work over to AI."
+  ],
+  [
+   "What you learn at university might be useless by the time you finish.",
+   "It could be out of date by the time you graduate."
+  ],
+  [
+   "What matters is that you can change when things change.",
+   "What matters is being able to adapt."
+  ],
+  [
+   "((Before the meeting,)) I spent the weekend going through articles about the new system.",
+   "I read up on the new system."
+  ],
+  [
+   "Prepare before you talk to the client((, so you don't look clueless.))",
+   "Do your homework before you talk to the client."
+  ],
+  [
+   "((In my first job,)) there was so much new stuff, and I had to get up to speed very fast.",
+   "It was a really steep learning curve."
+  ],
+  [
+   "((Nobody taught me.)) I learned it at work, through my own mistakes.",
+   "I picked it up on the job, the hard way."
+  ],
+  [
+   "Nobody showed me — I learned it all from books and videos.",
+   "I taught myself."
+  ]
+ ],
+ "box": [
+  {
+   "h": "Useful or not?",
+   "items": [
+    "It was a complete waste of time.",
+    "I've never used it since.",
+    "You never know when it might come in handy.",
+    "It's more … than you'd think.",
+    "What's the point of …?",
+    "None of it counted.",
+    "I had to start from scratch.",
+    "School only gets you so far.",
+    "That's where I really add value."
+   ]
+  },
+  {
+   "h": "Learning",
+   "items": [
+    "It was a steep learning curve.",
+    "I picked it up on the job, the hard way.",
+    "I read up on it. I did my homework.",
+    "I taught myself."
+   ]
+  },
+  {
+   "h": "Today",
+   "items": [
+    "They've stopped hiring juniors.",
+    "They're handing it over to AI.",
+    "It's out of date. You need to adapt."
+   ]
+  }
+ ],
+ "review": {
+  "from": "cards-1",
+  "n": 4
+ },
+ "speaking": [
+  "Each of you: two things you **taught yourself** and one you **picked up on the job**. Which took the longest?",
+  "Think of a time something was **a steep learning curve** for you. What helped most — a course, **reading up on it**, or someone showing you? Each of you: rank the three and say why.",
+  "\"**They're handing it over to AI.**\" Each of you: two tasks — at work or at home — that AI could do, and one it never should. Agree on the riskiest one to hand over.",
+  "Agree on two subjects that could be **out of date** by the time today's ten-year-olds graduate, and one that never will be.",
+  "Which card was the hardest? Each of you: two new sentences with it about your own work or life."
+ ]
+}

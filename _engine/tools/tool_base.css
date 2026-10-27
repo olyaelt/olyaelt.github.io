@@ -1,0 +1,145 @@
+/* Lesson tools (pages students open in a breakout room and share on Zoom, ~1280×720).
+   Same colours and font as the homework pages; bigger type; task on the left, Useful language on the right. */
+:root{
+  --ground:#F6F1DC; --card:#FFFFFF; --ink:#1D1D1B; --muted:#6B6B6B; --line:#D9D2B8;
+  --instr:#0693E3; --instr-ink:#FFFFFF; --label:#E00000; --ipa:#0E8A7E;
+  --hl:#FFFF00; --hl-ink:#1D1D1B; --bubble:#FFFF8C; --bubble-ink:#1D1D1B;
+  --date-bg:#FF9900; --date-ink:#1D1D1B;
+  --ok:#2E8B3E; --ok-bg:#EAF7EC; --ok-chip:#CDEFD3; --ok-ink:#1E6B2E;
+  --no:#C0392B; --no-bg:#FDECEB; --no-chip:#F9D2CF; --no-ink:#A1261B;
+  --used:#BFF2B8; --used-ink:#1D1D1B;
+  --a:#0693E3; --a-ink:#FFFFFF; --b:#FF9900; --b-ink:#1D1D1B;
+  --again:#E67E00; --on-ok:#FFFFFF; --on-no:#FFFFFF; --flip-ink:#0679BD; --tick:#B9B092; --instr-text:#0693E3;
+  --shadow:0 2px 0 rgba(29,29,27,.08), 0 10px 28px rgba(29,29,27,.08);
+  --font-body:"Homework Sans","Calibri","Carlito","Segoe UI",system-ui,sans-serif;
+  --radius:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D;
+    --instr:#1578C0; --label:#FF7A7A; --ipa:#4CC5B3; --hl:#FFF34D; --hl-ink:#111111;
+    --bubble:#3B391F; --bubble-ink:#F3F0D0;
+    --ok:#62C774; --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8;
+    --no:#FF8A80; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB;
+    --used:#2F5E35; --used-ink:#F1FFF0; --a:#1578C0; --again:#FFB14A; --on-ok:#0F2412; --on-no:#2A0D0A; --flip-ink:#6CC3FF; --tick:#70757C; --instr-text:#6CC3FF;
+    --shadow:0 2px 0 rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D;
+  --instr:#1578C0; --label:#FF7A7A; --ipa:#4CC5B3; --hl:#FFF34D; --hl-ink:#111111;
+  --bubble:#3B391F; --bubble-ink:#F3F0D0;
+  --ok:#62C774; --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8;
+  --no:#FF8A80; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB;
+  --used:#2F5E35; --used-ink:#F1FFF0; --a:#1578C0; --again:#FFB14A; --on-ok:#0F2412; --on-no:#2A0D0A; --flip-ink:#6CC3FF; --tick:#70757C; --instr-text:#6CC3FF;
+  --shadow:0 2px 0 rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{font-size:clamp(15px, 0.55vw + 11px, 19px)}
+html,body{background:var(--ground);margin:0}
+body{color:var(--ink);font-family:var(--font-body);line-height:1.45;padding:0 16px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:disabled{cursor:default}
+:focus-visible{outline:3px solid var(--instr);outline-offset:2px;border-radius:8px}
+h1,h2,h3{margin:0;text-wrap:balance}
+.wrap{max-width:1240px;margin:0 auto;padding:12px 0 16px;display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,380px);gap:16px 26px;align-items:start}
+.main{display:grid;gap:12px;min-width:0}
+.side{position:sticky;top:10px;display:grid;gap:10px;max-height:calc(100vh - 20px);overflow:auto;padding:0 4px 4px 12px;margin-left:-12px}
+@media (max-width:860px){ .wrap{grid-template-columns:1fr} .side{position:static;max-height:none;overflow:visible} }
+
+/* header */
+.head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.part{font-weight:900;letter-spacing:.04em;font-size:.85rem;background:var(--date-bg);color:var(--date-ink);padding:3px 10px;border-radius:6px}
+.head h1{font-size:1.85rem;line-height:1.1;font-weight:900}
+.gear{margin-left:auto;border:2px solid var(--line);background:var(--card);border-radius:99px;padding:4px 12px;font-weight:700;font-size:1rem;color:var(--muted);min-height:38px}
+.instr{background:var(--instr);color:var(--instr-ink);border-radius:12px;padding:8px 14px;font-weight:700;font-size:1rem;margin:0}
+.hint-top{background:var(--card);border-left:6px solid var(--instr);border-radius:12px;padding:8px 14px;font-weight:700;font-size:1.02rem;margin:0;box-shadow:var(--shadow)}
+.situation{background:var(--card);border-left:6px solid var(--date-bg);border-radius:12px;padding:12px 16px;font-size:1.1rem;margin:0;box-shadow:var(--shadow)}
+.settings{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font-size:.95rem}
+.seg{display:inline-flex;border:2px solid var(--line);border-radius:99px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:3px 12px;font-weight:700}
+.seg button[aria-pressed="true"]{background:var(--instr);color:var(--instr-ink)}
+
+/* buttons */
+.btn{border:2px solid var(--instr);background:transparent;color:var(--instr-text);border-radius:12px;padding:10px 20px;font-weight:900;font-size:1.05rem;min-height:48px}
+.btn.primary{background:var(--instr);color:var(--instr-ink)}
+.btn.big{font-size:1.4rem;padding:16px 30px;border-radius:16px}
+.btn:disabled{opacity:.35}
+.btn.ok{border-color:var(--ok);color:var(--ok)}
+.btn.ok.on,.btn.ok.solid{background:var(--ok);color:var(--on-ok)}
+.btn.no{border-color:var(--no);color:var(--no)}
+.btn.no.on{background:var(--no);color:var(--on-no)}
+.btn.again{border-color:var(--again);color:var(--again)}
+.linkish{border:0;background:none;color:var(--instr-text);font-weight:700;text-decoration:underline;padding:4px}
+.row-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* Useful language box (as on her slides and the homework pages) */
+.box{background:var(--card);border:2px solid var(--ink);border-radius:4px;padding:10px 12px 12px;position:relative;display:grid;gap:2px;margin-top:34px}
+.box .sticker{width:150px;height:auto;margin:-32px 0 -2px -8px}
+.box-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.box-top .linkish{font-size:.9rem;margin-top:-6px}
+.box h4{margin:8px 0 1px;color:var(--label);font-size:.82rem;letter-spacing:.07em;font-weight:900;text-transform:uppercase}
+.box h4:first-of-type{margin-top:2px}
+.ph{display:block;width:100%;text-align:left;border:0;background:transparent;border-radius:8px;padding:2px 8px 2px 26px;margin:0 0 0 -8px;line-height:1.32;font-size:.97rem;position:relative}
+.ph::before{content:"";position:absolute;left:8px;top:.62em;width:9px;height:9px;border-radius:50%;border:2px solid var(--line)}
+button.ph:hover{background:color-mix(in srgb, var(--used) 35%, transparent)}
+.ph.used{background:var(--used);color:var(--used-ink)}
+.ph .gloss{color:var(--muted);font-style:italic;font-size:.9em}
+.ph .bx{font-weight:900}
+.ph.used::before{content:"✓";border:0;width:auto;height:auto;top:.18em;left:7px;font-weight:900;color:var(--ok)}
+.box.static .ph{cursor:default}
+.box.static .ph::before{display:none}
+.box.static .ph{padding-left:8px}
+.peek{display:grid;gap:8px;justify-items:start;background:var(--card);border:2px dashed var(--line);border-radius:12px;padding:14px 16px;margin-top:10px}
+.peek p{margin:0;color:var(--muted)}
+.extra{margin:0;font-weight:700;background:var(--bubble);color:var(--bubble-ink);border-radius:10px;padding:8px 12px}
+
+/* If you're done: the speaking tasks */
+.speak{background:var(--bubble);color:var(--bubble-ink);border-radius:18px;padding:18px 22px;display:grid;gap:12px;box-shadow:var(--shadow)}
+.speak.pop{animation:popsoft .35s ease-out}
+.speak-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.speak-h{font-size:.85rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
+.speak-dots{display:flex;gap:0;margin:-6px -5px}
+.speak-dots button{border:0;background:none;padding:6px 5px;line-height:0}
+.speak-dots button::before{content:"";display:block;width:.6rem;height:.6rem;border-radius:50%;background:color-mix(in srgb, var(--bubble-ink) 22%, transparent);transition:transform .15s}
+.speak-dots button.was::before{background:color-mix(in srgb, var(--bubble-ink) 50%, transparent)}
+.speak-dots button.on::before{background:var(--label);transform:scale(1.25)}
+.speak-dots button:hover::before{transform:scale(1.35)}
+.speak-task{margin:0;font-size:1.45rem;font-weight:700;line-height:1.35}
+.speak-task .bx,.follow-q .bx{color:var(--flip-ink);font-weight:900}
+/* the stages */
+.stages{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-left:auto}
+.stage-btn{border:2px solid var(--line);background:var(--card);color:var(--muted);border-radius:99px;padding:4px 14px;font-weight:900;font-size:.95rem}
+.stage-btn:hover{border-color:var(--instr);color:var(--instr-text)}
+.stage-btn[aria-current="step"]{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
+.stage-arrow{color:var(--muted);font-weight:900}
+@media (max-width:560px){ .stages{margin-left:0} }
+/* 📋 all of it, folded */
+details.all{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:4px 16px}
+.side details.all{background:transparent;border:2px dashed var(--line);font-size:.92rem;padding:2px 14px}
+.side details.all[open]{background:var(--card)}
+details.all summary{cursor:pointer;font-weight:900;padding:8px 0;color:var(--muted);list-style:none}
+details.all summary::-webkit-details-marker{display:none}
+details.all summary::after{content:" ▸";}
+details.all[open] summary::after{content:" ▾";}
+details.all[open] summary{color:var(--ink)}
+.all-in{display:grid;gap:10px;padding:2px 0 14px}
+.all-row{display:grid;gap:2px;border-top:1px solid var(--line);padding-top:8px}
+.all-row .f{color:var(--ink)} .all-row .f .ctx{color:var(--muted)}
+.all-row .b{color:var(--flip-ink);font-weight:900}
+.all-h{color:var(--label);font-size:.82rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;margin-top:6px}
+.all-sub{font-weight:900}
+.all-row p{margin:0}
+.all-row .bx{color:var(--flip-ink)}
+.all-side{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;font-weight:900;color:var(--muted)}
+/* tactile feedback */
+@keyframes pop{0%{transform:scale(1)}35%{transform:scale(1.18)}100%{transform:scale(1)}}
+@keyframes popsoft{0%{transform:scale(1)}35%{transform:scale(1.035)}100%{transform:scale(1)}}
+.pop{animation:pop .38s cubic-bezier(.3,1.4,.5,1)}
+.ph.pop{animation:popsoft .32s ease-out}
+.legal{max-width:1240px;margin:0 auto;padding:6px 0 18px;font-size:.8rem;color:var(--muted)}
+.legal a{color:var(--muted)}
+@media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
