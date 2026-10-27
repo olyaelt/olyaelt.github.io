@@ -74,11 +74,11 @@ const {chromium} = require('playwright'); const path = require('path');
     out.c.dice4 = {max: Math.max(...rolls), min: Math.min(...rolls)}; expect('dice 1–4', out.c.dice4.max <= 4 && out.c.dice4.min >= 1);
     out.c.usedClearedOnRestart = await p.locator('.ph.used').count() === 0; expect('restart clears used phrases', out.c.usedClearedOnRestart);
     // the 📋 list keeps its place in the side panel while they work
-    await p.click('#side details.all summary'); await p.evaluate(() => document.getElementById('side').scrollTop = 300);
-    const before = await p.evaluate(() => document.getElementById('side').scrollTop);
+    await p.click('#side details.all summary'); await p.evaluate(() => scrollTo(0, 300));
+    const before = await p.evaluate(() => scrollY);
     await p.locator('.st').first().locator('.dot').first().click(); await p.waitForTimeout(100);
-    out.c.sideKeeps = {open: await p.locator('#side details.all').evaluate(d => d.open), scroll: [before, await p.evaluate(() => document.getElementById('side').scrollTop)]};
-    expect('side list stays open and in place', out.c.sideKeeps.open && out.c.sideKeeps.scroll[0] === out.c.sideKeeps.scroll[1]);
+    out.c.sideKeeps = {open: await p.locator('#side details.all').evaluate(d => d.open), scroll: [before, await p.evaluate(() => scrollY)]};
+    expect('side list stays open and the page keeps its place', out.c.sideKeeps.open && out.c.sideKeeps.scroll[0] === out.c.sideKeeps.scroll[1] && out.c.sideKeeps.scroll[0] > 0);
   }
   { const p = await page('tools/c1-schools/council-1.html', {scheme: 'dark'}); await p.click('[data-roll="0"]'); await p.waitForTimeout(100); await p.locator('.dot').first().click(); await shot(p, 'council-dark'); }
   // ---- council, Part 2: situation, box hidden until Peek, play every subject

@@ -38,17 +38,19 @@
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-html{font-size:clamp(15px, 0.55vw + 11px, 19px)}
+/* the page grows with the screen, like a slide (her slides keep everything at 15 pt or more) */
+html{font-size:clamp(15px, 1.4vw, 28px)}
 html,body{background:var(--ground);margin:0}
 body{color:var(--ink);font-family:var(--font-body);line-height:1.45;padding:0 16px}
 button{font:inherit;color:inherit;cursor:pointer}
 button:disabled{cursor:default}
 :focus-visible{outline:3px solid var(--instr);outline-offset:2px;border-radius:8px}
 h1,h2,h3{margin:0;text-wrap:balance}
-.wrap{max-width:1240px;margin:0 auto;padding:12px 0 16px;display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,380px);gap:16px 26px;align-items:start}
+.wrap{max-width:72rem;margin:0 auto;padding:12px 0 16px;display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,27rem);gap:16px 1.4rem;align-items:start}
 .main{display:grid;gap:12px;min-width:0}
-.side{position:sticky;top:10px;display:grid;gap:10px;max-height:calc(100vh - 20px);overflow:auto;padding:0 4px 4px 12px;margin-left:-12px}
-@media (max-width:860px){ .wrap{grid-template-columns:1fr} .side{position:static;max-height:none;overflow:visible} }
+/* the box stays in view while the task scrolls; a box taller than the screen scrolls with the page (no hidden inner scroll) */
+.side{position:sticky;top:10px;display:grid;gap:10px;padding:0 4px 4px 12px;margin-left:-12px}
+@media (max-width:860px){ .wrap{grid-template-columns:1fr} .side{position:static} }
 
 /* header */
 .head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
@@ -56,7 +58,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .head h1{font-size:1.85rem;line-height:1.1;font-weight:900}
 .gear{margin-left:auto;border:2px solid var(--line);background:var(--card);border-radius:99px;padding:4px 12px;font-weight:700;font-size:1rem;color:var(--muted);min-height:38px}
 .instr{background:var(--instr);color:var(--instr-ink);border-radius:12px;padding:8px 14px;font-weight:700;font-size:1rem;margin:0}
-.hint-top{background:var(--card);border-left:6px solid var(--instr);border-radius:12px;padding:8px 14px;font-weight:700;font-size:1.02rem;margin:0;box-shadow:var(--shadow)}
+.hint-top{background:var(--card);border-left:6px solid var(--instr);border-radius:12px;padding:8px 14px;font-weight:700;font-size:1.15rem;margin:0;box-shadow:var(--shadow)}
 .situation{background:var(--card);border-left:6px solid var(--date-bg);border-radius:12px;padding:12px 16px;font-size:1.1rem;margin:0;box-shadow:var(--shadow)}
 .settings{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font-size:.95rem}
 .seg{display:inline-flex;border:2px solid var(--line);border-radius:99px;overflow:hidden}
@@ -77,17 +79,17 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .row-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 
 /* Useful language box (as on her slides and the homework pages) */
-.box{background:var(--card);border:2px solid var(--ink);border-radius:4px;padding:10px 12px 12px;position:relative;display:grid;gap:2px;margin-top:34px}
-.box .sticker{width:150px;height:auto;margin:-32px 0 -2px -8px}
+.box{background:var(--card);border:2px solid var(--ink);border-radius:4px;padding:8px 12px 10px;position:relative;display:grid;gap:1px;margin-top:2rem}
+.box .sticker{width:8.5rem;height:auto;margin:-1.8rem 0 -4px -8px}
 .box-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
 .box-top .linkish{font-size:.9rem;margin-top:-6px}
-.box h4{margin:8px 0 1px;color:var(--label);font-size:.82rem;letter-spacing:.07em;font-weight:900;text-transform:uppercase}
+.box h4{margin:6px 0 1px;color:var(--label);font-size:.92rem;letter-spacing:.07em;font-weight:900;text-transform:uppercase}
 .box h4:first-of-type{margin-top:2px}
-.ph{display:block;width:100%;text-align:left;border:0;background:transparent;border-radius:8px;padding:2px 8px 2px 26px;margin:0 0 0 -8px;line-height:1.32;font-size:.97rem;position:relative}
-.ph::before{content:"";position:absolute;left:8px;top:.62em;width:9px;height:9px;border-radius:50%;border:2px solid var(--line)}
+.ph{display:block;width:100%;text-align:left;border:0;background:transparent;border-radius:8px;padding:2px 8px 2px 1.5rem;margin:0 0 0 -8px;line-height:1.25;font-size:1.12rem;position:relative}
+.ph::before{content:"";position:absolute;left:8px;top:.5em;width:.5em;height:.5em;border-radius:50%;border:2px solid var(--line)}
 button.ph:hover{background:color-mix(in srgb, var(--used) 35%, transparent)}
 .ph.used{background:var(--used);color:var(--used-ink)}
-.ph .gloss{color:var(--muted);font-style:italic;font-size:.9em}
+.ph .gloss{color:var(--muted);font-style:italic;font-size:.86em}
 .ph .bx{font-weight:900}
 .ph.used::before{content:"✓";border:0;width:auto;height:auto;top:.18em;left:7px;font-weight:900;color:var(--ok)}
 .box.static .ph{cursor:default}
@@ -112,7 +114,7 @@ button.ph:hover{background:color-mix(in srgb, var(--used) 35%, transparent)}
 .speak-task .bx,.follow-q .bx{color:var(--flip-ink);font-weight:900}
 /* the stages */
 .stages{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-left:auto}
-.stage-btn{border:2px solid var(--line);background:var(--card);color:var(--muted);border-radius:99px;padding:4px 14px;font-weight:900;font-size:.95rem}
+.stage-btn{border:2px solid var(--line);background:var(--card);color:var(--muted);border-radius:99px;padding:4px 14px;font-weight:900;font-size:1.02rem}
 .stage-btn:hover{border-color:var(--instr);color:var(--instr-text)}
 .stage-btn[aria-current="step"]{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
 .stage-arrow{color:var(--muted);font-weight:900}
@@ -140,6 +142,6 @@ details.all[open] summary{color:var(--ink)}
 @keyframes popsoft{0%{transform:scale(1)}35%{transform:scale(1.035)}100%{transform:scale(1)}}
 .pop{animation:pop .38s cubic-bezier(.3,1.4,.5,1)}
 .ph.pop{animation:popsoft .32s ease-out}
-.legal{max-width:1240px;margin:0 auto;padding:6px 0 18px;font-size:.8rem;color:var(--muted)}
+.legal{max-width:72rem;margin:0 auto;padding:6px 0 18px;font-size:.8rem;color:var(--muted)}
 .legal a{color:var(--muted)}
 @media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
