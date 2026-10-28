@@ -22,6 +22,7 @@ TYPES = {'dice-council': 'council_template.html', 'say-it-another-way': 'cards_t
 m = re.search(r'const SYNC_URL = "([^"]*)"', open(os.path.join(HERE, 'engine', 'page_template.html'), encoding='utf-8').read())
 SYNC = m.group(1) if m else ''
 built = []
+pages = []   # for tools/index.html, her list of all lesson pages
 for path in sorted(glob.glob(os.path.join(T, '*', '*.json'))):
     lesson, name = os.path.basename(os.path.dirname(path)), os.path.splitext(os.path.basename(path))[0]
     d = json.load(open(path, encoding='utf-8'))
@@ -37,6 +38,7 @@ for path in sorted(glob.glob(os.path.join(T, '*', '*.json'))):
                  ('__PAGE_ID__', lesson + '/' + name)]:
         html = html.replace(k, v)
     out_dir = os.path.join(site, 'tools', lesson); os.makedirs(out_dir, exist_ok=True)
+    pages.append({'lesson': lesson, 'name': name, 'title': d['title'], 'part': d.get('part', ''), 'type': d['type']})
     for suffix, live in (('', False), ('-live', True)):
         page = html.replace('__LIVE__', 'true' if live else 'false').replace('__SYNC_URL__', SYNC if live else '')
         left = [k for k in ('__BASE_CSS__', '__BASE_JS__', '__DATA__', '__REVIEW__', '__STICKER__', '__PAGE_ID__', '__LIVE__', '__SYNC_URL__') if k in page]
@@ -44,5 +46,62 @@ for path in sorted(glob.glob(os.path.join(T, '*', '*.json'))):
         if live and not SYNC: print('WARNING: no SYNC_URL found, %s-live works like the plain page' % name)
         open(os.path.join(out_dir, name + suffix + '.html'), 'w', encoding='utf-8').write(page)
         built.append('tools/%s/%s%s.html' % (lesson, name, suffix))
-print('tools %s: built %d pages' % (VERSION, len(built)))
+# tools 9 (her wish 28.10): tools/index.html, a teacher's page with every lesson page, grouped by group and lesson, the live link
+# first (with Copy, for the Zoom chat) and the plain one as the fallback. Shown when her code is on this device (as on the live
+# pages: a lock on the door, the list is in the source); noindex, linked from nowhere.
+GROUPS = {'b2': 'B2 · Wed Fri 18.30', 'c1': 'C1 · Wed Fri 20.15'}
+KIND = {'dice-council': '🎲 dice council', 'say-it-another-way': '🃏 say it another way'}
+def esc(t): return str(t).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
+blocks = []
+for g in sorted({p['lesson'].split('-')[0] for p in pages}):
+    rows = []
+    for lesson in sorted({p['lesson'] for p in pages if p['lesson'].split('-')[0] == g}):
+        nice = lesson.split('-', 1)[1].replace('-', ' ') if '-' in lesson else lesson
+        rows.append('<h3>%s</h3>' % esc(nice[:1].upper() + nice[1:]))
+        for p in [x for x in pages if x['lesson'] == lesson]:
+            base = 'https://olyaelt.github.io/tools/%s/%s' % (p['lesson'], p['name'])
+            rows.append('<div class="pg"><div class="pg-t"><b>%s</b> · %s <span class="kind">%s · %s</span></div>'
+                        '<div class="pg-a"><a class="btn primary" href="%s/%s-live.html" target="_blank" rel="noopener">Open live</a>'
+                        '<button class="btn" data-copy="%s-live.html">Copy link</button>'
+                        '<a class="plain" href="%s/%s.html" target="_blank" rel="noopener">plain page</a></div></div>'
+                        % (esc(p['title']), esc(p['part']), esc(KIND.get(p['type'], p['type'])), esc(p['name']),
+                           p['lesson'], p['name'], base, p['lesson'], p['name']))
+    blocks.append('<section><h2>%s</h2>%s</section>' % (esc(GROUPS.get(g, g.upper())), ''.join(rows)))
+index = """<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow"><title>Lesson pages</title>
+<link rel="stylesheet" href="../fonts/homework-sans.css">
+<style>
+:root{--ground:#F6F1DC;--card:#FFFFFF;--ink:#1D1D1B;--muted:#6B6B6B;--line:#D9D2B8;--instr:#0693E3;--label:#E00000}
+@media (prefers-color-scheme: dark){:root{--ground:#141517;--card:#1E2024;--ink:#ECECEC;--muted:#A4A4A4;--line:#3A3D42}}
+*{box-sizing:border-box}body{margin:0;background:var(--ground);color:var(--ink);font-family:"Homework Sans",system-ui,sans-serif;line-height:1.45}
+main{max-width:46rem;margin:0 auto;padding:20px 16px 40px}h1{margin:0 0 4px;font-size:1.6rem}
+.note{color:var(--muted);margin:0 0 18px}h2{font-size:1.15rem;margin:22px 0 6px}
+h3{font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;color:var(--label);margin:14px 0 6px}
+.pg{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0 0 8px;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between}
+.kind{color:var(--muted);font-size:.85rem;white-space:nowrap}.pg-a{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{font:inherit;font-weight:700;font-size:.95rem;border-radius:10px;padding:7px 12px;border:2px solid var(--instr);background:transparent;color:var(--instr);cursor:pointer;text-decoration:none}
+.btn.primary{background:var(--instr);color:#fff}.plain{color:var(--muted);font-size:.9rem}
+.legal{text-align:center;padding:10px 16px 24px;font-size:.85rem}.legal a{color:var(--muted)}
+</style></head><body><main>
+<h1>Lesson pages</h1>
+<p class="note" id="who"></p>
+<div id="list" hidden>__BLOCKS__</div>
+</main>
+<footer class="legal"><a href="../impressum.html">Impressum</a> · <a href="../datenschutz.html">Datenschutz</a></footer>
+<script>
+const me = (() => { try{ return localStorage.getItem("hw-role") === "teacher" && !!localStorage.getItem("hw-code"); }catch(e){ return false; } })();
+const who = document.getElementById("who"), list = document.getElementById("list");
+if(me){ list.hidden = false; who.textContent = "Give the groups the live link; if it misbehaves, the plain page. Your code is on this device, so the live pages show your 👩‍🏫 Live bar."; }
+else who.textContent = "This page is for Olya. Open any homework page, type your code, then come back here.";
+document.addEventListener("click", ev => {
+  const b = ev.target.closest("[data-copy]"); if(!b) return;
+  const url = b.dataset.copy, done = () => { b.textContent = "Copied ✓"; setTimeout(() => { b.textContent = "Copy link"; }, 1500); };
+  const old = () => { const t = document.createElement("textarea"); t.value = url; document.body.appendChild(t); t.select(); try{ document.execCommand("copy"); done(); }catch(e){} t.remove(); };
+  if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, old); else old();
+});
+</script></body></html>
+""".replace('__BLOCKS__', ''.join(blocks))
+open(os.path.join(site, 'tools', 'index.html'), 'w', encoding='utf-8').write(index)
+print('tools %s: built %d pages + tools/index.html (her list)' % (VERSION, len(built)))
 for b in built: print('  https://olyaelt.github.io/' + b)

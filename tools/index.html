@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow"><title>Lesson pages</title>
+<link rel="stylesheet" href="../fonts/homework-sans.css">
+<style>
+:root{--ground:#F6F1DC;--card:#FFFFFF;--ink:#1D1D1B;--muted:#6B6B6B;--line:#D9D2B8;--instr:#0693E3;--label:#E00000}
+@media (prefers-color-scheme: dark){:root{--ground:#141517;--card:#1E2024;--ink:#ECECEC;--muted:#A4A4A4;--line:#3A3D42}}
+*{box-sizing:border-box}body{margin:0;background:var(--ground);color:var(--ink);font-family:"Homework Sans",system-ui,sans-serif;line-height:1.45}
+main{max-width:46rem;margin:0 auto;padding:20px 16px 40px}h1{margin:0 0 4px;font-size:1.6rem}
+.note{color:var(--muted);margin:0 0 18px}h2{font-size:1.15rem;margin:22px 0 6px}
+h3{font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;color:var(--label);margin:14px 0 6px}
+.pg{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0 0 8px;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between}
+.kind{color:var(--muted);font-size:.85rem;white-space:nowrap}.pg-a{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{font:inherit;font-weight:700;font-size:.95rem;border-radius:10px;padding:7px 12px;border:2px solid var(--instr);background:transparent;color:var(--instr);cursor:pointer;text-decoration:none}
+.btn.primary{background:var(--instr);color:#fff}.plain{color:var(--muted);font-size:.9rem}
+.legal{text-align:center;padding:10px 16px 24px;font-size:.85rem}.legal a{color:var(--muted)}
+</style></head><body><main>
+<h1>Lesson pages</h1>
+<p class="note" id="who"></p>
+<div id="list" hidden><section><h2>B2 · Wed Fri 18.30</h2><h3>Have you seen it</h3><div class="pg"><div class="pg-t"><b>Say it another way</b> · Have you seen it? <span class="kind">🃏 say it another way · cards-1</span></div><div class="pg-a"><a class="btn primary" href="b2-have-you-seen-it/cards-1-live.html" target="_blank" rel="noopener">Open live</a><button class="btn" data-copy="https://olyaelt.github.io/tools/b2-have-you-seen-it/cards-1-live.html">Copy link</button><a class="plain" href="b2-have-you-seen-it/cards-1.html" target="_blank" rel="noopener">plain page</a></div></div></section><section><h2>C1 · Wed Fri 20.15</h2><h3>Schools</h3><div class="pg"><div class="pg-t"><b>Say it another way</b> · Part 1 <span class="kind">🃏 say it another way · cards-1</span></div><div class="pg-a"><a class="btn primary" href="c1-schools/cards-1-live.html" target="_blank" rel="noopener">Open live</a><button class="btn" data-copy="https://olyaelt.github.io/tools/c1-schools/cards-1-live.html">Copy link</button><a class="plain" href="c1-schools/cards-1.html" target="_blank" rel="noopener">plain page</a></div></div><div class="pg"><div class="pg-t"><b>Say it another way</b> · Part 2 <span class="kind">🃏 say it another way · cards-2</span></div><div class="pg-a"><a class="btn primary" href="c1-schools/cards-2-live.html" target="_blank" rel="noopener">Open live</a><button class="btn" data-copy="https://olyaelt.github.io/tools/c1-schools/cards-2-live.html">Copy link</button><a class="plain" href="c1-schools/cards-2.html" target="_blank" rel="noopener">plain page</a></div></div><div class="pg"><div class="pg-t"><b>School council</b> · Part 1 <span class="kind">🎲 dice council · council-1</span></div><div class="pg-a"><a class="btn primary" href="c1-schools/council-1-live.html" target="_blank" rel="noopener">Open live</a><button class="btn" data-copy="https://olyaelt.github.io/tools/c1-schools/council-1-live.html">Copy link</button><a class="plain" href="c1-schools/council-1.html" target="_blank" rel="noopener">plain page</a></div></div><div class="pg"><div class="pg-t"><b>School council</b> · Part 2 <span class="kind">🎲 dice council · council-2</span></div><div class="pg-a"><a class="btn primary" href="c1-schools/council-2-live.html" target="_blank" rel="noopener">Open live</a><button class="btn" data-copy="https://olyaelt.github.io/tools/c1-schools/council-2-live.html">Copy link</button><a class="plain" href="c1-schools/council-2.html" target="_blank" rel="noopener">plain page</a></div></div></section></div>
+</main>
+<footer class="legal"><a href="../impressum.html">Impressum</a> · <a href="../datenschutz.html">Datenschutz</a></footer>
+<script>
+const me = (() => { try{ return localStorage.getItem("hw-role") === "teacher" && !!localStorage.getItem("hw-code"); }catch(e){ return false; } })();
+const who = document.getElementById("who"), list = document.getElementById("list");
+if(me){ list.hidden = false; who.textContent = "Give the groups the live link; if it misbehaves, the plain page. Your code is on this device, so the live pages show your 👩‍🏫 Live bar."; }
+else who.textContent = "This page is for Olya. Open any homework page, type your code, then come back here.";
+document.addEventListener("click", ev => {
+  const b = ev.target.closest("[data-copy]"); if(!b) return;
+  const url = b.dataset.copy, done = () => { b.textContent = "Copied ✓"; setTimeout(() => { b.textContent = "Copy link"; }, 1500); };
+  const old = () => { const t = document.createElement("textarea"); t.value = url; document.body.appendChild(t); t.select(); try{ document.execCommand("copy"); done(); }catch(e){} t.remove(); };
+  if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, old); else old();
+});
+</script></body></html>

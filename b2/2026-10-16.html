@@ -392,7 +392,11 @@ s{color:var(--muted)}
 .gap-in:focus{background:var(--card);outline:2px solid var(--instr);outline-offset:1px}
 .gap-res{font-weight:700;border-radius:3px;padding:0 4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .gap-res.ans{background:var(--hl);color:var(--hl-ink)}
-.gap-res.ok{background:var(--ok-bg);color:var(--ok-ink)}
+.gap-res.ok{background:var(--ok-chip);color:var(--ok-ink)}
+.gap-res.no{background:var(--no-chip);color:var(--no-ink)}
+.you-ok,.you-no{font-weight:700;border-radius:3px;padding:0 4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.you-ok{background:var(--ok-chip);color:var(--ok-ink)}.you-no{background:var(--no-chip);color:var(--no-ink)}
+.to-ans{color:var(--muted);font-weight:400}
 .gap-fb{grid-column:2;background:var(--no-bg);border-radius:8px;padding:6px 10px;font-size:.95rem;line-height:1.5}
 .chip-x{color:var(--no-ink);font-weight:900}
 .ln.playing{border-color:var(--instr);background:var(--ground)}
@@ -1360,7 +1364,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = ["click on the top line to hear the context","click on the line with the gap and try to catch what's in the gap","check","listen again — how did the expression sound?","optional: pronounce the expression like the speaker"];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "37";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "38";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -1462,7 +1466,7 @@ function syncHTML(){
       <button class="chip-t" id="as-teacher">Back to teacher view</button></div>`;
   if(code && syncState!=="unknown" && ls.get("hw-role")==="teacher") return `<div class="sync sync-on teacher-bar">
       <span>👩‍🏫 <b>Teacher view</b>${who?` — ${esc(who)}`:""}${teacherData?"":" · loading…"}</span>
-      <button class="chip-t" id="hide-names" aria-pressed="${hideNames()}">👁️ Hide names</button>
+      <button class="chip-t" id="hide-names" aria-pressed="${hideNames()}">🙈 Hide names</button>
       <button class="chip-t" id="as-student">👀 Student view</button>
       <button class="linklike" id="code-change">Not you?</button></div>`;
   if(code && syncState!=="unknown") return `<div class="sync sync-on">
@@ -1815,7 +1819,7 @@ function mkBarHTML(id){
   return `<span class="t-mk-h">Hard for them:</span>${steps.map(si=>{ const ws = items.filter(it=>it.si===si).flatMap(it=>it.marks);
       return `<button class="tool t-mk-go ${ws.some(open)?"":"is-done"}" data-mkgo="${si}">Step ${si+1} · ❔ ${whoMarked(ws)}</button>`; }).join("")}
     ${c.questions?`<button class="linklike" data-mkq>❓ ${c.questions} ${c.questions===1?"question":"questions"}</button>`:""}${c.hard?`<span class="small">😓 ${c.hard} found it hard</span>`:""}
-    <button class="linklike" id="t-mk-names">${hideNames() ? "👁️ Show names" : "👁️ Hide names"}</button>
+    <button class="linklike" id="t-mk-names">${hideNames() ? "👁️ Show names" : "🙈 Hide names"}</button>
     ${anyOpen ? `<button class="tool rv-ok" id="t-mk-all">✓ All discussed</button>` : `<span class="small">✓ all discussed</span>`}`;
 }
 function wireMkBar(id){
@@ -2335,19 +2339,31 @@ function stripFrame(val, r){
   for(let k=Math.min(Q.length,S.length-1); k>0; k--){ if(S.slice(S.length-k).every((w,i)=>key(w)===Q[i])){ S=S.slice(0,S.length-k); break; } }
   return S.join(" ");
 }
-function verdictHTML(val, r){
-  if(!val) return "";
+/* engine 38 (students, 28.10, her decision: "I typed on the yellow, I expect my answer to stay there"): the answer typed stays
+   in the sentence, green when right (nothing more to say), red when not, then → the answer, and the detailed box under it */
+function judgeRewrite(val, r){
   const core = stripFrame(val, r);
   const expand = s => " "+String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/won't/g,"will not").replace(/can't/g,"can not").replace(/cannot/g,"can not")
     .replace(/n't/g," not").replace(/'ve/g," have").replace(/'ll/g," will").replace(/'re/g," are").replace(/'m/g," am").replace(/'d/g," would")
     .replace(/[.!?,;:]+/g," ").replace(/\s+/g," ").trim()+" ";
   const sameAs = a => [expand(r.pre+val+r.post), expand(val), expand(r.pre+core+r.post)].includes(expand(r.pre+a+r.post));
-  const m = r.acc.some(sameAs) ? {ok:true} : markAnswer(core, r.acc);
-  if(m.ok) return `<div class="verdict ok"><span class="chip">✓ Correct!</span><p>${esc(val)}</p></div>`;
+  return {core, m: r.acc.some(sameAs) ? {ok:true} : markAnswer(core, r.acc)};
+}
+function verdictHTML(val, r){
+  if(!val) return "";
+  const {core, m} = judgeRewrite(val, r);
+  if(m.ok) return "";
   if(m.plain) return `<div class="verdict no"><span class="chip">✗ Not quite</span><p>${esc(core)}</p><span class="small">Compare it with the answer above.</span></div>`;
   return `<div class="verdict no"><span class="chip">✗ Not quite</span>
     <p>${m.you}</p><p>→ ${m.fix}</p>
     <span class="legend">green = good · grey = the part to change · blue = the change. Other answers may also be possible.</span></div>`;
+}
+/* what stands in the sentence after Check */
+function rewriteShown(val, r){
+  if(!val) return `<span class="ans">${esc(r.a)}</span>`;
+  const {core, m} = judgeRewrite(val, r);
+  return m.ok ? `<span class="you-ok">${esc(core)} ✓</span>`
+    : `<span class="you-no">${esc(core)}</span> <span class="to-ans">→</span> <span class="ans">${esc(r.a)}</span>`;
 }
 
 function renderRewrite(st, count, pct){
@@ -2359,7 +2375,7 @@ function renderRewrite(st, count, pct){
     <div class="panel ${checked?"checked":""}">
       ${r.o?`<p class="orig">${esc(r.o)}</p>`:""}
       ${r.k?`<p class="key">${r.k}</p>`:""}
-      <p class="target">${br(r.pre)}${checked?`<span class="ans">${esc(r.a)}</span>`:
+      <p class="target">${br(r.pre)}${checked?rewriteShown(val, r):
         `<input id="rw" class="gap-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="Type the missing part" placeholder="type or say it" value="${esc(typed[key]||"")}">`}${hint}${br(r.post)}${checked?markBtn(String(stepIdx), plainText(r.pre + r.a + r.post))+bmBtn(curS(), 0):""}</p>
       ${checked?markHint()+revHint():""}
       ${yours}
@@ -2595,19 +2611,18 @@ function renderListen(st, count, pct){
   wireNav(()=>{
     app.querySelectorAll(".gap-in").forEach(inp=>{
       const k = +inp.dataset.k, ans = answers[k], val = inp.value.trim();
+      /* engine 38: what they typed stays in the gap, green when right, red + → the answer when not (see judgeRewrite) */
       const res = document.createElement("span");
-      if(!val){ res.className = "gap-res ans"; res.textContent = ans; }
-      else {
-        const m = markAnswer(val, [ans]);
-        if(m.ok){ res.className = "gap-res ok"; res.textContent = ans + " ✓"; }
-        else {
-          res.className = "gap-res ans"; res.textContent = ans;
-          const fb = document.createElement("div"); fb.className = "gap-fb";
-          fb.innerHTML = m.plain ? `<span class="chip-x">✗</span> You: ${esc(val)}` : `<span class="chip-x">✗</span> ${m.you} → ${m.fix}`;
-          inp.closest(".ln").appendChild(fb);
-        }
-      }
-      inp.replaceWith(res);
+      if(!val){ res.className = "gap-res ans"; res.textContent = ans; inp.replaceWith(res); return; }
+      const m = markAnswer(val, [ans]);
+      if(m.ok){ res.className = "gap-res ok"; res.textContent = val + " ✓"; inp.replaceWith(res); return; }
+      res.className = "gap-res no"; res.textContent = val;
+      const to = document.createElement("span"); to.className = "to-ans"; to.textContent = " → ";
+      const right = document.createElement("span"); right.className = "gap-res ans"; right.textContent = ans;
+      const fb = document.createElement("div"); fb.className = "gap-fb";
+      fb.innerHTML = m.plain ? `<span class="chip-x">✗</span> You: ${esc(val)}` : `<span class="chip-x">✗</span> ${m.you} → ${m.fix}`;
+      inp.closest(".ln").appendChild(fb);
+      inp.replaceWith(res, to, right);
     });
     if(canMark()){
       /* "?" only where there was something to catch (engine 37, her promise to a student: nothing to ask about on a line without a gap) */
