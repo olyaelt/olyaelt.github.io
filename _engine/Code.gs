@@ -23,6 +23,10 @@ const TEACHER = "TEACHER";     // a Students row with Group = Teacher: Olya's ow
 const REACT = "Reactions";      // Easy / OK / Hard after each task
 const DISC = "Discussed";       // what Olya went through in class ("Where they got stuck"): Key (page|task) | Page | Task | Data | Date
 const DISC_HEAD = ["Key", "Page", "Task", "Data (marks gone through)", "Date"];
+const LIVE = "Live";           // lesson tools, live version: what Olya changed during a lesson (one row per tool page)
+const LIVE_HEAD = ["Page", "Changes (JSON)", "Updated"];
+const LIVELOG = "Live log";    // every change she made, for the lesson debrief: what didn't work
+const LIVELOG_HEAD = ["Time", "Page", "Change", "Item", "Text"];
 const PUB = "Published";        // drafts ("listed": false) Olya published with the button on the page: Page | Published | Date
 const PUB_HEAD = ["Page", "Published", "Date"];
 const LEVELS = { easy: "easy", ok: "ok", hard: "hard" };
@@ -51,7 +55,7 @@ function setUp() {
   if (!has) st.appendRow([strongCode_({}), "Olya", "Teacher", ""]);
   progress_("B2"); progress_("C1");
   work_();
-  say_("Ready. On the Students tab, add each student's name and group (B2 or C1), then choose Homework → Make codes for new students. The row with Group = Teacher holds YOUR code: type it on any homework page to see the teacher view. Keep it to yourself.");
+  say_("Ready. On the Students tab, add each student's name and group (B2 or C1; Self for someone studying on their own, who never shows up in your views), then choose Homework → Make codes for new students. The row with Group = Teacher holds YOUR code: type it on any homework page to see the teacher view. Keep it to yourself.");
 }
 
 function makeCodes() {
@@ -361,7 +365,8 @@ function summary_(stu, pages) {
       if (String(r[W.feedback - 1]).trim()) { o.fb++; if (!r[W.seen - 1]) o.fbNew++; }
     });
   }
-  return { ok: true, name: stu.name, gid: isGroup_(stu.group) ? stu.group.toLowerCase() : "", pages: out, group: groupStats_(stu.group), published: published_(pages) };
+  const own = isGroup_(stu.group);
+  return { ok: true, name: stu.name, gid: own ? stu.group.toLowerCase() : "", pages: out, group: own ? groupStats_(stu.group) : null, me: own ? null : meStats_(stu.code), published: published_(pages) };
 }
 
 // Easy / OK / Hard after a task: one row per student + task in Reactions, and shown next to the tick in Progress
@@ -441,6 +446,18 @@ function groupStats_(group) {
   return { total: total, goal: goal, reward: reward, week: Object.keys(active).length, size: size, reached: goal > 0 && total >= goal };
 }
 
+// a student outside the groups (Group = Self, for people studying on their own): their own film, by their code only.
+// Nothing of theirs reaches Olya's views or a group's meter (those count only B2 / C1 codes).
+function meStats_(code) {
+  const state = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(STATE);
+  let total = 0, week = 0; const weekAgo = Date.now() - 7 * 86400000;
+  if (state && state.getLastRow() > 1) state.getRange(2, 1, state.getLastRow() - 1, 8).getValues().forEach(r => {
+    if (r[1] !== code || r[4] !== true) return;
+    const f = Number(r[7]) || 0; total += f; if (Number(r[5]) >= weekAgo) week += f;
+  });
+  return { total: Math.round(total), week: Math.round(week) };
+}
+
 // ---------- the teacher view ----------
 const groupOfPage_ = page => (String(page || "").split("-")[2] || "").toUpperCase();
 // a real group is one with a row in Settings (B2, C1); a student works only on their own group's pages
@@ -453,6 +470,7 @@ const typeKey_ = s => { s = String(s); return s.indexOf("recording") > -1 ? "rec
 function teacher_(stu, p) {
   if (p.action === "summary") { const g = groupOfPage_((p.pages || [])[0]); return { ok: true, role: "teacher", name: stu.name, pages: {}, group: g ? groupStats_(g) : null, published: published_(p.pages) }; }
   if (p.action === "overview") return overview_(p);
+  if (p.action === "liveOp") return liveOp_(clean_(p.tool, 80), p.op || {});
   const page = clean_(p.page, 80);
   if (!page) return { ok: false, error: "no-page" };
   if (p.action === "feedback") return setFeedback_(p.id, p.text);
@@ -553,6 +571,47 @@ function publish_(page, on) {
   return { ok: true, saved: true, published: on === true };
 }
 
+// ---------- lesson tools, live version (28.10): Olya removes, moves or corrects items during a lesson; the groups' pages pick it up ----------
+// changes = { hide: [path], last: [path], text: { path: text }, order: { list: [item numbers] } }; a path names an item in the page's data,
+// e.g. "speaking.2", "cards.4.1"; order = the order she dragged a list into (speaking tasks, follow-ups)
+function liveRow_(tool) {
+  const sh = sheet_(LIVE, LIVE_HEAD), n = sh.getLastRow() - 1;
+  const keys = n > 0 ? sh.getRange(2, 1, n, 1).getValues().map(r => String(r[0])) : [];
+  return { sh: sh, row: (keys.indexOf(tool) > -1 ? keys.indexOf(tool) : Math.max(n, 0)) + 2, found: keys.indexOf(tool) > -1 };
+}
+function liveGet_(tool) {
+  const empty = { hide: [], last: [], text: {}, order: {} };
+  if (!tool) return empty;
+  const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(LIVE);
+  if (!sh || sh.getLastRow() < 2) return empty;
+  const rows = sh.getRange(2, 1, sh.getLastRow() - 1, 2).getValues();
+  for (let i = 0; i < rows.length; i++) if (String(rows[i][0]) === tool) { try { const v = JSON.parse(String(rows[i][1])); return { hide: v.hide || [], last: v.last || [], text: v.text || {}, order: v.order || {} }; } catch (err) { return empty; } }
+  return empty;
+}
+function liveOp_(tool, op) {
+  if (!tool) return { ok: false, error: "no-tool" };
+  const kind = String(op.kind || ""), path = clean_(op.path, 80), text = String(op.text == null ? "" : op.text).slice(0, 2000);
+  if (kind !== "reset" && !/^[a-zA-Z]+(\.[a-zA-Z0-9]+)*$/.test(path)) return { ok: false, error: "bad-path" };
+  const v = liveGet_(tool), drop = (a, x) => a.filter(y => y !== x);
+  if (kind === "hide") { v.hide = drop(v.hide, path).concat([path]); }
+  else if (kind === "unhide") { v.hide = drop(v.hide, path); }
+  else if (kind === "last") { v.last = drop(v.last, path).concat([path]); }
+  else if (kind === "unlast") { v.last = drop(v.last, path); }
+  else if (kind === "text") { v.text[path] = text; }
+  else if (kind === "untext") { delete v.text[path]; }
+  else if (kind === "order") {
+    let a = []; try { a = JSON.parse(text); } catch (err) {}
+    if (!Array.isArray(a) || a.length > 200 || a.some(x => !Number.isInteger(x) || x < 0)) return { ok: false, error: "bad-order" };
+    v.order[path] = a; v.last = v.last.filter(x => x.indexOf(path + ".") !== 0);
+  }
+  else if (kind === "reset") { v.hide = []; v.last = []; v.text = {}; v.order = {}; }
+  else return { ok: false, error: "bad-op" };
+  const r = liveRow_(tool);
+  r.sh.getRange(r.row, 1, 1, 3).setValues([[tool, JSON.stringify(v), fmtDate_(Date.now())]]);
+  sheet_(LIVELOG, LIVELOG_HEAD).appendRow([fmtDate_(Date.now()), tool, kind, path, safeText_(text)]);
+  return { ok: true, live: v };
+}
+
 // "Where they got stuck" → ✓ Discussed: the marks and questions she went through in class (by work ID), and how many "hard" she has seen
 function discussed_(page, p) {
   const task = clean_(p.task, 80);
@@ -590,6 +649,7 @@ function sync_(p) {
   try { lock.waitLock(20000); } catch (err) { return { ok: false, error: "busy" }; }
   try {
     if (p.action === "published") return { ok: true, published: published_(p.pages) };   // the group list without a code: page keys only
+    if (p.action === "live") return { ok: true, live: liveGet_(clean_(p.tool, 80)) };          // a lesson tool (live version) asks for Olya's changes: no code, no personal data
     const stu = findStudent_(p.code);
     if (!stu) return { ok: false, error: "unknown-code" };
     if (stu.group === TEACHER) return teacher_(stu, p);
@@ -648,7 +708,8 @@ function sync_(p) {
     st_touch_(stu);
     const tasks = {};
     data.forEach(r => { if (r[1] === stu.code && r[2] === page) tasks[r[3]] = { done: r[4] === true, ts: Number(r[5]) }; });
-    return { ok: true, name: stu.name, gid: isGroup_(stu.group) ? stu.group.toLowerCase() : "", tasks: tasks, work: workFor_(stu, page), group: groupStats_(stu.group) };
+    const own = isGroup_(stu.group);
+    return { ok: true, name: stu.name, gid: own ? stu.group.toLowerCase() : "", tasks: tasks, work: workFor_(stu, page), group: own ? groupStats_(stu.group) : null, me: own ? null : meStats_(stu.code) };
   } finally {
     lock.releaseLock();
   }

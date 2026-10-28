@@ -131,6 +131,7 @@ h1{margin:0;font-size:var(--step-2);line-height:1.2;font-weight:900}
 .strip i{flex:1;height:22px;border-radius:2px;background:#3A3A36}
 .strip i.on{background:linear-gradient(180deg,#FFE066,#FF9900)}
 .meter .small{margin:0}
+.gate-note{margin:4px 2px 0;color:var(--muted)}
 .confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);max-width:min(92vw,520px);background:#1D1D1B;color:#fff;font-weight:700;padding:12px 16px;border-radius:12px;z-index:61;box-shadow:0 6px 20px rgba(0,0,0,.25);transition:opacity .5s}
 .toast.out{opacity:0}
@@ -226,6 +227,33 @@ function checkMilestone(gs, groupId){
   }
 }
 
+
+/* engine 35: someone studying on their own (Group = Self in her table) has their own film instead of the group's:
+   it grows with every task, and every 100 frames gets a small celebration (her choice, 28.10). Each code has its own. */
+let meStats = (()=>{ try{ const c = localStorage.getItem("hw-code"); return c ? JSON.parse(localStorage.getItem("hw-me-"+c)||"null") : null; }catch(e){ return null; } })();
+function meMeterHTML(me){
+  const n = 20, part = me.total % 100, filled = Math.round(part / 100 * n), next = (Math.floor(me.total / 100) + 1) * 100;
+  return `<section class="meter meter-me" aria-label="Your film">
+      <div class="meter-top"><b>🎬 Your film</b><span>${fmtN(me.total)} 🎞</span></div>
+      <div class="strip" role="img" aria-label="${part} of 100 frames to the next stop">${Array.from({length:n},(_,i)=>`<i class="${i<filled?"on":""}"></i>`).join("")}</div>
+      <p class="small">Every task adds frames — one per minute of work, Over to you counts double. Next stop: ${fmtN(next)} 🎞.${me.week ? ` This week: <b>${fmtN(me.week)} 🎞</b>.` : ""}</p>
+    </section>`;
+}
+function checkMe(me, code){
+  const key = "hw-me-ms-" + code, h = Math.floor(me.total / 100), seen = ls.get(key);
+  if(seen === ""){ ls.set(key, String(h)); return; }
+  if(h > Number(seen)){ ls.set(key, String(h)); confetti(true); toast(`🎬 ${fmtN(h * 100)} frames in your film! Next stop: ${fmtN((h + 1) * 100)}.`); }
+}
+function gotMe(res, code){
+  if(code !== myCode()) return false;
+  meStats = res.me || null;
+  if(res.me){ ls.set("hw-me-"+code, JSON.stringify(res.me)); setTimeout(()=>checkMe(res.me, code), 50); }
+  return !!res.me;
+}
+const meterNow = () => meStats ? meMeterHTML(meStats) : meterHTML(groupStats);
+
+/* engine 35: on the site the list opens only with a code (her decision, 28.10); see the homework page */
+const LOCKED = () => !!SYNC_URL && /\.github\.io$/.test(location.hostname) && (!myCode() || syncState === "unknown");
 
 async function post(payload){
   try{
@@ -333,7 +361,7 @@ function syncHTML(){
       <button class="chip-t" id="as-student">👀 Student view</button>
       <button class="linklike" id="code-change">Not you?</button></div>`;
   if(code && syncState!=="unknown") return `<div class="sync sync-on">
-      <span>✓ ${who?`Hi, ${esc(who)}! `:""}Olya can see your progress${syncState==="offline"?" — no connection right now, so this shows what's saved on this device.":"."}</span>
+      <span>✓ ${who?`Hi, ${esc(who)}! `:""}${meStats ? "Your progress is saved" : "Olya can see your progress"}${syncState==="offline"?" — no connection right now, so this shows what's saved on this device.":"."}</span>
       <button class="linklike" id="code-change">Not you?</button></div>`;
   return `<div class="sync sync-card">
       <label for="code"><b>Your code from Olya</b></label>
@@ -351,18 +379,26 @@ function tipHTML(){
     <button class="linklike" id="tip-x">Got it</button></div>`;
 }
 function render(){
-  app.innerHTML = `
+  if(LOCKED()){
+    app.innerHTML = `
+    <header class="head" id="gate"><h1>Homework</h1><p><b>__GROUP_NAME__</b> · All our homework in one place.</p></header>
+    <div id="sync-slot">${syncHTML()}</div>
+    <p class="small gate-note">The homework opens with your code. No code yet? Ask Olya — she'll send you one.</p>`;
+  } else app.innerHTML = `
     <header class="head">${teacherView() ? `<a class="to-start" href="../index.html">← Both groups</a>` : ""}<h1>Homework</h1><p><b>__GROUP_NAME__</b> · All our homework in one place. The newest is at the top.</p></header>
     <div id="sync-slot">${syncHTML()}</div>
     ${studentFbHTML()}
-    ${(myCode() && syncState!=="unknown") ? meterHTML(groupStats) : ""}
+    ${(myCode() && syncState!=="unknown") ? meterNow() : ""}
     ${tipHTML()}
     ${teacherSum()}
     <div class="list">${teacherList().map(card).join("")}</div>
     <p class="foot">Open a homework page, do the tasks and tick them off. Your ticks show up here.</p>`;
   const x = document.getElementById("tip-x"); if(x) x.addEventListener("click",()=>{ ls.set("hw-tip-done","1"); document.getElementById("tip").remove(); });
   const ch = document.getElementById("code-change");
-  if(ch) ch.addEventListener("click",()=>{ ls.set("hw-code",""); ls.set("hw-who",""); ls.set("hw-role",""); ls.set("hw-gid",""); ls.set("hw-as-student",""); server = null; syncState = ""; render(); const i=document.getElementById("code"); if(i) i.focus(); });
+  /* "Not you?": the next person starts clean on this device (engine 35), as on the homework pages */
+  if(ch) ch.addEventListener("click",()=>{ ["hw-code","hw-who","hw-role","hw-gid","hw-as-student"].forEach(k => ls.set(k, ""));
+    try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || /^hw-rev-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
+    location.reload(); });
   const go = document.getElementById("code-go"), inp = document.getElementById("code");
   if(go && inp){
     const save = async ()=>{
@@ -373,7 +409,7 @@ function render(){
       go.disabled = false;
       if(res.ok) gotPub(res.published);
       if(otherGroup(res, code)) return;
-      if(res.ok){ ls.set("hw-code", code); ls.set("hw-gid", res.role==="teacher" ? "" : (res.gid||"")); ls.set("hw-role", res.role==="teacher" ? "teacher" : ""); ls.set("hw-who", res.name||""); if(!ls.get("hw-name") && res.name) ls.set("hw-name", res.name); server = res; syncState = "ok"; gotGroup(res.group); render(); if(teacherView()) loadTeacher(); }
+      if(res.ok){ ls.set("hw-code", code); ls.set("hw-gid", res.role==="teacher" ? "" : (res.gid||"")); ls.set("hw-role", res.role==="teacher" ? "teacher" : ""); ls.set("hw-who", res.name||""); if(!ls.get("hw-name") && res.name) ls.set("hw-name", res.name); server = res; syncState = "ok"; gotGroup(res.group); gotMe(res, code); render(); if(teacherView()) loadTeacher(); }
       else msg.textContent = res.error==="unknown-code" ? "Hmm, Olya's list doesn't have this code. Check it with her." : "Can't reach Olya's list right now. Try again in a minute.";
     };
     go.addEventListener("click", save);
@@ -383,7 +419,7 @@ function render(){
 function gotGroup(g){ if(!g) return; groupStats = g; ls.set("hw-group-"+GROUP_ID, JSON.stringify(g)); setTimeout(()=>checkMilestone(g, GROUP_ID), 50); }
 async function refresh(){
   const code = myCode();
-  if(!code && SYNC_URL && HW_ALL.some(h=>h.unlisted)){   /* no code: only which drafts are published */
+  if(!code && SYNC_URL && !LOCKED() && HW_ALL.some(h=>h.unlisted)){   /* no code (off the site): only which drafts are published */
     const res = await post({action:"published", pages:HW_ALL.filter(h=>h.unlisted).map(h=>h.key)});
     if(res.ok && !myCode()){ gotPub(res.published); render(); }
     return;
@@ -392,7 +428,7 @@ async function refresh(){
   const res = await post({action:"summary", code, pages:HW_ALL.map(h=>h.key)});
   if(code !== myCode()) return;
   if(otherGroup(res, code)) return;
-  if(res.ok){ gotPub(res.published); ls.set("hw-gid", res.role==="teacher" ? "" : (res.gid||"")); server = res.role==="teacher" ? null : res; syncState = "ok"; ls.set("hw-who", res.name||""); ls.set("hw-role", res.role==="teacher" ? "teacher" : ""); gotGroup(res.group); }
+  if(res.ok){ gotPub(res.published); ls.set("hw-gid", res.role==="teacher" ? "" : (res.gid||"")); server = res.role==="teacher" ? null : res; syncState = "ok"; ls.set("hw-who", res.name||""); ls.set("hw-role", res.role==="teacher" ? "teacher" : ""); gotGroup(res.group); gotMe(res, code); }
   else syncState = res.error==="unknown-code" ? "unknown" : "offline";
   render();
   if(teacherView()) loadTeacher();

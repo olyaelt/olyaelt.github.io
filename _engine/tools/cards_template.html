@@ -30,7 +30,9 @@ __BASE_CSS__
 .card.open{cursor:default;border-color:var(--instr)}
 .card.enter{animation:deal .5s cubic-bezier(.2,.8,.2,1)}
 @keyframes deal{from{opacity:0;transform:translateX(60px) rotate(2deg)}to{opacity:1;transform:none}}
-.card .lbl{font-size:.82rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
+.card.card-hidden .say{opacity:.45}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.card .lbl{font-size:.88rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
 .card .say{font-size:2.05rem;font-weight:700;line-height:1.25;margin:0}
 .say .ctx{color:var(--muted);font-weight:500}
 /* the key word (tools 4, her decision 27.10): red bold capitals after the sentence, as on her slides and in the homework rewrites */
@@ -66,13 +68,14 @@ const REVIEW = __REVIEW__;          /* cards from the earlier part, for "+ N fro
 const STICKER = "__STICKER__";
 const TOOLS_VERSION = "__TOOLS_VERSION__";
 const PAGE_ID = "__PAGE_ID__";       /* e.g. c1-schools/cards-1: the Again list is remembered on this device for the next part */
+const LIVE_ON = __LIVE__, LIVE_URL = "__SYNC_URL__";   /* the "-live" page: Olya's changes during the lesson (tools 7) */
 __BASE_JS__
 const AGAIN_KEY = id => "tool-again-" + id;
 let useReview = !!(REVIEW && (params.get("review") === "1"));
 let boxOpen = true, settings = false;
 let S;
 function deck(){
-  const own = D.cards.map(([f, b, k], i) => ({id: "o" + i, f, b, k}));
+  const own = D.cards.map((c, i) => liveCard(i)).filter(c => !liveHidden("cards." + c.i));
   if(!useReview || !REVIEW) return shuffle(own);
   /* review: first the cards this device marked "Again" in the earlier part, then random ones */
   const again = store.get(AGAIN_KEY(REVIEW.page)) || [];
@@ -80,6 +83,21 @@ function deck(){
   const first = shuffle(all.filter((c, i) => again.includes(i))), rest = shuffle(all.filter((c, i) => !again.includes(i)));
   return shuffle(own.concat(first.concat(rest).slice(0, REVIEW.n)));
 }
+/* a card as the groups see it now (live version: her corrections; D itself never changes) */
+const liveCard = i => { const [f, b, k] = D.cards[i]; return {id: "o" + i, i, f: liveText(`cards.${i}.0`, f), b: liveText(`cards.${i}.1`, b), k: liveText(`cards.${i}.2`, k || "")}; };
+/* her changes arrive: corrected texts go into the deck; removed cards leave it (the one on the screen stays until they answer it) */
+function liveAdjust(){
+  if(!S) return;
+  S.cards.forEach(c => { if(c.id[0] === "o"){ const n = liveCard(c.i); c.f = n.f; c.b = n.b; c.k = n.k; } });
+  const gone = id => id[0] === "o" && liveHidden("cards." + id.slice(1));
+  const now = S.queue[0];
+  S.queue = S.queue.filter((id, j) => j === 0 || !gone(id));
+  S.cards = S.cards.filter(c => c.id === now || c.id === S.look || !gone(c.id));
+}
+/* the first answer from her table, before anyone has tapped: deal the deck again without what she removed */
+const liveFresh = () => { if(S && !S.shown && !S.flipped && !S.speak && !S.look) newRound(); };
+const liveLabel = p => { const v = pathGet(D, p); return Array.isArray(v) ? v[0].replace(/\(\(|\)\)/g, "") : typeof v === "string" ? v : p; };
+const cardTools = c => c && c.id[0] === "o" ? liveTools("cards." + c.i, {fields: `cards.${c.i}.0|cards.${c.i}.1|cards.${c.i}.2`}) : "";
 function newRound(cards){
   const list = cards || deck();
   S = { cards: list, queue: list.map(c => c.id), got: new Set(), again: new Set(), shown: 0, flipped: false, fresh: true };
@@ -119,8 +137,10 @@ function commit(ok){
   if(ok) S.got.add(id);
   else { S.again.add(id); const k = 2 + Math.floor(Math.random() * 2); if(S.queue.length >= k) S.queue.splice(k, 0, id); else S.queue.push(id); }
   S.flipped = false; S.shown++; S.fresh = true; S.popId = id;
-  if(!S.queue.length){ const mine = [...S.again].filter(x => x[0] === "o").map(x => +x.slice(1)); store.set(AGAIN_KEY(PAGE_ID), mine); }
+  const ended = !S.queue.length;
+  if(ended){ const mine = [...S.again].filter(x => x[0] === "o").map(x => +x.slice(1)); store.set(AGAIN_KEY(PAGE_ID), mine); }
   render();
+  if(ended) confetti(document.querySelector(".end h2"));   /* the end of the deck gets its moment, as in the homework (no score) */
 }
 function headHTML(){
   return `<header class="head"><span class="part">${esc(D.part)}</span><h1>${esc(D.title)}</h1>
@@ -151,8 +171,8 @@ function lookAgain(){   /* it was "Got it", but they want it once more: it goes 
 }
 function cardHTML(){
   const c = byId(S.queue[0]);
-  return `<div class="scene"><div class="card ${S.flipped ? "open" : ""} ${S.fresh ? "enter" : ""}" data-flip ${S.flipped ? "" : `role="button" tabindex="0" aria-label="Show the answer"`}>
-      <span class="lbl">${c.review ? `From ${esc(REVIEW.part)}` : "Say it another way"}</span>
+  return `<div class="scene"><div class="card ${S.flipped ? "open" : ""} ${S.fresh ? "enter" : ""} ${c.id[0] === "o" && liveTeacher() && liveHidden("cards." + c.i) ? "card-hidden" : ""}" data-flip data-live-host ${S.flipped ? "" : `role="button" tabindex="0" aria-label="Show the answer"`}>
+      <span class="card-top"><span class="lbl">${c.review ? `From ${esc(REVIEW.part)}` : "Say it another way"}</span>${cardTools(c)}</span>
       <p class="say">${fHTML(c.f, c.k)}</p>
       <div class="ans" ${S.flipped ? "" : "hidden"}><p class="say">${esc(c.b)}</p></div>
       ${S.flipped ? "" : `<span class="corner">tap to check ↓</span>`}
@@ -160,7 +180,7 @@ function cardHTML(){
     <div class="actions">${actionsHTML()}</div>`;
 }
 const actionsHTML = () => S.flipped
-  ? `<button class="btn again" data-again>↺ Again</button><button class="btn ok solid" data-got>✓ Got it</button>` : "";
+  ? `<button class="btn again" data-again>↺ Again</button><button class="btn ok" data-got>✓ Got it</button>` : "";
 function wireActions(){
   document.querySelectorAll("[data-again]").forEach(b => b.addEventListener("click", () => answer(false)));
   document.querySelectorAll("[data-got]").forEach(b => b.addEventListener("click", () => answer(true)));
@@ -175,24 +195,27 @@ function endHTML(){
 /* after the speaking tasks: the hard cards again, or all of them — so the task never runs out */
 function speakView(){
   const hard = S.cards.filter(c => S.again.has(c.id)).length;
-  return speakHTML(D.speaking, `${hard ? `<button class="btn" data-redo>The hard cards again</button>` : ""}<button class="btn primary" data-restart>All the cards again</button>`);
+  return speakHTML(liveList(D.speaking, "speaking"), `${hard ? `<button class="btn" data-redo>The hard cards again</button>` : ""}<button class="btn primary" data-restart>All the cards again</button>`);
 }
 function render(){
+  liveApply();   /* her latest changes, at the group's tap (live version) */
   const main = document.getElementById("main"), side = document.getElementById("side");
-  main.innerHTML = headHTML() + (S.speak ? `<section class="stage-wrap ${S.stageIn ? "enter" : ""}">${speakView()}</section>` : progressHTML() + (S.look ? lookHTML() : S.queue.length ? cardHTML() : endHTML()));
+  main.innerHTML = liveBarHTML(liveLabel) + headHTML() + (S.speak ? `<section class="stage-wrap ${S.stageIn ? "enter" : ""}">${speakView()}</section>` : progressHTML() + (S.look ? lookHTML() : S.queue.length ? cardHTML() : endHTML()));
   wireSpeak(main, render);
   /* 📋 under the box: a fallback for her, not something to invite a click (27.10) */
   const st = side.scrollTop;
   side.innerHTML = (boxOpen ? boxHTML(D.box, {clickable: true, collapsible: true}) : `<div class="peek"><button class="btn" data-box-show>Show the box</button></div>`)
-    + allHTML("All the cards", S.cards.map(c => `<div class="all-row"><span class="f">${fHTML(c.f, c.k)}</span><span class="b">${esc(c.b)}</span></div>`).join(""));
+    + allHTML("All the cards", S.cards.concat(liveTeacher() ? D.cards.map((_, i) => i).filter(i => liveHidden("cards." + i) && !S.cards.some(c => c.i === i)).map(liveCard) : [])
+        .map(c => `<div class="all-row live-host ${c.id[0] === "o" ? liveDim("cards." + c.i) : ""}" data-live-host><span><span class="f">${fHTML(c.f, c.k)}</span><span class="b">${esc(c.b)}</span></span>${cardTools(c)}</div>`).join(""));   /* her screen: hidden cards too, greyed */
   side.scrollTop = st; wireAll(side); wireBox(side, render);
+  wireLive(main, p => pathGet(D, p) || ""); wireLive(side, p => pathGet(D, p) || "");
   S.fresh = false; S.popId = null; S.stageIn = false;
   const on = (sel, fn) => document.querySelectorAll(sel).forEach(b => b.addEventListener("click", () => fn(b)));
   on("[data-flip]", flip); wireActions();
   on("[data-look]", b => { S.look = b.dataset.look === S.look ? null : b.dataset.look; S.fresh = true; render(); });
   on("[data-look-done]", () => { S.look = null; S.fresh = true; render(); });
   on("[data-look-again]", lookAgain);
-  on("[data-speak]", () => { S.speak = true; spk = 0; S.look = null; S.stageIn = true; render(); scrollTo(0, 0); });
+  on("[data-speak]", () => { S.speak = true; spkReset(); S.look = null; S.stageIn = true; render(); scrollTo(0, 0); });
   on("[data-stage]", b => { const sp = b.dataset.stage === "speak"; if(sp === !!S.speak || S.busy) return; S.speak = sp; S.look = null; S.fresh = true; S.stageIn = sp; render(); scrollTo(0, 0); });
   on("[data-redo]", () => { newRound(shuffle(S.cards.filter(c => S.again.has(c.id)))); render(); });
   on("[data-restart]", () => { newRound(); render(); });
@@ -210,6 +233,7 @@ document.addEventListener("keydown", e => {
   else if(S.flipped && (e.key === "1" || e.key === "ArrowLeft")) answer(false);
   else if(S.flipped && (e.key === "2" || e.key === "ArrowRight")) answer(true);
 });
+liveRerender = () => render();
 render();
 </script>
 </body>

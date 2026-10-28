@@ -32,7 +32,9 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
   // listening: mark a hard line
   if (ids.li) {
     await p.click(`[data-open="${ids.li}"]`); await p.waitForTimeout(200); await p.click('#go'); await p.waitForTimeout(100);
-    await p.locator('.ln .mk').nth(1).click();
+    // engine 37: "?" only on lines with a gap, none on context lines
+    out.listenMarks = await p.evaluate(() => [...document.querySelectorAll('.ln')].map(r => (r.classList.contains('has-gap') ? 'G' : '-') + (r.querySelector('.mk') ? '?' : '')).join(' '));
+    await p.locator('.ln.has-gap .mk').first().click();
     if (shots) await p.screenshot({path: path.join(shots, 'mark_listen.png')});
     for (let i = 0; i < 80 && !(await p.locator('.lesson-head').count()); i++) { await p.locator('#go').click(); await p.waitForTimeout(30); }
     await p.waitForTimeout(400);

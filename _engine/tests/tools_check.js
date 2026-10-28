@@ -32,18 +32,27 @@ const {chromium} = require('playwright'); const path = require('path');
     expect('second roll locked', await p.locator('[data-roll="1"]').isDisabled());
     await p.click('[data-roll="0"]'); await p.waitForTimeout(2000);          // animated roll
     const n = await p.locator('.st').first().locator('.dot').count(); out.c.roll = n; expect('roll gives ticks', n >= 1 && n <= 6);
+    // tools 6: the next row waits until this one is done (all ticked or We give up); "3 of 14" shows where they are
+    expect('second row waits for the first to be done', await p.locator('[data-roll="1"]').isDisabled());
+    out.c.count1 = await p.locator('.subj-count').innerText(); expect('subject count', /^1 of \d+$/.test(out.c.count1));
     for (let i = 0; i < n; i++) await p.locator('.st').first().locator('.dot').nth(i).click();
     await p.waitForTimeout(700);   // the example comes in a moment after the last tick
     out.c.step1 = {done: await p.locator('.st').first().evaluate(e => e.classList.contains('done')), exampleOpen: await p.locator('.ex-step').count()};
     expect('step 1 done + example opens by itself', out.c.step1.done && out.c.step1.exampleOpen === 1);
-    // the die (her husband's point, 27.10): it slows down and simply stops — the result already shows during the last slow turns, no scale bounce
+    // the die (her husband's point, 27.10): it slows down and simply stops — the result shows from about half a second in, no scale bounce
     await p.click('[data-roll="1"]');
+    // it ends upright (two whole turns), so the dark edge doesn't flick to the bottom when it stops (her catch, 27.10)
+    const endTurn = await p.locator('[data-die-slot="1"] .die').evaluate(d => { const a = d.getAnimations()[0], k = a && a.effect.getKeyframes(); return k ? k[k.length - 1].transform : null; });
+    const endDeg = +((/rotate\((-?[\d.]+)deg\)/.exec(endTurn || '') || [])[1]);
+    out.c.dieEnd = endTurn;
+    expect('die ends upright', Number.isFinite(endDeg) && endDeg % 360 === 0 && /translate\(0(px)?, 0(px)?\)/.test(endTurn));
     const dieAt = () => p.locator('[data-die-slot="1"] .die').evaluate(d => ({pips: d.querySelectorAll('i.p').length, tr: getComputedStyle(d).transform}));
     await p.waitForTimeout(1150); const late1 = await dieAt(); await p.waitForTimeout(350); const late2 = await dieAt();
     await p.waitForTimeout(500); const rolled = await p.locator('.st').nth(1).locator('.dot').count();
     out.c.die = {late1, late2, rolled};
     const scaled = tr => { const m = /matrix\(([^,]+), ([^,]+)/.exec(tr); return m && Math.abs(Math.hypot(+m[1], +m[2]) - 1) > .01; };
     expect('die keeps its result for the last slow turns', late1.pips === late2.pips && late2.pips === rolled && !scaled(late1.tr) && !scaled(late2.tr));
+    expect('decision waits for the second row', await p.locator('[data-dec="1"]').isDisabled());
     // the example opens every time a row is done, even after it was opened early and hidden
     if (await p.locator('[data-giveup="1"]').count()) {
       await p.click('[data-ex="1"]'); await p.waitForTimeout(150); await p.click('[data-ex-hide="1"]'); await p.waitForTimeout(150);
@@ -51,13 +60,18 @@ const {chromium} = require('playwright'); const path = require('path');
       await p.click('[data-giveup="1"]'); await p.waitForTimeout(150);
       out.c.gaveUp = {gave: await p.locator('.st').nth(1).evaluate(e => e.classList.contains('gave')), monkey: await p.locator('.st').nth(1).locator('.n').innerText(), exBefore: hidden, exAfter: await p.locator('.ex-step').count()};
       expect('give up -> 🙈', out.c.gaveUp.gave && out.c.gaveUp.monkey.includes('🙈'));
-      expect('give up opens the example again after a hide', out.c.gaveUp.exAfter === hidden + 1); }
+      expect('give up opens the example again after a hide', out.c.gaveUp.exAfter === hidden + 1);
+      expect('one example open at a time', out.c.gaveUp.exAfter === 1 && await p.locator('.ex-step [data-ex-hide="1"]').count() === 1 && await p.locator('[data-ex="0"]').count() === 1); }
     expect('next locked before a decision', await p.locator('[data-next]').isDisabled());
     await p.locator('.ph').nth(1).click(); out.c.phraseUsed = await p.locator('.ph.used').count(); expect('box phrase clickable', out.c.phraseUsed === 1);
     await p.click('[data-dec="agree"]'); await shot(p, 'council-turn');
+    out.c.agreeOn = await p.evaluate(() => { const b = document.querySelector('[data-dec="agree"]'), c = document.createElement('i'); c.style.color = 'var(--date-bg)'; document.body.append(c);
+      const want = getComputedStyle(c).color; c.remove(); return {bg: getComputedStyle(b).backgroundColor, want}; });
+    expect('Agree to disagree picked: warm colour, not grey', out.c.agreeOn.bg === out.c.agreeOn.want);
     await p.click('[data-next]'); await p.waitForTimeout(1200);
     out.c.second = {label: await p.locator('.subj-label').first().innerText(), sofar: await p.locator('.chip').allInnerTexts()};
     expect('next subject + so far', out.c.second.sofar.length === 1 && /agree to disagree/.test(out.c.second.sofar[0]));
+    expect('count moves on', /^2 of /.test(await p.locator('.subj-count').innerText()));
     // Decide stage
     await p.click('.stage-btn[data-stage="decide"]'); await p.waitForTimeout(600);
     out.c.decide = {current: await cur(p), hint: await p.locator('.dice-hint').count(), follow0: await p.locator('.follow').count()};
@@ -86,7 +100,7 @@ const {chromium} = require('playwright'); const path = require('path');
     out.c.dice4 = {max: Math.max(...rolls), min: Math.min(...rolls)}; expect('dice 1–4', out.c.dice4.max <= 4 && out.c.dice4.min >= 1);
     out.c.usedClearedOnRestart = await p.locator('.ph.used').count() === 0; expect('restart clears used phrases', out.c.usedClearedOnRestart);
     // the 📋 list keeps its place in the side panel while they work
-    await p.click('#side details.all summary'); await p.evaluate(() => scrollTo(0, 300));
+    await p.click('#side details.all summary'); await p.evaluate(() => scrollTo(0, 150));   // the tapped tick must stay on screen (since tools 6 the page is more compact), or the click itself scrolls
     const before = await p.evaluate(() => scrollY);
     await p.locator('.st').first().locator('.dot').first().click(); await p.waitForTimeout(100);
     out.c.sideKeeps = {open: await p.locator('#side details.all').evaluate(d => d.open), scroll: [before, await p.evaluate(() => scrollY)]};
@@ -100,7 +114,13 @@ const {chromium} = require('playwright'); const path = require('path');
     await p.click('[data-box-toggle]'); out.p2.hiddenAgain = await p.locator('.box').count() === 0;
     expect('part 2 peek', out.p2.boxBefore === 0 && out.p2.boxAfterPeek === 1 && out.p2.hiddenAgain);
     let guard = 0;
-    while (await p.locator('[data-roll="0"]').count() && guard++ < 20) { await p.click('[data-roll="0"]'); await p.click('[data-roll="1"]'); await p.click('[data-dec="0"]'); await p.click('[data-next]'); await p.waitForTimeout(40); }
+    // tools 6: every subject, with either example open, fits on a 1280×720 Zoom screen (Next subject included), so nobody has to scroll
+    const fits = [];
+    while (await p.locator('[data-roll="0"]').count() && guard++ < 20) { await p.click('[data-roll="0"]'); await p.click('[data-giveup="0"]'); await p.click('[data-roll="1"]'); await p.click('[data-giveup="1"]');
+      for (const k of [0, 1]) { if (await p.locator(`[data-ex="${k}"]`).count()) await p.click(`[data-ex="${k}"]`);
+        fits.push(await p.evaluate(() => { scrollTo(0, 0); return Math.round(document.querySelector('[data-next]').getBoundingClientRect().bottom); })); }
+      await p.click('[data-dec="0"]'); await p.click('[data-next]'); await p.waitForTimeout(40); }
+    out.p2.fitMax = Math.max(...fits); expect('a whole subject fits on a 720 px screen', out.p2.fitMax <= 720);
     out.p2.allDone = {rounds: guard, sofar: await p.locator('.chip').count(), end: await p.locator('.stage.empty p').innerText()};
     expect('part 2 all subjects', out.p2.allDone.sofar === guard && guard >= 4);
     await p.click('.stage.empty [data-decide]'); out.p2.toDecide = /Decide/.test(await cur(p)); expect('time to decide', out.p2.toDecide);
@@ -124,6 +144,9 @@ const {chromium} = require('playwright'); const path = require('path');
     await p.click('.card'); await p.waitForTimeout(300); await shot(p, 'cards-open');
     out.k.open = {ans: await p.locator('.ans:not([hidden])').count(), sentenceStays: (await front()) === f0};
     expect('tap opens the answer under the sentence', out.k.open.ans === 1 && out.k.open.sentenceStays);
+    // tools 6: Again and Got it weigh the same (no nudge towards Got it)
+    out.k.btns = await p.evaluate(() => ['[data-again]', '[data-got]'].map(q => getComputedStyle(document.querySelector(q)).backgroundColor));
+    expect('Again and Got it look equal', out.k.btns[0] === out.k.btns[1]);
     await p.click('[data-again]'); await p.waitForTimeout(1000);           // animated: flies into its dot
     await p.emulateMedia({reducedMotion: 'reduce'});
     const seen = [];
@@ -164,6 +187,15 @@ const {chromium} = require('playwright'); const path = require('path');
     expect('review cards from Part 1', out.k2.withReview === out.k2.dots + 4 && out.k2.viaLink === out.k2.withReview && out.k2.againIncluded);
     await shot(p, 'cards2');
   }
+  // tools 6: the end of the deck gets a burst of confetti; "you are here" is blue in the speaking dots
+  { const p = await page('tools/c1-schools/cards-1.html', {motion: 'no-preference'});
+    await p.evaluate(() => { S.queue = [S.queue[0]]; render(); }); await p.click('.card'); await p.click('[data-got]'); await p.waitForTimeout(900);
+    out.k.confetti = await p.locator('.confetti').count(); await shot(p, 'cards-confetti');
+    await p.click('.end [data-speak]'); await p.waitForTimeout(200);
+    out.k.speakDot = await p.evaluate(() => { const d = document.querySelector('.speak-dots button.on'), c = document.createElement('i'); c.style.color = 'var(--instr)'; document.body.append(c);
+      const want = getComputedStyle(c).color; c.remove(); return {dot: getComputedStyle(d, '::before').backgroundColor, want}; });
+    expect('confetti at the end of the deck', out.k.confetti > 10);
+    expect('speaking: current dot is blue', out.k.speakDot.dot === out.k.speakDot.want); }
   { const p = await page('tools/c1-schools/cards-1.html', {scheme: 'dark'}); await p.click('.card'); await p.waitForTimeout(200); await shot(p, 'cards-dark'); }
   // phone width: one column, nothing wider than the screen
   for (const f of ['council-1', 'cards-1']) { const p = await page('tools/c1-schools/' + f + '.html', {w: 390, h: 800});

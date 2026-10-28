@@ -10,29 +10,35 @@
 __BASE_CSS__
 /* ---------- the school council: draw a subject, roll for reasons, decide ---------- */
 .stage-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.subj-count{flex:none;border:2px solid var(--line);border-radius:99px;padding:2px 12px;font-weight:700;font-size:.95rem;color:var(--ink)}
 .head-btns{margin-left:auto;display:flex;gap:8px;align-items:center}
 .stage-wrap.enter{animation:enterR .45s cubic-bezier(.2,.8,.2,1)}
-.btn.slim{min-height:38px;padding:4px 14px;font-size:.95rem;border-radius:10px}
 .head-btns .gear{margin-left:0}
-.dice-hint{display:flex;justify-content:space-between;align-items:center;gap:8px 14px;flex-wrap:wrap}
+/* tools 6: the dice range sits at the end of the hint text, not on a line of its own, so the whole subject fits on a 720 px Zoom screen */
+.dice-hint{display:block}
+/* the stage buttons a touch smaller here, so they fit on the title line (three long labels) */
+.head .stage-btn{font-size:.92rem;padding:3px 11px}
+.head .stage-arrow{margin:0 -1px}
+.dice-hint .seg{display:inline-flex;vertical-align:middle;margin-left:10px}
 .dice-hint .seg{font-size:.85rem;font-weight:700;flex:none}
 .dice-hint .seg button{padding:2px 10px}
 @media (max-width:560px){ .head-btns{margin-left:0;flex-wrap:wrap} .stage{padding:14px} .stage-top{flex-wrap:wrap}
   .st{grid-template-columns:1.8rem minmax(0,1fr) auto;gap:8px;padding:7px 9px} .st .choice{grid-column:2 / 4} .subj{font-size:1.8rem} }
-.stage{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px;display:grid;gap:12px;align-content:start;min-height:300px}
+.stage{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 20px;display:grid;gap:10px;align-content:start;min-height:300px}
 .stage.empty{place-content:center;justify-items:center;text-align:center;gap:14px}
 .stage.empty p{margin:0;color:var(--muted);font-size:1.05rem}
 .stage.enter{animation:enterR .55s cubic-bezier(.2,.8,.2,1)}
 @keyframes enterR{from{opacity:0;transform:translateX(70px) rotate(1.5deg)}to{opacity:1;transform:none}}
 @keyframes enter{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
-.subj-top{display:grid;gap:2px}
-.subj-label{color:var(--label);font-weight:900;letter-spacing:.07em;text-transform:uppercase;font-size:.85rem}
+.subj-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 14px}
+.subj-top .subj-label{flex-basis:100%}
+.subj-label{color:var(--label);font-weight:900;letter-spacing:.07em;text-transform:uppercase;font-size:.9rem}
 .subj{font-size:2.2rem;font-weight:900;line-height:1.08}
 .subj-meta{color:var(--muted);font-size:1.05rem}
 .subj-meta .ipa{color:var(--ipa);white-space:nowrap}
 .subj-meta .ru{font-style:italic}
 .steps{display:grid;gap:8px}
-.st{display:grid;grid-template-columns:2.1rem minmax(0,1fr) auto;align-items:center;gap:12px;padding:7px 12px;border-radius:12px;background:var(--ground);transition:opacity .25s;min-height:4.2rem}
+.st{display:grid;grid-template-columns:2.1rem minmax(0,1fr) auto;align-items:center;gap:12px;padding:7px 12px;border-radius:12px;background:var(--ground);transition:opacity .25s;min-height:3.9rem}
 .st .n{width:2rem;height:2rem;border-radius:50%;display:grid;place-items:center;font-weight:900;background:var(--card);border:2px solid var(--line)}
 .st.done .n{background:var(--ok);border-color:var(--ok);color:#fff}
 .st.gave .n{background:var(--bubble);border-color:var(--again);font-size:1.05rem}
@@ -59,14 +65,14 @@ __BASE_CSS__
 .giveup:hover{border-color:var(--again);color:var(--again)}
 .gave-tag{font-weight:700;font-size:.92rem;color:var(--again);margin-left:4px}
 .exbtn.sm{padding:2px 12px;font-size:.9rem;margin-left:4px}
-.ex-step{display:grid;gap:6px;background:var(--bubble);color:var(--bubble-ink);border-radius:12px;padding:10px 16px 12px 58px;margin:-4px 0 2px}
+.ex-step{display:grid;gap:5px;background:var(--bubble);color:var(--bubble-ink);border-radius:12px;padding:8px 16px 10px 58px;margin:-4px 0 2px}
 .ex-step.opening{animation:enter .35s ease-out}
 .ex-step .ex-h{display:flex;justify-content:space-between;align-items:baseline}
 .ex-step p{margin:0;line-height:1.35}
 .ex-step .bx{color:var(--flip-ink)}
 .btn.meh{border-color:var(--muted);color:var(--muted)}
-.btn.meh.on{background:var(--muted);color:var(--card)}
-.chip.meh{background:var(--line);color:var(--ink)}
+.btn.meh.on{background:var(--date-bg);border-color:var(--date-bg);color:var(--date-ink)}   /* tools 6: grey looked switched off */
+.chip.meh{background:color-mix(in srgb, var(--date-bg) 35%, var(--card));color:var(--ink)}
 .die{width:3.3rem;height:3.3rem;border-radius:11px;background:#FFFFFF;border:3px solid #1D1D1B;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:.45rem;box-shadow:0 4px 0 #1D1D1B}
 .die i{width:.62rem;height:.62rem;border-radius:50%;background:#1D1D1B;place-self:center;visibility:hidden}
 .die i.p{visibility:visible}
@@ -79,7 +85,7 @@ __BASE_CSS__
 .ex{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;background:var(--bubble);color:var(--bubble-ink);border-radius:14px;padding:12px 16px;animation:enter .3s ease-out}
 @media (max-width:640px){ .ex{grid-template-columns:1fr} }
 .ex-col{display:grid;gap:6px;align-content:start}
-.ex-h{font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
+.ex-h{font-size:.88rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
 .ex p{margin:0;line-height:1.35}
 .ex .bx{color:var(--flip-ink)}
 .sofar{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center}
@@ -104,7 +110,7 @@ __BASE_CSS__
 .col-h{display:flex;justify-content:space-between;align-items:baseline}
 .col-h .cnt{color:var(--muted);font-weight:700}
 .pick{display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left;border:2px solid var(--line);background:var(--card);border-radius:10px;padding:4px 12px;font-size:1rem;font-weight:700}
-.pick .was{font-weight:400;font-size:.85rem;color:var(--muted);white-space:nowrap}
+.pick .was{font-weight:600;font-size:.92rem;color:color-mix(in srgb, var(--ink) 70%, transparent);white-space:nowrap}
 .pick.on.cut{border-color:var(--no);background:var(--no-bg)}
 .pick.on.add{border-color:var(--ok);background:var(--ok-bg)}
 .pick .mark{font-weight:900}
@@ -114,8 +120,8 @@ __BASE_CSS__
 .follow-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .follow-h{font-size:.85rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
 .follow-q{margin:0;font-size:1.25rem;font-weight:700;line-height:1.35}
-.follow .speak-dots button::before{background:var(--line)} .follow .speak-dots button.was::before{background:var(--muted)} .follow .speak-dots button.on::before{background:var(--date-bg)}
-.frame small{display:block;font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;margin-bottom:4px}
+.follow .speak-dots button::before{background:var(--line)} .follow .speak-dots button.was::before{background:var(--muted)} .follow .speak-dots button.on::before{background:var(--instr)}
+.frame small{display:block;font-size:.88rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;margin-bottom:4px}
 </style>
 </head>
 <body>
@@ -125,12 +131,24 @@ __BASE_CSS__
 const D = __DATA__;
 const STICKER = "__STICKER__";
 const TOOLS_VERSION = "__TOOLS_VERSION__";
+const PAGE_ID = "__PAGE_ID__";
+const LIVE_ON = __LIVE__, LIVE_URL = "__SYNC_URL__";   /* the "-live" page: Olya's changes during the lesson (tools 7) */
 __BASE_JS__
 /* ---------- state ---------- */
 const DIE_OPTIONS = [3, 4, 6];
 let faces = DIE_OPTIONS.includes(+params.get("dice")) ? +params.get("dice") : 6;
 const LISTS = Object.fromEntries(D.lists.map(l => [l.kind, l]));
 const ORDER = D.lists.map(l => l.kind);            /* cut, add, cut, add… */
+/* a subject as the groups see it now: her corrected title and example lines (live version); D itself never changes */
+const LIDX = Object.fromEntries(D.lists.map((l, L) => [l.kind, L]));
+const itemPath = (kind, i) => `lists.${LIDX[kind]}.items.${i}`;
+const exLive = (p, arr) => (arr || []).map((s, j) => ({p: `${p}.${j}`, t: liveText(`${p}.${j}`, s)})).filter(x => liveTeacher() || !liveHidden(x.p));   /* her screen keeps hidden lines, greyed */
+const itemOf = (kind, i) => { const it = LISTS[kind].items[i], p = itemPath(kind, i);
+  return {...it, t: liveText(p + ".t", it.t), exl: it.ex ? {for: exLive(p + ".ex.for", it.ex.for), against: exLive(p + ".ex.against", it.ex.against)} : null}; };
+const itemGone = (kind, i) => liveHidden(itemPath(kind, i));
+const TOTAL = () => D.lists.reduce((a, l) => a + l.items.filter((_, i) => !itemGone(l.kind, i)).length, 0);
+/* her changes arrive: removed subjects leave the pile (the one on the table stays until Next) */
+function liveAdjust(){ ORDER.forEach(k => { S.pools[k] = S.pools[k].filter(i => !itemGone(k, i)); }); }
 let S;
 function newGame(){
   S = { draws: 0, pools: Object.fromEntries(D.lists.map(l => [l.kind, shuffle(l.items.map((_, i) => i))])),
@@ -143,10 +161,16 @@ const WORDS = {
   cut: {keep: "Reasons to keep", drop: "Reasons to cut", q: "Keep or cut?", yes: "Keep", no: "Cut", yesTag: "keep", noTag: "cut"},
   add: {keep: "Reasons to add", drop: "Reasons not to add", q: "Add or not?", yes: "Add", no: "Don't add", yesTag: "add", noTag: "don't add"}
 };
-const itemOf = (kind, i) => LISTS[kind].items[i];
+/* the first answer from her table, before anyone has played: start again without what she removed */
+const liveFresh = () => { if(S && !S.done.length && S.view === "game" && S.cur && S.cur.r[0].n === null && itemGone(S.cur.kind, S.cur.i)) newGame(); };
+const liveCursorHook = p => { if(S && S.fuCur && p === "followUp." + S.fuCur.key) S.fuCur.move = 1; };
+const liveLabel = p => { const v = pathGet(D, p); return typeof v === "string" ? v : v && v.t ? v.t : p; };
+/* a row is done when every reason is ticked or they gave up; the next row (and the decision) waits for it (her rule, 27.10) */
+const rowDone = r => r.n !== null && (r.got >= r.n || !!r.gaveUp);
 
 function draw(sameKind){
   let kind = sameKind || ORDER[S.draws % ORDER.length];
+  liveAdjust();
   if(!S.pools[kind].length) kind = ORDER.find(k => S.pools[k].length);
   if(!kind){ S.cur = null; return; }
   const i = S.pools[kind].shift();
@@ -174,11 +198,12 @@ const PIPS = {1:[5], 2:[1,9], 3:[1,5,9], 4:[1,3,7,9], 5:[1,3,5,7,9], 6:[1,3,4,6,
 const dieHTML = n => `<span class="die" aria-label="${n}">${Array.from({length: 9}, (_, k) => `<i class="${PIPS[n].includes(k + 1) ? "p" : ""}"></i>`).join("")}</span>`;
 /* the example opens by itself every time a row is finished (all ticked or "We give up"), even if it was opened and hidden before:
    that is the moment to look at it (her wish, 27.10). Already open → it stays as it is, no re-animation */
-function openEx(k){ const c = S.cur; if(!c || !exOf(k) || c.exOpen[k]) return; c.exOpen[k] = true; S.exAnim = k; }
+/* only one example is open at a time (tools 6): with both open, the decision row and Next went below a 720 px Zoom screen */
+function openEx(k){ const c = S.cur; if(!c || !exOf(k) || c.exOpen[k]) return; c.exOpen = c.exOpen.map(() => false); c.exOpen[k] = true; S.exAnim = k; }
 const setFace = (die, n) => die.querySelectorAll("i").forEach((p, j) => p.classList.toggle("p", PIPS[n].includes(j + 1)));
-/* the roll: the die rolls over one face at a time (a quarter turn, its middle lifted as on an edge), slower and slower,
-   and the last quarter turn lands on the result and simply stops there — no bounce, no late change (her husband's point, 27.10:
-   the slowing down is the nicest part, a real die just stops). Then the ticks for the reasons appear one by one */
+/* the roll: the die tumbles and slows down smoothly, as in the first version she liked (two whole turns, faces changing more and more slowly);
+   for the last, slowest part it already shows the result and keeps it, and it simply stops, upright — no bounce, no change at the end
+   (her husband's point and hers, 27.10: the slowing down is the nicest part, a real die just stops). Then the ticks appear one by one */
 function roll(k){
   const r = S.cur.r[k]; if(r.n !== null || S.busy) return;
   const final = 1 + Math.floor(Math.random() * faces), any = () => 1 + Math.floor(Math.random() * faces);
@@ -187,30 +212,31 @@ function roll(k){
   S.busy = true;
   slot.closest(".st").querySelectorAll("button").forEach(b => b.disabled = true);
   const first = any(); slot.innerHTML = dieHTML(first);
-  const die = slot.firstElementChild, gaps = [60, 65, 72, 82, 95, 112, 135, 165, 205, 260, 340];
-  const total = gaps.reduce((a, b) => a + b, 0), n = gaps.length, lift = die.offsetHeight * .2;
-  /* one keyframe on its edge (45°, lifted; higher at the start, as if thrown) and one flat on a face per quarter turn */
-  const frames = [{transform: "translateY(0) rotate(0deg)", offset: 0}];
+  const die = slot.firstElementChild, gaps = [50, 55, 60, 70, 80, 95, 115, 140, 175, 220, 280];
+  const total = gaps.reduce((a, b) => a + b, 0);
+  /* -720deg = two whole turns: it ends exactly as it started, dark edge at the bottom, so nothing jumps when the page redraws it */
+  die.animate([
+    {transform: "translate(0, 0) rotate(0deg)"},
+    {transform: "translate(-8px, -22px) rotate(-240deg)", offset: .22},
+    {transform: "translate(4px, 0) rotate(-470deg)", offset: .5},
+    {transform: "translate(-2px, -8px) rotate(-610deg)", offset: .74},
+    {transform: "translate(0, 0) rotate(-700deg)", offset: .9},
+    {transform: "translate(0, 0) rotate(-720deg)"}], {duration: total, easing: "cubic-bezier(.12,.75,.3,1)"});
+  /* the faces change more and more slowly while it turns; the 7th change (about half a second in, with a last ~40° still to turn)
+     is the result, and it keeps it while it slows down to a stop. Before, the faces kept flickering after the die had all but
+     stopped, and the result popped up at the very end with a bounce */
+  const LAND = 6;
   let t = 0, prev = first;
-  gaps.forEach((g, i) => { const e = 1 - i / n, up = lift + 16 * e * e;
-    frames.push({transform: `translateY(${-up.toFixed(1)}px) rotate(${-(90 * i + 45)}deg)`, offset: (t + g / 2) / total});
-    t += g;
-    frames.push({transform: `translateY(0) rotate(${-90 * (i + 1)}deg)`, offset: t / total}); });
-  /* the last quarter turn: it slows down on its way up onto the edge, then tips over and lies still */
-  frames[frames.length - 3].easing = "ease-out"; frames[frames.length - 2].easing = "ease-in-out";
-  die.animate(frames, {duration: total, easing: "linear"});
-  /* while it's fast, a new face shows each time the die lies flat; for the last two, slowest quarter turns it already shows
-     the result and keeps it, so it just rolls slower and slower and stops (no change at the very end) */
-  t = 0; gaps.forEach((g, i) => { t += g; if(i > n - 3) return;
-    setTimeout(() => { let f = final; if(i < n - 3){ do f = any(); while(faces > 1 && (f === prev || (i === n - 4 && f === final))); } prev = f; setFace(die, f); }, t - 8); });
-  setTimeout(() => { S.busy = false; r.n = final; S.justRolled = k; render(); S.justRolled = null; }, total + 380);
+  gaps.forEach((g, i) => { t += g; if(i > LAND) return;
+    setTimeout(() => { let f = final; if(i < LAND){ do f = any(); while(faces > 1 && (f === prev || (i === LAND - 1 && f === final))); } prev = f; setFace(die, f); }, t); });
+  setTimeout(() => { S.busy = false; r.n = final; S.justRolled = k; render(); S.justRolled = null; }, total + 150);
 }
 
 /* ---------- views ---------- */
 const metaHTML = it => [it.ipa ? `<span class="ipa">${esc(it.ipa)}</span>` : "", it.note ? esc(it.note) : "", it.ru ? `<span class="ru">${esc(it.ru)}</span>` : ""].filter(Boolean).join(" · ");
 function stepHTML(k){
   const c = S.cur, w = WORDS[c.kind], r = c.r[k];
-  const off = k === 1 && c.r[0].n === null, full = r.n !== null && r.got >= r.n, done = full || r.gaveUp;
+  const off = k === 1 && r.n === null && !rowDone(c.r[0]), full = r.n !== null && r.got >= r.n, done = full || r.gaveUp;
   const fresh = S.justRolled === k, delay = j => fresh ? ` style="animation-delay:${j * 90}ms"` : "";
   const gave = r.gaveUp && !full, monkeys = S.justGave === k;
   const dots = r.n === null ? "" : `<div class="dots">${Array.from({length: r.n}, (_, j) => j >= r.got && gave
@@ -229,10 +255,11 @@ function gameHTML(anim){
   const c = S.cur;
   if(!c) return `<section class="stage empty ${anim ? "enter" : ""}"><p>That's all the subjects.</p>
       <button class="btn primary big" data-decide>Time to decide →</button></section>${sofarHTML()}`;
-  const it = itemOf(c.kind, c.i), w = WORDS[c.kind], ready = c.r[1].n !== null;
+  const it = itemOf(c.kind, c.i), w = WORDS[c.kind], ready = rowDone(c.r[1]) || c.dec !== null;
   return `<section class="stage ${anim ? "enter" : ""}">
       <div class="stage-top"><div class="subj-top"><span class="subj-label">${esc(LISTS[c.kind].label)}</span>
-        <h2 class="subj">${esc(it.t)}</h2>${metaHTML(it) ? `<div class="subj-meta">${metaHTML(it)}</div>` : ""}</div></div>
+        <div class="live-host ${liveDim(itemPath(c.kind, c.i))}" data-live-host><h2 class="subj">${esc(it.t)}</h2>${liveTools(itemPath(c.kind, c.i), {fields: itemPath(c.kind, c.i) + ".t"})}</div>${metaHTML(it) ? `<div class="subj-meta">${metaHTML(it)}</div>` : ""}</div>
+        <span class="subj-count" aria-label="Subject ${S.done.length + 1} of ${Math.max(TOTAL(), S.done.length + 1)}">${S.done.length + 1} of ${Math.max(TOTAL(), S.done.length + 1)}</span></div>
       <div class="steps">${stepHTML(0)}${exStepHTML(0)}${stepHTML(1)}${exStepHTML(1)}
         <div class="st ${ready ? "" : "off"} ${c.dec !== null ? "done" : ""}"><span class="n">${c.dec !== null ? "✓" : 3}</span>
           <div><div class="st-t">Together: ${w.q}</div></div>
@@ -246,32 +273,36 @@ function gameHTML(anim){
 /* 💡 Example: two model reasons for each side, written in the lesson chat (box phrases in **bold**).
    It opens by itself under a reason row once that row is done (all ticked, or "We give up"), so they try first; 💡 opens it earlier */
 const exLine = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>');
-const exOf = k => { const c = S.cur, it = c && itemOf(c.kind, c.i); return it && it.ex && c.r[k].n !== null ? (k === 0 ? it.ex.for : it.ex.against) : null; };
+const exOf = k => { const c = S.cur, it = c && itemOf(c.kind, c.i), l = it && it.exl && c.r[k].n !== null ? (k === 0 ? it.exl.for : it.exl.against) : null; return l && l.length ? l : null; };
+const exLineHTML = x => `<div class="live-host ${liveDim(x.p)}" data-live-host><p>${exLine(x.t)}</p>${liveTools(x.p)}</div>`;
 const exStepHTML = k => { const lines = exOf(k); if(!lines || !S.cur.exOpen[k]) return "";
-  return `<div class="ex-step ${S.exAnim === k ? "opening" : ""}" role="region" aria-label="Example"><span class="ex-h"><span>💡 Example</span><button class="linkish" data-ex-hide="${k}">hide</button></span>${lines.map(s => `<p>${exLine(s)}</p>`).join("")}</div>`; };
+  return `<div class="ex-step ${S.exAnim === k ? "opening" : ""}" role="region" aria-label="Example"><span class="ex-h"><span>💡 Example</span><button class="linkish" data-ex-hide="${k}">hide</button></span>${lines.map(exLineHTML).join("")}</div>`; };
 const allExamplesHTML = () => D.lists.some(l => l.items.some(it => it.ex)) ? allHTML("All the examples", D.lists.map(l => { const w = WORDS[l.kind];
-    return `<span class="all-h">${esc(l.label)}</span>` + l.items.filter(it => it.ex).map(it => `<div class="all-row"><span class="all-sub">${esc(it.t)}</span>
-      <span class="all-side">${w.keep}</span>${it.ex.for.map(s => `<p>${exLine(s)}</p>`).join("")}
-      <span class="all-side">${w.drop}</span>${it.ex.against.map(s => `<p>${exLine(s)}</p>`).join("")}</div>`).join(""); }).join("")) : "";
+    return `<span class="all-h">${esc(l.label)}</span>` + l.items.map((_, i) => i).filter(i => l.items[i].ex && (liveTeacher() || !itemGone(l.kind, i))).map(i => { const it = itemOf(l.kind, i), p = itemPath(l.kind, i);
+      return `<div class="all-row"><div class="live-host ${liveDim(p)}" data-live-host><span class="all-sub">${esc(it.t)}</span>${liveTools(p, {fields: p + ".t"})}</div>
+      <span class="all-side">${w.keep}</span>${it.exl.for.map(exLineHTML).join("")}
+      <span class="all-side">${w.drop}</span>${it.exl.against.map(exLineHTML).join("")}</div>`; }).join(""); }).join("")) : "";
 const decTag = (d, w) => d.dec === "agree" ? "agree to disagree" : d.dec ? w.yesTag : w.noTag;
 const sofarHTML = () => S.done.length ? `<div class="sofar"><b>So far:</b>${S.done.map((d, i) => { const w = WORDS[d.kind];
     return `<span class="chip ${d.dec === "agree" ? "meh" : d.dec ? "yes" : "nope"} ${S.popChip && i === S.done.length - 1 ? "chip-in" : ""}">${esc(itemOf(d.kind, d.i).t)} · ${decTag(d, w)}</span>`; }).join("")}</div>` : "";
-const speakStage = () => `<section class="stage-wrap ${S.enter ? "enter" : ""}">${speakHTML(D.speaking, `<button class="btn" data-back>← The subjects you haven't discussed</button><button class="btn primary" data-restart>Start again</button>`, "Extra speaking")}</section>`;
+const speakStage = () => `<section class="stage-wrap ${S.enter ? "enter" : ""}">${speakHTML(liveList(D.speaking, "speaking"), `<button class="btn" data-back>← The subjects you haven't discussed</button><button class="btn primary" data-restart>Start again</button>`, "Extra speaking", "speaking")}</section>`;
 /* follow-up questions: they come in once two to cut and two to add are picked, one at a time */
 function followHTML(){
-  const F = D.followUp || [];
+  const F = liveList(D.followUp, "followUp");
   if(!F.length || S.picks.cut.size < 2 || S.picks.add.size < 2) return "";
-  const i = Math.min(S.fu, F.length - 1), first = !S.fuShown; S.fuShown = true;
+  /* the group stays on the same question when her changes arrive (as with the speaking tasks) */
+  S.fuCur = S.fuCur || newCursor();
+  const {i, more, back} = cursorPick(S.fuCur, F), first = !S.fuShown; S.fuShown = true; S.fuView = F; liveViews.followUp = F;
   return `<div class="follow ${first ? "follow-in" : ""}"><div class="follow-top"><span class="follow-h">➕ Follow-up</span>
-      ${dotsHTML(F.length, i, "data-fu-go", "Follow-up")}</div>
-    <p class="follow-q">${boxMarks(F[i])}</p>
-    ${i || i < F.length - 1 ? `<div class="row-actions">${i ? `<button class="btn slim" data-fu-prev>← Previous</button>` : ""}${i < F.length - 1 ? `<button class="btn slim" data-fu-next>Next follow-up →</button>` : ""}</div>` : ""}</div>`;
+      ${dotsHTML(F.length, i, "data-fu-go", "Follow-up question", F, "followUp", S.fuCur.seen)}</div>
+    <div class="live-host" data-live-host><p class="follow-q">${boxMarks(F[i].t)}</p>${liveTools("followUp." + F[i].k, {last: true})}</div>
+    ${back || more ? `<div class="row-actions">${back ? `<button class="btn slim" data-fu-prev>← Previous</button>` : ""}${more ? `<button class="btn slim" data-fu-next>Next question →</button>` : ""}</div>` : ""}</div>`;
 }
 function decideHTML(){
   const col = kind => { const l = LISTS[kind], w = WORDS[kind], picked = S.picks[kind];
     return `<div class="col"><div class="col-h"><span class="subj-label">${esc(l.label)}</span><span class="cnt">${kind === "cut" ? "two to cut" : "two to add"}${picked.size ? ` · ${picked.size} picked` : ""}</span></div>
-      ${l.items.map((it, i) => { const d = S.done.find(x => x.kind === kind && x.i === i), on = picked.has(i);
-        return `<button class="pick ${kind} ${on ? "on" : ""}" data-pick="${kind}.${i}" aria-pressed="${on}"><span>${on ? `<span class="mark">${kind === "cut" ? "✂" : "＋"}</span> ` : ""}${esc(it.t)}</span>${d ? `<span class="was">you said: ${decTag(d, w)}</span>` : ""}</button>`; }).join("")}</div>`; };
+      ${l.items.map((_, i) => itemGone(kind, i) ? "" : (it => { const d = S.done.find(x => x.kind === kind && x.i === i), on = picked.has(i);
+        return `<button class="pick ${kind} ${on ? "on" : ""}" data-pick="${kind}.${i}" aria-pressed="${on}"><span>${on ? `<span class="mark">${kind === "cut" ? "✂" : "＋"}</span> ` : ""}${esc(it.t)}</span>${d ? `<span class="was">you said: ${decTag(d, w)}</span>` : ""}</button>`; })(itemOf(kind, i))).join("")}</div>`; };
   return `<section class="stage decide ${S.enter ? "enter" : ""}"><div class="decide-top"><h2>Decide together</h2>
     <p class="lead">Agree on two to cut and two to add. Tap them.</p></div>
     <div class="cols">${col("cut")}${col("add")}</div>
@@ -294,11 +325,13 @@ function sideHTML(){
   return `${extra}${boxHTML(D.box, {clickable: true, collapsible: D.boxHidden})}`;
 }
 function render(anim){
+  liveApply();   /* her latest changes, at the group's tap (live version) */
   const main = document.getElementById("main"), side = document.getElementById("side");
-  main.innerHTML = headHTML() + (S.view === "decide" ? decideHTML() : S.view === "speak" ? speakStage() : gameHTML(anim));
+  main.innerHTML = liveBarHTML(liveLabel) + headHTML() + (S.view === "decide" ? decideHTML() : S.view === "speak" ? speakStage() : gameHTML(anim));
   /* 📋 under the box: a fallback for her, not something to invite a click (27.10) */
   const st = side.scrollTop; side.innerHTML = sideHTML() + allExamplesHTML(); side.scrollTop = st;
   wireAll(side); wireBox(side); wireSpeak(main, render); S.exAnim = null;
+  wireLive(main, p => pathGet(D, p)); wireLive(side, p => pathGet(D, p));
   const on = (sel, fn) => document.querySelectorAll(sel).forEach(b => b.addEventListener("click", () => fn(b)));
   on("[data-roll]", b => roll(+b.dataset.roll));
   on("[data-giveup]", b => { const k = +b.dataset.giveup, r = S.cur.r[k]; r.gaveUp = !r.gaveUp; if(r.gaveUp){ S.justGave = k; openEx(k); } render(); S.justGave = null; });
@@ -313,16 +346,17 @@ function render(anim){
   on("[data-decide]", () => goStage("decide"));
   on("[data-stage]", b => goStage(b.dataset.stage));
   on("[data-back]", () => { S.view = "game"; render(); });
-  const fuGo = k => { S.fu = k; render(); pop(document.querySelector(".follow")); };
-  on("[data-fu-next]", () => fuGo(S.fu + 1));
-  on("[data-fu-prev]", () => fuGo(Math.max(0, S.fu - 1)));
-  on("[data-fu-go]", b => fuGo(+b.dataset.fuGo));
+  const fuShow = () => { render(); pop(document.querySelector(".follow")); };
+  on("[data-fu-next]", () => { S.fuCur.move = 1; fuShow(); });
+  on("[data-fu-prev]", () => { S.fuCur.move = -1; fuShow(); });
+  on("[data-fu-go]", b => { const k = +b.dataset.fuGo; S.fuCur.go = S.fuView && S.fuView[k] ? S.fuView[k].k : null; fuShow(); });   /* her dragging of these dots: wireSpeak → wireDrag */
   on("[data-pick]", b => { const [kind, i] = b.dataset.pick.split("."), set = S.picks[kind]; set.has(+i) ? set.delete(+i) : set.add(+i); render(); if(set.has(+i)) pop(document.querySelector(`[data-pick="${kind}.${i}"]`)); });
   on("[data-faces]", b => { faces = +b.dataset.faces; render(); });
-  on("[data-restart]", () => { usedPhrases.clear(); spk = 0; newGame(); render(true); });
+  on("[data-restart]", () => { usedPhrases.clear(); spkReset(); newGame(); render(true); });
   on("[data-peek]", () => { S.peek = true; render(); });
   on("[data-box-toggle]", () => { S.peek = false; render(); });
 }
+liveRerender = () => render();
 render();
 </script>
 </body>

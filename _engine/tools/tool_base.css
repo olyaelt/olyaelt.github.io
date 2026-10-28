@@ -108,7 +108,7 @@ button.ph:hover{background:color-mix(in srgb, var(--used) 35%, transparent)}
 .speak-dots button{border:0;background:none;padding:6px 5px;line-height:0}
 .speak-dots button::before{content:"";display:block;width:.6rem;height:.6rem;border-radius:50%;background:color-mix(in srgb, var(--bubble-ink) 22%, transparent);transition:transform .15s}
 .speak-dots button.was::before{background:color-mix(in srgb, var(--bubble-ink) 50%, transparent)}
-.speak-dots button.on::before{background:var(--label);transform:scale(1.25)}
+.speak-dots button.on::before{background:var(--instr);transform:scale(1.25)}   /* "you are here" is blue on every page (tools 6) */
 .speak-dots button:hover::before{transform:scale(1.35)}
 .speak-task{margin:0;font-size:1.45rem;font-weight:700;line-height:1.35}
 .speak-task .bx,.follow-q .bx{color:var(--flip-ink);font-weight:900}
@@ -132,7 +132,7 @@ details.all[open] summary{color:var(--ink)}
 .all-row{display:grid;gap:2px;border-top:1px solid var(--line);padding-top:8px}
 .all-row .f{color:var(--ink)} .all-row .f .ctx{color:var(--muted)}
 .all-row .b{color:var(--flip-ink);font-weight:900}
-.all-h{color:var(--label);font-size:.82rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;margin-top:6px}
+.all-h{color:var(--label);font-size:.88rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;margin-top:6px}
 .all-sub{font-weight:900}
 .all-row p{margin:0}
 .all-row .bx{color:var(--flip-ink)}
@@ -145,3 +145,31 @@ details.all[open] summary{color:var(--ink)}
 .legal{max-width:72rem;margin:0 auto;padding:6px 0 18px;font-size:.8rem;color:var(--muted)}
 .legal a{color:var(--muted)}
 @media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
+.btn.slim{min-height:38px;padding:4px 14px;font-size:.95rem;border-radius:10px}
+/* live version (tools 7): Olya's edit buttons and bar — only on her screen */
+.live-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;background:var(--card);border:2px dashed var(--instr);border-radius:12px;padding:6px 12px;margin-bottom:10px;font-size:.95rem}
+.live-bar #live-status{color:var(--muted)}
+.live-removed{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.live-chip,.live-reset{border:2px solid var(--line);background:var(--ground);color:var(--ink);border-radius:99px;padding:1px 10px;font-weight:700;font-size:.9rem}
+.live-reset{margin-left:auto;border-color:var(--no);color:var(--no)}
+.live-host{display:flex;align-items:flex-start;gap:8px}
+.live-host > :first-child{flex:1}
+.live-tools{display:inline-flex;gap:4px;flex:none}
+.live-b{border:2px solid var(--line);background:var(--card);border-radius:8px;padding:1px 6px;font-size:1rem;line-height:1.4}
+.live-b:hover{border-color:var(--instr)}
+.speak-dots.draggable button{cursor:grab;touch-action:none}
+.speak-dots.draggable button::before{width:.85rem;height:.85rem}
+.speak-dots button.dragging{cursor:grabbing;z-index:2;position:relative}
+.speak-dots button.dragging::before{transform:scale(1.5);box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.speak-dots button.drop-here::before{outline:3px solid var(--instr);outline-offset:2px}
+.live-host.is-hidden{flex-direction:column-reverse;gap:4px}   /* hidden, not deleted: greyed, with "Hidden from the groups · ✏️ · Show" on its own line above */
+.live-host.is-hidden > :first-child{opacity:.45}
+.live-host.is-hidden .live-tools{align-self:flex-start}
+.all-row.is-hidden > span:first-child{opacity:.45}
+.live-hidden-tag{align-self:center;font-size:.8rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.live-b.live-show{border-color:var(--instr);background:var(--instr);color:var(--instr-ink);font-weight:900;padding:1px 10px}
+.live-b[data-live-hide]{font-weight:700;font-size:.9rem;padding:1px 8px}
+.speak-dots button.hid::before{background:transparent !important;box-shadow:inset 0 0 0 2px var(--muted)}
+.live-edit{display:grid;gap:8px;background:var(--card);border:2px solid var(--instr);border-radius:12px;padding:10px 12px}
+.live-edit label{display:grid;gap:2px;font-size:.85rem;font-weight:700;color:var(--muted)}
+.live-edit textarea{font:inherit;font-size:1.05rem;font-weight:400;color:var(--ink);background:var(--ground);border:2px solid var(--line);border-radius:8px;padding:6px 8px;width:100%;resize:vertical}

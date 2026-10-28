@@ -206,6 +206,7 @@ details.summary[open] summary::after{content:"Hide"}
 .strip i{flex:1;height:22px;border-radius:2px;background:#3A3A36}
 .strip i.on{background:linear-gradient(180deg,#FFE066,#FF9900)}
 .meter .small{margin:0}
+.gate-note{margin:4px 2px 0;color:var(--muted)}
 .confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);max-width:min(92vw,520px);background:#1D1D1B;color:#fff;font-weight:700;padding:12px 16px;border-radius:12px;z-index:61;box-shadow:0 6px 20px rgba(0,0,0,.25);transition:opacity .5s}
 .toast.out{opacity:0}
@@ -272,7 +273,8 @@ details.summary[open] summary::after{content:"Hide"}
 .rev.on path{fill:currentColor}
 .rev:hover{background:color-mix(in srgb, var(--done) 14%, transparent)}
 .rev.demo{cursor:default;height:1.2em}
-.rev-hint{margin:0;font-size:.88rem;color:var(--muted);text-align:right}
+/* engine 34: the bookmark hint sits on top, right under the instruction (her wish: at the bottom of a long text nobody sees it) */
+.rev-hint{margin:-6px 0 12px;font-size:.92rem;color:var(--muted)}
 /* engine 33: the bookmark on every practice item; next to a hidden answer it shows once the answer is open */
 .reveal:not(.open) ~ .rev:not(.on){display:none}
 .say-a .rev,.lb .rev{flex:none;font-size:1.15rem}
@@ -377,7 +379,10 @@ s{color:var(--muted)}
 .video iframe,.video > div{position:absolute;inset:0;width:100%;height:100%;border:0}
 .yt-consent{display:grid;place-items:center;text-align:center;padding:10px 14px;color:#fff;background:#1D1D1B;font-size:.9rem;line-height:1.35}
 .yt-consent p{margin:0 0 8px}.yt-consent a{color:#9CC9FF}.yt-consent .small{color:#C9C9C9;margin:6px 0 0;font-size:.8rem}
-.vmsg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:16px;color:#fff;font-size:.95rem;background:#1D1D1B}
+.vmsg{position:absolute;inset:0;z-index:2;margin:0;display:grid;place-items:center;text-align:center;padding:16px;color:#fff;font-size:.95rem;background:#1D1D1B}
+.vmsg p{margin:0 0 8px}.vmsg a{color:#9CC9FF}.vmsg .small{color:#C9C9C9;margin:8px 0 0;font-size:.85rem}
+.vmsg .btn{margin:8px 0 2px}
+.vload{position:absolute;inset:0;z-index:1;display:grid;place-items:center;margin:0;color:#C9C9C9;font-size:.9rem;pointer-events:none}
 .lines{display:grid;gap:6px}
 .ln{display:grid;grid-template-columns:34px minmax(0,1fr);gap:8px;align-items:start;text-align:left;width:100%;background:transparent;border:1px solid var(--line);
   border-radius:10px;padding:8px 10px;cursor:pointer;line-height:1.6}
@@ -392,6 +397,11 @@ s{color:var(--muted)}
 .chip-x{color:var(--no-ink);font-weight:900}
 .ln.playing{border-color:var(--instr);background:var(--ground)}
 .ln.has-gap{border-width:2px}
+/* engine 37 (a student, 28.10: a ▶ on every line looked as if every line were a task): only the lines with a gap are framed;
+   the others are context, quiet and grey, like the grey context on her slides, and still play when tapped */
+.ln:not(.has-gap){border-color:transparent;color:var(--muted);padding-top:3px;padding-bottom:3px}
+.ln:not(.has-gap) .pl{width:24px;height:24px;font-size:.62rem;margin:3px 0 0 3px;opacity:.85}
+.ln:not(.has-gap).playing{color:var(--ink)}
 .gapbox{font:inherit;font-weight:700;background:var(--hl);color:var(--hl-ink);border:2px dashed var(--hl-ink);border-radius:6px;padding:0 6px;margin:1px 0;cursor:pointer;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .gapbox.open{border-style:solid;border-color:transparent}
 .gapbox .g-hint{font-size:.8em;font-weight:900;letter-spacing:.02em;padding:0 10px}
@@ -399,7 +409,8 @@ s{color:var(--muted)}
 .gapbox.open .g-ans{display:inline}
 .gapbox.open .g-hint{display:none}
 .gapbox.open{color:var(--hl-ink)}
-.tap-hint{margin:0}
+.tap-hint{margin:0}.tap-hint p{margin:0}
+.yt-help{margin-top:4px}.yt-help summary{cursor:pointer;color:var(--instr);font-weight:700}.yt-help p{margin:6px 0 0}
 .pc-note{margin:0;padding:10px 12px;border-radius:10px;background:var(--ground);border:1px dashed var(--line)}
 .cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--instr);color:var(--instr-ink);text-decoration:none;font-weight:900;
   padding:14px 18px;border-radius:12px;border:0;cursor:pointer;min-height:48px}
@@ -718,7 +729,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = ["click on the top line to hear the context","click on the line with the gap and try to catch what's in the gap","check","listen again — how did the expression sound?","optional: pronounce the expression like the speaker"];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "33";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "37";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -802,10 +813,11 @@ async function syncNow(code, opts={}){
     if(res.work){ work = res.work; saveWork(); refreshWork(); }
     if(code === myCode()) flushFlags();
     if(res.group && code === myCode()){ groupStats = res.group; ls.set("hw-group-"+GROUP_ID, JSON.stringify(res.group)); refreshMeter(); checkMilestone(res.group, GROUP_ID); }
+    if(gotMe(res, code)) refreshMeter();
     if(code === myCode()){ ls.set("hw-who", res.name||""); if(!ls.get("hw-name") && res.name) ls.set("hw-name", res.name); }
     if(changed) refreshTicks();
   }
-  if(code === myCode()){ syncState = res.ok ? "ok" : (res.error==="unknown-code" ? "unknown" : "offline"); refreshSync(); }
+  if(code === myCode()){ syncState = res.ok ? "ok" : (res.error==="unknown-code" ? "unknown" : "offline"); if(LOCKED() && !document.getElementById("gate")) renderGate(); else refreshSync(); }
   if(syncAgain){ syncAgain = false; syncNow(); }
   return res;
 }
@@ -823,7 +835,7 @@ function syncHTML(){
       <button class="chip-t" id="as-student">👀 Student view</button>
       <button class="linklike" id="code-change">Not you?</button></div>`;
   if(code && syncState!=="unknown") return `<div class="sync sync-on">
-      <span>✓ ${who?`Hi, ${esc(who)}! `:""}Olya can see your progress${syncState==="offline"?" — <b>not sent yet</b>: no connection right now. Your ticks are saved here and will go to her later.":"."}</span>
+      <span>✓ ${who?`Hi, ${esc(who)}! `:""}${meStats ? "Your progress is saved" : "Olya can see your progress"}${syncState==="offline"?" — <b>not sent yet</b>: no connection right now. Your ticks are saved here and will go to her later.":"."}</span>
       <button class="linklike" id="code-change">Not you?</button></div>`;
   return `<div class="sync sync-card">
       <label for="code"><b>Your code from Olya</b></label>
@@ -836,7 +848,12 @@ function syncHTML(){
 function wireSync(){
   const box = document.getElementById("sync-slot"); if(!box) return;
   const ch = document.getElementById("code-change");
-  if(ch) ch.addEventListener("click",()=>{ ls.set("hw-code",""); ls.set("hw-who",""); ls.set("hw-role",""); ls.set("hw-gid",""); ls.set("hw-as-student",""); teacherData = null; syncState=""; if(!current){ renderHome(); } refreshSync(); const i=document.getElementById("code"); if(i) i.focus(); });
+  /* "Not you?": the next person starts clean on this device — the last person's ticks, marks, bookmarks and drafts here are forgotten
+     (engine 35: before, a second person's code took over the first one's ticks; what was sent stays in Olya's table) */
+  if(ch) ch.addEventListener("click",()=>{ ["hw-code","hw-who","hw-role","hw-gid","hw-as-student"].forEach(k => ls.set(k, ""));
+    try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || /^hw-rev-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
+    try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){}
+    location.reload(); });
   const go = document.getElementById("code-go"), inp = document.getElementById("code");
   if(go && inp){
     const save = async ()=>{
@@ -846,7 +863,11 @@ function wireSync(){
       const res = await syncNow(code);
       go.disabled = false;
       if(res && res.ok && res.role==="teacher"){ ls.set("hw-code", code); ls.set("hw-role","teacher"); ls.set("hw-who", res.name||""); teacherData = res; if(res.group) groupStats = res.group; syncState = "ok"; renderHome(); return; }
-      if(res && res.ok){ ls.set("hw-code", code); ls.set("hw-role", ""); ls.set("hw-who", res.name||""); if(!ls.get("hw-name") && res.name) ls.set("hw-name", res.name); syncState = "ok"; refreshSync(); refreshTicks(); refreshWork(); if(res.group){ groupStats = res.group; ls.set("hw-group-"+GROUP_ID, JSON.stringify(res.group)); refreshMeter(); checkMilestone(res.group, GROUP_ID); } }
+      const fromGate = !!document.getElementById("gate");
+      if(res && res.ok && fromGate){ ls.set("hw-code", code); ls.set("hw-role", ""); ls.set("hw-who", res.name||""); if(!ls.get("hw-name") && res.name) ls.set("hw-name", res.name); syncState = "ok";
+        if(res.group){ groupStats = res.group; ls.set("hw-group-"+GROUP_ID, JSON.stringify(res.group)); } gotMe(res, code);
+        const h = (location.hash||"").replace("#",""); if(h && TASKS.some(t=>t.id===h)) openTask(h); else renderHome(); return; }   /* the task the link pointed to, if it's still in the address */
+      if(res && res.ok){ ls.set("hw-code", code); ls.set("hw-role", ""); ls.set("hw-who", res.name||""); if(!ls.get("hw-name") && res.name) ls.set("hw-name", res.name); syncState = "ok"; refreshSync(); refreshTicks(); refreshWork(); if(res.group){ groupStats = res.group; ls.set("hw-group-"+GROUP_ID, JSON.stringify(res.group)); refreshMeter(); checkMilestone(res.group, GROUP_ID); }  if(gotMe(res, code)) refreshMeter(); }
       else msg.textContent = (res && res.error==="unknown-code") ? "Hmm, Olya's list doesn't have this code. Check it with her." : "Can't reach Olya's list right now. Try again in a minute.";
     };
     go.addEventListener("click", save);
@@ -1017,6 +1038,29 @@ function checkMilestone(gs, groupId){
     toast(ms===100 ? `🎉 We did it! ${capFirst(gs.reward)} is coming!` : `🎬 Our group is ${ms}% of the way to ${gs.reward}!`);
   }
 }
+/* engine 35: someone studying on their own (Group = Self in her table) has their own film instead of the group's:
+   it grows with every task, and every 100 frames gets a small celebration (her choice, 28.10). Each code has its own. */
+let meStats = (()=>{ try{ const c = localStorage.getItem("hw-code"); return c ? JSON.parse(localStorage.getItem("hw-me-"+c)||"null") : null; }catch(e){ return null; } })();
+function meMeterHTML(me){
+  const n = 20, part = me.total % 100, filled = Math.round(part / 100 * n), next = (Math.floor(me.total / 100) + 1) * 100;
+  return `<section class="meter meter-me" aria-label="Your film">
+      <div class="meter-top"><b>🎬 Your film</b><span>${fmtN(me.total)} 🎞</span></div>
+      <div class="strip" role="img" aria-label="${part} of 100 frames to the next stop">${Array.from({length:n},(_,i)=>`<i class="${i<filled?"on":""}"></i>`).join("")}</div>
+      <p class="small">Every task adds frames — one per minute of work, Over to you counts double. Next stop: ${fmtN(next)} 🎞.${me.week ? ` This week: <b>${fmtN(me.week)} 🎞</b>.` : ""}</p>
+    </section>`;
+}
+function checkMe(me, code){
+  const key = "hw-me-ms-" + code, h = Math.floor(me.total / 100), seen = ls.get(key);
+  if(seen === ""){ ls.set(key, String(h)); return; }
+  if(h > Number(seen)){ ls.set(key, String(h)); confetti(true); toast(`🎬 ${fmtN(h * 100)} frames in your film! Next stop: ${fmtN((h + 1) * 100)}.`); }
+}
+function gotMe(res, code){
+  if(code !== myCode()) return false;
+  meStats = res.me || null;
+  if(res.me){ ls.set("hw-me-"+code, JSON.stringify(res.me)); setTimeout(()=>checkMe(res.me, code), 50); }
+  return !!res.me;
+}
+const meterNow = () => meStats ? meMeterHTML(meStats) : meterHTML(groupStats);
 /* "?" next to an answer: the student marks what's unclear or hard to hear; it goes to Olya when the task is finished */
 let flags = (()=>{ try{ return JSON.parse(localStorage.getItem(PAGE_KEY+"-flags")||"{}")||{}; }catch(e){ return {}; } })();
 let lastFlagged = [];
@@ -1307,7 +1351,7 @@ function renderTeacherTask(id, wid){
   const focus = wid && app.querySelector(`.t-item[data-w="${wid}"]`);
   if(focus){ focus.classList.add("t-focus"); focus.scrollIntoView({block:"center"}); }
 }
-function refreshMeter(){ const m = document.getElementById("meter-slot"); if(m && !current) m.innerHTML = (myCode() && syncState!=="unknown") ? meterHTML(groupStats) : ""; }
+function refreshMeter(){ const m = document.getElementById("meter-slot"); if(m && !current) m.innerHTML = (myCode() && syncState!=="unknown") ? meterNow() : ""; }
 function footHTML(){
   return myCode() && syncState!=="unknown"
     ? `<span>When you finish a task, mark it in our spreadsheet in your colour.</span><span>Your ticks are saved for Olya and on all your devices.</span>`
@@ -1349,7 +1393,25 @@ const norm = s => String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/[.!?
 
 /* ---------- home ---------- */
 const ON_SITE = /\.github\.io$/.test(location.hostname) || location.protocol === "file:";   /* the list of all homework lives next to this page on the site */
+/* engine 35: on the site, the homework opens only with a code (her decision, 28.10). Without one — or with a code her table doesn't know —
+   the page shows just the code field. A code this device already used keeps working when the table doesn't answer.
+   It's a lock on the door, not a safe: the tasks are still in the page's source. Previews outside the site stay open. */
+const LOCKED = () => !!SYNC_URL && /\.github\.io$/.test(location.hostname) && (!myCode() || syncState === "unknown");
+function renderGate(){
+  current = null;
+  app.innerHTML = `
+    <header class="lesson-head" id="gate">
+      <a class="all-hw" href="index.html">← All homework</a>
+      <span class="date">${LESSON.date}</span>
+      <h1>Homework</h1>
+    </header>
+    <div id="sync-slot">${syncHTML()}</div>
+    <p class="small gate-note">The homework opens with your code. No code yet? Ask Olya — she'll send you one.</p>`;
+  wireSync();
+  const i = document.getElementById("code"); if(i && !("ontouchstart" in window)) i.focus({preventScroll: true});
+}
 function renderHome(justDone){
+  if(LOCKED()) return renderGate();
   current = null;
   const taskBtn = t => `
           <div class="task-wrap"><div class="task-row ${done.has(t.id)?"is-done":""}">
@@ -1359,7 +1421,7 @@ function renderHome(justDone){
             <button class="status" data-toggle="${t.id}" aria-pressed="${done.has(t.id)}" aria-label="${done.has(t.id)?"Done — tap to untick":"Tap to mark as done"}">✓</button>
           </div><div data-fbslot="${t.id}">${isTeacher() ? teacherLine(t.id) : fbLine(t.id)}</div></div>`;
   app.innerHTML = `
-    ${justDone?`<div class="done-banner" role="status">✓ Done!${isTeacher() ? " Teacher view: nothing was sent and nothing counts for the group." : lastDone && myCode() && syncState!=="unknown" ? ` +${framesOf(lastDone)} 🎞 for our group.` : " Mark it in our spreadsheet in your colour."}${reactHTML()}</div>`:""}
+    ${justDone?`<div class="done-banner" role="status">✓ Done!${isTeacher() ? " Teacher view: nothing was sent and nothing counts for the group." : lastDone && myCode() && syncState!=="unknown" ? ` +${framesOf(lastDone)} 🎞 for ${meStats ? "your film" : "our group"}.` : " Mark it in our spreadsheet in your colour."}${reactHTML()}</div>`:""}
     <header class="lesson-head">
       ${ON_SITE?`<a class="all-hw" href="index.html">← All homework</a>`:""}
       <span class="date">${LESSON.date}</span>
@@ -1369,7 +1431,7 @@ function renderHome(justDone){
     </header>
     <div id="sync-slot">${syncHTML()}</div>
     <div id="fbnew-slot">${newFbHTML()}</div>
-    <div id="meter-slot">${(myCode() && syncState!=="unknown") ? meterHTML(groupStats) : ""}</div>
+    <div id="meter-slot">${(myCode() && syncState!=="unknown") ? meterNow() : ""}</div>
     ${unlistedHTML()}${waitHTML()}${hotHTML()}
     ${TOPICS.map((tp,ti)=>`
       <section class="topic ${tp.id==="earlier"?"topic-earlier":"topic-"+(ti%2)}">
@@ -1391,6 +1453,7 @@ function renderHome(justDone){
 
 /* ---------- task shell ---------- */
 function openTask(id, idx=0){
+  if(LOCKED()) return renderGate();
   const t = TASKS.find(x=>x.id===id); if(!t){ renderHome(); return; }
   current = t; stepIdx = idx; checked = false;
   try{ if(location.hash !== "#"+id) history.replaceState(null,"","#"+id); }catch(e){}
@@ -1413,6 +1476,7 @@ function shell({count, pct, instr, stageHTML, withBox, actionsHTML, panel}){
     ${instr?`<div class="instr">${instr}</div>`:""}
     <div class="stage ${withBox?"with-box":""}">${stageHTML}</div>
     <div class="actions">${actionsHTML}</div>`;
+  placeRevHint(app.querySelector(".stage .rev-hint"));
   document.getElementById("home").addEventListener("click",goHome);
   const ts = document.getElementById("t-strip"); if(ts) ts.addEventListener("click",()=>renderTeacherTask(ts.dataset.strip));
   if(document.getElementById("t-mkbar")) wireMkBar(current.id);
@@ -1477,7 +1541,9 @@ function gapLineHTML(line){
 /* ---------- engine 30: "!" = my own revision list (her decision 27.10: "?" asks Olya, "!" is for me); nothing is sent ---------- */
 const BOOKMARK = `<svg viewBox="0 0 12 16" aria-hidden="true"><path d="M1.6 1.6h8.8v12.8L6 11.2l-4.4 3.2z"/></svg>`;
 /* a one-line hint until the first bookmark (as for "?") */
-const revHint = () => ls.get("hw-rev-used") ? "" : `<p class="rev-hint">Want to practise something again? Tap <span class="rev demo" aria-hidden="true">${BOOKMARK}</span> after it — only you will see it.</p>`;
+const revHint = () => ls.get("hw-rev-used") ? "" : `<p class="rev-hint">Want to practise something again? Tap <span class="rev demo" aria-hidden="true">${BOOKMARK}</span> — only you will see it.</p>`;
+/* wherever a task builds the hint, it goes to the top: under the instruction (or above the task when there is none) */
+const placeRevHint = el => { if(!el) return; const ins = app.querySelector(".instr"), stage = app.querySelector(".stage"); if(ins) ins.after(el); else if(stage) stage.before(el); };
 /* the step as it is in the task (in "Once more" the steps are a subset) */
 const curS = () => { const st = current && current.steps && current.steps[stepIdx]; return st && st._orig != null ? st._orig : stepIdx; };
 const bmBtn = (s, r) => { const on = getRev(current.id, s).has(r);
@@ -1728,27 +1794,44 @@ function renderShare(st, count, pct){
 }
 
 /* ---------- listening (clips from TubeQuizard, played from YouTube) ---------- */
-let ytPromise = null, ytPlayer = null, ytTimer = null, ytWatch = null, ytReady = false, ytVideo = "";
+let ytPromise = null, ytPlayer = null, ytTimer = null, ytWatch = null, ytReady = false, ytVideo = "", ytReadyWatch = null;
+/* engine 36 (a C1 student's phone, 28.10: a black box, no message): YouTube says it's ready through one callback,
+   window.onYouTubeIframeAPIReady; a browser that puts its own button on YouTube videos (Yandex Browser does) or a slow
+   connection can mean that call never reaches us. So we also watch for YT.Player itself, wait up to 20 s instead of 7,
+   and a failed load can be tried again (Try again on the message) */
+const YT_API_WAIT = 20000, YT_READY_WAIT = 15000; let ytTries = 0;
+const ytApiOk = () => !!(window.YT && typeof window.YT.Player === "function");
 function loadYT(){
-  if(window.YT && window.YT.Player) return Promise.resolve();
+  if(ytApiOk()) return Promise.resolve();
   if(!ytPromise){
     ytPromise = new Promise((res, rej)=>{
+      let done = false, poll = null, stop = null;
+      const finish = err => { if(done) return; done = true; clearInterval(poll); clearTimeout(stop); if(err){ ytPromise = null; rej(err); } else res(); };
       const prev = window.onYouTubeIframeAPIReady;
-      window.onYouTubeIframeAPIReady = () => { if(typeof prev === "function") prev(); res(); };
-      const s = document.createElement("script"); s.src = "https://www.youtube.com/iframe_api"; s.async = true;
-      s.onerror = () => rej(new Error("blocked")); document.head.appendChild(s);
-      setTimeout(()=>{ if(!(window.YT && window.YT.Player)) rej(new Error("timeout")); }, 7000);
+      window.onYouTubeIframeAPIReady = function(){ try{ if(typeof prev === "function") prev.apply(this, arguments); }catch(e){} if(ytApiOk()) finish(); };
+      poll = setInterval(()=>{ if(ytApiOk()) finish(); }, 250);
+      stop = setTimeout(()=> finish(new Error("timeout")), YT_API_WAIT);
+      const API = 'script[src="https://www.youtube.com/iframe_api"]';
+      /* trying again: a failed try can leave YT half-made ({loading: 1}), and then the API script loads nothing, so start clean
+         (not on the first try: something else on the page may be loading the API right now) */
+      if(++ytTries > 1){ document.querySelectorAll(API).forEach(x => x.remove()); if(window.YT && !ytApiOk()){ try{ window.YT = undefined; }catch(e){} } }
+      if(!document.querySelector(API)){
+        const s = document.createElement("script"); s.src = "https://www.youtube.com/iframe_api"; s.async = true;
+        s.onerror = () => { s.remove(); finish(new Error("blocked")); }; document.head.appendChild(s);
+      }
     });
   }
   return ytPromise;
 }
+const clipOutHTML = lines => current.tq ? `<a href="${esc(current.tq)}" target="_blank" rel="noopener">Do this quiz in TubeQuizard ↗</a>`
+  : `<a href="https://www.youtube.com/watch?v=${encodeURIComponent(lines[0][0])}&t=${Math.floor(Math.max(0, lines[0][1] - 1))}s" target="_blank" rel="noopener">Watch the clip on YouTube ↗</a>`;
 /* the videos come from YouTube: nothing is loaded from there until the student agrees (remembered on this device) */
 const ytConsentHTML = () => `<div class="yt-consent" id="yt-consent"><div>
     <p>The clips play from <b>YouTube</b>. When you load them, YouTube (Google) gets your IP address and may store cookies.${ON_SITE ? ` <a href="../datenschutz.html#youtube">More</a>` : ""}</p>
     <button class="btn primary" id="yt-ok">Load the videos</button>
     <p class="small">Just once on this device.</p></div></div>`;
 function stopPlayer(){
-  clearInterval(ytTimer); clearTimeout(ytWatch);
+  clearInterval(ytTimer); clearTimeout(ytWatch); clearTimeout(ytReadyWatch);
   if(ytPlayer){ try{ ytPlayer.destroy(); }catch(e){} ytPlayer = null; }
   ytReady = false; ytVideo = "";
 }
@@ -1786,9 +1869,14 @@ function renderListen(st, count, pct){
              aria-label="Type the missing words" style="width:min(100%, ${p.gap.length + 3}ch)" value="${esc(typed[keyOf(k)]||"")}">`)(gk++)).join("")}${i===0?` <span class="whole-note">· whole clip</span>`:""}</span>
     </div>`; };
   const rest = `
+        <div class="tap-hint small" id="hint" hidden><p>Nothing playing? Tap the video once, then tap the line again.</p>
+          <details class="yt-help"><summary>Still nothing?</summary>
+            <p>If the video says <b>Sign in to confirm you're not a bot</b>, YouTube wants to know who's watching: tap <b>Sign in</b> on the video and use your Google account.</p>
+            <p>On an iPhone or a Mac, Safari can hide that sign-in from videos on other sites: in the Safari settings, turn off <b>Prevent Cross-Site Tracking</b>, then reload this page.</p>
+            <p>Or ${clipOutHTML(lines)}</p></details></div>
         <div class="slow-row"><button class="slow" id="slow" aria-pressed="${!!ls.get("hw-slow")}">🐢 Slower</button><span class="small">${ls.get("hw-slow")?"playing at 0.75":"tap to slow the clips down"}</span></div>
         <div class="lines">${lines.map(lineHTML).join("")}</div>
-        <p class="small tap-hint" id="hint" hidden>Nothing playing? Tap the video once, then tap the line again.</p>
+
         <p class="small" id="after" ${checked?"":"hidden"}>Listen again: how did the expression sound? Try to say it like the speaker.${stepIdx===current.steps.length-1&&current.takeaway?`<br><b>${current.takeaway}</b>`:""}</p>`;
   if(playerOnScreen()){
     /* the same player stays; only the lines, the counter and the buttons change */
@@ -1804,19 +1892,39 @@ function renderListen(st, count, pct){
     shell({count, pct, instr,
       stageHTML: `
       <div class="panel">
-        <div class="video"><div id="yt"></div><p class="vmsg" id="vmsg" hidden></p>${ls.get("hw-yt-ok") ? "" : ytConsentHTML()}</div>${rest}
+        <div class="video"><div id="yt"></div><p class="vmsg" id="vmsg" hidden></p>${ls.get("hw-yt-ok") ? `<p class="vload" id="vload">Loading the video…</p>` : ytConsentHTML()}</div>${rest}
       </div>`,
       actionsHTML: navButtons("Check answers")});
-    const msg = document.getElementById("vmsg");
-    const startYT = () => loadYT().then(()=>{
-      if(!document.getElementById("yt")) return;
-      ytVideo = lines[0][0];
+    const msg = document.getElementById("vmsg"), vbox = msg.parentNode;
+    const loading = on => { const l = document.getElementById("vload");
+      if(on && !l) vbox.insertAdjacentHTML("beforeend", `<p class="vload" id="vload">Loading the video…</p>`); else if(!on && l) l.remove(); };
+    /* the video doesn't come: say so, offer to try again, and a way to the clip outside this page */
+    const failed = () => {
+      if(!msg.isConnected || ytReady) return;
+      loading(false); msg.hidden = false;
+      if(!ON_SITE){ msg.textContent = "The video can't play in this preview. On the published page it plays right here."; return; }
+      /* the "Still nothing?" help (sign in to YouTube, Safari's tracking setting) right under the video */
+      const h = document.getElementById("hint"); if(h){ h.hidden = false; const first = h.querySelector("p"); if(first) first.hidden = true; }
+      const out = clipOutHTML(lines);
+      msg.innerHTML = `<span><span class="vm-t">The video isn't loading.</span><br><button class="btn" id="yt-retry">Try again</button><br><span class="small">or ${out}</span></span>`;
+      document.getElementById("yt-retry").addEventListener("click", ()=>{
+        msg.hidden = true; msg.textContent = "";
+        clearTimeout(ytReadyWatch); if(ytPlayer){ try{ ytPlayer.destroy(); }catch(e){} ytPlayer = null; }
+        if(!document.getElementById("yt")) vbox.insertAdjacentHTML("afterbegin", `<div id="yt"></div>`);
+        startYT();
+      });
+    };
+    const startYT = () => { loading(true); loadYT().then(()=>{
+      if(!document.getElementById("yt") || !msg.isConnected) return;
+      ytVideo = lines[0][0]; ytReady = false;
       ytPlayer = new YT.Player("yt", {
         videoId: lines[0][0], width: "100%", height: "100%",
         playerVars: { playsinline: 1, rel: 0, modestbranding: 1, cc_load_policy: 0, iv_load_policy: 3, start: Math.floor(lines[0][1]) },
-        events: { onReady: () => { ytReady = true; }, onApiChange: captionsOffOnce, onStateChange: e => { if(e && e.data === 1) setTimeout(captionsOffOnce, 300); } }
+        events: { onReady: () => { ytReady = true; clearTimeout(ytReadyWatch); loading(false); if(msg.isConnected){ msg.hidden = true; } },
+                  onApiChange: captionsOffOnce, onStateChange: e => { if(e && e.data === 1) setTimeout(captionsOffOnce, 300); } }
       });
-    }).catch(()=>{ msg.hidden = false; msg.textContent = "The video can't play in this preview. On the published page it plays right here."; });
+      clearTimeout(ytReadyWatch); ytReadyWatch = setTimeout(failed, YT_READY_WAIT);
+    }).catch(failed); };
     const ok = document.getElementById("yt-ok");
     if(ok) ok.addEventListener("click", ()=>{ ls.set("hw-yt-ok", "1"); const c = document.getElementById("yt-consent"); if(c) c.remove(); startYT(); });
     else startYT();
@@ -1871,14 +1979,17 @@ function renderListen(st, count, pct){
       inp.replaceWith(res);
     });
     if(canMark()){
-      app.querySelectorAll(".ln").forEach((row,i)=>{
-        const l = lines[i], txt = l[3].map(p=>typeof p==="string"?p:p.gap).join("");
+      /* "?" only where there was something to catch (engine 37, her promise to a student: nothing to ask about on a line without a gap) */
+      app.querySelectorAll(".ln.has-gap").forEach(row=>{
+        const i = +row.dataset.i, l = lines[i], txt = l[3].map(p=>typeof p==="string"?p:p.gap).join("");
         row.insertAdjacentHTML("beforeend", markBtn(stepIdx+"-"+i, txt, `https://youtu.be/${l[0]}?t=${Math.max(0, Math.floor(l[1]) - 1)}`)); row.classList.add("has-mk");
       });
       const hint = markHint(); if(hint) document.getElementById("after").insertAdjacentHTML("beforebegin", hint.replace("Not sure about something?","Hard to hear?"));
     }
     app.querySelectorAll(".ln.has-gap").forEach(row => { row.insertAdjacentHTML("beforeend", bmBtn(curS(), +row.dataset.i)); row.classList.add("has-rev"); });
-    const rh = revHint(); if(rh) document.getElementById("after").insertAdjacentHTML("beforebegin", rh);
+    const rh = revHint(); if(rh){   /* it goes on top; if they've scrolled down to the clips, keep what they're looking at in place */
+      const d = document.createElement("div"), after = document.getElementById("after"), y0 = after.getBoundingClientRect().top; d.innerHTML = rh; placeRevHint(d.firstElementChild);
+      const dy = after.getBoundingClientRect().top - y0; if(dy && window.scrollY > 0) window.scrollBy(0, dy); }
     document.getElementById("after").hidden = false;
     const last = stepIdx === current.steps.length-1;
     document.getElementById("go").textContent = last ? "Finish" : "Next";

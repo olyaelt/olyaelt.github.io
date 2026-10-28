@@ -112,6 +112,8 @@ h2{margin:0;font-size:var(--step-1);font-weight:900}
 .total-todo.checking{color:var(--muted)}
 .legal{max-width:var(--maxw,760px);margin:0 auto;padding:18px 16px 28px;color:var(--muted);font-size:.85rem;text-align:center}
 .legal a{color:inherit}
+.self-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px}
+.self-links .btn{display:inline-flex;align-items:center;text-decoration:none}
 </style>
 </head>
 <body>
@@ -244,13 +246,16 @@ function render(){
   const code = myCode(), who = ls.get("hw-who"), teacher = isTeacher() && state !== "unknown";
   let top = "";
   if(SYNC_URL && teacher) top = `<div class="sync sync-on"><span>👩‍🏫 <b>Teacher view</b>${who?` — ${esc(who)}`:""}${state==="loading"?" · loading…":""}</span><button class="linklike" id="reload">Refresh</button><button class="linklike" id="code-change">Not you?</button></div>`;
-  else if(SYNC_URL && code && state !== "unknown") top = `<div class="sync sync-on"><span>${state==="checking" ? "Checking your code…" : state==="offline" ? "Can't reach Olya's list right now. Open your homework from the link Olya sent you." : `✓ ${who?`Hi, ${esc(who)}! `:""}Open your homework from the link Olya sent you.`}</span><button class="linklike" id="code-change">Not you?</button></div>`;
+  else if(SYNC_URL && code && state !== "unknown") top = `<div class="sync sync-on"><span>${state==="checking" ? "Checking your code…" : state==="offline" ? "Can't reach Olya's list right now. Open your homework from the link Olya sent you." : `✓ ${who?`Hi, ${esc(who)}! `:""}${ls.get("hw-gid") ? "Open your homework from the link Olya sent you." : "Choose the homework you'd like to do."}`}</span><button class="linklike" id="code-change">Not you?</button></div>`;
   else if(SYNC_URL) top = `<div class="sync sync-card"><label for="code"><b>Your code from Olya</b></label>
       <div class="sync-row"><input id="code" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="e.g. lemon42" value="${esc(code)}"><button class="btn primary" id="code-go">Save</button></div>
       <p class="small">Type your code, and your group's homework opens.</p><p class="small sync-msg" id="sync-msg">${state==="unknown"?"Hmm, Olya's list doesn't have this code. Check it with her.":""}</p></div>`;
   const showGroups = teacher || !SYNC_URL;
+  /* engine 35: someone studying on their own (no group) gets both homework lists to choose from */
+  const self = !teacher && SYNC_URL && code && state === "ok" && !ls.get("hw-gid");
   app.innerHTML = `<header class="head"><h1>Homework</h1><p>${teacher ? "Both groups at a glance." : "Your homework from Olya."}</p></header>${top}
-    ${showGroups ? `<div class="groups">${Object.keys(GROUPS).map(groupCard).join("")}</div>` : ""}`;
+    ${showGroups ? `<div class="groups">${Object.keys(GROUPS).map(groupCard).join("")}</div>` : ""}
+    ${self ? `<div class="self-links">${Object.keys(GROUPS).map(g => `<a class="btn" href="${g}/index.html">${esc(NAMES[g] || g.toUpperCase())} (${g.toUpperCase()}) →</a>`).join("")}</div>` : ""}`;
   const rl = document.getElementById("reload"); if(rl) rl.addEventListener("click", load);
   const ch = document.getElementById("code-change"); if(ch) ch.addEventListener("click",()=>{ ls.set("hw-code",""); ls.set("hw-who",""); ls.set("hw-role",""); ls.set("hw-gid",""); data = {}; state = ""; render(); });
   const go = document.getElementById("code-go"), inp = document.getElementById("code");
