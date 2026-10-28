@@ -76,8 +76,8 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
   out.afterSave = await card.locator('.t-prev').innerHTML();
   await p.click('#t-home'); await p.waitForTimeout(100);
   out.waitAfterSave = (await p.locator('section.hot.wait').innerText()).replace(/\s+/g, ' ');
-  await p.click('#copy-wait'); await p.waitForTimeout(150);
-  out.copiedWait = await p.evaluate(() => navigator.clipboard.readText()).catch(e => 'clipboard: ' + e.message);
+  // engine 39: no "Copy all for Claude" (her wish: one piece of work at a time)
+  out.copyAllButtons = await p.locator('#copy-wait, #t-copy-all').count();
   // hide names for the screen
   await p.click('#hide-names'); await p.waitForTimeout(150);
   out.hiddenLine = (await p.locator(`[data-teach="${meta.tasks[0].id}"]`).first().innerText()).replace(/\s+/g, ' ');
