@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>__TITLE__</title>
+<link rel="stylesheet" href="../../fonts/homework-sans.css">
+<style>
+__BASE_CSS__
+/* ---------- dice situations (tools 11, B2 filler «Any recommendations?», 30.10.26): three dice make a speaking situation ---------- */
+.head .stage-btn{font-size:.92rem;padding:3px 11px}
+.dice-hint{display:block;line-height:1.3}
+.stage{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 20px;display:grid;gap:12px;align-content:start}
+.stage.enter{animation:enterR .55s cubic-bezier(.2,.8,.2,1)}
+@keyframes enterR{from{opacity:0;transform:translateX(70px) rotate(1.5deg)}to{opacity:1;transform:none}}
+@keyframes enter{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.stage-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.sit-count{flex:none;border:2px solid var(--line);border-radius:99px;padding:2px 12px;font-weight:700;font-size:.95rem;color:var(--ink)}
+.sit-label{color:var(--label);font-weight:900;letter-spacing:.07em;text-transform:uppercase;font-size:.9rem}
+.dice3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.dcell{background:var(--ground);border-radius:12px;padding:10px 12px;display:grid;justify-items:center;align-content:start;gap:8px;text-align:center}
+.dcell .dl{color:var(--label);font-weight:900;letter-spacing:.06em;text-transform:uppercase;font-size:.8rem}
+.dcell .face{font-weight:800;font-size:1.05rem;line-height:1.25;min-height:2.5em}
+.dcell .face.wait{color:var(--muted);font-weight:600}
+.dcell .face .type{display:inline-block;background:var(--date-bg);color:var(--date-ink);border-radius:6px;padding:0 7px;margin-right:4px;font-weight:900}
+.die{width:3.1rem;height:3.1rem;border-radius:11px;background:#FFFFFF;border:3px solid #1D1D1B;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:.42rem;box-shadow:0 4px 0 #1D1D1B;will-change:transform}
+.die i{width:.58rem;height:.58rem;border-radius:50%;background:#1D1D1B;place-self:center;visibility:hidden}
+.die i.p{visibility:visible}
+.die.blank{opacity:.35}
+.sit{background:var(--bubble);color:var(--bubble-ink);border-radius:14px;padding:12px 18px;display:grid;gap:4px}
+.sit.in{animation:enter .4s ease-out}
+.sit .who{margin:0;font-size:1.3rem;font-weight:700;line-height:1.35}
+.sit .how{margin:0;font-size:1.12rem;line-height:1.35}
+.sit .how b{font-weight:900}
+.row-act{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row-act .grow{flex:1}
+.exbtn{border:2px solid var(--bubble-line, #E6D96A);background:var(--bubble);color:var(--bubble-ink);border-radius:99px;padding:6px 16px;font-weight:900;font-size:1rem}
+.ex-step{position:relative;background:var(--card);border:2px solid var(--bubble-line, #E6D96A);border-radius:12px;padding:8px 16px 10px 52px;display:grid;gap:4px}
+.ex-step.opening{animation:enter .35s ease-out}
+.ex-step .ex-ic{position:absolute;left:18px;top:8px;font-size:1.2rem;line-height:1.35}
+.ex-step .ex-hide{position:absolute;right:14px;top:8px}
+.ex-step p{margin:0;line-height:1.4;font-size:1.05rem}
+.ex-step p.a{color:var(--muted);padding-right:44px}
+.ex-step .bx{color:var(--flip-ink)}
+.ex-step .spk{font-weight:900;margin-right:6px}
+.btn.done-on{background:var(--ok);border-color:var(--ok);color:#fff}
+.empty-roll{display:grid;justify-items:center;gap:10px;padding:8px 0 4px}
+.empty-roll p{margin:0;color:var(--muted)}
+.btn.big{font-size:1.2rem;padding:10px 26px}
+.all-row .ty{font-weight:900;margin-right:6px}
+@media (max-width:560px){ .stage{padding:14px} .dice3{gap:6px} .dcell{padding:8px 6px} .dcell .face{font-size:.95rem} .sit .who{font-size:1.15rem} }
+</style>
+</head>
+<body>
+<div class="wrap"><main class="main" id="main"></main><div class="side" id="side"></div></div>
+<footer class="legal"><a href="../../impressum.html">Impressum</a> · <a href="../../datenschutz.html">Datenschutz</a></footer>
+<script>
+const D = __DATA__;
+const STICKER = "__STICKER__";
+const TOOLS_VERSION = "__TOOLS_VERSION__";
+const PAGE_ID = "__PAGE_ID__";
+const LIVE_ON = __LIVE__, LIVE_URL = "__SYNC_URL__";   /* the "-live" page: Olya's changes during the lesson (tools 7) */
+__BASE_JS__
+/* ---------- the dice ----------
+   die 1: WHO is asking (random face); die 2: WHAT they need; die 3: YOUR ANSWER (1–2, 3–4, 5–6 → three answer types).
+   Dice 2 and 3 come from a shuffled bag of every need × answer type, so no pair repeats until all of them have come up (then a new bag). */
+const WHO = D.dice[0], NEED = D.dice[1], ANS = D.dice[2];
+const TYPES = ANS.map.map(m => m.type);                       /* R, W, D */
+const facesOf = range => String(range).split(/[–-]/).map(Number); /* "1–2" → [1, 2] */
+const facePath = (k, i) => `dice.${k}.faces.${i}`;
+const faceText = (k, i) => liveText(facePath(k, i), D.dice[k].faces[i]);
+const faceGone = (k, i) => liveHidden(facePath(k, i));
+const exPath = (n, t, s) => `examples.${n}.${t}.${s}`;
+const ansText = t => liveText(`answers.${t}`, D.answers[t]);
+let S;
+function newBag(){ const all = []; NEED.faces.forEach((_, n) => { if(!faceGone(1, n)) TYPES.forEach(t => all.push([n, t])); }); return shuffle(all); }
+function newGame(){ S = {view: "roll", bag: newBag(), cur: null, n: 0, seen: 0}; }
+newGame();
+/* her changes arrive: a need she hid leaves the bag */
+function liveAdjust(){ if(S) S.bag = S.bag.filter(([n]) => !faceGone(1, n)); }
+const liveLabel = p => { const v = pathGet(D, p); return typeof v === "string" ? v : p; };
+const BAG_SIZE = () => NEED.faces.filter((_, n) => !faceGone(1, n)).length * TYPES.length;
+function pick(){
+  if(!S.bag.length) S.bag = newBag();
+  const [n, t] = S.bag.shift();
+  const whoFaces = WHO.faces.map((_, i) => i).filter(i => !faceGone(0, i)), w = whoFaces[Math.floor(Math.random() * whoFaces.length)];
+  const range = facesOf(ANS.map[TYPES.indexOf(t)].faces), a = range[Math.floor(Math.random() * range.length)];
+  S.n++; S.seen++;
+  return {who: w, need: n, type: t, faces: [w + 1, n + 1, a], done: false, exOpen: false};
+}
+
+/* ---------- the roll: the same calm motion as the council's die; the three settle one after another ---------- */
+const PIPS = {1:[5], 2:[1,9], 3:[1,5,9], 4:[1,3,7,9], 5:[1,3,5,7,9], 6:[1,3,4,6,7,9]};
+const dieHTML = n => `<span class="die ${n ? "" : "blank"}" aria-label="${n || ""}">${Array.from({length: 9}, (_, k) => `<i class="${n && PIPS[n].includes(k + 1) ? "p" : ""}"></i>`).join("")}</span>`;
+const setFace = (die, n) => die.querySelectorAll("i").forEach((p, j) => p.classList.toggle("p", PIPS[n].includes(j + 1)));
+function roll(){
+  if(S.busy) return;
+  const next = pick();
+  const slots = [...document.querySelectorAll("[data-die]")];
+  if(calm() || slots.length < 3){ S.cur = next; S.fresh = true; render(true); S.fresh = false; return; }
+  S.busy = true; document.querySelectorAll(".stage button").forEach(b => b.disabled = true);
+  const any = () => 1 + Math.floor(Math.random() * 6), gaps = [50, 55, 60, 70, 80, 95, 115, 140, 175, 220, 280], LAND = 6;
+  const total = gaps.reduce((a, b) => a + b, 0), stagger = 260;
+  slots.forEach((slot, k) => {
+    const final = next.faces[k]; let prev = any(); slot.innerHTML = dieHTML(prev); const die = slot.firstElementChild;
+    const face = slot.parentElement.querySelector(".face"); if(face){ face.classList.add("wait"); face.textContent = "…"; }
+    die.animate([
+      {transform: "translate(0, 0) rotate(0deg)"},
+      {transform: "translate(-8px, -20px) rotate(-240deg)", offset: .22},
+      {transform: "translate(4px, 0) rotate(-470deg)", offset: .5},
+      {transform: "translate(-2px, -8px) rotate(-610deg)", offset: .74},
+      {transform: "translate(0, 0) rotate(-700deg)", offset: .9},
+      {transform: "translate(0, 0) rotate(-720deg)"}], {duration: total + k * stagger, easing: "cubic-bezier(.12,.75,.3,1)"});
+    let t = 0;
+    gaps.forEach((g, i) => { t += g * (1 + k * stagger / total); if(i > LAND) return;
+      setTimeout(() => { let f = final; if(i < LAND){ do f = any(); while(f === prev || (i === LAND - 1 && f === final)); } prev = f; setFace(die, f); }, t); });
+  });
+  setTimeout(() => { S.busy = false; S.cur = next; S.fresh = true; render(); S.fresh = false; }, total + 2 * stagger + 150);
+}
+
+/* ---------- views ---------- */
+const cap = s => s ? s[0].toUpperCase() + s.slice(1) : s;
+const exLine = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>');
+function cellHTML(k){
+  const c = S.cur, n = c ? c.faces[k] : 0;
+  const label = esc(D.dice[k].label);
+  let face = `<span class="face wait">${k === 2 ? "how you answer" : "?"}</span>`;
+  if(c){
+    if(k === 2) face = `<span class="face"><span class="type">${esc(c.type)}</span>${esc(ANS.map[TYPES.indexOf(c.type)].faces)}</span>`;
+    else { const i = k === 0 ? c.who : c.need, p = facePath(k, i);
+      face = `<div class="live-host ${liveDim(p)}" data-live-host><span class="face">${esc(faceText(k, i))}</span>${liveTools(p)}</div>`; }
+  }
+  return `<div class="dcell"><span class="dl">${label}</span><span data-die="${k}">${dieHTML(n)}</span>${face}</div>`;
+}
+function exHTML(){
+  const c = S.cur; if(!c || !c.exOpen) return "";
+  const pa = exPath(c.need, c.type, "a"), pb = exPath(c.need, c.type, "b"), e = D.examples[c.need][c.type];
+  return `<div class="ex-step ${S.exAnim ? "opening" : ""}" role="region" aria-label="Example"><span class="ex-ic" aria-hidden="true">💡</span><button class="linkish ex-hide" data-ex-hide>hide</button>
+    <div class="live-host ${liveDim(pa)}" data-live-host><p class="a"><span class="spk">A:</span>${exLine(liveText(pa, e.a))}</p>${liveTools(pa)}</div>
+    <div class="live-host ${liveDim(pb)}" data-live-host><p class="b"><span class="spk">B:</span>${exLine(liveText(pb, e.b))}</p>${liveTools(pb)}</div></div>`;
+}
+function gameHTML(anim){
+  const c = S.cur;
+  const top = `<div class="stage-top"><span class="sit-label">${c ? "Your situation" : "Roll the dice"}</span>${c ? `<span class="sit-count" aria-label="Situation ${S.seen} of ${BAG_SIZE()}">${((S.seen - 1) % BAG_SIZE()) + 1} of ${BAG_SIZE()}</span>` : ""}</div>`;
+  const dice = `<div class="dice3">${[0, 1, 2].map(cellHTML).join("")}</div>`;
+  if(!c) return `<section class="stage ${anim ? "enter" : ""}">${top}${dice}<div class="empty-roll"><button class="btn primary big" data-roll>🎲 Roll</button></div></section>`;
+  return `<section class="stage ${anim ? "enter" : ""}">${top}${dice}
+    <div class="sit ${S.fresh ? "in" : ""}"><p class="who">${esc(cap(faceText(0, c.who)))} asks you about ${esc(faceText(1, c.need))}.</p>
+      <div class="live-host" data-live-host><p class="how"><b>${esc(ansText(c.type))}</b></p>${liveTools(`answers.${c.type}`)}</div></div>
+    <div class="row-act">${c.done ? `<button class="btn done-on" data-done aria-pressed="true">✓ Done</button>` : `<button class="btn ${c.done ? "" : "primary"}" data-done aria-pressed="false">✓ Done</button>`}
+      ${c.exOpen ? "" : `<button class="exbtn" data-ex>💡 Example</button>`}<span class="grow"></span>
+      <button class="btn ${c.done ? "primary" : ""}" data-roll>🎲 Next situation</button></div>
+    ${exHTML()}</section>`;
+}
+const allExamplesHTML = () => allHTML("All the examples", NEED.faces.map((_, n) => (liveTeacher() || !faceGone(1, n)) ? `<div class="all-row"><span class="all-sub">${esc(faceText(1, n))}</span>
+    ${TYPES.map(t => { const e = D.examples[n][t], pa = exPath(n, t, "a"), pb = exPath(n, t, "b");
+      return `<span class="all-side"><span class="ty">${esc(t)}</span>${esc(ansText(t))}</span>
+        <div class="live-host ${liveDim(pa)}" data-live-host><p>A: ${exLine(liveText(pa, e.a))}</p>${liveTools(pa)}</div>
+        <div class="live-host ${liveDim(pb)}" data-live-host><p>B: ${exLine(liveText(pb, e.b))}</p>${liveTools(pb)}</div>`; }).join("")}</div>` : "").join(""));
+const speakStage = () => `<section class="stage-wrap ${S.enter ? "enter" : ""}">${speakHTML(liveList(D.speaking, "speaking"), `<button class="btn" data-back>← Back to the situations</button><button class="btn primary" data-restart>Start again</button>`, "Speaking", "speaking")}</section>`;
+function headHTML(){
+  return `<header class="head">${D.part ? `<span class="part">${esc(D.part)}</span>` : ""}<h1>${esc(D.title)}</h1>
+      ${stagesHTML([["roll", "🎲 Situations"], ["speak", "💬 Speaking"]], S.view)}</header>
+    ${S.view !== "roll" ? "" : `<div class="hint-top dice-hint"><span>🎲 ${esc(D.hint)}</span></div>`}`;
+}
+function goStage(v){ if(S.view === v || S.busy) return; S.view = v; S.enter = true; render(); S.enter = false; scrollTo(0, 0); }
+function render(anim){
+  liveApply();   /* her latest changes, at the group's tap (live version) */
+  const main = document.getElementById("main"), side = document.getElementById("side");
+  main.innerHTML = liveBarHTML(liveLabel) + headHTML() + (S.view === "speak" ? speakStage() : gameHTML(anim));
+  const st = side.scrollTop; side.innerHTML = boxHTML(D.box, {clickable: true}) + allExamplesHTML(); side.scrollTop = st;
+  wireAll(side); wireBox(side); wireSpeak(main, render); S.exAnim = false;
+  wireLive(main, p => pathGet(D, p)); wireLive(side, p => pathGet(D, p));
+  const on = (sel, fn) => document.querySelectorAll(sel).forEach(b => b.addEventListener("click", () => fn(b)));
+  on("[data-roll]", roll);
+  /* ✓ Done: the example for this need × answer opens by itself (her rule 6: feedback right after the step); a second tap undoes */
+  on("[data-done]", () => { const c = S.cur; c.done = !c.done; if(c.done && !c.exOpen){ c.exOpen = true; S.exAnim = true; } render(); if(c.done) pop(document.querySelector("[data-done]")); });
+  on("[data-ex]", () => { S.cur.exOpen = true; S.exAnim = true; render(); });
+  on("[data-ex-hide]", () => { S.cur.exOpen = false; render(); });
+  on("[data-stage]", b => goStage(b.dataset.stage));
+  on("[data-back]", () => goStage("roll"));
+  on("[data-restart]", () => { usedPhrases.clear(); spkReset(); newGame(); render(true); });
+}
+liveRerender = () => render();
+render();
+</script>
+</body>
+</html>

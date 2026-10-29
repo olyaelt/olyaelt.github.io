@@ -122,6 +122,10 @@ details.summary[open] summary::after{content:"Hide"}
 .chip-t[aria-pressed="true"]{border-color:var(--instr);background:var(--instr);color:var(--instr-ink)}
 .t-strip{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 12px;width:100%;margin:0 0 12px;padding:9px 12px;text-align:left;font:inherit;font-size:.95rem;color:var(--ink);background:var(--card);border:1px solid var(--line);border-left:5px solid var(--line);border-radius:10px;cursor:pointer}
 .t-strip.open{border-left-color:var(--instr)}
+/* engine 41: a task for later (not in the total time) and, for her, the TubeQuizard copy of a listening task */
+.later-tag{display:inline-block;vertical-align:.15em;font-size:.72rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);border:1.5px solid var(--line);border-radius:99px;padding:0 8px;margin-left:4px;white-space:nowrap}
+.tq-link{margin:4px 2px 0;font-size:.9rem;color:var(--muted)}
+.tq-link button{font:inherit;background:none;border:0;padding:0;color:var(--instr);text-decoration:underline;cursor:pointer}
 
 .t-strip-go{color:var(--instr);font-weight:700;white-space:nowrap}
 .t-line{display:flex;flex-wrap:wrap;align-items:center;gap:5px;width:100%;text-align:left;background:transparent;border:0;padding:8px 4px 2px;cursor:pointer;font:inherit}
@@ -390,6 +394,10 @@ s{color:var(--muted)}
 .whole-note{color:var(--muted);font-size:.85rem;white-space:nowrap}
 .gap-in{font:inherit;font-weight:700;color:var(--answer);background:var(--hl);border:0;border-bottom:2px solid var(--hl-ink);border-radius:4px 4px 0 0;padding:0 6px;margin:1px 0;max-width:100%}
 .gap-in:focus{background:var(--card);outline:2px solid var(--instr);outline-offset:1px}
+/* engine 40: each gap can be checked on its own ("Check" after it, or Enter), as in TubeQuizard; Check answers takes the rest.
+   A word, not ✓: a ✓ beside a typed answer read as "right" (her catch, 29.10) — ✓ and green mean right, as in TubeQuizard */
+.gap-ck{font:inherit;font-size:.72em;font-weight:900;line-height:1.3;border:2px solid var(--instr);color:var(--instr);background:var(--card);border-radius:99px;padding:0 8px;margin:0 3px 0 5px;vertical-align:.12em;cursor:pointer}
+.gap-ck[hidden]{display:none}
 .gap-res{font-weight:700;border-radius:3px;padding:0 4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .gap-res.ans{background:var(--hl);color:var(--hl-ink)}
 .gap-res.ok{background:var(--ok-chip);color:var(--ok-ink)}
@@ -770,7 +778,7 @@ const TASKS = [
 ];
 
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "39";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "41";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -1447,10 +1455,10 @@ function renderHome(justDone){
   const taskBtn = t => `
           <div class="task-wrap"><div class="task-row ${done.has(t.id)?"is-done":""}">
             <button class="task-btn" data-open="${t.id}">
-              <span><div class="t">${esc(t.title)}</div><div class="m">${esc(t.meta)} · ≈ ${minutesOf(t)} min</div>${t.alt?`<div class="alt">${esc(t.alt)}</div>`:""}</span>
+              <span><div class="t">${esc(t.title)}${t.later?` <span class="later-tag">for later</span>`:""}</div><div class="m">${esc(t.meta)} · ≈ ${minutesOf(t)} min</div>${t.alt?`<div class="alt">${esc(t.alt)}</div>`:""}</span>
             </button>
             <button class="status" data-toggle="${t.id}" aria-pressed="${done.has(t.id)}" aria-label="${done.has(t.id)?"Done — tap to untick":"Tap to mark as done"}">✓</button>
-          </div><div data-fbslot="${t.id}">${isTeacher() ? teacherLine(t.id) : fbLine(t.id)}</div></div>`;
+          </div><div data-fbslot="${t.id}">${isTeacher() ? teacherLine(t.id) : fbLine(t.id)}</div>${isTeacher() && t.tqLink ? tqLinkHTML(t) : ""}</div>`;
   app.innerHTML = `
     ${justDone?`<div class="done-banner" role="status">✓ Done!${isTeacher() ? " Teacher view: nothing was sent and nothing counts for the group." : lastDone && myCode() && syncState!=="unknown" ? ` +${framesOf(lastDone)} 🎞 for ${meStats ? "your film" : "our group"}.` : " Mark it in our spreadsheet in your colour."}${reactHTML()}</div>`:""}
     <header class="lesson-head">
@@ -1458,7 +1466,7 @@ function renderHome(justDone){
       <span class="date">${LESSON.date}</span>
       <h1>Homework</h1>
       ${LESSON.sub?`<p>${LESSON.sub}</p>`:""}
-      <p class="total">About ${Math.round(TASKS.reduce((s,t)=>s+minutesOf(t),0)/5)*5} minutes in total — you don't have to do it all in one go.</p>
+      <p class="total">About ${Math.round(TASKS.filter(t=>!t.later).reduce((s,t)=>s+minutesOf(t),0)/5)*5} minutes in total — you don't have to do it all in one go.${TASKS.some(t=>t.later)?" Tasks marked <b>for later</b> aren't in that time: come back to them when you like.":""}</p>
     </header>
     <div id="sync-slot">${syncHTML()}</div>
     <div id="fbnew-slot">${newFbHTML()}</div>
@@ -1474,6 +1482,7 @@ function renderHome(justDone){
       </section>`).join("")}
     <div class="foot" id="foot">${footHTML()}</div>`;
   app.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>openTask(b.dataset.open)));
+  app.querySelectorAll("[data-copy-tq]").forEach(b => b.addEventListener("click", ev => { ev.stopPropagation(); const t = TASKS.find(x => x.id === b.dataset.copyTq); if(t) copyText(t.tqLink, b); }));
   app.querySelectorAll("[data-toggle]").forEach(b=>b.addEventListener("click",()=>{
     const id = b.dataset.toggle; setMark(id, !done.has(id)); refreshTicks();
   }));
@@ -1490,6 +1499,9 @@ function openTask(id, idx=0){
   try{ if(location.hash !== "#"+id) history.replaceState(null,"","#"+id); }catch(e){}
   renderTask();
 }
+/* engine 41 (her wish 29.10: she didn't know where to find a page's TubeQuizard quiz): in her teacher view each listening task with
+   `tqLink` shows its TubeQuizard copy, to open or copy for the spreadsheet. Students never see it. */
+const tqLinkHTML = t => `<p class="tq-link">🔗 TubeQuizard copy of this quiz: <a href="${esc(t.tqLink)}" target="_blank" rel="noopener">open</a> · <button class="linkish" data-copy-tq="${esc(t.id)}">Copy link</button></p>`;
 function teacherStrip(id){
   if(!isTeacher() || !teacherData) return "";
   const st = teacherData.students || [], dn = ((teacherData.done||{})[id] || []).length, c = teacherCounts(id);
@@ -1574,7 +1586,8 @@ const BOOKMARK = `<svg viewBox="0 0 12 16" aria-hidden="true"><path d="M1.6 1.6h
 /* a one-line hint until the first bookmark (as for "?") */
 const revHint = () => ls.get("hw-rev-used") ? "" : `<p class="rev-hint">Want to practise something again? Tap <span class="rev demo" aria-hidden="true">${BOOKMARK}</span> — only you will see it.</p>`;
 /* wherever a task builds the hint, it goes to the top: under the instruction (or above the task when there is none) */
-const placeRevHint = el => { if(!el) return; const ins = app.querySelector(".instr"), stage = app.querySelector(".stage"); if(ins) ins.after(el); else if(stage) stage.before(el); };
+const placeRevHint = el => { if(!el) return; app.querySelectorAll(".rev-hint").forEach(x => { if(x !== el) x.remove(); });   /* engine 41: one hint, never a pile (a student, 29.10: one more line on every listening clip) */
+  const ins = app.querySelector(".instr"), stage = app.querySelector(".stage"); if(ins) ins.after(el); else if(stage) stage.before(el); };
 /* the step as it is in the task (in "Once more" the steps are a subset) */
 const curS = () => { const st = current && current.steps && current.steps[stepIdx]; return st && st._orig != null ? st._orig : stepIdx; };
 const bmBtn = (s, r) => { const on = getRev(current.id, s).has(r);
@@ -1901,15 +1914,15 @@ function partsHTML(parts){
 function renderListen(st, count, pct){
   const lines = st.clip;
   const instr = st.first
-    ? "Tap the top line to hear the whole clip. Then tap the line with the gap and try to catch the missing words. Type them if you like, then tap Check answers."
-    : "Listen and catch the missing words. Then tap Check answers.";
+    ? "Tap the top line to hear the whole clip, or any line to hear just that line. Catch the missing words in the framed lines: type them if you like, then tap Check next to a gap, or Check answers for all of them."
+    : "Listen and catch the missing words, then tap Check next to a gap, or Check answers.";
   let gk = 0;
   const keyOf = k => current.id+"-"+curS()+(current._once?"-again":"")+"-g"+k;
   const lineHTML = (l,i) => { const skip = st._rows && !st._rows.has(i); return `<div class="ln ${l[3].some(p=>typeof p!=="string")?"has-gap":""}" data-i="${i}">
       <button class="pl" aria-label="${i===0?"Play the whole clip":"Play this line"}">▶</button>
       <span class="ln-text">${l[3].map(p => typeof p === "string" ? esc(p)
         : (k => skip ? `<b>${esc(p.gap)}</b>` : `<input class="gap-in" data-k="${k}" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"
-             aria-label="Type the missing words" style="width:min(100%, ${p.gap.length + 3}ch)" value="${esc(typed[keyOf(k)]||"")}">`)(gk++)).join("")}${i===0?` <span class="whole-note">· whole clip</span>`:""}</span>
+             aria-label="Type the missing words" style="width:min(100%, ${p.gap.length + 3}ch)" value="${esc(typed[keyOf(k)]||"")}"><button class="gap-ck" data-k="${k}" aria-label="Check this gap" ${(typed[keyOf(k)]||"").trim() ? "" : "hidden"}>Check</button>`)(gk++)).join("")}${i===0?` <span class="whole-note">· whole clip</span>`:""}</span>
     </div>`; };
   const rest = `
         <div class="tap-hint small" id="hint" hidden><p>Nothing playing? Tap the video once, then tap the line again.</p>
@@ -1926,6 +1939,7 @@ function renderListen(st, count, pct){
     const bar = app.querySelector(".taskbar .count"); if(bar) bar.textContent = count;
     const fill = app.querySelector(".taskbar .bar i"); if(fill) fill.style.width = pct + "%";
     const ins = app.querySelector(".instr"); if(ins) ins.innerHTML = instr;
+    app.querySelectorAll(".rev-hint").forEach(x => x.remove());   /* the last clip's bookmark hint goes with it (it comes back after Check) */
     const panel = app.querySelector(".stage .panel");
     [...panel.children].forEach(ch=>{ if(!ch.classList.contains("video")) ch.remove(); });
     panel.insertAdjacentHTML("beforeend", rest);
@@ -1988,7 +2002,7 @@ function renderListen(st, count, pct){
   /* as in TubeQuizard (its offset = 1): start a second before the line and stop a second after it, so the first words are never cut off */
   const LEAD = 1;
   rows.forEach((row,i)=>row.addEventListener("click",ev=>{
-    if(ev.target.closest("input, .rev, .mk")) return;
+    if(ev.target.closest("input, .rev, .mk, .gap-ck")) return;
     if(i===0) play(Math.max(0, lines[0][1] - LEAD), clipEnd(lines, lines.length-1) + LEAD, 0);   /* top line: the whole clip, as in TubeQuizard */
     else play(Math.max(0, lines[i][1] - LEAD), lines[i][1] + lines[i][2] + LEAD, i);
   }));
@@ -1999,15 +2013,10 @@ function renderListen(st, count, pct){
     try{ ytPlayer && ytPlayer.setPlaybackRate(on ? 0.75 : 1); }catch(e){}
   });
   const answers = lines.flatMap(l => l[3].filter(p=>typeof p!=="string").map(p=>p.gap));
-  app.querySelectorAll(".gap-in").forEach(inp=>{
-    inp.addEventListener("click", ev=>ev.stopPropagation());
-    inp.addEventListener("input", ()=>{ typed[keyOf(+inp.dataset.k)] = inp.value; });
-    inp.addEventListener("keydown", ev=>{ if(ev.key==="Enter"){ ev.preventDefault(); inp.blur(); } });
-  });
-  wireNav(()=>{
-    app.querySelectorAll(".gap-in").forEach(inp=>{
+  /* engine 38: what they typed stays in the gap, green when right, red + → the answer when not (see judgeRewrite) */
+  const judgeGap = inp => {
       const k = +inp.dataset.k, ans = answers[k], val = inp.value.trim();
-      /* engine 38: what they typed stays in the gap, green when right, red + → the answer when not (see judgeRewrite) */
+      const ck = inp.nextElementSibling; if(ck && ck.classList.contains("gap-ck")) ck.remove();
       const res = document.createElement("span");
       if(!val){ res.className = "gap-res ans"; res.textContent = ans; inp.replaceWith(res); return; }
       const m = markAnswer(val, [ans]);
@@ -2019,7 +2028,24 @@ function renderListen(st, count, pct){
       fb.innerHTML = m.plain ? `<span class="chip-x">✗</span> You: ${esc(val)}` : `<span class="chip-x">✗</span> ${m.you} → ${m.fix}`;
       inp.closest(".ln").appendChild(fb);
       inp.replaceWith(res, to, right);
-    });
+  };
+  /* engine 40 (a student: with two gaps in a clip, Check answers opened both at once, so she couldn't guess, check and go on):
+     "Check" after a gap, or Enter in it, checks just that gap; when the last one is checked, the step counts as checked (Check answers) */
+  const checkOne = (inp, byKey) => {
+    const k = +inp.dataset.k; judgeGap(inp);
+    const left = [...app.querySelectorAll(".gap-in")];
+    if(!left.length){ document.getElementById("go").click(); return; }
+    if(byKey){ const next = left.find(x => +x.dataset.k > k) || left[0]; try{ next.focus({preventScroll: false}); }catch(e){ next.focus(); } }
+  };
+  app.querySelectorAll(".gap-in").forEach(inp=>{
+    const ck = inp.nextElementSibling && inp.nextElementSibling.classList.contains("gap-ck") ? inp.nextElementSibling : null;
+    inp.addEventListener("click", ev=>ev.stopPropagation());
+    inp.addEventListener("input", ()=>{ typed[keyOf(+inp.dataset.k)] = inp.value; if(ck) ck.hidden = !inp.value.trim(); });
+    inp.addEventListener("keydown", ev=>{ if(ev.key==="Enter"){ ev.preventDefault(); if(inp.value.trim()) checkOne(inp, true); else inp.blur(); } });
+    if(ck) ck.addEventListener("click", ev=>{ ev.stopPropagation(); checkOne(inp, false); });
+  });
+  wireNav(()=>{
+    app.querySelectorAll(".gap-in").forEach(judgeGap);
     if(canMark()){
       /* "?" only where there was something to catch (engine 37, her promise to a student: nothing to ask about on a line without a gap) */
       app.querySelectorAll(".ln.has-gap").forEach(row=>{

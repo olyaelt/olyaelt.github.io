@@ -15,7 +15,7 @@ base_js = open(os.path.join(T, 'tool_base.js'), encoding='utf-8').read()
 sticker = 'data:image/png;base64,' + base64.b64encode(open(os.path.join(T, 'sticker.png'), 'rb').read()).decode()
 js = lambda o: json.dumps(o, ensure_ascii=False).replace('</', '<\\/')
 # each task type has its own mechanic (template); the lesson chat names the type in its handoff, and each new type is built and reviewed with Olya on its own
-TYPES = {'dice-council': 'council_template.html', 'say-it-another-way': 'cards_template.html'}
+TYPES = {'dice-council': 'council_template.html', 'say-it-another-way': 'cards_template.html', 'dice-situations': 'situations_template.html'}
 # the live version (tools 7, her wish 28.10): every page is also built as <page>-live.html, which asks her table for the changes
 # she makes during the lesson; the plain page never contacts the table and stays exactly as it was. The table's address is the
 # one the homework pages use (engine/page_template.html).
@@ -33,7 +33,7 @@ for path in sorted(glob.glob(os.path.join(T, '*', '*.json'))):
     if d.get('review'):
         src = json.load(open(os.path.join(T, lesson, d['review']['from'] + '.json'), encoding='utf-8'))
         review = {'page': lesson + '/' + d['review']['from'], 'part': src.get('part', 'last time'), 'n': d['review'].get('n', 4), 'cards': src['cards']}
-    for k, v in [('__BASE_CSS__', base_css), ('__BASE_JS__', base_js), ('__TITLE__', '%s · %s' % (d['title'], d['part'])),
+    for k, v in [('__BASE_CSS__', base_css), ('__BASE_JS__', base_js), ('__TITLE__', d['title'] + (' · ' + d['part'] if d.get('part') else '')),
                  ('__DATA__', js(d)), ('__REVIEW__', js(review)), ('__STICKER__', sticker), ('__TOOLS_VERSION__', VERSION),
                  ('__PAGE_ID__', lesson + '/' + name)]:
         html = html.replace(k, v)
@@ -50,21 +50,23 @@ for path in sorted(glob.glob(os.path.join(T, '*', '*.json'))):
 # first (with Copy, for the Zoom chat) and the plain one as the fallback. Shown when her code is on this device (as on the live
 # pages: a lock on the door, the list is in the source); noindex, linked from nowhere.
 GROUPS = {'b2': 'B2 · Wed Fri 18.30', 'c1': 'C1 · Wed Fri 20.15'}
-KIND = {'dice-council': '🎲 dice council', 'say-it-another-way': '🃏 say it another way'}
+KIND = {'dice-council': '🎲 dice council', 'say-it-another-way': '🃏 say it another way', 'dice-situations': '🎲 dice situations'}
 def esc(t): return str(t).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
 blocks = []
 for g in sorted({p['lesson'].split('-')[0] for p in pages}):
     rows = []
     for lesson in sorted({p['lesson'] for p in pages if p['lesson'].split('-')[0] == g}):
-        nice = lesson.split('-', 1)[1].replace('-', ' ') if '-' in lesson else lesson
+        rest = lesson.split('-', 1)[1] if '-' in lesson else lesson
+        dm = re.match(r'(\d{4})-(\d{2})-(\d{2})$', rest)   # tools 11: a lesson folder named by its date (b2-2026-10-30)
+        nice = 'Lesson of %s.%s.%s' % (dm.group(3), dm.group(2), dm.group(1)[2:]) if dm else rest.replace('-', ' ')
         rows.append('<h3>%s</h3>' % esc(nice[:1].upper() + nice[1:]))
         for p in [x for x in pages if x['lesson'] == lesson]:
             base = 'https://olyaelt.github.io/tools/%s/%s' % (p['lesson'], p['name'])
-            rows.append('<div class="pg"><div class="pg-t"><b>%s</b> · %s <span class="kind">%s · %s</span></div>'
+            rows.append('<div class="pg"><div class="pg-t"><b>%s</b>%s <span class="kind">%s · %s</span></div>'
                         '<div class="pg-a"><a class="btn primary" href="%s/%s-live.html" target="_blank" rel="noopener">Open live</a>'
                         '<button class="btn" data-copy="%s-live.html">Copy link</button>'
                         '<a class="plain" href="%s/%s.html" target="_blank" rel="noopener">plain page</a></div></div>'
-                        % (esc(p['title']), esc(p['part']), esc(KIND.get(p['type'], p['type'])), esc(p['name']),
+                        % (esc(p['title']), (' · ' + esc(p['part'])) if p['part'] else '', esc(KIND.get(p['type'], p['type'])), esc(p['name']),
                            p['lesson'], p['name'], base, p['lesson'], p['name']))
     blocks.append('<section><h2>%s</h2>%s</section>' % (esc(GROUPS.get(g, g.upper())), ''.join(rows)))
 index = """<!doctype html>

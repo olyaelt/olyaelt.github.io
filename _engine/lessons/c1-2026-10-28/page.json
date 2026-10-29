@@ -1,5 +1,5 @@
 {
- "title": "Should schools teach more practical things?",
+ "title": "What's the point of Latin?",
  "group": "c1",
  "file": "2026-10-28.html",
  "assets": {
@@ -7,5 +7,34 @@
   "GAPS": "gaps.json",
   "TQ": "tq.json"
  },
- "listed": false
+ "listed": false,
+ "earlier_only": [
+  "still work for you",
+  "later for you",
+  "clocks go back",
+  "extra hour of sleep",
+  "change the clocks",
+  "your time",
+  "almost forgot",
+  "did physics at",
+  "did maths at",
+  "did economics at",
+  "studied",
+  "went to university",
+  "did a course in",
+  "what do you do",
+  "get into",
+  "always been",
+  "worth it",
+  "trained as",
+  "on the job",
+  "grounding in",
+  "job came up",
+  "what everyone did",
+  "easy part",
+  "by training",
+  "been ages",
+  "been up to",
+  "long time no see"
+ ]
 }

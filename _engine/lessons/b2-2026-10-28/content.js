@@ -41,7 +41,7 @@ const SEEN_MAP = [
 ];
 
 const TOPICS = [
-  {id:"seen", title:"Have you seen it?", sub:"Talking about series: recommend one, or warn a friend off", box:()=>mapInner(SEEN_MAP)}
+  {id:"seen", title:"I've run out of things to watch. Any ideas?", sub:"Talking about series: recommend one, or warn a friend off", box:()=>mapInner(SEEN_MAP)}
 ];
 
 const SAYIT = [
@@ -69,8 +69,12 @@ const TASKS = [
   {id:"then-now", topic:"seen", sec:"Revision", title:"Back to the start: how would you say it now?", meta:"6 sentences from the start of the lesson", kind:"steps",
    steps:SAYIT.map((s,i)=>({type:"sayit", s, first:i===0, box:"",
      instr: i===0 ? "Remember the start of the lesson? Say it in English — aloud. Then tap the yellow boxes to check." : "Say it in English."}))},
-  {id:"tq-seen", topic:"seen", sec:"Extension", title:"Listening: the same phrases in real conversations", meta:"4 short clips from real videos", kind:"steps",
-   steps:TQ.seen.map((clip,i)=>({type:"listen",clip,first:i===0}))}
+  {id:"tq-seen", topic:"seen", sec:"Extension", title:"Listening: the same phrases in real conversations", meta:"5 short clips · a tough one: try 🐢 Slower", kind:"steps",
+   tqLink:TQ.quiz_links.seen,
+   steps:TQ.seen.map((clip,i)=>({type:"listen",clip,first:i===0}))},
+  {id:"tq-seen-2", topic:"seen", sec:"Extension", title:"Listening 2: more phrases from the lesson in real videos", meta:"8 short clips · do it when you have time", kind:"steps",
+   later:true, tqLink:TQ.quiz_links.seen2,
+   steps:TQ.seen2.map((clip,i)=>({type:"listen",clip,first:i===0}))}
 ];
 
 const MAP = [];

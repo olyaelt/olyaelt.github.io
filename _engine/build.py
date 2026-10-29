@@ -3,7 +3,8 @@
    python3 build.py lessons/b2-2026-10-30 SITE_DIR   -> writes SITE_DIR/b2/2026-10-30.html
 The page = the shared engine (engine/page_template.html, version in engine/VERSION) + this lesson's
 content.js (what goes between LESSON CONTENT: START and END) + page.json (title, group, file, assets;
-"listed": false = an unlisted page, left out of the lists until set to true).
+"listed": false = an unlisted page, left out of the lists until set to true;
+"earlier_only": [phrases] = look-back items only where the target contains one of them — what the whole group did in class).
 Also writes lessons/<name>/build/preview.html for the Claude artifact preview."""
 import base64, json, mimetypes, os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -44,6 +45,13 @@ if '__EARLIER__' in t:
                                              capture_output=True, text=True, check=True).stdout)
             rnd = random.Random(name); want = int(cfg.get('earlier_count', 4))
             pools = [[dict(it, frm=d['date']) for it in d['items']] for d in data if d['items']]
+            only = [str(x).lower().replace('\u2019', "'") for x in cfg.get('earlier_only') or []]
+            if only:   # engine 41 (her rule 29.10): only what the whole group did in class — the target must contain one of these phrases
+                def target(it):
+                    txt = it['r'].get('a', '') if it['type'] == 'rewrite' else (it['s']['rows'][0][1] if it['s'].get('rows') else '')
+                    return re.sub(r'<[^>]+>|\$\{g\("|"\)\}', '', str(txt)).lower().replace('\u2019', "'")
+                pools = [[it for it in pool if any(o in target(it) for o in only)] for pool in pools]
+                print('look back limited to the whitelist in page.json:', sum(len(p) for p in pools), 'items fit')
             for pool in pools: rnd.shuffle(pool); pool.sort(key=lambda it: it['type'] != 'rewrite')   # rewrite first, then say-it
             while len(picked) < want and any(pools):
                 for pool in pools:

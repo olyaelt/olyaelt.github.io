@@ -2,6 +2,52 @@
  "seen": [
   [
    [
+    "rDqXwUS402I",
+    265.611,
+    9.476,
+    [
+     "Now, lobster is a delicacy."
+    ]
+   ],
+   [
+    "rDqXwUS402I",
+    267.62,
+    2.796,
+    [
+     "Can the same paradigm shift happen for bugs?"
+    ]
+   ],
+   [
+    "rDqXwUS402I",
+    270.416,
+    1.239,
+    [
+     "So, ",
+     {
+      "gap": "give it a try"
+     },
+     "!"
+    ]
+   ],
+   [
+    "rDqXwUS402I",
+    271.655,
+    1.388,
+    [
+     "Pop that insect into your mouth,"
+    ]
+   ],
+   [
+    "rDqXwUS402I",
+    273.043,
+    2.044,
+    [
+     "and savor the crunch."
+    ]
+   ]
+  ],
+  [
+   [
     "Ln3KO17NVpc",
     179.945,
     7.308,
@@ -63,16 +109,20 @@
   [
    [
     "AqLIMK8pIog",
-    1153.55,
-    5.09,
+    1148.55,
+    10.1,
     [
-     "BARRY MITCHELL: Does this take you back?"
+     "BARRY MITCHELL: Does this ",
+     {
+      "gap": "take you back"
+     },
+     "?"
     ]
    ],
    [
     "AqLIMK8pIog",
-    1154.96,
-    1.64,
+    1152.45,
+    2.7,
     [
      "JAMAL CRAWFORD: Yes, it ",
      {
@@ -83,8 +133,8 @@
    ],
    [
     "AqLIMK8pIog",
-    1156.6,
-    2.04,
+    1154.6,
+    2.6,
     [
      "I'm glad to see it. I'm glad I came here today."
     ]
@@ -119,5 +169,289 @@
     ]
    ]
   ]
- ]
+ ],
+ "seen2": [
+  [
+   [
+    "lWbjqpmYKrw",
+    0.83,
+    11.47,
+    [
+     "NARRATOR: Coming soon to the Bloom Network, the show"
+    ]
+   ],
+   [
+    "lWbjqpmYKrw",
+    4.01,
+    3.81,
+    [
+     {
+      "gap": "everyone's talking about"
+     },
+     ", Desperate Houseplants."
+    ]
+   ],
+   [
+    "lWbjqpmYKrw",
+    7.82,
+    2.84,
+    [
+     "It's the story of some houseplants who were not"
+    ]
+   ],
+   [
+    "lWbjqpmYKrw",
+    10.66,
+    1.64,
+    [
+     "getting what they needed."
+    ]
+   ]
+  ],
+  [
+   [
+    "uk9wV_Cm7qE",
+    242.709,
+    9.01,
+    [
+     "\"Nine Perfect Strangers.\" It's the new \"it\" show right now."
+    ]
+   ],
+   [
+    "uk9wV_Cm7qE",
+    245.511,
+    2.502,
+    [
+     "It's on Hulu. [Cheers and applause]"
+    ]
+   ],
+   [
+    "uk9wV_Cm7qE",
+    248.013,
+    2.036,
+    [
+     "People love it. ",
+     {
+      "gap": "Everyone's talking about it"
+     },
+     "."
+    ]
+   ],
+   [
+    "uk9wV_Cm7qE",
+    250.049,
+    1.668,
+    [
+     "— Yes."
+    ]
+   ]
+  ],
+  [
+   [
+    "32zzZE658ec",
+    175.608,
+    10.044,
+    [
+     "— By any chance, did you see \"Battlestar Galactica\""
+    ]
+   ],
+   [
+    "32zzZE658ec",
+    178.745,
+    1.101,
+    [
+     "last night?"
+    ]
+   ],
+   [
+    "32zzZE658ec",
+    179.846,
+    1.501,
+    [
+     "— No, I did not. ",
+     {
+      "gap": "Is that any good"
+     },
+     "?"
+    ]
+   ],
+   [
+    "32zzZE658ec",
+    181.347,
+    2.937,
+    [
+     "— Actually, not. It was really so-so."
+    ]
+   ],
+   [
+    "32zzZE658ec",
+    184.284,
+    1.368,
+    [
+     "— Okay."
+    ]
+   ]
+  ],
+  [
+   [
+    "jdRsYs5N_tc",
+    213.32,
+    5.63,
+    [
+     "…that we ended up having to give up and leave."
+    ]
+   ],
+   [
+    "jdRsYs5N_tc",
+    215.57,
+    1.53,
+    [
+     "MEDHA: To see what ",
+     {
+      "gap": "all the hype"
+     },
+     " was about,"
+    ]
+   ],
+   [
+    "jdRsYs5N_tc",
+    217.1,
+    1.85,
+    [
+     "we decided to try the food ourselves."
+    ]
+   ]
+  ],
+  [
+   [
+    "pnv5iKB2hl4",
+    677.465,
+    6.27,
+    [
+     "I mean, it's distinctive,"
+    ]
+   ],
+   [
+    "pnv5iKB2hl4",
+    681.459,
+    2.275,
+    [
+     {
+      "gap": "I'll give them that"
+     },
+     "."
+    ]
+   ]
+  ],
+  [
+   [
+    "Byx7jyC4pCQ",
+    2111.16,
+    6.8,
+    [
+     "But the discrimination between men and women was"
+    ]
+   ],
+   [
+    "Byx7jyC4pCQ",
+    2114.72,
+    0.845,
+    [
+     "too huge for me."
+    ]
+   ],
+   [
+    "Byx7jyC4pCQ",
+    2115.565,
+    2.395,
+    [
+     "I ",
+     {
+      "gap": "couldn't get into that"
+     },
+     "."
+    ]
+   ]
+  ],
+  [
+   [
+    "Lc3lWIdB-sw",
+    38.19,
+    10.63,
+    [
+     "Now, one of the really important things about Google"
+    ]
+   ],
+   [
+    "Lc3lWIdB-sw",
+    42.44,
+    2.28,
+    [
+     "Drive and what I ",
+     {
+      "gap": "keep going on about"
+     },
+     ", if you've ever heard me"
+    ]
+   ],
+   [
+    "Lc3lWIdB-sw",
+    44.72,
+    2.39,
+    [
+     "say anything, I'm always going on about this."
+    ]
+   ],
+   [
+    "Lc3lWIdB-sw",
+    47.11,
+    1.71,
+    [
+     "So sorry about the broken record."
+    ]
+   ]
+  ],
+  [
+   [
+    "ngBy0H_q-GY",
+    90.88,
+    4.69,
+    [
+     "And the unification stuff that you mentioned—"
+    ]
+   ],
+   [
+    "ngBy0H_q-GY",
+    93.44,
+    0.89,
+    [
+     "PAUL LEWIS: Yay."
+    ]
+   ],
+   [
+    "ngBy0H_q-GY",
+    94.33,
+    0.78,
+    [
+     "JAKE ARCHIBALD: It's ",
+     {
+      "gap": "not as good as"
+     },
+     " you think."
+    ]
+   ],
+   [
+    "ngBy0H_q-GY",
+    95.11,
+    0.46,
+    [
+     "PAUL LEWIS: Oh."
+    ]
+   ]
+  ]
+ ],
+ "quiz_links": {
+  "seen": "http://tubequizard.com/search.php?pattern=!KGdpdmUgaXQgYSAodHJ5fGdvfHNob3QpKS8oKEkndmV8SSBoYXZlKSggb25seSk_IHNlZW4gYml0cyBvZiBpdCkvKChoYXNuJ3R8aGF2ZW4ndCkgYWdlZCB3ZWxsKQ&quizType=1&video=rDqXwUS402I%2CLn3KO17NVpc%2CvPETy41V7AA%2CrFpDK2KhAgw",
+  "seen2": "http://tubequizard.com/search.php?pattern=!KGV2ZXJ5b25lJ3MgdGFsa2luZyBhYm91dCggaXQpPykvKGFsbCB0aGUgaHlwZSkvKEknbGwgZ2l2ZSAoaXR8eW91fGhpbXxoZXJ8dGhlbSkgdGhhdCkvKGNvdWxkbid0IGdldCBpbnRvIChpdHx0aGF0KSkvKChrZWVwfGtlZXBzfGtlcHQpIGdvaW5nIG9uIGFib3V0KS8oKGlzfHdhcykgKGl0fHRoYXR8dGhpc3xoZXxzaGV8dGhleSkgYW55IGdvb2QpLyhub3QgYXMgZ29vZCBhcyAoeW91fEl8d2V8ZXZlcnlvbmV8cGVvcGxlKSAodGhpbmt8dGhvdWdodHxzYXl8c2F5c3xzYWlkKSk&quizType=1&video=lWbjqpmYKrw%2Cuk9wV_Cm7qE%2C32zzZE658ec%2CjdRsYs5N_tc%2Cpnv5iKB2hl4%2CByx7jyC4pCQ%2CLc3lWIdB-sw%2CngBy0H_q-GY"
+ }
 }
