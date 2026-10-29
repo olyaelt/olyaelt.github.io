@@ -35,7 +35,7 @@ const BOX_SCHOOL = `
   <p>It was hard, but it <b>paid off</b>.</p>
   <p>School <b>only gets you so far</b>.</p>`;
 const TOPICS = [
-  {id:"school", title:"Should schools teach more practical things?", sub:"A radio show asked listeners: was school any use?", box:()=>BOX_SCHOOL}
+  {id:"school", title:"Should schools teach more practical things? Part 1", sub:"A radio show asked listeners: was school any use?", box:()=>BOX_SCHOOL}
 ];
 
 /* R1 (TZ 29.10 15:15, her decision 29.10, the same in B2 and C1): each answer twice in a row — with the glossary beside it, then straight away without it */
