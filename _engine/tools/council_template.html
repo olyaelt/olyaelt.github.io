@@ -7,6 +7,15 @@
 <title>__TITLE__</title>
 <link rel="stylesheet" href="../../fonts/homework-sans.css">
 <style>
+/* tools 10: the situation is a chip on the title line, so it costs no height while closed; opened, it drops below the title as a card */
+.sit-fold{background:var(--card);border:2px solid var(--line);border-radius:99px;padding:2px 12px}
+.sit-fold summary{cursor:pointer;font-weight:900;font-size:.92rem;color:var(--muted);list-style:none;white-space:nowrap}
+.sit-fold summary::-webkit-details-marker{display:none}
+.sit-fold summary::after{content:" ▸"}
+.sit-fold[open]{flex-basis:100%;order:9;border:0;border-left:6px solid var(--date-bg);border-radius:12px;padding:8px 14px;box-shadow:var(--shadow)}
+.sit-fold[open] summary{color:var(--ink)}
+.sit-fold[open] summary::after{content:" ▾"}
+.sit-fold p{margin:6px 0 2px;font-size:1.05rem}
 __BASE_CSS__
 /* ---------- the school council: draw a subject, roll for reasons, decide ---------- */
 .stage-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
@@ -15,7 +24,7 @@ __BASE_CSS__
 .stage-wrap.enter{animation:enterR .45s cubic-bezier(.2,.8,.2,1)}
 .head-btns .gear{margin-left:0}
 /* tools 6: the dice range sits at the end of the hint text, not on a line of its own, so the whole subject fits on a 720 px Zoom screen */
-.dice-hint{display:block}
+.dice-hint{display:block;line-height:1.3}
 /* the stage buttons a touch smaller here, so they fit on the title line (three long labels) */
 .head .stage-btn{font-size:.92rem;padding:3px 11px}
 .head .stage-arrow{margin:0 -1px}
@@ -23,7 +32,7 @@ __BASE_CSS__
 .dice-hint .seg{font-size:.85rem;font-weight:700;flex:none}
 .dice-hint .seg button{padding:2px 10px}
 @media (max-width:560px){ .head-btns{margin-left:0;flex-wrap:wrap} .stage{padding:14px} .stage-top{flex-wrap:wrap}
-  .st{grid-template-columns:1.8rem minmax(0,1fr) auto;gap:8px;padding:7px 9px} .st .choice{grid-column:2 / 4} .subj{font-size:1.8rem} }
+  .st{grid-template-columns:1.8rem minmax(0,1fr) auto;gap:8px;padding:7px 9px} .st .choice{grid-column:2 / 4} .st.st-dec{grid-template-columns:1.8rem minmax(0,1fr)} .subj{font-size:1.8rem} }
 .stage{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 20px;display:grid;gap:10px;align-content:start;min-height:300px}
 .stage.empty{place-content:center;justify-items:center;text-align:center;gap:14px}
 .stage.empty p{margin:0;color:var(--muted);font-size:1.05rem}
@@ -65,9 +74,12 @@ __BASE_CSS__
 .giveup:hover{border-color:var(--again);color:var(--again)}
 .gave-tag{font-weight:700;font-size:.92rem;color:var(--again);margin-left:4px}
 .exbtn.sm{padding:2px 12px;font-size:.9rem;margin-left:4px}
-.ex-step{display:grid;gap:5px;background:var(--bubble);color:var(--bubble-ink);border-radius:12px;padding:8px 16px 10px 58px;margin:-4px 0 2px}
+.ex-step{position:relative;background:var(--bubble);color:var(--bubble-ink);border-radius:12px;padding:8px 16px 10px 58px;margin:-4px 0 2px}
+/* tools 10: no label row (the 💡 says it), so a whole subject fits on a 720 px screen */
+.ex-step .ex-ic{position:absolute;left:21px;top:7px;font-size:1.2rem;line-height:1.35}
+.ex-step .ex-hide{float:right;margin:0 0 0 14px;line-height:1.35}
+.ex-step .live-host + .live-host{margin-top:5px}
 .ex-step.opening{animation:enter .35s ease-out}
-.ex-step .ex-h{display:flex;justify-content:space-between;align-items:baseline}
 .ex-step p{margin:0;line-height:1.35}
 .ex-step .bx{color:var(--flip-ink)}
 .btn.meh{border-color:var(--muted);color:var(--muted)}
@@ -81,6 +93,11 @@ __BASE_CSS__
 .choice{display:flex;gap:8px;flex-wrap:wrap}
 .choice .btn{min-height:44px;padding:6px 16px}
 .next-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+/* tools 10: the decision row: "Together: …?" above, the three choices and Next subject on one line under it */
+.st.st-dec{grid-template-columns:2.1rem minmax(0,1fr);row-gap:6px}
+.st.st-dec .n{align-self:start}
+.st.st-dec .choice{grid-column:2 / -1}
+.choice .next-btn{margin-left:auto}
 .exbtn{border:2px solid var(--bubble-line, #E6D96A);background:var(--bubble);color:var(--bubble-ink);border-radius:99px;padding:6px 16px;font-weight:900;font-size:1rem}
 .ex{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;background:var(--bubble);color:var(--bubble-ink);border-radius:14px;padding:12px 16px;animation:enter .3s ease-out}
 @media (max-width:640px){ .ex{grid-template-columns:1fr} }
@@ -139,6 +156,9 @@ const DIE_OPTIONS = [3, 4, 6];
 let faces = DIE_OPTIONS.includes(+params.get("dice")) ? +params.get("dice") : 6;
 const LISTS = Object.fromEntries(D.lists.map(l => [l.kind, l]));
 const ORDER = D.lists.map(l => l.kind);            /* cut, add, cut, add… */
+/* tools 10 (council-3, her decision 28.10: add two first, then the hard part, cut two to make room): the Decide columns
+   follow the order of the lists in the data, and the line above them can come from the data (decideLead) */
+const KINDS = [...new Set(ORDER)];
 /* a subject as the groups see it now: her corrected title and example lines (live version); D itself never changes */
 const LIDX = Object.fromEntries(D.lists.map((l, L) => [l.kind, L]));
 const itemPath = (kind, i) => `lists.${LIDX[kind]}.items.${i}`;
@@ -261,13 +281,13 @@ function gameHTML(anim){
         <div class="live-host ${liveDim(itemPath(c.kind, c.i))}" data-live-host><h2 class="subj">${esc(it.t)}</h2>${liveTools(itemPath(c.kind, c.i), {fields: itemPath(c.kind, c.i) + ".t"})}</div>${metaHTML(it) ? `<div class="subj-meta">${metaHTML(it)}</div>` : ""}</div>
         <span class="subj-count" aria-label="Subject ${S.done.length + 1} of ${Math.max(TOTAL(), S.done.length + 1)}">${S.done.length + 1} of ${Math.max(TOTAL(), S.done.length + 1)}</span></div>
       <div class="steps">${stepHTML(0)}${exStepHTML(0)}${stepHTML(1)}${exStepHTML(1)}
-        <div class="st ${ready ? "" : "off"} ${c.dec !== null ? "done" : ""}"><span class="n">${c.dec !== null ? "✓" : 3}</span>
+        <div class="st st-dec ${ready ? "" : "off"} ${c.dec !== null ? "done" : ""}"><span class="n">${c.dec !== null ? "✓" : 3}</span>
           <div><div class="st-t">Together: ${w.q}</div></div>
           <div class="choice"><button class="btn ok ${c.dec === true ? "on" : ""}" data-dec="1" ${ready ? "" : "disabled"}>${w.yes}</button>
             <button class="btn no ${c.dec === false ? "on" : ""}" data-dec="0" ${ready ? "" : "disabled"}>${w.no}</button>
-            <button class="btn meh ${c.dec === "agree" ? "on" : ""}" data-dec="agree" ${ready ? "" : "disabled"}>🤝 Agree to disagree</button></div></div></div>
-      <div class="next-row">${c.r[0].n === null && S.pools[c.kind].length ? `<button class="linkish" data-swap>Another subject</button>` : "<span></span>"}
-        <button class="btn primary" data-next ${c.dec === null ? "disabled" : ""}>Next subject →</button></div>
+            <button class="btn meh ${c.dec === "agree" ? "on" : ""}" data-dec="agree" ${ready ? "" : "disabled"}>🤝 Agree to disagree</button>
+            <button class="btn primary next-btn" data-next ${c.dec === null ? "disabled" : ""}>Next subject →</button></div></div></div>
+      ${c.r[0].n === null && S.pools[c.kind].length ? `<div class="next-row"><button class="linkish" data-swap>Another subject</button></div>` : ""}
     </section>${sofarHTML()}`;
 }
 /* 💡 Example: two model reasons for each side, written in the lesson chat (box phrases in **bold**).
@@ -276,7 +296,7 @@ const exLine = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>');
 const exOf = k => { const c = S.cur, it = c && itemOf(c.kind, c.i), l = it && it.exl && c.r[k].n !== null ? (k === 0 ? it.exl.for : it.exl.against) : null; return l && l.length ? l : null; };
 const exLineHTML = x => `<div class="live-host ${liveDim(x.p)}" data-live-host><p>${exLine(x.t)}</p>${liveTools(x.p)}</div>`;
 const exStepHTML = k => { const lines = exOf(k); if(!lines || !S.cur.exOpen[k]) return "";
-  return `<div class="ex-step ${S.exAnim === k ? "opening" : ""}" role="region" aria-label="Example"><span class="ex-h"><span>💡 Example</span><button class="linkish" data-ex-hide="${k}">hide</button></span>${lines.map(exLineHTML).join("")}</div>`; };
+  return `<div class="ex-step ${S.exAnim === k ? "opening" : ""}" role="region" aria-label="Example"><span class="ex-ic" aria-hidden="true">💡</span><button class="linkish ex-hide" data-ex-hide="${k}">hide</button>${lines.map(exLineHTML).join("")}</div>`; };
 const allExamplesHTML = () => D.lists.some(l => l.items.some(it => it.ex)) ? allHTML("All the examples", D.lists.map(l => { const w = WORDS[l.kind];
     return `<span class="all-h">${esc(l.label)}</span>` + l.items.map((_, i) => i).filter(i => l.items[i].ex && (liveTeacher() || !itemGone(l.kind, i))).map(i => { const it = itemOf(l.kind, i), p = itemPath(l.kind, i);
       return `<div class="all-row"><div class="live-host ${liveDim(p)}" data-live-host><span class="all-sub">${esc(it.t)}</span>${liveTools(p, {fields: p + ".t"})}</div>
@@ -304,8 +324,8 @@ function decideHTML(){
       ${l.items.map((_, i) => itemGone(kind, i) ? "" : (it => { const d = S.done.find(x => x.kind === kind && x.i === i), on = picked.has(i);
         return `<button class="pick ${kind} ${on ? "on" : ""}" data-pick="${kind}.${i}" aria-pressed="${on}"><span>${on ? `<span class="mark">${kind === "cut" ? "✂" : "＋"}</span> ` : ""}${esc(it.t)}</span>${d ? `<span class="was">you said: ${decTag(d, w)}</span>` : ""}</button>`; })(itemOf(kind, i))).join("")}</div>`; };
   return `<section class="stage decide ${S.enter ? "enter" : ""}"><div class="decide-top"><h2>Decide together</h2>
-    <p class="lead">Agree on two to cut and two to add. Tap them.</p></div>
-    <div class="cols">${col("cut")}${col("add")}</div>
+    <p class="lead">${esc(D.decideLead || "Agree on two to cut and two to add. Tap them.")}</p></div>
+    <div class="cols">${KINDS.map(col).join("")}</div>
     <div class="frame"><small>Your decision</small>${esc(D.report)}</div>
     ${followHTML()}
     <div class="row-actions"><button class="btn" data-back>← Back to the reasons</button>${D.speaking && D.speaking.length ? `<button class="btn" data-stage="speak">💬 Extra speaking →</button>` : ""}</div>
@@ -313,14 +333,18 @@ function decideHTML(){
 }
 function goStage(v){ if(S.view === v || S.busy) return; S.view = v; S.enter = true; render(); S.enter = false; scrollTo(0, 0); }
 function headHTML(){
-  return `<header class="head"><span class="part">${esc(D.part)}</span><h1>${esc(D.title)}</h1>
+  return `<header class="head"><span class="part">${esc(D.part)}</span><h1>${esc(D.title)}</h1>${S.view !== "speak" ? sitFoldHTML() : ""}
       ${stagesHTML([["game", "🎲 Reasons"], ["decide", "🤝 Decide"], ["speak", "💬 Extra speaking"]], S.view)}</header>
     ${S.view !== "game" ? "" : `<div class="hint-top dice-hint"><span>🎲 ${esc(D.hint || "The dice tells you how many reasons to give, for and against — a phrase from the box for each, changed to fit.")}</span>
       <span class="seg" role="group" aria-label="Dice">${DIE_OPTIONS.map(n => `<button data-faces="${n}" aria-pressed="${faces === n}">1–${n}</button>`).join("")}</span></div>`}
 `;
 }
+/* tools 10: while the box is on screen, the situation folds into a chip on the title line (it is read on the slide first),
+   so the box and the whole subject fit on a 1280×720 Zoom screen (her rule: no scrolling); behind 👀 Peek it stays beside */
+const boxShown = () => !D.boxHidden || S.peek;
+const sitFoldHTML = () => D.situation && boxShown() ? `<details class="sit-fold" ${S.sitOpen ? "open" : ""}><summary>📍 The situation</summary><p>${esc(D.situation)}</p></details>` : "";
 function sideHTML(){
-  const extra = (D.situation ? `<p class="situation">${esc(D.situation)}</p>` : "") + (D.extra ? `<p class="extra">${esc(D.extra)}</p>` : "");
+  const extra = (D.situation && !boxShown() ? `<p class="situation">${esc(D.situation)}</p>` : "") + (D.extra ? `<p class="extra">${esc(D.extra)}</p>` : "");
   if(D.boxHidden && !S.peek) return `${extra}<div class="peek"><p>Try not to look at the box.</p><button class="btn" data-peek>👀 Peek</button></div>`;
   return `${extra}${boxHTML(D.box, {clickable: true, collapsible: D.boxHidden})}`;
 }
@@ -354,6 +378,7 @@ function render(anim){
   on("[data-faces]", b => { faces = +b.dataset.faces; render(); });
   on("[data-restart]", () => { usedPhrases.clear(); spkReset(); newGame(); render(true); });
   on("[data-peek]", () => { S.peek = true; render(); });
+  document.querySelectorAll(".sit-fold").forEach(d => d.addEventListener("toggle", () => { S.sitOpen = d.open; }));   /* stays open through rolls */
   on("[data-box-toggle]", () => { S.peek = false; render(); });
 }
 liveRerender = () => render();

@@ -1,0 +1,717 @@
+{
+ "part1": {
+  "intro": "",
+  "lines": [
+   {
+    "s": "Ruth",
+    "p": [
+     "Oh, Dan, you sound terrible."
+    ]
+   },
+   {
+    "s": "Dan",
+    "p": [
+     "I feel terrible. I'm stuck at home with this cold and I've run out of things to watch. Any ideas?"
+    ]
+   },
+   {
+    "s": "Zoe",
+    "p": [
+     "Have you seen The Long Winter? I'm obsessed. Everyone at work's ",
+     {
+      "f": "t",
+      "r": "alking"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "bout"
+     },
+     " it too."
+    ]
+   },
+   {
+    "s": "Dan",
+    "p": [
+     "I tried it. I ",
+     {
+      "f": "g",
+      "r": "ave"
+     },
+     " ",
+     {
+      "f": "u",
+      "r": "p"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "fter"
+     },
+     " episode three. I just ",
+     {
+      "f": "c",
+      "r": "ouldn't"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "et"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " it."
+    ]
+   },
+   {
+    "s": "Zoe",
+    "p": [
+     "No! You have to stick with it. It really ",
+     {
+      "f": "p",
+      "r": "icks"
+     },
+     " ",
+     {
+      "f": "u",
+      "r": "p"
+     },
+     " in episode four."
+    ]
+   },
+   {
+    "s": "Marcus",
+    "p": [
+     "Hmm. To be honest, all the ",
+     {
+      "f": "h",
+      "r": "ype"
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "ut"
+     },
+     " me ",
+     {
+      "f": "o",
+      "r": "ff"
+     },
+     " at first. I only watched it because Zoe ",
+     {
+      "f": "k",
+      "r": "ept"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "oing"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "n"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "bout"
+     },
+     " it. And it's ",
+     {
+      "f": "n",
+      "r": "ot"
+     },
+     " as ",
+     {
+      "f": "g",
+      "r": "ood"
+     },
+     " as ",
+     {
+      "f": "e",
+      "r": "veryone"
+     },
+     " ",
+     {
+      "f": "s",
+      "r": "ays"
+     },
+     "."
+    ]
+   },
+   {
+    "s": "Zoe",
+    "p": [
+     "Oh, come on. You said the acting was brilliant."
+    ]
+   },
+   {
+    "s": "Marcus",
+    "p": [
+     "The acting's great, ",
+     {
+      "f": "I",
+      "r": "'ll"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "ive"
+     },
+     " it ",
+     {
+      "f": "t",
+      "r": "hat"
+     },
+     ". But it's so dark. Every single character is miserable."
+    ]
+   },
+   {
+    "s": "Zoe",
+    "p": [
+     "Well, it ",
+     {
+      "f": "i",
+      "r": "s"
+     },
+     " a crime drama, Marcus!"
+    ]
+   },
+   {
+    "s": "Marcus",
+    "p": [
+     "Fair enough. But Dan, if you just want to relax, I ",
+     {
+      "f": "w",
+      "r": "ouldn't"
+     },
+     " ",
+     {
+      "f": "b",
+      "r": "other"
+     },
+     ". You need something cosy."
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     "everyone's ",
+     {
+      "f": "t",
+      "r": "alking"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "bout"
+     },
+     " it"
+    ],
+    "m": "",
+    "ru": "все о нём говорят ('s = is)"
+   },
+   {
+    "p": [
+     {
+      "f": "k",
+      "r": "eep"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "oing"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "n"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "bout"
+     },
+     " sth"
+    ],
+    "m": "",
+    "ru": "без конца твердить о (часто надоело)"
+   },
+   {
+    "p": [
+     {
+      "f": "g",
+      "r": "ive"
+     },
+     " ",
+     {
+      "f": "u",
+      "r": "p"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "fter"
+     },
+     " episode three"
+    ],
+    "m": "",
+    "ru": "бросить после 3-й серии"
+   },
+   {
+    "p": [
+     {
+      "f": "c",
+      "r": "ouldn't"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "et"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " it"
+    ],
+    "m": "",
+    "ru": "не смог(ла) втянуться"
+   },
+   {
+    "p": [
+     "it ",
+     {
+      "f": "p",
+      "r": "icks"
+     },
+     " ",
+     {
+      "f": "u",
+      "r": "p"
+     }
+    ],
+    "m": "",
+    "ru": "становится интереснее"
+   },
+   {
+    "p": [
+     "the ",
+     {
+      "f": "h",
+      "r": "ype"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/haɪp/",
+      "o": 1
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "ut"
+     },
+     " ",
+     {
+      "f": "m",
+      "r": "e"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "ff"
+     }
+    ],
+    "m": "",
+    "ru": "шумиха оттолкнула"
+   },
+   {
+    "p": [
+     {
+      "f": "n",
+      "r": "ot"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "s"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "ood"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "s"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "veryone"
+     },
+     " ",
+     {
+      "f": "s",
+      "r": "ays"
+     }
+    ],
+    "m": "",
+    "ru": "не так хорош, как говорят"
+   },
+   {
+    "p": [
+     "…, ",
+     {
+      "f": "I",
+      "r": "'ll"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "ive"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "t"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "hat"
+     }
+    ],
+    "m": "",
+    "ru": "это надо признать"
+   },
+   {
+    "p": [
+     "Well, it ",
+     {
+      "f": "i",
+      "r": "s"
+     },
+     " a crime drama!"
+    ],
+    "m": "",
+    "ru": "ну это же детектив (ударение на is)"
+   },
+   {
+    "p": [
+     "I ",
+     {
+      "f": "w",
+      "r": "ouldn't"
+     },
+     " ",
+     {
+      "f": "b",
+      "r": "other"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˈbɒðə/",
+      "o": 1
+     }
+    ],
+    "m": "",
+    "ru": "не трать время (прямой совет) · or: Don't waste your time. (резче)"
+   }
+  ]
+ },
+ "part2": {
+  "intro": "",
+  "lines": [
+   {
+    "s": "Ruth",
+    "p": [
+     "Well, if it's cosy you want, I've been rewatching Friends. It ",
+     {
+      "f": "t",
+      "r": "akes"
+     },
+     " me ",
+     {
+      "f": "b",
+      "r": "ack"
+     },
+     ". I used to watch it every Friday night with my sister."
+    ]
+   },
+   {
+    "s": "Marcus",
+    "p": [
+     "I've ",
+     {
+      "f": "o",
+      "r": "nly"
+     },
+     " ",
+     {
+      "f": "s",
+      "r": "een"
+     },
+     " ",
+     {
+      "f": "b",
+      "r": "its"
+     },
+     " of it. ",
+     {
+      "f": "I",
+      "r": "s"
+     },
+     " it ",
+     {
+      "f": "a",
+      "r": "ny"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "ood"
+     },
+     "?"
+    ]
+   },
+   {
+    "s": "Ruth",
+    "p": [
+     "Of course it's good! Well, mostly. Some of the jokes ",
+     {
+      "f": "h",
+      "r": "aven't"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "ged"
+     },
+     " ",
+     {
+      "f": "w",
+      "r": "ell"
+     },
+     ". And I ",
+     {
+      "f": "s",
+      "r": "ee"
+     },
+     " Ross in a ",
+     {
+      "f": "c",
+      "r": "ompletely"
+     },
+     " ",
+     {
+      "f": "d",
+      "r": "ifferent"
+     },
+     " ",
+     {
+      "f": "l",
+      "r": "ight"
+     },
+     " now. He's awful!"
+    ]
+   },
+   {
+    "s": "Zoe",
+    "p": [
+     "Ha! Ross was always awful."
+    ]
+   },
+   {
+    "s": "Ruth",
+    "p": [
+     "Anyway, ",
+     {
+      "f": "g",
+      "r": "ive"
+     },
+     " it a ",
+     {
+      "f": "t",
+      "r": "ry"
+     },
+     ", both of you. It's perfect when you're ill."
+    ]
+   },
+   {
+    "s": "Dan",
+    "p": [
+     "OK, Friends it is. And if I feel better, I'll give The Long Winter another go."
+    ]
+   },
+   {
+    "s": "Zoe",
+    "p": [
+     "Just watch episode four, Dan. That's all I'm asking."
+    ]
+   },
+   {
+    "s": "Marcus",
+    "p": [
+     "Or don't."
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     "it ",
+     {
+      "f": "t",
+      "r": "akes"
+     },
+     " ",
+     {
+      "f": "m",
+      "r": "e"
+     },
+     " ",
+     {
+      "f": "b",
+      "r": "ack"
+     }
+    ],
+    "m": "",
+    "ru": "возвращает в прошлое (вспоминаю, как было)"
+   },
+   {
+    "p": [
+     "I've ",
+     {
+      "f": "o",
+      "r": "nly"
+     },
+     " ",
+     {
+      "f": "s",
+      "r": "een"
+     },
+     " ",
+     {
+      "f": "b",
+      "r": "its"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "f"
+     },
+     " it"
+    ],
+    "m": "",
+    "ru": "видел(а) только отрывки"
+   },
+   {
+    "p": [
+     {
+      "f": "I",
+      "r": "s"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "t"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "ny"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "ood"
+     },
+     "?"
+    ],
+    "m": "",
+    "ru": "ну как, стоит смотреть?"
+   },
+   {
+    "p": [
+     {
+      "f": "h",
+      "r": "aven't"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "ged"
+     },
+     " ",
+     {
+      "f": "w",
+      "r": "ell"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/eɪdʒd/",
+      "o": 1
+     }
+    ],
+    "m": "",
+    "ru": "устарели (сейчас смотрятся плохо)"
+   },
+   {
+    "p": [
+     {
+      "f": "s",
+      "r": "ee"
+     },
+     " sb ",
+     {
+      "f": "i",
+      "r": "n"
+     },
+     " a ",
+     {
+      "f": "d",
+      "r": "ifferent"
+     },
+     " ",
+     {
+      "f": "l",
+      "r": "ight"
+     }
+    ],
+    "m": "",
+    "ru": "смотреть на кого-то по-другому"
+   },
+   {
+    "p": [
+     {
+      "f": "g",
+      "r": "ive"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "t"
+     },
+     " a ",
+     {
+      "f": "t",
+      "r": "ry"
+     }
+    ],
+    "m": "",
+    "ru": "попробуй (посмотри) · or: give it a shot / give it a go (BrE)"
+   }
+  ]
+ }
+}

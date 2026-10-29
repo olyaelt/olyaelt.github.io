@@ -1,0 +1,11 @@
+{
+ "title": "Should schools teach more practical things?",
+ "group": "c1",
+ "file": "2026-10-28.html",
+ "assets": {
+  "STICKER": "sticker.png",
+  "GAPS": "gaps.json",
+  "TQ": "tq.json"
+ },
+ "listed": false
+}

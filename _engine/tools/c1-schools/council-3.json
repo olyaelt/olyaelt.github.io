@@ -1,0 +1,282 @@
+{
+ "type": "dice-council",
+ "title": "The curriculum meeting",
+ "part": "Part 3",
+ "situation": "An international school is changing its curriculum. Next year it wants to add two new subjects, so two things have to go. Parents, teachers and students are meeting tonight to decide.",
+ "lists": [
+  {
+   "kind": "add",
+   "label": "Could be added",
+   "items": [
+    {
+     "t": "managing money",
+     "ex": {
+      "for": [
+       "**Nobody ever taught us how to** make a budget, and my first credit card was a disaster.",
+       "It's **more important than you'd think** — one bad loan can leave you in debt for years."
+      ],
+      "against": [
+       "**You pick it up along the way**, like everyone does.",
+       "**What's the point of** a school subject? Every family handles money differently."
+      ]
+     }
+    },
+    {
+     "t": "first aid",
+     "ex": {
+      "for": [
+       "**You never know when it might come in handy** — it can save a life.",
+       "**Nobody ever taught us how to** help someone who's choking."
+      ],
+      "against": [
+       "**School only gets you so far** — if you don't practise it, you forget it within a year.",
+       "**My kids' school is very hands-on** — they already have a first-aid day every year."
+      ]
+     }
+    },
+    {
+     "t": "cooking",
+     "ex": {
+      "for": [
+       "**Nobody ever taught us how to** cook, so I lived on pasta for a year.",
+       "**My kids' school is very hands-on** — they cook every Friday, and they love it."
+      ],
+      "against": [
+       "**You pick it up along the way** — from your parents or from YouTube.",
+       "**Back in my day**, we had cooking classes, but we spent most of the lesson waiting for the oven — **a complete waste of time**."
+      ]
+     }
+    },
+    {
+     "t": "doing your taxes",
+     "ex": {
+      "for": [
+       "**Nobody ever taught us how to** do our taxes, and my first tax return took a whole weekend.",
+       "It's **more complicated than you'd think**, so everyone needs at least the basics."
+      ],
+      "against": [
+       "**What's the point of** teaching it at fifteen? The rules change every year.",
+       "When we moved abroad, **I had to start from scratch** — the tax system was completely different."
+      ]
+     }
+    },
+    {
+     "t": "public speaking",
+     "ex": {
+      "for": [
+       "Explaining an idea so that people get it — **that's where I really add value** at work.",
+       "**Nobody ever taught us how to** speak in front of people, and I was terrified for years."
+      ],
+      "against": [
+       "**What's the point of** making every shy kid give speeches?",
+       "**School only gets you so far** — confidence comes from doing it for real, not from one lesson a week."
+      ]
+     }
+    },
+    {
+     "t": "using AI well (and checking it)",
+     "ex": {
+      "for": [
+       "**They're handing** more and more work **over to AI**, so someone has to check it.",
+       "**I taught myself, the hard way** — kids shouldn't have to."
+      ],
+      "against": [
+       "The tools change every month, so what they learn will be **out of date** by the time they leave school.",
+       "Kids **pick it up** on their own — and very fast."
+      ]
+     }
+    },
+    {
+     "t": "how to learn",
+     "ex": {
+      "for": [
+       "Everything goes **out of date**, so **you need to adapt** — and that means knowing how to learn.",
+       "When I changed careers, **I had to start from scratch**, and nobody had ever shown me how to learn."
+      ],
+      "against": [
+       "**I picked it up on the job** — you learn how to learn by doing it, not in a lesson.",
+       "**School only gets you so far** — everyone learns differently, so you have to find your own way."
+      ]
+     }
+    },
+    {
+     "t": "dealing with difficult people",
+     "ex": {
+      "for": [
+       "My first year as a manager **was a steep learning curve** — nobody had taught me any of it.",
+       "**I picked it up on the job, the hard way**, and I'd love my kids to have it easier."
+      ],
+      "against": [
+       "**School only gets you so far** — you learn it from real people, not from role-plays.",
+       "It's **more complicated than you'd think** — every difficult person is different, so a school course can't really prepare you."
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "kind": "cut",
+   "label": "Could be cut",
+   "items": [
+    {
+     "t": "Latin",
+     "ex": {
+      "for": [
+       "It's **more useful than you'd think**: loads of medical and legal words come from Latin.",
+       "**It was hard, but it paid off** — Spanish and Italian were much easier for me later."
+      ],
+      "against": [
+       "**What's the point of** Latin? Nobody speaks it.",
+       "I did five years of it, and **I've never used it since**."
+      ]
+     }
+    },
+    {
+     "t": "memorising dates in history",
+     "ex": {
+      "for": [
+       "It's **more useful than you'd think**: key dates help you put events in order and see how they're connected.",
+       "**You never know when it might come in handy** — like when your kids need help with their homework."
+      ],
+      "against": [
+       "We learned hundreds of dates **by heart**, but never talked about why they mattered — **a complete waste of time**.",
+       "**What's the point of** memorising dates? You can look them up."
+      ]
+     }
+    },
+    {
+     "t": "trigonometry",
+     "ex": {
+      "for": [
+       "**You never know when it might come in handy** — you might end up as an engineer or a game designer.",
+       "**It was hard, but it paid off** when I studied engineering."
+      ],
+      "against": [
+       "**I've never used it since** — not once.",
+       "**It was out of touch with real life** — we never knew what it was for."
+      ]
+     }
+    },
+    {
+     "t": "the periodic table",
+     "ex": {
+      "for": [
+       "It's **more useful than you'd think** — it helps explain why things burn, rust or explode.",
+       "**You never know when it might come in handy** — you might end up working in a lab."
+      ],
+      "against": [
+       "We learned the whole table **by heart**, and **I've never used it since**.",
+       "The way we learned it **was out of touch with real life** — just symbols and numbers."
+      ]
+     }
+    },
+    {
+     "t": "foreign languages",
+     "ex": {
+      "for": [
+       "**You never know when it might come in handy** — I never thought I'd live abroad.",
+       "Translation apps **only get you so far** — try making friends through one."
+      ],
+      "against": [
+       "AI translates everything now — **what's the point of** six years of French?",
+       "I did French at school, but when I moved to France, **I had to start from scratch**."
+      ]
+     }
+    },
+    {
+     "t": "reading the classics",
+     "ex": {
+      "for": [
+       "**It was hard, but it paid off** — I read much faster now, and I can concentrate for hours.",
+       "It's **more useful than you'd think** — you learn a lot about people and why they do what they do."
+      ],
+      "against": [
+       "**What's the point of** reading 800 pages at fourteen? You don't understand it at that age.",
+       "**It was a complete waste of time** — we all just read the summaries anyway."
+      ]
+     }
+    },
+    {
+     "t": "PE",
+     "ex": {
+      "for": [
+       "Kids sit in front of screens all day — it's **more important than you'd think**.",
+       "**You never know when it might come in handy** — I learned to swim at school."
+      ],
+      "against": [
+       "I was always picked last. **It was a complete waste of time**, and I hated every minute.",
+       "Two hours a week **only gets you so far** — you won't get fit on that alone."
+      ]
+     }
+    },
+    {
+     "t": "music and art",
+     "ex": {
+      "for": [
+       "AI can make a picture in seconds, so creativity is **where we really add value** now — and that's what art teaches.",
+       "**It was hard, but it paid off** — I still play the piano."
+      ],
+      "against": [
+       "**What's the point of** drawing lessons if you have no talent?",
+       "**It's out of date** — kids make videos and designs on their computers, and at school they're still drawing vases of flowers."
+      ]
+     }
+    }
+   ]
+  }
+ ],
+ "box": [
+  {
+   "h": "BACK THEN",
+   "items": [
+    "**Back in my day**, … My kids' school is very **hands-on**.",
+    "It was **out of touch with real life**. We learned it **by heart**.",
+    "**Nobody ever taught us how to** …"
+   ]
+  },
+  {
+   "h": "USEFUL OR NOT?",
+   "items": [
+    "It was **a complete waste of time**. I've **never used it since**.",
+    "You **never know when it might come in handy**.",
+    "It's **more … than you'd think**. **What's the point of** …?",
+    "It was hard, but it **paid off**.",
+    "It's **out of date**. You need to **adapt**.",
+    "They're **handing** it **over to AI**.",
+    "That's where I really **add value**."
+   ]
+  },
+  {
+   "h": "LEARNING",
+   "items": [
+    "It was a **steep learning curve**. I **taught myself**.",
+    "I **picked it up on the job**, **the hard way**.",
+    "You **pick it up along the way**.",
+    "I had to **start from scratch**. School **only gets you so far**."
+   ]
+  },
+  {
+   "h": "MAKING ROOM",
+   "items": [
+    "The curriculum is already **packed**.",
+    "How are we going to **fit it all in**?",
+    "**Something has to go**.",
+    "What do we cut to **make room for it**?"
+   ]
+  }
+ ],
+ "report": "We've decided to add … and …, and cut … and … to make room. We'd rather keep … because …",
+ "decideLead": "Agree on two to add first. Then the hard part: cut two to make room. Tap them.",
+ "followUp": [
+  "The principal says no to one of your four changes. Which one, do you think? What two arguments could change her mind? A phrase from the box for each.",
+  "A parent says: \"We learned Latin and it never did us any harm.\" What two things would you say back?",
+  "A student says: \"Why read Tolstoy when you can just read the summary online?\" What two things would you say back?",
+  "Now the school wants to add one more subject from the list. Which one? What would you cut to make room for it, and who'd be most upset?"
+ ],
+ "speaking": [
+  "Think back to your own school: each of you, two subjects you would have cut and one you would have added. Anything in common?",
+  "A 20-year-old relative asks: \"What should I study, now that AI can do half the jobs out there?\" What three pieces of advice would you give, with a phrase from the box for each?",
+  "Cooking · public speaking · managing money · Latin · foreign languages: which two would you keep for a 16-year-old, and which one would you drop? Why?"
+ ],
+ "hint": "The dice tells you how many reasons to give, for and against — a phrase from the box for each, changed to fit. Add two subjects first. Then the hard part: cut two to make room."
+}

@@ -1,0 +1,652 @@
+{
+ "intros": [
+  "A radio show asked listeners: \"Should schools teach more practical things?\" First answer: fill the gaps. The glossary helps.",
+  "Second answer: fill the gaps. The glossary helps.",
+  "Third answer: fill the gaps. The glossary helps.",
+  "A radio show asked listeners: \"Should schools teach more practical things?\" Now all three answers again, without the glossary."
+ ],
+ "gary": {
+  "lines": [
+   {
+    "s": "Gary, 52, moved to Toronto from the UK",
+    "p": [
+     "Absolutely. ",
+     {
+      "f": "B",
+      "r": "ack"
+     },
+     " ",
+     {
+      "b": "in"
+     },
+     " ",
+     {
+      "b": "my"
+     },
+     " ",
+     {
+      "f": "d",
+      "r": "ay"
+     },
+     " , half of what we did at school was ",
+     {
+      "f": "c",
+      "r": "ompletely"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "ut"
+     },
+     "  ",
+     {
+      "b": "of"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "ouch"
+     },
+     " ",
+     {
+      "b": "with"
+     },
+     " ",
+     {
+      "f": "r",
+      "r": "eal"
+     },
+     " ",
+     {
+      "f": "l",
+      "r": "ife"
+     },
+     ". We ",
+     {
+      "f": "l",
+      "r": "earned"
+     },
+     " dates and formulas ",
+     {
+      "b": "by"
+     },
+     " ",
+     {
+      "f": "h",
+      "r": "eart"
+     },
+     ": ",
+     {
+      "b": "a"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "omplete"
+     },
+     " ",
+     {
+      "f": "w",
+      "r": "aste"
+     },
+     " ",
+     {
+      "b": "of"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "ime"
+     },
+     ". I couldn't tell you a single one now. And ",
+     {
+      "f": "n",
+      "r": "obody"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "ver"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "aught"
+     },
+     " ",
+     {
+      "b": "us"
+     },
+     " ",
+     {
+      "b": "how"
+     },
+     " ",
+     {
+      "b": "to"
+     },
+     " do our taxes or read a contract. My kids' school here is much more ",
+     {
+      "f": "h",
+      "r": "ands-on"
+     },
+     ": they cook, they sew, they build things, they even do a bit of budgeting. Last week my twelve-year-old ",
+     {
+      "f": "s",
+      "r": "ewed"
+     },
+     " a button ",
+     {
+      "f": "b",
+      "r": "ack"
+     },
+     " ",
+     {
+      "b": "on"
+     },
+     " my shirt. I didn't even know we owned a needle."
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     "back in my day"
+    ],
+    "m": "when I was young (a bit jokey)",
+    "ru": "в моё время"
+   },
+   {
+    "p": [
+     "completely out of touch with real life",
+     " ",
+     {
+      "f": "",
+      "r": "/tʌtʃ/",
+      "o": 1
+     }
+    ],
+    "m": "nothing to do with real life",
+    "ru": "совершенно оторвано от жизни"
+   },
+   {
+    "p": [
+     "learn sth by heart",
+     " ",
+     {
+      "f": "",
+      "r": "/hɑːt/",
+      "o": 1
+     }
+    ],
+    "m": "memorise it word for word · also: off by heart (BrE)",
+    "ru": "выучить наизусть"
+   },
+   {
+    "p": [
+     "a complete waste of time",
+     " ",
+     {
+      "f": "",
+      "r": "/weɪst/",
+      "o": 1
+     }
+    ],
+    "m": "totally useless",
+    "ru": "пустая трата времени"
+   },
+   {
+    "p": [
+     "hands-on",
+     " ",
+     {
+      "f": "",
+      "r": "/ˌhændz ˈɒn/",
+      "o": 1
+     }
+    ],
+    "m": "learning by doing",
+    "ru": "практический («руками»)"
+   },
+   {
+    "p": [
+     "sewed a button back on",
+     " ",
+     {
+      "f": "",
+      "r": "/səʊd/",
+      "o": 1
+     }
+    ],
+    "m": "attached it again with a needle · sew sounds like so",
+    "ru": "пришил пуговицу обратно"
+   }
+  ]
+ },
+ "claire": {
+  "lines": [
+   {
+    "s": "Claire, 41, architect, Montreal",
+    "p": [
+     {
+      "f": "C",
+      "r": "all"
+     },
+     " ",
+     {
+      "b": "me"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "ld-fashioned"
+     },
+     ", ",
+     {
+      "f": "b",
+      "r": "ut"
+     },
+     "  I don't think so. We had to take Latin at my school, and everyone said, \"",
+     {
+      "f": "W",
+      "r": "hat's"
+     },
+     " ",
+     {
+      "b": "the"
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "oint"
+     },
+     " ",
+     {
+      "b": "of"
+     },
+     " Latin?\" But I use it ",
+     {
+      "f": "m",
+      "r": "ore"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "ften"
+     },
+     " ",
+     {
+      "b": "than"
+     },
+     " ",
+     {
+      "f": "y",
+      "r": "ou'd"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "hink"
+     },
+     ": I can usually work out what a long word means just by looking at it. So ",
+     {
+      "b": "you"
+     },
+     " ",
+     {
+      "f": "n",
+      "r": "ever"
+     },
+     " ",
+     {
+      "f": "k",
+      "r": "now"
+     },
+     " ",
+     {
+      "b": "when"
+     },
+     " ",
+     {
+      "f": "s",
+      "r": "omething"
+     },
+     " ",
+     {
+      "f": "m",
+      "r": "ight"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "ome"
+     },
+     " ",
+     {
+      "b": "in"
+     },
+     " ",
+     {
+      "f": "h",
+      "r": "andy"
+     },
+     ". School's not there to train you for a job. Mine didn't teach me to do anything practical, but ",
+     {
+      "b": "it"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "aught"
+     },
+     " ",
+     {
+      "b": "me"
+     },
+     " ",
+     {
+      "b": "how"
+     },
+     " ",
+     {
+      "b": "to"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "hink"
+     },
+     ". These days the software does half the drawing, so my job is mostly thinking, and that's where I really ",
+     {
+      "f": "a",
+      "r": "dd"
+     },
+     "  ",
+     {
+      "f": "v",
+      "r": "alue"
+     },
+     ". The practical stuff, you ",
+     {
+      "f": "p",
+      "r": "ick"
+     },
+     " ",
+     {
+      "b": "up"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "long"
+     },
+     " ",
+     {
+      "b": "the"
+     },
+     " ",
+     {
+      "f": "w",
+      "r": "ay"
+     },
+     " ."
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     "Call me old-fashioned, but …"
+    ],
+    "m": "my view may sound old-fashioned, but…",
+    "ru": "может, я старомодна, но…"
+   },
+   {
+    "p": [
+     "What's the point of Latin?"
+    ],
+    "m": "why bother?",
+    "ru": "какой смысл в латыни?"
+   },
+   {
+    "p": [
+     "more often than you'd think",
+     " ",
+     {
+      "f": "",
+      "r": "/ðən juːd ˈθɪŋk/",
+      "o": 1
+     }
+    ],
+    "m": "more often than people expect",
+    "ru": "чаще, чем можно подумать"
+   },
+   {
+    "p": [
+     "you never know when sth might come in handy"
+    ],
+    "m": "it may be useful one day",
+    "ru": "никогда не знаешь, когда пригодится"
+   },
+   {
+    "p": [
+     "add value",
+     " ",
+     {
+      "f": "",
+      "r": "/ˈvæljuː/",
+      "o": 1
+     }
+    ],
+    "m": "be useful in a way others (or software) can't",
+    "ru": "приносить пользу, быть ценным"
+   },
+   {
+    "p": [
+     "pick sth up along the way"
+    ],
+    "m": "learn it as you go",
+    "ru": "научиться по ходу дела"
+   }
+  ]
+ },
+ "helena": {
+  "lines": [
+   {
+    "s": "Helena, 68, retired, moved to Canada from Poland at 30",
+    "p": [
+     "Practical where, though? ",
+     {
+      "b": "I"
+     },
+     " ",
+     {
+      "b": "was"
+     },
+     " ",
+     {
+      "b": "a"
+     },
+     " ",
+     {
+      "f": "l",
+      "r": "awyer"
+     },
+     " ",
+     {
+      "b": "for"
+     },
+     " ",
+     {
+      "f": "s",
+      "r": "ix"
+     },
+     "  ",
+     {
+      "f": "y",
+      "r": "ears"
+     },
+     " back in Poland, and when we moved here, ",
+     {
+      "f": "n",
+      "r": "one"
+     },
+     " ",
+     {
+      "b": "of"
+     },
+     " ",
+     {
+      "b": "it"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "ounted"
+     },
+     ". Different country, different laws: ",
+     {
+      "f": "I",
+      "r": "'ve"
+     },
+     " ",
+     {
+      "f": "n",
+      "r": "ever"
+     },
+     " ",
+     {
+      "f": "u",
+      "r": "sed"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "ny"
+     },
+     "  ",
+     {
+      "b": "of"
+     },
+     " ",
+     {
+      "b": "it"
+     },
+     " ",
+     {
+      "f": "s",
+      "r": "ince"
+     },
+     ". I had to ",
+     {
+      "f": "s",
+      "r": "tart"
+     },
+     " ",
+     {
+      "b": "from"
+     },
+     " ",
+     {
+      "f": "s",
+      "r": "cratch"
+     },
+     ": I worked in a café, took English classes at night, and then went back to school to train as a nurse. It was hard, but ",
+     {
+      "b": "it"
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "aid"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "ff"
+     },
+     " : I was a nurse for thirty years, and I loved it. So, practical or not, school ",
+     {
+      "f": "o",
+      "r": "nly"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "ets"
+     },
+     " ",
+     {
+      "b": "you"
+     },
+     " ",
+     {
+      "b": "so"
+     },
+     " ",
+     {
+      "f": "f",
+      "r": "ar"
+     },
+     " . What got me through was pure stubbornness."
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     "I was a lawyer for six years",
+     " ",
+     {
+      "f": "",
+      "r": "/ˈlɔɪə/",
+      "o": 1
+     }
+    ],
+    "m": "past simple, not I've been: she isn't a lawyer any more",
+    "ru": "я шесть лет была юристом"
+   },
+   {
+    "p": [
+     "none of it counted"
+    ],
+    "m": "her degree wasn't recognised",
+    "ru": "ничего из этого не засчитали"
+   },
+   {
+    "p": [
+     "I've never used any of it since"
+    ],
+    "m": "not once after that",
+    "ru": "с тех пор ни разу не пригодилось"
+   },
+   {
+    "p": [
+     "start from scratch",
+     " ",
+     {
+      "f": "",
+      "r": "/skrætʃ/",
+      "o": 1
+     }
+    ],
+    "m": "start again from the beginning",
+    "ru": "начинать с нуля"
+   },
+   {
+    "p": [
+     "school only gets you so far"
+    ],
+    "m": "it helps, but only up to a point",
+    "ru": "школа даёт лишь базу"
+   },
+   {
+    "p": [
+     "it paid off"
+    ],
+    "m": "the hard work was worth it · ≠ pay off a loan",
+    "ru": "это окупилось, оно того стоило"
+   }
+  ]
+ }
+}
