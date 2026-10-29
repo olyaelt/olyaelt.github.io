@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>__TITLE__</title>
+<link rel="stylesheet" href="../../fonts/homework-sans.css">
+<style>
+__BASE_CSS__
+/* ---------- situation cards (tools 12, B2 filler «Any recommendations?», 30.10.26; replaces the WHO / WHAT dice of tools 11):
+   ready-made situation cards, one die for the answer type ---------- */
+.head .stage-btn{font-size:.9rem;padding:3px 10px}
+.head h1{font-size:1.6rem}
+.dice-hint{display:block;line-height:1.3}
+.stage{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 20px;display:grid;gap:10px;align-content:start}
+.stage.enter{animation:enterR .55s cubic-bezier(.2,.8,.2,1)}
+@keyframes enterR{from{opacity:0;transform:translateX(70px) rotate(1.5deg)}to{opacity:1;transform:none}}
+@keyframes enter{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.stage-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.sit-count{flex:none;border:2px solid var(--line);border-radius:99px;padding:2px 12px;font-weight:700;font-size:.95rem;color:var(--ink)}
+.sit-label{color:var(--label);font-weight:900;letter-spacing:.07em;text-transform:uppercase;font-size:.9rem}
+.scard{background:var(--bubble);color:var(--bubble-ink);border-radius:16px;padding:10px 18px 12px;display:grid;gap:2px}
+.scard.in{animation:enter .4s ease-out}
+.scard .who{margin:0;color:var(--label);font-weight:900;letter-spacing:.05em;text-transform:uppercase;font-size:.88rem}
+.scard .says{margin:0;font-size:1.25rem;font-weight:700;line-height:1.33}
+.type.sm{font-size:.82em;padding:0 5px}
+.tline{display:block}
+.type{display:inline-block;background:var(--date-bg);color:var(--date-ink);border-radius:6px;padding:0 7px;margin-right:6px;font-weight:900;white-space:nowrap}
+.types{display:grid;gap:8px}
+.trow{background:var(--ground);border-radius:12px;padding:8px 14px}
+.trow b{font-weight:800}
+.trow .tans{margin:4px 0 0;font-size:1.05rem;line-height:1.4}
+.trow .tans.in{animation:enter .35s ease-out}
+.ex-ask{margin:0;color:var(--muted);font-weight:700}
+.bx{color:var(--flip-ink)}
+.die-row{display:flex;align-items:center;gap:14px;min-height:3.6rem}
+.die-row .dl{color:var(--label);font-weight:900;letter-spacing:.06em;text-transform:uppercase;font-size:.8rem;display:block}
+.die-how{font-size:1.1rem;line-height:1.3}
+.die-how b{font-weight:900}
+.die-how.wait{color:var(--muted)}
+.die{width:3.1rem;height:3.1rem;flex:none;border-radius:11px;background:#FFFFFF;border:3px solid #1D1D1B;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:.42rem;box-shadow:0 4px 0 #1D1D1B;will-change:transform}
+.die i{width:.58rem;height:.58rem;border-radius:50%;background:#1D1D1B;place-self:center;visibility:hidden}
+.die i.p{visibility:visible}
+.die.blank{opacity:.35}
+.react{margin:0;color:var(--muted);font-size:.98rem}
+.react b{color:var(--ink)}
+.row-act{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row-act .grow{flex:1}
+.back{display:grid;gap:6px}
+.back.in{animation:enter .35s ease-out}
+.back-main{border:2px solid var(--instr);border-radius:12px;padding:6px 14px 8px;background:var(--card)}
+.back-main .bl,.back-other .bl{font-size:.8rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.back-main p{margin:2px 0 0;font-size:1.1rem;line-height:1.4}
+.back-other{display:grid;gap:4px;padding:0 4px}
+.back-other p{margin:0;font-size:.95rem;line-height:1.35;color:var(--muted)}
+.back-other p .bx{color:inherit;font-weight:800}
+details.model{background:var(--ground);border-radius:12px;padding:4px 12px 6px}
+.side details.model{background:var(--card);border:2px solid var(--line)}
+details.model summary{cursor:pointer;font-weight:700;font-size:.95rem;line-height:1.35;padding:2px 0}
+details.model summary .ml{color:var(--label);font-weight:900;letter-spacing:.05em;text-transform:uppercase;font-size:.8rem;margin-right:4px}
+.model-ans{display:grid;gap:3px;margin-top:4px}
+.model-ans p{margin:0;font-size:.88rem;line-height:1.35}
+.empty-draw{display:grid;justify-items:center;gap:10px;padding:10px 0 6px}
+.empty-draw p{margin:0;color:var(--muted)}
+.btn.big{font-size:1.2rem;padding:10px 26px}
+.all-row .ty{font-weight:900;margin-right:6px}
+@media (max-width:560px){ .stage{padding:14px} .scard .says{font-size:1.15rem} .trow{padding:8px 10px} }
+</style>
+</head>
+<body>
+<div class="wrap"><main class="main" id="main"></main><div class="side" id="side"></div></div>
+<footer class="legal"><a href="../../impressum.html">Impressum</a> · <a href="../../datenschutz.html">Datenschutz</a></footer>
+<script>
+const D = __DATA__;
+const STICKER = "__STICKER__";
+const TOOLS_VERSION = "__TOOLS_VERSION__";
+const PAGE_ID = "__PAGE_ID__";
+const LIVE_ON = __LIVE__, LIVE_URL = "__SYNC_URL__";   /* the "-live" page: Olya's changes during the lesson (tools 7) */
+__BASE_JS__
+/* ---------- the cards and the die ----------
+   Her decision 29.10 (after the dice page): ready-made situations — who asks, their whole line, a concrete option they're thinking of —
+   instead of the WHO and WHAT dice; one die stays, YOUR ANSWER (1–2 R · 3–4 W · 5–6 D), so the same card can come back with another answer.
+   The 18 cards come from a shuffled deck, no repeats until all have come up, then a new deck. */
+const TYPES = D.die.map.map(m => m.type);                        /* R, W, D */
+const facesOf = range => String(range).split(/[–-]/).map(Number);  /* "1–2" → [1, 2] */
+const typeOfFace = n => (D.die.map.find(m => facesOf(m.faces).includes(n)) || D.die.map[0]).type;
+const facesFor = t => D.die.map[TYPES.indexOf(t)].faces;
+const ansText = t => liveText(`answers.${t}`, D.answers[t]);
+const cardText = (i, f) => liveText(`cards.${i}.${f}`, D.cards[i][f]);
+const modelText = f => liveText(`model.${f}`, D.model[f]);
+const cardGone = i => liveHidden("cards." + i);
+const narrow = () => matchMedia("(max-width: 700px)").matches;
+let S;
+const deckAll = () => D.cards.map((_, i) => i).filter(i => !cardGone(i));
+function newDeck(last){ let d = shuffle(deckAll()); if(d.length > 1 && d[0] === last) d.push(d.shift()); return d; }
+function newGame(view){ S = {view: view || "example", exShown: false, modelOpen: !narrow(), deck: newDeck(), cur: null, seen: 0}; }
+newGame();
+/* her changes arrive: a card she hid leaves the deck */
+function liveAdjust(){ if(S) S.deck = S.deck.filter(i => !cardGone(i)); }
+const liveLabel = p => { const v = pathGet(D, p); return typeof v === "string" ? v : v && v.says ? v.who + ": " + v.says : p; };
+const DECK_SIZE = () => deckAll().length;
+function draw(){
+  if(S.busy) return;
+  if(!S.deck.length) S.deck = newDeck(S.cur && S.cur.i);
+  const i = S.deck.shift(); S.seen++;
+  S.cur = {i, face: 0, type: null, flipped: false}; S.fresh = true; render(); S.fresh = false;
+}
+
+/* ---------- the roll: the same calm motion as the council's die ---------- */
+const PIPS = {1:[5], 2:[1,9], 3:[1,5,9], 4:[1,3,7,9], 5:[1,3,5,7,9], 6:[1,3,4,6,7,9]};
+const dieHTML = n => `<span class="die ${n ? "" : "blank"}" aria-label="${n || ""}">${Array.from({length: 9}, (_, k) => `<i class="${n && PIPS[n].includes(k + 1) ? "p" : ""}"></i>`).join("")}</span>`;
+const setFace = (die, n) => die.querySelectorAll("i").forEach((p, j) => p.classList.toggle("p", PIPS[n].includes(j + 1)));
+function roll(){
+  const c = S.cur; if(S.busy || !c) return;
+  const final = 1 + Math.floor(Math.random() * 6);
+  const done = () => { c.face = final; c.type = typeOfFace(final); S.rolled = true; render(); S.rolled = false; };
+  const slot = document.querySelector("[data-die]");
+  if(calm() || !slot){ done(); return; }
+  S.busy = true; document.querySelectorAll(".stage button").forEach(b => b.disabled = true);
+  const how = document.querySelector(".die-how"); if(how){ how.classList.add("wait"); how.textContent = "…"; }
+  const any = () => 1 + Math.floor(Math.random() * 6), gaps = [50, 55, 60, 70, 80, 95, 115, 140, 175, 220, 280], LAND = 6;
+  const total = gaps.reduce((a, b) => a + b, 0);
+  let prev = any(); slot.innerHTML = dieHTML(prev); const die = slot.firstElementChild;
+  die.animate([
+    {transform: "translate(0, 0) rotate(0deg)"},
+    {transform: "translate(-8px, -20px) rotate(-240deg)", offset: .22},
+    {transform: "translate(4px, 0) rotate(-470deg)", offset: .5},
+    {transform: "translate(-2px, -8px) rotate(-610deg)", offset: .74},
+    {transform: "translate(0, 0) rotate(-700deg)", offset: .9},
+    {transform: "translate(0, 0) rotate(-720deg)"}], {duration: total, easing: "cubic-bezier(.12,.75,.3,1)"});
+  let t = 0;
+  gaps.forEach((g, i) => { t += g; if(i > LAND) return;
+    setTimeout(() => { let f = final; if(i < LAND){ do f = any(); while(f === prev || (i === LAND - 1 && f === final)); } prev = f; setFace(die, f); }, t); });
+  setTimeout(() => { S.busy = false; done(); }, total + 150);
+}
+
+/* ---------- views ---------- */
+const exLine = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>');
+const host = (p, inner, opts) => `<div class="live-host ${liveDim(p)}" data-live-host>${inner}${liveTools(p, opts)}</div>`;
+/* ⭐ Example (her flow): the model card alone and the three answer types; the group says all three aloud, then shows the examples */
+function exampleHTML(){
+  return `<section class="stage ${S.enter ? "enter" : ""}"><div class="stage-top"><span class="sit-label">⭐ Example</span></div>
+    <div class="scard">${host("model.who", `<p class="who">${esc(modelText("who"))}</p>`)}${host("model.says", `<p class="says">${esc(modelText("says"))}</p>`)}</div>
+    <p class="ex-ask">How could you answer? Say all three aloud together.</p>
+    <div class="types">${TYPES.map(t => `<div class="trow">${host(`answers.${t}`, `<span class="tline"><span class="type">${esc(facesFor(t))}</span><b>${esc(ansText(t))}</b></span>`)}
+      ${S.exShown ? host(`model.${t}`, `<p class="tans ${S.exAnim ? "in" : ""}">${exLine(modelText(t))}</p>`) : ""}</div>`).join("")}</div>
+    <div class="row-act"><button class="btn ${S.exShown ? "" : "primary"}" data-show-ex aria-pressed="${S.exShown}">${S.exShown ? "Hide the examples" : "Show the examples"}</button>
+      <span class="grow"></span><button class="btn ${S.exShown ? "primary" : ""}" data-start>Start the cards →</button></div></section>`;
+}
+/* 🃏 Cards: the model with its three answers stays pinned on top (foldable) */
+function modelPinHTML(){
+  return `<details class="model" data-model ${S.modelOpen ? "open" : ""}><summary><span class="ml">⭐ Example</span><b>${esc(modelText("who"))}:</b> ${esc(modelText("says"))}</summary>
+    <div class="model-ans">${TYPES.map(t => `<p><span class="type">${esc(facesFor(t))}</span>${exLine(modelText(t))}</p>`).join("")}</div></details>`;
+}
+function backHTML(c){
+  const main = c.type || null, others = TYPES.filter(t => t !== main);
+  const line = (t, badge) => host(`cards.${c.i}.${t}`, `<p>${badge ? `<span class="type sm">${esc(facesFor(t))}</span>` : ""}${exLine(cardText(c.i, t))}</p>`);
+  if(!main) return `<div class="back in" role="region" aria-label="Suggested answers"><div class="back-other">${TYPES.map(t => line(t, true)).join("")}</div></div>`;
+  return `<div class="back ${S.flipAnim ? "in" : ""}" role="region" aria-label="Suggested answers">
+    <div class="back-main"><span class="bl">Suggested answer</span>${line(main, true)}</div>
+    <div class="back-other"><span class="bl">Other ways to answer</span>${others.map(t => line(t, true)).join("")}</div></div>`;
+}
+function cardsHTML(){
+  const c = S.cur, n = DECK_SIZE();
+  const top = `<div class="stage-top"><span class="sit-label">${c ? "Your card" : "Situation cards"}</span>${c ? `<span class="sit-count" aria-label="Card ${S.seen} of ${n}">${((S.seen - 1) % n) + 1} of ${n}</span>` : ""}</div>`;
+  const pin = narrow() ? modelPinHTML() : "";
+  if(!c) return `<section class="stage ${S.enter ? "enter" : ""}">${pin}${top}<div class="empty-draw"><p>One of you reads the card, the other rolls and answers.</p><button class="btn primary big" data-draw>🃏 Draw a card</button></div></section>`;
+  const how = c.type ? `<span class="die-how"><span class="dl">${esc(D.die.label)}</span><span class="type">${esc(facesFor(c.type))}</span><b>${esc(ansText(c.type))}</b></span>`
+    : `<span class="die-how wait"><span class="dl">${esc(D.die.label)}</span>Roll the die: it decides how you answer.</span>`;
+  return `<section class="stage ${S.enter ? "enter" : ""}">${pin}${top}
+    ${host("cards." + c.i, `<div class="scard ${S.fresh ? "in" : ""}">${host(`cards.${c.i}.who`, `<p class="who">${esc(cardText(c.i, "who"))}</p>`)}${host(`cards.${c.i}.says`, `<p class="says">${esc(cardText(c.i, "says"))}</p>`)}</div>`, {edit: false})}
+    <div class="die-row"><span data-die>${dieHTML(c.face)}</span>${how}</div>
+    <p class="react">React: ${(D.react || []).map(r => `<b>${esc(r)}</b>`).join(" · ")}</p>
+    <div class="row-act"><button class="btn ${c.type ? "" : "primary"}" data-roll>🎲 ${c.type ? "Roll again" : "Roll"}</button>
+      <button class="btn ${c.type && !c.flipped ? "primary" : ""}" data-flip aria-pressed="${c.flipped}">${c.flipped ? "Flip back" : "Flip"}</button>
+      <span class="grow"></span><button class="btn ${c.flipped ? "primary" : ""}" data-draw>Next card →</button></div>
+    ${c.flipped ? backHTML(c) : ""}</section>`;
+}
+const allCardsHTML = () => allHTML("All the cards", D.cards.map((_, i) => (liveTeacher() || !cardGone(i)) ? `<div class="all-row"><span class="all-sub">${esc(cardText(i, "who"))}: ${esc(cardText(i, "says"))}</span>
+    ${TYPES.map(t => `<p><span class="ty">${esc(t)}</span>${exLine(cardText(i, t))}</p>`).join("")}</div>` : "").join(""));
+const speakStage = () => `<section class="stage-wrap ${S.enter ? "enter" : ""}">${speakHTML(liveList(D.speaking, "speaking"), `<button class="btn" data-back>← Back to the cards</button><button class="btn primary" data-restart>Start again</button>`, "Real talk", "speaking")}</section>`;
+function headHTML(){
+  return `<header class="head">${D.part ? `<span class="part">${esc(D.part)}</span>` : ""}<h1>${esc(D.title)}</h1>
+      ${stagesHTML([["example", "⭐ Example"], ["cards", "🃏 Cards"], ["speak", "💬 Real talk"]], S.view)}</header>
+    ${S.view !== "cards" || S.cur ? "" : `<div class="hint-top dice-hint"><span>🃏 ${esc(D.hint)}</span></div>`}`;
+}
+function goStage(v){ if(S.view === v || S.busy) return; S.view = v; S.enter = true; render(); S.enter = false; scrollTo(0, 0); }
+function render(){
+  liveApply();   /* her latest changes, at the group's tap (live version) */
+  const main = document.getElementById("main"), side = document.getElementById("side");
+  main.innerHTML = liveBarHTML(liveLabel) + headHTML() + (S.view === "speak" ? speakStage() : S.view === "cards" ? cardsHTML() : exampleHTML());
+  const st = side.scrollTop; side.innerHTML = boxHTML(D.box, {clickable: true}) + (S.view === "cards" && !narrow() ? modelPinHTML() : "") + allCardsHTML(); side.scrollTop = st;
+  wireAll(side); wireBox(side); wireSpeak(main, render); S.exAnim = false; S.flipAnim = false;
+  wireLive(main, p => pathGet(D, p)); wireLive(side, p => pathGet(D, p));
+  const on = (sel, fn) => document.querySelectorAll(sel).forEach(b => b.addEventListener("click", () => fn(b)));
+  on("[data-show-ex]", () => { S.exShown = !S.exShown; S.exAnim = S.exShown; render(); });
+  on("[data-start]", () => goStage("cards"));
+  on("[data-draw]", draw);
+  on("[data-roll]", roll);
+  /* Flip: the back, the rolled answer first (her rule 6: feedback right after the step); a second tap turns it back */
+  on("[data-flip]", () => { const c = S.cur; c.flipped = !c.flipped; S.flipAnim = c.flipped; render(); if(c.flipped) pop(document.querySelector(".back-main") || document.querySelector(".back")); });
+  document.querySelectorAll("[data-model]").forEach(d => d.addEventListener("toggle", () => { S.modelOpen = d.open; }));
+  on("[data-stage]", b => goStage(b.dataset.stage));
+  on("[data-back]", () => goStage("cards"));
+  on("[data-restart]", () => { usedPhrases.clear(); spkReset(); const keep = {exShown: S.exShown, modelOpen: S.modelOpen}; newGame("cards"); Object.assign(S, keep); S.enter = true; render(); S.enter = false; scrollTo(0, 0); });
+}
+liveRerender = () => render();
+render();
+</script>
+</body>
+</html>

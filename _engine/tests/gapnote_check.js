@@ -12,6 +12,9 @@ const {chromium, devices} = require('playwright'); const path = require('path');
     say: (TASKS.find(t => t.steps && t.steps.some(s => s.type === 'sayit' && s.s.rows.some(r => r[2]))) || {}).id}));
   out.ids = ids; expect('page has both', ids.dlg && ids.say, ids);
   await p.click(`[data-open="${ids.dlg}"]`); await p.waitForTimeout(400);
+  // a screen with 2+ noted gaps (engine 45: opening the only gap by hand already counts as checked)
+  const at = await p.evaluate(id => TASKS.find(t => t.id === id).steps.findIndex(s => s.type === 'dlg' && s.lines.flatMap(l => l.p).filter(x => x && x.n).length >= 2), ids.dlg);
+  out.screen = at; for (let k = 0; k < at; k++) { await p.click('#go'); await p.waitForTimeout(120); await p.click('#go'); await p.waitForTimeout(250); }
   const look = () => p.evaluate(() => ({all: document.querySelectorAll('.gap-n').length, shown: [...document.querySelectorAll('.gap-n')].filter(n => !n.hidden).map(n => n.textContent),
     color: (() => { const n = [...document.querySelectorAll('.gap-n')].find(n => !n.hidden); return n ? getComputedStyle(n).color : ''; })(),
     firstNoted: [...document.querySelectorAll('.panel .dlg .chunk')].findIndex(c => c.dataset.nk)}));

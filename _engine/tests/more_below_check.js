@@ -31,6 +31,11 @@ const {chromium, devices} = require('playwright'); const path = require('path');
     await p.evaluate(() => scrollTo(0, 0)); await p.waitForTimeout(200); out.afterTop = await chip(p); expect('it stays gone', out.afterTop === false, out.afterTop);
     await p.click('#go'); await p.waitForTimeout(300); out.checked = await p.evaluate(() => document.querySelectorAll('.panel .dlg .chunk.open').length);
     expect('Show the answers still opens the gaps', out.checked > 0, out.checked);
+    // engine 45: all gaps opened by hand → the button says Next
+    await p.click('#go'); await p.waitForTimeout(300);   // on to screen 2 (Next)
+    const n2 = await p.locator('.panel .dlg .chunk').count(); for (let k = 0; k < n2; k++) { await p.locator('.panel .dlg .chunk').nth(k).click(); await p.waitForTimeout(60); }
+    out.byHand = await p.evaluate(() => ({go: document.getElementById('go').textContent, y: scrollY})); expect('every gap opened by hand → Next', /Next|Finish/.test(out.byHand.go), out.byHand);
+    out.afterCheck = await chip(p); expect('no chip after Show the answers (engine 45)', out.afterCheck !== true, out.afterCheck);
     await ctx.close(); }
   console.log(JSON.stringify(out, null, 1)); if (errs.length) fail.push('page errors: ' + errs.join(' | '));
   console.log(fail.length ? 'FAILED:\n' + fail.join('\n') : 'OK more below'); await b.close(); process.exit(fail.length ? 1 : 0);

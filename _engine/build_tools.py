@@ -15,7 +15,8 @@ base_js = open(os.path.join(T, 'tool_base.js'), encoding='utf-8').read()
 sticker = 'data:image/png;base64,' + base64.b64encode(open(os.path.join(T, 'sticker.png'), 'rb').read()).decode()
 js = lambda o: json.dumps(o, ensure_ascii=False).replace('</', '<\\/')
 # each task type has its own mechanic (template); the lesson chat names the type in its handoff, and each new type is built and reviewed with Olya on its own
-TYPES = {'dice-council': 'council_template.html', 'say-it-another-way': 'cards_template.html', 'dice-situations': 'situations_template.html'}
+TYPES = {'dice-council': 'council_template.html', 'say-it-another-way': 'cards_template.html', 'dice-situations': 'situations_template.html',
+         'situation-cards': 'situation_cards_template.html'}   # tools 12
 # the live version (tools 7, her wish 28.10): every page is also built as <page>-live.html, which asks her table for the changes
 # she makes during the lesson; the plain page never contacts the table and stays exactly as it was. The table's address is the
 # one the homework pages use (engine/page_template.html).
@@ -50,7 +51,7 @@ for path in sorted(glob.glob(os.path.join(T, '*', '*.json'))):
 # first (with Copy, for the Zoom chat) and the plain one as the fallback. Shown when her code is on this device (as on the live
 # pages: a lock on the door, the list is in the source); noindex, linked from nowhere.
 GROUPS = {'b2': 'B2 · Wed Fri 18.30', 'c1': 'C1 · Wed Fri 20.15'}
-KIND = {'dice-council': '🎲 dice council', 'say-it-another-way': '🃏 say it another way', 'dice-situations': '🎲 dice situations'}
+KIND = {'dice-council': '🎲 dice council', 'say-it-another-way': '🃏 say it another way', 'dice-situations': '🎲 dice situations', 'situation-cards': '🃏 situation cards'}
 def esc(t): return str(t).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
 blocks = []
 for g in sorted({p['lesson'].split('-')[0] for p in pages}):

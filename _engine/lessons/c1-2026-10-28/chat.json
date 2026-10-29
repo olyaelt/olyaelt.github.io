@@ -46,9 +46,12 @@
       {
        "f": "",
        "r": "a complete",
-       "n": "a + adjective + noun: a complete waste of time"
+       "n": "a + adjective + noun: **a complete** waste of time"
       },
-      " (complete / completely?) waste of time."
+      {
+       "b": " waste of time"
+      },
+      " (complete / completely?)."
      ]
     },
     {
@@ -60,13 +63,19 @@
     {
      "s": "Ollie",
      "p": [
-      "Mrs Martin always said, \"You never know when it might ",
+      "Mrs Martin always said, \"",
+      {
+       "b": "You never know when it might "
+      },
       {
        "f": "",
        "r": "come",
-       "n": "come in handy: the verb is come"
+       "n": "come in handy: the verb is **come**"
       },
-      " (1 word) in handy, Oliver.\" She was right. Don't tell her."
+      {
+       "b": " in handy"
+      },
+      " (1 word), Oliver.\" She was right. Don't tell her."
      ]
     },
     {
@@ -78,11 +87,14 @@
     {
      "s": "Ollie",
      "p": [
-      "Honestly? More often ",
+      "Honestly? ",
+      {
+       "b": "More often "
+      },
       {
        "f": "",
        "r": "than you'd think",
-       "n": "you'd = you would · or: than you think"
+       "n": "**you'd** = you would · or: than you think"
       },
       " (t… y… t…)."
      ]
@@ -96,11 +108,15 @@
     {
      "s": "Jess",
      "p": [
-      "She retired last year. My niece was in her very last class, and she still made them learn all the irregular verbs ",
+      "She retired last year. My niece was in her very last class, and she still made them ",
+      {
+       "b": "learn"
+      },
+      " all the irregular verbs ",
       {
        "f": "",
        "r": "by heart",
-       "n": "by heart — singular · or: off by heart (BrE)"
+       "n": "by **heart** — singular · or: off by heart (BrE)"
       },
       " (наизусть)."
      ]
@@ -112,11 +128,13 @@
        "f": "B",
        "r": "ack"
       },
-      " in my ",
+      {
+       "b": " in my "
+      },
       {
        "f": "d",
        "r": "ay",
-       "n": "back in my day — singular"
+       "n": "back in my **day** — singular"
       },
       ", it was fifty verbs a week!"
      ]
@@ -140,7 +158,7 @@
      ]
     }
    ],
-   "note": "a + adjective + noun: a complete waste of time · come in handy: the verb is come · you'd = you would · or: than you think · by heart — singular · or: off by heart (BrE) · back in my day — singular"
+   "note": "a + adjective + noun: **a complete** waste of time · come in handy: the verb is **come** · **you'd** = you would · or: than you think · by **heart** — singular · or: off by heart (BrE) · back in my **day** — singular"
   },
   {
    "type": "dlg",
@@ -161,11 +179,14 @@
     {
      "s": "Nadia",
      "p": [
-      "Four so far. I hated training at first, but it ",
+      "Four so far. I hated training at first, but ",
+      {
+       "b": "it "
+      },
       {
        "f": "",
        "r": "paid off",
-       "n": "active: it paid off · or: it's paid off"
+       "n": "active: it **paid off** (no was) · or: it's paid off"
       },
       " (pay off — active or passive?)."
      ]
@@ -195,7 +216,7 @@
       {
        "f": "",
        "r": "none of it counted",
-       "n": "none of it counted — active, past simple (= it didn't count: no mark)"
+       "n": "**none of it counted** = it didn't count — active, past simple"
       },
       " (none / count)."
      ]
@@ -243,7 +264,7 @@
      ]
     }
    ],
-   "note": "active: it paid off · or: it's paid off · none of it counted — active, past simple (= it didn't count: no mark)"
+   "note": "active: it **paid off** (no was) · or: it's paid off · **none of it counted** = it didn't count — active, past simple"
   }
  ]
 }

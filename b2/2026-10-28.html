@@ -279,6 +279,9 @@ details.summary[open] summary::after{content:"Hide"}
 .gap .r{font-weight:700;background:var(--hl);color:transparent;padding:1px 0;border-radius:2px;transition:color .15s ease}
 .gap .r:empty{display:none}
 .chunk.open .gap .r{color:var(--hl-ink)}
+/* engine 46 (her wish 29.10, as on her slides): an opened gap reads in the same blue bold as the given words around it */
+.dlg .chunk.open .gap .r{color:#0000FF}   /* on the yellow: the slide blue, in dark mode too */
+.dlg b.given{color:var(--answer)}
 /* engine 30: "!" after an opened gap = "I want to revise this" (kept on this device) */
 /* engine 32 (her decision 27.10): a green bookmark, not a second round sign next to "?" — "?" asks Olya, the bookmark is for me */
 .rev{display:inline-grid;place-items:center;width:1.25em;height:1.5em;margin:0 1px 0 2px;padding:0;border:0;border-radius:4px;background:none;color:var(--done);vertical-align:-.3em;cursor:pointer}
@@ -1826,7 +1829,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = [];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "44";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "46";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -2629,8 +2632,8 @@ function gapLineHTML(line){
       }
       const nk = ns.length ? ++GNK : 0;
       html += `<span class="chunk" role="button" tabindex="0" aria-label="Show the missing words"${nk?` data-nk="${nk}"`:""}>${chunk}</span>`;
-      if(nk) notes += `<span class="gap-n" data-nk="${nk}" hidden>${esc(ns.join(" · "))}</span>`;
-    } else if(typeof x === "object" && "b" in x){ html += `<b>${esc(x.b)}</b>`; i++; }
+      if(nk) notes += `<span class="gap-n" data-nk="${nk}" hidden>${esc(ns.join(" · ")).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>")}</span>`;   /* **key word** bold (engine 46) */
+    } else if(typeof x === "object" && "b" in x){ html += `<b class="given">${esc(x.b)}</b>`; i++; }   /* given words: blue bold, as the TZ data says (engine 46) */
     else if(typeof x === "object" && "ipa" in x){ html += `<span class="ipa${x.o?" o":""}">${esc(x.ipa)}</span>`; i++; }   /* engine 44: shown IPA (a glossary that helps) */
     else { html += esc(x); i++; }
   }
@@ -2739,7 +2742,12 @@ function renderDlg(st, count, pct){
     stageHTML:`<div class="panel">${st.intro?`<p class="situation">${esc(st.intro)}</p>`:""}<div class="dlg">${st.lines.map(gapLineHTML).join("")}</div>${checked&&st.note?`<p class="small">${st.note}</p>`:""}${checked?revHint():""}</div>${side}`,
     withBox: !!side, actionsHTML: navButtons(st.checkLabel || "Show the answers")});
   const chunks = [...app.querySelectorAll(".chunk")];
-  const toggle = c => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); syncGapNotes(app); };
+  const toggle = c => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); syncGapNotes(app); allOpen(); };
+  /* engine 45 (her catch 29.10): every gap opened by hand = the step is checked, so the button says Next (Finish), not "Show the answers" */
+  const allOpen = () => { if(checked) return; const g = [...app.querySelectorAll(".panel .dlg .chunk")].filter(c => !c.classList.contains("plain"));
+    if(!g.length || !g.every(c => c.classList.contains("open"))) return;
+    checked = true; const go = document.getElementById("go"); if(go) go.textContent = stepIdx === current.steps.length - 1 ? "Finish" : "Next";
+    if(moreOff){ moreOff(); moreOff = null; } const ch = app.querySelector(".more-below"); if(ch) ch.hidden = true; };
   chunks.forEach(c=>{
     if(checked) c.classList.add("open");
     c.addEventListener("click",()=>toggle(c));
@@ -2757,7 +2765,10 @@ function renderDlg(st, count, pct){
 let moreOff = null;
 function moreBelow(){
   if(moreOff){ moreOff(); moreOff = null; }
-  const last = [...app.querySelectorAll(".panel .dlg p")].pop(), act = app.querySelector(".actions"); if(!last || !act) return;
+  /* engine 45 (her catch 29.10: "there's nothing below"): only before "Show the answers", and only while a GAP is still below the
+     buttons — text without gaps, or a red note that opened, doesn't count */
+  if(checked) return;
+  const last = [...app.querySelectorAll(".panel .dlg .chunk")].pop(), act = app.querySelector(".actions"); if(!last || !act) return;
   const chip = document.createElement("button"); chip.type = "button"; chip.className = "more-below"; chip.hidden = true; chip.textContent = "↓ More below";
   act.before(chip);
   let seen = false;

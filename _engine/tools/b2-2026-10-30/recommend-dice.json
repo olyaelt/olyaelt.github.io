@@ -1,139 +1,168 @@
 {
- "type": "dice-situations",
+ "type": "situation-cards",
  "title": "Any recommendations?",
  "part": "",
- "hint": "Roll: who's asking, what they need and how you answer. Answer with a real place or thing if you know one.",
- "dice": [
+ "hint": "Draw a card and roll the die: it decides how you answer. Answer with a real place or thing if you know one.",
+ "die": {
+  "label": "YOUR ANSWER",
+  "map": [
+   {
+    "faces": "1–2",
+    "type": "R"
+   },
+   {
+    "faces": "3–4",
+    "type": "W"
+   },
+   {
+    "faces": "5–6",
+    "type": "D"
+   }
+  ]
+ },
+ "answers": {
+  "R": "You recommend it — and give a tip.",
+  "W": "You wouldn't recommend it — say what you'd recommend instead.",
+  "D": "You don't know it — say what you'd recommend doing."
+ },
+ "model": {
+  "who": "A new colleague",
+  "says": "I'm new here. Is the café downstairs any good for lunch? I've only got half an hour.",
+  "R": "It's great — I'd **highly recommend** it. I'd **recommend going** before twelve, though: it gets really busy.",
+  "W": "Honestly? I **wouldn't recommend** it — the food's always cold. I'd **recommend** the Vietnamese place round the corner **instead**.",
+  "D": "I've never been, actually. I'd **recommend asking** Anna — she has lunch there every day."
+ },
+ "cards": [
   {
-   "label": "WHO'S ASKING?",
-   "faces": [
-    "a new colleague, new in town",
-    "your neighbour",
-    "a friend who's visiting",
-    "someone from our group",
-    "your cousin",
-    "your boss"
-   ]
+   "who": "Your boss",
+   "says": "I'm taking some clients out to dinner on Friday. I was thinking of the steak place on the main square. Is it any good?",
+   "R": "Yes, it's lovely — I'd **recommend** it. I'd **recommend booking** ahead, though: on Fridays it's always full.",
+   "W": "Hmm, I **wouldn't recommend** it for clients — it's really noisy. I'd **recommend** the Italian place by the river **instead**.",
+   "D": "I've never been, to be honest. I'd **recommend asking** Tom from sales — he takes clients there a lot."
   },
   {
-   "label": "WHAT DO THEY NEED?",
-   "faces": [
-    "lunch or coffee near work",
-    "a good app (languages, fitness…)",
-    "a doctor or a hairdresser",
-    "something to do at the weekend",
-    "a series or a book",
-    "a shop or a website"
-   ]
+   "who": "Your neighbour",
+   "says": "Our boiler's broken again! Do you know a good plumber? There's a company with ads everywhere — FixIt 24.",
+   "R": "We used FixIt 24 last winter — I'd **recommend** them. They came the same day. I'd **recommend calling** first thing in the morning, though.",
+   "W": "I **wouldn't recommend** them — they charged us a fortune. I'd **recommend** the plumber who did our bathroom **instead**. I'll send you his number.",
+   "D": "Sorry, no idea. I'd **recommend asking** in the neighbours' group chat — someone always knows a good one."
   },
   {
-   "label": "YOUR ANSWER",
-   "map": [
-    {
-     "faces": "1–2",
-     "type": "R"
-    },
-    {
-     "faces": "3–4",
-     "type": "W"
-    },
-    {
-     "faces": "5–6",
-     "type": "D"
-    }
-   ]
+   "who": "Someone from our group",
+   "says": "Everyone's talking about that new series on Netflix. Is it any good?",
+   "R": "Yes! I'd **highly recommend** it. I'd **recommend watching** it with English subtitles, though — they talk really fast.",
+   "W": "Honestly? I **wouldn't recommend** it — it's really slow. I'd **recommend** Ted Lasso **instead** — it's so funny.",
+   "D": "I haven't seen it yet. I'd **recommend watching** the trailer first — then you'll know if it's your thing."
+  },
+  {
+   "who": "A friend who's visiting",
+   "says": "I've got one free day in your city on Saturday. Everyone says I should go up the tower. Is it worth it?",
+   "R": "Yes! I'd **highly recommend** it — the view's amazing. I'd **recommend going** early, before the tour groups arrive.",
+   "W": "Honestly? I **wouldn't recommend** it — the queue's usually about an hour. I'd **recommend** the hill behind the station **instead**: same view, no queue.",
+   "D": "I've never actually been up there 😅 I'd **recommend joining** a free walking tour — they're usually great."
+  },
+  {
+   "who": "Your cousin",
+   "says": "I want to start learning Spanish before my holiday. Is Duolingo any good, or is there something better?",
+   "R": "I'd **recommend** it — it's fun, and it's free. I'd **recommend doing** ten minutes a day, though, not an hour once a week.",
+   "W": "I **wouldn't recommend** it if you want to speak — you mostly just tap words. I'd **recommend** a few lessons with a tutor **instead**.",
+   "D": "No idea, I've never tried it. I'd **recommend trying** a few free apps and sticking with the one you like."
+  },
+  {
+   "who": "A colleague from another office",
+   "says": "I'm coming for the conference next week. They want to put me in the big hotel by the station. Is it any good?",
+   "R": "People from our office often stay there — it's good. I'd **recommend asking** for a room at the back, though: the front is really noisy.",
+   "W": "I **wouldn't recommend** it — people from our office always complain: the rooms are tiny. I'd **recommend** the small hotel near the park **instead**.",
+   "D": "I've never stayed there. I'd **recommend checking** the reviews before they book it."
+  },
+  {
+   "who": "Your sister",
+   "says": "My hairdresser's moved away. There's a salon on the corner near you — is it any good? I don't want to spend a fortune.",
+   "R": "Yes, I go there — I'd **recommend** it. It's not too expensive. I'd **recommend booking** a week ahead, though.",
+   "W": "I **wouldn't recommend** it — they cut way too much off. I'd **recommend** the one near the station **instead**.",
+   "D": "I've never been — my friend cuts my hair 😅 I'd **recommend going** in and asking how much a cut is first."
+  },
+  {
+   "who": "Your new neighbour",
+   "says": "We've just moved in. Is the supermarket across the road any good, or should we go somewhere else?",
+   "R": "It's good — I'd **recommend** it. I'd **recommend going** in the morning, though: the fresh bread's gone by lunchtime.",
+   "W": "I **wouldn't recommend** it — it's a bit expensive. I'd **recommend** the cheaper supermarket down the road **instead**.",
+   "D": "Hmm, I don't shop there. I'd **recommend trying** it for a week and seeing what you think."
+  },
+  {
+   "who": "Your boss",
+   "says": "My son needs a laptop for university. He's looking at the cheapest one online. Can you recommend anything?",
+   "R": "I'd **recommend** the one I've got — it's light and the battery lasts all day. I'd **recommend waiting** for a sale, though.",
+   "W": "I **wouldn't recommend** the cheapest one — they often break within a year. I'd **recommend** paying a bit more for a good one **instead**.",
+   "D": "I don't know much about laptops. I'd **recommend asking** in a computer shop — they'll know what he needs."
+  },
+  {
+   "who": "Someone from our group",
+   "says": "I need a book for my holiday. Everyone's reading that new thriller — is it any good?",
+   "R": "Yes! I'd **highly recommend** it — I couldn't put it down. I'd **recommend starting** it before you go, though — you won't want to stop.",
+   "W": "I **wouldn't recommend** it — the ending's terrible. I'd **recommend** her first one **instead**.",
+   "D": "I haven't read it 😅 I'd **recommend asking** in a bookshop. The staff are always happy to suggest something."
+  },
+  {
+   "who": "A friend who's just moved here",
+   "says": "I want to join a gym. There's a big one near my flat — FitZone. Is it any good?",
+   "R": "I go there — I'd **recommend** it. I'd **recommend going** before work, though: after six it's packed.",
+   "W": "I **wouldn't recommend** it — sixty euros a month is a bit much. I'd **recommend** the gym at the sports centre **instead** — it's half the price.",
+   "D": "I've never been. I'd **recommend asking** for a free trial first."
+  },
+  {
+   "who": "A mum from your child's class",
+   "says": "We need a birthday cake for Saturday. Can you recommend a bakery? The one in the shopping centre looks a bit boring.",
+   "R": "I'd **highly recommend** the little bakery near the school — their cakes are amazing. I'd **recommend ordering** a few days ahead, though.",
+   "W": "I **wouldn't recommend** the one in the shopping centre — ours was really dry. I'd **recommend** the little bakery near the school **instead**.",
+   "D": "I always buy mine at the supermarket 😅 I'd **recommend asking** in the parents' chat."
+  },
+  {
+   "who": "Your cousin",
+   "says": "We're getting a dog! There's a vet clinic on the main road near us — is it any good?",
+   "R": "Yes, I'd **recommend** it — they're really gentle with nervous dogs. I'd **recommend booking** online, though: it's quicker than phoning.",
+   "W": "I **wouldn't recommend** it — they always rush you. I'd **recommend** the one near the park **instead**.",
+   "D": "We don't have pets, so no idea. I'd **recommend asking** other dog owners in the park — they'll know."
+  },
+  {
+   "who": "A colleague",
+   "says": "My English teacher says I should listen to podcasts. Is 6 Minute English any good? I don't want anything too difficult.",
+   "R": "Yes, I'd **recommend** it — it's short and the speakers are really clear. I'd **recommend listening** twice: once for the general idea, then again for new words.",
+   "W": "Honestly? I **wouldn't recommend** it — it's always the same format, so it gets a bit boring. I'd **recommend** an easy podcast about something you love **instead** — football, cooking…",
+   "D": "I don't really listen to podcasts. I'd **recommend trying** a few and sticking with the one you enjoy most."
+  },
+  {
+   "who": "Your neighbour",
+   "says": "My phone screen's cracked. There's a little repair shop by the station. Is it any good?",
+   "R": "Yes, I'd **recommend** it — they fixed mine in an hour. I'd **recommend asking** for the price first, though.",
+   "W": "I **wouldn't recommend** it — mine broke again a week later. I'd **recommend** the official service centre **instead**. It's pricier, but they do it properly.",
+   "D": "I've never used it. I'd **recommend checking** the reviews online — and getting a price first."
+  },
+  {
+   "who": "Your boss",
+   "says": "We need somewhere for the team Christmas party — last year's place was a bit much: fifty euros each! I was thinking of the karaoke bar on King Street. Is it any good?",
+   "R": "Yes, I'd **recommend** it — it's great fun. I'd **recommend booking** soon, though: everywhere gets booked up in December.",
+   "W": "I **wouldn't recommend** it — it's tiny, we wouldn't all fit. I'd **recommend** the bowling alley **instead** — it's fun and it's pretty cheap.",
+   "D": "I've never been, to be honest. I'd **recommend asking** the team what they'd like."
+  },
+  {
+   "who": "An old friend",
+   "says": "I just can't sleep — I'm up till two every night. Is that sleep app everyone's talking about any good?",
+   "R": "Yes, I'd **recommend** it — the sleep stories really work for me. I'd **recommend setting** the sleep timer, though, so it doesn't play all night.",
+   "W": "I tried it — I **wouldn't recommend** it. It kept me awake! I'd **recommend** a really boring book **instead** 😄",
+   "D": "I've never tried it, sorry. I'd **recommend talking** to your doctor — being up till two every night isn't good."
+  },
+  {
+   "who": "Someone from our group",
+   "says": "I want to watch a film in English. Is that new Guy Ritchie film any good?",
+   "R": "Yes, I'd **recommend** it — it's really funny. I'd **recommend watching** it twice, though — you'll miss half the jokes the first time.",
+   "W": "I **wouldn't recommend** it for practising your English — everyone talks super fast, with strong accents! I'd **recommend** Paddington **instead**: the English is really clear.",
+   "D": "I haven't seen it. I'd **recommend starting** with a film you've already seen in Russian."
   }
  ],
- "answers": {
-  "R": "Recommend a real one — and give a tip.",
-  "W": "One you didn't like: say you wouldn't recommend it — and what you'd recommend instead.",
-  "D": "You don't know one: say what you'd recommend doing."
- },
- "examples": [
-  {
-   "R": {
-    "a": "Can you recommend a good place for coffee near the office?",
-    "b": "I'd **highly recommend** the little café by the bus stop. I'd **recommend going** before nine, though — after that there's always a huge queue."
-   },
-   "W": {
-    "a": "Is the canteen on the ground floor any good?",
-    "b": "Honestly? I **wouldn't recommend** it — the food's always cold. I'd **recommend** the sandwich place across the road **instead**."
-   },
-   "D": {
-    "a": "Any recommendations for lunch around here?",
-    "b": "Sorry, I'm new here too. I'd **recommend asking** Anna — she knows every café in the area."
-   }
-  },
-  {
-   "R": {
-    "a": "Can you recommend a good app for learning Spanish?",
-    "b": "I'd **recommend** Brainscape 😉 Oh, and I'd **recommend doing** ten minutes a day — it works better than an hour once a week."
-   },
-   "W": {
-    "a": "Is that fitness app everyone's talking about any good?",
-    "b": "Not really. I **wouldn't recommend** it. It looks great, but twelve euros a month is a bit much. I'd **recommend** a free one **instead**."
-   },
-   "D": {
-    "a": "Any good apps for budgeting?",
-    "b": "I don't really use one, to be honest. I'd **recommend checking** the reviews first — some of them are full of ads."
-   }
-  },
-  {
-   "R": {
-    "a": "Can you recommend a good dentist?",
-    "b": "I'd **highly recommend** mine — she's really gentle. I'd **recommend booking** well in advance, though: she's always booked up."
-   },
-   "W": {
-    "a": "Is the hair salon on the corner any good?",
-    "b": "I **wouldn't recommend** it — they cut way too much off. I'd **recommend** the one near the station **instead**."
-   },
-   "D": {
-    "a": "Any recommendations for a doctor who speaks English?",
-    "b": "Sorry, I don't know any. I'd **recommend asking** in the neighbourhood chat — someone always knows."
-   }
-  },
-  {
-   "R": {
-    "a": "We've got a free Saturday. What would you recommend?",
-    "b": "The market in the old town is lovely. I'd **recommend going** early, before it gets busy."
-   },
-   "W": {
-    "a": "Is the new escape room any good? I keep seeing ads for it.",
-    "b": "Hmm, I **wouldn't recommend** it — it's short and a bit pricey. I'd **recommend** the bowling alley **instead**."
-   },
-   "D": {
-    "a": "Any ideas for the weekend?",
-    "b": "Not really — I'm usually at home 😅 I'd **recommend checking** what's on at the cinema."
-   }
-  },
-  {
-   "R": {
-    "a": "Seen anything good lately? I need a new series.",
-    "b": "I'd **highly recommend** Ted Lasso — it's really funny. I'd **recommend watching** it with English subtitles, though: they talk quite fast."
-   },
-   "W": {
-    "a": "Is that new crime drama any good?",
-    "b": "I **wouldn't recommend** it — it really drags. I'd **recommend** the book it's based on **instead**."
-   },
-   "D": {
-    "a": "Can you recommend something to watch on a long flight?",
-    "b": "I'm not really a series person. I'd **recommend downloading** a few episodes before you go, though!"
-   }
-  },
-  {
-   "R": {
-    "a": "Can you recommend a good online shop for clothes?",
-    "b": "I'd **recommend** the one my sister uses — returns are free. I'd **recommend checking** the size chart, though: their clothes run a bit small."
-   },
-   "W": {
-    "a": "Have you ever ordered from that cheap website with all the ads?",
-    "b": "Once. I **wouldn't recommend** it — my parcel took six weeks to arrive. I'd **recommend** a local shop **instead**."
-   },
-   "D": {
-    "a": "Where can I get a good laptop?",
-    "b": "No idea, to be honest. I'd **recommend waiting** for the sales — laptops are often much cheaper then."
-   }
-  }
+ "react": [
+  "Good to know, thanks!",
+  "Thanks for the heads-up!"
  ],
  "box": [
   {
@@ -157,11 +186,8 @@
   }
  ],
  "speaking": [
-  "Tell your partner about **two things** you tried because someone recommended them. Would you recommend them too? Why / why not?",
-  "Which do you trust more: **a friend's recommendation or online reviews**? Tell your partner about a time a recommendation worked out — or didn't. Would you recommend that thing now?",
-  "A friend has **one day** in your city. Plan their day: **three things**, from morning to evening — and a tip for each.",
-  "**One thing** you'd recommend to everyone in our group — a book, an app, a place. What tip would you give them?",
-  "Tell your partner about **two apps** you use every day: what do you use them for? Would you recommend them? One tip for each (I'd recommend turning on…).",
-  "**Two things** you'd never recommend to anyone — a place, a product, a film… What would you recommend instead?"
+  "Think of **two things** you need this month (a present, an app, a series to watch…) and one option you're thinking of for each. Ask your partner: **I'm thinking of … Is it any good?** Your partner answers, you react with the box. Then swap.",
+  "Tell your partner about **two things** you tried because someone recommended them. **Who recommended them to you?** Would you recommend them too — why / why not? Your partner asks one question about each.",
+  "Your partner is visiting your city for **one day**. Recommend **three things**, from morning to evening, with a tip for each (**I'd recommend …ing**). Your partner asks one question about each place. Then swap."
  ]
 }
