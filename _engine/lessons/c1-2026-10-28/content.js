@@ -15,6 +15,32 @@ const box = inner => `<aside class="box" aria-label="Useful language"><img class
 /* ---------- content of this page: C1 lesson 5 homework, 28.10.26 → Fri 30.10 (small), from the lesson chat's TZ of 29.10, 15:15 ---------- */
 const LESSON = { date:"28.10.26", sub:"" };
 /* the lesson's box, as taught (bold parts as on the slides) */
+/* her wish 29.10 (C1 lesson chat, 17:50): what the glossaries said, behind a fold-out under the box, so the box stays compact;
+   two strips at the end: the sounds the group got wrong on 28.10 and the tense one student mixed up */
+const IPA = t => `<span class="ipa o">${t}</span>`;
+const bm = (ph, ipaT, m, r) => `<p class="bm-row"><b>${ph}</b>${ipaT ? " " + IPA(ipaT) : ""} <span class="m">— ${m}</span> ${ru(r)}</p>`;
+const BOX_MORE = `<details class="box-more"><summary>More about these phrases</summary><div class="bm-in">
+  <h5>BACK THEN</h5>
+  ${bm("back in my day", "", "when I was young (a bit jokey)", "в моё время")}
+  ${bm("out of touch with real life", "/tʌtʃ/", "nothing to do with real life", "оторвано от жизни")}
+  ${bm("learn sth by heart", "/hɑːt/", "memorise it word for word · also: off by heart (BrE)", "выучить наизусть")}
+  ${bm("hands-on", "/ˌhændz ˈɒn/", "learning by doing", "практический («руками»)")}
+  <h5>USEFUL OR NOT?</h5>
+  ${bm("a complete waste of time", "/weɪst/", "totally useless", "пустая трата времени")}
+  ${bm("I've never used it since", "", "not once after that", "с тех пор ни разу не пригодилось")}
+  ${bm("you never know when sth might come in handy", "", "it may be useful one day", "никогда не знаешь, когда пригодится")}
+  ${bm("more often than you'd think", "/ðən juːd ˈθɪŋk/", "more often than people expect", "чаще, чем можно подумать")}
+  ${bm("What's the point of …?", "", "why bother?", "какой смысл…?")}
+  ${bm("add value", "/ˈvæljuː/", "be useful in a way others (or software) can't", "приносить пользу, быть ценным")}
+  ${bm("pick sth up along the way", "", "learn it as you go", "научиться по ходу дела")}
+  <h5>STARTING AGAIN</h5>
+  ${bm("none of it counted", "", "it didn't count (her degree wasn't recognised)", "ничего из этого не засчитали")}
+  ${bm("start from scratch", "/skrætʃ/", "start again from the beginning", "начинать с нуля")}
+  ${bm("it paid off", "", "the hard work was worth it · ≠ pay off a loan", "это окупилось, оно того стоило")}
+  ${bm("school only gets you so far", "", "it helps, but only up to a point", "школа даёт лишь базу")}
+  <div class="bm-strip"><h5>SAY IT RIGHT</h5><p>heart ${IPA("/h<b>ɑː</b>t/")} <span class="m">— not hurt</span> · sewed ${IPA("/s<b>əʊ</b>d/")} <span class="m">— sew sounds like so, not sued</span> · value ${IPA("/ˈvæljuː/")} · lawyer ${IPA("/ˈlɔɪə/")}</p></div>
+  <div class="bm-strip"><h5>WATCH THE TENSE</h5><p><b>I was a lawyer for six years.</b> <span class="m">= she isn't one any more (past simple, not I've been)</span></p></div>
+</div></details>`;
 const BOX_SCHOOL = `
   <h4>BACK THEN</h4>
   <p><b>Back in my day</b>, …</p>
@@ -34,7 +60,8 @@ const BOX_SCHOOL = `
   <p><b>None of it counted</b>.</p>
   <p>I had to <b>start from scratch</b>.</p>
   <p>It was hard, but it <b>paid off</b>.</p>
-  <p>School <b>only gets you so far</b>.</p>`;
+  <p>School <b>only gets you so far</b>.</p>
+  ${BOX_MORE}`;
 const TOPICS = [
   {id:"school", title:"Should schools teach more practical things? Part 1", sub:"A radio show asked listeners: was school any use?", box:()=>BOX_SCHOOL}
 ];

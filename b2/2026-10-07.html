@@ -90,6 +90,16 @@ details.summary[open] summary::after{content:"Hide"}
 .ru{font-style:italic;color:var(--muted)}
 .ipa{color:var(--ipa);font-style:normal;white-space:nowrap}
 .ipa.o{color:#B45309}
+/* engine 47 (her wish 29.10): "More about these phrases" — what the glossaries said, folded under the Useful language box */
+.box details.box-more{margin-top:8px;border-top:1px dashed var(--line);padding-top:6px}
+.box details.box-more summary{cursor:pointer;font-weight:700;color:var(--instr);font-size:.92em}
+.box-more .bm-in{display:grid;gap:3px;margin-top:6px;font-size:.88em}
+.box-more h5{margin:8px 0 1px;color:var(--label);font-size:.85em;letter-spacing:.07em;font-weight:900}
+.box-more .bm-row{margin:0;line-height:1.4}
+.box-more .m{color:var(--muted)}
+.box-more .bm-strip{border:2px solid var(--line);border-radius:8px;padding:4px 10px 6px;margin-top:8px}
+.box-more .bm-strip h5{margin-top:2px}
+.box-more .bm-strip p{margin:0;line-height:1.45}
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .ipa.o{color:#F6B26B} }
 :root[data-theme="dark"] .ipa.o{color:#F6B26B}
 .section{display:grid;gap:10px;margin-bottom:22px}
@@ -421,6 +431,7 @@ s{color:var(--muted)}
 .you-ok,.you-no{font-weight:700;border-radius:3px;padding:0 4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .you-ok{background:var(--ok-chip);color:var(--ok-ink)}.you-no{background:var(--no-chip);color:var(--no-ink)}
 .to-ans{color:var(--muted);font-weight:400}
+.you-typed{font-weight:700;border-bottom:2px dotted var(--muted)}
 .gap-fb{grid-column:2;background:var(--no-bg);border-radius:8px;padding:6px 10px;font-size:.95rem;line-height:1.5}
 .chip-x{color:var(--no-ink);font-weight:900}
 .ln.playing{border-color:var(--instr);background:var(--ground)}
@@ -757,7 +768,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = ["click on the top line to hear the context","click on the line with the gap and try to catch what's in the gap","check","listen again — how did the expression sound?","optional: pronounce the expression like the speaker"];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "46";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "47";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -1671,11 +1682,8 @@ function renderDlg(st, count, pct){
     withBox: !!side, actionsHTML: navButtons(st.checkLabel || "Show the answers")});
   const chunks = [...app.querySelectorAll(".chunk")];
   const toggle = c => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); syncGapNotes(app); allOpen(); };
-  /* engine 45 (her catch 29.10): every gap opened by hand = the step is checked, so the button says Next (Finish), not "Show the answers" */
-  const allOpen = () => { if(checked) return; const g = [...app.querySelectorAll(".panel .dlg .chunk")].filter(c => !c.classList.contains("plain"));
-    if(!g.length || !g.every(c => c.classList.contains("open"))) return;
-    checked = true; const go = document.getElementById("go"); if(go) go.textContent = stepIdx === current.steps.length - 1 ? "Finish" : "Next";
-    if(moreOff){ moreOff(); moreOff = null; } const ch = app.querySelector(".more-below"); if(ch) ch.hidden = true; };
+  /* engine 45/47 (her catch 29.10): every gap opened by hand = the step is checked, so the button says Next (Finish), not "Show the answers" */
+  const allOpen = () => checkWhenAllOpen(".panel .dlg .chunk");
   chunks.forEach(c=>{
     if(checked) c.classList.add("open");
     c.addEventListener("click",()=>toggle(c));
@@ -1787,8 +1795,11 @@ function verdictHTML(val, r){
 function rewriteShown(val, r){
   if(!val) return `<span class="ans">${esc(r.a)}</span>`;
   const {core, m} = judgeRewrite(val, r);
+  /* engine 47 (her catch 29.10): when the "Not quite" box below compares it word by word, the sentence just keeps what they typed —
+     the red "→ answer" here said the same thing again, less clearly; only an answer too far off for that box keeps "→ answer" here */
   return m.ok ? `<span class="you-ok">${esc(core)} ✓</span>`
-    : `<span class="you-no">${esc(core)}</span> <span class="to-ans">→</span> <span class="ans">${esc(r.a)}</span>`;
+    : m.plain ? `<span class="you-no">${esc(core)}</span> <span class="to-ans">→</span> <span class="ans">${esc(r.a)}</span>`
+    : `<span class="you-typed">${esc(core)}</span>`;
 }
 
 function renderRewrite(st, count, pct){
@@ -1817,6 +1828,13 @@ function renderRewrite(st, count, pct){
 }
 /* re-render the same step after Check without resetting */
 function renderTaskKeep(){ const keep = checked; renderTask(); checked = keep; }
+/* engine 47 (her catch 29.10): when every answer of a step has been opened by hand, the step counts as checked — it shows what Check shows
+   (notes, bookmarks) where the student is, and the button says Next / Finish, so there's no extra tap on "Check" */
+function checkWhenAllOpen(sel){
+  if(checked) return; const items = [...app.querySelectorAll(sel)].filter(c => !c.classList.contains("plain"));
+  if(!items.length || !items.every(c => c.classList.contains("open"))) return;
+  const y = scrollY; checked = true; renderTaskKeep(); scrollTo(0, y);
+}
 
 /* ---------- say it in English ---------- */
 function renderSayit(st, count, pct){
@@ -1834,7 +1852,7 @@ function renderSayit(st, count, pct){
         ${checked&&s.note?`<p class="small">${s.note}</p>`:""}
       </div>${(checked||st.boxAlways)&&bx?box(bx):""}`,
     withBox: (checked||st.boxAlways) && !!bx, actionsHTML: navButtons()});
-  app.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>b.classList.toggle("open")));
+  app.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>{ b.classList.toggle("open"); checkWhenAllOpen(".reveal"); }));
   wireNav(()=>renderTaskKeep());
 }
 
@@ -2094,7 +2112,7 @@ function renderLookback(st, count, pct){
         ${checked?revHint():""}
       </div>`,
     actionsHTML: navButtons("Show all")});
-  app.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>b.classList.toggle("open")));
+  app.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>{ b.classList.toggle("open"); checkWhenAllOpen(".reveal"); }));
   wireNav(()=>renderTaskKeep());
 }
 

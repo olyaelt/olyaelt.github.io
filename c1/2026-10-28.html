@@ -92,6 +92,16 @@ details.summary[open] summary::after{content:"Hide"}
 .ru{font-style:italic;color:var(--muted)}
 .ipa{color:var(--ipa);font-style:normal;white-space:nowrap}
 .ipa.o{color:#B45309}
+/* engine 47 (her wish 29.10): "More about these phrases" — what the glossaries said, folded under the Useful language box */
+.box details.box-more{margin-top:8px;border-top:1px dashed var(--line);padding-top:6px}
+.box details.box-more summary{cursor:pointer;font-weight:700;color:var(--instr);font-size:.92em}
+.box-more .bm-in{display:grid;gap:3px;margin-top:6px;font-size:.88em}
+.box-more h5{margin:8px 0 1px;color:var(--label);font-size:.85em;letter-spacing:.07em;font-weight:900}
+.box-more .bm-row{margin:0;line-height:1.4}
+.box-more .m{color:var(--muted)}
+.box-more .bm-strip{border:2px solid var(--line);border-radius:8px;padding:4px 10px 6px;margin-top:8px}
+.box-more .bm-strip h5{margin-top:2px}
+.box-more .bm-strip p{margin:0;line-height:1.45}
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .ipa.o{color:#F6B26B} }
 :root[data-theme="dark"] .ipa.o{color:#F6B26B}
 .section{display:grid;gap:10px;margin-bottom:22px}
@@ -423,6 +433,7 @@ s{color:var(--muted)}
 .you-ok,.you-no{font-weight:700;border-radius:3px;padding:0 4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .you-ok{background:var(--ok-chip);color:var(--ok-ink)}.you-no{background:var(--no-chip);color:var(--no-ink)}
 .to-ans{color:var(--muted);font-weight:400}
+.you-typed{font-weight:700;border-bottom:2px dotted var(--muted)}
 .gap-fb{grid-column:2;background:var(--no-bg);border-radius:8px;padding:6px 10px;font-size:.95rem;line-height:1.5}
 .chip-x{color:var(--no-ink);font-weight:900}
 .ln.playing{border-color:var(--instr);background:var(--ground)}
@@ -2397,6 +2408,32 @@ const box = inner => `<aside class="box" aria-label="Useful language"><img class
 /* ---------- content of this page: C1 lesson 5 homework, 28.10.26 → Fri 30.10 (small), from the lesson chat's TZ of 29.10, 15:15 ---------- */
 const LESSON = { date:"28.10.26", sub:"" };
 /* the lesson's box, as taught (bold parts as on the slides) */
+/* her wish 29.10 (C1 lesson chat, 17:50): what the glossaries said, behind a fold-out under the box, so the box stays compact;
+   two strips at the end: the sounds the group got wrong on 28.10 and the tense one student mixed up */
+const IPA = t => `<span class="ipa o">${t}</span>`;
+const bm = (ph, ipaT, m, r) => `<p class="bm-row"><b>${ph}</b>${ipaT ? " " + IPA(ipaT) : ""} <span class="m">— ${m}</span> ${ru(r)}</p>`;
+const BOX_MORE = `<details class="box-more"><summary>More about these phrases</summary><div class="bm-in">
+  <h5>BACK THEN</h5>
+  ${bm("back in my day", "", "when I was young (a bit jokey)", "в моё время")}
+  ${bm("out of touch with real life", "/tʌtʃ/", "nothing to do with real life", "оторвано от жизни")}
+  ${bm("learn sth by heart", "/hɑːt/", "memorise it word for word · also: off by heart (BrE)", "выучить наизусть")}
+  ${bm("hands-on", "/ˌhændz ˈɒn/", "learning by doing", "практический («руками»)")}
+  <h5>USEFUL OR NOT?</h5>
+  ${bm("a complete waste of time", "/weɪst/", "totally useless", "пустая трата времени")}
+  ${bm("I've never used it since", "", "not once after that", "с тех пор ни разу не пригодилось")}
+  ${bm("you never know when sth might come in handy", "", "it may be useful one day", "никогда не знаешь, когда пригодится")}
+  ${bm("more often than you'd think", "/ðən juːd ˈθɪŋk/", "more often than people expect", "чаще, чем можно подумать")}
+  ${bm("What's the point of …?", "", "why bother?", "какой смысл…?")}
+  ${bm("add value", "/ˈvæljuː/", "be useful in a way others (or software) can't", "приносить пользу, быть ценным")}
+  ${bm("pick sth up along the way", "", "learn it as you go", "научиться по ходу дела")}
+  <h5>STARTING AGAIN</h5>
+  ${bm("none of it counted", "", "it didn't count (her degree wasn't recognised)", "ничего из этого не засчитали")}
+  ${bm("start from scratch", "/skrætʃ/", "start again from the beginning", "начинать с нуля")}
+  ${bm("it paid off", "", "the hard work was worth it · ≠ pay off a loan", "это окупилось, оно того стоило")}
+  ${bm("school only gets you so far", "", "it helps, but only up to a point", "школа даёт лишь базу")}
+  <div class="bm-strip"><h5>SAY IT RIGHT</h5><p>heart ${IPA("/h<b>ɑː</b>t/")} <span class="m">— not hurt</span> · sewed ${IPA("/s<b>əʊ</b>d/")} <span class="m">— sew sounds like so, not sued</span> · value ${IPA("/ˈvæljuː/")} · lawyer ${IPA("/ˈlɔɪə/")}</p></div>
+  <div class="bm-strip"><h5>WATCH THE TENSE</h5><p><b>I was a lawyer for six years.</b> <span class="m">= she isn't one any more (past simple, not I've been)</span></p></div>
+</div></details>`;
 const BOX_SCHOOL = `
   <h4>BACK THEN</h4>
   <p><b>Back in my day</b>, …</p>
@@ -2416,7 +2453,8 @@ const BOX_SCHOOL = `
   <p><b>None of it counted</b>.</p>
   <p>I had to <b>start from scratch</b>.</p>
   <p>It was hard, but it <b>paid off</b>.</p>
-  <p>School <b>only gets you so far</b>.</p>`;
+  <p>School <b>only gets you so far</b>.</p>
+  ${BOX_MORE}`;
 const TOPICS = [
   {id:"school", title:"Should schools teach more practical things? Part 1", sub:"A radio show asked listeners: was school any use?", box:()=>BOX_SCHOOL}
 ];
@@ -2474,7 +2512,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = [];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "46";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "47";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [{"type": "rewrite", "r": {"o": "My degree is in physics.", "k": "DID", "pre": "I ", "post": " university.", "a": "did physics at", "acc": ["did physics at", "did a physics degree at"], "n": "<span class=\"ipa\">/ˈfɪzɪks/<\/span><br>do + subject, no article; at university.<br><i class=\"ru\">учился на физика<\/i><br><i class=\"ru\">or: did a physics degree at<\/i><br><i class=\"ru\">AmE: I majored in physics in college.<\/i>"}, "frm": "23.10.26"}, {"type": "sayit", "s": {"rows": [["<span class=\"en\">I studied <span class=\"trap\">at the faculty of mathematics<\/span>.<\/span> <i class=\"ru\">(учился на матфаке)<\/i>", "I studied <b class=\"g\">maths<\/b>. / I did <b class=\"g\">maths at uni<\/b>."]], "note": "", "html": true}, "instr": "What would Dan or Ruth say instead?", "frm": "21.10.26"}, {"type": "rewrite", "r": {"pre": "", "hint": "У нас часы не переводят", "post": ", so I can never remember whether our calls move earlier or later.", "a": "We don't change the clocks here", "acc": ["We don't change the clocks here", "The clocks don't change here", "We don't have daylight saving here", "We don't have daylight saving time here"], "n": "change the clocks — the clocks, plural.<br><i class=\"ru\">or: The clocks don't change here / We don't have daylight saving (time) here<\/i>"}, "frm": "23.10.26"}, {"type": "sayit", "s": {"rows": [["<span class=\"en\">Nobody taught me how to talk to clients — I learned it <span class=\"trap\">in practice<\/span>.<\/span> <i class=\"ru\">(научилась в процессе работы)<\/i>", "Nobody taught me how to talk to clients — I learned it <b class=\"g\">on the job<\/b>."]], "note": "", "html": true}, "instr": "What would Dan or Ruth say instead?", "frm": "21.10.26"}];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -3388,11 +3426,8 @@ function renderDlg(st, count, pct){
     withBox: !!side, actionsHTML: navButtons(st.checkLabel || "Show the answers")});
   const chunks = [...app.querySelectorAll(".chunk")];
   const toggle = c => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); syncGapNotes(app); allOpen(); };
-  /* engine 45 (her catch 29.10): every gap opened by hand = the step is checked, so the button says Next (Finish), not "Show the answers" */
-  const allOpen = () => { if(checked) return; const g = [...app.querySelectorAll(".panel .dlg .chunk")].filter(c => !c.classList.contains("plain"));
-    if(!g.length || !g.every(c => c.classList.contains("open"))) return;
-    checked = true; const go = document.getElementById("go"); if(go) go.textContent = stepIdx === current.steps.length - 1 ? "Finish" : "Next";
-    if(moreOff){ moreOff(); moreOff = null; } const ch = app.querySelector(".more-below"); if(ch) ch.hidden = true; };
+  /* engine 45/47 (her catch 29.10): every gap opened by hand = the step is checked, so the button says Next (Finish), not "Show the answers" */
+  const allOpen = () => checkWhenAllOpen(".panel .dlg .chunk");
   chunks.forEach(c=>{
     if(checked) c.classList.add("open");
     c.addEventListener("click",()=>toggle(c));
@@ -3504,8 +3539,11 @@ function verdictHTML(val, r){
 function rewriteShown(val, r){
   if(!val) return `<span class="ans">${esc(r.a)}</span>`;
   const {core, m} = judgeRewrite(val, r);
+  /* engine 47 (her catch 29.10): when the "Not quite" box below compares it word by word, the sentence just keeps what they typed —
+     the red "→ answer" here said the same thing again, less clearly; only an answer too far off for that box keeps "→ answer" here */
   return m.ok ? `<span class="you-ok">${esc(core)} ✓</span>`
-    : `<span class="you-no">${esc(core)}</span> <span class="to-ans">→</span> <span class="ans">${esc(r.a)}</span>`;
+    : m.plain ? `<span class="you-no">${esc(core)}</span> <span class="to-ans">→</span> <span class="ans">${esc(r.a)}</span>`
+    : `<span class="you-typed">${esc(core)}</span>`;
 }
 
 function renderRewrite(st, count, pct){
@@ -3534,6 +3572,13 @@ function renderRewrite(st, count, pct){
 }
 /* re-render the same step after Check without resetting */
 function renderTaskKeep(){ const keep = checked; renderTask(); checked = keep; }
+/* engine 47 (her catch 29.10): when every answer of a step has been opened by hand, the step counts as checked — it shows what Check shows
+   (notes, bookmarks) where the student is, and the button says Next / Finish, so there's no extra tap on "Check" */
+function checkWhenAllOpen(sel){
+  if(checked) return; const items = [...app.querySelectorAll(sel)].filter(c => !c.classList.contains("plain"));
+  if(!items.length || !items.every(c => c.classList.contains("open"))) return;
+  const y = scrollY; checked = true; renderTaskKeep(); scrollTo(0, y);
+}
 
 /* ---------- say it in English ---------- */
 function renderSayit(st, count, pct){
@@ -3551,7 +3596,7 @@ function renderSayit(st, count, pct){
         ${checked&&s.note?`<p class="small">${s.note}</p>`:""}
       </div>${(checked||st.boxAlways)&&bx?box(bx):""}`,
     withBox: (checked||st.boxAlways) && !!bx, actionsHTML: navButtons()});
-  app.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>b.classList.toggle("open")));
+  app.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>{ b.classList.toggle("open"); checkWhenAllOpen(".reveal"); }));
   wireNav(()=>renderTaskKeep());
 }
 
@@ -3811,7 +3856,7 @@ function renderLookback(st, count, pct){
         ${checked?revHint():""}
       </div>`,
     actionsHTML: navButtons("Show all")});
-  app.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>b.classList.toggle("open")));
+  app.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>{ b.classList.toggle("open"); checkWhenAllOpen(".reveal"); }));
   wireNav(()=>renderTaskKeep());
 }
 
