@@ -4,7 +4,7 @@
 The page = the shared engine (engine/page_template.html, version in engine/VERSION) + this lesson's
 content.js (what goes between LESSON CONTENT: START and END) + page.json (title, group, file, assets;
 "listed": false = an unlisted page, left out of the lists until set to true;
-"earlier_only": [phrases] = look-back items only where the target contains one of them — what the whole group did in class).
+"earlier_only": [phrases] = look-back items only where the target contains one of them — what the whole group did in class; a task with core: true always fits and comes first, engine 43).
 Also writes lessons/<name>/build/preview.html for the Claude artifact preview."""
 import base64, json, mimetypes, os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -50,9 +50,9 @@ if '__EARLIER__' in t:
                 def target(it):
                     txt = it['r'].get('a', '') if it['type'] == 'rewrite' else (it['s']['rows'][0][1] if it['s'].get('rows') else '')
                     return re.sub(r'<[^>]+>|\$\{g\("|"\)\}', '', str(txt)).lower().replace('\u2019', "'")
-                pools = [[it for it in pool if any(o in target(it) for o in only)] for pool in pools]
+                pools = [[it for it in pool if it.get('core') or any(o in target(it) for o in only)] for pool in pools]   # engine 43: core tasks always fit
                 print('look back limited to the whitelist in page.json:', sum(len(p) for p in pools), 'items fit')
-            for pool in pools: rnd.shuffle(pool); pool.sort(key=lambda it: it['type'] != 'rewrite')   # rewrite first, then say-it
+            for pool in pools: rnd.shuffle(pool); pool.sort(key=lambda it: (not it.get('core'), it['type'] != 'rewrite'))   # core first (engine 43), rewrite, then say-it
             while len(picked) < want and any(pools):
                 for pool in pools:
                     if pool and len(picked) < want: picked.append(pool.pop(0))

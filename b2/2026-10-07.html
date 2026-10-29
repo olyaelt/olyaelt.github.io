@@ -103,8 +103,11 @@ details.summary[open] summary::after{content:"Hide"}
 .linklike{background:none;border:0;padding:0;color:var(--instr);font:inherit;font-weight:700;text-decoration:underline;cursor:pointer}
 .total{font-size:.92rem}
 .slow-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.slow{font:inherit;font-weight:700;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:6px 14px;cursor:pointer}
-.slow[aria-pressed="true"]{border-color:var(--instr);background:var(--instr);color:var(--instr-ink)}
+.spd-l{font-weight:700}
+.spd{display:inline-flex;border:2px solid var(--line);border-radius:99px;overflow:hidden;background:var(--card)}
+.spd button{font:inherit;font-weight:700;border:0;background:transparent;color:var(--ink);padding:6px 13px;min-width:46px;cursor:pointer}
+.spd button+button{border-left:2px solid var(--line)}
+.spd button[aria-pressed="true"]{background:var(--instr);color:var(--instr-ink)}
 .react{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:10px;font-weight:400;color:var(--ink)}
 .chips{display:inline-flex;gap:6px}
 .chip{font:inherit;font-weight:700;border:2px solid var(--ok-ink);background:transparent;color:var(--ok-ink);border-radius:99px;padding:4px 12px;cursor:pointer}
@@ -125,6 +128,7 @@ details.summary[open] summary::after{content:"Hide"}
 /* engine 41: a task for later (not in the total time) and, for her, the TubeQuizard copy of a listening task */
 .later-tag{display:inline-block;vertical-align:.15em;font-size:.72rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);border:1.5px solid var(--line);border-radius:99px;padding:0 8px;margin-left:4px;white-space:nowrap}
 .tq-link{margin:4px 2px 0;font-size:.9rem;color:var(--muted)}
+.tq-alt{margin:4px 2px 0;font-size:.9rem;color:var(--muted)}.tq-alt a{color:var(--instr)}
 .tq-link button{font:inherit;background:none;border:0;padding:0;color:var(--instr);text-decoration:underline;cursor:pointer}
 
 .t-strip-go{color:var(--instr);font-weight:700;white-space:nowrap}
@@ -255,6 +259,7 @@ details.summary[open] summary::after{content:"Hide"}
 .bar i{display:block;height:100%;background:var(--instr);width:0;transition:width .25s ease}
 .task-title{font-size:var(--step-1);font-weight:900;line-height:1.25}
 .instr{background:var(--instr);color:var(--instr-ink);font-weight:700;padding:10px 14px;border-radius:4px;margin-block:12px 14px}
+.instr-why{display:block;font-weight:400;margin-top:3px}
 .stage{display:grid;gap:16px}
 @media (min-width:720px){ .stage.with-box{grid-template-columns:minmax(0,1fr) 250px;align-items:start} }
 .panel{background:var(--card);border-radius:var(--radius);padding:16px;min-width:0;display:grid;gap:12px}
@@ -292,6 +297,9 @@ details.summary[open] summary::after{content:"Hide"}
 .target .rev{font-size:1.1rem}
 .chunk:not(.open) + .rev:not(.on){display:none}
 .chunk.plain{cursor:default}
+.gap-n{display:block;color:var(--label);font-size:.88rem;line-height:1.35;margin:1px 0 2px}
+.gap-n[hidden]{display:none}
+.say-note{margin:2px 0 0}
 .chunk.plain .gap .f,.chunk.plain .gap .r,.chunk.plain .gap.o .r{font-weight:inherit;color:inherit;background:none}
 .gap.o .r{background:#F6B26B;font-weight:400}
 .chunk.open .gap.o .r{color:#3B2300}
@@ -741,7 +749,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = ["click on the top line to hear the context","click on the line with the gap and try to catch what's in the gap","check","listen again — how did the expression sound?","optional: pronounce the expression like the speaker"];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "41";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "43";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -1421,7 +1429,7 @@ function renderHome(justDone){
               <span><div class="t">${esc(t.title)}${t.later?` <span class="later-tag">for later</span>`:""}</div><div class="m">${esc(t.meta)} · ≈ ${minutesOf(t)} min</div>${t.alt?`<div class="alt">${esc(t.alt)}</div>`:""}</span>
             </button>
             <button class="status" data-toggle="${t.id}" aria-pressed="${done.has(t.id)}" aria-label="${done.has(t.id)?"Done — tap to untick":"Tap to mark as done"}">✓</button>
-          </div><div data-fbslot="${t.id}">${isTeacher() ? teacherLine(t.id) : fbLine(t.id)}</div>${isTeacher() && t.tqLink ? tqLinkHTML(t) : ""}</div>`;
+          </div><div data-fbslot="${t.id}">${isTeacher() ? teacherLine(t.id) : fbLine(t.id)}</div>${isTeacher() && t.tqLink ? tqLinkHTML(t) : !isTeacher() && t.tq ? tqAltHTML(t) : ""}</div>`;
   app.innerHTML = `
     ${justDone?`<div class="done-banner" role="status">✓ Done!${isTeacher() ? " Teacher view: nothing was sent and nothing counts for the group." : lastDone && myCode() && syncState!=="unknown" ? ` +${framesOf(lastDone)} 🎞 for ${meStats ? "your film" : "our group"}.` : " Mark it in our spreadsheet in your colour."}${reactHTML()}</div>`:""}
     <header class="lesson-head">
@@ -1464,7 +1472,9 @@ function openTask(id, idx=0){
 }
 /* engine 41 (her wish 29.10: she didn't know where to find a page's TubeQuizard quiz): in her teacher view each listening task with
    `tqLink` shows its TubeQuizard copy, to open or copy for the spreadsheet. Students never see it. */
-const tqLinkHTML = t => `<p class="tq-link">🔗 TubeQuizard copy of this quiz: <a href="${esc(t.tqLink)}" target="_blank" rel="noopener">open</a> · <button class="linkish" data-copy-tq="${esc(t.id)}">Copy link</button></p>`;
+const tqLinkHTML = t => `<p class="tq-link">🔗 TubeQuizard copy of this quiz: <a href="${esc(t.tqLink)}" target="_blank" rel="noopener">open</a> · <button class="linkish" data-copy-tq="${esc(t.id)}">Copy link</button>${t.tq ? " · students see a link too" : ""}</p>`;
+/* engine 42: `tq` on a listening task = students see the same quiz in TubeQuizard under the task (and in the "isn't loading" help) */
+const tqAltHTML = t => `<p class="tq-alt">Prefer TubeQuizard? <a href="${esc(t.tq)}" target="_blank" rel="noopener">Do the same quiz there ↗</a> and tick ✓ here.</p>`;
 function teacherStrip(id){
   if(!isTeacher() || !teacherData) return "";
   const st = teacherData.students || [], dn = ((teacherData.done||{})[id] || []).length, c = teacherCounts(id);
@@ -1526,24 +1536,30 @@ let lastDone = null;
 function finish(t){ setMark(t.id, true); lastDone = t; lastFlagged = Object.values(flags[t.id]||{}); flushFlags(); }
 
 /* ---------- gapped dialogue ---------- */
+let GNK = 0;   /* engine 43: ids that tie a gap to its red note */
 function gapLineHTML(line){
-  const parts = line.p; let html = "", i = 0;
+  const parts = line.p; let html = "", i = 0, notes = "";
   while(i < parts.length){
     const x = parts[i];
     if(typeof x === "object" && "r" in x){
-      let chunk = "";
+      let chunk = "", ns = [];
       while(i < parts.length){
         const y = parts[i];
-        if(typeof y === "object" && "r" in y){ chunk += `<span class="gap${y.o?" o":""}"><span class="f">${esc(y.f)}</span><span class="r">${esc(y.r)}</span></span>`; i++; }
+        if(typeof y === "object" && "r" in y){ chunk += `<span class="gap${y.o?" o":""}"><span class="f">${esc(y.f)}</span><span class="r">${esc(y.r)}</span></span>`; if(y.n) ns.push(y.n); i++; }
         else if(typeof y === "string" && /^\s+$/.test(y) && typeof parts[i+1] === "object" && parts[i+1] && "r" in parts[i+1]){ chunk += y; i++; }
         else break;
       }
-      html += `<span class="chunk" role="button" tabindex="0" aria-label="Show the missing words">${chunk}</span>`;
+      const nk = ns.length ? ++GNK : 0;
+      html += `<span class="chunk" role="button" tabindex="0" aria-label="Show the missing words"${nk?` data-nk="${nk}"`:""}>${chunk}</span>`;
+      if(nk) notes += `<span class="gap-n" data-nk="${nk}" hidden>${esc(ns.join(" · "))}</span>`;
     } else if(typeof x === "object" && "b" in x){ html += `<b>${esc(x.b)}</b>`; i++; }
     else { html += esc(x); i++; }
   }
-  return `<p>${line.s?`<span class="spk">${esc(line.s)}:</span> `:""}${html}</p>`;
+  return `<p>${line.s?`<span class="spk">${esc(line.s)}:</span> `:""}${html}${notes}</p>`;
 }
+/* engine 43: a gap's red note shows while the gap is open (not on the plain, already-open text of "once more") */
+const syncGapNotes = root => (root || document).querySelectorAll(".gap-n[data-nk]").forEach(n => {
+  const c = (root || document).querySelector(`.chunk[data-nk="${n.dataset.nk}"]`); n.hidden = !(c && c.classList.contains("open") && !c.classList.contains("plain")); });
 /* ---------- engine 30: "!" = my own revision list (her decision 27.10: "?" asks Olya, "!" is for me); nothing is sent ---------- */
 const BOOKMARK = `<svg viewBox="0 0 12 16" aria-hidden="true"><path d="M1.6 1.6h8.8v12.8L6 11.2l-4.4 3.2z"/></svg>`;
 /* a one-line hint until the first bookmark (as for "?") */
@@ -1585,7 +1601,7 @@ function addRevButtons(chunks, id, s, only){
   return revs;
 }
 const wireChunk = c => {
-  const toggle = () => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); };
+  const toggle = () => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); syncGapNotes(app); };
   c.addEventListener("click", toggle);
   c.addEventListener("keydown", e => { if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggle(); }});
 };
@@ -1644,7 +1660,7 @@ function renderDlg(st, count, pct){
     stageHTML:`<div class="panel">${st.intro?`<p class="situation">${esc(st.intro)}</p>`:""}<div class="dlg">${st.lines.map(gapLineHTML).join("")}</div>${checked&&st.note?`<p class="small">${st.note}</p>`:""}${checked?revHint():""}</div>${side}`,
     withBox: !!side, actionsHTML: navButtons(st.checkLabel || "Show the answers")});
   const chunks = [...app.querySelectorAll(".chunk")];
-  const toggle = c => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); };
+  const toggle = c => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); syncGapNotes(app); };
   chunks.forEach(c=>{
     if(checked) c.classList.add("open");
     c.addEventListener("click",()=>toggle(c));
@@ -1653,6 +1669,7 @@ function renderDlg(st, count, pct){
   const dlgChunks = [...app.querySelectorAll(".panel .dlg .chunk")];   /* the dialogue's gaps, not the glossary's */
   if(st._rows) dlgChunks.forEach((c, k) => { if(!st._rows.has(k)){ c.classList.add("open", "plain"); ["role", "tabindex", "aria-label"].forEach(a => c.removeAttribute(a)); } });
   addRevButtons(dlgChunks, current.id, curS(), st._rows ? new Set(st._rows) : null);
+  syncGapNotes(app);
   wireNav(()=>renderTaskKeep());
 }
 
@@ -1775,7 +1792,7 @@ function renderSayit(st, count, pct){
       <div class="panel">
         <div class="say">
           ${s.rows.map((row,i)=> st._rows && !st._rows.has(i) ? "" : `<div class="say-row"><span class="q">${row[0]}</span>
-            <span class="say-a"><button class="reveal ${checked?"open":""}" data-r="${i}" aria-label="Show the English">${s.html ? row[1] : esc(row[1])}</button>${checked?markBtn(stepIdx+"-"+i, s.html ? plainText(row[1]) : row[1]):""}${bmBtn(curS(), i)}</span></div>`).join("")}
+            <span class="say-a"><button class="reveal ${checked?"open":""}" data-r="${i}" aria-label="Show the English">${s.html ? row[1] : esc(row[1])}</button>${checked?markBtn(stepIdx+"-"+i, s.html ? plainText(row[1]) : row[1]):""}${bmBtn(curS(), i)}</span>${checked&&row[2]?`<p class="small say-note">${row[2]}</p>`:""}</div>`).join("")}
         </div>
         ${checked?markHint()+revHint():""}
         ${checked&&s.note?`<p class="small">${s.note}</p>`:""}
@@ -1842,6 +1859,10 @@ function loadYT(){
   }
   return ytPromise;
 }
+/* engine 42: listening speed, three small buttons (normal · 0.75 · 0.5); the choice stays on this device for every clip.
+   Before 42 it was one 🐢 toggle (0.75 ↔ 1) kept as hw-slow, still read here. */
+const RATES = [1, 0.75, 0.5];
+const rateNow = () => { const r = Number(ls.get("hw-rate")); return RATES.includes(r) ? r : (ls.get("hw-slow") ? 0.75 : 1); };
 const clipOutHTML = lines => current.tq ? `<a href="${esc(current.tq)}" target="_blank" rel="noopener">Do this quiz in TubeQuizard ↗</a>`
   : `<a href="https://www.youtube.com/watch?v=${encodeURIComponent(lines[0][0])}&t=${Math.floor(Math.max(0, lines[0][1] - 1))}s" target="_blank" rel="noopener">Watch the clip on YouTube ↗</a>`;
 /* the videos come from YouTube: nothing is loaded from there until the student agrees (remembered on this device) */
@@ -1893,7 +1914,7 @@ function renderListen(st, count, pct){
             <p>If the video says <b>Sign in to confirm you're not a bot</b>, YouTube wants to know who's watching: tap <b>Sign in</b> on the video and use your Google account.</p>
             <p>On an iPhone or a Mac, Safari can hide that sign-in from videos on other sites: in the Safari settings, turn off <b>Prevent Cross-Site Tracking</b>, then reload this page.</p>
             <p>Or ${clipOutHTML(lines)}</p></details></div>
-        <div class="slow-row"><button class="slow" id="slow" aria-pressed="${!!ls.get("hw-slow")}">🐢 Slower</button><span class="small">${ls.get("hw-slow")?"playing at 0.75":"tap to slow the clips down"}</span></div>
+        <div class="slow-row"><span class="spd-l">🐢 Speed</span><div class="spd" id="spd" role="group" aria-label="Speed of the clips">${RATES.map(r => `<button data-rate="${r}" aria-pressed="${rateNow()===r}">${r===1?"normal":r}</button>`).join("")}</div></div>
         <div class="lines">${lines.map(lineHTML).join("")}</div>
 
         <p class="small" id="after" ${checked?"":"hidden"}>Listen again: how did the expression sound? Try to say it like the speaker.${stepIdx===current.steps.length-1&&current.takeaway?`<br><b>${current.takeaway}</b>`:""}</p>`;
@@ -1954,7 +1975,7 @@ function renderListen(st, count, pct){
     if(!ytPlayer || !ytReady) return;
     clearInterval(ytTimer); clearTimeout(ytWatch);
     rows.forEach((m,k)=>m.classList.toggle("playing", k===i));
-    try{ ytPlayer.setPlaybackRate(ls.get("hw-slow") ? 0.75 : 1); }catch(e){}
+    try{ ytPlayer.setPlaybackRate(rateNow()); }catch(e){}
     ytPlayer.seekTo(from, true); ytPlayer.playVideo();
     ytWatch = setTimeout(()=>{ try{ if(ytPlayer.getPlayerState() !== 1) document.getElementById("hint").hidden = false; }catch(e){} }, 2000);
     ytTimer = setInterval(()=>{
@@ -1969,12 +1990,11 @@ function renderListen(st, count, pct){
     if(i===0) play(Math.max(0, lines[0][1] - LEAD), clipEnd(lines, lines.length-1) + LEAD, 0);   /* top line: the whole clip, as in TubeQuizard */
     else play(Math.max(0, lines[i][1] - LEAD), lines[i][1] + lines[i][2] + LEAD, i);
   }));
-  const slowBtn = document.getElementById("slow");
-  if(slowBtn) slowBtn.addEventListener("click",()=>{
-    const on = !ls.get("hw-slow"); ls.set("hw-slow", on ? "1" : "");
-    slowBtn.setAttribute("aria-pressed", on); slowBtn.nextElementSibling.textContent = on ? "playing at 0.75" : "tap to slow the clips down";
-    try{ ytPlayer && ytPlayer.setPlaybackRate(on ? 0.75 : 1); }catch(e){}
-  });
+  app.querySelectorAll("#spd [data-rate]").forEach(b => b.addEventListener("click", () => {
+    const r = Number(b.dataset.rate); ls.set("hw-rate", String(r)); ls.set("hw-slow", "");
+    app.querySelectorAll("#spd [data-rate]").forEach(x => x.setAttribute("aria-pressed", Number(x.dataset.rate) === r));
+    try{ ytPlayer && ytPlayer.setPlaybackRate(r); }catch(e){}
+  }));
   const answers = lines.flatMap(l => l[3].filter(p=>typeof p!=="string").map(p=>p.gap));
   /* engine 38: what they typed stays in the gap, green when right, red + → the answer when not (see judgeRewrite) */
   const judgeGap = inp => {
@@ -2127,7 +2147,9 @@ function renderPlan(st, count, pct){
   const list = MAP.map((g,gi)=>`<h4 class="pick-h">${g.h}</h4>${g.items.map((it,ii)=>{ const [en,r,mean] = it, id = gi+"-"+ii;
       return `<button class="pick ${picks.has(id)?"on":""}" data-id="${id}" aria-pressed="${picks.has(id)}"><span class="tick" aria-hidden="true"></span>
         <span class="p-txt"><span class="p-en">${en}</span>${mean?` <span class="mean">— ${mean}</span>`:""}${ru(r)}</span></button>`; }).join("")}`).join("");
-  shell({count, pct, instr:PLAN_INSTR,
+  /* engine 42: the why under the instruction; PLAN_WHY in the homework data replaces it ("" = none) */
+  const why = typeof PLAN_WHY !== "undefined" ? PLAN_WHY : "They'll be with you on the next step, so you remember to use them.";
+  shell({count, pct, instr: PLAN_INSTR + (why ? `<span class="instr-why">${why}</span>` : ""),
     stageHTML:`<div class="panel">
         ${taskPeek()}
         <div class="pick-count small" id="pc" aria-live="polite"></div>

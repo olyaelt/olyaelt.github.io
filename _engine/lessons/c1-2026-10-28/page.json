@@ -5,7 +5,8 @@
  "assets": {
   "STICKER": "sticker.png",
   "GAPS": "gaps.json",
-  "TQ": "tq.json"
+  "TQ": "tq.json",
+  "CHAT": "chat.json"
  },
  "listed": false,
  "earlier_only": [

@@ -37,7 +37,7 @@ const HIJACK = `window.onYouTubeIframeAPIReady=function(){};window.YT={Player:${
   await run('hijacked', 'hijack', async s => { await s.open(); await s.p.clock.runFor(1000); const v = await s.look(); out.hijacked = v;
     expect('hijacked: the player comes anyway', v.iframe && !v.msg && !v.loading, v); });
   await run('blocked', 'block', async s => { await s.open(); await s.p.clock.runFor(500); const v = await s.look(); out.blocked = v;
-    expect('blocked: message, Try again, YouTube link', /isn't loading/.test(v.msg) && /Try again/.test(v.msg) && /youtube\.com\/watch\?v=.+&t=\d+s/.test(v.link) && !v.loading, v);
+    expect('blocked: message, Try again, YouTube link (TubeQuizard when the task has tq, engine 42 on C1)', /isn't loading/.test(v.msg) && /Try again/.test(v.msg) && (/youtube\.com\/watch\?v=.+&t=\d+s/.test(v.link) || /tubequizard\.com/.test(v.link) && /Do this quiz in TubeQuizard/.test(v.msg)) && !v.loading, v);
     s.setApi('ok'); await s.p.click('#yt-retry'); await s.p.waitForTimeout(400); await s.p.clock.runFor(1000); const w = await s.look(); out.retried = w;
     expect('blocked: Try again works', w.iframe && !w.msg && !w.loading, w); });
   await run('hanging', 'hang', async s => { await s.open(); await s.p.clock.runFor(5000); const v = await s.look(); out.hanging5s = v;
@@ -55,8 +55,8 @@ const HIJACK = `window.onYouTubeIframeAPIReady=function(){};window.YT={Player:${
     return {shown: !!h && !h.hidden, tapLine: !!h && !!h.querySelector('p') && !h.querySelector('p').hidden, summary: d ? d.querySelector('summary').textContent : '',
             text: d ? d.textContent.replace(/\s+/g, ' ') : '', link: d && d.querySelector('a') ? d.querySelector('a').href : ''}; });
   await run('noplay', 'ok', async s => { await s.p.evaluate(() => { window.__noPlay = true; }); await s.open(); await s.p.clock.runFor(1000);
-    await s.p.click('.ln >> nth=1'); await s.p.clock.runFor(2500); const v = await help(s.p); out.noplay = v;
-    expect('noplay: hint + Still nothing?', v.shown && v.tapLine && v.summary === 'Still nothing?' && /Sign in/.test(v.text) && /Prevent Cross-Site Tracking/.test(v.text) && /youtube\.com\/watch/.test(v.link), v); });
+    await s.p.click('.ln .pl >> nth=1');   /* the play button: a line's centre can be a gap field */ await s.p.clock.runFor(2500); const v = await help(s.p); out.noplay = v;
+    expect('noplay: hint + Still nothing?', v.shown && v.tapLine && v.summary === 'Still nothing?' && /Sign in/.test(v.text) && /Prevent Cross-Site Tracking/.test(v.text) && /youtube\.com\/watch|tubequizard\.com/.test(v.link), v); });
   await run('failed-help', 'block', async s => { await s.open(); await s.p.clock.runFor(500); const v = await help(s.p); out.failedHelp = v;
     expect('failed: the help shows without the tap line', v.shown && !v.tapLine && v.summary === 'Still nothing?', v); });
   console.log(JSON.stringify(out, null, 1)); if (errs.length) fail.push('page errors: ' + errs.join(' | '));

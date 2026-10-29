@@ -2,177 +2,6 @@
  "seen": [
   [
    [
-    "rDqXwUS402I",
-    265.611,
-    9.476,
-    [
-     "Now, lobster is a delicacy."
-    ]
-   ],
-   [
-    "rDqXwUS402I",
-    267.62,
-    2.796,
-    [
-     "Can the same paradigm shift happen for bugs?"
-    ]
-   ],
-   [
-    "rDqXwUS402I",
-    270.416,
-    1.239,
-    [
-     "So, ",
-     {
-      "gap": "give it a try"
-     },
-     "!"
-    ]
-   ],
-   [
-    "rDqXwUS402I",
-    271.655,
-    1.388,
-    [
-     "Pop that insect into your mouth,"
-    ]
-   ],
-   [
-    "rDqXwUS402I",
-    273.043,
-    2.044,
-    [
-     "and savor the crunch."
-    ]
-   ]
-  ],
-  [
-   [
-    "Ln3KO17NVpc",
-    179.945,
-    7.308,
-    [
-     "So I -- I -- I haven't seen it."
-    ]
-   ],
-   [
-    "Ln3KO17NVpc",
-    184.116,
-    1.669,
-    [
-     "I've ",
-     {
-      "gap": "seen bits of it"
-     },
-     ". I then did my homework."
-    ]
-   ],
-   [
-    "Ln3KO17NVpc",
-    185.785,
-    1.468,
-    [
-     "I've seen loads now. -Yeah."
-    ]
-   ]
-  ],
-  [
-   [
-    "vPETy41V7AA",
-    295.55,
-    10.37,
-    [
-     "One thing we've noticed, though, is that even though"
-    ]
-   ],
-   [
-    "vPETy41V7AA",
-    298.7,
-    4.84,
-    [
-     "the spinner, back in 2006, was just really trendy,"
-    ]
-   ],
-   [
-    "vPETy41V7AA",
-    303.54,
-    2.38,
-    [
-     "it ",
-     {
-      "gap": "hasn't aged well"
-     },
-     "."
-    ]
-   ]
-  ],
-  [
-   [
-    "AqLIMK8pIog",
-    1148.55,
-    10.1,
-    [
-     "BARRY MITCHELL: Does this ",
-     {
-      "gap": "take you back"
-     },
-     "?"
-    ]
-   ],
-   [
-    "AqLIMK8pIog",
-    1152.45,
-    2.7,
-    [
-     "JAMAL CRAWFORD: Yes, it ",
-     {
-      "gap": "takes me back"
-     },
-     ". It's really interesting."
-    ]
-   ],
-   [
-    "AqLIMK8pIog",
-    1154.6,
-    2.6,
-    [
-     "I'm glad to see it. I'm glad I came here today."
-    ]
-   ]
-  ],
-  [
-   [
-    "rFpDK2KhAgw",
-    565.145,
-    6.695,
-    [
-     "or somebody preaching in the street"
-    ]
-   ],
-   [
-    "rFpDK2KhAgw",
-    567.659,
-    2.223,
-    [
-     "or somebody wearing funny clothes."
-    ]
-   ],
-   [
-    "rFpDK2KhAgw",
-    570.689,
-    1.151,
-    [
-     {
-      "gap": "Give it a try"
-     },
-     "."
-    ]
-   ]
-  ]
- ],
- "seen2": [
-  [
-   [
     "lWbjqpmYKrw",
     0.83,
     11.47,
@@ -399,7 +228,11 @@
     44.72,
     2.39,
     [
-     "say anything, I'm always going on about this."
+     "say anything, I'm ",
+     {
+      "gap": "always going on about"
+     },
+     " this."
     ]
    ],
    [
@@ -450,8 +283,179 @@
    ]
   ]
  ],
+ "seen2": [
+  [
+   [
+    "rDqXwUS402I",
+    265.611,
+    9.476,
+    [
+     "Now, lobster is a delicacy."
+    ]
+   ],
+   [
+    "rDqXwUS402I",
+    267.62,
+    2.796,
+    [
+     "Can the same paradigm shift happen for bugs?"
+    ]
+   ],
+   [
+    "rDqXwUS402I",
+    270.416,
+    1.239,
+    [
+     "So, ",
+     {
+      "gap": "give it a try"
+     },
+     "!"
+    ]
+   ],
+   [
+    "rDqXwUS402I",
+    271.655,
+    1.388,
+    [
+     "Pop that insect into your mouth,"
+    ]
+   ],
+   [
+    "rDqXwUS402I",
+    273.043,
+    2.044,
+    [
+     "and savor the crunch."
+    ]
+   ]
+  ],
+  [
+   [
+    "Ln3KO17NVpc",
+    179.945,
+    7.308,
+    [
+     "So I -- I -- I haven't seen it."
+    ]
+   ],
+   [
+    "Ln3KO17NVpc",
+    184.116,
+    1.669,
+    [
+     "I've ",
+     {
+      "gap": "seen bits of it"
+     },
+     ". I then did my homework."
+    ]
+   ],
+   [
+    "Ln3KO17NVpc",
+    185.785,
+    1.468,
+    [
+     "I've seen loads now. -Yeah."
+    ]
+   ]
+  ],
+  [
+   [
+    "vPETy41V7AA",
+    295.55,
+    10.37,
+    [
+     "One thing we've noticed, though, is that even though"
+    ]
+   ],
+   [
+    "vPETy41V7AA",
+    298.7,
+    4.84,
+    [
+     "the spinner, back in 2006, was just really trendy,"
+    ]
+   ],
+   [
+    "vPETy41V7AA",
+    303.54,
+    2.38,
+    [
+     "it ",
+     {
+      "gap": "hasn't aged well"
+     },
+     "."
+    ]
+   ]
+  ],
+  [
+   [
+    "AqLIMK8pIog",
+    1148.55,
+    10.1,
+    [
+     "BARRY MITCHELL: Does this ",
+     {
+      "gap": "take you back"
+     },
+     "?"
+    ]
+   ],
+   [
+    "AqLIMK8pIog",
+    1152.45,
+    2.7,
+    [
+     "JAMAL CRAWFORD: Yes, it ",
+     {
+      "gap": "takes me back"
+     },
+     ". It's really interesting."
+    ]
+   ],
+   [
+    "AqLIMK8pIog",
+    1154.6,
+    2.6,
+    [
+     "I'm glad to see it. I'm glad I came here today."
+    ]
+   ]
+  ],
+  [
+   [
+    "rFpDK2KhAgw",
+    565.145,
+    6.695,
+    [
+     "or somebody preaching in the street"
+    ]
+   ],
+   [
+    "rFpDK2KhAgw",
+    567.659,
+    2.223,
+    [
+     "or somebody wearing funny clothes."
+    ]
+   ],
+   [
+    "rFpDK2KhAgw",
+    570.689,
+    1.151,
+    [
+     {
+      "gap": "Give it a try"
+     },
+     "."
+    ]
+   ]
+  ]
+ ],
  "quiz_links": {
-  "seen": "http://tubequizard.com/search.php?pattern=!KGdpdmUgaXQgYSAodHJ5fGdvfHNob3QpKS8oKEkndmV8SSBoYXZlKSggb25seSk_IHNlZW4gYml0cyBvZiBpdCkvKChoYXNuJ3R8aGF2ZW4ndCkgYWdlZCB3ZWxsKQ&quizType=1&video=rDqXwUS402I%2CLn3KO17NVpc%2CvPETy41V7AA%2CrFpDK2KhAgw",
-  "seen2": "http://tubequizard.com/search.php?pattern=!KGV2ZXJ5b25lJ3MgdGFsa2luZyBhYm91dCggaXQpPykvKGFsbCB0aGUgaHlwZSkvKEknbGwgZ2l2ZSAoaXR8eW91fGhpbXxoZXJ8dGhlbSkgdGhhdCkvKGNvdWxkbid0IGdldCBpbnRvIChpdHx0aGF0KSkvKChrZWVwfGtlZXBzfGtlcHQpIGdvaW5nIG9uIGFib3V0KS8oKGlzfHdhcykgKGl0fHRoYXR8dGhpc3xoZXxzaGV8dGhleSkgYW55IGdvb2QpLyhub3QgYXMgZ29vZCBhcyAoeW91fEl8d2V8ZXZlcnlvbmV8cGVvcGxlKSAodGhpbmt8dGhvdWdodHxzYXl8c2F5c3xzYWlkKSk&quizType=1&video=lWbjqpmYKrw%2Cuk9wV_Cm7qE%2C32zzZE658ec%2CjdRsYs5N_tc%2Cpnv5iKB2hl4%2CByx7jyC4pCQ%2CLc3lWIdB-sw%2CngBy0H_q-GY"
+  "seen": "http://tubequizard.com/search.php?pattern=!KGV2ZXJ5b25lJ3MgdGFsa2luZyBhYm91dCggaXQpPykvKGFsbCB0aGUgaHlwZSkvKEknbGwgZ2l2ZSAoaXR8eW91fGhpbXxoZXJ8dGhlbSkgdGhhdCkvKGNvdWxkbid0IGdldCBpbnRvIChpdHx0aGF0KSkvKChrZWVwfGtlZXBzfGtlcHR8YWx3YXlzKSBnb2luZyBvbiBhYm91dCkvKChpc3x3YXMpIChpdHx0aGF0fHRoaXN8aGV8c2hlfHRoZXkpIGFueSBnb29kKS8obm90IGFzIGdvb2QgYXMgKHlvdXxJfHdlfGV2ZXJ5b25lfHBlb3BsZSkgKHRoaW5rfHRob3VnaHR8c2F5fHNheXN8c2FpZCkp&quizType=1&video=lWbjqpmYKrw%2Cuk9wV_Cm7qE%2C32zzZE658ec%2CjdRsYs5N_tc%2Cpnv5iKB2hl4%2CByx7jyC4pCQ%2CLc3lWIdB-sw%2CngBy0H_q-GY",
+  "seen2": "http://tubequizard.com/search.php?pattern=!KGdpdmUgaXQgYSAodHJ5fGdvfHNob3QpKS8oKEkndmV8SSBoYXZlKSggb25seSk_IHNlZW4gYml0cyBvZiBpdCkvKChoYXNuJ3R8aGF2ZW4ndCkgYWdlZCB3ZWxsKQ&quizType=1&video=rDqXwUS402I%2CLn3KO17NVpc%2CvPETy41V7AA%2CrFpDK2KhAgw"
  }
 }

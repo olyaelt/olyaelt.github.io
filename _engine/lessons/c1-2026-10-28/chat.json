@@ -1,0 +1,249 @@
+{
+ "id": "e1",
+ "section": "Extension",
+ "title": "Class of 2006: the group chat",
+ "meta": "8 gaps · 2 screens",
+ "instr": "Twenty years after school, four old classmates are chatting in their WhatsApp group. Say each missing bit, then tap to check.",
+ "steps": [
+  {
+   "type": "dlg",
+   "intro": "WhatsApp group «Class of 2006 🎓» · Jess, Ollie, Nadia, Chris",
+   "lines": [
+    {
+     "s": "Jess",
+     "p": [
+      "Mum's clearing out the attic, and she's found my old school reports! 📦 Perfect timing for the reunion 😂"
+     ]
+    },
+    {
+     "s": "Jess",
+     "p": [
+      "Ollie, listen to this: \"Jessica would do better in French if she didn't sit next to Oliver, who talks far too much.\" Signed Mrs Martin 😂"
+     ]
+    },
+    {
+     "s": "Nadia",
+     "p": [
+      "😂 Nothing's changed, then."
+     ]
+    },
+    {
+     "s": "Ollie",
+     "p": [
+      "Excuse me. These days I talk far too much in French. IN FRANCE."
+     ]
+    },
+    {
+     "s": "Chris",
+     "p": [
+      "Wait, you live in France?? Last I heard, you were in Leeds."
+     ]
+    },
+    {
+     "s": "Ollie",
+     "p": [
+      "Yep, Lyon. Six years now. My wife's French. And yes, I know — I spent five years telling everyone French was ",
+      {
+       "f": "",
+       "r": "a complete",
+       "n": "a + adjective + noun: a complete waste of time"
+      },
+      " (complete / completely?) waste of time."
+     ]
+    },
+    {
+     "s": "Jess",
+     "p": [
+      "Every single lesson!"
+     ]
+    },
+    {
+     "s": "Ollie",
+     "p": [
+      "Mrs Martin always said, \"You never know when it might ",
+      {
+       "f": "",
+       "r": "come",
+       "n": "come in handy: the verb is come"
+      },
+      " (1 word) in handy, Oliver.\" She was right. Don't tell her."
+     ]
+    },
+    {
+     "s": "Nadia",
+     "p": [
+      "Do you ever think of her when you order a croissant?"
+     ]
+    },
+    {
+     "s": "Ollie",
+     "p": [
+      "Honestly? More often ",
+      {
+       "f": "",
+       "r": "than you'd think",
+       "n": "you'd = you would · or: than you think"
+      },
+      " (t… y… t…)."
+     ]
+    },
+    {
+     "s": "Chris",
+     "p": [
+      "Is she still teaching?"
+     ]
+    },
+    {
+     "s": "Jess",
+     "p": [
+      "She retired last year. My niece was in her very last class, and she still made them learn all the irregular verbs ",
+      {
+       "f": "",
+       "r": "by heart",
+       "n": "by heart — singular · or: off by heart (BrE)"
+      },
+      " (наизусть)."
+     ]
+    },
+    {
+     "s": "Chris",
+     "p": [
+      {
+       "f": "B",
+       "r": "ack"
+      },
+      " in my ",
+      {
+       "f": "d",
+       "r": "ay",
+       "n": "back in my day — singular"
+      },
+      ", it was fifty verbs a week!"
+     ]
+    },
+    {
+     "s": "Jess",
+     "p": [
+      "Chris, we're the same age. 😄 Go on, ask your mums. I bet they've kept your reports too."
+     ]
+    },
+    {
+     "s": "Nadia",
+     "p": [
+      "On it."
+     ]
+    },
+    {
+     "s": "Chris",
+     "p": [
+      "Same."
+     ]
+    }
+   ],
+   "note": "a + adjective + noun: a complete waste of time · come in handy: the verb is come · you'd = you would · or: than you think · by heart — singular · or: off by heart (BrE) · back in my day — singular"
+  },
+  {
+   "type": "dlg",
+   "intro": "Later that evening",
+   "lines": [
+    {
+     "s": "Nadia",
+     "p": [
+      "OK, Mum found mine: \"Nadia does not enjoy PE.\" Understatement of the century."
+     ]
+    },
+    {
+     "s": "Chris",
+     "p": [
+      "And now you run marathons!"
+     ]
+    },
+    {
+     "s": "Nadia",
+     "p": [
+      "Four so far. I hated training at first, but it ",
+      {
+       "f": "",
+       "r": "paid off",
+       "n": "active: it paid off · or: it's paid off"
+      },
+      " (pay off — active or passive?)."
+     ]
+    },
+    {
+     "s": "Jess",
+     "p": [
+      "Mr Hughes would faint. 😂 He nearly failed you every year."
+     ]
+    },
+    {
+     "s": "Chris",
+     "p": [
+      "Mine's here too. Look: \"Christopher put a lot of work into his science project.\""
+     ]
+    },
+    {
+     "s": "Jess",
+     "p": [
+      "Oh no. The one the cleaner threw away?"
+     ]
+    },
+    {
+     "s": "Chris",
+     "p": [
+      "Three weeks of work in a bin bag. No project, no mark, so ",
+      {
+       "f": "",
+       "r": "none of it counted",
+       "n": "none of it counted — active, past simple (= it didn't count: no mark)"
+      },
+      " (none / count)."
+     ]
+    },
+    {
+     "s": "Ollie",
+     "p": [
+      "You cried in the canteen."
+     ]
+    },
+    {
+     "s": "Chris",
+     "p": [
+      "I did NOT cry. My eye was watering. For an hour."
+     ]
+    },
+    {
+     "s": "Jess",
+     "p": [
+      "😂 Right, back to the reunion. Drinks at the Red Lion on 12 December? Who's in?"
+     ]
+    },
+    {
+     "s": "Nadia",
+     "p": [
+      "In!"
+     ]
+    },
+    {
+     "s": "Ollie",
+     "p": [
+      "In. And can we invite Mrs Martin? I'd like to tell her she was right."
+     ]
+    },
+    {
+     "s": "Jess",
+     "p": [
+      "Oh, Ollie. That's lovely. I'll ask my niece's school to pass on a message."
+     ]
+    },
+    {
+     "s": "Chris",
+     "p": [
+      "In. I'll bring tissues. For my eye."
+     ]
+    }
+   ],
+   "note": "active: it paid off · or: it's paid off · none of it counted — active, past simple (= it didn't count: no mark)"
+  }
+ ]
+}

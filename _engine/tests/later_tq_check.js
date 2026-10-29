@@ -16,23 +16,27 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
   await ctx.route(URL_ + '**', r => r.fulfill({status: 200, contentType: 'application/json', headers: {'Access-Control-Allow-Origin': '*'}, body: JSON.stringify(env.post(r.request().postData()))}));
   const p = await ctx.newPage(); p.on('pageerror', e => errs.push(e.message));
   await p.goto('file://' + path.join(dir, path.basename(src))); await p.waitForTimeout(300);
-  const meta = await p.evaluate(() => ({later: TASKS.filter(t => t.later).map(t => t.id), tq: TASKS.filter(t => t.tqLink).map(t => t.id),
+  const meta = await p.evaluate(() => ({later: TASKS.filter(t => t.later).map(t => t.id), tq: TASKS.filter(t => t.tqLink).map(t => t.id), tqStud: TASKS.filter(t => t.tq).map(t => t.id),
     all: Math.round(TASKS.reduce((s, t) => s + minutesOf(t), 0) / 5) * 5, core: Math.round(TASKS.filter(t => !t.later).reduce((s, t) => s + minutesOf(t), 0) / 5) * 5}));
   out.meta = meta; expect('page has a later task and TubeQuizard links', meta.later.length && meta.tq.length, meta);
   // a student (code s0)
   await p.fill('#code', 's0'); await p.click('#code-go'); await p.waitForTimeout(400);
   const stud = await p.evaluate(() => ({total: document.querySelector('.total') ? document.querySelector('.total').textContent : '', tags: [...document.querySelectorAll('.later-tag')].map(x => x.closest('.task-wrap').querySelector('[data-open]').dataset.open),
-    tq: document.querySelectorAll('.tq-link').length}));
+    tq: document.querySelectorAll('.tq-link').length,
+    alt: [...document.querySelectorAll('.tq-alt')].map(x => ({task: x.closest('.task-wrap').querySelector('[data-open]').dataset.open, href: x.querySelector('a').href}))}));
   out.student = stud;
   expect('student: total without the later task', new RegExp('About ' + meta.core + ' minutes').test(stud.total) && /for later/.test(stud.total), stud);
   expect('student: tag on the later task(s) only', JSON.stringify(stud.tags) === JSON.stringify(meta.later), stud);
-  expect('student: no TubeQuizard links', stud.tq === 0, stud);
+  expect('student: no teacher TubeQuizard lines', stud.tq === 0, stud);
+  // engine 42: a task with `tq` (C1 pages) shows students "Prefer TubeQuizard? Do the same quiz there"; without `tq` (B2) nothing
+  expect('student: the TubeQuizard line on tasks with tq only', JSON.stringify(stud.alt.map(x => x.task)) === JSON.stringify(meta.tqStud) && stud.alt.every(x => /tubequizard\.com/.test(x.href)), stud);
   if (shots) await p.screenshot({path: path.join(shots, 'student-home.png'), fullPage: true});
   // Olya
   await p.evaluate(() => { localStorage.clear(); }); await p.reload(); await p.waitForTimeout(300);
   await p.fill('#code', teacherCode); await p.click('#code-go'); await p.waitForTimeout(500);
-  const t = await p.evaluate(() => ({links: [...document.querySelectorAll('.tq-link')].map(x => ({task: x.closest('.task-wrap').querySelector('[data-open]').dataset.open, href: x.querySelector('a').href}))}));
+  const t = await p.evaluate(() => ({links: [...document.querySelectorAll('.tq-link')].map(x => ({task: x.closest('.task-wrap').querySelector('[data-open]').dataset.open, href: x.querySelector('a').href})), alt: document.querySelectorAll('.tq-alt').length}));
   out.teacher = t;
+  expect('teacher: no student line', t.alt === 0, t);
   expect('teacher: one TubeQuizard line per task with tqLink', JSON.stringify(t.links.map(x => x.task)) === JSON.stringify(meta.tq) && t.links.every(x => /tubequizard\.com/.test(x.href)), t);
   await ctx.grantPermissions(['clipboard-read', 'clipboard-write']).catch(() => {});
   await p.locator('[data-copy-tq]').first().click(); await p.waitForTimeout(200);

@@ -69,10 +69,10 @@ const TASKS = [
   {id:"then-now", topic:"seen", sec:"Revision", title:"Back to the start: how would you say it now?", meta:"6 sentences from the start of the lesson", kind:"steps",
    steps:SAYIT.map((s,i)=>({type:"sayit", s, first:i===0, box:"",
      instr: i===0 ? "Remember the start of the lesson? Say it in English — aloud. Then tap the yellow boxes to check." : "Say it in English."}))},
-  {id:"tq-seen", topic:"seen", sec:"Extension", title:"Listening: the same phrases in real conversations", meta:"5 short clips · a tough one: try 🐢 Slower", kind:"steps",
+  {id:"tq-seen", topic:"seen", sec:"Extension", title:"Listening: phrases from the lesson in real videos", meta:"8 short clips", kind:"steps",
    tqLink:TQ.quiz_links.seen,
    steps:TQ.seen.map((clip,i)=>({type:"listen",clip,first:i===0}))},
-  {id:"tq-seen-2", topic:"seen", sec:"Extension", title:"Listening 2: more phrases from the lesson in real videos", meta:"8 short clips · do it when you have time", kind:"steps",
+  {id:"tq-seen-2", topic:"seen", sec:"Extension", title:"Listening 2: more phrases from the lesson in real conversations", meta:"5 short clips · a tough one: try 🐢 0.75 or 0.5", kind:"steps",
    later:true, tqLink:TQ.quiz_links.seen2,
    steps:TQ.seen2.map((clip,i)=>({type:"listen",clip,first:i===0}))}
 ];

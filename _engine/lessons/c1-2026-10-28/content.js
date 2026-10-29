@@ -1,6 +1,7 @@
 const STICKER = "__STICKER__";
 const GAPS = __GAPS__;
 const TQ = __TQ__;   /* clips from the TubeQuizard quiz: [videoId, start, duration, parts] */
+const CHAT = __CHAT__;   /* e1: the group chat «Class of 2006» */
 /* Link to the group's homework spreadsheet. Leave empty and the page simply says where to write. */
 const SHEET_URL = "";
 const PAGE_KEY = "hw-ge-c1-2026-10-28";
@@ -44,25 +45,31 @@ const R1_GLOSS = "Say the missing words, then tap the yellow and orange boxes to
 const R1_PLAIN = "Now without the glossary. Say the missing words, then tap the yellow boxes to check.";
 const R1_STEPS = GAPS.steps.map((st, i) => Object.assign({}, st, {instr: i === 0 ? R1_FIRST : st.gloss ? R1_GLOSS : R1_PLAIN}));
 
-/* E1: the group's slips in new sentences (moved to Extension, her rule 29.10: Revision holds only what the whole group met in class) */
-const SAYIT = {html:true, rows:[
-  ["Это совещание было совершенно пустой тратой времени.", `That meeting was ${g("a complete waste of time")}.`],
-  ["Папа говорит, что в его время все ходили в школу пешком.", `My dad says that ${g("back in his day")}, everyone walked to school.`],
-  ["Я год учила испанский каждый день. Было тяжело, но это окупилось.", `I studied Spanish every day for a year. It was hard, but ${g("it paid off")}.`],
-  ["Я два часа гуляла, но телефон с шагомером остался дома, так что ничего из этого не засчиталось.", `I walked for two hours, but I left my phone at home, so ${g("none of it counted")}.`],
-  ["Не все любят готовить. Многие люди даже не знают, как сварить яйцо.", `${g("Not everyone likes")} cooking. A lot of ${g("people don't")} even know how to boil an egg.`],
-  ["Я купила коврик для йоги, позанималась один раз — и с тех пор ни разу им не пользовалась.", `I bought a yoga mat, used it once, and ${g("I've never used it since")}.`]],
-  note:"The small words: a complete waste of time · back in his day · it paid off · none of it counted · not everyone likes · people don't · I've never used it since (or: I haven't used it since)"};
+/* R2 (TZ 29.10 17:00, better.json = deck slides 47–53 as the class saw them): green = good, grey = could be better; the note under each after Check.
+   core: the whole group did it in class, so later Quick look backs take it first (engine 43). */
+const BETTER = {html:true, rows:[
+  [`<span class="en"><span class="good">All the skills you've learned</span> <span class="trap">sooner or later never be useless</span>.</span> ${ru("(любые навыки рано или поздно пригодятся)")}`,
+   `All the skills you've learned <b class="g">will come in handy</b> sooner or later. / Everything you learn <b class="g">comes in handy</b> sooner or later.`,
+   `Sooner or later and never don't go together. Also possible: You never know when it might come in handy.`],
+  [`<span class="en"><span class="trap">In our days</span>, <span class="trap">back to the past</span>, <span class="good">the university was very ideological</span>.</span> ${ru("(в наше время вуз был очень идеологизированным)")}`,
+   `<b class="g">Back in my day</b>, / <b class="g">In our day</b>, the university was very ideological.`,
+   `Not in our days, but in our day (no -s) = back in my day. «В наше время» = back then → in our day; = now → these days / nowadays. Back to the past isn't an English phrase. · ideological ${ipa("/ˌaɪdiəˈlɒdʒɪkl/")}`],
+  [`<span class="en"><span class="good">It's a good way to</span> <span class="trap">know</span> <span class="good">something new</span>: to create something <span class="trap">from zero to the end</span>.</span> ${ru("(хороший способ узнать что-то новое — сделать что-то с нуля самому)")}`,
+   `It's a good way to <b class="g">learn</b> something new: to make something <b class="g">from scratch</b>.`,
+   `Know = знать (a state); «узнать что-то новое» → learn something new. «С нуля» → from scratch; «от начала до конца» → from start to finish. · scratch ${ipa("/skrætʃ/")}`]]};
 
 const TASKS = [
   {id:"r1", topic:"school", sec:"Revision", title:"Three answers on the radio: was school any use?", meta:"6 steps", kind:"steps", steps:R1_STEPS},
-  {id:"e1", topic:"school", sec:"Extension", title:"Small words that matter: say it in English", meta:"6 lines", kind:"steps",
-   steps:[{type:"sayit", s:SAYIT, instr:"Say it in English. Then tap to check."}]},
+  {id:"r2", topic:"school", sec:"Revision", title:"Our sentences: could be better → perfect", meta:"3 sentences", kind:"steps", core:true,
+   steps:[{type:"sayit", s:BETTER, box:BOX_SCHOOL, boxAlways:true, instr:"Our sentences from the lesson. Green = good, grey = could be better. How would you make each one perfect English with today's phrases? Use the box. Then tap to check."}]},
+  /* E1 (TZ 29.10 17:00, chat.json): the group chat; its gaps sit on the group's slips of 28.10, each with a red note when opened (engine 43) */
+  {id:"e1", topic:"school", sec:"Extension", title:"Class of 2006: the group chat", meta:"8 gaps · 2 screens", kind:"steps",
+   steps:CHAT.steps.map((st, i) => ({type:"dlg", intro:st.intro, lines:st.lines, instr: i === 0 ? CHAT.instr : "Say each missing bit, then tap to check."}))},
   {id:"e2", topic:"school", sec:"Extension", title:"Hear it: the phrases in real videos", meta:"6 clips, 7 gaps", kind:"steps",
-   takeaway:TQ.takeaway, tqLink:TQ.quiz_link,
+   takeaway:TQ.takeaway, tqLink:TQ.quiz_link, tq:TQ.quiz_link,
    steps:TQ.e2.map((clip,i)=>({type:"listen",clip,first:i===0}))},
   {id:"e3", topic:"school", sec:"Extension", title:"Hear it, part 2: the other phrases", meta:"6 clips, 6 gaps", kind:"steps",
-   later:true, takeaway:TQ.takeaway_2, tqLink:TQ.quiz_link_2,
+   later:true, takeaway:TQ.takeaway_2, tqLink:TQ.quiz_link_2, tq:TQ.quiz_link_2,
    steps:TQ.e3.map((clip,i)=>({type:"listen",clip,first:i===0}))}
 ];
 const MAP = [];

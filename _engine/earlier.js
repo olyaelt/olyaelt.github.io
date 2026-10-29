@@ -18,8 +18,8 @@ for (const file of process.argv.slice(2)) {
   try { vm.createContext(ctx); vm.runInContext(code, ctx, { timeout: 2000 }); } catch (e) { console.error('skip', file, e.message); continue; }
   const items = [];
   for (const t of ctx.__out.tasks) for (const st of (t.steps || [])) {
-    if (st.type === 'rewrite' && st.r && st.r.a) items.push({ type: 'rewrite', r: st.r });
-    if (st.type === 'sayit' && st.s && st.s.rows) for (const row of st.s.rows) items.push({ type: 'sayit', s: { rows: [row], note: '', html: !!st.s.html }, ...(st.instr ? { instr: st.instr } : {}) });
+    if (st.type === 'rewrite' && st.r && st.r.a) items.push({ type: 'rewrite', r: st.r, ...(t.core ? { core: true } : {}) });
+    if (st.type === 'sayit' && st.s && st.s.rows) for (const row of st.s.rows) items.push({ type: 'sayit', s: { rows: [row], note: '', html: !!st.s.html }, ...(st.instr ? { instr: st.instr } : {}), ...(t.core ? { core: true } : {}) });
   }
   out.push({ file, date: ctx.__out.date, items: JSON.parse(JSON.stringify(items)) });
 }
