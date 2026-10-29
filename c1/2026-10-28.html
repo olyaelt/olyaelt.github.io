@@ -91,6 +91,9 @@ details.summary[open] summary::after{content:"Hide"}
 .summary li b{font-weight:700}
 .ru{font-style:italic;color:var(--muted)}
 .ipa{color:var(--ipa);font-style:normal;white-space:nowrap}
+.ipa.o{color:#B45309}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .ipa.o{color:#F6B26B} }
+:root[data-theme="dark"] .ipa.o{color:#F6B26B}
 .section{display:grid;gap:10px;margin-bottom:22px}
 .section h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:900}
 .all-hw{justify-self:start;color:var(--instr);font-weight:700;text-decoration:none;margin-bottom:6px}
@@ -301,6 +304,8 @@ details.summary[open] summary::after{content:"Hide"}
 .chunk.plain{cursor:default}
 .gap-n{display:block;color:var(--label);font-size:.88rem;line-height:1.35;margin:1px 0 2px}
 .gap-n[hidden]{display:none}
+.more-below{position:fixed;left:50%;transform:translateX(-50%);z-index:5;font:inherit;font-weight:700;font-size:.95rem;background:var(--instr);color:var(--instr-ink);border:0;border-radius:99px;padding:7px 16px;box-shadow:0 2px 10px rgba(0,0,0,.28);cursor:pointer}
+.more-below[hidden]{display:none}
 .say-note{margin:2px 0 0}
 .chunk.plain .gap .f,.chunk.plain .gap .r,.chunk.plain .gap.o .r{font-weight:inherit;color:inherit;background:none}
 .gap.o .r{background:#F6B26B;font-weight:400}
@@ -758,15 +763,15 @@ const GAPS = {
     },
     {
      "p": [
-      "sewed a button back on ",
+      "sewed a button back on my shirt ",
       {
        "f": "",
        "r": "/səʊd/",
        "o": 1
       }
      ],
-     "m": "attached it again with a needle · sew sounds like so",
-     "ru": "пришил пуговицу обратно"
+     "m": "sew sth back on (sth): back = again, on = onto the shirt · attached it again with a needle · sew sounds like so",
+     "ru": "пришил пуговицу обратно (на рубашку)"
     }
    ]
   },
@@ -2115,7 +2120,7 @@ const CHAT = {
  "steps": [
   {
    "type": "dlg",
-   "intro": "WhatsApp group «Class of 2006 🎓» · Jess, Ollie, Nadia, Chris",
+   "intro": "WhatsApp group \"Class of 2006 🎓\" · Jess, Ollie, Nadia, Chris",
    "lines": [
     {
      "s": "Jess",
@@ -2354,7 +2359,7 @@ const CHAT = {
    "note": "active: it paid off · or: it's paid off · none of it counted — active, past simple (= it didn't count: no mark)"
   }
  ]
-};   /* e1: the group chat «Class of 2006» */
+};   /* e1: the group chat "Class of 2006" */
 /* Link to the group's homework spreadsheet. Leave empty and the page simply says where to write. */
 const SHEET_URL = "";
 const PAGE_KEY = "hw-ge-c1-2026-10-28";
@@ -2393,10 +2398,12 @@ const TOPICS = [
 ];
 
 /* R1 (TZ 29.10 15:15, her decision 29.10, the same in B2 and C1): each answer twice in a row — with the glossary beside it, then straight away without it */
-const R1_FIRST = "Each answer twice: first with the glossary beside it, then straight away without it. Say the missing words, then tap the yellow and orange boxes to check.";
-const R1_GLOSS = "Say the missing words, then tap the yellow and orange boxes to check.";
+const R1_FIRST = "Each answer twice: first with the glossary beside it, then straight away without it. Say the missing words, then tap the yellow boxes to check.";
+const R1_GLOSS = "Say the missing words, then tap the yellow boxes to check.";
 const R1_PLAIN = "Now without the glossary. Say the missing words, then tap the yellow boxes to check.";
-const R1_STEPS = GAPS.steps.map((st, i) => Object.assign({}, st, {instr: i === 0 ? R1_FIRST : st.gloss ? R1_GLOSS : R1_PLAIN}));
+/* her decision 29.10 17:28: the glossary is there to help, so its IPA is shown, not hidden (orange text, engine 44) */
+const showIpa = g => g.h ? g : Object.assign({}, g, {p: g.p.map(x => x && typeof x === "object" && x.o && "r" in x ? {ipa: x.r.trim(), o: 1} : x)});
+const R1_STEPS = GAPS.steps.map((st, i) => Object.assign({}, st, st.gloss ? {gloss: st.gloss.map(showIpa)} : {}, {instr: i === 0 ? R1_FIRST : st.gloss ? R1_GLOSS : R1_PLAIN}));
 
 /* R2 (TZ 29.10 17:00, better.json = deck slides 47–53 as the class saw them): green = good, grey = could be better; the note under each after Check.
    core: the whole group did it in class, so later Quick look backs take it first (engine 43). */
@@ -2406,18 +2413,22 @@ const BETTER = {html:true, rows:[
    `Sooner or later and never don't go together. Also possible: You never know when it might come in handy.`],
   [`<span class="en"><span class="trap">In our days</span>, <span class="trap">back to the past</span>, <span class="good">the university was very ideological</span>.</span> ${ru("(в наше время вуз был очень идеологизированным)")}`,
    `<b class="g">Back in my day</b>, / <b class="g">In our day</b>, the university was very ideological.`,
-   `Not in our days, but in our day (no -s) = back in my day. «В наше время» = back then → in our day; = now → these days / nowadays. Back to the past isn't an English phrase. · ideological ${ipa("/ˌaɪdiəˈlɒdʒɪkl/")}`],
+   `Not in our days, but in our day (no -s) = back in my day. "В наше время" = back then → in our day; = now → these days / nowadays. Back to the past isn't an English phrase. · ideological ${ipa("/ˌaɪdiəˈlɒdʒɪkl/")}`],
   [`<span class="en"><span class="good">It's a good way to</span> <span class="trap">know</span> <span class="good">something new</span>: to create something <span class="trap">from zero to the end</span>.</span> ${ru("(хороший способ узнать что-то новое — сделать что-то с нуля самому)")}`,
    `It's a good way to <b class="g">learn</b> something new: to make something <b class="g">from scratch</b>.`,
-   `Know = знать (a state); «узнать что-то новое» → learn something new. «С нуля» → from scratch; «от начала до конца» → from start to finish. · scratch ${ipa("/skrætʃ/")}`]]};
+   `Know = знать (a state); "узнать что-то новое" → learn something new. "С нуля" → from scratch; "от начала до конца" → from start to finish. · scratch ${ipa("/skrætʃ/")}`]]};
 
+/* her worry 29.10: a text this long, and they may never see its second half → five screens that fit a laptop (1280×720) whole;
+   the two parts of chat.json stay, "Later that evening" opens part 2 */
+const CHAT_CUTS = [[[0, 6], [6, 12], [12, 16]], [[0, 6], [6, 14]]];
+const CHAT_STEPS = CHAT.steps.flatMap((st, si) => CHAT_CUTS[si].map(([a, z], k) => ({type:"dlg", intro: k === 0 ? st.intro : "", lines: st.lines.slice(a, z),
+  instr: si === 0 && k === 0 ? CHAT.instr : "Say each missing bit, then tap to check."})));
 const TASKS = [
   {id:"r1", topic:"school", sec:"Revision", title:"Three answers on the radio: was school any use?", meta:"6 steps", kind:"steps", steps:R1_STEPS},
   {id:"r2", topic:"school", sec:"Revision", title:"Our sentences: could be better → perfect", meta:"3 sentences", kind:"steps", core:true,
    steps:[{type:"sayit", s:BETTER, box:BOX_SCHOOL, boxAlways:true, instr:"Our sentences from the lesson. Green = good, grey = could be better. How would you make each one perfect English with today's phrases? Use the box. Then tap to check."}]},
   /* E1 (TZ 29.10 17:00, chat.json): the group chat; its gaps sit on the group's slips of 28.10, each with a red note when opened (engine 43) */
-  {id:"e1", topic:"school", sec:"Extension", title:"Class of 2006: the group chat", meta:"8 gaps · 2 screens", kind:"steps",
-   steps:CHAT.steps.map((st, i) => ({type:"dlg", intro:st.intro, lines:st.lines, instr: i === 0 ? CHAT.instr : "Say each missing bit, then tap to check."}))},
+  {id:"e1", topic:"school", sec:"Extension", title:"Class of 2006: the group chat", meta:"8 gaps · 5 screens", kind:"steps", steps:CHAT_STEPS},
   {id:"e2", topic:"school", sec:"Extension", title:"Hear it: the phrases in real videos", meta:"6 clips, 7 gaps", kind:"steps",
    takeaway:TQ.takeaway, tqLink:TQ.quiz_link, tq:TQ.quiz_link,
    steps:TQ.e2.map((clip,i)=>({type:"listen",clip,first:i===0}))},
@@ -2439,7 +2450,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = [];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "43";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "44";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [{"type": "rewrite", "r": {"o": "My degree is in physics.", "k": "DID", "pre": "I ", "post": " university.", "a": "did physics at", "acc": ["did physics at", "did a physics degree at"], "n": "<span class=\"ipa\">/ˈfɪzɪks/<\/span><br>do + subject, no article; at university.<br><i class=\"ru\">учился на физика<\/i><br><i class=\"ru\">or: did a physics degree at<\/i><br><i class=\"ru\">AmE: I majored in physics in college.<\/i>"}, "frm": "23.10.26"}, {"type": "sayit", "s": {"rows": [["<span class=\"en\">I studied <span class=\"trap\">at the faculty of mathematics<\/span>.<\/span> <i class=\"ru\">(учился на матфаке)<\/i>", "I studied <b class=\"g\">maths<\/b>. / I did <b class=\"g\">maths at uni<\/b>."]], "note": "", "html": true}, "instr": "What would Dan or Ruth say instead?", "frm": "21.10.26"}, {"type": "rewrite", "r": {"pre": "", "hint": "У нас часы не переводят", "post": ", so I can never remember whether our calls move earlier or later.", "a": "We don't change the clocks here", "acc": ["We don't change the clocks here", "The clocks don't change here", "We don't have daylight saving here", "We don't have daylight saving time here"], "n": "change the clocks — the clocks, plural.<br><i class=\"ru\">or: The clocks don't change here / We don't have daylight saving (time) here<\/i>"}, "frm": "23.10.26"}, {"type": "sayit", "s": {"rows": [["<span class=\"en\">Nobody taught me how to talk to clients — I learned it <span class=\"trap\">in practice<\/span>.<\/span> <i class=\"ru\">(научилась в процессе работы)<\/i>", "Nobody taught me how to talk to clients — I learned it <b class=\"g\">on the job<\/b>."]], "note": "", "html": true}, "instr": "What would Dan or Ruth say instead?", "frm": "21.10.26"}];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -3172,6 +3183,7 @@ function teacherStrip(id){
   return `<button class="t-strip ${c.open?"open":""}" id="t-strip" data-strip="${id}"><span>👩‍🏫 ${bits}</span><span class="t-strip-go">Students' work →</span></button><div class="t-mkbar" id="t-mkbar">${mkBarHTML(id)}</div>`;
 }
 function shell({count, pct, instr, stageHTML, withBox, actionsHTML, panel}){
+  if(moreOff){ moreOff(); moreOff = null; }
   app.innerHTML = `
     <div class="taskbar">
       <div class="taskbar-row"><button class="back" id="home">← All tasks</button>${count?`<span class="count">${count}</span>`:""}</div>
@@ -3243,6 +3255,7 @@ function gapLineHTML(line){
       html += `<span class="chunk" role="button" tabindex="0" aria-label="Show the missing words"${nk?` data-nk="${nk}"`:""}>${chunk}</span>`;
       if(nk) notes += `<span class="gap-n" data-nk="${nk}" hidden>${esc(ns.join(" · "))}</span>`;
     } else if(typeof x === "object" && "b" in x){ html += `<b>${esc(x.b)}</b>`; i++; }
+    else if(typeof x === "object" && "ipa" in x){ html += `<span class="ipa${x.o?" o":""}">${esc(x.ipa)}</span>`; i++; }   /* engine 44: shown IPA (a glossary that helps) */
     else { html += esc(x); i++; }
   }
   return `<p>${line.s?`<span class="spk">${esc(line.s)}:</span> `:""}${html}${notes}</p>`;
@@ -3361,6 +3374,24 @@ function renderDlg(st, count, pct){
   addRevButtons(dlgChunks, current.id, curS(), st._rows ? new Set(st._rows) : null);
   syncGapNotes(app);
   wireNav(()=>renderTaskKeep());
+  moreBelow();
+}
+/* engine 44 (her worry 29.10, the C1 group chat: on a small screen they may tap "Show the answers" and never see the second half):
+   while the text's last line is below the buttons, a "↓ More below" chip sits over them; a tap scrolls on; it goes once the end was on screen */
+let moreOff = null;
+function moreBelow(){
+  if(moreOff){ moreOff(); moreOff = null; }
+  const last = [...app.querySelectorAll(".panel .dlg p")].pop(), act = app.querySelector(".actions"); if(!last || !act) return;
+  const chip = document.createElement("button"); chip.type = "button"; chip.className = "more-below"; chip.hidden = true; chip.textContent = "↓ More below";
+  act.before(chip);
+  let seen = false;
+  const upd = () => { if(seen || !chip.isConnected) return; const a = act.getBoundingClientRect();
+    if(last.getBoundingClientRect().bottom - a.top <= 4){ seen = true; chip.hidden = true; return; }
+    chip.hidden = false; chip.style.bottom = Math.round(innerHeight - a.top + 10) + "px"; };
+  chip.addEventListener("click", () => window.scrollBy({top: Math.max(120, act.getBoundingClientRect().top - 160), behavior: "smooth"}));
+  addEventListener("scroll", upd, {passive: true}); addEventListener("resize", upd);
+  moreOff = () => { removeEventListener("scroll", upd); removeEventListener("resize", upd); };
+  setTimeout(upd, 60);   /* after renderTask's scroll to the top */
 }
 
 /* ---------- rewrite the sentence ---------- */

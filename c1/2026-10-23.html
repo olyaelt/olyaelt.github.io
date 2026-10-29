@@ -89,6 +89,9 @@ details.summary[open] summary::after{content:"Hide"}
 .summary li b{font-weight:700}
 .ru{font-style:italic;color:var(--muted)}
 .ipa{color:var(--ipa);font-style:normal;white-space:nowrap}
+.ipa.o{color:#B45309}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .ipa.o{color:#F6B26B} }
+:root[data-theme="dark"] .ipa.o{color:#F6B26B}
 .section{display:grid;gap:10px;margin-bottom:22px}
 .section h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:900}
 .all-hw{justify-self:start;color:var(--instr);font-weight:700;text-decoration:none;margin-bottom:6px}
@@ -299,6 +302,8 @@ details.summary[open] summary::after{content:"Hide"}
 .chunk.plain{cursor:default}
 .gap-n{display:block;color:var(--label);font-size:.88rem;line-height:1.35;margin:1px 0 2px}
 .gap-n[hidden]{display:none}
+.more-below{position:fixed;left:50%;transform:translateX(-50%);z-index:5;font:inherit;font-weight:700;font-size:.95rem;background:var(--instr);color:var(--instr-ink);border:0;border-radius:99px;padding:7px 16px;box-shadow:0 2px 10px rgba(0,0,0,.28);cursor:pointer}
+.more-below[hidden]{display:none}
 .say-note{margin:2px 0 0}
 .chunk.plain .gap .f,.chunk.plain .gap .r,.chunk.plain .gap.o .r{font-weight:inherit;color:inherit;background:none}
 .gap.o .r{background:#F6B26B;font-weight:400}
@@ -750,7 +755,7 @@ const TASKS = [
 ];
 
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "43";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "44";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -1483,6 +1488,7 @@ function teacherStrip(id){
   return `<button class="t-strip ${c.open?"open":""}" id="t-strip" data-strip="${id}"><span>👩‍🏫 ${bits}</span><span class="t-strip-go">Students' work →</span></button><div class="t-mkbar" id="t-mkbar">${mkBarHTML(id)}</div>`;
 }
 function shell({count, pct, instr, stageHTML, withBox, actionsHTML, panel}){
+  if(moreOff){ moreOff(); moreOff = null; }
   app.innerHTML = `
     <div class="taskbar">
       <div class="taskbar-row"><button class="back" id="home">← All tasks</button>${count?`<span class="count">${count}</span>`:""}</div>
@@ -1554,6 +1560,7 @@ function gapLineHTML(line){
       html += `<span class="chunk" role="button" tabindex="0" aria-label="Show the missing words"${nk?` data-nk="${nk}"`:""}>${chunk}</span>`;
       if(nk) notes += `<span class="gap-n" data-nk="${nk}" hidden>${esc(ns.join(" · "))}</span>`;
     } else if(typeof x === "object" && "b" in x){ html += `<b>${esc(x.b)}</b>`; i++; }
+    else if(typeof x === "object" && "ipa" in x){ html += `<span class="ipa${x.o?" o":""}">${esc(x.ipa)}</span>`; i++; }   /* engine 44: shown IPA (a glossary that helps) */
     else { html += esc(x); i++; }
   }
   return `<p>${line.s?`<span class="spk">${esc(line.s)}:</span> `:""}${html}${notes}</p>`;
@@ -1672,6 +1679,24 @@ function renderDlg(st, count, pct){
   addRevButtons(dlgChunks, current.id, curS(), st._rows ? new Set(st._rows) : null);
   syncGapNotes(app);
   wireNav(()=>renderTaskKeep());
+  moreBelow();
+}
+/* engine 44 (her worry 29.10, the C1 group chat: on a small screen they may tap "Show the answers" and never see the second half):
+   while the text's last line is below the buttons, a "↓ More below" chip sits over them; a tap scrolls on; it goes once the end was on screen */
+let moreOff = null;
+function moreBelow(){
+  if(moreOff){ moreOff(); moreOff = null; }
+  const last = [...app.querySelectorAll(".panel .dlg p")].pop(), act = app.querySelector(".actions"); if(!last || !act) return;
+  const chip = document.createElement("button"); chip.type = "button"; chip.className = "more-below"; chip.hidden = true; chip.textContent = "↓ More below";
+  act.before(chip);
+  let seen = false;
+  const upd = () => { if(seen || !chip.isConnected) return; const a = act.getBoundingClientRect();
+    if(last.getBoundingClientRect().bottom - a.top <= 4){ seen = true; chip.hidden = true; return; }
+    chip.hidden = false; chip.style.bottom = Math.round(innerHeight - a.top + 10) + "px"; };
+  chip.addEventListener("click", () => window.scrollBy({top: Math.max(120, act.getBoundingClientRect().top - 160), behavior: "smooth"}));
+  addEventListener("scroll", upd, {passive: true}); addEventListener("resize", upd);
+  moreOff = () => { removeEventListener("scroll", upd); removeEventListener("resize", upd); };
+  setTimeout(upd, 60);   /* after renderTask's scroll to the top */
 }
 
 /* ---------- rewrite the sentence ---------- */

@@ -44,7 +44,7 @@ const BOX_RU = `
   <p>${ru("Замучились уже с этим лифтом.")} → It's <b>a nightmare</b>, isn't it?</p>
   <p>${ru("Ну хоть нашёлся! Уже хорошо.")} → That's <b>a relief</b>, isn't it?</p>
   <p>${ru("Ты не поверишь!")} → <b>You won't believe</b> what happened!</p>
-  <p class="small">In Russian we say something like «Вообще ужас», «Жалко, конечно» — we don't ask anything but we <b>do</b> expect a reply. In English, you can add <b>a tag question</b> when you're sharing your emotions. Your voice goes down: It's awful, ↘ isn't it? Тэг не обязателен: I know. It's awful. — тоже делится эмоцией.</p>
+  <p class="small">In Russian we say something like "Вообще ужас" or "Жалко, конечно" — we don't ask anything but we <b>do</b> expect a reply. In English, you can add <b>a tag question</b> when you're sharing your emotions. Your voice goes down: It's awful, ↘ isn't it? Тэг не обязателен: I know. It's awful. — тоже делится эмоцией.</p>
   <p class="small">BrE → AmE: petrol station → gas station · lift → elevator · parcel → package</p>
   <p class="small">You should be ashamed of yourself!</p>`;
 const TOPICS = [
