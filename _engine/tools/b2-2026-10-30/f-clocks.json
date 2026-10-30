@@ -51,7 +51,7 @@
  },
  "stages": [
   {
-   "label": "🔁 Remember",
+   "label": "📝 Test yourself",
    "blocks": [
     {
      "kind": "say",
@@ -67,12 +67,13 @@
       "Hi Omar! Just a heads-up: our clocks **went back** on Sunday, so our call is now **an hour later for you** — **ten my time**, **one your time**. **Does that still work for you?**",
       "((go back → went back (не get back) · Does that still work (без s)))"
      ],
-     "answer_title": "Suggested answer"
+     "answer_title": "Suggested answer",
+     "tip": "Say it aloud first, then tap “Show the answer”."
     }
    ]
   },
   {
-   "label": "📖 The call",
+   "label": "🔁 Recall",
    "blocks": [
     {
      "kind": "text",
@@ -311,12 +312,13 @@
        ],
        "ru": "поспать на час дольше"
       }
-     ]
+     ],
+     "tip": "The first letters are given; the glossary is beside the call. Tap the yellow to check."
     }
    ]
   },
   {
-   "label": "🃏 Cards",
+   "label": "🃏 Practice",
    "blocks": [
     {
      "kind": "cards",
@@ -347,12 +349,13 @@
        "back": "Changing the clocks does **more harm than good**.",
        "note": "Перевод часов приносит больше вреда, чем пользы."
       }
-     ]
+     ],
+     "tip": "Read the message, say it again with the word in red, then tap the card. ↺ Again = we weren't sure."
     }
    ]
   },
   {
-   "label": "💬 Speaking",
+   "label": "💬 Use it",
    "blocks": [
     {
      "kind": "calendars",
@@ -626,7 +629,8 @@
       }
      ],
      "box": "CALL",
-     "done": "The time that works for both: **13:00 London = 16:00 Istanbul**."
+     "done": "The time that works for both: **13:00 London = 16:00 Istanbul**.",
+     "tip": "Two calendars: grey = busy, yellow = free, blue = the call. Find a time that works for both, then tap ✓ Done to check."
     },
     {
      "kind": "calendars",

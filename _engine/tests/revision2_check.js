@@ -1,0 +1,83 @@
+// The B2 revision, round 2 (handoff 30.10 09:20 + her wishes 09:23): the same four stages on every field, 🎓 How it works (tips),
+// f-demo with its button on the board, the chat page inside 💬 Use it shows only its working part (?embed=1), opened gaps black bold on
+// the yellow, and her 👥 panel under a chat / a message: every group's text for this chat, live, with ✓ Good etc.; numbered chat dots.
+//   node tests/revision2_check.js SITE_DIR [shots_dir]
+const {chromium} = require('playwright'); const fs = require('fs'); const path = require('path');
+const {makeEnv} = require('./mock');
+const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-10-30/';
+(async () => {
+  const site = path.resolve(process.argv[2]), shots = process.argv[3], out = {}, errs = [], fail = [];
+  if (shots) fs.mkdirSync(shots, {recursive: true});
+  const expect = (n, ok, got) => { if (!ok) fail.push(n + ' ' + JSON.stringify(got)); };
+  const env = makeEnv(); env.ctx.setUp(); const T = String(env.sheets.Students.d[1][0]);
+  env.sheets.Students.appendRow(['abc123', 'Anna', 'B2', '']);
+  const b = await chromium.launch(), tmps = [];
+  // the pages are copied with the test table's address; the field's iframe loads its tool page the same way (routed)
+  const open = async (rel, who) => {
+    const c = await b.newContext({viewport: {width: 1280, height: 720}, reducedMotion: 'reduce'});
+    if (who === 'teacher') await c.addInitScript(code => { localStorage.setItem('hw-code', code); localStorage.setItem('hw-role', 'teacher'); }, T);
+    if (who === 'anna') await c.addInitScript(() => { localStorage.setItem('hw-code', 'abc123'); localStorage.setItem('hw-role', ''); });
+    await c.route(/script\.google\.com/, r => r.fulfill({status: 200, contentType: 'application/json', headers: {'Access-Control-Allow-Origin': '*'}, body: JSON.stringify(env.post(r.request().postData()))}));
+    const p = await c.newPage(); p.on('pageerror', e => errs.push(rel + ': ' + e.message));
+    await p.goto('file://' + path.join(site, rel)); await p.waitForTimeout(500); return p;
+  };
+  // the built pages talk to the real table: point them at the test one for this run (put back at the end)
+  const pages = fs.readdirSync(path.join(site, L)).filter(f => /-live\.html$/.test(f)), orig = {};
+  pages.forEach(f => { const fp = path.join(site, L, f); orig[fp] = fs.readFileSync(fp, 'utf8'); fs.writeFileSync(fp, orig[fp].replace(/LIVE_URL = "https:\/\/script\.google\.com[^"]*"/, `LIVE_URL = "${URL_}"`)); });
+  try {
+    // ---- the board: 🎓 How the game works
+    const OB = await open(L + 'jeopardy-live.html', 'teacher');
+    out.demoBtn = await OB.locator('.howgame').getAttribute('href').catch(() => ''); expect('the board: 🎓 How the game works → f-demo-live', out.demoBtn === 'f-demo-live.html', out.demoBtn);
+    // ---- the same four stages on every field
+    const want = '📝 Test yourself|🔁 Recall|🃏 Practice|💬 Use it';
+    for (const f of ['f-late', 'f-tags', 'f-crime', 'f-clocks', 'f-demo']) {
+      const p = await open(L + f + '-live.html', '');
+      const labels = await p.evaluate(() => D.stages.map(s => s.label).join('|')); expect(f + ': the four stages', labels === want, labels);
+      if (f === 'f-demo') {
+        out.demo = {tips: await p.locator('.tip').count(), sw: await p.locator('[data-howto]').count(), part: await p.locator('.head .part').count(), back: await p.locator('.board-back a').getAttribute('href')};
+        expect('f-demo: tips on from the start, no switch, no cell name, ⬅ Board', out.demo.tips === 1 && out.demo.sw === 0 && out.demo.part === 0 && out.demo.back === 'jeopardy-live.html', out.demo);
+        await p.fill('[data-wta]', 'No way! When did you last see him?'); await p.waitForTimeout(2600); await p.click('[data-wsend]'); await p.waitForTimeout(200);
+        out.example = await p.locator('.ans-lines').innerText().catch(() => ''); expect('f-demo: after Send the example', /example/i.test(out.example) && /When did you last see him/.test(out.example), out.example);
+        if (shots) await p.screenshot({path: path.join(shots, 'r2-demo.png')});
+      }
+      if (f === 'f-tags') {
+        out.tags = {sw: await p.locator('[data-howto]').count(), before: await p.locator('.tip').count()};
+        await p.click('[data-howto]'); await p.waitForTimeout(150); out.tags.after = await p.locator('.tip').innerText().catch(() => '');
+        expect('🎓 How it works: off at first, a tip above the block when on', out.tags.sw === 1 && out.tags.before === 0 && /How it works: Say it aloud first/.test(out.tags.after), out.tags);
+        await p.click('.stage-btn[data-stage="1"]'); await p.locator('[data-gap]').first().click(); await p.waitForTimeout(150);
+        out.gap = await p.evaluate(() => { const g = document.querySelector('.gp.open'), cs = e => { const s = getComputedStyle(e); return [s.color, s.fontWeight, s.backgroundColor]; }; return {f: g.querySelector('.f') ? cs(g.querySelector('.f')) : null, r: cs(g.querySelector('.r'))}; });
+        expect('an opened gap: black bold on the yellow, the first letters too', out.gap.r[0] === 'rgb(29, 29, 27)' && +out.gap.r[1] >= 700 && out.gap.r[2] === 'rgb(255, 255, 0)' && (!out.gap.f || (out.gap.f[0] === 'rgb(29, 29, 27)' && out.gap.f[2] === 'rgb(255, 255, 0)')), out.gap);
+      }
+    }
+    // ---- the chat page inside 💬 Use it: only its working part
+    const OL = await open(L + 'f-late-live.html', 'teacher'); await OL.click('.stage-btn[data-stage="3"]'); await OL.waitForTimeout(1500);
+    out.src = await OL.locator('.tool-frame').getAttribute('src'); expect('the field loads the chat page with ?embed=1', out.src === 'late-live.html?embed=1', out.src);
+    const fr = OL.frameLocator('.tool-frame');
+    out.inner = {bar: await fr.locator('.live-bar').count(), h1: await fr.locator('.head h1').isVisible(), groups: await fr.locator('.stage-btn[data-stage="groups"]').count(), sub: await fr.locator('.stages.sub').count(), edit: await fr.locator('[data-live-edit], .live-tools').count()};
+    expect('inside: no Live bar, no title, no 📥 Groups, small steps, no ✏️', out.inner.bar === 0 && !out.inner.h1 && out.inner.groups === 0 && out.inner.sub === 1 && out.inner.edit === 0, out.inner);
+    if (shots) await OL.screenshot({path: path.join(shots, 'r2-late-useit.png')});
+    // ---- her 👥 panel under a chat: a group types in chat 2, she sees it there and marks it
+    const A = await open(L + 'late-live.html', 'anna');
+    out.dots = await A.locator('.sc-dots button').allInnerTexts(); expect('numbered chat dots', out.dots.join() === '1,2,3,4,5', out.dots);
+    await A.locator('.sc-dots button').nth(1).click(); await A.waitForTimeout(200); await A.fill('#msg', 'Sorry Alex, I stuck in traffic'); await A.waitForTimeout(2600);
+    const O = await open(L + 'late-live.html', 'teacher'); await O.locator('.sc-dots button').nth(1).click(); await O.waitForTimeout(300); await O.evaluate(() => gwFetch()); await O.waitForTimeout(400);
+    out.panel = await O.locator('.pc').innerText().catch(() => ''); expect('her panel under chat 2: Anna\'s text, live', /The groups on this chat/.test(out.panel) && /Group 1 — Anna/.test(out.panel) && /I stuck in traffic/.test(out.panel), out.panel);
+    await O.evaluate(() => { const t = document.querySelector('.pc .gw-text'), n = [...t.childNodes].find(x => x.nodeType === 3 && x.textContent.includes('I stuck')), at = n.textContent.indexOf('I stuck'); const r = document.createRange(); r.setStart(n, at); r.setEnd(n, at + 7); const s = getSelection(); s.removeAllRanges(); s.addRange(r); });
+    await O.waitForTimeout(200); await O.click('.pc [data-mk="change"]'); await O.waitForTimeout(400);
+    out.note = (env.sheets['Lesson notes'] ? env.sheets['Lesson notes'].d.slice(1) : []).map(r => r.join('|')).filter(r => /I stuck/.test(r));
+    expect('✗ Change from the panel reaches her table, on chat 2', out.note.length === 1 && /change/.test(out.note[0]), out.note);
+    out.marked = await O.locator('.pc .gw-text .m-del').innerText().catch(() => ''); expect('the panel shows her mark', out.marked === 'I stuck', out.marked);
+    await O.locator('.sc-dots button').nth(0).click(); await O.waitForTimeout(200); out.model = await O.locator('.pc').count(); expect('no panel on the model chat', out.model === 0, out.model);
+    if (shots) { await O.locator('.sc-dots button').nth(1).click(); await O.waitForTimeout(300); await O.evaluate(() => document.querySelector('.pc').scrollIntoView()); await O.screenshot({path: path.join(shots, 'r2-panel.png')}); }
+    // the same work in 📥 Groups
+    await O.click('.stage-btn[data-stage="groups"]'); await O.waitForTimeout(500); out.groups = await O.locator('.gw-card').count(); expect('📥 Groups still shows it', out.groups === 1, out.groups);
+    // ---- the panel under a message on a field (Test yourself)
+    const B = await open(L + 'f-late-live.html', 'anna'); await B.fill('[data-wta]', 'Just a heads-up, I\'m running late'); await B.waitForTimeout(2600);
+    const O2 = await open(L + 'f-late-live.html', 'teacher'); await O2.evaluate(() => gwFetch()); await O2.waitForTimeout(400);
+    out.fieldPanel = await O2.locator('.pc').first().innerText().catch(() => ''); expect('her panel under the message on the field', /Group \d — Anna/.test(out.fieldPanel) && /running late/.test(out.fieldPanel), out.fieldPanel);
+  } finally {
+    Object.entries(orig).forEach(([fp, s]) => fs.writeFileSync(fp, s));
+  }
+  console.log(JSON.stringify(out, null, 1)); if (errs.length) fail.push('page errors: ' + errs.join(' | '));
+  console.log(fail.length ? 'FAILED:\n' + fail.join('\n') : 'OK revision 2'); await b.close(); process.exit(fail.length ? 1 : 0);
+})();

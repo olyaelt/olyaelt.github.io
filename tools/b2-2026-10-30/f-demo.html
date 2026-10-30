@@ -1,0 +1,1404 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>How the game works</title>
+<link rel="stylesheet" href="../../fonts/homework-sans.css">
+<style>
+/* Lesson tools (pages students open in a breakout room and share on Zoom, ~1280×720).
+   Same colours and font as the homework pages; bigger type; task on the left, Useful language on the right. */
+:root{
+  --ground:#F6F1DC; --card:#FFFFFF; --ink:#1D1D1B; --muted:#6B6B6B; --line:#D9D2B8;
+  --instr:#0693E3; --instr-ink:#FFFFFF; --label:#E00000; --ipa:#0E8A7E;
+  --hl:#FFFF00; --hl-ink:#1D1D1B; --bubble:#FFFF8C; --bubble-ink:#1D1D1B;
+  --date-bg:#FF9900; --date-ink:#1D1D1B;
+  --ok:#2E8B3E; --ok-bg:#EAF7EC; --ok-chip:#CDEFD3; --ok-ink:#1E6B2E;
+  --no:#C0392B; --no-bg:#FDECEB; --no-chip:#F9D2CF; --no-ink:#A1261B;
+  --used:#BFF2B8; --used-ink:#1D1D1B;
+  --a:#0693E3; --a-ink:#FFFFFF; --b:#FF9900; --b-ink:#1D1D1B;
+  --again:#E67E00; --on-ok:#FFFFFF; --on-no:#FFFFFF; --flip-ink:#0679BD; --tick:#B9B092; --instr-text:#0693E3;
+  --shadow:0 2px 0 rgba(29,29,27,.08), 0 10px 28px rgba(29,29,27,.08);
+  --font-body:"Homework Sans","Calibri","Carlito","Segoe UI",system-ui,sans-serif;
+  --radius:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D;
+    --instr:#1578C0; --label:#FF7A7A; --ipa:#4CC5B3; --hl:#FFF34D; --hl-ink:#111111;
+    --bubble:#3B391F; --bubble-ink:#F3F0D0;
+    --ok:#62C774; --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8;
+    --no:#FF8A80; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB;
+    --used:#2F5E35; --used-ink:#F1FFF0; --a:#1578C0; --again:#FFB14A; --on-ok:#0F2412; --on-no:#2A0D0A; --flip-ink:#6CC3FF; --tick:#70757C; --instr-text:#6CC3FF;
+    --shadow:0 2px 0 rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D;
+  --instr:#1578C0; --label:#FF7A7A; --ipa:#4CC5B3; --hl:#FFF34D; --hl-ink:#111111;
+  --bubble:#3B391F; --bubble-ink:#F3F0D0;
+  --ok:#62C774; --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8;
+  --no:#FF8A80; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB;
+  --used:#2F5E35; --used-ink:#F1FFF0; --a:#1578C0; --again:#FFB14A; --on-ok:#0F2412; --on-no:#2A0D0A; --flip-ink:#6CC3FF; --tick:#70757C; --instr-text:#6CC3FF;
+  --shadow:0 2px 0 rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+/* the page grows with the screen, like a slide (her slides keep everything at 15 pt or more), and with its height: a laptop screen minus the browser bar is wider than 16:9, so the size is the smaller of the two (the Useful language box should fit without scrolling) */
+html{font-size:clamp(15px, min(1.4vw, 2.55vh), 28px)}
+html,body{background:var(--ground);margin:0}
+body{color:var(--ink);font-family:var(--font-body);line-height:1.45;padding:0 16px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:disabled{cursor:default}
+:focus-visible{outline:3px solid var(--instr);outline-offset:2px;border-radius:8px}
+h1,h2,h3{margin:0;text-wrap:balance}
+.wrap{max-width:72rem;margin:0 auto;padding:12px 0 16px;display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,30rem);gap:16px 1.4rem;align-items:start}
+.main{display:grid;gap:12px;min-width:0}
+/* the box stays in view while the task scrolls; a box taller than the screen scrolls with the page (no hidden inner scroll) */
+.side{position:sticky;top:10px;display:grid;gap:10px;padding:0 4px 4px 12px;margin-left:-12px}
+@media (max-width:860px){ .wrap{grid-template-columns:1fr} .side{position:static} }
+
+/* header */
+.head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.part{font-weight:900;letter-spacing:.04em;font-size:.85rem;background:var(--date-bg);color:var(--date-ink);padding:3px 10px;border-radius:6px}
+.head h1{font-size:1.85rem;line-height:1.1;font-weight:900}
+.gear{margin-left:auto;border:2px solid var(--line);background:var(--card);border-radius:99px;padding:4px 12px;font-weight:700;font-size:1rem;color:var(--muted);min-height:38px}
+.instr{background:var(--instr);color:var(--instr-ink);border-radius:12px;padding:8px 14px;font-weight:700;font-size:1rem;margin:0}
+.hint-top{background:var(--card);border-left:6px solid var(--instr);border-radius:12px;padding:8px 14px;font-weight:700;font-size:1.15rem;margin:0;box-shadow:var(--shadow)}
+.situation{background:var(--card);border-left:6px solid var(--date-bg);border-radius:12px;padding:12px 16px;font-size:1.1rem;margin:0;box-shadow:var(--shadow)}
+.settings{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font-size:.95rem}
+.seg{display:inline-flex;border:2px solid var(--line);border-radius:99px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:3px 12px;font-weight:700}
+.seg button[aria-pressed="true"]{background:var(--instr);color:var(--instr-ink)}
+
+/* buttons */
+.btn{border:2px solid var(--instr);background:transparent;color:var(--instr-text);border-radius:12px;padding:10px 20px;font-weight:900;font-size:1.05rem;min-height:48px}
+.btn.primary{background:var(--instr);color:var(--instr-ink)}
+.btn.big{font-size:1.4rem;padding:16px 30px;border-radius:16px}
+.btn:disabled{opacity:.35}
+.btn.ok{border-color:var(--ok);color:var(--ok)}
+.btn.ok.on,.btn.ok.solid{background:var(--ok);color:var(--on-ok)}
+.btn.no{border-color:var(--no);color:var(--no)}
+.btn.no.on{background:var(--no);color:var(--on-no)}
+.btn.again{border-color:var(--again);color:var(--again)}
+.linkish{border:0;background:none;color:var(--instr-text);font-weight:700;text-decoration:underline;padding:4px}
+.row-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* Useful language box (as on her slides and the homework pages) */
+.box{background:var(--card);border:2px solid var(--ink);border-radius:4px;padding:8px 12px 10px;position:relative;display:grid;gap:1px;margin-top:2rem}
+.box .sticker{width:8.5rem;height:auto;margin:-1.8rem 0 -4px -8px}
+.box-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.box-top .linkish{font-size:.9rem;margin-top:-6px}
+.box h4{margin:6px 0 1px;color:var(--label);font-size:.92rem;letter-spacing:.07em;font-weight:900;text-transform:uppercase}
+.box h4:first-of-type{margin-top:2px}
+.ph{display:block;width:100%;text-align:left;border:0;background:transparent;border-radius:8px;padding:1px 8px 1px 1.5rem;margin:0 0 0 -8px;line-height:1.2;font-size:1.12rem;position:relative}
+.ph::before{content:"";position:absolute;left:8px;top:.5em;width:.5em;height:.5em;border-radius:50%;border:2px solid var(--line)}
+button.ph:hover{background:color-mix(in srgb, var(--used) 35%, transparent)}
+.ph.used{background:var(--used);color:var(--used-ink)}
+.ph .gloss{color:var(--muted);font-style:italic;font-size:.86em}
+.ph .bx{font-weight:900}
+.ph.used::before{content:"✓";border:0;width:auto;height:auto;top:.18em;left:7px;font-weight:900;color:var(--ok)}
+.box.static .ph{cursor:default}
+.box.static .ph::before{display:none}
+.box.static .ph{padding-left:8px}
+.peek{display:grid;gap:8px;justify-items:start;background:var(--card);border:2px dashed var(--line);border-radius:12px;padding:14px 16px;margin-top:10px}
+.peek p{margin:0;color:var(--muted)}
+.extra{margin:0;font-weight:700;background:var(--bubble);color:var(--bubble-ink);border-radius:10px;padding:8px 12px}
+
+/* If you're done: the speaking tasks */
+.speak{background:var(--bubble);color:var(--bubble-ink);border-radius:18px;padding:18px 22px;display:grid;gap:12px;box-shadow:var(--shadow)}
+.speak.pop{animation:popsoft .35s ease-out}
+.speak-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.speak-h{font-size:.85rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
+.speak-dots{display:flex;gap:0;margin:-6px -5px}
+.speak-dots button{border:0;background:none;padding:6px 5px;line-height:0}
+.speak-dots button::before{content:"";display:block;width:.6rem;height:.6rem;border-radius:50%;background:color-mix(in srgb, var(--bubble-ink) 22%, transparent);transition:transform .15s}
+.speak-dots button.was::before{background:color-mix(in srgb, var(--bubble-ink) 50%, transparent)}
+.speak-dots button.on::before{background:var(--instr);transform:scale(1.25)}   /* "you are here" is blue on every page (tools 6) */
+.speak-dots button:hover::before{transform:scale(1.35)}
+.speak-task{margin:0;font-size:1.45rem;font-weight:700;line-height:1.35}
+.speak-task .bx,.follow-q .bx{color:var(--flip-ink);font-weight:900}
+/* the stages */
+.stages{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-left:auto}
+.stage-btn{border:2px solid var(--line);background:var(--card);color:var(--muted);border-radius:99px;padding:4px 14px;font-weight:900;font-size:1.02rem}
+.stage-btn:hover{border-color:var(--instr);color:var(--instr-text)}
+.stage-btn[aria-current="step"]{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
+.stage-arrow{color:var(--muted);font-weight:900}
+@media (max-width:560px){ .stages{margin-left:0} }
+/* 📋 all of it, folded */
+details.all{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:4px 16px}
+.side details.all{background:transparent;border:2px dashed var(--line);font-size:.92rem;padding:2px 14px}
+.side details.all[open]{background:var(--card)}
+details.all summary{cursor:pointer;font-weight:900;padding:8px 0;color:var(--muted);list-style:none}
+details.all summary::-webkit-details-marker{display:none}
+details.all summary::after{content:" ▸";}
+details.all[open] summary::after{content:" ▾";}
+details.all[open] summary{color:var(--ink)}
+.all-in{display:grid;gap:10px;padding:2px 0 14px}
+.all-row{display:grid;gap:2px;border-top:1px solid var(--line);padding-top:8px}
+.all-row .f{color:var(--ink)} .all-row .f .ctx{color:var(--muted)}
+.all-row .b{color:var(--flip-ink);font-weight:900}
+.all-h{color:var(--label);font-size:.88rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;margin-top:6px}
+.all-sub{font-weight:900}
+.all-row p{margin:0}
+.all-row .bx{color:var(--flip-ink)}
+.all-side{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;font-weight:900;color:var(--muted)}
+/* tactile feedback */
+@keyframes pop{0%{transform:scale(1)}35%{transform:scale(1.18)}100%{transform:scale(1)}}
+@keyframes popsoft{0%{transform:scale(1)}35%{transform:scale(1.035)}100%{transform:scale(1)}}
+.pop{animation:pop .38s cubic-bezier(.3,1.4,.5,1)}
+.ph.pop{animation:popsoft .32s ease-out}
+.legal{max-width:72rem;margin:0 auto;padding:6px 0 18px;font-size:.8rem;color:var(--muted)}
+.legal a{color:var(--muted)}
+@media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
+.btn.slim{min-height:38px;padding:4px 14px;font-size:.95rem;border-radius:10px}
+/* live version (tools 7): Olya's edit buttons and bar — only on her screen */
+.live-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;background:var(--card);border:2px dashed var(--instr);border-radius:12px;padding:6px 12px;margin-bottom:10px;font-size:.95rem}
+.live-bar #live-status{color:var(--muted)}
+.live-removed{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.live-chip,.live-reset{border:2px solid var(--line);background:var(--ground);color:var(--ink);border-radius:99px;padding:1px 10px;font-weight:700;font-size:.9rem}
+.live-reset{margin-left:auto;border-color:var(--no);color:var(--no)}
+.live-host{display:flex;align-items:flex-start;gap:8px}
+.live-host > :first-child{flex:1}
+.live-tools{display:inline-flex;gap:4px;flex:none}
+.live-b{border:2px solid var(--line);background:var(--card);border-radius:8px;padding:1px 6px;font-size:1rem;line-height:1.4}
+.live-b:hover{border-color:var(--instr)}
+.speak-dots.draggable button{cursor:grab;touch-action:none}
+.speak-dots.draggable button::before{width:.85rem;height:.85rem}
+.speak-dots button.dragging{cursor:grabbing;z-index:2;position:relative}
+.speak-dots button.dragging::before{transform:scale(1.5);box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.speak-dots button.drop-here::before{outline:3px solid var(--instr);outline-offset:2px}
+.live-host.is-hidden{flex-direction:column-reverse;gap:4px}   /* hidden, not deleted: greyed, with "Hidden from the groups · ✏️ · Show" on its own line above */
+.live-host.is-hidden > :first-child{opacity:.45}
+.live-host.is-hidden .live-tools{align-self:flex-start}
+.all-row.is-hidden > span:first-child{opacity:.45}
+.live-hidden-tag{align-self:center;font-size:.8rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.live-b.live-show{border-color:var(--instr);background:var(--instr);color:var(--instr-ink);font-weight:900;padding:1px 10px}
+.live-b[data-live-hide]{font-weight:700;font-size:.9rem;padding:1px 8px}
+.speak-dots button.hid::before{background:transparent !important;box-shadow:inset 0 0 0 2px var(--muted)}
+.live-edit{display:grid;gap:8px;background:var(--card);border:2px solid var(--instr);border-radius:12px;padding:10px 12px}
+.live-edit label{display:grid;gap:2px;font-size:.85rem;font-weight:700;color:var(--muted)}
+.live-edit textarea{font:inherit;font-size:1.05rem;font-weight:400;color:var(--ink);background:var(--ground);border:2px solid var(--line);border-radius:8px;padding:6px 8px;width:100%;resize:vertical}
+
+/* inside a field page (?embed=1, tools 13): only the working part; its steps small, under the field's own tabs */
+.embed .head h1,.embed .head .part{display:none}
+.embed footer.legal{display:none}
+.embed .stages.sub{margin-left:0}
+.embed .stages.sub .stage-btn{font-size:.85rem;padding:2px 10px;border-width:1px}
+.embed .stages.sub .stage-arrow{font-size:.8rem}
+
+/* ---------- revision field (tools 13, B2 revision 30.10, her wish 03:26): one Jeopardy question = one page — Remember → 📖 text → 🃏 cards → 💬 speaking ---------- */
+.wrap.nobox{grid-template-columns:minmax(0,1fr);max-width:72rem}
+.wrap.nobox .side{display:none}
+.wrap.wide{grid-template-columns:minmax(0,1fr);max-width:90rem}
+.wrap.wide .side{display:none}
+.head .part{white-space:nowrap}
+.head h1{font-size:1.6rem}
+.blk{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 18px;display:grid;gap:12px;align-content:start}
+.blk.enter{animation:enterR .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes enterR{from{opacity:0;transform:translateX(50px)}to{opacity:1;transform:none}}
+.finstr{background:var(--card);color:var(--ink);border-left:6px solid var(--instr);border-radius:12px;padding:8px 14px;font-weight:700;font-size:1.12rem;margin:0;box-shadow:var(--shadow)}
+.finstr .bx{color:var(--flip-ink)}
+.ctx,.lctx{color:var(--muted)}
+.lctx{margin:4px 0 0;font-style:italic;font-size:1rem}
+.bx{color:var(--flip-ink);font-weight:900}
+.m-good{background:#BFF2B8;color:#111111;border-radius:3px}
+.m-del{text-decoration:line-through;color:#8A8D91}
+.ipa{color:#B45309;font-weight:600}
+.blk-nav{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.blk-nav .grow{flex:1}
+.bdots{display:flex;gap:6px}
+.bdots button{width:14px;height:14px;border-radius:50%;border:2px solid var(--line);background:var(--card);padding:0}
+.bdots button.on{background:var(--instr);border-color:var(--instr);transform:scale(1.2)}
+.bdots button.was{background:var(--line)}
+.board-back{display:flex;gap:10px;align-items:center}
+.board-back a{font-weight:900;color:var(--instr-text);text-decoration:none;border:2px solid var(--line);border-radius:99px;padding:4px 14px;background:var(--card)}
+/* 📖 a gapped text, as the homework dlg: first letters blue bold, the rest yellow; tap to open; IPA hidden orange */
+.tx{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px;align-items:start}
+.tx.single{grid-template-columns:minmax(0,1fr)}
+.dlg p{margin:0 0 6px;font-size:1.18rem;line-height:1.55}
+.dlg .sp{font-weight:900;margin-right:4px}
+.gp{font:inherit;border:0;padding:0;background:transparent;cursor:pointer;color:inherit}
+.gp .f{color:#0000FF;font-weight:900}
+.gp .r{background:#FFFF00;color:transparent;border-radius:3px;padding:0 1px}
+.gp.open .r,.gp.open .f{color:#1D1D1B;font-weight:700;background:#FFFF00}   /* opened: the whole chunk black bold on the yellow (her read-through 30.10: blue on yellow is hard on the eyes) */
+.gp.open .f{border-radius:3px 0 0 3px;padding-left:1px}
+.gp.o .r{background:#F6B26B}
+.gp.o.open .r{background:#FDE7CF;color:#B45309;font-weight:600}
+.gp:not(.open):hover .r{outline:2px solid #E8D800}
+.bm{border:0;background:transparent;font-size:.8rem;padding:0 2px;opacity:.3;cursor:pointer;vertical-align:super}
+.bm.on{opacity:1}
+.bm:hover{opacity:.8}
+.gloss{background:var(--ground);border-radius:12px;padding:8px 12px;display:grid;gap:4px;font-size:1.02rem}
+.gloss .gl{margin:0;line-height:1.35}
+.gloss .ru{color:var(--muted);font-style:italic}
+.tx-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tx-tools .hint{color:var(--muted);font-size:.9rem}
+.parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr));gap:14px}
+.part-h{font-weight:900;color:var(--label);letter-spacing:.05em;text-transform:uppercase;font-size:.85rem;margin:0 0 4px}
+/* ✍️ write: the situation, their message, Send; on -live her notes above the input */
+.witem{display:grid;gap:6px;border-top:1px dashed var(--line);padding-top:10px}
+.witem:first-of-type{border-top:0;padding-top:0}
+.witem .lbl{font-weight:900;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;color:var(--label)}
+.witem .inmsg{justify-self:start;background:#FFFFFF;color:#111111;border-radius:12px;border-top-left-radius:3px;padding:6px 10px;box-shadow:0 1px 0 rgba(0,0,0,.12);border:1px solid var(--line);font-size:1.05rem}
+.witem textarea{font:inherit;font-size:1.1rem;border:2px solid var(--line);border-radius:12px;padding:8px 12px;min-height:3.2rem;resize:vertical;background:var(--card);color:var(--ink)}
+.witem .sentmsg{justify-self:end;background:#D9FDD3;color:#111111;border-radius:12px;border-top-right-radius:3px;padding:6px 10px;font-size:1.05rem;max-width:90%}
+.witem .w-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.share-note{font-size:.85rem;color:var(--muted);margin:0}
+.t-notes{display:grid;gap:6px}
+.t-notes:empty{display:none}
+/* 🔁 say: the task, Show the answer, one tap: how close were we */
+.say-lines p,.ans-lines p{margin:0 0 4px;font-size:1.15rem;line-height:1.45}
+.ans-lines{border-top:2px dashed var(--line);padding-top:10px}
+.ans-h{font-weight:900;color:var(--ok);letter-spacing:.06em;text-transform:uppercase;font-size:.85rem}
+.selfcheck{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.selfcheck .q{font-weight:800;color:var(--muted)}
+.selfcheck button{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:4px 12px;font-weight:800}
+.selfcheck button.on{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
+/* 🖼 picture */
+.pic img{width:100%;height:auto;max-height:52vh;object-fit:contain;border-radius:12px;display:block;background:var(--ground)}
+.pic .task{font-size:1.15rem;margin:0}
+/* 🃏 cards */
+.deck{display:grid;gap:12px}
+.fdots{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.fdots span,.fdots button{width:.95rem;height:.95rem;border-radius:50%;background:var(--line);border:0;padding:0}
+.fdots .got{background:var(--ok)}
+.fdots .again{background:var(--again)}
+.fdots .now{transform:scale(1.35);box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--instr)}
+.fc{position:relative;min-height:12rem;background:var(--card);border-radius:20px;border:2px solid var(--line);box-shadow:var(--shadow);display:grid;align-content:start;gap:10px;padding:22px 26px 28px;cursor:pointer}
+.fc.open{cursor:default;border-color:var(--instr)}
+.fc.enter{animation:deal .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes deal{from{opacity:0;transform:translateX(50px) rotate(2deg)}to{opacity:1;transform:none}}
+.fc .lbl{font-size:.85rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
+.fc .say{font-size:1.6rem;font-weight:700;line-height:1.3;margin:0}
+.fc .sm{font-size:1.15rem;margin:0}
+.fc .kw{color:var(--label);font-weight:900;letter-spacing:.03em;text-transform:uppercase;margin-left:.4em}
+.fc .frame{font-size:1.35rem;font-weight:700;margin:0}
+.fc .ans{border-top:2px dashed var(--line);padding-top:12px;display:grid;gap:6px}
+.fc .ans .say{color:var(--flip-ink)}
+.fc .ans .say .bx{color:var(--flip-ink);text-decoration:underline;text-decoration-thickness:2px}
+.fc .note{color:var(--muted);font-size:1rem;margin:0}
+.fc .chk{display:inline-block;background:var(--ok);color:var(--on-ok);border-radius:6px;padding:1px 8px;font-size:.8rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase}
+.fc .next{margin:0;font-size:1.1rem}
+.fc .corner{position:absolute;right:16px;bottom:8px;color:var(--muted);font-size:.88rem}
+.fc .hintline{color:var(--muted);margin:0}
+.fc.look{border-style:dashed}
+.deck-act{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.deck-act .btn{min-width:10rem}
+.endlist{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.endlist li{background:var(--ground);border-left:5px solid var(--again);border-radius:10px;padding:8px 14px}
+.endlist.all li{border-left-color:var(--ok)}
+.endlist .f{color:var(--muted);display:block;font-size:.95rem}
+.endlist .b{font-weight:900;color:var(--flip-ink);font-size:1.1rem}
+/* 🗓 calendars */
+.cals{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:14px}
+.cal{border:2px solid #3E6A8A;border-radius:10px;overflow:hidden;background:#FFFFFF;color:#111111}
+.cal h4{margin:0;background:#3E6A8A;color:#FFFFFF;padding:6px 10px;font-size:.95rem;letter-spacing:.04em}
+.cal .r{display:grid;grid-template-columns:4.2rem 1fr;border-top:1px solid #FFFFFF;font-size:1rem}
+.cal .r span{padding:4px 8px}
+.cal .r .t{font-weight:800}
+.cal .busy{background:#D9D9D9}
+.cal .free{background:#FFE699}
+.cal .call{background:#BDD7EE;font-weight:800}
+.cal-done{background:var(--ok-bg);color:var(--ok-ink);border-radius:10px;padding:8px 12px;font-weight:700;margin:0}
+/* ⚡ fast finishers */
+.fast{background:var(--bubble);color:var(--bubble-ink);border-radius:16px;padding:12px 16px;display:grid;gap:8px}
+.fast h3{margin:0;font-size:1.1rem}
+.fast p{margin:0;font-size:1.08rem}
+.tool-frame{width:100%;height:calc(100vh - 13rem);min-height:32rem;border:2px solid var(--line);border-radius:14px;background:var(--ground)}
+/* 🎓 How it works (handoff 0920): a line above a block that has a tip — always on f-demo, on the other fields when the switch is on */
+.tip{margin:0;color:var(--muted);font-size:1.05rem;font-weight:600;border:2px dashed var(--line);border-radius:12px;padding:6px 12px;background:var(--card)}
+.howto{margin-left:6px}
+.howto[aria-pressed="true"]{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
+.compare{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+/* the box: X{{rest}} = the first letter shown, the rest hidden yellow (tap to open) */
+.ph .bh{background:#FFFF00;color:transparent;border-radius:3px}
+.ph .bh.open{color:#1D1D1B;font-weight:700}
+/* her group dots on a deck (as on the cards pages) */
+.gdots{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;background:var(--card);border:2px dashed var(--line);border-radius:14px;padding:6px 12px}
+.gd-lbl{font-weight:900;font-size:.9rem}
+.gd{width:var(--s);height:var(--s);border-radius:50%;border:0;padding:0;background:var(--line);cursor:pointer;flex:none}
+.gd.gd-ok{background:var(--ok)}
+.gd.gd-again{background:var(--again)}
+.gd-meta{color:var(--muted);font-size:.82rem;margin-left:auto}
+/* ---------- lesson work (tools 13, 30.10, her wish): on a -live page Olya sees what each group types, where each room is, and sends quick notes; shared by chat-scenes and the revision pages ---------- */
+.t-note{background:#FFFBE6;border:2px solid #E8B800;border-radius:12px;padding:6px 10px;font-size:1rem;line-height:1.35;color:#111111}
+.t-note.new{animation:noteIn .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes noteIn{0%{opacity:0;transform:translateY(8px) scale(.96)}60%{transform:scale(1.03)}100%{opacity:1;transform:none}}
+.t-note .who{font-weight:900;margin-right:4px}
+.t-note .q{font-weight:800;color:#B3261E}
+.stage-btn .gw-n{display:inline-block;min-width:1.4em;margin-left:4px;border-radius:99px;background:#E8B800;color:#111111;font-size:.8rem;padding:0 6px}
+.gw{display:grid;gap:12px}
+.gw-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px 14px}
+.gw-top .grow{flex:1}
+.gw-top .gw-meta{color:var(--muted);font-size:.9rem}
+.wrap.groups{grid-template-columns:minmax(0,1fr);max-width:90rem}
+.wrap.groups .side{display:none}
+.gw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(26rem,1fr));gap:12px;align-items:start}
+@media (max-width:560px){ .gw-grid{grid-template-columns:1fr} }
+.gw-empty{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;color:var(--muted)}
+.gw-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px 14px 12px;display:grid;gap:8px;border-left:6px solid var(--line)}
+.gw-card.typing{border-left-color:#E8B800}
+.gw-card.sent{border-left-color:var(--ok)}
+.gw-who{display:flex;gap:4px 10px;align-items:baseline;flex-wrap:wrap}
+.gw-who .nm{font-weight:900;font-size:1.05rem}
+.gw-who .ch{color:var(--label);font-weight:800;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase}
+.gw-who .stt{font-size:.85rem;font-weight:700;color:var(--muted)}
+.gw-text{font-size:1.1rem;line-height:1.45;background:var(--ground);border-radius:10px;padding:8px 10px;white-space:pre-wrap;overflow-wrap:anywhere;min-height:2.4em;cursor:text}
+/* her homework feedback marks (same colours as the feedback page): ✓ Good green, ✗ Change struck, ✎ Correction blue on yellow, 💬 Comment blue */
+.m-good{background:#BFF2B8;color:#111111;border-radius:3px}
+.m-del{text-decoration:line-through;color:#8A8D91}
+.m-ins{background:#FFFF00;color:#0000FF;border-radius:3px;font-weight:700;padding:0 2px}
+.m-note{background:#DCE9FF;color:#0B2F8F;border-radius:3px}
+.m-pick{background:#FFE58A;color:#111111;border-radius:3px;outline:2px solid #E8B800}
+.gw-tools{display:flex;flex-wrap:wrap;gap:6px}
+.gw-tools .tool{border:2px solid var(--line);border-radius:10px;padding:3px 11px;font-weight:800;font-size:.92rem}
+.gw-tools .good{background:#BFF2B8;color:#111111}
+.gw-tools .del{background:var(--card);color:var(--muted);text-decoration:line-through}
+.gw-tools .ins{background:#FFFF00;color:#0000FF}
+.gw-tools .cmt{background:#DCE9FF;color:#0B2F8F}
+.gw-card.fixing .gw-own input{border-color:#0000FF;background:#FFFFE0;color:#0000FF;font-weight:700}
+.gw-text .none{color:var(--muted);font-style:italic}
+.gw-notes{display:grid;gap:3px;font-size:.92rem}
+.gw-notes .q{font-weight:800}
+.gw-notes .sn{color:var(--muted);font-size:.82rem}
+.gw-pick{font-size:.85rem;color:var(--muted)}
+.gw-pick:empty{display:none}
+.gw-pick b{color:var(--ink)}
+.gw-pick button{border:0;background:transparent;color:var(--muted);font-weight:900;padding:0 4px}
+.gw-quick{display:flex;flex-wrap:wrap;gap:6px}
+.gw-quick button{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:2px 9px;font-weight:700;font-size:.85rem}
+.gw-quick button:hover{border-color:var(--instr)}
+.gw-own{display:flex;gap:6px}
+.gw-own input{flex:1;min-width:0;font:inherit;font-size:1rem;border:2px solid var(--line);border-radius:10px;padding:6px 10px;background:var(--card);color:var(--ink)}
+.gw-said{font-size:.85rem;font-weight:700;color:var(--ok)}
+.gw-said:empty{display:none}
+.gw-earlier:empty{display:none}
+.gw-earlier summary{cursor:pointer;color:var(--muted);font-weight:700;font-size:.9rem}
+.gw-earlier p{margin:4px 0;font-size:.95rem;line-height:1.35}
+.gw-earlier .ch{color:var(--label);font-weight:800;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;margin-right:6px}
+/* her strip on the groups' screens: "move on to …" (Go → / Not yet) and 📢 (OK) — her rule 04:00: they can always say Not yet */
+#lw-strip-host{position:sticky;top:0;z-index:30}
+.lw-strip{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;max-width:72rem;margin:8px auto 0;background:#FFF4C2;border:2px solid #E8B800;border-radius:14px;padding:8px 14px;color:#111111;font-size:1.05rem;box-shadow:0 6px 18px rgba(0,0,0,.12);animation:noteIn .5s cubic-bezier(.2,.8,.2,1)}
+.lw-strip .grow{flex:1}
+.lw-strip .btn.slim{min-height:36px}
+.lw-strip .btn:not(.primary){background:#FFFFFF;color:#111111;border-color:#111111}
+/* her view: rooms, people, where each screen is */
+.gw-rooms{background:#E8F4FD;border:2px solid #9FD3FF;border-radius:var(--radius);padding:8px 14px;font-weight:800;color:#0B2F8F}
+.gw-rooms[hidden]{display:none}
+.gw-who .wh{font-size:.85rem;font-weight:800;color:var(--ink);background:var(--ground);border-radius:99px;padding:1px 9px}
+.gw-who .wh.long{background:#FDE2E1;color:#B3261E}
+.gw-who .away{font-size:.82rem;color:var(--muted)}
+.gw-ppl{border:0;background:transparent;font-size:1.05rem;padding:0 2px;cursor:pointer}
+.gw-ppl[aria-expanded="true"]{outline:2px solid var(--instr);border-radius:6px}
+.gw-roster{display:flex;flex-wrap:wrap;gap:6px;background:var(--ground);border-radius:10px;padding:6px 8px}
+.gw-roster .rn{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:2px 10px;font-weight:700;font-size:.9rem}
+.gw-roster .rn.here{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
+.gw-roster .rn.else{opacity:.7}
+.gw-roster .rn small{font-weight:600;opacity:.8}
+.gw-card.notext .gw-tools,.gw-card.notext .gw-quick,.gw-card.notext .gw-own{opacity:.55}
+.gw-nudge{font-size:.88rem;background:#FFF4C2;color:#111111;border-radius:8px;padding:3px 8px}
+.gw-nudges:empty{display:none}
+.gw-go{border:2px solid var(--line);border-radius:10px;padding:3px 8px;font-weight:800;font-size:.9rem;background:var(--card);color:var(--ink)}
+.gw-sayall{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:8px 12px}
+.gw-sayall[hidden]{display:none}
+.gw-sayall input{flex:1;min-width:14rem;font:inherit;border:2px solid var(--line);border-radius:10px;padding:6px 10px;background:var(--card);color:var(--ink)}
+.chipq{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:2px 10px;font-weight:700;font-size:.88rem}
+.gw-hist{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:8px 14px}
+.gw-hist summary{cursor:pointer;font-weight:800}
+.gw-hist p{margin:6px 0 0}
+.gw-hist .mv{color:var(--muted);font-size:.9rem}
+
+/* 👥 under a chat on the task page (her view): the groups' texts for this chat */
+.pc{display:grid;gap:8px;border:2px dashed var(--line);border-radius:16px;padding:10px 12px;background:var(--ground)}
+.pc-top{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.pc-meta{color:var(--muted);font-size:.88rem}
+.pc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(20rem,1fr));gap:10px}
+
+@media (max-width:760px){ .tx{grid-template-columns:1fr} .blk{padding:12px} .fc .say{font-size:1.3rem} .tool-frame{height:80vh} }
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap"><main class="main" id="main"></main><div class="side" id="side"></div></div>
+<footer class="legal"><a href="../../impressum.html">Impressum</a> · <a href="../../datenschutz.html">Datenschutz</a></footer>
+<script>
+const D = {"type": "revision-field", "demo": true, "board": {"button": "🎓 How the game works"}, "title": "How the game works", "boxes": {"BOX": [{"h": "THE NEWS", "items": ["**Just a heads-up** — …", "Gary's **gone missing**!", "He's **been missing since** Friday."]}, {"h": "SHARE A FEELING ↘", "items": ["It's so weird, **isn't it?**", "— It **really is**!"]}, {"h": "REACT AND ASK", "items": ["No way! **When did you last see him?**", "**Thanks for the heads-up!**"]}]}, "stages": [{"label": "📝 Test yourself", "blocks": [{"kind": "write", "lesson_work": true, "instr": "Gary is the office goldfish. Your colleague texts you. Write a reply together, then send it.", "tip": "First you try on your own — before any help. On the real pages Olya sees what you type and can send you a note.", "items": [{"ctx": "((Your colleague, in the office chat:))", "incoming": "Have you seen Gary? His bowl is empty! 🐟", "label": "Your reply"}], "example": "No way! That's so weird. **When did you last see him?**"}]}, {"label": "🔁 Recall", "blocks": [{"kind": "text", "instr": "Complete the chat and say the words. Tap the yellow to check.", "tip": "Here comes the text from our lesson, with the first letters. 🔖 = \"we didn't know this\" — Olya sees which gaps were hard.", "lines": [{"s": "Mia", "p": ["Just a ", {"f": "h", "r": "eads-up"}, " — Gary's ", {"f": "g", "r": "one missing"}, "! 🐟"]}, {"s": "Sam", "p": ["I know! I saw the empty bowl this morning. It's so weird, ", {"f": "i", "r": "sn't it"}, "?"]}, {"s": "Mia", "p": ["It ", {"f": "r", "r": "eally is"}, ". The bowl's still here, but no Gary."]}, {"s": "Sam", "p": ["UPDATE: found him. Ken took him home for the weekend and forgot to bring him back. He said Gary looked lonely."]}], "gloss": [{"p": [{"b": "heads-up"}], "ru": "предупреждение"}, {"p": [{"b": "gone missing"}], "ru": "пропал"}]}]}, {"label": "🃏 Practice", "blocks": [{"kind": "cards", "style": "kwt", "instr": "Three cards, three kinds. Say your answer, then tap the card to check.", "tip": "↺ Again = \"we weren't sure\": the card comes back two or three cards later. ✓ Got it = done. Olya sees which cards came back.", "cards": [{"front": "Nobody knows where Gary is.", "key": "MISSING", "frame": "Gary has ___.", "answer": "gone missing", "back": "Gary has **gone missing**.", "note": "пропал → has gone missing · also fine: Gary is missing."}]}, {"kind": "cards", "style": "ours", "instr": "One of our sentences. Green = good, grey = could be better. How would you make it perfect English?", "check": "Perfect English", "cards": [{"ctx": "в чате офиса", "front": "<g>Gary<\/g> ~~is missing~~ <g>since Friday<\/g>.", "back": "Gary **has been missing** since Friday.", "why": "С since — «с тех пор и до сих пор»: has been missing."}]}, {"kind": "cards", "style": "say", "instr": "How do you say it in English?", "cards": [{"front": "((Спасибо, что предупредила!))", "back": "**Thanks for the heads-up!**"}]}]}, {"label": "💬 Use it", "blocks": [{"kind": "questions", "box": "BOX", "instr": "Now talk. Use the box.", "tip": "Tap a phrase in the box when you say it — it turns green. ⬅ Board takes you back to the game.", "items": ["Tell your partner about a time something went missing at work or at home (real or made up!). What was it? Did it turn up? Your partner reacts and asks **two** questions."], "fast": "If you're done: act out Mia and Sam's chat from memory."}]}], "_pids": {"blocks": [0, 1, 2, 3, 4, 5], "cards": [0, 1, 2], "write": [0], "questions.5": [0]}, "boardPage": "jeopardy", "embeds": {}};
+const STICKER = "data:image/png;base64,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";
+const TOOLS_VERSION = "13";
+const PAGE_ID = "b2-2026-10-30/f-demo";
+const LIVE_ON = false, LIVE_URL = "";
+/* shared by the lesson tools: the Useful language box, shuffling, small helpers */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle = a => { a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const store = { get(k){ try{ return JSON.parse(localStorage.getItem(k) || "null"); }catch(e){ return null; } }, set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} } };
+const params = new URLSearchParams(location.search);
+/* inside a field page (?embed=1; tools 13, her catch 30.10 09:20): only the working part — no Live bar, no title, no 📥 Groups (the field
+   has its own), and its steps as small sub-steps under the field's tabs: one row of big tabs on the screen */
+const EMBED = params.get("embed") === "1";
+if(EMBED) document.documentElement.classList.add("embed");
+/* **box phrase** in a speaking task or a follow-up = shown like the box phrases in the examples (checklist 8.07) */
+const boxMarks = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>');
+const calm = () => !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+/* a small burst of confetti from an element (the end of a deck): brand colours, falls and fades in about a second; none with reduced motion */
+function confetti(from){
+  if(calm() || !from) return;
+  const r = from.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  const css = getComputedStyle(document.documentElement), col = ["--instr", "--date-bg", "--hl", "--ok", "--label"].map(v => css.getPropertyValue(v).trim() || "#0693E3");
+  for(let i = 0; i < 46; i++){
+    const p = document.createElement("i"), a = Math.random() * Math.PI * 2, d = 90 + Math.random() * 170, w = 6 + Math.random() * 6;
+    p.className = "confetti"; p.style.cssText = `position:fixed;left:${cx}px;top:${cy}px;width:${w}px;height:${w * .45}px;background:${col[i % col.length]};border-radius:2px;pointer-events:none;z-index:50`;
+    document.body.appendChild(p);
+    const dx = Math.cos(a) * d, dy = Math.sin(a) * d * .6 - 60, spin = (Math.random() - .5) * 720;
+    p.animate([{transform: "translate(-50%, -50%) rotate(0)", opacity: 1},
+               {transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) rotate(${spin / 2}deg)`, opacity: 1, offset: .45},
+               {transform: `translate(calc(-50% + ${dx * 1.15}px), calc(-50% + ${dy + 160}px)) rotate(${spin}deg)`, opacity: 0}],
+              {duration: 1100 + Math.random() * 500, easing: "cubic-bezier(.2,.7,.4,1)"}).onfinish = () => p.remove();
+  }
+}
+/* a small "pop" on whatever was just tapped (tactile feedback) */
+const pop = el => { if(!el || calm()) return; el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop"); };
+
+/* "If you're done": speaking tasks for fast finishers, one at a time (her rule, 27.10: a page can't be changed during the lesson,
+   so every tool ends with plenty of talk, and after it the task starts over — it never runs out) */
+/* where a group is in a run of tasks (speaking tasks, follow-ups). It counts which tasks they have SEEN, not positions, so that
+   when Olya moves or removes tasks during the lesson (live version) no group skips anything (her catch, 28.10: on slides she could
+   say "go back to slide 74"; here nobody could). Next = the next unseen task after this one in the current order, then any unseen
+   one they jumped over; Previous = back the way they came; the end buttons come only when everything has been seen. */
+const newCursor = () => ({key: null, seen: new Set(), hist: [], move: 0, go: null});
+function cursorPick(cur, list){
+  const has = k => list.some(x => x.k === k), unseen = x => !cur.seen.has(x.k) && x.k !== cur.key && !x.hidden;
+  let key = cur.key;
+  if(cur.go != null && has(cur.go)){ if(has(key)) cur.hist.push(key); key = cur.go; }
+  else if(cur.move > 0){ const at = list.findIndex(x => x.k === key), nx = list.slice(at + 1).find(unseen) || list.find(unseen);
+    if(nx){ if(has(key)) cur.hist.push(key); key = nx.k; } }
+  else if(cur.move < 0){ while(cur.hist.length){ const pk = cur.hist.pop(); if(has(pk)){ key = pk; break; } } }
+  if(key == null || !has(key)){ const nx = list.find(x => !cur.seen.has(x.k)) || list[0]; key = nx.k; }
+  cur.key = key; cur.move = 0; cur.go = null; cur.seen.add(key);
+  return {i: list.findIndex(x => x.k === key), more: list.some(x => !cur.seen.has(x.k) && !x.hidden), back: cur.hist.some(has)};
+}
+let spkCur = newCursor(), spkView = [];
+const spkReset = () => { spkCur = newCursor(); };
+/* the dots under a run of tasks: each one is a button that opens that task */
+const dotsHTML = (n, i, attr, what, list, base, seen) => { const drag = list && base && liveTeacher();
+  return `<span class="speak-dots ${drag ? "draggable" : ""}" ${drag ? `data-drag="${base}"` : ""}>${Array.from({length: n}, (_, k) =>
+  `<button class="${k === i ? "on" : (seen && list ? seen.has(list[k].k) : k < i) ? "was" : ""} ${list && list[k].hidden ? "hid" : ""}" ${attr}="${k}" aria-label="${what} ${k + 1}" ${k === i ? `aria-current="step"` : ""}${drag ? ` data-k="${list[k].k}" title="${esc(String(list[k].t).replace(/\*\*/g, "").slice(0, 90))} — drag to move"` : ""}></button>`).join("")}</span>`; };
+function speakHTML(list, endButtons, label = "Speaking", base = "speaking"){
+  list = (list || []).map((x, k) => typeof x === "string" ? {k, t: x} : x);
+  if(!list.length) return "";
+  const {i, more, back} = cursorPick(spkCur, list), last = !more; spkView = list; liveViews[base] = list;
+  return `<section class="speak" aria-live="polite"><div class="speak-top"><span class="speak-h">💬 ${esc(label)}</span>
+      ${dotsHTML(list.length, i, "data-speak-go", "Question", list, base, spkCur.seen)}</div>
+    <div class="live-host ${liveDim(base + "." + list[i].k)}" data-live-host><p class="speak-task">${boxMarks(list[i].t)}</p>${liveTools(base + "." + list[i].k, {last: true})}</div>
+    <div class="row-actions">${back ? `<button class="btn" data-speak-prev>← Previous question</button>` : ""}${last ? endButtons : `<button class="btn primary" data-speak-next>Next question →</button>`}</div></section>`;
+}
+function wireSpeak(root, rerender){
+  const show = () => { rerender(); const t = document.querySelector(".speak"); if(t) pop(t); };
+  root.querySelectorAll("[data-speak-next]").forEach(b => b.addEventListener("click", () => { spkCur.move = 1; show(); }));
+  root.querySelectorAll("[data-speak-prev]").forEach(b => b.addEventListener("click", () => { spkCur.move = -1; show(); }));
+  root.querySelectorAll("[data-speak-go]").forEach(b => b.addEventListener("click", () => { const k = +b.dataset.speakGo; spkCur.go = spkView[k] ? spkView[k].k : null; show(); }));
+  wireDrag(root);
+}
+
+/* the stages of the task (her rule, 27.10: every tool has stages — at least the practice and the speaking —
+   and a group can move between them at any time without clicking through) */
+const stagesHTML = (list, cur) => `<nav class="stages ${EMBED ? "sub" : ""}" aria-label="Stages">${list.filter(([id]) => !(EMBED && id === "groups")).map(([id, label], i) =>
+  `${i ? `<span class="stage-arrow" aria-hidden="true">→</span>` : ""}<button class="stage-btn" data-stage="${id}" ${id === cur ? `aria-current="step"` : ""}>${label}</button>`).join("")}</nav>`;
+
+/* 📋 everything on one screen, folded: to show a card or an example again later in the lesson */
+let allOpen = false;
+const allHTML = (title, inner) => `<details class="all" ${allOpen ? "open" : ""}><summary>📋 ${esc(title)}</summary><div class="all-in">${inner}</div></details>`;
+function wireAll(root){ root.querySelectorAll("details.all").forEach(d => d.addEventListener("toggle", () => { allOpen = d.open; })); }
+
+/* the box: tap a phrase when you've said it (it lights up green); "clickable:false" = a plain list.
+   A line may carry a short Russian gloss after " – " (as on her slides: grey italics) and **bold** key words. */
+const phHTML = t => { const k = t.indexOf(" – "), en = k < 0 ? t : t.slice(0, k), ru = k < 0 ? "" : t.slice(k + 3);
+  return boxMarks(en) + (ru ? ` <span class="gloss">– ${esc(ru)}</span>` : ""); };
+const usedPhrases = new Set();
+function boxHTML(box, {clickable = true, collapsible = false, open = true} = {}){
+  const items = box.map((g, gi) => `<h4>${esc(g.h)}</h4>` + g.items.map((t, ti) => clickable
+      ? `<button class="ph ${usedPhrases.has(gi + "." + ti) ? "used" : ""}" data-ph="${gi}.${ti}" aria-pressed="${usedPhrases.has(gi + "." + ti)}">${phHTML(t)}</button>`
+      : `<p class="ph">${phHTML(t)}</p>`).join("")).join("");
+  return `<aside class="box ${clickable ? "" : "static"}" aria-label="Useful language">
+    <div class="box-top"><img class="sticker" src="${STICKER}" alt="Useful language">${collapsible ? `<button class="linkish" data-box-toggle>Hide</button>` : ""}</div>
+    ${open ? items : ""}</aside>`;
+}
+function wireBox(root, rerender){
+  root.querySelectorAll("[data-ph]").forEach(b => b.addEventListener("click", () => {
+    const k = b.dataset.ph; usedPhrases.has(k) ? usedPhrases.delete(k) : usedPhrases.add(k);
+    b.classList.toggle("used", usedPhrases.has(k)); b.setAttribute("aria-pressed", usedPhrases.has(k)); if(usedPhrases.has(k)) pop(b);
+  }));
+}
+
+/* ---------- live version (tools 7, her wish 28.10): Olya removes, moves or corrects items during a lesson ----------
+   Only on the "-live" pages (LIVE_ON). The page as built is the default; her changes come from her table
+   (sheet "Live", one row per page) when the page opens and every 30 s, and are applied at the group's next tap,
+   so nothing changes under their eyes. If the table doesn't answer, the page simply shows what it was built with.
+   Her own code on this site (typed on any homework page) turns on the edit buttons: ✏️ correct, ⤓ to the end, Hide / Show.
+   Hide, not delete (her wish, 28.10): a hidden item stays on HER screen, greyed, so she can correct it and show it again. */
+let LV = {hide: [], last: [], text: {}, order: {}}, livePending = null, liveRerender = () => {}, liveBusy = false, liveMsg = "";
+const liveCacheKey = "tool-live-" + PAGE_ID;
+const liveSame = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const liveNorm = v => ({hide: (v && v.hide) || [], last: (v && v.last) || [], text: (v && v.text) || {}, order: (v && v.order) || {}});
+if(LIVE_ON){ const c = store.get(liveCacheKey); if(c) LV = liveNorm(c); }
+/* permanent numbers (tools 13, her decision 30.10): her table keeps live changes by an item's permanent number (D._pids, from the build's
+   register), not by its place in the data, so a rebuild that inserts or moves items never moves her ✏️ / Hide / order onto another item.
+   The page works with places; these turn a path into its stored form and back ("cards.4.1" ↔ "cards.<number>.1"). No numbers → the same. */
+const PIDS = (typeof D !== "undefined" && D && D._pids) || {};
+const PID_KEYS = Object.keys(PIDS).sort((a, b) => b.length - a.length);
+const pidOf = (base, k) => PIDS[base] && PIDS[base][k] != null ? PIDS[base][k] : k;
+const idxOf = (base, pid) => PIDS[base] ? PIDS[base].indexOf(+pid) : +pid;
+function pathMap(path, fn){
+  path = String(path); const key = PID_KEYS.find(k => path.startsWith(k + "."));
+  if(!key) return path;
+  const rest = path.slice(key.length + 1), seg = rest.split(".")[0]; if(!/^\d+$/.test(seg)) return path;
+  const n = fn(key, +seg); return n == null || n < 0 ? null : key + "." + n + rest.slice(seg.length);
+}
+const toStore = path => pathMap(path, pidOf);
+const fromStore = path => pathMap(path, idxOf);
+const liveTeacher = () => { if(!LIVE_ON) return false; try{ return localStorage.getItem("hw-role") === "teacher" && !!localStorage.getItem("hw-code"); }catch(e){ return false; } };
+const pathGet = (o, path) => String(path).split(".").reduce((x, k) => x == null ? x : x[k], o);
+const liveText = (path, dflt) => { const p = toStore(path); return Object.prototype.hasOwnProperty.call(LV.text, p) ? LV.text[p] : dflt; };
+const liveHidden = path => LV.hide.includes(toStore(path));
+/* a list as the groups see it now: in the order she dragged it into, removed ones out, corrected texts in
+   (an item she brought back after ordering goes to the end) */
+function liveList(arr, base){
+  const mine = liveTeacher();   /* her screen keeps the hidden ones (greyed), the groups' screens leave them out */
+  let items = (arr || []).map((t, k) => ({k, t: typeof t === "string" ? liveText(base + "." + k, t) : t, hidden: liveHidden(base + "." + k)})).filter(x => mine || !x.hidden);
+  const ord = Array.isArray(LV.order[base]) ? LV.order[base].map(p => idxOf(base, p)).filter(k => k > -1) : null;   /* stored by permanent number */
+  if(ord) items = ord.map(k => items.find(x => x.k === k)).filter(Boolean).concat(items.filter(x => !ord.includes(x.k)));
+  const lastKs = LV.last.filter(p => p.startsWith(base + ".") && /^\d+$/.test(p.slice(base.length + 1))).map(p => idxOf(base, +p.slice(base.length + 1))).filter(k => k > -1);
+  return items.filter(x => !lastKs.includes(x.k)).concat(lastKs.map(k => items.find(x => x.k === k)).filter(Boolean));
+}
+/* "⤓ to the end" and dragging a dot both send the whole new order of that list */
+const liveViews = {};
+function liveMoveTo(base, key, to){
+  const keys = (liveViews[base] || []).map(x => x.k), from = keys.indexOf(key); if(from < 0) return;
+  keys.splice(from, 1); keys.splice(Math.max(0, Math.min(to, keys.length)), 0, key);
+  return liveOp("order", base, JSON.stringify(keys.map(k => pidOf(base, k))));
+}
+async function livePost(body){
+  try{ const r = await fetch(LIVE_URL, {method: "POST", body: JSON.stringify(body), headers: {"Content-Type": "text/plain;charset=utf-8"}}); return await r.json(); }
+  catch(e){ return {ok: false, error: "offline"}; }
+}
+/* new changes wait for the group's next tap (render calls liveApply first); hers apply at once */
+function liveApply(){ if(!livePending) return false; LV = livePending; livePending = null; if(typeof liveAdjust === "function") liveAdjust(); return true; }
+async function liveFetch(first){
+  if(!LIVE_ON || !LIVE_URL) return;
+  const res = await livePost({action: "live", tool: PAGE_ID});
+  if(!res.ok || !res.live) return;
+  const v = liveNorm(res.live); store.set(liveCacheKey, v);
+  if(liveSame(v, LV)) { livePending = null; return; }
+  livePending = v; if(first || liveTeacher()){ liveApply(); if(first && typeof liveFresh === "function") liveFresh(); liveRerender(); }
+}
+if(LIVE_ON){ setTimeout(() => liveFetch(true), 50); setInterval(() => liveFetch(false), 30000); }
+async function liveOp(kind, path, text){
+  if(liveBusy) return; liveBusy = true; liveMsg = "saving…"; liveStatus();
+  const res = await livePost({action: "liveOp", code: localStorage.getItem("hw-code") || "", tool: PAGE_ID, op: {kind, path: kind === "order" || kind === "reset" ? path : toStore(path), text}});
+  liveBusy = false;
+  /* on her own screen, removing or moving the task she's looking at shows what takes its place */
+  /* hiding the task she's on: she stays on it (greyed) to correct it and show it again */
+  if(res.ok && res.live){ LV = liveNorm(res.live); livePending = null; store.set(liveCacheKey, LV); if(typeof liveAdjust === "function") liveAdjust(); liveMsg = "saved ✓ — the groups get it when they move on"; liveRerender(); }
+  else { liveMsg = res.error === "offline" ? "not saved: no connection" : res.error === "unknown-code" ? "not saved: your code isn't in the table" : "not saved: " + (res.error || "error"); liveStatus(); }
+}
+const liveStatus = () => { const s = document.getElementById("live-status"); if(s) s.textContent = liveMsg; };
+/* her buttons next to an item; "fields" = several texts edited together (a card: sentence, answer, key word) */
+/* dragging a dot (her screen only): the task moves to where the dot is dropped; a plain tap still opens the task */
+function wireDrag(root){
+  if(!liveTeacher()) return;
+  root.querySelectorAll(".speak-dots[data-drag]").forEach(row => {
+    const base = row.dataset.drag, dots = [...row.querySelectorAll("button[data-k]")];
+    dots.forEach(dot => dot.addEventListener("pointerdown", e => {
+      if(e.button !== 0) return;
+      const x0 = e.clientX, key = +dot.dataset.k, centers = dots.map(d => { const r = d.getBoundingClientRect(); return r.left + r.width / 2; });
+      let moved = false, to = dots.indexOf(dot);
+      const move = ev => { const dx = ev.clientX - x0; if(!moved && Math.abs(dx) < 5) return; moved = true;
+        dot.classList.add("dragging"); dot.style.transform = `translateX(${dx}px)`;
+        to = centers.reduce((best, c, j) => Math.abs(ev.clientX - c) < Math.abs(ev.clientX - centers[best]) ? j : best, 0);
+        dots.forEach((d, j) => d.classList.toggle("drop-here", j === to && d !== dot)); };
+      const up = () => { removeEventListener("pointermove", move); removeEventListener("pointerup", up);
+        if(!moved) return;
+        dot.addEventListener("click", ev => { ev.stopImmediatePropagation(); ev.preventDefault(); }, {capture: true, once: true});
+        liveMoveTo(base, key, to); };
+      addEventListener("pointermove", move); addEventListener("pointerup", up);
+    }));
+  });
+}
+const liveTools = (path, {last = false, edit = true, fields = ""} = {}) => !(liveTeacher() && path) || EMBED ? "" : liveHidden(path)
+  ? `<span class="live-tools"><span class="live-hidden-tag">Hidden from the groups</span>${edit ? `<button class="live-b" data-live-edit="${fields || path}" title="Correct the text" aria-label="Correct the text">✏️</button>` : ""}<button class="live-b live-show" data-live-unhide="${path}" title="Show it to the groups again">Show</button></span>`
+  : `<span class="live-tools">${edit ? `<button class="live-b" data-live-edit="${fields || path}" title="Correct the text" aria-label="Correct the text">✏️</button>` : ""}${last ? `<button class="live-b" data-live-last="${path}" title="Move to the end" aria-label="Move to the end">⤓</button>` : ""}<button class="live-b" data-live-hide="${path}" title="Hide it from the groups for now — you can correct it and show it again" aria-label="Hide from the groups">Hide</button></span>`;
+/* her screen: a hidden item stays, greyed (class for its box) */
+const liveDim = path => liveTeacher() && liveHidden(path) ? "is-hidden" : "";
+/* the bar on top of her screen: what she has hidden (tap to show it again), Reset */
+function liveBarHTML(labelOf){
+  if(!liveTeacher() || EMBED) return "";
+  const removed = LV.hide.map(fromStore).filter(Boolean).map(p => `<button class="live-chip" data-live-unhide="${p}" title="Show it to the groups again">👁 ${esc((labelOf(p) || p).slice(0, 38))}${(labelOf(p) || p).length > 38 ? "…" : ""}</button>`).join("");
+  const n = LV.hide.length + LV.last.length + Object.keys(LV.text).length + Object.keys(LV.order).length;
+  liveLabelOf = labelOf;
+  return `<div class="live-bar"><b>👩‍🏫 Live</b><span id="live-status">${esc(liveMsg || (n ? `${n} change${n === 1 ? "" : "s"} — the groups get them when they move on` : "✏️ correct · ⤓ to the end · Hide / Show — the groups get it when they move on"))}</span>
+    ${removed ? `<span class="live-removed">Hidden: ${removed}</span>` : ""}${n ? `<button class="live-chip" data-live-copy title="For the lesson debrief: what you changed live, to put into the slides and the page">📋 My changes</button><button class="live-reset" data-live-reset>Reset all</button>` : ""}</div>`;
+}
+/* 📋 My changes (her wish 30.10 07:36): after the lesson, the debrief puts them into her slides and the page; plain words, the item's own text */
+let liveLabelOf = p => p;
+function liveChangesText(){
+  const lab = p => { const t = String(liveLabelOf(p) || p).replace(/\*\*|\(\(|\)\)/g, ""); return t.length > 90 ? t.slice(0, 90) + "…" : t; }, out = [];
+  LV.hide.map(fromStore).filter(Boolean).forEach(p => out.push(`Hidden: ${lab(p)}`));
+  Object.keys(LV.text).forEach(sp => { const p = fromStore(sp); if(!p) return; const old = pathGet(D, p);
+    out.push(`Corrected: ${typeof old === "string" ? `"${old.replace(/\*\*/g, "")}"` : lab(p)} → "${LV.text[sp]}"`); });
+  Object.keys(LV.order).forEach(base => { const keys = (LV.order[base] || []).map(x => idxOf(base, x)).filter(k => k > -1);
+    out.push(`New order (${base}): ${keys.map((k, i) => `${i + 1}. ${lab(base + "." + k)}`).join(" · ")}`); });
+  LV.last.map(fromStore).filter(Boolean).forEach(p => out.push(`Moved to the end: ${lab(p)}`));
+  return out.length ? [`${document.title} — what I changed live (${PAGE_ID}${LIVE_ON ? "-live" : ""})`].concat(out).join("\n") : "";
+}
+function wireLive(root, current){
+  if(!liveTeacher()) return;
+  root.querySelectorAll("[data-live-hide]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); liveOp("hide", b.dataset.liveHide); }));
+  root.querySelectorAll("[data-live-unhide]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); liveOp("unhide", b.dataset.liveUnhide); }));
+  root.querySelectorAll("[data-live-last]").forEach(b => b.addEventListener("click", e => { e.stopPropagation();
+    const p = b.dataset.liveLast, base = p.slice(0, p.lastIndexOf(".")), key = +p.slice(p.lastIndexOf(".") + 1);
+    if(p === "speaking." + spkCur.key) spkCur.move = 1; if(typeof liveCursorHook === "function") liveCursorHook(p);   /* she sees what takes its place */
+    liveMoveTo(base, key, Infinity); }));
+  root.querySelectorAll("[data-live-copy]").forEach(b => b.addEventListener("click", async e => { e.stopPropagation(); const t = liveChangesText(); let ok = false;
+    try{ await navigator.clipboard.writeText(t); ok = true; }catch(err){ const ta = document.createElement("textarea"); ta.value = t; document.body.appendChild(ta); ta.select(); try{ ok = document.execCommand("copy"); }catch(x){} ta.remove(); }
+    b.textContent = ok ? "Copied ✓" : "Couldn't copy"; setTimeout(() => { b.textContent = "📋 My changes"; }, 2000); }));
+  root.querySelectorAll("[data-live-reset]").forEach(b => b.addEventListener("click", e => { e.stopPropagation();
+    if(b.dataset.sure){ liveOp("reset", ""); } else { b.dataset.sure = "1"; b.textContent = "Sure? Tap again"; } }));
+  root.querySelectorAll("[data-live-edit]").forEach(b => b.addEventListener("click", e => { e.stopPropagation();
+    const paths = b.dataset.liveEdit.split("|"), labels = ["", "Answer", "Key word"], host = b.closest("[data-live-host]") || b.parentElement.parentElement;
+    const form = document.createElement("div"); form.className = "live-edit";
+    form.innerHTML = paths.map((p, i) => `<label>${paths.length > 1 ? `<span>${i ? labels[i] : "Sentence"}</span>` : ""}<textarea data-p="${p}" rows="${paths.length > 1 ? 2 : 3}">${esc(liveText(p, current(p)))}</textarea></label>`).join("")
+      + `<div class="row-actions"><button class="btn primary slim" data-live-save>Save for the groups</button><button class="btn slim" data-live-cancel>Cancel</button></div>`;
+    host.replaceWith(form); const t = form.querySelector("textarea"); if(t){ t.focus(); t.setSelectionRange(t.value.length, t.value.length); }
+    form.addEventListener("click", ev => ev.stopPropagation());
+    form.querySelector("[data-live-cancel]").addEventListener("click", () => liveRerender());
+    form.querySelector("[data-live-save]").addEventListener("click", async () => {
+      for(const ta of form.querySelectorAll("textarea")){ const p = ta.dataset.p, v = ta.value.trim(); if(v !== liveText(p, current(p))) await liveOp("text", p, v); }
+      liveRerender(); });
+  }));
+}
+
+/* ---------- lesson work (tools 13, 30.10, her wishes 02:51–04:00): on a -live page Olya sees what each group types, where each room is
+   and who sits there, and sends quick notes; shared by chat-scenes and the revision pages ----------
+   Groups' side: what they type goes to her table while they type (2.5 s after they stop, at least every 8 s) and on Send; her notes come
+   back to this device (every 10 s while they type, else every 30 s) and show where they belong; "move on to …" and 📢 messages show as a
+   strip with two answers (her rule 04:00: a group can always say Not yet). A random device id is kept on the device; the name goes along
+   only if a student's code is saved there (else anonymous). Her own screen never sends anything: it has the 📥 Groups view.
+   The page sets the hooks in LW (below) before render(). */
+const LW = {
+  tools: [],                 /* her Groups view: [{id, title, chat: i => label}] — this page first, then pages shown inside it */
+  current: () => null,       /* groups: the chat they are typing in now (polls faster), or null */
+  onNotes: () => {},         /* groups: her notes changed → repaint them */
+  onGo: () => {},            /* groups: they tapped Go → on her "move on to …" (the note's text is the stage) */
+  stages: [],                /* her "move on to …" choices: [[id, label]] (revision pages) */
+  board: null,               /* {id, cell}: the Jeopardy board's page and this field's cell (rooms opened / closed) */
+  groupsView: () => false    /* her 📥 Groups view is on screen */
+};
+const SHARE = LIVE_ON && !!LIVE_URL;
+const sharing = () => SHARE && !liveTeacher();
+const DEV = (() => { const ok = d => /^[a-z0-9]{12,40}$/.test(d || ""), make = () => Array.from({length: 16}, () => "abcdefghijklmnopqrstuvwxyz0123456789"[Math.floor(Math.random() * 36)]).join("");
+  try{ let d = localStorage.getItem("tool-dev"); if(!ok(d)){ d = make(); localStorage.setItem("tool-dev", d); } return d; }catch(e){ return make(); } })();
+const studentCode = () => { try{ return localStorage.getItem("hw-role") === "teacher" ? "" : (localStorage.getItem("hw-code") || ""); }catch(e){ return ""; } };
+const NKEY = "tool-notes-" + PAGE_ID;
+let NOTES = store.get(NKEY) || [];                         /* her notes to this device: [{id, chat, q, k, c, ts}] */
+const shown = new Set(store.get(NKEY + "-shown") || []), told = new Set(store.get(NKEY + "-told") || []), fresh = new Set();
+const answered = new Set(store.get(NKEY + "-answered") || []);
+let pend = {}, shareT = null, shareFirst = 0, shareBusy = false, posted = !!store.get(NKEY + "-posted");
+const markPosted = () => { if(!posted){ posted = true; store.set(NKEY + "-posted", true); } };
+function shareDraft(i, text, sent){
+  if(!sharing()) return;
+  pend[i] = {chat: i, text: text, sent: !!sent};
+  const now = Date.now(); if(!shareT) shareFirst = now; clearTimeout(shareT);
+  shareT = setTimeout(shareFlush, sent ? 0 : Math.max(0, Math.min(2500, shareFirst + 8000 - now)));
+}
+async function shareFlush(){
+  shareT = null; if(shareBusy){ shareT = setTimeout(shareFlush, 700); return; }
+  const list = Object.values(pend); pend = {}; if(!list.length) return; shareBusy = true;
+  for(const body of list){
+    const res = await livePost(Object.assign({action: "toolPost", tool: PAGE_ID, dev: DEV, code: studentCode()}, body));
+    if(res.ok){ markPosted(); notesIn(res.notes); }
+    else if(["offline", "busy", "server"].includes(res.error) && !pend[body.chat]){ pend[body.chat] = body; if(!shareT) shareT = setTimeout(shareFlush, 10000); }   /* no connection: try again */
+  }
+  shareBusy = false;
+}
+function notesIn(list){
+  if(!Array.isArray(list)) return;
+  const had = new Set(NOTES.map(n => n.id)); list.forEach(n => { if(!had.has(n.id)) fresh.add(n.id); });
+  NOTES = list; store.set(NKEY, NOTES); LW.onNotes(); paintStrip();
+}
+let pollN = 0;
+async function notesPoll(){
+  if(!sharing() || !posted || document.hidden) return;
+  if(LW.current() == null && (pollN++ % 3)) return;     /* while they type: every 10 s; otherwise every 30 s */
+  const seen = [...shown].filter(id => !told.has(id)).slice(0, 50);
+  const res = await livePost(Object.assign({action: "toolNotes", tool: PAGE_ID, dev: DEV}, seen.length ? {seen} : {}));
+  if(!res.ok) return; seen.forEach(id => told.add(id)); store.set(NKEY + "-told", [...told]); notesIn(res.notes);
+}
+if(SHARE){ setTimeout(notesPoll, 1500); setInterval(notesPoll, 10000); }
+const seenNote = id => { if(!shown.has(id)){ shown.add(id); store.set(NKEY + "-shown", [...shown]); } fresh.delete(id); };
+const notesOf = i => NOTES.filter(n => n.chat === i && n.k !== "go" && n.k !== "say").sort((a, b) => a.ts - b.ts);
+/* a note in her feedback marks: ✓ Good (green), ✗ Change (struck), ✎ Correction (struck → blue on yellow), 💬 Comment */
+const markLine = n => n.k === "good" ? `<span class="m-good">${esc(n.q)}</span> ✓ Good!`
+  : n.k === "change" ? `<span class="m-del">${esc(n.q)}</span> ✗ Change this`
+  : n.k === "fix" ? `<span class="m-del">${esc(n.q)}</span> → <span class="m-ins">${esc(n.c)}</span>`
+  : n.k === "go" ? `⏩ move on to ${esc(n.c)}` : n.k === "say" ? `📢 ${esc(n.c)}`
+  : `${n.q ? `<span class="q">“${esc(n.q)}”</span> — ` : ""}${esc(n.c)}`;
+const noteHTML = n => `<div class="t-note ${fresh.has(n.id) ? "new" : ""}" data-note="${esc(n.id)}"><span class="who">👩‍🏫 Olya:</span> ${markLine(n)}</div>`;
+
+/* "move on to …" and 📢: a strip on top until they answer (Go → / Not yet, or OK); the answer goes to her card */
+function stripHTML(){
+  if(!sharing()) return "";
+  const open = NOTES.filter(n => (n.k === "go" || n.k === "say") && !answered.has(n.id)).sort((a, b) => b.ts - a.ts)[0];
+  if(!open) return "";
+  return open.k === "go"
+    ? `<div class="lw-strip" data-strip="${esc(open.id)}"><span>👩‍🏫 <b>Olya suggests:</b> move on to ${esc(open.c)}</span><span class="grow"></span><button class="btn slim primary" data-strip-go>Go →</button><button class="btn slim" data-strip-later>Not yet</button></div>`
+    : `<div class="lw-strip" data-strip="${esc(open.id)}"><span>📢 <b>Olya:</b> ${esc(open.c)}</span><span class="grow"></span><button class="btn slim primary" data-strip-ok>OK</button></div>`;
+}
+function paintStrip(){
+  if(!sharing()) return;
+  let el = document.getElementById("lw-strip-host");
+  if(!el){ el = document.createElement("div"); el.id = "lw-strip-host"; el.setAttribute("aria-live", "polite"); document.body.prepend(el); }
+  const h = stripHTML(); if(el.dataset.h === h) return; el.dataset.h = h; el.innerHTML = h;
+  const s = el.querySelector("[data-strip]"); if(!s) return; const id = s.dataset.strip, n = NOTES.find(x => x.id === id);
+  seenNote(id);
+  const answer = v => { answered.add(id); store.set(NKEY + "-answered", [...answered]); lwSignal("reply", id, v); paintStrip(); };
+  s.querySelectorAll("[data-strip-go]").forEach(b => b.addEventListener("click", () => { answer("go"); LW.onGo(n.c); }));
+  s.querySelectorAll("[data-strip-later]").forEach(b => b.addEventListener("click", () => answer("later")));
+  s.querySelectorAll("[data-strip-ok]").forEach(b => b.addEventListener("click", () => answer("ok")));
+}
+if(SHARE) setTimeout(paintStrip, 0);
+
+/* where the group is (revision pages): sent when the stage changes, and every minute while the page is open (so "3 of 4 screens here") */
+let whereNow = "", whereT = null;
+async function lwWhere(at){
+  if(!sharing()) return; if(at != null) whereNow = at; if(!whereNow) return;
+  const res = await livePost({action: "toolWhere", tool: PAGE_ID, dev: DEV, at: whereNow, code: studentCode()});
+  if(res.ok) markPosted();
+  clearTimeout(whereT); whereT = setTimeout(() => { if(!document.hidden) lwWhere(); else whereT = setTimeout(lwWhere, 60000); }, 60000);
+}
+/* one tap of the group: ✓/≈/✗ after "Show the answer", 🔖 on a gap, a box phrase, the answer to her strip */
+function lwSignal(kind, item, value){
+  if(!sharing()) return;
+  livePost({action: "toolSignal", tool: PAGE_ID, dev: DEV, kind, item: String(item), value: String(value)}).then(r => { if(r.ok) markPosted(); });
+}
+/* the cards: card number → times back into the deck, the cards they got; never reset (a page is made for one group) */
+const DKEY = "tool-deckstats-" + PAGE_ID;
+let DS = (() => { const v = store.get(DKEY); return v && v.again && Array.isArray(v.got) ? v : {again: {}, got: []}; })(), dsT = null;
+function lwDeck(i, ok){
+  if(!sharing()) return;
+  if(ok){ if(!DS.got.includes(i)) DS.got.push(i); } else DS.again[i] = (DS.again[i] || 0) + 1;
+  store.set(DKEY, DS); clearTimeout(dsT); dsT = setTimeout(deckSend, 2000);
+}
+async function deckSend(){
+  dsT = null; const res = await livePost({action: "toolDeck", tool: PAGE_ID, dev: DEV, code: studentCode(), again: DS.again, got: DS.got});
+  if(res.ok) markPosted(); else if(["offline", "busy", "server"].includes(res.error)) dsT = setTimeout(deckSend, 10000);
+}
+
+/* ---------- her screen: 📥 Groups — one card per screen: Group 1 — Anna + Boris · where · minutes; what they type; her marks ---------- */
+const QUICK = (typeof D !== "undefined" && D.quickNotes) || ["🤔 Think again", "🔍 Check the verb form", "📖 Check the word", "🎩 Too formal?", "🧢 Too informal?", "👍 Nice!"];
+const SINCE_KEY = "tool-work-since-" + PAGE_ID;
+let GW = {rows: [], rooms: [], signals: [], decks: [], students: [], board: null, at: 0, skew: 0, err: "", loaded: false}, gwBusy = false, gwTick = 0, selAt = 0, rosterOpen = null, rosterPick = null;
+const gwNow = () => Date.now() + GW.skew;
+const gwSince = () => Number(store.get(SINCE_KEY)) || 0;
+/* this lesson only (her wish 07:46: what matters is the moment): screens and texts from more than 3 hours ago are folded away
+   ("Earlier lessons"); 🧹 Start fresh hides her own test from this morning too. The decks' counts are not cut: they add up (her decision 03:33). */
+const RECENT = 3 * 3600000;
+const gwCut = () => GW.showOld ? gwSince() : Math.max(gwSince(), gwNow() - RECENT);
+const gwRows = () => GW.rows.filter(r => r.ts >= gwCut());
+const gwRooms = () => GW.rooms.filter(r => r.ts >= gwCut());
+const toolOf = id => LW.tools.find(t => t.id === id) || {id, title: id, chat: i => `Chat ${i + 1}`};
+const chatName = (tool, i) => toolOf(tool).chat(i);
+function gwDevices(){
+  const by = {}, get = dev => by[dev] = by[dev] || {dev, rows: [], first: Infinity, name: "", room: null};
+  gwRows().forEach(r => { const d = get(r.dev); d.rows.push(r); d.first = Math.min(d.first, r.started || r.ts); if(r.name) d.name = r.name; });
+  gwRooms().forEach(r => { const d = get(r.dev); d.room = r; d.first = Math.min(d.first, r.first || r.ts); if(r.name) d.name = r.name; });
+  const list = Object.values(by).sort((a, b) => a.first - b.first);
+  list.forEach((d, k) => { d.n = k + 1; d.rows.sort((a, b) => b.ts - a.ts); d.cur = d.rows[0] || null;
+    d.people = d.room && d.room.names && d.room.names.length ? d.room.names : d.name ? [d.name] : [];
+    d.label = `Group ${d.n}` + (d.people.length ? ` — ${d.people.join(" + ")}` : ""); d.short = `Group ${d.n}`; });
+  return list;
+}
+const ago = ts => { const s = Math.max(0, Math.round((gwNow() - ts) / 1000)); return s < 60 ? `${s} s ago` : s < 3600 ? `${Math.round(s / 60)} min ago` : new Date(ts).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit", hour12: false}); };
+const hm = ts => new Date(ts).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit", hour12: false});
+const typingNow = r => !!r && r.status === "typing" && gwNow() - r.ts < 60000;
+const statusText = r => r.status === "sent" ? `✓ sent ${ago(r.ts)}` : typingNow(r) ? `✍️ typing… ${ago(r.ts)}` : `✍️ draft · ${ago(r.ts)}`;
+const hereNow = room => room && gwNow() - room.ts < 150000;
+/* her quoted words marked in their text (the ones she sent: her marks; the one she is pointing at now: yellow with a frame) */
+function markedText(r, pick){
+  const t = r.text || ""; if(!t.trim()) return `<span class="none">(empty)</span>`;
+  const spans = []; const add = (q, cls, after) => { if(!q) return; const at = t.indexOf(q); if(at > -1 && !spans.some(x => at < x.b && at + q.length > x.a)) spans.push({a: at, b: at + q.length, cls, after}); };
+  add(pick, "m-pick"); (r.notes || []).slice().reverse().forEach(n => add(n.q, n.k === "good" ? "m-good" : n.k === "change" || n.k === "fix" ? "m-del" : "m-note", n.k === "fix" ? n.c : ""));
+  spans.sort((x, y) => x.a - y.a); let out = "", k = 0;
+  spans.forEach(x => { out += esc(t.slice(k, x.a)) + `<span class="${x.cls}">${esc(t.slice(x.a, x.b))}</span>${x.after ? ` <span class="m-ins">${esc(x.after)}</span>` : ""}`; k = x.b; });
+  return out + esc(t.slice(k));
+}
+const replyOf = (dev, id) => { const s = GW.signals.find(x => x.dev === dev && x.kind === "reply" && x.item === id); return s ? s.value : ""; };
+const gwNotesHTML = (r, dev) => (r.notes || []).filter(n => n.k !== "go" && n.k !== "say").map(n => `<div>${n.k === "note" || !n.k ? "💬 " : ""}${markLine(n)} <span class="sn">${n.seen ? "· ✓ seen" : "· not seen yet"}</span></div>`).join("");
+/* her "move on" / 📢 to this screen, with the group's answer */
+function gwNudgesHTML(d){
+  const last = (GW.notes || []).filter(n => n.dev === d.dev && (n.k === "go" || n.k === "say")).sort((a, b) => b.ts - a.ts)[0]; if(!last) return "";
+  const v = replyOf(d.dev, last.id), st = v === "go" ? "✓ went" : v === "later" ? "⏸ not yet" : v === "ok" ? "✓ OK" : "⏳ waiting";
+  return `<div class="gw-nudge">${last.k === "go" ? `⏩ ${esc(last.c)}` : `📢 ${esc(last.c)}`} · ${hm(last.ts)} · <b>${st}</b></div>`;
+}
+const gwEarlierHTML = d => { const old = d.rows.slice(1).sort((a, b) => a.chat - b.chat); return old.length ? `<summary>Earlier (${old.length})</summary>${old.map(r => `<p><span class="ch">${esc(chatName(r.tool, r.chat))}</span>${esc(r.text)}${r.status === "typing" ? " ✍️" : ""}${(r.notes || []).filter(n => n.k !== "go" && n.k !== "say").map(n => `<br>${markLine(n)}`).join("")}</p>`).join("")}` : ""; };
+function gwWhoHTML(d, row){
+  const room = d.room, mins = room && room.since ? Math.max(0, Math.round((gwNow() - room.since) / 60000)) : 0;
+  const where = room && room.at ? `<span class="wh ${mins >= 8 ? "long" : ""}">${esc(room.at)} · ${mins} min</span>` : "";
+  const away = room && !hereNow(room) ? `<span class="away">· not on this page now</span>` : "";
+  return `<span class="nm">${esc(d.label)}</span><button class="gw-ppl" data-roster aria-expanded="${rosterOpen === d.dev}" title="Who is in this room">👥</button>${where}${away}
+    ${row ? `<span class="ch">${esc(chatName(row.tool, row.chat))}</span><span class="stt">${statusText(row)}${row !== d.cur ? ` · now on ${esc(chatName(d.cur.tool, d.cur.chat))}` : ""}</span>` : ""}`;
+}
+/* who is in this room: tap a name to put them here (from another room: kept as a move with the time), tap again to take them out */
+function rosterHTML(d, devs){
+  if(rosterOpen !== d.dev) return "";
+  const at = {}; devs.forEach(x => x.people.forEach(n => { at[n] = x; }));
+  const names = [...new Set((GW.students || []).concat(devs.flatMap(x => x.people)))];
+  return `<div class="gw-roster">${names.map(n => { const x = at[n], here = x && x.dev === d.dev;
+    return `<button class="rn ${here ? "here" : x ? "else" : ""}" data-rn="${esc(n)}">${esc(n)}${x && !here ? ` <small>${esc(x.short)}</small>` : ""}</button>`; }).join("") || `<span class="sn">No names yet: her table's Students tab (Group ${esc(String(PAGE_ID).split("-")[0].toUpperCase())}).</span>`}</div>`;
+}
+function gwCardHTML(d){
+  return `<article class="gw-card" data-dev="${esc(d.dev)}" ${d.cur ? `data-tool="${esc(d.cur.tool)}" data-chat="${d.cur.chat}"` : ""}>
+    <div class="gw-who" data-who></div>
+    <div data-roster-box></div>
+    <div class="gw-nudges" data-nudge></div>
+    <div class="gw-text" data-text></div>
+    <div class="gw-notes" data-notes></div>
+    <div class="gw-pick" data-pick></div>
+    <div class="gw-tools"><button class="tool good" data-mk="good">✓ Good</button><button class="tool del" data-mk="change">✗ Change</button><button class="tool ins" data-mk="fix">✎ Correction</button><button class="tool cmt" data-mk="note">💬 Comment</button>${LW.stages.length ? `<select class="gw-go" data-go aria-label="Suggest they move on"><option value="">⏩ Move on to…</option>${LW.stages.map(([id, l]) => `<option value="${esc(l)}">${esc(l)}</option>`).join("")}</select>` : ""}</div>
+    <div class="gw-quick">${QUICK.map(q => `<button data-quick="${esc(q)}">${esc(q)}</button>`).join("")}</div>
+    <form class="gw-own" data-own><input maxlength="300" placeholder="Or type your note to this group…" aria-label="Your note to this group"><button class="btn slim primary">Send</button></form>
+    <div class="gw-said" data-said></div>
+    <details class="gw-earlier" data-earlier></details></article>`;
+}
+/* ---------- 👥 under a chat on the task page (her wish 30.10 09:23: the task and the groups' work on one page) ----------
+   Her view only: every group's text for this chat, live (every 10 s), with the same ✓ Good, ✗ Change, ✎ Correction, 💬 as in 📥 Groups.
+   📥 Groups stays as it is (all the pages at once, who works with whom): the two show the same work. */
+const pcHTML = (tool, chat) => liveTeacher() && SHARE ? `<section class="pc" data-pc="${esc(tool)}|${chat}"><div class="pc-top"><b>👥 The groups on this chat</b><span class="pc-meta"></span></div><div class="pc-grid"></div></section>` : "";
+function pcCardHTML(d, tool, chat){
+  return `<article class="gw-card pc-card" data-dev="${esc(d.dev)}" data-tool="${esc(tool)}" data-chat="${chat}">
+    <div class="gw-who" data-who></div>
+    <div class="gw-text" data-text></div>
+    <div class="gw-notes" data-notes></div>
+    <div class="gw-pick" data-pick></div>
+    <div class="gw-tools"><button class="tool good" data-mk="good">✓ Good</button><button class="tool del" data-mk="change">✗ Change</button><button class="tool ins" data-mk="fix">✎ Correction</button><button class="tool cmt" data-mk="note">💬 Comment</button></div>
+    <div class="gw-quick">${QUICK.map(q => `<button data-quick="${esc(q)}">${esc(q)}</button>`).join("")}</div>
+    <form class="gw-own" data-own><input maxlength="300" placeholder="Or type your note to this group…" aria-label="Your note to this group"><button class="btn slim primary">Send</button></form>
+    <div class="gw-said" data-said></div></article>`;
+}
+function pcPaint(){
+  document.querySelectorAll(".pc[data-pc]").forEach(pc => {
+    const [tool, chat] = pc.dataset.pc.split("|"), list = gwDevices().map(d => ({d, r: d.rows.find(r => r.tool === tool && String(r.chat) === chat)})).filter(x => x.r);
+    const meta = pc.querySelector(".pc-meta"), mt = GW.err ? gwMetaText() : !GW.loaded ? "loading…" : `${list.length} group${list.length === 1 ? "" : "s"} · updated ${hm(GW.at)} · select words, then ✓ ✗ ✎ 💬`;
+    if(meta.innerHTML !== mt) meta.innerHTML = mt;
+    const grid = pc.querySelector(".pc-grid"), want = new Set(list.map(x => x.d.dev));
+    grid.querySelectorAll(".gw-card").forEach(c => { if(!want.has(c.dataset.dev)) c.remove(); });
+    const empty = grid.querySelector(".gw-empty");
+    if(!list.length){ if(!empty) grid.innerHTML = `<div class="gw-empty">Nothing from the groups on this chat yet.</div>`; return; }
+    if(empty) empty.remove();
+    list.forEach(({d, r}) => {
+      let c = grid.querySelector(`.gw-card[data-dev="${d.dev}"]`);
+      if(!c){ grid.insertAdjacentHTML("beforeend", pcCardHTML(d, tool, chat)); c = grid.lastElementChild; wireCard(c); }
+      c.classList.toggle("sent", r.status === "sent"); c.classList.toggle("typing", typingNow(r));
+      const set = (sel, h) => { const el = c.querySelector(sel); if(el.dataset.h !== h){ el.innerHTML = h; el.dataset.h = h; } };
+      set("[data-who]", `<span class="nm">${esc(d.label)}</span><span class="stt">${statusText(r)}</span>`);
+      const tx = c.querySelector("[data-text]"), sel = getSelection(), inside = sel && sel.rangeCount && !sel.isCollapsed && tx.contains(sel.anchorNode) && Date.now() - selAt < 8000;
+      if(!inside){ const h = markedText(r, c.dataset.quote || ""); if(tx.innerHTML !== h) tx.innerHTML = h; }
+      set("[data-notes]", gwNotesHTML(r, d.dev));
+    });
+  });
+}
+/* the task page re-renders on her taps: the panel (a half-typed note, picked words) is kept and put back */
+function pcStash(){ const m = {}; document.querySelectorAll(".pc[data-pc]").forEach(pc => { m[pc.dataset.pc] = pc; }); return m; }
+function pcRestore(m){ document.querySelectorAll(".pc[data-pc]").forEach(pc => { const old = m[pc.dataset.pc]; if(old && old !== pc) pc.replaceWith(old); }); pcPaint(); }
+function groupsHTML(){
+  return `<section class="gw ${S && S.enter ? "enter" : ""}"><div class="gw-rooms" id="gw-rooms"></div><div class="gw-top"><b>📥 What the groups are doing</b><span class="gw-meta" id="gw-meta"></span><span class="grow"></span>
+    ${LW.stages.length ? `<button class="btn slim" data-say-all>📢 To all rooms</button>` : ""}<button class="btn slim" data-gw-copy="names">📋 Copy all</button><button class="btn slim" data-gw-copy="">📋 Without names</button><button class="btn slim" data-gw-fresh>🧹 Start fresh</button></div>
+    <div class="gw-sayall" id="gw-sayall" hidden><input maxlength="200" placeholder="A message to every room, e.g. 2 minutes left!" aria-label="Message to all rooms"><button class="btn slim primary" data-say-send>Send to all</button>
+      ${["⏰ 2 minutes left!", "🙌 Finish this card, then come back to the main room."].map(t => `<button class="chipq" data-say-quick="${esc(t)}">${esc(t)}</button>`).join("")}</div>
+    <div class="gw-grid" id="gw-grid"></div><div class="gw-history" id="gw-history"></div></section>`;
+}
+function gwMetaText(){
+  if(GW.err === "old-script") return "⚠️ Your table doesn't know this yet: in Apps Script, Deploy → Manage deployments → ✏️ → Version: New version → Deploy.";
+  if(GW.err) return "⚠️ not updated: " + (GW.err === "offline" ? "no connection" : GW.err) + " — trying again in 10 s";
+  if(!GW.loaded) return "loading…";
+  const hid = GW.rows.length - GW.rows.filter(r => r.ts >= Math.max(gwSince(), gwNow() - RECENT)).length;
+  return `updated ${new Date(GW.at).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false})} · every 10 s · select words in a text, then ✓ Good, ✗ Change, ✎ Correction or a note${GW.showOld ? ` <button class="btn slim" data-gw-all>Only this lesson</button>` : hid ? ` · ${hid} from earlier hidden <button class="btn slim" data-gw-all>Show earlier</button>` : ""}`;
+}
+/* "Rooms opened 18:42 · 3 of 4 screens here": the first group's screen on this page opens the rooms (her own device never counts);
+   her ✓ Done on the board, or ▶ Now on another field, closes them */
+function roomsSpan(){
+  const rs = gwRooms().filter(r => r.first); if(!rs.length) return null;
+  const open = Math.max(Math.min(...rs.map(r => r.first)), gwSince()); let close = null;
+  const b = GW.board, cell = LW.board && LW.board.cell;
+  if(b && cell){ const done = Number((b.text || {})["done." + cell]) || 0, nw = String((b.text || {}).now || "").split("|");
+    if(done && done > open) close = done; else if(nw[0] && nw[0] !== cell && Number(nw[1]) > open) close = Number(nw[1]); }
+  return {open, close, here: rs.filter(hereNow).length, all: rs.length};
+}
+function roomsHTML(){
+  const s = roomsSpan(); if(!s || s.close) return "";   /* only while the rooms are open (her wish 07:46); the times stay in 📸 Who worked where */
+  return s.close ? `🚪 Rooms: ${hm(s.open)}–${hm(s.close)} · ${Math.round((s.close - s.open) / 60000)} min · ${s.all} screen${s.all === 1 ? "" : "s"}`
+    : `🚪 Rooms opened ${hm(s.open)} · ${Math.round((gwNow() - s.open) / 60000)} min · ${s.here} of ${s.all} screen${s.all === 1 ? "" : "s"} here`;
+}
+/* 📸 Who worked where (bottom): this activity's groups and the moves, for the snapshot */
+function historyHTML(devs){
+  const s = roomsSpan(); if(!s || !devs.length) return "";
+  const moves = devs.flatMap(d => (d.room && d.room.moves) || []);
+  return `<details class="gw-hist"><summary>📸 Who worked where</summary><p><b>${hm(s.open)}${s.close ? "–" + hm(s.close) : ""} · ${esc(D.title)}:</b> ${devs.map(d => esc(d.label)).join(" · ")}</p>${moves.length ? `<p class="mv">${moves.map(esc).join(" · ")}</p>` : ""}</details>`;
+}
+/* the cards are patched, not rebuilt: her half-typed note, the words she picked and an open fold stay as they are */
+function gwPaint(){
+  const devs = gwDevices(), n = devs.filter(d => typingNow(d.cur)).length;
+  const tab = document.querySelector('.stage-btn[data-stage="groups"]'); if(tab){ let b = tab.querySelector(".gw-n"); if(n){ if(!b){ b = document.createElement("span"); b.className = "gw-n"; tab.appendChild(b); } b.textContent = n; } else if(b) b.remove(); }
+  pcPaint();
+  if(!LW.groupsView()) return;
+  const meta = document.getElementById("gw-meta"); if(meta){ meta.innerHTML = gwMetaText(); const all = meta.querySelector("[data-gw-all]"); if(all) all.addEventListener("click", () => { if(!GW.showOld && gwSince() > gwNow() - RECENT) store.set(SINCE_KEY, 0); GW.showOld = !GW.showOld; gwRebuild(); }); }
+  const rooms = document.getElementById("gw-rooms"); if(rooms){ const h = roomsHTML(); if(rooms.innerHTML !== h) rooms.innerHTML = h; rooms.hidden = !h; }
+  const grid = document.getElementById("gw-grid"); if(!grid) return;
+  if(!devs.length){ grid.innerHTML = `<div class="gw-empty">${GW.loaded ? "Nothing yet. When a group opens this -live page, its card appears here (every 10 s)." : "Loading…"}</div>`; return; }
+  const empty = grid.querySelector(".gw-empty"); if(empty) empty.remove();
+  const want = new Set(devs.map(d => d.dev));
+  grid.querySelectorAll(".gw-card").forEach(c => { if(!want.has(c.dataset.dev)) c.remove(); });
+  devs.forEach(d => {
+    let c = grid.querySelector(`.gw-card[data-dev="${d.dev}"]`);
+    if(!c){ grid.insertAdjacentHTML("beforeend", gwCardHTML(d)); c = grid.lastElementChild; wireCard(c); }
+    if(!c.dataset.target && d.cur){ c.dataset.tool = d.cur.tool; c.dataset.chat = d.cur.chat; }
+    const row = c.dataset.target ? (d.rows.find(r => r.tool + "|" + r.chat === c.dataset.target) || d.cur) : d.cur;
+    c.classList.toggle("sent", !!row && row.status === "sent"); c.classList.toggle("typing", typingNow(row)); c.classList.toggle("notext", !row);
+    const set = (sel, h) => { const el = c.querySelector(sel); if(el.dataset.h !== h){ el.innerHTML = h; el.dataset.h = h; return el; } return null; };
+    set("[data-who]", gwWhoHTML(d, row));
+    const rb = set("[data-roster-box]", rosterHTML(d, devs)); if(rb) wireRoster(rb, d);
+    set("[data-nudge]", gwNudgesHTML(d));
+    const tx = c.querySelector("[data-text]"), sel = getSelection(), inside = sel && sel.rangeCount && !sel.isCollapsed && tx.contains(sel.anchorNode) && Date.now() - selAt < 8000;   /* their new text waits while she is selecting */
+    if(!inside){ const h = row ? markedText(row, c.dataset.quote || "") : `<span class="none">(nothing typed yet)</span>`; if(tx.innerHTML !== h) tx.innerHTML = h; }
+    set("[data-notes]", row ? gwNotesHTML(row, d.dev) : "");
+    const ea = c.querySelector("[data-earlier]"), eh = gwEarlierHTML(d); if(ea.dataset.h !== eh){ const open = ea.open; ea.innerHTML = eh; ea.open = open; ea.dataset.h = eh; }
+  });
+  const hist = document.getElementById("gw-history"); if(hist){ const h = historyHTML(devs); if(hist.dataset.h !== h){ const open = hist.querySelector("details") && hist.querySelector("details").open; hist.innerHTML = h; hist.dataset.h = h; const dd = hist.querySelector("details"); if(dd && open) dd.open = true; } }
+}
+function gwRebuild(){ const g = document.getElementById("gw-grid"); if(g) g.innerHTML = ""; gwPaint(); }
+async function gwFetch(){
+  if(!liveTeacher() || gwBusy || !LW.tools.length) return; gwBusy = true;
+  const code = localStorage.getItem("hw-code") || "", rows = []; let err = "", main = null;
+  for(const t of LW.tools){
+    const res = await livePost({action: "toolList", tool: t.id, code});
+    if(res.ok && Array.isArray(res.rows)){ res.rows.forEach(r => { r.tool = t.id; rows.push(r); }); if(t.id === PAGE_ID) main = res; GW.skew = (Number(res.now) || Date.now()) - Date.now(); }
+    else { err = res.error === "no-page" ? "old-script" : (res.error || "error"); break; }
+  }
+  if(LW.board && !err){ const b = await livePost({action: "live", tool: LW.board.id}); if(b.ok && b.live) GW.board = b.live; }
+  gwBusy = false;
+  if(!err){ GW.rows = rows; GW.rooms = (main && main.rooms) || []; GW.signals = (main && main.signals) || []; GW.decks = (main && main.decks) || []; GW.students = (main && main.students) || [];
+    GW.notes = (main && main.notes) || []; GW.at = Date.now(); GW.err = ""; GW.loaded = true; if(typeof onGroupData === "function") onGroupData(); }
+  else GW.err = err;
+  gwPaint();
+}
+if(liveTeacher()){ setTimeout(gwFetch, 300); setInterval(() => { if(document.hidden) return; if(LW.groupsView() || document.querySelector(".pc") || !(gwTick++ % 3)) gwFetch(); }, 10000); }
+/* she selects words in a group's text: they stay picked until she sends a note or taps ✕ */
+document.addEventListener("selectionchange", () => {
+  if(!liveTeacher()) return;   /* in 📥 Groups and in 👥 under a chat */
+  const sel = getSelection(); if(!sel || sel.isCollapsed || !sel.rangeCount) return;
+  const tx = sel.anchorNode && (sel.anchorNode.nodeType === 1 ? sel.anchorNode : sel.anchorNode.parentElement).closest(".gw-text"); if(!tx || !tx.contains(sel.focusNode)) return;
+  const q = sel.toString().replace(/\s+/g, " ").trim().slice(0, 160); if(!q) return;
+  const c = tx.closest(".gw-card"); c.dataset.quote = q; selAt = Date.now(); if(!c.dataset.target) c.dataset.target = c.dataset.tool + "|" + c.dataset.chat; pickLine(c);
+});
+function pickLine(c){
+  const p = c.querySelector("[data-pick]");
+  p.innerHTML = c.dataset.quote ? `Words: <b>“${esc(c.dataset.quote)}”</b> <button data-unpick aria-label="Don't point at these words">✕</button> — ✓ Good, ✗ Change, ✎ Correction or a note:` : "";
+  const x = p.querySelector("[data-unpick]"); if(x) x.addEventListener("click", () => { delete c.dataset.quote; setMode(c, "note"); if(!c.querySelector("[data-own] input").value) delete c.dataset.target; pickLine(c); gwPaint(); });
+}
+/* ✎ Correction: the box takes the picked words to type the right version (blue on yellow, as on the feedback page) */
+function setMode(c, m){
+  const inp = c.querySelector("[data-own] input"), btn = c.querySelector("[data-own] button");
+  c.dataset.mode = m; c.classList.toggle("fixing", m === "fix");
+  inp.placeholder = m === "fix" ? "Type the correct words…" : "Or type your note to this group…"; btn.textContent = m === "fix" ? "Send correction" : "Send";
+  if(m !== "fix" && inp.dataset.fixed){ inp.value = ""; delete inp.dataset.fixed; }
+}
+function toolMark(c, k){
+  const inp = c.querySelector("[data-own] input");
+  if(k === "note"){ setMode(c, "note"); inp.focus(); return; }
+  if(!c.dataset.quote){ const p = c.querySelector("[data-pick]"); p.textContent = "Select words in their text first ↑"; setTimeout(() => pickLine(c), 2500); return; }
+  if(k === "fix"){ if(!c.dataset.target) c.dataset.target = c.dataset.tool + "|" + c.dataset.chat; setMode(c, "fix"); inp.value = c.dataset.quote; inp.dataset.fixed = "1"; inp.focus(); inp.select(); return; }
+  sendNote(c, "", k);
+}
+function wireCard(c){
+  const own = c.querySelector("[data-own]"), inp = own.querySelector("input");
+  c.querySelectorAll("[data-mk]").forEach(b => { b.addEventListener("mousedown", e => e.preventDefault()); b.addEventListener("click", () => toolMark(c, b.dataset.mk)); });
+  inp.addEventListener("keydown", e => { if(e.key === "Escape" && c.dataset.mode === "fix"){ setMode(c, "note"); inp.blur(); } });
+  inp.addEventListener("focus", () => { if(!c.dataset.target && c.dataset.tool) c.dataset.target = c.dataset.tool + "|" + c.dataset.chat; });
+  inp.addEventListener("blur", () => { if(!inp.value.trim() && !c.dataset.quote) delete c.dataset.target; });
+  c.querySelectorAll("[data-quick]").forEach(b => { b.addEventListener("mousedown", e => e.preventDefault()); b.addEventListener("click", () => sendNote(c, b.dataset.quick)); });
+  own.addEventListener("submit", e => { e.preventDefault(); if(inp.value.trim()) sendNote(c, inp.value.trim(), c.dataset.mode === "fix" ? "fix" : "note"); });
+  c.addEventListener("click", e => { if(!e.target.closest("[data-roster]")) return; rosterOpen = rosterOpen === c.dataset.dev ? null : c.dataset.dev; gwPaint(); });
+  const go = c.querySelector("[data-go]"); if(go) go.addEventListener("change", () => { if(go.value) sendNote(c, go.value, "go", {noTarget: true}); go.value = ""; });
+}
+function wireRoster(box, d){
+  box.querySelectorAll("[data-rn]").forEach(b => b.addEventListener("click", async () => {
+    const name = b.dataset.rn, devs = gwDevices(), from = devs.find(x => x.people.includes(name)), to = devs.find(x => x.dev === d.dev);
+    const code = localStorage.getItem("hw-code") || "", t = hm(gwNow());
+    if(from && from.dev !== to.dev) await livePost({action: "toolRoster", tool: PAGE_ID, code, dev: from.dev, names: from.people.filter(x => x !== name)});
+    const here = to.people.includes(name), names = here ? to.people.filter(x => x !== name) : to.people.concat([name]);
+    const move = here ? `${t} ${name} left ${to.short}` : from && from.dev !== to.dev ? `${t} ${name}: ${from.short} → ${to.short}` : `${t} ${name} → ${to.short}`;
+    const res = await livePost({action: "toolRoster", tool: PAGE_ID, code, dev: to.dev, names, move});
+    if(res.ok && Array.isArray(res.rooms)){ GW.rooms = res.rooms; GW.at = Date.now(); } gwPaint(); }));
+}
+async function sendNote(c, note, mark = "note", opts = {}){
+  const said = c.querySelector("[data-said]"), [tool, chat] = opts.noTarget ? [PAGE_ID, 0] : String(c.dataset.target || (c.dataset.tool + "|" + c.dataset.chat)).split("|");
+  if(!opts.noTarget && (!tool || tool === "undefined")){ said.textContent = "nothing typed yet — your note needs their text"; return; }
+  said.textContent = "sending…";
+  const res = await livePost({action: "toolNote", tool, code: localStorage.getItem("hw-code") || "", dev: c.dataset.dev, chat: +chat || 0, quote: opts.noTarget ? "" : (c.dataset.quote || ""), note, mark});
+  if(res.ok && Array.isArray(res.rows)){
+    const sel = getSelection(); if(sel && sel.rangeCount && c.contains(sel.anchorNode)) sel.removeAllRanges();
+    if(tool === PAGE_ID || !opts.noTarget){ res.rows.forEach(r => r.tool = tool); GW.rows = GW.rows.filter(r => r.tool !== tool).concat(res.rows); }
+    if(tool === PAGE_ID && Array.isArray(res.notes)) GW.notes = res.notes;
+    GW.at = Date.now(); delete c.dataset.quote; delete c.dataset.target; c.querySelector("[data-own] input").value = ""; setMode(c, "note"); pickLine(c);
+    said.textContent = mark === "go" ? `✓ suggested: ${note} — they can say Not yet` : mark === "say" ? "✓ sent" : `✓ sent to them (${chatName(tool, +chat)}) — they see it within ~10 s`;
+    setTimeout(() => { if(said.textContent.startsWith("✓")) said.textContent = ""; }, 6000); gwPaint(); gwFetch();
+  } else said.textContent = "not sent: " + (res.error === "offline" ? "no connection" : res.error === "no-page" || res.error === "bad-input" ? "redeploy the script (New version)" : res.error === "no-words" ? "select words in their text first" : res.error || "error");
+}
+/* 📋 Copy all: every chat, each group's text (drafts marked), her notes under them; "Without names": Group 1, 2, 3… */
+function gwCopyText(names){
+  const devs = gwDevices(), lab = d => names && d.people.length ? d.label : d.short, out = [`${D.title} — what the groups wrote`];
+  LW.tools.forEach(t => {
+    const chats = [...new Set(gwRows().filter(r => r.tool === t.id).map(r => r.chat))].sort((a, b) => a - b);
+    chats.forEach(i => {
+      const rows = devs.map(d => ({d, r: d.rows.find(r => r.tool === t.id && r.chat === i)})).filter(x => x.r && (x.r.text || "").trim()); if(!rows.length) return;
+      out.push("", t.chat(i));
+      rows.forEach(({d, r}) => { out.push(`${lab(d)}${r.status === "sent" ? "" : " (draft)"}: ${r.text.replace(/\s*\n\s*/g, " ")}`);
+        (r.notes || []).filter(n => n.k !== "go" && n.k !== "say").forEach(n => out.push("   " + (n.k === "good" ? `✓ “${n.q}”` : n.k === "change" ? `✗ “${n.q}”` : n.k === "fix" ? `✎ “${n.q}” → ${n.c}` : `💬 ${n.q ? `“${n.q}” — ` : ""}${n.c}`))); });
+    });
+  });
+  return out.length > 1 ? out.join("\n") : "";
+}
+async function copyText(t){
+  try{ await navigator.clipboard.writeText(t); return true; }catch(e){}
+  const ta = document.createElement("textarea"); ta.value = t; ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select();
+  let ok = false; try{ ok = document.execCommand("copy"); }catch(e){} ta.remove(); return ok;
+}
+function wireGroups(root){
+  root.querySelectorAll("[data-gw-copy]").forEach(b => b.addEventListener("click", async () => {
+    const t = gwCopyText(!!b.dataset.gwCopy), was = b.dataset.label || b.textContent; b.dataset.label = was;
+    b.textContent = !t ? "Nothing to copy yet" : (await copyText(t)) ? "Copied ✓" : "Couldn't copy"; setTimeout(() => { b.textContent = was; }, 2200); }));
+  root.querySelectorAll("[data-gw-fresh]").forEach(b => b.addEventListener("click", () => {
+    if(!b.dataset.sure){ b.dataset.sure = "1"; b.textContent = "Hide what's here now? Tap again"; return; }
+    store.set(SINCE_KEY, gwNow()); delete b.dataset.sure; b.textContent = "🧹 Start fresh"; gwRebuild(); }));
+  /* 📢 to all rooms: the same strip on every screen of this page, with OK */
+  const box = root.querySelector("#gw-sayall");
+  root.querySelectorAll("[data-say-all]").forEach(b => b.addEventListener("click", () => { box.hidden = !box.hidden; if(!box.hidden) box.querySelector("input").focus(); }));
+  const sayAll = async t => { t = String(t || "").trim(); if(!t) return; const devs = gwDevices().filter(d => !d.room || hereNow(d.room)), code = localStorage.getItem("hw-code") || "";
+    for(const d of devs) await livePost({action: "toolNote", tool: PAGE_ID, code, dev: d.dev, chat: 0, note: t, mark: "say"});
+    box.querySelector("input").value = ""; box.hidden = true; gwFetch(); };
+  root.querySelectorAll("[data-say-send]").forEach(b => b.addEventListener("click", () => sayAll(box.querySelector("input").value)));
+  root.querySelectorAll("[data-say-quick]").forEach(b => b.addEventListener("click", () => sayAll(b.dataset.sayQuick)));
+  if(box) box.querySelector("input").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); sayAll(e.target.value); } });
+  gwPaint();
+}
+
+/* ---------- the field ----------
+   Stages in a row on top, clickable both ways (her rule); a stage = blocks one after another (← Previous / Next →, dots); ⬅ Board under
+   everything. On the -live page the groups' work goes to her table (lesson work above): their texts, the cards they send back, ✓/≈/✗
+   after "Show the answer", 🔖 on a gap, the box phrases they tick, and where they are. What they type is also kept on this device. */
+const LESSON = PAGE_ID.split("/")[0];
+const mk = s => esc(s == null ? "" : s)
+  .replace(/##(\/[^#]+?\/)##/g, '<span class="ipa">$1</span>')
+  .replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>')
+  .replace(/\(\((.+?)\)\)/g, '<span class="ctx">$1</span>')
+  .replace(/&lt;g&gt;(.+?)&lt;\/g&gt;/g, '<span class="m-good">$1</span>')
+  .replace(/~~(.+?)~~/g, '<span class="m-del">$1</span>');
+const KEY = "tool-field-" + PAGE_ID;
+let saved = store.get(KEY) || {w: {}, again: []};      /* this device: what they wrote ({chat: {text, sent}}), the cards they sent back */
+if(!saved.w) saved.w = {}; if(!Array.isArray(saved.again)) saved.again = [];
+const save = () => store.set(KEY, saved);
+/* every block gets an id; write items a chat number (her 📥 Groups), cards a number across the page (her dots) */
+/* permanent numbers from the build (her decision 30.10): blocks, cards and write items keep their number whatever is inserted or moved later,
+   so her table's counts, texts and notes stay with the same card */
+let chatN = 0, cardN = 0, blockN = 0;
+const BLOCKS = [], P = D._pids || {};
+D.stages.forEach((st, si) => st.blocks.forEach((b, bi) => {
+  b._id = `s${si}b${bi}`; b._si = si; b._bi = bi; b._pid = (P.blocks || [])[blockN] != null ? P.blocks[blockN] : blockN; blockN++; BLOCKS.push(b);
+  if(b.kind === "write") b.items.forEach(it => { it._chat = (P.write || [])[chatN] != null ? P.write[chatN] : chatN; chatN++; });
+  if(b.kind === "cards") b.cards.forEach(c => { c._n = (P.cards || [])[cardN] != null ? P.cards[cardN] : cardN; cardN++; c._b = b; });
+}));
+const writeItems = BLOCKS.filter(b => b.kind === "write").flatMap(b => b.items);
+const FAST = BLOCKS.map(b => b.fast).filter(Boolean);
+let S;
+function newState(){ S = {stage: 0, at: {}, view: "field", bs: {}, noFirst: false, enter: false, fast: null, look: null, howto: !!D.demo}; }
+newState();
+const curBlocks = () => D.stages[S.stage].blocks;
+const bIdx = () => Math.min(S.at[S.stage] || 0, curBlocks().length - 1);
+const curBlock = () => curBlocks()[bIdx()];
+const bs = b => S.bs[b._id] = S.bs[b._id] || {open: new Set(), shown: false, check: "", deck: null, look: null, done: false, bm: new Set()};
+const isLast = () => S.stage === D.stages.length - 1 && bIdx() === curBlocks().length - 1;
+
+/* ---------- 📖 gaps ---------- */
+function partsHTML(parts, b, prefix){
+  let k = 0; const st = bs(b);
+  return (parts || []).map(x => {
+    if(typeof x === "string") return mk(x);
+    if(x.b != null) return `<b class="bx">${esc(x.b)}</b>`;
+    const id = `${prefix}${k++}`, open = st.open.has(id), nf = S.noFirst && b.kind === "text";
+    const bm = open && !x.o && sharing() ? `<button class="bm ${st.bm.has(id) ? "on" : ""}" data-bm="${id}" title="We didn't know this" aria-label="We didn't know this">🔖</button>` : "";
+    return `<button class="gp ${open ? "open" : ""} ${x.o ? "o" : ""}" data-gap="${id}" aria-label="Show the missing part">${nf || !x.f ? "" : `<span class="f">${esc(x.f)}</span>`}<span class="r">${esc(nf ? (x.f || "") + x.r : x.r)}</span></button>${bm}`;
+  }).join("");
+}
+/* a gap's words (for 🔖: kept by the words, not by the place, so a corrected line keeps its marks) */
+function gapAnswer(b, id){
+  const m = id.match(/^([a-z]\d*)l(\d+)g(\d+)$/); if(!m) return id;
+  const lines = m[1] === "t" ? b.lines : m[1] === "x" ? (b.gloss || []).map(g => ({p: g.p})) : m[1] === "c" ? b.lines : m[1][0] === "m" ? b.parts[+m[1].slice(1)].lines : [];
+  const gaps = ((lines[+m[2]] || {}).p || []).filter(x => x && typeof x === "object" && x.r != null), g = gaps[+m[3]];
+  return g ? (g.f || "") + g.r : id;
+}
+const linesHTML = (lines, b, pre) => (lines || []).map((l, li) => l.ctx != null ? `<p class="lctx">${mk(l.ctx)}</p>` : `<p>${l.s ? `<b class="sp">${esc(l.s)}:</b>` : ""}${partsHTML(l.p, b, `${pre}l${li}g`)}</p>`).join("");
+const gapIds = (lines, pre) => (lines || []).flatMap((l, li) => (l.p || []).filter(x => x && typeof x === "object" && x.r != null).map((_, k) => `${pre}l${li}g${k}`));
+function allGaps(b){
+  if(b.kind === "text") return gapIds(b.lines, "t").concat(gapIds((b.gloss || []).map(g => ({p: g.p})), "x"));
+  if(b.kind === "model") return b.parts.flatMap((p, pi) => gapIds(p.lines, `m${pi}`));
+  if(b.kind === "calendars") return gapIds(b.lines, "c");
+  return [];
+}
+function textHTML(b){
+  const gl = b.gloss && b.gloss.length ? `<aside class="gloss" aria-label="Glossary">${b.gloss.map((g, gi) => `<p class="gl">${partsHTML(g.p, b, `xl${gi}g`)} <span class="ru">– ${esc(g.ru)}</span></p>`).join("")}</aside>` : "";
+  return `<div class="tx ${gl ? "" : "single"}"><div class="dlg">${linesHTML(b.lines, b, "t")}</div>${gl}</div>${gapTools(b)}`;
+}
+function gapTools(b){
+  const ids = allGaps(b), st = bs(b), all = ids.length && ids.every(id => st.open.has(id));
+  return ids.length ? `<div class="tx-tools"><button class="btn slim" data-showall="${b._id}">${all ? "Hide all" : "Show all"}</button>${S.noFirst && b.kind === "text" ? `<span class="hint">⚡ No first letters this time.</span>` : sharing() ? `<span class="hint">🔖 next to an opened gap = we didn't know this</span>` : ""}</div>` : "";
+}
+const modelHTML = b => `<div class="parts">${b.parts.map((p, pi) => `<div class="dlg">${p.title ? `<p class="part-h">${esc(p.title)}</p>` : ""}${linesHTML(p.lines, b, `m${pi}`)}</div>`).join("")}</div>${gapTools(b)}`;
+
+/* ---------- ✍️ write ---------- */
+function writeHTML(b){
+  return b.items.map(it => { const sv = saved.w[it._chat] || {};
+    return `<div class="witem" data-w="${it._chat}">${it.ctx ? `<p class="lctx">${mk(it.ctx)}</p>` : ""}${it.incoming ? `<div class="inmsg">${mk(it.incoming)}</div>` : ""}
+      <span class="lbl">${esc(it.label || "Your message")}</span>
+      ${sharing() ? `<div class="t-notes" data-tnotes="${it._chat}">${notesOf(it._chat).map(noteHTML).join("")}</div>` : ""}
+      ${sv.sent ? `<div class="sentmsg">${esc(sv.text)} <small>✓✓</small></div><div class="w-row"><button class="btn slim" data-wedit="${it._chat}">✏️ Change it</button><span class="share-note">${sharing() ? "Sent ✓ — Olya sees it too." : "Sent ✓ — only on this device."}</span></div>`
+        : `<textarea data-wta="${it._chat}" rows="2" placeholder="Type it together…" aria-label="${esc(it.label || "Your message")}">${esc(sv.text || "")}</textarea>
+           <div class="w-row"><button class="btn slim primary" data-wsend="${it._chat}" ${(sv.text || "").trim() ? "" : "disabled"}>Send ➤</button>${sharing() ? `<span class="share-note">👀 Olya sees what you type here${studentCode() ? " (with your name)" : ""} and may send you a quick tip.</span>` : ""}</div>`}</div>${pcHTML(PAGE_ID, it._chat)}`; }).join("")
+    + (!b.items.every(it => (saved.w[it._chat] || {}).sent) ? "" : b.example ? `<div class="ans-lines"><p class="ans-h">Example</p><p>${mk(b.example)}</p></div>`
+      : recallStage() > -1 && recallStage() !== b._si ? `<div class="compare"><span class="share-note">Now compare with our lesson:</span><button class="btn slim" data-goto="${recallStage()}">${esc(D.stages[recallStage()].label)} →</button></div>` : "");
+}
+function paintWriteNotes(){
+  document.querySelectorAll("[data-tnotes]").forEach(box => { const i = +box.dataset.tnotes, want = notesOf(i).map(n => n.id).join();
+    if(box.dataset.ids !== want){ box.innerHTML = notesOf(i).map(noteHTML).join(""); box.dataset.ids = want; } notesOf(i).forEach(n => seenNote(n.id)); });
+}
+const recallStage = () => { const t = BLOCKS.find(x => x.kind === "text"); return t ? t._si : -1; };
+/* ---------- 🔁 say ---------- */
+function sayHTML(b){
+  const st = bs(b), opts = [["yes", "✓ We said it like this"], ["close", "≈ Close"], ["no", "✗ Differently"]];
+  return `<div class="say-lines">${(st.shown ? b.answer : b.task).map(l => `<p>${mk(l)}</p>`).join("")}</div>
+    ${st.shown ? `<p class="ans-h">${esc(b.answer_title || "Check")}</p>
+      <div class="selfcheck"><span class="q">How close were you?</span>${opts.map(([v, l]) => `<button data-check="${v}" class="${st.check === v ? "on" : ""}" aria-pressed="${st.check === v}">${l}</button>`).join("")}</div>`
+      : `<div class="row-actions"><button class="btn primary" data-sayshow>Show the answer</button></div>`}`;
+}
+/* ---------- 🖼 picture, 🗓 calendars, 🔧 tool, 💬 questions ---------- */
+const pictureHTML = b => `<figure class="pic" style="margin:0"><img src="${esc(b.img)}" alt="${esc(b.alt || b.instr || "")}"></figure>${b.task ? `<p class="task">${mk(b.task)}</p>` : ""}`;
+function calendarsHTML(b){
+  const st = bs(b);
+  return `${b.who ? `<p class="lctx">${mk(b.who)}</p>` : ""}<div class="cals">${b.cals.map(c => `<div class="cal"><h4>${esc(c.title)}</h4>${c.rows.map(([t, l, s]) => `<div class="r ${esc(s)}"><span class="t">${esc(t)}</span><span>${esc(l)}</span></div>`).join("")}</div>`).join("")}</div>
+    ${b.lines ? `<div class="dlg">${linesHTML(b.lines, b, "c")}</div>${gapTools(b)}` : ""}
+    ${b.done ? (st.done ? `<p class="cal-done">${mk(b.done)}</p>` : `<div class="row-actions"><button class="btn primary" data-caldone>✓ Done — check the time</button></div>`) : ""}`;
+}
+const toolSrc = b => `${b.page}${LIVE_ON ? "-live" : ""}.html`;
+const toolHTML = b => `<iframe class="tool-frame" src="${toolSrc(b)}?embed=1" title="${esc(b.instr || b.page)}"></iframe><p class="share-note"><a href="${toolSrc(b)}" target="_blank" rel="noopener">Open it in a new tab ↗</a></p>`;
+function questionsHTML(b){
+  const st = bs(b); if(st.spk) spkCur = st.spk; else { spkReset(); st.spk = spkCur; }
+  const base = "questions." + b._pid;   /* her ✏️ / Hide / order on these too, kept by permanent numbers */
+  return speakHTML(liveList(b.items, base), isLast() ? "" : `<button class="btn primary" data-next>Next →</button>`, "Speaking", base);
+}
+
+/* ---------- 🃏 cards: Again comes back 2–3 cards later, Got it into its dot; the end: Come back to these (+ the full list for "ours") ---------- */
+function newDeck(cards){ return {cards, queue: cards.map((_, i) => i), got: new Set(), again: new Set(), flipped: false, fresh: true}; }
+const deckOf = b => { const st = bs(b); if(!st.deck) st.deck = newDeck(b.cards); return st.deck; };
+function frontHTML(b, c, i){
+  if(b.style === "mix") b = c._b; const st = b.style;
+  if(st === "kwt") return `<p class="sm">${mk(c.front)}</p><p class="frame">${mk(c.frame)}<span class="kw">${esc(c.key)}</span></p>`;
+  if(st === "ours") return `${c.ctx ? `<p class="lctx">${esc(c.ctx)}</p>` : ""}<p class="say">${mk(c.front)}</p>`;
+  if(st === "share") return `${c.ctx ? `<p class="lctx">${mk(c.ctx)}</p>` : ""}<p class="say">A: ${mk(c.a)}</p>${c.hint ? `<p class="hintline">${esc(c.hint)}</p>` : ""}`;
+  return `<p class="say">${mk(c.front)}</p>`;
+}
+function backHTML(b, c){
+  if(b.style === "mix") b = c._b; const st = b.style;
+  if(st === "kwt") return `<p class="say">${mk(c.back)}</p>${c.note ? `<p class="note">${mk(c.note)}</p>` : ""}`;
+  if(st === "ours") return `${b.check ? `<span class="chk">${esc(b.check)}</span>` : ""}<p class="say">${mk(c.back)}</p>${c.why ? `<p class="note">${mk(c.why)}</p>` : ""}`;
+  if(st === "share") return `<p class="say">B: ${mk(c.back)}</p>${c.next ? `<p class="next">A: ${mk(c.next)}</p>` : ""}${c.note ? `<p class="note">${mk(c.note)}</p>` : ""}`;
+  return `<p class="say">${mk(c.back)}</p>${c.note ? `<p class="note">${mk(c.note)}</p>` : ""}`;
+}
+const cardInstr = (b, k, first) => b.style === "share" && b.cards[k].instr ? b.cards[k].instr : first || !b.instr_next ? b.instr : b.instr_next;
+function cardsHTML(b){
+  const d = deckOf(b), st = bs(b);
+  const dots = `<div class="fdots">${d.cards.map((c, i) => `<span class="${d.got.has(i) ? "got" : d.again.has(i) ? "again" : ""} ${d.queue[0] === i && d.queue.length ? "now" : ""}"></span>`).join("")}</div>`;
+  if(st.look != null){ const c = d.cards[st.look];
+    return `${dots}<div class="fc open look"><span class="lbl from-groups">${esc(st.lookLbl || "Looking back")}</span>${frontHTML(b, c, st.look)}<div class="ans">${backHTML(b, c)}</div></div>
+      <div class="deck-act"><button class="btn primary" data-lookdone>Back to the cards →</button></div>`; }
+  if(!d.queue.length){
+    const back = d.cards.filter((_, i) => d.again.has(i));
+    return `${dots}<div class="blk-end"><h3 style="margin:0">${back.length ? "Done! Come back to these" : "Done! You got them all"}</h3>
+      ${back.length ? `<ul class="endlist">${back.map(c => `<li><span class="f">${mk(cardFrontPlain(b, c))}</span><span class="b">${mk(c.back)}</span></li>`).join("")}</ul>` : ""}
+      ${b.style === "ours" && b.summary ? `<p class="part-h" style="margin-top:10px">${esc(b.summary)}</p><ul class="endlist all">${b.cards.map(c => `<li><span class="f">${mk(c.front)}</span><span class="b">${mk(c.back)}</span></li>`).join("")}</ul>` : ""}
+      <div class="row-actions" style="margin-top:10px">${back.length ? `<button class="btn" data-redo>Go through these again</button>` : `<button class="btn" data-restart>All the cards again</button>`}${isLast() ? "" : `<button class="btn primary" data-next>Next →</button>`}</div></div>`;
+  }
+  const i = d.queue[0], c = d.cards[i], first = d.got.size + d.again.size === 0;
+  return `${dots}<div class="fc ${d.flipped ? "open" : ""} ${d.fresh ? "enter" : ""}" data-flip ${d.flipped ? "" : `role="button" tabindex="0" aria-label="Show the answer"`}>
+      <span class="lbl">${esc(cardInstr(b, i, first) || "")}</span>${frontHTML(b, c, i)}
+      ${d.flipped ? `<div class="ans">${backHTML(b, c)}</div>` : `<span class="corner">tap to check ↓</span>`}</div>
+    <div class="deck-act">${d.flipped ? `<button class="btn again" data-again>↺ Again</button><button class="btn ok" data-got>✓ Got it</button>` : ""}</div>`;
+}
+const cardFrontPlain = (b, c) => (b.style === "mix" ? c._b.style : b.style) === "share" ? c.a : c.front;
+/* the box beside a card: a "share" card says how much support (box · strip · none, her rule: support fades) */
+function boxFor(b){
+  if(!b) return null;
+  if(b.kind === "cards" && b.style === "share"){ const d = deckOf(b), i = d.queue[0], c = i != null ? b.cards[i] : null, sup = c ? c.support : "none";
+    return sup === "box" ? "BOX" : sup === "strip" ? "STRIP" : null; }
+  return b.box || null;
+}
+
+/* ---------- her dots on a deck: which cards the groups sent back (as on the cards pages) ---------- */
+function deckStats(n){
+  const rows = (GW.decks || []).filter(r => r.ts >= gwSince());
+  return rows.reduce((s, r) => { const a = Number((r.again || {})[n]) || 0; return {again: s.again + a, screens: s.screens + (a ? 1 : 0), got: s.got + ((r.got || []).includes(n) ? 1 : 0)}; }, {again: 0, screens: 0, got: 0});
+}
+function groupDotsHTML(b){
+  if(!liveTeacher()) return "";
+  const n = (GW.decks || []).filter(r => r.ts >= gwSince()).length;
+  return `<div class="gdots" data-gdots="${b._id}"><span class="gd-lbl">👥 The groups:</span>${b.cards.map((c, i) => { const s = deckStats(c._n), size = s.again ? Math.min(2.2, 1.1 + .3 * s.again) : .95;
+    const tip = s.again ? `back into the deck ${s.again}× (${s.screens} screen${s.screens === 1 ? "" : "s"})` : s.got ? "got it — nobody sent it back" : "no group has answered it yet";
+    return `<button class="gd ${s.again ? "gd-again" : s.got ? "gd-ok" : ""}" style="--s:${size.toFixed(2)}rem" data-gd="${i}" title="${esc(cardFrontPlain(b, c).replace(/\(\(|\)\)|\*\*/g, ""))} — ${tip}" aria-label="Card ${i + 1}: ${tip}"></button>`; }).join("")}<span class="gd-meta">${n} screen${n === 1 ? "" : "s"}</span></div>`;
+}
+function onGroupData(){ document.querySelectorAll("[data-gdots]").forEach(el => { const b = BLOCKS.find(x => x._id === el.dataset.gdots); const h = groupDotsHTML(b); if(el.outerHTML !== h){ el.outerHTML = h; wireGroupDots(); } }); }
+function wireGroupDots(){ document.querySelectorAll("[data-gdots] [data-gd]").forEach(btn => btn.addEventListener("click", () => {
+  const b = BLOCKS.find(x => x._id === btn.closest("[data-gdots]").dataset.gdots), st = bs(b), i = +btn.dataset.gd, s = deckStats(b.cards[i]._n);
+  st.look = st.look === i ? null : i; st.lookLbl = `👥 ${s.again ? `Back into the deck ${s.again}× · ${s.screens} screen${s.screens === 1 ? "" : "s"}` : s.got ? "Nobody sent it back" : "No group has answered it yet"}`; render(); })); }
+
+/* ---------- ⚡ fast finishers (the last block): the fast line, their ↺ cards once more, the text again without first letters ---------- */
+function fastHTML(){
+  if(!isLast() || S.view !== "field") return "";
+  const again = saved.again.length, text = BLOCKS.find(b => b.kind === "text");
+  return `<section class="fast"><h3>⚡ If you're done</h3>${FAST.map(f => `<p>${mk(f)}</p>`).join("")}
+    <div class="row-actions">${again ? `<button class="btn slim" data-fast-cards>↺ Your ${again} hard card${again === 1 ? "" : "s"} once more</button>` : ""}${text ? `<button class="btn slim" data-fast-text>📖 The text again — no first letters</button>` : ""}</div></section>`;
+}
+function fastDeckBlock(){
+  const cards = saved.again.map(n => BLOCKS.filter(b => b.kind === "cards").flatMap(b => b.cards).find(c => c._n === n)).filter(Boolean);
+  return {kind: "cards", style: "mix", _id: "fastdeck", instr: "Your hard cards once more", cards};
+}
+
+/* ---------- the page ---------- */
+function blockHTML(b){
+  const body = b.kind === "text" ? textHTML(b) : b.kind === "model" ? modelHTML(b) : b.kind === "write" ? writeHTML(b) : b.kind === "say" ? sayHTML(b)
+    : b.kind === "picture" ? pictureHTML(b) : b.kind === "calendars" ? calendarsHTML(b) : b.kind === "tool" ? toolHTML(b)
+    : b.kind === "questions" ? questionsHTML(b) : b.kind === "cards" ? groupDotsHTML(b) + `<div class="deck">${cardsHTML(b)}</div>` : "";
+  const instr = b.kind === "cards" || b.kind === "questions" ? (b.kind === "questions" ? b.instr : "") : b.instr;
+  const tip = S.howto && b.tip ? `<p class="tip">🎓 How it works: ${mk(b.tip)}</p>` : "";
+  return `${tip}${instr ? `<p class="finstr">${mk(instr)}</p>` : ""}<section class="blk ${S.enter ? "enter" : ""}" data-blk="${b._id}">${body}</section>`;
+}
+function navHTML(){
+  const bl = curBlocks(), i = bIdx(), more = i < bl.length - 1, nextStage = D.stages[S.stage + 1];
+  const dots = bl.length > 1 ? `<span class="bdots">${bl.map((_, k) => `<button class="${k === i ? "on" : k < i ? "was" : ""}" data-bgo="${k}" aria-label="Part ${k + 1} of ${bl.length}"></button>`).join("")}</span>` : "";
+  return `<div class="blk-nav">${i ? `<button class="btn slim" data-prev>← Previous</button>` : ""}${dots}<span class="grow"></span>
+    ${more ? `<button class="btn slim primary" data-next>Next →</button>` : nextStage ? `<button class="btn slim primary" data-next>Next: ${esc(nextStage.label)} →</button>` : ""}</div>`;
+}
+const cellName = () => D.board && D.board.col ? `${D.board.col} · $${D.board.value}` : "";
+const boardHref = () => D.boardPage ? `${D.boardPage}${LIVE_ON ? "-live" : ""}.html` : "";
+function headHTML(){
+  const st = D.stages.map((s, i) => [String(i), s.label]).concat(liveTeacher() ? [["groups", "📥 Groups"]] : []);
+  const howto = !D.demo && BLOCKS.some(b => b.tip) && S.view === "field" ? `<button class="btn slim howto" data-howto aria-pressed="${S.howto}" title="Show how each part of this page works (for the screen you share)">🎓 How it works</button>` : "";
+  return `<header class="head">${cellName() ? `<span class="part">${esc(cellName())}</span>` : ""}<h1>${esc(D.title)}</h1>${stagesHTML(st, S.view === "groups" ? "groups" : String(S.stage))}${howto}</header>`;
+}
+function render(){
+  liveApply();
+  const main = document.getElementById("main"), side = document.getElementById("side"), wrap = document.getElementById("wrap");
+  let b = S.fast ? S.fast : curBlock(), box = S.view === "field" ? boxFor(b) : null;
+  const keepGrid = S.view === "groups" ? document.getElementById("gw-grid") : null;
+  wrap.classList.toggle("nobox", !box && S.view === "field"); wrap.classList.toggle("wide", S.view === "groups" || (b && b.kind === "tool"));
+  wrap.classList.toggle("groups", S.view === "groups");
+  const back = boardHref() ? `<div class="board-back"><a href="${boardHref()}">⬅ Board</a></div>` : "";
+  const bar = S.view === "field" ? liveBarHTML(liveLabel) : "";
+  const pcs = pcStash();   /* her 👥 panel under a message keeps a half-typed note */
+  if(S.view === "groups") main.innerHTML = headHTML() + groupsHTML() + back;
+  else if(S.fast) main.innerHTML = headHTML() + `<p class="finstr">↺ Your hard cards once more</p><section class="blk"><div class="deck">${cardsHTML(S.fast)}</div><div class="row-actions"><button class="btn" data-fast-close>← Back</button></div></section>` + back;
+  else main.innerHTML = bar + headHTML() + blockHTML(b) + navHTML() + fastHTML() + back;
+  if(keepGrid){ const g = document.getElementById("gw-grid"); if(g) g.replaceWith(keepGrid); }
+  pcRestore(pcs);
+  const st = side.scrollTop; side.innerHTML = box && D.boxes[box] ? fieldBoxHTML(D.boxes[box]) : ""; side.scrollTop = st;
+  wireBox(side); wireBoxHidden(side);
+  S.enter = false; if(b && b.kind === "cards") deckOf(b).fresh = false;
+  wire(main); wireLive(main, p => { const m = String(p).match(/^questions\.(\d+)\.(\d+)$/); if(!m) return ""; const bl = BLOCKS.find(x => x._pid === +m[1]); return bl ? bl.items[+m[2]] || "" : ""; });
+  if(S.view === "groups") wireGroups(main); else { paintWriteNotes(); gwPaint(); }
+}
+/* the box with X{{rest}}: the first letter shown, the rest hidden yellow (tap the yellow to open it; tap the line to tick it) */
+const boxLineHTML = t => phHTML(t).replace(/\{\{(.+?)\}\}/g, '<span class="bh" data-bh>$1</span>');
+function fieldBoxHTML(box){
+  const items = box.map((g, gi) => `<h4>${esc(g.h)}</h4>` + g.items.map((t, ti) => `<button class="ph ${usedPhrases.has(gi + "." + ti) ? "used" : ""}" data-ph="${gi}.${ti}" data-pt="${esc(t.replace(/\*\*|\{\{|\}\}/g, ""))}" aria-pressed="${usedPhrases.has(gi + "." + ti)}">${boxLineHTML(t)}</button>`).join("")).join("");
+  return `<aside class="box" aria-label="Useful language"><div class="box-top"><img class="sticker" src="${STICKER}" alt="Useful language"></div>${items}</aside>`;
+}
+function wireBoxHidden(root){
+  root.querySelectorAll("[data-bh]").forEach(x => x.addEventListener("click", e => { if(x.classList.contains("open")) return; e.stopPropagation(); x.classList.add("open"); }, true));
+  root.querySelectorAll("[data-ph]").forEach(btn => btn.addEventListener("click", () => lwSignal("box", btn.dataset.pt, usedPhrases.has(btn.dataset.ph) ? 1 : 0)));
+}
+function goStage(i){ if(S.view === "field" && S.stage === i && !S.fast) return; S.view = "field"; S.fast = null; S.stage = i; S.enter = true; render(); scrollTo(0, 0); lwWhere(D.stages[i].label); }
+function wire(root){
+  const on = (q, fn) => root.querySelectorAll(q).forEach(x => x.addEventListener("click", e => fn(x, e)));
+  on("[data-stage]", x => { if(x.dataset.stage === "groups"){ if(S.view !== "groups"){ S.view = "groups"; S.fast = null; render(); scrollTo(0, 0); setTimeout(gwFetch, 0); } } else goStage(+x.dataset.stage); });
+  on("[data-next]", () => { const bl = curBlocks(), i = bIdx(); if(i < bl.length - 1){ S.at[S.stage] = i + 1; S.enter = true; render(); scrollTo(0, 0); } else if(S.stage < D.stages.length - 1) goStage(S.stage + 1); });
+  on("[data-prev]", () => { S.at[S.stage] = Math.max(0, bIdx() - 1); S.enter = true; render(); scrollTo(0, 0); });
+  on("[data-bgo]", x => { S.at[S.stage] = +x.dataset.bgo; S.enter = true; render(); });
+  on("[data-howto]", () => { S.howto = !S.howto; render(); });
+  on("[data-goto]", x => goStage(+x.dataset.goto));
+  const b = S.fast || curBlock(); if(!b) return;
+  /* gaps */
+  on("[data-gap]", x => { const st = bs(b), id = x.dataset.gap; st.open.has(id) ? st.open.delete(id) : st.open.add(id); render(); });
+  on("[data-showall]", () => { const st = bs(b), ids = allGaps(b), all = ids.every(id => st.open.has(id)); ids.forEach(id => all ? st.open.delete(id) : st.open.add(id)); render(); });
+  on("[data-bm]", (x, e) => { e.stopPropagation(); const st = bs(b), id = x.dataset.bm, onNow = !st.bm.has(id); onNow ? st.bm.add(id) : st.bm.delete(id); lwSignal("gap", `b${b._pid}:${gapAnswer(b, id)}`, onNow ? 1 : 0); render(); });
+  /* say */
+  on("[data-sayshow]", () => { bs(b).shown = true; render(); });
+  on("[data-check]", x => { const st = bs(b); st.check = x.dataset.check; lwSignal("check", "b" + b._pid, st.check); render(); });
+  /* calendars */
+  on("[data-caldone]", () => { bs(b).done = true; render(); });
+  /* write */
+  root.querySelectorAll("[data-wta]").forEach(ta => { const i = +ta.dataset.wta, send = root.querySelector(`[data-wsend="${i}"]`);
+    ta.addEventListener("input", () => { saved.w[i] = {text: ta.value, sent: false}; save(); send.disabled = !ta.value.trim(); shareDraft(i, ta.value, false); }); });
+  on("[data-wsend]", x => { const i = +x.dataset.wsend, ta = root.querySelector(`[data-wta="${i}"]`), v = ta.value.trim(); if(!v) return;
+    saved.w[i] = {text: v, sent: true}; save(); shareDraft(i, v, true); render(); });
+  on("[data-wedit]", x => { const i = +x.dataset.wedit; saved.w[i] = {text: (saved.w[i] || {}).text || "", sent: false}; save(); render(); const t = document.querySelector(`[data-wta="${i}"]`); if(t) t.focus(); });
+  /* cards */
+  const d = b.kind === "cards" ? deckOf(b) : null;
+  on("[data-flip]", () => { if(!d || d.flipped) return; d.flipped = true; render(); });
+  const answer = ok => { const i = d.queue.shift(), c = d.cards[i];
+    if(ok){ d.got.add(i); d.again.delete(i); } else { d.again.add(i); const k = 2 + Math.floor(Math.random() * 2); if(d.queue.length >= k) d.queue.splice(k, 0, i); else d.queue.push(i);
+      if(!saved.again.includes(c._n)){ saved.again.push(c._n); save(); } }
+    if(ok && b._id === "fastdeck"){ saved.again = saved.again.filter(n => n !== c._n); save(); }
+    if(b._id !== "fastdeck") lwDeck(c._n, ok);
+    d.flipped = false; d.fresh = true; render(); };
+  on("[data-again]", () => answer(false)); on("[data-got]", () => answer(true));
+  on("[data-redo]", () => { bs(b).deck = newDeck(d.cards.filter((_, i) => d.again.has(i))); if(b._id === "fastdeck") S.fast.cards = bs(b).deck.cards; render(); });
+  on("[data-restart]", () => { bs(b).deck = newDeck(b.cards); render(); });
+  on("[data-lookdone]", () => { bs(b).look = null; render(); });
+  wireGroupDots();
+  /* questions */
+  if(b.kind === "questions") wireSpeak(root, render);
+  /* fast finishers */
+  on("[data-fast-cards]", () => { S.fast = fastDeckBlock(); delete S.bs.fastdeck; render(); scrollTo(0, 0); });
+  on("[data-fast-close]", () => { S.fast = null; render(); });
+  on("[data-fast-text]", () => { const t = BLOCKS.find(x => x.kind === "text"); S.noFirst = true; bs(t).open.clear(); S.at[t._si] = t._bi; goStage(t._si); render(); });
+}
+document.addEventListener("keydown", e => {
+  if(e.target.closest && e.target.closest("input, textarea, select")) return;
+  const b = S.fast || curBlock(); if(S.view !== "field" || !b || b.kind !== "cards") return; const d = deckOf(b); if(!d.queue.length || bs(b).look != null) return;
+  if((e.key === " " || e.key === "Enter") && !d.flipped){ if(e.target.closest && e.target.closest("button, a")) return; e.preventDefault(); d.flipped = true; render(); }
+});
+/* lesson work on this page */
+/* her live bar: a question's own text as its label (paths "questions.<block number>.<place>") */
+const liveLabel = p => { const m = String(p).match(/^questions\.(\d+)\.(\d+)$/); if(!m) return p; const bl = BLOCKS.find(x => x._pid === +m[1]); return bl ? String(bl.items[+m[2]] || p) : p; };
+LW.tools = [{id: PAGE_ID, title: D.title, chat: n => { const k = writeItems.findIndex(it => it._chat === n), it = writeItems[k]; return it ? `🔁 ${it.label || "Your message"}${writeItems.length > 1 ? ` (${k + 1})` : ""}` : `Message #${n}`; }}]
+  .concat(Object.entries(D.embeds || {}).map(([page, e]) => ({id: LESSON + "/" + page, title: e.title, chat: n => { const ks = Object.keys(e.chats), k = ks.indexOf(String(n)); return `💬 Chat ${k > -1 ? k + 1 : "#" + n}${e.chats[n] ? " · " + e.chats[n] : ""}`; }})));
+LW.current = () => { const b = curBlock(); if(S.view !== "field" || !b || b.kind !== "write") return null; const open = b.items.find(it => !(saved.w[it._chat] || {}).sent); return open ? open._chat : null; };
+LW.onNotes = () => paintWriteNotes();
+LW.onGo = label => { const i = D.stages.findIndex(s => s.label === label); if(i > -1) goStage(i); };
+LW.stages = D.stages.map((s, i) => [i, s.label]);
+LW.board = D.boardPage && D.cell ? {id: LESSON + "/" + D.boardPage, cell: D.cell} : null;
+LW.groupsView = () => !!S && S.view === "groups";
+liveRerender = () => render();
+render();
+lwWhere(D.stages[0].label);
+</script>
+</body>
+</html>

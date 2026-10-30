@@ -131,6 +131,8 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
             bd = json.load(open(bp, encoding='utf-8'))
             if bd.get('type') == 'revision-board' and d.get('board') and d['board'].get('col') in bd['cols']:
                 d['boardPage'] = os.path.splitext(os.path.basename(bp))[0]; d['cell'] = 'c%dv%d' % (bd['cols'].index(d['board']['col']), d['board']['value'])
+            elif bd.get('type') == 'revision-board' and d.get('board', {}).get('button'):   # f-demo (handoff 0920): a button on top of the board, not a cell
+                d['boardPage'] = os.path.splitext(os.path.basename(bp))[0]
         d['embeds'] = {}
         for st in d['stages']:
             for b in st['blocks']:
@@ -141,6 +143,13 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
                         d['embeds'][b['page']] = {'title': ed['title'], 'chats': {str(pid): x.get('contact', '') for pid, x in zip(ep, ed['scenes'])}}
                 if b.get('kind') == 'picture' and b.get('img'):
                     shutil.copyfile(os.path.join(T, lesson, b['img']), os.path.join(out_dir, b['img']))
+    if d['type'] == 'revision-board':
+        # the lesson's pages with a button on the board (f-demo, "🎓 How the game works", handoff 0920)
+        d['buttons'] = []
+        for fp in sorted(p for p in glob.glob(os.path.join(T, lesson, '*.json')) if not p.endswith('.ids.json')):
+            fd = json.load(open(fp, encoding='utf-8'))
+            if fd.get('type') == 'revision-field' and fd.get('board', {}).get('button'):
+                d['buttons'].append({'label': fd['board']['button'], 'page': os.path.splitext(os.path.basename(fp))[0]})
     review = None
     if d.get('review'):
         src = json.load(open(os.path.join(T, lesson, d['review']['from'] + '.json'), encoding='utf-8'))

@@ -57,17 +57,18 @@
  },
  "stages": [
   {
-   "label": "🔁 Remember",
+   "label": "📝 Test yourself",
    "blocks": [
     {
      "kind": "picture",
      "instr": "What happened on Linden Street? Tell your partner as many incidents as you can remember.",
-     "img": "linden-street.jpg"
+     "img": "linden-street.jpg",
+     "tip": "Look at the picture and tell your partner what happened. No help yet — that comes next."
     }
    ]
   },
   {
-   "label": "📖 The chat",
+   "label": "🔁 Recall",
    "blocks": [
     {
      "kind": "text",
@@ -265,7 +266,8 @@
        ],
        "ru": "её ограбили"
       }
-     ]
+     ],
+     "tip": "The first letters are given; the glossary is beside the chat. Tap the yellow (and the orange sounds) to check."
     },
     {
      "kind": "text",
@@ -511,7 +513,7 @@
    ]
   },
   {
-   "label": "🃏 Cards",
+   "label": "🃏 Practice",
    "blocks": [
     {
      "kind": "cards",
@@ -540,7 +542,8 @@
        "back": "I hope **nobody** got hurt.",
        "why": "Надеюсь, никто не пострадал → I hope nobody… Anyone — в вопросе: Did anyone get hurt?"
       }
-     ]
+     ],
+     "tip": "Green = good, grey = could be better. Say the perfect version, then tap the card. ↺ Again = we weren't sure."
     },
     {
      "kind": "cards",
@@ -580,7 +583,7 @@
    ]
   },
   {
-   "label": "💬 Speaking",
+   "label": "💬 Use it",
    "blocks": [
     {
      "kind": "model",
@@ -668,7 +671,8 @@
      "instr": "This is Maple Road. What else has been happening here? Take turns to share the news like neighbours.",
      "img": "maple-road.jpg",
      "box": "NEWS",
-     "task": "One incident each. Your partner reacts and asks **two** questions. End with a tip: **Watch out for** …"
+     "task": "One incident each. Your partner reacts and asks **two** questions. End with a tip: **Watch out for** …",
+     "tip": "One incident each from the picture. Tap a phrase in the box when you say it — it turns green."
     },
     {
      "kind": "questions",
@@ -678,7 +682,7 @@
       "**2**  What should a visitor to your area **watch out for**? Give **two** tips."
      ],
      "box": "ASK",
-     "fast": "If you're done: go back to the neighbours' chat (📖) and say the missing words. Then: how safe is your area? “I'd say it's pretty safe, but…”"
+     "fast": "If you're done: go back to the neighbours' chat in 🔁 Recall and say the missing words. Then: how safe is your area? “I'd say it's pretty safe, but…”"
     }
    ]
   }

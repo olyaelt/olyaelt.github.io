@@ -83,6 +83,19 @@ details.summary[open] summary::after{content:"Hide"}
 .summary li b{font-weight:700}
 .ru{font-style:italic;color:var(--muted)}
 .ipa{color:var(--ipa);font-style:normal;white-space:nowrap}
+.ipa.o{color:#B45309}
+/* engine 47 (her wish 29.10): "More about these phrases" — what the glossaries said, folded under the Useful language box */
+.box details.box-more{margin-top:8px;border-top:1px dashed var(--line);padding-top:6px}
+.box details.box-more summary{cursor:pointer;font-weight:700;color:var(--instr);font-size:.92em}
+.box-more .bm-in{display:grid;gap:3px;margin-top:6px;font-size:.88em}
+.box-more h5{margin:8px 0 1px;color:var(--label);font-size:.85em;letter-spacing:.07em;font-weight:900}
+.box-more .bm-row{margin:0;line-height:1.4}
+.box-more .m{color:var(--muted)}
+.box-more .bm-strip{border:2px solid var(--line);border-radius:8px;padding:4px 10px 6px;margin-top:8px}
+.box-more .bm-strip h5{margin-top:2px}
+.box-more .bm-strip p{margin:0;line-height:1.45}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .ipa.o{color:#F6B26B} }
+:root[data-theme="dark"] .ipa.o{color:#F6B26B}
 .section{display:grid;gap:10px;margin-bottom:22px}
 .section h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:900}
 .all-hw{justify-self:start;color:var(--instr);font-weight:700;text-decoration:none;margin-bottom:6px}
@@ -97,8 +110,11 @@ details.summary[open] summary::after{content:"Hide"}
 .linklike{background:none;border:0;padding:0;color:var(--instr);font:inherit;font-weight:700;text-decoration:underline;cursor:pointer}
 .total{font-size:.92rem}
 .slow-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.slow{font:inherit;font-weight:700;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:6px 14px;cursor:pointer}
-.slow[aria-pressed="true"]{border-color:var(--instr);background:var(--instr);color:var(--instr-ink)}
+.spd-l{font-weight:700}
+.spd{display:inline-flex;border:2px solid var(--line);border-radius:99px;overflow:hidden;background:var(--card)}
+.spd button{font:inherit;font-weight:700;border:0;background:transparent;color:var(--ink);padding:6px 13px;min-width:46px;cursor:pointer}
+.spd button+button{border-left:2px solid var(--line)}
+.spd button[aria-pressed="true"]{background:var(--instr);color:var(--instr-ink)}
 .react{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:10px;font-weight:400;color:var(--ink)}
 .chips{display:inline-flex;gap:6px}
 .chip{font:inherit;font-weight:700;border:2px solid var(--ok-ink);background:transparent;color:var(--ok-ink);border-radius:99px;padding:4px 12px;cursor:pointer}
@@ -116,6 +132,11 @@ details.summary[open] summary::after{content:"Hide"}
 .chip-t[aria-pressed="true"]{border-color:var(--instr);background:var(--instr);color:var(--instr-ink)}
 .t-strip{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 12px;width:100%;margin:0 0 12px;padding:9px 12px;text-align:left;font:inherit;font-size:.95rem;color:var(--ink);background:var(--card);border:1px solid var(--line);border-left:5px solid var(--line);border-radius:10px;cursor:pointer}
 .t-strip.open{border-left-color:var(--instr)}
+/* engine 41: a task for later (not in the total time) and, for her, the TubeQuizard copy of a listening task */
+.later-tag{display:inline-block;vertical-align:.15em;font-size:.72rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);border:1.5px solid var(--line);border-radius:99px;padding:0 8px;margin-left:4px;white-space:nowrap}
+.tq-link{margin:4px 2px 0;font-size:.9rem;color:var(--muted)}
+.tq-alt{margin:4px 2px 0;font-size:.9rem;color:var(--muted)}.tq-alt a{color:var(--instr)}
+.tq-link button{font:inherit;background:none;border:0;padding:0;color:var(--instr);text-decoration:underline;cursor:pointer}
 
 .t-strip-go{color:var(--instr);font-weight:700;white-space:nowrap}
 .t-line{display:flex;flex-wrap:wrap;align-items:center;gap:5px;width:100%;text-align:left;background:transparent;border:0;padding:8px 4px 2px;cursor:pointer;font:inherit}
@@ -128,6 +149,11 @@ details.summary[open] summary::after{content:"Hide"}
 .hot{background:var(--card);border-radius:var(--radius);padding:12px 14px;margin:0 0 16px;border-left:5px solid var(--label)}
 .hot ul{margin:6px 0 0;padding-left:18px;display:grid;gap:4px}
 .hot .small{margin:4px 0 0}
+.hot.unl-note{border-left-color:var(--muted);border-style:dashed}
+.hot.unl-note.is-pub{border:0;border-left:5px solid var(--done)}
+.t-pub{margin:8px 0 0}
+.tool.primary-t{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
+.tool[disabled]{opacity:.5;cursor:default}
 .tool.rv-ok{background:var(--good-hl);color:var(--hl-ink)}
 .t-mkbar{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin:-4px 0 12px}
 .t-mkbar:empty{display:none}
@@ -195,6 +221,7 @@ details.summary[open] summary::after{content:"Hide"}
 .strip i{flex:1;height:22px;border-radius:2px;background:#3A3A36}
 .strip i.on{background:linear-gradient(180deg,#FFE066,#FF9900)}
 .meter .small{margin:0}
+.gate-note{margin:4px 2px 0;color:var(--muted)}
 .confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);max-width:min(92vw,520px);background:#1D1D1B;color:#fff;font-weight:700;padding:12px 16px;border-radius:12px;z-index:61;box-shadow:0 6px 20px rgba(0,0,0,.25);transition:opacity .5s}
 .toast.out{opacity:0}
@@ -239,6 +266,7 @@ details.summary[open] summary::after{content:"Hide"}
 .bar i{display:block;height:100%;background:var(--instr);width:0;transition:width .25s ease}
 .task-title{font-size:var(--step-1);font-weight:900;line-height:1.25}
 .instr{background:var(--instr);color:var(--instr-ink);font-weight:700;padding:10px 14px;border-radius:4px;margin-block:12px 14px}
+.instr-why{display:block;font-weight:400;margin-top:3px}
 .stage{display:grid;gap:16px}
 @media (min-width:720px){ .stage.with-box{grid-template-columns:minmax(0,1fr) 250px;align-items:start} }
 .panel{background:var(--card);border-radius:var(--radius);padding:16px;min-width:0;display:grid;gap:12px}
@@ -253,6 +281,39 @@ details.summary[open] summary::after{content:"Hide"}
 .gap .r{font-weight:700;background:var(--hl);color:transparent;padding:1px 0;border-radius:2px;transition:color .15s ease}
 .gap .r:empty{display:none}
 .chunk.open .gap .r{color:var(--hl-ink)}
+/* engine 48 (her read-through 30.10: blue on yellow was hard on the eyes): an opened gap is one chunk, the first letters and the rest
+   black bold on the yellow, in dark mode too (engine 46 had made the rest blue) */
+.chunk.open .gap .f{color:var(--hl-ink);background:var(--hl);border-radius:2px 0 0 2px}
+.dlg b.given{color:var(--answer)}
+/* engine 30: "!" after an opened gap = "I want to revise this" (kept on this device) */
+/* engine 32 (her decision 27.10): a green bookmark, not a second round sign next to "?" — "?" asks Olya, the bookmark is for me */
+.rev{display:inline-grid;place-items:center;width:1.25em;height:1.5em;margin:0 1px 0 2px;padding:0;border:0;border-radius:4px;background:none;color:var(--done);vertical-align:-.3em;cursor:pointer}
+.rev svg{width:.78em;height:1.05em;overflow:visible}
+.rev path{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round}
+.rev.on path{fill:currentColor}
+.rev:hover{background:color-mix(in srgb, var(--done) 14%, transparent)}
+.rev.demo{cursor:default;height:1.2em}
+/* engine 34: the bookmark hint sits on top, right under the instruction (her wish: at the bottom of a long text nobody sees it) */
+.rev-hint{margin:-6px 0 12px;font-size:.92rem;color:var(--muted)}
+/* engine 33: the bookmark on every practice item; next to a hidden answer it shows once the answer is open */
+.reveal:not(.open) ~ .rev:not(.on){display:none}
+.say-a .rev,.lb .rev{flex:none;font-size:1.15rem}
+.lb-item{display:flex;align-items:center;gap:6px}
+.lb-item .reveal{flex:1}
+.ln .rev{position:absolute;right:8px;top:9px;font-size:1.1rem}
+.ln.has-mk .rev{right:46px}
+.ln.has-rev{padding-right:40px}
+.ln.has-mk.has-rev{padding-right:80px}
+.mk-row .rev{font-size:1.25rem;margin-left:6px}
+.target .rev{font-size:1.1rem}
+.chunk:not(.open) + .rev:not(.on){display:none}
+.chunk.plain{cursor:default}
+.gap-n{display:block;color:var(--label);font-size:.88rem;line-height:1.35;margin:1px 0 2px}
+.gap-n[hidden]{display:none}
+.more-below{position:fixed;left:50%;transform:translateX(-50%);z-index:5;font:inherit;font-weight:700;font-size:.95rem;background:var(--instr);color:var(--instr-ink);border:0;border-radius:99px;padding:7px 16px;box-shadow:0 2px 10px rgba(0,0,0,.28);cursor:pointer}
+.more-below[hidden]{display:none}
+.say-note{margin:2px 0 0}
+.chunk.plain .gap .f,.chunk.plain .gap .r,.chunk.plain .gap.o .r{font-weight:inherit;color:inherit;background:none}
 .gap.o .r{background:#F6B26B;font-weight:400}
 .chunk.open .gap.o .r{color:#3B2300}
 .box.gloss p{line-height:1.7}
@@ -343,7 +404,10 @@ s{color:var(--muted)}
 .video iframe,.video > div{position:absolute;inset:0;width:100%;height:100%;border:0}
 .yt-consent{display:grid;place-items:center;text-align:center;padding:10px 14px;color:#fff;background:#1D1D1B;font-size:.9rem;line-height:1.35}
 .yt-consent p{margin:0 0 8px}.yt-consent a{color:#9CC9FF}.yt-consent .small{color:#C9C9C9;margin:6px 0 0;font-size:.8rem}
-.vmsg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:16px;color:#fff;font-size:.95rem;background:#1D1D1B}
+.vmsg{position:absolute;inset:0;z-index:2;margin:0;display:grid;place-items:center;text-align:center;padding:16px;color:#fff;font-size:.95rem;background:#1D1D1B}
+.vmsg p{margin:0 0 8px}.vmsg a{color:#9CC9FF}.vmsg .small{color:#C9C9C9;margin:8px 0 0;font-size:.85rem}
+.vmsg .btn{margin:8px 0 2px}
+.vload{position:absolute;inset:0;z-index:1;display:grid;place-items:center;margin:0;color:#C9C9C9;font-size:.9rem;pointer-events:none}
 .lines{display:grid;gap:6px}
 .ln{display:grid;grid-template-columns:34px minmax(0,1fr);gap:8px;align-items:start;text-align:left;width:100%;background:transparent;border:1px solid var(--line);
   border-radius:10px;padding:8px 10px;cursor:pointer;line-height:1.6}
@@ -351,13 +415,27 @@ s{color:var(--muted)}
 .whole-note{color:var(--muted);font-size:.85rem;white-space:nowrap}
 .gap-in{font:inherit;font-weight:700;color:var(--answer);background:var(--hl);border:0;border-bottom:2px solid var(--hl-ink);border-radius:4px 4px 0 0;padding:0 6px;margin:1px 0;max-width:100%}
 .gap-in:focus{background:var(--card);outline:2px solid var(--instr);outline-offset:1px}
+/* engine 40: each gap can be checked on its own ("Check" after it, or Enter), as in TubeQuizard; Check answers takes the rest.
+   A word, not ✓: a ✓ beside a typed answer read as "right" (her catch, 29.10) — ✓ and green mean right, as in TubeQuizard */
+.gap-ck{font:inherit;font-size:.72em;font-weight:900;line-height:1.3;border:2px solid var(--instr);color:var(--instr);background:var(--card);border-radius:99px;padding:0 8px;margin:0 3px 0 5px;vertical-align:.12em;cursor:pointer}
+.gap-ck[hidden]{display:none}
 .gap-res{font-weight:700;border-radius:3px;padding:0 4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .gap-res.ans{background:var(--hl);color:var(--hl-ink)}
-.gap-res.ok{background:var(--ok-bg);color:var(--ok-ink)}
+.gap-res.ok{background:var(--ok-chip);color:var(--ok-ink)}
+.gap-res.no{background:var(--no-chip);color:var(--no-ink)}
+.you-ok,.you-no{font-weight:700;border-radius:3px;padding:0 4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.you-ok{background:var(--ok-chip);color:var(--ok-ink)}.you-no{background:var(--no-chip);color:var(--no-ink)}
+.to-ans{color:var(--muted);font-weight:400}
+.you-typed{font-weight:700;border-bottom:2px dotted var(--muted)}
 .gap-fb{grid-column:2;background:var(--no-bg);border-radius:8px;padding:6px 10px;font-size:.95rem;line-height:1.5}
 .chip-x{color:var(--no-ink);font-weight:900}
 .ln.playing{border-color:var(--instr);background:var(--ground)}
 .ln.has-gap{border-width:2px}
+/* engine 37 (a student, 28.10: a ▶ on every line looked as if every line were a task): only the lines with a gap are framed;
+   the others are context, quiet and grey, like the grey context on her slides, and still play when tapped */
+.ln:not(.has-gap){border-color:transparent;color:var(--muted);padding-top:3px;padding-bottom:3px}
+.ln:not(.has-gap) .pl{width:24px;height:24px;font-size:.62rem;margin:3px 0 0 3px;opacity:.85}
+.ln:not(.has-gap).playing{color:var(--ink)}
 .gapbox{font:inherit;font-weight:700;background:var(--hl);color:var(--hl-ink);border:2px dashed var(--hl-ink);border-radius:6px;padding:0 6px;margin:1px 0;cursor:pointer;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .gapbox.open{border-style:solid;border-color:transparent}
 .gapbox .g-hint{font-size:.8em;font-weight:900;letter-spacing:.02em;padding:0 10px}
@@ -365,7 +443,8 @@ s{color:var(--muted)}
 .gapbox.open .g-ans{display:inline}
 .gapbox.open .g-hint{display:none}
 .gapbox.open{color:var(--hl-ink)}
-.tap-hint{margin:0}
+.tap-hint{margin:0}.tap-hint p{margin:0}
+.yt-help{margin-top:4px}.yt-help summary{cursor:pointer;color:var(--instr);font-weight:700}.yt-help p{margin:6px 0 0}
 .pc-note{margin:0;padding:10px 12px;border-radius:10px;background:var(--ground);border:1px dashed var(--line)}
 .cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--instr);color:var(--instr-ink);text-decoration:none;font-weight:900;
   padding:14px 18px;border-radius:12px;border:0;cursor:pointer;min-height:48px}
@@ -388,6 +467,12 @@ s{color:var(--muted)}
 .picks{display:grid;gap:6px}
 .pick-h{margin:10px 0 2px;color:var(--label);font-size:.8rem;letter-spacing:.06em;font-weight:900;text-transform:uppercase}
 .pick-h:first-child{margin-top:0}
+/* engine 31: "Your phrases" grouped by the parts of the conversation; an empty part shows in red, nothing is blocked */
+.ph-part{display:grid;gap:6px}
+.ph-h{margin:6px 0 0;color:var(--muted);font-size:.8rem;letter-spacing:.06em;font-weight:900;text-transform:uppercase}
+.ph-part.empty .ph-h,.ph-part.empty .ph-zero{color:var(--no-ink)}
+.ph-back{font:inherit;color:inherit;letter-spacing:inherit;text-transform:inherit;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.ph-zero{margin-top:-4px}
 .pick{display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;align-items:start;text-align:left;width:100%;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px;cursor:pointer;line-height:1.4}
 .pick .tick{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);margin-top:1px;display:grid;place-items:center;font-size:.8rem;font-weight:900;color:transparent}
 .pick.on{background:var(--ok-bg);border-color:var(--done)}
@@ -426,6 +511,8 @@ s{color:var(--muted)}
 .field input,textarea{font:inherit;color:var(--ink);background:var(--ground);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
 textarea{min-height:10em;resize:vertical;line-height:1.5}
 .mode{display:grid;gap:10px}
+.saved-note{margin:-4px 2px 0;color:var(--ok-ink);font-weight:700}
+.saved-note.warn{color:var(--muted);font-weight:400}
 .rec-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .rec-btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 22px;border-radius:999px;border:2px solid var(--rec);background:var(--card);color:var(--rec);font-weight:900;cursor:pointer}
 .rec-btn .dot{width:14px;height:14px;border-radius:50%;background:var(--rec)}
@@ -445,6 +532,28 @@ audio{width:100%}
 .btn[disabled]{opacity:.35;cursor:default}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.next-line{opacity:1;transform:none}}
 .legal{max-width:var(--maxw,760px);margin:0 auto;padding:18px 16px 28px;color:var(--muted);font-size:.85rem;text-align:center}
+/* engine 29 (her wish, 27.10): on a computer the page grows with the screen, by width and by height, whichever is smaller,
+   so the text is big and the Useful language box fits without scrolling; the phone layout stays as it was */
+@media (min-width:900px){
+  html{font-size:clamp(16px, min(1.35vw, 2.5vh), 26px)}
+  .wrap{max-width:50rem}
+  .wrap:has(.stage.with-box){max-width:64rem}
+  .legal{max-width:64rem}
+  .stage.with-box{grid-template-columns:minmax(0,1fr) minmax(250px,22rem)}
+  .stage .box{font-size:1.15rem}   /* fitBoxes() lowers it until the box fits on the screen */
+  .stage .box h4{font-size:.76em}
+  .stage .box .ru,.stage .box .mean{font-size:.86em}
+  .box .sticker{width:9rem;margin-top:-1.6rem}
+  /* her catch (27.10): on a wide screen the Russian goes on the same line as the phrase (on a phone it stays below) */
+  .box .ru{display:inline}
+  .box.gloss p{line-height:1.4}
+  .box .ru.dash::before{content:"– "}
+  /* the topic's box on the task list: two columns on a wide screen */
+  .box-home{display:block;columns:2 20rem;column-gap:2.5rem;font-size:1.05rem}
+  .box-home h4{break-after:avoid}
+  .box-home h4:first-child{margin-top:0}
+  .box-home p{break-inside:avoid;margin-bottom:3px}
+}
 .legal a{color:inherit}
 </style>
 
@@ -652,7 +761,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = ["click on the top line to hear the context","click on the line with the gap and try to catch what's in the gap","check","listen again — how did the expression sound?","optional: pronounce the expression like the speaker"];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "24";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "48";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -669,6 +778,8 @@ const GROUP_ID = PAGE_KEY.split("-")[2] || "group";
 let groupStats = (()=>{ try{ return JSON.parse(localStorage.getItem("hw-group-"+GROUP_ID)||"null"); }catch(e){ return null; } })();
 const minutesOf = t => t.min || (t.kind==="gaps" ? 5 : t.kind==="link" ? 10 : Math.max(2, Math.round((t.steps||[]).reduce((s,st)=>s+(EST[st.type]||1),0))));
 const lsMem = {};   /* if the browser blocks storage (private mode), remember things for this visit at least */
+/* can this browser keep things after the page is closed? (engine 28: "✓ Saved on this device" under her text) */
+const lsKeeps = (()=>{ try{ localStorage.setItem("hw-test","1"); localStorage.removeItem("hw-test"); return true; }catch(e){ return false; } })();
 const ls = { get:k=>{ try{ const v = localStorage.getItem(k); if(v != null) return v; }catch(e){} return lsMem[k] || ""; }, set:(k,v)=>{ lsMem[k] = v; try{ localStorage.setItem(k,v); }catch(e){} } };
 /* ---------- progress: kept on this device, and in Olya's table once the student enters their code ---------- */
 const SYNC_URL = "https://script.google.com/macros/s/AKfycbwHqzwA-2z09POg7JSqiMhqglOKbD8bxs-UG-NcFKZPzTyzmdEW79ct3zHGktUGyLM_/exec";   /* the address of Olya's progress table; empty = ticks stay on this device only */
@@ -703,7 +814,7 @@ const myCode = () => SYNC_URL ? ls.get("hw-code") : "";
 const asStudent = () => !!(SYNC_URL && ls.get("hw-code") && ls.get("hw-role") === "teacher" && ls.get("hw-as-student"));
 function setStudentView(on){
   ls.set("hw-as-student", on ? "1" : "");
-  try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
+  try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || /^hw-rev-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
   location.reload();
 }
 document.addEventListener("click", ev => { const b = ev.target.closest && ev.target.closest("#as-student, #as-teacher"); if(b) setStudentView(b.id === "as-student"); });
@@ -734,10 +845,11 @@ async function syncNow(code, opts={}){
     if(res.work){ work = res.work; saveWork(); refreshWork(); }
     if(code === myCode()) flushFlags();
     if(res.group && code === myCode()){ groupStats = res.group; ls.set("hw-group-"+GROUP_ID, JSON.stringify(res.group)); refreshMeter(); checkMilestone(res.group, GROUP_ID); }
+    if(gotMe(res, code)) refreshMeter();
     if(code === myCode()){ ls.set("hw-who", res.name||""); if(!ls.get("hw-name") && res.name) ls.set("hw-name", res.name); }
     if(changed) refreshTicks();
   }
-  if(code === myCode()){ syncState = res.ok ? "ok" : (res.error==="unknown-code" ? "unknown" : "offline"); refreshSync(); }
+  if(code === myCode()){ syncState = res.ok ? "ok" : (res.error==="unknown-code" ? "unknown" : "offline"); if(LOCKED() && !document.getElementById("gate")) renderGate(); else refreshSync(); }
   if(syncAgain){ syncAgain = false; syncNow(); }
   return res;
 }
@@ -751,11 +863,11 @@ function syncHTML(){
       <button class="chip-t" id="as-teacher">Back to teacher view</button></div>`;
   if(code && syncState!=="unknown" && ls.get("hw-role")==="teacher") return `<div class="sync sync-on teacher-bar">
       <span>👩‍🏫 <b>Teacher view</b>${who?` — ${esc(who)}`:""}${teacherData?"":" · loading…"}</span>
-      <button class="chip-t" id="hide-names" aria-pressed="${hideNames()}">👁️ Hide names</button>
+      <button class="chip-t" id="hide-names" aria-pressed="${hideNames()}">🙈 Hide names</button>
       <button class="chip-t" id="as-student">👀 Student view</button>
       <button class="linklike" id="code-change">Not you?</button></div>`;
   if(code && syncState!=="unknown") return `<div class="sync sync-on">
-      <span>✓ ${who?`Hi, ${esc(who)}! `:""}Olya can see your progress${syncState==="offline"?" — <b>not sent yet</b>: no connection right now. Your ticks are saved here and will go to her later.":"."}</span>
+      <span>✓ ${who?`Hi, ${esc(who)}! `:""}${meStats ? "Your progress is saved" : "Olya can see your progress"}${syncState==="offline"?" — <b>not sent yet</b>: no connection right now. Your ticks are saved here and will go to her later.":"."}</span>
       <button class="linklike" id="code-change">Not you?</button></div>`;
   return `<div class="sync sync-card">
       <label for="code"><b>Your code from Olya</b></label>
@@ -768,7 +880,12 @@ function syncHTML(){
 function wireSync(){
   const box = document.getElementById("sync-slot"); if(!box) return;
   const ch = document.getElementById("code-change");
-  if(ch) ch.addEventListener("click",()=>{ ls.set("hw-code",""); ls.set("hw-who",""); ls.set("hw-role",""); ls.set("hw-gid",""); ls.set("hw-as-student",""); teacherData = null; syncState=""; if(!current){ renderHome(); } refreshSync(); const i=document.getElementById("code"); if(i) i.focus(); });
+  /* "Not you?": the next person starts clean on this device — the last person's ticks, marks, bookmarks and drafts here are forgotten
+     (engine 35: before, a second person's code took over the first one's ticks; what was sent stays in Olya's table) */
+  if(ch) ch.addEventListener("click",()=>{ ["hw-code","hw-who","hw-role","hw-gid","hw-as-student"].forEach(k => ls.set(k, ""));
+    try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || /^hw-rev-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
+    try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){}
+    location.reload(); });
   const go = document.getElementById("code-go"), inp = document.getElementById("code");
   if(go && inp){
     const save = async ()=>{
@@ -778,7 +895,11 @@ function wireSync(){
       const res = await syncNow(code);
       go.disabled = false;
       if(res && res.ok && res.role==="teacher"){ ls.set("hw-code", code); ls.set("hw-role","teacher"); ls.set("hw-who", res.name||""); teacherData = res; if(res.group) groupStats = res.group; syncState = "ok"; renderHome(); return; }
-      if(res && res.ok){ ls.set("hw-code", code); ls.set("hw-role", ""); ls.set("hw-who", res.name||""); if(!ls.get("hw-name") && res.name) ls.set("hw-name", res.name); syncState = "ok"; refreshSync(); refreshTicks(); refreshWork(); if(res.group){ groupStats = res.group; ls.set("hw-group-"+GROUP_ID, JSON.stringify(res.group)); refreshMeter(); checkMilestone(res.group, GROUP_ID); } }
+      const fromGate = !!document.getElementById("gate");
+      if(res && res.ok && fromGate){ ls.set("hw-code", code); ls.set("hw-role", ""); ls.set("hw-who", res.name||""); if(!ls.get("hw-name") && res.name) ls.set("hw-name", res.name); syncState = "ok";
+        if(res.group){ groupStats = res.group; ls.set("hw-group-"+GROUP_ID, JSON.stringify(res.group)); } gotMe(res, code);
+        const h = (location.hash||"").replace("#",""); if(h && TASKS.some(t=>t.id===h)) openTask(h); else renderHome(); return; }   /* the task the link pointed to, if it's still in the address */
+      if(res && res.ok){ ls.set("hw-code", code); ls.set("hw-role", ""); ls.set("hw-who", res.name||""); if(!ls.get("hw-name") && res.name) ls.set("hw-name", res.name); syncState = "ok"; refreshSync(); refreshTicks(); refreshWork(); if(res.group){ groupStats = res.group; ls.set("hw-group-"+GROUP_ID, JSON.stringify(res.group)); refreshMeter(); checkMilestone(res.group, GROUP_ID); }  if(gotMe(res, code)) refreshMeter(); }
       else msg.textContent = (res && res.error==="unknown-code") ? "Hmm, Olya's list doesn't have this code. Check it with her." : "Can't reach Olya's list right now. Try again in a minute.";
     };
     go.addEventListener("click", save);
@@ -845,7 +966,7 @@ function renderFeedback(id){
   shell({instr:"Here's Olya's feedback on your work.",
     stageHTML: `<p class="fb-key small"><b class="fb-good">green</b> = great, keep it · <s class="fb-del">grey</s> = change this · <ins class="fb-ins">yellow</ins> = a better way to say it · <span class="fb-note">blue</span> = Olya's comment</p>` +
       list.map(w=>`<div class="panel fb-item">
-        <div class="small">${w.type==="recording"?"🎙 Your recording":w.type==="question"?"❓ Your question":w.type==="marked"?"🔖 You marked":"✍️ Your text"} · sent ${esc(w.sent||"")}</div>
+        <div class="small">${w.type==="recording"?"🎙 Your recording":w.type==="question"?"❓ Your question":w.type==="marked"?`<span class="mk demo" aria-hidden="true">?</span> You asked about`:"✍️ Your text"} · sent ${esc(w.sent||"")}</div>
         ${(w.type==="question"||w.type==="marked") ? `<p class="fb-q">${esc(String(w.text||"").split("\n").filter(l=>!/^https?:/.test(l)).join(" "))}</p>` : ""}
         ${String(w.feedback||"").trim() ? `<div class="fb-text">${fbHTML(w.feedback)}</div>` : `<p class="small">Olya hasn't written feedback on this one yet.</p>`}
         ${w.type==="text" && w.text ? `<details class="fb-orig"><summary>What you sent</summary><div class="fb-sent">${esc(w.text).replace(/\n/g,"<br>")}</div></details>` : ""}
@@ -863,7 +984,7 @@ function renderFeedback(id){
 function reactHTML(){
   if(!lastDone || !myCode() || syncState==="unknown" || isTeacher()) return "";
   const n = lastFlagged.length;
-  const fl = n ? `<div class="flagged"><b>🔖 You marked ${n} ${n===1?"thing":"things"} — Olya will see ${n===1?"it":"them"}.</b>
+  const fl = n ? `<div class="flagged"><b><span class="mk demo" aria-hidden="true">?</span> You asked about ${n} ${n===1?"thing":"things"} — Olya will see ${n===1?"it":"them"}.</b>
       ${lastFlagged.map((f,i)=>`<div class="fl"><span class="fl-s">${esc(f.s.length>90?f.s.slice(0,88)+"…":f.s)}</span>
         <button class="linklike" data-note="${i}">add a note</button>
         <span class="note-box" data-nb="${i}" hidden><input type="text" placeholder="What's unclear? (optional)" data-ni="${i}"><button class="btn" data-ng="${i}">Add</button></span></div>`).join("")}</div>` : "";
@@ -949,6 +1070,29 @@ function checkMilestone(gs, groupId){
     toast(ms===100 ? `🎉 We did it! ${capFirst(gs.reward)} is coming!` : `🎬 Our group is ${ms}% of the way to ${gs.reward}!`);
   }
 }
+/* engine 35: someone studying on their own (Group = Self in her table) has their own film instead of the group's:
+   it grows with every task, and every 100 frames gets a small celebration (her choice, 28.10). Each code has its own. */
+let meStats = (()=>{ try{ const c = localStorage.getItem("hw-code"); return c ? JSON.parse(localStorage.getItem("hw-me-"+c)||"null") : null; }catch(e){ return null; } })();
+function meMeterHTML(me){
+  const n = 20, part = me.total % 100, filled = Math.round(part / 100 * n), next = (Math.floor(me.total / 100) + 1) * 100;
+  return `<section class="meter meter-me" aria-label="Your film">
+      <div class="meter-top"><b>🎬 Your film</b><span>${fmtN(me.total)} 🎞</span></div>
+      <div class="strip" role="img" aria-label="${part} of 100 frames to the next stop">${Array.from({length:n},(_,i)=>`<i class="${i<filled?"on":""}"></i>`).join("")}</div>
+      <p class="small">Every task adds frames — one per minute of work, Over to you counts double. Next stop: ${fmtN(next)} 🎞.${me.week ? ` This week: <b>${fmtN(me.week)} 🎞</b>.` : ""}</p>
+    </section>`;
+}
+function checkMe(me, code){
+  const key = "hw-me-ms-" + code, h = Math.floor(me.total / 100), seen = ls.get(key);
+  if(seen === ""){ ls.set(key, String(h)); return; }
+  if(h > Number(seen)){ ls.set(key, String(h)); confetti(true); toast(`🎬 ${fmtN(h * 100)} frames in your film! Next stop: ${fmtN((h + 1) * 100)}.`); }
+}
+function gotMe(res, code){
+  if(code !== myCode()) return false;
+  meStats = res.me || null;
+  if(res.me){ ls.set("hw-me-"+code, JSON.stringify(res.me)); setTimeout(()=>checkMe(res.me, code), 50); }
+  return !!res.me;
+}
+const meterNow = () => meStats ? meMeterHTML(meStats) : meterHTML(groupStats);
 /* "?" next to an answer: the student marks what's unclear or hard to hear; it goes to Olya when the task is finished */
 let flags = (()=>{ try{ return JSON.parse(localStorage.getItem(PAGE_KEY+"-flags")||"{}")||{}; }catch(e){ return {}; } })();
 let lastFlagged = [];
@@ -956,11 +1100,11 @@ const saveFlags = () => { try{ localStorage.setItem(PAGE_KEY+"-flags", JSON.stri
 const canMark = () => !!(myCode() && syncState!=="unknown" && !isTeacher());
 const plainText = s => { const d = document.createElement("div"); d.innerHTML = String(s||""); return d.textContent.replace(/\s+/g," ").trim(); };
 function markBtn(key, snippet, link){
-  if(!canMark() || !current) return "";
+  if(!canMark() || !current || current._once) return "";
   const on = !!(flags[current.id] && flags[current.id][key]);
   return `<button class="mk ${on?"on":""}" data-mk="${esc(key)}" data-s="${esc(snippet)}" data-l="${esc(link||"")}" aria-pressed="${on}" aria-label="${on?"Marked for Olya — tap to unmark":"Not sure? Mark it for Olya"}">?</button>`;
 }
-function markHint(){ return canMark() && !ls.get("hw-mark-used") ? `<p class="mk-hint">Not sure about something? Tap <span class="mk demo">?</span> — Olya will see it.</p>` : ""; }
+function markHint(){ return canMark() && !(current && current._once) && !ls.get("hw-mark-used") ? `<p class="mk-hint">Not sure about something? Tap <span class="mk demo">?</span> — Olya will see it.</p>` : ""; }
 document.addEventListener("click", ev=>{
   const b = ev.target.closest(".mk[data-mk]"); if(!b || !current) return;
   ev.stopPropagation();
@@ -1002,7 +1146,7 @@ function labelsFor(students){
     return s.name;
   });
 }
-/* what waits for Olya's answer: texts, recordings, questions, and a 🔖 mark only when the student added a note */
+/* what waits for Olya's answer: texts, recordings, questions, and a ❔ mark ("?" on a line) only when the student added a note */
 const hasNote = w => /\n— /.test(String(w.text||""));   /* the note goes after the marked line */
 const needsAnswer = w => !String(w.feedback||"").trim() && (w.type !== "marked" || hasNote(w));
 function teacherCounts(id){
@@ -1016,7 +1160,7 @@ function teacherLine(id){
   const st = teacherData.students || [], lab = labelsFor(st), dn = new Set((teacherData.done||{})[id] || []), c = teacherCounts(id);
   const chips = hideNames() ? `<span class="t-count">${dn.size} of ${st.length} done</span>`
     : st.map((s,i)=>`<span class="t-chip ${dn.has(i)?"on":""}" title="${esc(s.name)}">${esc(lab[i])}</span>`).join("");
-  const badges = [c.marked?`🔖 ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:"", c.hard?`😓 ${c.hard}`:""].filter(Boolean).join(" · ");
+  const badges = [c.marked?`❔ ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:"", c.hard?`😓 ${c.hard}`:""].filter(Boolean).join(" · ");
   return `<button class="t-line ${c.marked+c.questions?"hot":""}" data-teach="${id}">${chips}${badges?`<span class="t-badges">${badges}${c.open?` · <b>${c.open} to answer</b>`:""}</span>`:""}</button>`;
 }
 /* ---------- "Where they got stuck": what hasn't been gone through in class yet ---------- */
@@ -1031,7 +1175,7 @@ function stuckCounts(id){
 function hotHTML(){
   if(!isTeacher() || !teacherData) return "";
   const hot = TASKS.map(t=>({t, c:stuckCounts(t.id)})).filter(x=>x.c.marked+x.c.questions+x.c.hard>0).sort((a,b)=>(b.c.marked+b.c.questions+b.c.hard)-(a.c.marked+a.c.questions+a.c.hard));
-  return `<section class="hot"><b>Where they got stuck</b>${hot.length ? `<ul>${hot.map(x=>`<li><button class="linklike" data-stuck="${x.t.id}">${esc(x.t.title)}</button> <span>${[x.c.marked?`🔖 ${x.c.marked}`:"", x.c.questions?`❓ ${x.c.questions}`:"", x.c.hard?`😓 ${x.c.hard} hard`:""].filter(Boolean).join(" · ")}</span></li>`).join("")}</ul>
+  return `<section class="hot"><b>Where they got stuck</b>${hot.length ? `<ul>${hot.map(x=>`<li><button class="linklike" data-stuck="${x.t.id}">${esc(x.t.title)}</button> <span>${[x.c.marked?`❔ ${x.c.marked}`:"", x.c.questions?`❓ ${x.c.questions}`:"", x.c.hard?`😓 ${x.c.hard} hard`:""].filter(Boolean).join(" · ")}</span></li>`).join("")}</ul>
     <p class="small">Tap a task to go through it together — the marked lines are framed red.</p>` : `<p class="small">Nothing new: no marks or questions waiting.</p>`}</section>`;
 }
 /* every line a student could mark: step, row (-1 = the whole card) and the text the ? button sends */
@@ -1070,9 +1214,9 @@ function mkBarHTML(id){
   if(!steps.length && !c.questions && !c.hard) return "";
   const anyOpen = items.some(it=>it.marks.some(open)) || c.questions || c.hard;
   return `<span class="t-mk-h">Hard for them:</span>${steps.map(si=>{ const ws = items.filter(it=>it.si===si).flatMap(it=>it.marks);
-      return `<button class="tool t-mk-go ${ws.some(open)?"":"is-done"}" data-mkgo="${si}">Step ${si+1} · 🔖 ${whoMarked(ws)}</button>`; }).join("")}
+      return `<button class="tool t-mk-go ${ws.some(open)?"":"is-done"}" data-mkgo="${si}">Step ${si+1} · ❔ ${whoMarked(ws)}</button>`; }).join("")}
     ${c.questions?`<button class="linklike" data-mkq>❓ ${c.questions} ${c.questions===1?"question":"questions"}</button>`:""}${c.hard?`<span class="small">😓 ${c.hard} found it hard</span>`:""}
-    <button class="linklike" id="t-mk-names">${hideNames() ? "👁️ Show names" : "👁️ Hide names"}</button>
+    <button class="linklike" id="t-mk-names">${hideNames() ? "👁️ Show names" : "🙈 Hide names"}</button>
     ${anyOpen ? `<button class="tool rv-ok" id="t-mk-all">✓ All discussed</button>` : `<span class="small">✓ all discussed</span>`}`;
 }
 function wireMkBar(id){
@@ -1099,7 +1243,7 @@ function annotateMarks(){
     const o = it.marks.some(open), ids = it.marks.map(w=>w.id).join(",");
     el.classList.add("t-marked"); if(!o) el.classList.add("t-marked-done");
     const notes = it.marks.filter(w=>noteOf(w)).map(w=>`<span class="t-mk-note">💬 ${hn ? "" : `${esc(((teacherData.students||[])[w.s]||{}).name||"")}: `}${esc(noteOf(w))}</span>`).join("");
-    const lab = `<div class="t-mk-who ${o?"":"is-done"}"><span>🔖 ${whoMarked(it.marks)}</span>${notes}${o ? `<button class="linklike" data-mkdone="${ids}">✓ Discussed</button>` : `<span>✓ discussed</span><button class="linklike" data-mkundo="${ids}">undo</button>`}</div>`;
+    const lab = `<div class="t-mk-who ${o?"":"is-done"}"><span>❔ ${whoMarked(it.marks)}</span>${notes}${o ? `<button class="linklike" data-mkdone="${ids}">✓ Discussed</button>` : `<span>✓ discussed</span><button class="linklike" data-mkundo="${ids}">undo</button>`}</div>`;
     el.insertAdjacentHTML(it.row < 0 ? "afterbegin" : "afterend", lab);
   });
   app.querySelectorAll("[data-mkdone]").forEach(b=>b.addEventListener("click", async e=>{ e.stopPropagation(); if(await setDiscussed(id, {ids: b.dataset.mkdone.split(",")})) refreshMarks(); }));
@@ -1115,27 +1259,39 @@ function renderStuck(id){
   const open = isOpenMark(id), its = markedItems(id), first = its.find(it=>it.marks.some(open)) || its[0];
   openTask(id, first ? first.si : 0);
 }
-const WAIT_ICON = {text:"✍️ text", recording:"🎙 recording", question:"❓ question", marked:"🔖 marked"};
+/* an unlisted page ("listed": false in page.json): her teacher view says so on top, with Publish / Unpublish.
+   Publishing is a row in her table (sheet "Published"): the students' group list asks the table, so no new upload is needed */
+const UNLISTED = !!document.querySelector('meta[name="hw-unlisted"]');
+function unlistedHTML(){
+  if(!UNLISTED || !isTeacher()) return "";
+  if(teacherData && teacherData.published) return `<section class="hot unl-note is-pub"><b>✓ Published</b><p class="small">Students see this homework in their list now.</p>
+    <p class="t-pub"><button class="tool" id="unl-pub" data-on="0">Unpublish</button></p></section>`;
+  return `<section class="hot unl-note"><b>🔒 Not published yet</b><p class="small">This page isn't in the homework list, so students only get here by its link. Show it in class, then tap Publish: it appears in students' list straight away.</p>
+    <p class="t-pub"><button class="tool primary-t" id="unl-pub" data-on="1" ${teacherData?"":"disabled"}>📢 Publish</button></p></section>`;
+}
+async function setPublished(b){
+  const on = b.dataset.on === "1"; b.disabled = true; b.textContent = on ? "Publishing…" : "Unpublishing…";
+  const res = await post({action:"publish", code:myCode(), page:PAGE_KEY, on});
+  if(res.ok && res.saved){ teacherData.published = !!res.published; toast(on ? "✓ Published: students see it in their list now." : "Unpublished: it's gone from students' list."); }
+  else toast(res.ok ? "Your table's script is older than this page: update it (Deploy → Manage deployments → New version), then tap again." : "Couldn't reach your table. Try again in a minute.");
+  if(!current){ const y = scrollY; renderHome(); scrollTo(0,y); }
+}
+const WAIT_ICON = {text:"✍️ text", recording:"🎙 recording", question:"❓ question", marked:"❔ marked"};
 function waitHTML(){
   if(!isTeacher() || !teacherData) return "";
   const st = teacherData.students || [], hn = hideNames(), pos = Object.fromEntries(TASKS.map((t,i)=>[t.id,i]));
   const order = {text:0, recording:1, question:2, marked:3};
   const open = (teacherData.work||[]).filter(w=>needsAnswer(w) && pos[w.task] !== undefined)
     .sort((a,b)=>(pos[a.task]-pos[b.task]) || (order[a.type]-order[b.type]));
-  return `<section class="hot wait"><b>💬 Waiting for your answer${open.length?`: ${open.length}`:""}</b>${open.length?` <button class="tool" id="copy-wait">📋 Copy all for Claude</button>`:""}${open.length
-    ? `<ul>${open.map(w=>`<li><button class="linklike" data-teach="${w.task}" data-wid="${w.id}">${hn ? "" : esc((st[w.s]||{}).name||"") + " — "}${esc(TASKS[pos[w.task]].title)}</button> <span>${w.type==="marked" ? "🔖 marked, with a note" : WAIT_ICON[w.type]||""}</span></li>`).join("")}</ul>`
+  return `<section class="hot wait"><b>💬 Waiting for your answer${open.length?`: ${open.length}`:""}</b>${open.length
+    ? `<ul>${open.map(w=>`<li><button class="linklike" data-teach="${w.task}" data-wid="${w.id}">${hn ? "" : esc((st[w.s]||{}).name||"") + " — "}${esc(TASKS[pos[w.task]].title)}</button> <span>${w.type==="marked" ? "❔ marked, with a note" : WAIT_ICON[w.type]||""}</span></li>`).join("")}</ul>`
     : `<p class="small">Nothing to answer on this homework.</p>`}</section>`;
 }
 function wireTeacher(){
   document.querySelectorAll("[data-teach]").forEach(b=>{ if(b._t) return; b._t = 1; b.addEventListener("click",()=>renderTeacherTask(b.dataset.teach, b.dataset.wid)); });
   document.querySelectorAll("[data-stuck]").forEach(b=>{ if(b._t) return; b._t = 1; b.addEventListener("click",()=>renderStuck(b.dataset.stuck)); });
-  const cw = document.getElementById("copy-wait");
-  if(cw && !cw._t){ cw._t = 1; cw.addEventListener("click",()=>{
-    const pos = Object.fromEntries(TASKS.map((t,i)=>[t.id,i]));
-    const open = (teacherData.work||[]).filter(w=>needsAnswer(w) && pos[w.task] !== undefined);
-    const text = TASKS.filter(t=>open.some(w=>w.task===t.id)).map(t=>taskForClaude(t) + "\n\n" + open.filter(w=>w.task===t.id).map(w=>itemForClaude(w)).join("\n\n")).join("\n\n----------\n\n");
-    copyText(text, cw);
-  }); }
+  const pb = document.getElementById("unl-pub");
+  if(pb && !pb._t){ pb._t = 1; pb.addEventListener("click",()=>setPublished(pb)); }
   const h = document.getElementById("hide-names");
   if(h && !h._t){ h._t = 1; h.addEventListener("click",()=>{ ls.set("hw-hide", hideNames() ? "" : "1"); const y = scrollY; renderHome(); scrollTo(0,y); }); }
 }
@@ -1167,7 +1323,7 @@ function renderTeacherTask(id, wid){
   const r = (teacherData.reactions||{})[id] || {easy:[],ok:[],hard:[]};
   const order = {marked:0, question:1, text:2, recording:3};
   const items = (teacherData.work||[]).filter(x=>x.task===id).sort((a,b)=>order[a.type]-order[b.type]);
-  const icon = {marked:"🔖 Marked", question:"❓ Question", text:"✍️ Their text", recording:"🎙 Recording"};
+  const icon = {marked:"❔ Marked", question:"❓ Question", text:"✍️ Their text", recording:"🎙 Recording"};
   const taskCard = hasTaskCard(t);   /* Over to you: the task in front of her */
   const startOf = w => String(w.feedback||"").trim() ? w.feedback : (w.type==="text" ? textOf(w) : "");
   const rowsOf = s => Math.min(18, Math.max(3, String(s).split("\n").length + 1));
@@ -1183,7 +1339,6 @@ function renderTeacherTask(id, wid){
     stageHTML: `${taskCard?`<div class="panel task-card t-task">${TASK_HTML}</div>`:""}<div class="panel t-panel">
         <p><b>Done:</b> ${hn ? `${dn.size} of ${st.length}` : st.map((s,i)=>`<span class="t-chip wide ${dn.has(i)?"on":""}">${esc(s.name)}</span>`).join(" ")}</p>
         ${r.easy.length+r.ok.length+r.hard.length ? `<p><b>How was it:</b> Easy ${r.easy.length} · OK ${r.ok.length} · Hard ${r.hard.length}${!hn && r.hard.length ? ` (${r.hard.map(i=>esc((st[i]||{}).name||"")).join(", ")})` : ""}</p>` : ""}
-        ${items.length ? `<p><button class="tool" id="t-copy-all">📋 Copy all for Claude</button></p>` : ""}
       </div>
       ${items.length ? items.map(w=>`<div class="panel t-item" data-w="${w.id}">
           <div class="small">${icon[w.type]} · ${who(w.s)}${esc(w.sent||"")}${String(w.feedback||"").trim() ? (w.seen ? " · read ✓" : " · not read yet") : ""}</div>
@@ -1199,8 +1354,6 @@ function renderTeacherTask(id, wid){
     actionsHTML: `<button class="btn" id="t-open">Open the task</button><button class="btn primary grow" id="t-home">Back to all tasks</button>`, panel: true});
   document.getElementById("t-home").addEventListener("click", goHome);
   document.getElementById("t-open").addEventListener("click", ()=>openTask(id));
-  const all = document.getElementById("t-copy-all");
-  if(all) all.addEventListener("click", ()=>copyText(taskForClaude(t) + "\n\n" + items.map(w=>itemForClaude(w, app.querySelector(`.t-item[data-w="${w.id}"] .t-ta`).value)).join("\n\n"), all));
   app.querySelectorAll(".t-item").forEach(card=>{
     const w = items.find(x=>String(x.id)===card.dataset.w), ta = card.querySelector(".t-ta"), prev = card.querySelector(".t-prev"), msg = card.querySelector(".t-msg");
     const upd = () => { prev.innerHTML = fbHTML(ta.value); }; upd();
@@ -1220,7 +1373,7 @@ function renderTeacherTask(id, wid){
   const focus = wid && app.querySelector(`.t-item[data-w="${wid}"]`);
   if(focus){ focus.classList.add("t-focus"); focus.scrollIntoView({block:"center"}); }
 }
-function refreshMeter(){ const m = document.getElementById("meter-slot"); if(m && !current) m.innerHTML = (myCode() && syncState!=="unknown") ? meterHTML(groupStats) : ""; }
+function refreshMeter(){ const m = document.getElementById("meter-slot"); if(m && !current) m.innerHTML = (myCode() && syncState!=="unknown") ? meterNow() : ""; }
 function footHTML(){
   return myCode() && syncState!=="unknown"
     ? `<span>When you finish a task, mark it in our spreadsheet in your colour.</span><span>Your ticks are saved for Olya and on all your devices.</span>`
@@ -1229,6 +1382,22 @@ function footHTML(){
 function refreshFoot(){ const f = document.getElementById("foot"); if(f) f.innerHTML = footHTML(); }
 
 const app = document.getElementById("app");
+/* engine 29: on a computer the Useful language box beside a task gets the biggest text that still fits on the screen
+   (from 1.15rem down to 0.9rem; below that it scrolls); phones keep their layout */
+const BIG_SCREEN = window.matchMedia ? matchMedia("(min-width:900px)") : {matches: false};
+function fitBoxes(){
+  app.querySelectorAll(".stage .box").forEach(b => {
+    if(!BIG_SCREEN.matches){ b.style.fontSize = ""; return; }
+    let f = 1.15; b.style.fontSize = f + "rem";
+    while(f > .9 && b.getBoundingClientRect().bottom + scrollY > innerHeight - 12){ f = Math.round((f - .05) * 100) / 100; b.style.fontSize = f + "rem"; }
+  });
+}
+let fitQueued = false;
+/* a Russian gloss that starts with a word gets a dash before it when it sits on the phrase's line (wide screens) */
+const markRu = () => app.querySelectorAll(".box .ru:not(.dash)").forEach(e => { if(/^[\p{L}]/u.test(e.textContent.trim())) e.classList.add("dash"); });
+const queueFit = () => { if(fitQueued) return; fitQueued = true; requestAnimationFrame(() => { fitQueued = false; markRu(); fitBoxes(); }); };
+if(window.MutationObserver) new MutationObserver(queueFit).observe(app, {childList: true});
+window.addEventListener("resize", queueFit);
 let current = null, stepIdx = 0, checked = false;
 /* ✎ Correction = {…}, 💬 Comment = [[…]]: inside the other kind → switch it; words selected → wrap them; nothing selected → an empty pair at the cursor */
 function markSel(ta, kind){
@@ -1246,28 +1415,46 @@ const norm = s => String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/[.!?
 
 /* ---------- home ---------- */
 const ON_SITE = /\.github\.io$/.test(location.hostname) || location.protocol === "file:";   /* the list of all homework lives next to this page on the site */
+/* engine 35: on the site, the homework opens only with a code (her decision, 28.10). Without one — or with a code her table doesn't know —
+   the page shows just the code field. A code this device already used keeps working when the table doesn't answer.
+   It's a lock on the door, not a safe: the tasks are still in the page's source. Previews outside the site stay open. */
+const LOCKED = () => !!SYNC_URL && /\.github\.io$/.test(location.hostname) && (!myCode() || syncState === "unknown");
+function renderGate(){
+  current = null;
+  app.innerHTML = `
+    <header class="lesson-head" id="gate">
+      <a class="all-hw" href="index.html">← All homework</a>
+      <span class="date">${LESSON.date}</span>
+      <h1>Homework</h1>
+    </header>
+    <div id="sync-slot">${syncHTML()}</div>
+    <p class="small gate-note">The homework opens with your code. No code yet? Ask Olya — she'll send you one.</p>`;
+  wireSync();
+  const i = document.getElementById("code"); if(i && !("ontouchstart" in window)) i.focus({preventScroll: true});
+}
 function renderHome(justDone){
+  if(LOCKED()) return renderGate();
   current = null;
   const taskBtn = t => `
           <div class="task-wrap"><div class="task-row ${done.has(t.id)?"is-done":""}">
             <button class="task-btn" data-open="${t.id}">
-              <span><div class="t">${esc(t.title)}</div><div class="m">${esc(t.meta)} · ≈ ${minutesOf(t)} min</div>${t.alt?`<div class="alt">${esc(t.alt)}</div>`:""}</span>
+              <span><div class="t">${esc(t.title)}${t.later?` <span class="later-tag">for later</span>`:""}</div><div class="m">${esc(t.meta)} · ≈ ${minutesOf(t)} min</div>${t.alt?`<div class="alt">${esc(t.alt)}</div>`:""}</span>
             </button>
             <button class="status" data-toggle="${t.id}" aria-pressed="${done.has(t.id)}" aria-label="${done.has(t.id)?"Done — tap to untick":"Tap to mark as done"}">✓</button>
-          </div><div data-fbslot="${t.id}">${isTeacher() ? teacherLine(t.id) : fbLine(t.id)}</div></div>`;
+          </div><div data-fbslot="${t.id}">${isTeacher() ? teacherLine(t.id) : fbLine(t.id)}</div>${isTeacher() && t.tqLink ? tqLinkHTML(t) : !isTeacher() && t.tq ? tqAltHTML(t) : ""}</div>`;
   app.innerHTML = `
-    ${justDone?`<div class="done-banner" role="status">✓ Done!${isTeacher() ? " Teacher view: nothing was sent and nothing counts for the group." : lastDone && myCode() && syncState!=="unknown" ? ` +${framesOf(lastDone)} 🎞 for our group.` : " Mark it in our spreadsheet in your colour."}${reactHTML()}</div>`:""}
+    ${justDone?`<div class="done-banner" role="status">✓ Done!${isTeacher() ? " Teacher view: nothing was sent and nothing counts for the group." : lastDone && myCode() && syncState!=="unknown" ? ` +${framesOf(lastDone)} 🎞 for ${meStats ? "your film" : "our group"}.` : " Mark it in our spreadsheet in your colour."}${reactHTML()}</div>`:""}
     <header class="lesson-head">
       ${ON_SITE?`<a class="all-hw" href="index.html">← All homework</a>`:""}
       <span class="date">${LESSON.date}</span>
       <h1>Homework</h1>
       ${LESSON.sub?`<p>${LESSON.sub}</p>`:""}
-      <p class="total">About ${Math.round(TASKS.reduce((s,t)=>s+minutesOf(t),0)/5)*5} minutes in total — you don't have to do it all in one go.</p>
+      <p class="total">About ${Math.round(TASKS.filter(t=>!t.later).reduce((s,t)=>s+minutesOf(t),0)/5)*5} minutes in total — you don't have to do it all in one go.${TASKS.some(t=>t.later)?" Tasks marked <b>for later</b> aren't in that time: come back to them when you like.":""}</p>
     </header>
     <div id="sync-slot">${syncHTML()}</div>
     <div id="fbnew-slot">${newFbHTML()}</div>
-    <div id="meter-slot">${(myCode() && syncState!=="unknown") ? meterHTML(groupStats) : ""}</div>
-    ${waitHTML()}${hotHTML()}
+    <div id="meter-slot">${(myCode() && syncState!=="unknown") ? meterNow() : ""}</div>
+    ${unlistedHTML()}${waitHTML()}${hotHTML()}
     ${TOPICS.map((tp,ti)=>`
       <section class="topic ${tp.id==="earlier"?"topic-earlier":"topic-"+(ti%2)}">
         <div class="topic-head"><span class="topic-n">${tp.id==="earlier"?"Look back":"Topic "+(ti+1)}</span><h2>${esc(tp.title)}</h2><p>${esc(tp.sub)}</p></div>
@@ -1278,6 +1465,7 @@ function renderHome(justDone){
       </section>`).join("")}
     <div class="foot" id="foot">${footHTML()}</div>`;
   app.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>openTask(b.dataset.open)));
+  app.querySelectorAll("[data-copy-tq]").forEach(b => b.addEventListener("click", ev => { ev.stopPropagation(); const t = TASKS.find(x => x.id === b.dataset.copyTq); if(t) copyText(t.tqLink, b); }));
   app.querySelectorAll("[data-toggle]").forEach(b=>b.addEventListener("click",()=>{
     const id = b.dataset.toggle; setMark(id, !done.has(id)); refreshTicks();
   }));
@@ -1288,18 +1476,25 @@ function renderHome(justDone){
 
 /* ---------- task shell ---------- */
 function openTask(id, idx=0){
+  if(LOCKED()) return renderGate();
   const t = TASKS.find(x=>x.id===id); if(!t){ renderHome(); return; }
   current = t; stepIdx = idx; checked = false;
   try{ if(location.hash !== "#"+id) history.replaceState(null,"","#"+id); }catch(e){}
   renderTask();
 }
+/* engine 41 (her wish 29.10: she didn't know where to find a page's TubeQuizard quiz): in her teacher view each listening task with
+   `tqLink` shows its TubeQuizard copy, to open or copy for the spreadsheet. Students never see it. */
+const tqLinkHTML = t => `<p class="tq-link">🔗 TubeQuizard copy of this quiz: <a href="${esc(t.tqLink)}" target="_blank" rel="noopener">open</a> · <button class="linkish" data-copy-tq="${esc(t.id)}">Copy link</button>${t.tq ? " · students see a link too" : ""}</p>`;
+/* engine 42: `tq` on a listening task = students see the same quiz in TubeQuizard under the task (and in the "isn't loading" help) */
+const tqAltHTML = t => `<p class="tq-alt">Prefer TubeQuizard? <a href="${esc(t.tq)}" target="_blank" rel="noopener">Do the same quiz there ↗</a> and tick ✓ here.</p>`;
 function teacherStrip(id){
   if(!isTeacher() || !teacherData) return "";
   const st = teacherData.students || [], dn = ((teacherData.done||{})[id] || []).length, c = teacherCounts(id);
-  const bits = [`${dn} of ${st.length} done`, c.questions?`❓ ${c.questions}`:"", c.marked?`🔖 ${c.marked}`:"", c.work?`✍️ ${c.work}`:"", c.hard?`😓 ${c.hard}`:"", c.open?`<b>💬 ${c.open} to answer</b>`:""].filter(Boolean).join(" · ");
+  const bits = [`${dn} of ${st.length} done`, c.questions?`❓ ${c.questions}`:"", c.marked?`❔ ${c.marked}`:"", c.work?`✍️ ${c.work}`:"", c.hard?`😓 ${c.hard}`:"", c.open?`<b>💬 ${c.open} to answer</b>`:""].filter(Boolean).join(" · ");
   return `<button class="t-strip ${c.open?"open":""}" id="t-strip" data-strip="${id}"><span>👩‍🏫 ${bits}</span><span class="t-strip-go">Students' work →</span></button><div class="t-mkbar" id="t-mkbar">${mkBarHTML(id)}</div>`;
 }
 function shell({count, pct, instr, stageHTML, withBox, actionsHTML, panel}){
+  if(moreOff){ moreOff(); moreOff = null; }
   app.innerHTML = `
     <div class="taskbar">
       <div class="taskbar-row"><button class="back" id="home">← All tasks</button>${count?`<span class="count">${count}</span>`:""}</div>
@@ -1310,6 +1505,7 @@ function shell({count, pct, instr, stageHTML, withBox, actionsHTML, panel}){
     ${instr?`<div class="instr">${instr}</div>`:""}
     <div class="stage ${withBox?"with-box":""}">${stageHTML}</div>
     <div class="actions">${actionsHTML}</div>`;
+  placeRevHint(app.querySelector(".stage .rev-hint"));
   document.getElementById("home").addEventListener("click",goHome);
   const ts = document.getElementById("t-strip"); if(ts) ts.addEventListener("click",()=>renderTeacherTask(ts.dataset.strip));
   if(document.getElementById("t-mkbar")) wireMkBar(current.id);
@@ -1323,12 +1519,18 @@ function renderTask(){
   stopRecorder();
   if(t.kind==="gaps") return renderGaps(t);
   if(t.kind==="link") return renderLink(t);
-  if(stepIdx >= t.steps.length){ finish(t); return goHome(true); }
+  if(stepIdx >= t.steps.length){
+    if(t._once){ current = t._base; return goHome(true); }
+    finish(t);
+    const again = onceMoreTask(t);
+    if(again){ current = again; stepIdx = 0; checked = false; return renderTask(); }
+    return goHome(true);
+  }
   const st = t.steps[stepIdx];
-  const count = `${stepIdx+1} of ${t.steps.length}`;
+  const count = t._once ? `Once more: your bookmarks · ${stepIdx+1} of ${t.steps.length}` : `${stepIdx+1} of ${t.steps.length}`;
   const pct = Math.round((stepIdx)/t.steps.length*100);
   ({dlg:renderDlg, rewrite:renderRewrite, sayit:renderSayit, share:renderShare, lookback:renderLookback, listen:renderListen, task:renderTaskCard, plan:renderPlan, produce:renderProduce})[st.type](st, count, pct);
-  annotateMarks();
+  if(!t._once) annotateMarks();
   window.scrollTo(0,0);
 }
 function navButtons(checkLabel="Check"){
@@ -1347,43 +1549,119 @@ let lastDone = null;
 function finish(t){ setMark(t.id, true); lastDone = t; lastFlagged = Object.values(flags[t.id]||{}); flushFlags(); }
 
 /* ---------- gapped dialogue ---------- */
+let GNK = 0;   /* engine 43: ids that tie a gap to its red note */
 function gapLineHTML(line){
-  const parts = line.p; let html = "", i = 0;
+  const parts = line.p; let html = "", i = 0, notes = "";
   while(i < parts.length){
     const x = parts[i];
     if(typeof x === "object" && "r" in x){
-      let chunk = "";
+      let chunk = "", ns = [];
       while(i < parts.length){
         const y = parts[i];
-        if(typeof y === "object" && "r" in y){ chunk += `<span class="gap${y.o?" o":""}"><span class="f">${esc(y.f)}</span><span class="r">${esc(y.r)}</span></span>`; i++; }
+        if(typeof y === "object" && "r" in y){ chunk += `<span class="gap${y.o?" o":""}"><span class="f">${esc(y.f)}</span><span class="r">${esc(y.r)}</span></span>`; if(y.n) ns.push(y.n); i++; }
         else if(typeof y === "string" && /^\s+$/.test(y) && typeof parts[i+1] === "object" && parts[i+1] && "r" in parts[i+1]){ chunk += y; i++; }
         else break;
       }
-      html += `<span class="chunk" role="button" tabindex="0" aria-label="Show the missing words">${chunk}</span>`;
-    } else if(typeof x === "object" && "b" in x){ html += `<b>${esc(x.b)}</b>`; i++; }
+      const nk = ns.length ? ++GNK : 0;
+      html += `<span class="chunk" role="button" tabindex="0" aria-label="Show the missing words"${nk?` data-nk="${nk}"`:""}>${chunk}</span>`;
+      if(nk) notes += `<span class="gap-n" data-nk="${nk}" hidden>${esc(ns.join(" · ")).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>")}</span>`;   /* **key word** bold (engine 46) */
+    } else if(typeof x === "object" && "b" in x){ html += `<b class="given">${esc(x.b)}</b>`; i++; }   /* given words: blue bold, as the TZ data says (engine 46) */
+    else if(typeof x === "object" && "ipa" in x){ html += `<span class="ipa${x.o?" o":""}">${esc(x.ipa)}</span>`; i++; }   /* engine 44: shown IPA (a glossary that helps) */
     else { html += esc(x); i++; }
   }
-  return `<p>${line.s?`<span class="spk">${esc(line.s)}:</span> `:""}${html}</p>`;
+  return `<p>${line.s?`<span class="spk">${esc(line.s)}:</span> `:""}${html}${notes}</p>`;
+}
+/* engine 43: a gap's red note shows while the gap is open (not on the plain, already-open text of "once more") */
+const syncGapNotes = root => (root || document).querySelectorAll(".gap-n[data-nk]").forEach(n => {
+  const c = (root || document).querySelector(`.chunk[data-nk="${n.dataset.nk}"]`); n.hidden = !(c && c.classList.contains("open") && !c.classList.contains("plain")); });
+/* ---------- engine 30: "!" = my own revision list (her decision 27.10: "?" asks Olya, "!" is for me); nothing is sent ---------- */
+const BOOKMARK = `<svg viewBox="0 0 12 16" aria-hidden="true"><path d="M1.6 1.6h8.8v12.8L6 11.2l-4.4 3.2z"/></svg>`;
+/* a one-line hint until the first bookmark (as for "?") */
+const revHint = () => ls.get("hw-rev-used") ? "" : `<p class="rev-hint">Want to practise something again? Tap <span class="rev demo" aria-hidden="true">${BOOKMARK}</span> — only you will see it.</p>`;
+/* wherever a task builds the hint, it goes to the top: under the instruction (or above the task when there is none) */
+const placeRevHint = el => { if(!el) return; app.querySelectorAll(".rev-hint").forEach(x => { if(x !== el) x.remove(); });   /* engine 41: one hint, never a pile (a student, 29.10: one more line on every listening clip) */
+  const ins = app.querySelector(".instr"), stage = app.querySelector(".stage"); if(ins) ins.after(el); else if(stage) stage.before(el); };
+/* the step as it is in the task (in "Once more" the steps are a subset) */
+const curS = () => { const st = current && current.steps && current.steps[stepIdx]; return st && st._orig != null ? st._orig : stepIdx; };
+const bmBtn = (s, r) => { const on = getRev(current.id, s).has(r);
+  return `<button type="button" class="rev ${on?"on":""}" data-bm="${s}.${r}" aria-pressed="${on}" aria-label="Bookmark: practise this again" title="Bookmark: practise this again">${BOOKMARK}</button>`; };
+document.addEventListener("click", ev => {
+  const b = ev.target.closest && ev.target.closest("[data-bm]"); if(!b || !current) return;
+  ev.stopPropagation(); ev.preventDefault();
+  const [s, r] = b.dataset.bm.split(".").map(Number), revs = getRev(current.id, s);
+  revs.has(r) ? revs.delete(r) : revs.add(r);
+  ls.set(revKey(current.id, s), JSON.stringify([...revs].sort((x, y) => x - y))); if(revs.size) ls.set("hw-rev-used", "1");
+  b.classList.toggle("on", revs.has(r)); b.setAttribute("aria-pressed", revs.has(r));
+}, true);
+/* "Once more" for a steps task: the bookmarked steps again, each with only its bookmarked items to do */
+const REV_TYPES = new Set(["dlg", "rewrite", "sayit", "share", "listen", "lookback"]);
+function onceMoreTask(t){
+  const steps = (t.steps || []).map((st, s) => ({st, s, revs: REV_TYPES.has(st.type) ? getRev(t.id, s) : new Set()})).filter(x => x.revs.size)
+    .map(x => ({...x.st, _orig: x.s, _rows: x.revs}));
+  return steps.length ? {...t, steps, _once: true, _base: t} : null;
+}
+const revKey = (id, s) => "hw-rev-" + PAGE_KEY + "-" + id + (s == null ? "" : "-s" + s);
+function getRev(id, s){ try{ return new Set(JSON.parse(ls.get(revKey(id, s)) || "[]")); }catch(e){ return new Set(); } }
+function addRevButtons(chunks, id, s, only){
+  const revs = getRev(id, s);
+  chunks.forEach((c, k) => {
+    if(only && !only.has(k)) return;
+    const b = document.createElement("button"); b.type = "button"; b.className = "rev" + (revs.has(k) ? " on" : ""); b.innerHTML = BOOKMARK;
+    b.title = "Bookmark: practise this again"; b.setAttribute("aria-label", "Bookmark: practise this again"); b.setAttribute("aria-pressed", revs.has(k));
+    b.addEventListener("click", () => { revs.has(k) ? revs.delete(k) : revs.add(k); b.classList.toggle("on", revs.has(k)); b.setAttribute("aria-pressed", revs.has(k)); if(revs.size) ls.set("hw-rev-used", "1");
+      ls.set(revKey(id, s), JSON.stringify([...revs].sort((x, y) => x - y))); });
+    c.after(b);
+  });
+  return revs;
+}
+const wireChunk = c => {
+  const toggle = () => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); syncGapNotes(app); };
+  c.addEventListener("click", toggle);
+  c.addEventListener("keydown", e => { if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggle(); }});
+};
+/* after Finish: the same text again, only the marked gaps closed, everything else already open and plain */
+function renderOnceMore(t){
+  const parts = [{lines: t.lines, s: null, revs: getRev(t.id)}];   /* gaps tasks; steps tasks go through onceMoreTask() */
+  const n = parts.reduce((a, p) => a + p.revs.size, 0);
+  shell({
+    instr: `Once more: your bookmarks (${n})<br>Say the missing words, then tap to check.`,
+    stageHTML: parts.map(p => `<div class="panel once"><div class="dlg">${p.lines.map(gapLineHTML).join("")}</div></div>`).join(""),
+    actionsHTML: `<button class="btn" id="all">Show all</button><button class="btn primary grow" id="fin">Finish</button>`
+  });
+  const hidden = [];
+  app.querySelectorAll(".panel.once").forEach((panel, pi) => {
+    const p = parts[pi], chunks = [...panel.querySelectorAll(".chunk")];
+    chunks.forEach((c, k) => {
+      if(p.revs.has(k)){ hidden.push(c); wireChunk(c); }
+      else { c.classList.add("open", "plain"); ["role", "tabindex", "aria-label"].forEach(a => c.removeAttribute(a)); }
+    });
+    addRevButtons(chunks, t.id, p.s, new Set(p.revs));   /* a "!" can be taken off here once it's learned */
+  });
+  const all = document.getElementById("all");
+  all.addEventListener("click", () => {
+    const open = all.dataset.open !== "1";
+    hidden.forEach(c => c.classList.toggle("open", open));
+    all.dataset.open = open ? "1" : "0"; all.textContent = open ? "Hide all" : "Show all";
+  });
+  document.getElementById("fin").addEventListener("click", () => goHome(true));
+  window.scrollTo(0,0);
 }
 function renderGaps(t){
   shell({
     instr:`${esc(t.lead)}<br>${esc(t.instr)}`,
-    stageHTML:`<div class="panel"><div class="dlg">${t.lines.map(gapLineHTML).join("")}</div></div>`,
+    stageHTML:`<div class="panel"><div class="dlg">${t.lines.map(gapLineHTML).join("")}</div>${revHint()}</div>`,
     actionsHTML:`<button class="btn" id="all">Show all</button><button class="btn primary grow" id="fin">Finish</button>`
   });
   const chunks = [...app.querySelectorAll(".chunk")];
-  const toggle = c => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); };
-  chunks.forEach(c=>{
-    c.addEventListener("click",()=>toggle(c));
-    c.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggle(c); }});
-  });
+  chunks.forEach(wireChunk);
+  const revs = addRevButtons(chunks, t.id);
   const all = document.getElementById("all");
   all.addEventListener("click",()=>{
     const open = all.dataset.open !== "1";
     chunks.forEach(c=>c.classList.toggle("open",open));
     all.dataset.open = open ? "1" : "0"; all.textContent = open ? "Hide all" : "Show all";
   });
-  document.getElementById("fin").addEventListener("click",()=>{ finish(t); goHome(true); });
+  document.getElementById("fin").addEventListener("click",()=>{ finish(t); if(revs.size) renderOnceMore(t); else goHome(true); });
   window.scrollTo(0,0);
 }
 
@@ -1393,16 +1671,43 @@ function renderDlg(st, count, pct){
   const side = st.box ? box(st.box)
     : st.gloss ? `<aside class="box gloss" aria-label="Glossary"><h4>GLOSSARY</h4>${st.gloss.map(g=>g.h?`<h4>${esc(g.h)}</h4>`:glossLineHTML(g)).join("")}</aside>` : "";
   shell({count, pct, instr: st.instr,
-    stageHTML:`<div class="panel">${st.intro?`<p class="situation">${esc(st.intro)}</p>`:""}<div class="dlg">${st.lines.map(gapLineHTML).join("")}</div>${checked&&st.note?`<p class="small">${st.note}</p>`:""}</div>${side}`,
+    stageHTML:`<div class="panel">${st.intro?`<p class="situation">${esc(st.intro)}</p>`:""}<div class="dlg">${st.lines.map(gapLineHTML).join("")}</div>${checked&&st.note?`<p class="small">${st.note}</p>`:""}${checked?revHint():""}</div>${side}`,
     withBox: !!side, actionsHTML: navButtons(st.checkLabel || "Show the answers")});
   const chunks = [...app.querySelectorAll(".chunk")];
-  const toggle = c => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); };
+  const toggle = c => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); syncGapNotes(app); allOpen(); };
+  /* engine 45/47 (her catch 29.10): every gap opened by hand = the step is checked, so the button says Next (Finish), not "Show the answers" */
+  const allOpen = () => checkWhenAllOpen(".panel .dlg .chunk");
   chunks.forEach(c=>{
     if(checked) c.classList.add("open");
     c.addEventListener("click",()=>toggle(c));
     c.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggle(c); }});
   });
+  const dlgChunks = [...app.querySelectorAll(".panel .dlg .chunk")];   /* the dialogue's gaps, not the glossary's */
+  if(st._rows) dlgChunks.forEach((c, k) => { if(!st._rows.has(k)){ c.classList.add("open", "plain"); ["role", "tabindex", "aria-label"].forEach(a => c.removeAttribute(a)); } });
+  addRevButtons(dlgChunks, current.id, curS(), st._rows ? new Set(st._rows) : null);
+  syncGapNotes(app);
   wireNav(()=>renderTaskKeep());
+  moreBelow();
+}
+/* engine 44 (her worry 29.10, the C1 group chat: on a small screen they may tap "Show the answers" and never see the second half):
+   while the text's last line is below the buttons, a "↓ More below" chip sits over them; a tap scrolls on; it goes once the end was on screen */
+let moreOff = null;
+function moreBelow(){
+  if(moreOff){ moreOff(); moreOff = null; }
+  /* engine 45 (her catch 29.10: "there's nothing below"): only before "Show the answers", and only while a GAP is still below the
+     buttons — text without gaps, or a red note that opened, doesn't count */
+  if(checked) return;
+  const last = [...app.querySelectorAll(".panel .dlg .chunk")].pop(), act = app.querySelector(".actions"); if(!last || !act) return;
+  const chip = document.createElement("button"); chip.type = "button"; chip.className = "more-below"; chip.hidden = true; chip.textContent = "↓ More below";
+  act.before(chip);
+  let seen = false;
+  const upd = () => { if(seen || !chip.isConnected) return; const a = act.getBoundingClientRect();
+    if(last.getBoundingClientRect().bottom - a.top <= 4){ seen = true; chip.hidden = true; return; }
+    chip.hidden = false; chip.style.bottom = Math.round(innerHeight - a.top + 10) + "px"; };
+  chip.addEventListener("click", () => window.scrollBy({top: Math.max(120, act.getBoundingClientRect().top - 160), behavior: "smooth"}));
+  addEventListener("scroll", upd, {passive: true}); addEventListener("resize", upd);
+  moreOff = () => { removeEventListener("scroll", upd); removeEventListener("resize", upd); };
+  setTimeout(upd, 60);   /* after renderTask's scroll to the top */
 }
 
 /* ---------- rewrite the sentence ---------- */
@@ -1460,23 +1765,38 @@ function stripFrame(val, r){
   for(let k=Math.min(Q.length,S.length-1); k>0; k--){ if(S.slice(S.length-k).every((w,i)=>key(w)===Q[i])){ S=S.slice(0,S.length-k); break; } }
   return S.join(" ");
 }
-function verdictHTML(val, r){
-  if(!val) return "";
+/* engine 38 (students, 28.10, her decision: "I typed on the yellow, I expect my answer to stay there"): the answer typed stays
+   in the sentence, green when right (nothing more to say), red when not, then → the answer, and the detailed box under it */
+function judgeRewrite(val, r){
   const core = stripFrame(val, r);
   const expand = s => " "+String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/won't/g,"will not").replace(/can't/g,"can not").replace(/cannot/g,"can not")
     .replace(/n't/g," not").replace(/'ve/g," have").replace(/'ll/g," will").replace(/'re/g," are").replace(/'m/g," am").replace(/'d/g," would")
     .replace(/[.!?,;:]+/g," ").replace(/\s+/g," ").trim()+" ";
   const sameAs = a => [expand(r.pre+val+r.post), expand(val), expand(r.pre+core+r.post)].includes(expand(r.pre+a+r.post));
-  const m = r.acc.some(sameAs) ? {ok:true} : markAnswer(core, r.acc);
-  if(m.ok) return `<div class="verdict ok"><span class="chip">✓ Correct!</span><p>${esc(val)}</p></div>`;
+  return {core, m: r.acc.some(sameAs) ? {ok:true} : markAnswer(core, r.acc)};
+}
+function verdictHTML(val, r){
+  if(!val) return "";
+  const {core, m} = judgeRewrite(val, r);
+  if(m.ok) return "";
   if(m.plain) return `<div class="verdict no"><span class="chip">✗ Not quite</span><p>${esc(core)}</p><span class="small">Compare it with the answer above.</span></div>`;
   return `<div class="verdict no"><span class="chip">✗ Not quite</span>
     <p>${m.you}</p><p>→ ${m.fix}</p>
     <span class="legend">green = good · grey = the part to change · blue = the change. Other answers may also be possible.</span></div>`;
 }
+/* what stands in the sentence after Check */
+function rewriteShown(val, r){
+  if(!val) return `<span class="ans">${esc(r.a)}</span>`;
+  const {core, m} = judgeRewrite(val, r);
+  /* engine 47 (her catch 29.10): when the "Not quite" box below compares it word by word, the sentence just keeps what they typed —
+     the red "→ answer" here said the same thing again, less clearly; only an answer too far off for that box keeps "→ answer" here */
+  return m.ok ? `<span class="you-ok">${esc(core)} ✓</span>`
+    : m.plain ? `<span class="you-no">${esc(core)}</span> <span class="to-ans">→</span> <span class="ans">${esc(r.a)}</span>`
+    : `<span class="you-typed">${esc(core)}</span>`;
+}
 
 function renderRewrite(st, count, pct){
-  const r = st.r, key = current.id+"-"+stepIdx, val = (typed[key]||"").trim();
+  const r = st.r, key = current.id+"-"+curS()+(current._once?"-again":""), val = (typed[key]||"").trim();
   const yours = checked ? verdictHTML(val, r) : "";
   const br = s => esc(s).replace(/\n/g,"<br>");
   const hint = r.hint ? ` <span class="ru">(${esc(r.hint)})</span>` : "";
@@ -1484,9 +1804,9 @@ function renderRewrite(st, count, pct){
     <div class="panel ${checked?"checked":""}">
       ${r.o?`<p class="orig">${esc(r.o)}</p>`:""}
       ${r.k?`<p class="key">${r.k}</p>`:""}
-      <p class="target">${br(r.pre)}${checked?`<span class="ans">${esc(r.a)}</span>`:
-        `<input id="rw" class="gap-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="Type the missing part" placeholder="type or say it" value="${esc(typed[key]||"")}">`}${hint}${br(r.post)}${checked?markBtn(String(stepIdx), plainText(r.pre + r.a + r.post)):""}</p>
-      ${checked?markHint():""}
+      <p class="target">${br(r.pre)}${checked?rewriteShown(val, r):
+        `<input id="rw" class="gap-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="Type the missing part" placeholder="type or say it" value="${esc(typed[key]||"")}">`}${hint}${br(r.post)}${checked?markBtn(String(stepIdx), plainText(r.pre + r.a + r.post))+bmBtn(curS(), 0):""}</p>
+      ${checked?markHint()+revHint():""}
       ${yours}
       ${checked?`<p class="note">${r.n}</p>`:""}
     </div>${checked&&st.box?box(st.box):""}`;
@@ -1501,6 +1821,13 @@ function renderRewrite(st, count, pct){
 }
 /* re-render the same step after Check without resetting */
 function renderTaskKeep(){ const keep = checked; renderTask(); checked = keep; }
+/* engine 47 (her catch 29.10): when every answer of a step has been opened by hand, the step counts as checked — it shows what Check shows
+   (notes, bookmarks) where the student is, and the button says Next / Finish, so there's no extra tap on "Check" */
+function checkWhenAllOpen(sel){
+  if(checked) return; const items = [...app.querySelectorAll(sel)].filter(c => !c.classList.contains("plain"));
+  if(!items.length || !items.every(c => c.classList.contains("open"))) return;
+  const y = scrollY; checked = true; renderTaskKeep(); scrollTo(0, y);
+}
 
 /* ---------- say it in English ---------- */
 function renderSayit(st, count, pct){
@@ -1511,14 +1838,14 @@ function renderSayit(st, count, pct){
     stageHTML: `
       <div class="panel">
         <div class="say">
-          ${s.rows.map((row,i)=>`<div class="say-row"><span class="q">${row[0]}</span>
-            <span class="say-a"><button class="reveal ${checked?"open":""}" data-r="${i}" aria-label="Show the English">${s.html ? row[1] : esc(row[1])}</button>${checked?markBtn(stepIdx+"-"+i, s.html ? plainText(row[1]) : row[1]):""}</span></div>`).join("")}
+          ${s.rows.map((row,i)=> st._rows && !st._rows.has(i) ? "" : `<div class="say-row"><span class="q">${row[0]}</span>
+            <span class="say-a"><button class="reveal ${checked?"open":""}" data-r="${i}" aria-label="Show the English">${s.html ? row[1] : esc(row[1])}</button>${checked?markBtn(stepIdx+"-"+i, s.html ? plainText(row[1]) : row[1]):""}${bmBtn(curS(), i)}</span>${checked&&row[2]?`<p class="small say-note">${row[2]}</p>`:""}</div>`).join("")}
         </div>
-        ${checked?markHint():""}
+        ${checked?markHint()+revHint():""}
         ${checked&&s.note?`<p class="small">${s.note}</p>`:""}
       </div>${(checked||st.boxAlways)&&bx?box(bx):""}`,
     withBox: (checked||st.boxAlways) && !!bx, actionsHTML: navButtons()});
-  app.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>b.classList.toggle("open")));
+  app.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>{ b.classList.toggle("open"); checkWhenAllOpen(".reveal"); }));
   wireNav(()=>renderTaskKeep());
 }
 
@@ -1541,7 +1868,7 @@ function renderShare(st, count, pct){
         ${turn("a", s.a)}
         ${checked||!s.sit?"":`<p class="situation">${esc(s.sit)}</p>`}${checked||!s.use?"":`<p class="use">Use: <b>${s.use}</b></p>`}
         <div class="turn b"><div class="bubble">${bBubble}</div><img class="fig" src="${IMG_B}" alt=""></div>
-        ${checked?`<p class="mk-row mk-right">${markBtn(String(stepIdx), plainText(s.s+(q?" "+q:"")))}</p>${markHint()}`:""}
+        ${checked?`<p class="mk-row mk-right">${markBtn(String(stepIdx), plainText(s.s+(q?" "+q:"")))}${bmBtn(curS(), 0)}</p>${markHint()}${revHint()}`:""}
         ${checked?`<div class="turn a next-line"><img class="fig" src="${IMG_A}" alt=""><div class="bubble">${s.nextHtml || esc(s.next)}</div></div>
           ${(s.notes||[]).length?`<div class="notes">${s.notes.map(n=>`<div>${n}</div>`).join("")}</div>`:""}`:""}
       </div>${bx?box(bx):""}`,
@@ -1550,27 +1877,48 @@ function renderShare(st, count, pct){
 }
 
 /* ---------- listening (clips from TubeQuizard, played from YouTube) ---------- */
-let ytPromise = null, ytPlayer = null, ytTimer = null, ytWatch = null, ytReady = false, ytVideo = "";
+let ytPromise = null, ytPlayer = null, ytTimer = null, ytWatch = null, ytReady = false, ytVideo = "", ytReadyWatch = null;
+/* engine 36 (a C1 student's phone, 28.10: a black box, no message): YouTube says it's ready through one callback,
+   window.onYouTubeIframeAPIReady; a browser that puts its own button on YouTube videos (Yandex Browser does) or a slow
+   connection can mean that call never reaches us. So we also watch for YT.Player itself, wait up to 20 s instead of 7,
+   and a failed load can be tried again (Try again on the message) */
+const YT_API_WAIT = 20000, YT_READY_WAIT = 15000; let ytTries = 0;
+const ytApiOk = () => !!(window.YT && typeof window.YT.Player === "function");
 function loadYT(){
-  if(window.YT && window.YT.Player) return Promise.resolve();
+  if(ytApiOk()) return Promise.resolve();
   if(!ytPromise){
     ytPromise = new Promise((res, rej)=>{
+      let done = false, poll = null, stop = null;
+      const finish = err => { if(done) return; done = true; clearInterval(poll); clearTimeout(stop); if(err){ ytPromise = null; rej(err); } else res(); };
       const prev = window.onYouTubeIframeAPIReady;
-      window.onYouTubeIframeAPIReady = () => { if(typeof prev === "function") prev(); res(); };
-      const s = document.createElement("script"); s.src = "https://www.youtube.com/iframe_api"; s.async = true;
-      s.onerror = () => rej(new Error("blocked")); document.head.appendChild(s);
-      setTimeout(()=>{ if(!(window.YT && window.YT.Player)) rej(new Error("timeout")); }, 7000);
+      window.onYouTubeIframeAPIReady = function(){ try{ if(typeof prev === "function") prev.apply(this, arguments); }catch(e){} if(ytApiOk()) finish(); };
+      poll = setInterval(()=>{ if(ytApiOk()) finish(); }, 250);
+      stop = setTimeout(()=> finish(new Error("timeout")), YT_API_WAIT);
+      const API = 'script[src="https://www.youtube.com/iframe_api"]';
+      /* trying again: a failed try can leave YT half-made ({loading: 1}), and then the API script loads nothing, so start clean
+         (not on the first try: something else on the page may be loading the API right now) */
+      if(++ytTries > 1){ document.querySelectorAll(API).forEach(x => x.remove()); if(window.YT && !ytApiOk()){ try{ window.YT = undefined; }catch(e){} } }
+      if(!document.querySelector(API)){
+        const s = document.createElement("script"); s.src = "https://www.youtube.com/iframe_api"; s.async = true;
+        s.onerror = () => { s.remove(); finish(new Error("blocked")); }; document.head.appendChild(s);
+      }
     });
   }
   return ytPromise;
 }
+/* engine 42: listening speed, three small buttons (normal · 0.75 · 0.5); the choice stays on this device for every clip.
+   Before 42 it was one 🐢 toggle (0.75 ↔ 1) kept as hw-slow, still read here. */
+const RATES = [1, 0.75, 0.5];
+const rateNow = () => { const r = Number(ls.get("hw-rate")); return RATES.includes(r) ? r : (ls.get("hw-slow") ? 0.75 : 1); };
+const clipOutHTML = lines => current.tq ? `<a href="${esc(current.tq)}" target="_blank" rel="noopener">Do this quiz in TubeQuizard ↗</a>`
+  : `<a href="https://www.youtube.com/watch?v=${encodeURIComponent(lines[0][0])}&t=${Math.floor(Math.max(0, lines[0][1] - 1))}s" target="_blank" rel="noopener">Watch the clip on YouTube ↗</a>`;
 /* the videos come from YouTube: nothing is loaded from there until the student agrees (remembered on this device) */
 const ytConsentHTML = () => `<div class="yt-consent" id="yt-consent"><div>
     <p>The clips play from <b>YouTube</b>. When you load them, YouTube (Google) gets your IP address and may store cookies.${ON_SITE ? ` <a href="../datenschutz.html#youtube">More</a>` : ""}</p>
     <button class="btn primary" id="yt-ok">Load the videos</button>
     <p class="small">Just once on this device.</p></div></div>`;
 function stopPlayer(){
-  clearInterval(ytTimer); clearTimeout(ytWatch);
+  clearInterval(ytTimer); clearTimeout(ytWatch); clearTimeout(ytReadyWatch);
   if(ytPlayer){ try{ ytPlayer.destroy(); }catch(e){} ytPlayer = null; }
   ytReady = false; ytVideo = "";
 }
@@ -1597,26 +1945,32 @@ function partsHTML(parts){
 function renderListen(st, count, pct){
   const lines = st.clip;
   const instr = st.first
-    ? "Tap the top line to hear the whole clip. Then tap the line with the gap and try to catch the missing words. Type them if you like, then tap Check answers."
-    : "Listen and catch the missing words. Then tap Check answers.";
+    ? "Tap the top line to hear the whole clip, or any line to hear just that line. Catch the missing words in the framed lines: type them if you like, then tap Check next to a gap, or Check answers for all of them."
+    : "Listen and catch the missing words, then tap Check next to a gap, or Check answers.";
   let gk = 0;
-  const keyOf = k => current.id+"-"+stepIdx+"-g"+k;
-  const lineHTML = (l,i) => `<div class="ln ${l[3].some(p=>typeof p!=="string")?"has-gap":""}" data-i="${i}">
+  const keyOf = k => current.id+"-"+curS()+(current._once?"-again":"")+"-g"+k;
+  const lineHTML = (l,i) => { const skip = st._rows && !st._rows.has(i); return `<div class="ln ${l[3].some(p=>typeof p!=="string")?"has-gap":""}" data-i="${i}">
       <button class="pl" aria-label="${i===0?"Play the whole clip":"Play this line"}">▶</button>
       <span class="ln-text">${l[3].map(p => typeof p === "string" ? esc(p)
-        : (k => `<input class="gap-in" data-k="${k}" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"
-             aria-label="Type the missing words" style="width:min(100%, ${p.gap.length + 3}ch)" value="${esc(typed[keyOf(k)]||"")}">`)(gk++)).join("")}${i===0?` <span class="whole-note">· whole clip</span>`:""}</span>
-    </div>`;
+        : (k => skip ? `<b>${esc(p.gap)}</b>` : `<input class="gap-in" data-k="${k}" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"
+             aria-label="Type the missing words" style="width:min(100%, ${p.gap.length + 3}ch)" value="${esc(typed[keyOf(k)]||"")}"><button class="gap-ck" data-k="${k}" aria-label="Check this gap" ${(typed[keyOf(k)]||"").trim() ? "" : "hidden"}>Check</button>`)(gk++)).join("")}${i===0?` <span class="whole-note">· whole clip</span>`:""}</span>
+    </div>`; };
   const rest = `
-        <div class="slow-row"><button class="slow" id="slow" aria-pressed="${!!ls.get("hw-slow")}">🐢 Slower</button><span class="small">${ls.get("hw-slow")?"playing at 0.75":"tap to slow the clips down"}</span></div>
+        <div class="tap-hint small" id="hint" hidden><p>Nothing playing? Tap the video once, then tap the line again.</p>
+          <details class="yt-help"><summary>Still nothing?</summary>
+            <p>If the video says <b>Sign in to confirm you're not a bot</b>, YouTube wants to know who's watching: tap <b>Sign in</b> on the video and use your Google account.</p>
+            <p>On an iPhone or a Mac, Safari can hide that sign-in from videos on other sites: in the Safari settings, turn off <b>Prevent Cross-Site Tracking</b>, then reload this page.</p>
+            <p>Or ${clipOutHTML(lines)}</p></details></div>
+        <div class="slow-row"><span class="spd-l">🐢 Speed</span><div class="spd" id="spd" role="group" aria-label="Speed of the clips">${RATES.map(r => `<button data-rate="${r}" aria-pressed="${rateNow()===r}">${r===1?"normal":r}</button>`).join("")}</div></div>
         <div class="lines">${lines.map(lineHTML).join("")}</div>
-        <p class="small tap-hint" id="hint" hidden>Nothing playing? Tap the video once, then tap the line again.</p>
+
         <p class="small" id="after" ${checked?"":"hidden"}>Listen again: how did the expression sound? Try to say it like the speaker.${stepIdx===current.steps.length-1&&current.takeaway?`<br><b>${current.takeaway}</b>`:""}</p>`;
   if(playerOnScreen()){
     /* the same player stays; only the lines, the counter and the buttons change */
     const bar = app.querySelector(".taskbar .count"); if(bar) bar.textContent = count;
     const fill = app.querySelector(".taskbar .bar i"); if(fill) fill.style.width = pct + "%";
     const ins = app.querySelector(".instr"); if(ins) ins.innerHTML = instr;
+    app.querySelectorAll(".rev-hint").forEach(x => x.remove());   /* the last clip's bookmark hint goes with it (it comes back after Check) */
     const panel = app.querySelector(".stage .panel");
     [...panel.children].forEach(ch=>{ if(!ch.classList.contains("video")) ch.remove(); });
     panel.insertAdjacentHTML("beforeend", rest);
@@ -1626,19 +1980,39 @@ function renderListen(st, count, pct){
     shell({count, pct, instr,
       stageHTML: `
       <div class="panel">
-        <div class="video"><div id="yt"></div><p class="vmsg" id="vmsg" hidden></p>${ls.get("hw-yt-ok") ? "" : ytConsentHTML()}</div>${rest}
+        <div class="video"><div id="yt"></div><p class="vmsg" id="vmsg" hidden></p>${ls.get("hw-yt-ok") ? `<p class="vload" id="vload">Loading the video…</p>` : ytConsentHTML()}</div>${rest}
       </div>`,
       actionsHTML: navButtons("Check answers")});
-    const msg = document.getElementById("vmsg");
-    const startYT = () => loadYT().then(()=>{
-      if(!document.getElementById("yt")) return;
-      ytVideo = lines[0][0];
+    const msg = document.getElementById("vmsg"), vbox = msg.parentNode;
+    const loading = on => { const l = document.getElementById("vload");
+      if(on && !l) vbox.insertAdjacentHTML("beforeend", `<p class="vload" id="vload">Loading the video…</p>`); else if(!on && l) l.remove(); };
+    /* the video doesn't come: say so, offer to try again, and a way to the clip outside this page */
+    const failed = () => {
+      if(!msg.isConnected || ytReady) return;
+      loading(false); msg.hidden = false;
+      if(!ON_SITE){ msg.textContent = "The video can't play in this preview. On the published page it plays right here."; return; }
+      /* the "Still nothing?" help (sign in to YouTube, Safari's tracking setting) right under the video */
+      const h = document.getElementById("hint"); if(h){ h.hidden = false; const first = h.querySelector("p"); if(first) first.hidden = true; }
+      const out = clipOutHTML(lines);
+      msg.innerHTML = `<span><span class="vm-t">The video isn't loading.</span><br><button class="btn" id="yt-retry">Try again</button><br><span class="small">or ${out}</span></span>`;
+      document.getElementById("yt-retry").addEventListener("click", ()=>{
+        msg.hidden = true; msg.textContent = "";
+        clearTimeout(ytReadyWatch); if(ytPlayer){ try{ ytPlayer.destroy(); }catch(e){} ytPlayer = null; }
+        if(!document.getElementById("yt")) vbox.insertAdjacentHTML("afterbegin", `<div id="yt"></div>`);
+        startYT();
+      });
+    };
+    const startYT = () => { loading(true); loadYT().then(()=>{
+      if(!document.getElementById("yt") || !msg.isConnected) return;
+      ytVideo = lines[0][0]; ytReady = false;
       ytPlayer = new YT.Player("yt", {
         videoId: lines[0][0], width: "100%", height: "100%",
         playerVars: { playsinline: 1, rel: 0, modestbranding: 1, cc_load_policy: 0, iv_load_policy: 3, start: Math.floor(lines[0][1]) },
-        events: { onReady: () => { ytReady = true; }, onApiChange: captionsOffOnce, onStateChange: e => { if(e && e.data === 1) setTimeout(captionsOffOnce, 300); } }
+        events: { onReady: () => { ytReady = true; clearTimeout(ytReadyWatch); loading(false); if(msg.isConnected){ msg.hidden = true; } },
+                  onApiChange: captionsOffOnce, onStateChange: e => { if(e && e.data === 1) setTimeout(captionsOffOnce, 300); } }
       });
-    }).catch(()=>{ msg.hidden = false; msg.textContent = "The video can't play in this preview. On the published page it plays right here."; });
+      clearTimeout(ytReadyWatch); ytReadyWatch = setTimeout(failed, YT_READY_WAIT);
+    }).catch(failed); };
     const ok = document.getElementById("yt-ok");
     if(ok) ok.addEventListener("click", ()=>{ ls.set("hw-yt-ok", "1"); const c = document.getElementById("yt-consent"); if(c) c.remove(); startYT(); });
     else startYT();
@@ -1648,7 +2022,7 @@ function renderListen(st, count, pct){
     if(!ytPlayer || !ytReady) return;
     clearInterval(ytTimer); clearTimeout(ytWatch);
     rows.forEach((m,k)=>m.classList.toggle("playing", k===i));
-    try{ ytPlayer.setPlaybackRate(ls.get("hw-slow") ? 0.75 : 1); }catch(e){}
+    try{ ytPlayer.setPlaybackRate(rateNow()); }catch(e){}
     ytPlayer.seekTo(from, true); ytPlayer.playVideo();
     ytWatch = setTimeout(()=>{ try{ if(ytPlayer.getPlayerState() !== 1) document.getElementById("hint").hidden = false; }catch(e){} }, 2000);
     ytTimer = setInterval(()=>{
@@ -1659,46 +2033,61 @@ function renderListen(st, count, pct){
   /* as in TubeQuizard (its offset = 1): start a second before the line and stop a second after it, so the first words are never cut off */
   const LEAD = 1;
   rows.forEach((row,i)=>row.addEventListener("click",ev=>{
-    if(ev.target.closest("input")) return;
+    if(ev.target.closest("input, .rev, .mk, .gap-ck")) return;
     if(i===0) play(Math.max(0, lines[0][1] - LEAD), clipEnd(lines, lines.length-1) + LEAD, 0);   /* top line: the whole clip, as in TubeQuizard */
     else play(Math.max(0, lines[i][1] - LEAD), lines[i][1] + lines[i][2] + LEAD, i);
   }));
-  const slowBtn = document.getElementById("slow");
-  if(slowBtn) slowBtn.addEventListener("click",()=>{
-    const on = !ls.get("hw-slow"); ls.set("hw-slow", on ? "1" : "");
-    slowBtn.setAttribute("aria-pressed", on); slowBtn.nextElementSibling.textContent = on ? "playing at 0.75" : "tap to slow the clips down";
-    try{ ytPlayer && ytPlayer.setPlaybackRate(on ? 0.75 : 1); }catch(e){}
-  });
+  app.querySelectorAll("#spd [data-rate]").forEach(b => b.addEventListener("click", () => {
+    const r = Number(b.dataset.rate); ls.set("hw-rate", String(r)); ls.set("hw-slow", "");
+    app.querySelectorAll("#spd [data-rate]").forEach(x => x.setAttribute("aria-pressed", Number(x.dataset.rate) === r));
+    try{ ytPlayer && ytPlayer.setPlaybackRate(r); }catch(e){}
+  }));
   const answers = lines.flatMap(l => l[3].filter(p=>typeof p!=="string").map(p=>p.gap));
+  /* engine 38: what they typed stays in the gap, green when right, red + → the answer when not (see judgeRewrite) */
+  const judgeGap = inp => {
+      const k = +inp.dataset.k, ans = answers[k], val = inp.value.trim();
+      const ck = inp.nextElementSibling; if(ck && ck.classList.contains("gap-ck")) ck.remove();
+      const res = document.createElement("span");
+      if(!val){ res.className = "gap-res ans"; res.textContent = ans; inp.replaceWith(res); return; }
+      const m = markAnswer(val, [ans]);
+      if(m.ok){ res.className = "gap-res ok"; res.textContent = val + " ✓"; inp.replaceWith(res); return; }
+      res.className = "gap-res no"; res.textContent = val;
+      const to = document.createElement("span"); to.className = "to-ans"; to.textContent = " → ";
+      const right = document.createElement("span"); right.className = "gap-res ans"; right.textContent = ans;
+      const fb = document.createElement("div"); fb.className = "gap-fb";
+      fb.innerHTML = m.plain ? `<span class="chip-x">✗</span> You: ${esc(val)}` : `<span class="chip-x">✗</span> ${m.you} → ${m.fix}`;
+      inp.closest(".ln").appendChild(fb);
+      inp.replaceWith(res, to, right);
+  };
+  /* engine 40 (a student: with two gaps in a clip, Check answers opened both at once, so she couldn't guess, check and go on):
+     "Check" after a gap, or Enter in it, checks just that gap; when the last one is checked, the step counts as checked (Check answers) */
+  const checkOne = (inp, byKey) => {
+    const k = +inp.dataset.k; judgeGap(inp);
+    const left = [...app.querySelectorAll(".gap-in")];
+    if(!left.length){ document.getElementById("go").click(); return; }
+    if(byKey){ const next = left.find(x => +x.dataset.k > k) || left[0]; try{ next.focus({preventScroll: false}); }catch(e){ next.focus(); } }
+  };
   app.querySelectorAll(".gap-in").forEach(inp=>{
+    const ck = inp.nextElementSibling && inp.nextElementSibling.classList.contains("gap-ck") ? inp.nextElementSibling : null;
     inp.addEventListener("click", ev=>ev.stopPropagation());
-    inp.addEventListener("input", ()=>{ typed[keyOf(+inp.dataset.k)] = inp.value; });
-    inp.addEventListener("keydown", ev=>{ if(ev.key==="Enter"){ ev.preventDefault(); inp.blur(); } });
+    inp.addEventListener("input", ()=>{ typed[keyOf(+inp.dataset.k)] = inp.value; if(ck) ck.hidden = !inp.value.trim(); });
+    inp.addEventListener("keydown", ev=>{ if(ev.key==="Enter"){ ev.preventDefault(); if(inp.value.trim()) checkOne(inp, true); else inp.blur(); } });
+    if(ck) ck.addEventListener("click", ev=>{ ev.stopPropagation(); checkOne(inp, false); });
   });
   wireNav(()=>{
-    app.querySelectorAll(".gap-in").forEach(inp=>{
-      const k = +inp.dataset.k, ans = answers[k], val = inp.value.trim();
-      const res = document.createElement("span");
-      if(!val){ res.className = "gap-res ans"; res.textContent = ans; }
-      else {
-        const m = markAnswer(val, [ans]);
-        if(m.ok){ res.className = "gap-res ok"; res.textContent = ans + " ✓"; }
-        else {
-          res.className = "gap-res ans"; res.textContent = ans;
-          const fb = document.createElement("div"); fb.className = "gap-fb";
-          fb.innerHTML = m.plain ? `<span class="chip-x">✗</span> You: ${esc(val)}` : `<span class="chip-x">✗</span> ${m.you} → ${m.fix}`;
-          inp.closest(".ln").appendChild(fb);
-        }
-      }
-      inp.replaceWith(res);
-    });
+    app.querySelectorAll(".gap-in").forEach(judgeGap);
     if(canMark()){
-      app.querySelectorAll(".ln").forEach((row,i)=>{
-        const l = lines[i], txt = l[3].map(p=>typeof p==="string"?p:p.gap).join("");
+      /* "?" only where there was something to catch (engine 37, her promise to a student: nothing to ask about on a line without a gap) */
+      app.querySelectorAll(".ln.has-gap").forEach(row=>{
+        const i = +row.dataset.i, l = lines[i], txt = l[3].map(p=>typeof p==="string"?p:p.gap).join("");
         row.insertAdjacentHTML("beforeend", markBtn(stepIdx+"-"+i, txt, `https://youtu.be/${l[0]}?t=${Math.max(0, Math.floor(l[1]) - 1)}`)); row.classList.add("has-mk");
       });
       const hint = markHint(); if(hint) document.getElementById("after").insertAdjacentHTML("beforebegin", hint.replace("Not sure about something?","Hard to hear?"));
     }
+    app.querySelectorAll(".ln.has-gap").forEach(row => { row.insertAdjacentHTML("beforeend", bmBtn(curS(), +row.dataset.i)); row.classList.add("has-rev"); });
+    const rh = revHint(); if(rh){   /* it goes on top; if they've scrolled down to the clips, keep what they're looking at in place */
+      const d = document.createElement("div"), after = document.getElementById("after"), y0 = after.getBoundingClientRect().top; d.innerHTML = rh; placeRevHint(d.firstElementChild);
+      const dy = after.getBoundingClientRect().top - y0; if(dy && window.scrollY > 0) window.scrollBy(0, dy); }
     document.getElementById("after").hidden = false;
     const last = stepIdx === current.steps.length-1;
     document.getElementById("go").textContent = last ? "Finish" : "Next";
@@ -1710,11 +2099,13 @@ function renderLookback(st, count, pct){
   shell({count, pct, instr:"Look back at your answers: how did the box phrases change? Then tap the yellow boxes to check.",
     stageHTML: `
       <div class="panel lb">
-        ${LOOKBACK.map(gp=>`<div class="lb-group"><div class="phrase">${esc(gp.p)}</div>
-          ${gp.qa.map(([q,a])=>`<div>${esc(q)}</div><button class="reveal ${checked?"open":""}" aria-label="Show the answer">${esc(a)}</button>`).join("")}</div>`).join("")}
+        ${(() => { let k = 0; return LOOKBACK.map(gp => { const items = gp.qa.map(([q,a]) => { const i = k++; return st._rows && !st._rows.has(i) ? "" :
+            `<div>${esc(q)}</div><div class="lb-item"><button class="reveal ${checked?"open":""}" aria-label="Show the answer">${esc(a)}</button>${bmBtn(curS(), i)}</div>`; }).join("");
+          return items ? `<div class="lb-group"><div class="phrase">${esc(gp.p)}</div>${items}</div>` : ""; }).join(""); })()}
+        ${checked?revHint():""}
       </div>`,
     actionsHTML: navButtons("Show all")});
-  app.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>b.classList.toggle("open")));
+  app.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>{ b.classList.toggle("open"); checkWhenAllOpen(".reveal"); }));
   wireNav(()=>renderTaskKeep());
 }
 
@@ -1803,7 +2194,9 @@ function renderPlan(st, count, pct){
   const list = MAP.map((g,gi)=>`<h4 class="pick-h">${g.h}</h4>${g.items.map((it,ii)=>{ const [en,r,mean] = it, id = gi+"-"+ii;
       return `<button class="pick ${picks.has(id)?"on":""}" data-id="${id}" aria-pressed="${picks.has(id)}"><span class="tick" aria-hidden="true"></span>
         <span class="p-txt"><span class="p-en">${en}</span>${mean?` <span class="mean">— ${mean}</span>`:""}${ru(r)}</span></button>`; }).join("")}`).join("");
-  shell({count, pct, instr:PLAN_INSTR,
+  /* engine 42: the why under the instruction; PLAN_WHY in the homework data replaces it ("" = none) */
+  const why = typeof PLAN_WHY !== "undefined" ? PLAN_WHY : "They'll be with you on the next step, so you remember to use them.";
+  shell({count, pct, instr: PLAN_INSTR + (why ? `<span class="instr-why">${why}</span>` : ""),
     stageHTML:`<div class="panel">
         ${taskPeek()}
         <div class="pick-count small" id="pc" aria-live="polite"></div>
@@ -1825,16 +2218,28 @@ function renderPlan(st, count, pct){
 
 /* 3. record it (or write it), tick the phrases you used, send it */
 function renderProduce(st, count, pct){
-  const mode = ls.get("hw-mode") || "write";
+  /* modes:["write"] on the step (or the task) = writing only, no Record tab (dialogues); default both */
+  const modes = (st.modes || current.modes || ["write", "record"]).filter(m => m === "write" || m === "record");
+  if(!modes.length) modes.push("write");
+  const mode = modes.includes(ls.get("hw-mode")) ? ls.get("hw-mode") : modes[0];
+  const instr = modes.includes("record") ? PRODUCE_INSTR : String(PRODUCE_INSTR||"").replace(/\s*\(Prefer to talk\? Tap Record it\.\)/, "");
   const picks = getList(picksKey()), used = new Set(getList(usedKey()));
-  const picked = picks.map(id=>{ const [gi,ii] = id.split("-").map(Number); const it = MAP[gi] && MAP[gi].items[ii]; return it ? {id, en:it[0]} : null; }).filter(Boolean);
-  shell({count, pct, instr:PRODUCE_INSTR,
+  const picked = picks.map(id=>{ const [gi,ii] = id.split("-").map(Number); const it = MAP[gi] && MAP[gi].items[ii]; return it ? {id, gi, ii, en:it[0]} : null; }).filter(Boolean);
+  /* engine 31 (her decision 27.10): the parts are the moves of the conversation, so the phrases are checked against the same moves;
+     on when MAP has 2+ parts, PICK_EACH = false in the homework data = the flat list (menu-style tasks) */
+  const byPart = MAP.length > 1 && (typeof PICK_EACH === "undefined" || PICK_EACH !== false);
+  const cbHTML = p => `<label><input type="checkbox" data-u="${p.id}" ${used.has(p.id)?"checked":""}><span>${p.en}</span></label>`;
+  const planAt = (current.steps || []).findIndex(s => s.type === "plan");
+  const partsHTML = () => MAP.map((g, gi) => { const ps = picked.filter(p => p.gi === gi).sort((a, b) => a.ii - b.ii);
+      return `<div class="ph-part ${ps.length ? "" : "empty"}"><h4 class="ph-h">${!ps.length && planAt >= 0 ? `<button class="ph-back" data-plan aria-label="${esc(String(g.h).replace(/<[^>]+>/g, ""))}: choose phrases">${g.h}</button>` : g.h}</h4>
+        ${ps.length ? ps.map(cbHTML).join("") : `<span class="small ph-zero">0 phrases</span>`}</div>`; }).join("");
+  shell({count, pct, instr,
     stageHTML:`<div class="panel">
         ${taskPeek()}
-        <div class="seg" role="tablist">
+        ${modes.length > 1 ? `<div class="seg" role="tablist">
           <button class="seg-btn ${mode==="write"?"on":""}" data-mode="write" role="tab" aria-selected="${mode==="write"}">Write it</button>
           <button class="seg-btn ${mode==="record"?"on":""}" data-mode="record" role="tab" aria-selected="${mode==="record"}">Record it</button>
-        </div>
+        </div>` : ""}
         <div id="m-record" ${mode==="record"?"":"hidden"} class="mode">
           <div class="rec-row" id="rec-row">
             <button class="rec-btn" id="rec"><span class="dot" aria-hidden="true"></span><span id="rec-label">Start recording</span></button>
@@ -1849,12 +2254,12 @@ function renderProduce(st, count, pct){
         </div>
         <div id="m-write" ${mode==="write"?"":"hidden"} class="mode">
           <textarea id="txt" rows="7" placeholder="${typeof PRODUCE_PH!=="undefined"?PRODUCE_PH:"A: …&#10;B: …"}&#10;(Tap the microphone on your keyboard to dictate.)">${esc(ls.get(draftKey()))}</textarea>
+          <p class="small saved-note" id="txt-saved" aria-live="polite" hidden></p>
         </div>
         <fieldset class="check">
           <legend>Your phrases</legend>
-          ${picked.length ? `<span class="small">Did you use them? Tick the ones you did.</span>
-            ${picked.map(p=>`<label><input type="checkbox" data-u="${p.id}" ${used.has(p.id)?"checked":""}><span>${p.en}</span></label>`).join("")}`
-            : `<span class="small">You didn't pick any phrases. Tap Back to choose some — or just go ahead.</span>`}
+          ${picked.length ? `<span class="small">Did you use them? Tick the ones you did.</span>` : `<span class="small">You didn't pick any phrases. Tap Back to choose some — or just go ahead.</span>`}
+          ${byPart ? partsHTML() : picked.map(cbHTML).join("")}
         </fieldset>
         <label class="field"><span class="small">Your name</span><input id="who" type="text" autocomplete="given-name" placeholder="Your name" value="${esc(ls.get("hw-name"))}"></label>
         <div class="row-btns">
@@ -1873,10 +2278,17 @@ function renderProduce(st, count, pct){
     $("m-record").hidden = curMode!=="record"; $("m-write").hidden = curMode!=="write"; $("copy").hidden = curMode!=="write";
   }));
   who.addEventListener("input",()=>ls.set("hw-name", who.value.trim()));
+  app.querySelectorAll("[data-plan]").forEach(b=>b.addEventListener("click",()=>{ if(planAt >= 0){ stepIdx = planAt; checked = false; renderTask(); } }));
   app.querySelectorAll(".check input").forEach(cb=>cb.addEventListener("change",()=>{
     ls.set(usedKey(), JSON.stringify([...app.querySelectorAll(".check input")].filter(x=>x.checked).map(x=>x.dataset.u)));
   }));
-  const txt = $("txt"); txt.addEventListener("input",()=>ls.set(draftKey(), txt.value));
+  const txt = $("txt"), savedNote = $("txt-saved");
+  /* her wish (27.10): the student sees that the text is kept if the page closes or the internet drops — no Save button */
+  const showSaved = () => { const has = txt.value.trim() !== ""; savedNote.hidden = !has;
+    savedNote.classList.toggle("warn", !lsKeeps);
+    savedNote.textContent = lsKeeps ? "✓ Saved on this device" : "This browser won't keep your text after you close the page — tap Copy first."; };
+  txt.addEventListener("input",()=>{ ls.set(draftKey(), txt.value); showSaved(); });
+  showSaved();
 
   /* recording */
   const recBtn = $("rec"), label = $("rec-label"), time = $("rec-time");

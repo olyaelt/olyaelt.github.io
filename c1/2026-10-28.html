@@ -289,8 +289,9 @@ details.summary[open] summary::after{content:"Hide"}
 .gap .r{font-weight:700;background:var(--hl);color:transparent;padding:1px 0;border-radius:2px;transition:color .15s ease}
 .gap .r:empty{display:none}
 .chunk.open .gap .r{color:var(--hl-ink)}
-/* engine 46 (her wish 29.10, as on her slides): an opened gap reads in the same blue bold as the given words around it */
-.dlg .chunk.open .gap .r{color:#0000FF}   /* on the yellow: the slide blue, in dark mode too */
+/* engine 48 (her read-through 30.10: blue on yellow was hard on the eyes): an opened gap is one chunk, the first letters and the rest
+   black bold on the yellow, in dark mode too (engine 46 had made the rest blue) */
+.chunk.open .gap .f{color:var(--hl-ink);background:var(--hl);border-radius:2px 0 0 2px}
 .dlg b.given{color:var(--answer)}
 /* engine 30: "!" after an opened gap = "I want to revise this" (kept on this device) */
 /* engine 32 (her decision 27.10): a green bookmark, not a second round sign next to "?" — "?" asks Olya, the bookmark is for me */
@@ -2513,7 +2514,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = [];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "47";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "48";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [{"type": "rewrite", "r": {"o": "My degree is in physics.", "k": "DID", "pre": "I ", "post": " university.", "a": "did physics at", "acc": ["did physics at", "did a physics degree at"], "n": "<span class=\"ipa\">/ˈfɪzɪks/<\/span><br>do + subject, no article; at university.<br><i class=\"ru\">учился на физика<\/i><br><i class=\"ru\">or: did a physics degree at<\/i><br><i class=\"ru\">AmE: I majored in physics in college.<\/i>"}, "frm": "23.10.26"}, {"type": "sayit", "s": {"rows": [["<span class=\"en\">I studied <span class=\"trap\">at the faculty of mathematics<\/span>.<\/span> <i class=\"ru\">(учился на матфаке)<\/i>", "I studied <b class=\"g\">maths<\/b>. / I did <b class=\"g\">maths at uni<\/b>."]], "note": "", "html": true}, "instr": "What would Dan or Ruth say instead?", "frm": "21.10.26"}, {"type": "rewrite", "r": {"pre": "", "hint": "У нас часы не переводят", "post": ", so I can never remember whether our calls move earlier or later.", "a": "We don't change the clocks here", "acc": ["We don't change the clocks here", "The clocks don't change here", "We don't have daylight saving here", "We don't have daylight saving time here"], "n": "change the clocks — the clocks, plural.<br><i class=\"ru\">or: The clocks don't change here / We don't have daylight saving (time) here<\/i>"}, "frm": "23.10.26"}, {"type": "sayit", "s": {"rows": [["<span class=\"en\">Nobody taught me how to talk to clients — I learned it <span class=\"trap\">in practice<\/span>.<\/span> <i class=\"ru\">(научилась в процессе работы)<\/i>", "Nobody taught me how to talk to clients — I learned it <b class=\"g\">on the job<\/b>."]], "note": "", "html": true}, "instr": "What would Dan or Ruth say instead?", "frm": "21.10.26"}];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){

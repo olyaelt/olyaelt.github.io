@@ -21,5 +21,8 @@ for p in pages:
 must = {'--note-ink': 6, 'fb-overall{': 1, 'fb-next': 2, 'lines.shift()': 1, 'font-weight:400;font-size:.95em': 1}
 for k, n in must.items():
     if tpl.count(k) != n: bad.append('engine: "%s" %d times, expected %d (the feedback look from 26.10)' % (k, tpl.count(k), n))
+# the copy she pastes into Apps Script must be the current script (30.10: a stale copy left the table without lesson work)
+txt = os.path.join(HERE, 'homework-progress-script.txt')
+if os.path.isfile(txt) and open(txt, 'rb').read() != open(os.path.join(HERE, 'Code.gs'), 'rb').read(): bad.append('homework-progress-script.txt differs from Code.gs: copy Code.gs over it')
 if bad: print('\n'.join(bad)); sys.exit(1)
 print('OK: engine %s in all %d pages, feedback look in place' % (version, len(pages)))

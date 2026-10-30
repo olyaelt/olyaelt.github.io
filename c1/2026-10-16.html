@@ -287,8 +287,9 @@ details.summary[open] summary::after{content:"Hide"}
 .gap .r{font-weight:700;background:var(--hl);color:transparent;padding:1px 0;border-radius:2px;transition:color .15s ease}
 .gap .r:empty{display:none}
 .chunk.open .gap .r{color:var(--hl-ink)}
-/* engine 46 (her wish 29.10, as on her slides): an opened gap reads in the same blue bold as the given words around it */
-.dlg .chunk.open .gap .r{color:#0000FF}   /* on the yellow: the slide blue, in dark mode too */
+/* engine 48 (her read-through 30.10: blue on yellow was hard on the eyes): an opened gap is one chunk, the first letters and the rest
+   black bold on the yellow, in dark mode too (engine 46 had made the rest blue) */
+.chunk.open .gap .f{color:var(--hl-ink);background:var(--hl);border-radius:2px 0 0 2px}
 .dlg b.given{color:var(--answer)}
 /* engine 30: "!" after an opened gap = "I want to revise this" (kept on this device) */
 /* engine 32 (her decision 27.10): a green bookmark, not a second round sign next to "?" — "?" asks Olya, the bookmark is for me */
@@ -704,7 +705,7 @@ const TASKS = [
    steps:[{type:"task"},{type:"plan"},{type:"produce"}]}
 ];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "47";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "48";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){

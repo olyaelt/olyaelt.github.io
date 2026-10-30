@@ -183,6 +183,13 @@ details.all[open] summary{color:var(--ink)}
 .live-edit label{display:grid;gap:2px;font-size:.85rem;font-weight:700;color:var(--muted)}
 .live-edit textarea{font:inherit;font-size:1.05rem;font-weight:400;color:var(--ink);background:var(--ground);border:2px solid var(--line);border-radius:8px;padding:6px 8px;width:100%;resize:vertical}
 
+/* inside a field page (?embed=1, tools 13): only the working part; its steps small, under the field's own tabs */
+.embed .head h1,.embed .head .part{display:none}
+.embed footer.legal{display:none}
+.embed .stages.sub{margin-left:0}
+.embed .stages.sub .stage-btn{font-size:.85rem;padding:2px 10px;border-width:1px}
+.embed .stages.sub .stage-arrow{font-size:.8rem}
+
 /* ---------- chat scenes (tools 13, B2 revision 30.10 «Running late»): a chat on a phone; the pair agrees what to type ---------- */
 .head .stage-btn{font-size:.9rem;padding:3px 10px}
 .head h1{font-size:1.6rem}
@@ -193,9 +200,11 @@ details.all[open] summary{color:var(--ink)}
 .scene-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .scene-top .grow{flex:1}
 .sc-dots{display:flex;gap:6px}
-.sc-dots button{width:16px;height:16px;border-radius:50%;border:2px solid var(--line);background:var(--card);padding:0}
+.sc-dots button{width:1.7rem;height:1.7rem;border-radius:50%;border:2px solid var(--line);background:var(--card);padding:0;font:inherit;font-weight:900;font-size:.85rem;color:var(--muted);cursor:pointer;display:grid;place-items:center}   /* numbered: tap to go to that chat (her wish 30.10) */
+.sc-dots button:hover{border-color:var(--instr)}
+.sc-dots button.done,.sc-dots button.on{color:#FFFFFF}
 .sc-dots button.done{background:var(--ok);border-color:var(--ok)}
-.sc-dots button.on{background:var(--instr);border-color:var(--instr);transform:scale(1.2)}
+.sc-dots button.on{background:var(--instr);border-color:var(--instr);transform:scale(1.1)}
 .sc-label{color:var(--label);font-weight:900;letter-spacing:.07em;text-transform:uppercase;font-size:.85rem}
 .chip{border:2px solid var(--line);background:var(--card);border-radius:99px;padding:3px 12px;font-weight:700;font-size:.9rem;color:var(--ink)}
 .chip[aria-pressed="true"]{border-color:var(--instr);color:var(--instr)}
@@ -220,7 +229,7 @@ details.all[open] summary{color:var(--ink)}
 .bub.ex{border:2px dashed #25A35A}
 .bub.typing{color:#667781;font-style:italic}
 .mgap{font:inherit;border:0;border-radius:3px;padding:0 2px;background:#FFFF00;color:transparent;cursor:pointer;font-weight:700}
-.mgap.open{color:#0A58CA}
+.mgap.open{color:#1D1D1B}   /* opened: black bold on the yellow (her read-through 30.10, as on every page) */
 .mgap:not(.open):hover{outline:2px solid #E8D800}
 .compose{display:flex;gap:6px;padding:8px;background:#F0F2F5;align-items:flex-end}
 .compose textarea{flex:1;font:inherit;font-size:1rem;border:0;border-radius:18px;padding:8px 12px;resize:none;min-height:2.5rem;max-height:6rem;background:#FFFFFF;color:#111111}
@@ -330,6 +339,12 @@ details.all[open] summary{color:var(--ink)}
 .gw-hist p{margin:6px 0 0}
 .gw-hist .mv{color:var(--muted);font-size:.9rem}
 
+/* 👥 under a chat on the task page (her view): the groups' texts for this chat */
+.pc{display:grid;gap:8px;border:2px dashed var(--line);border-radius:16px;padding:10px 12px;background:var(--ground)}
+.pc-top{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.pc-meta{color:var(--muted);font-size:.88rem}
+.pc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(20rem,1fr));gap:10px}
+
 </style>
 </head>
 <body>
@@ -346,6 +361,10 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":
 const shuffle = a => { a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const store = { get(k){ try{ return JSON.parse(localStorage.getItem(k) || "null"); }catch(e){ return null; } }, set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} } };
 const params = new URLSearchParams(location.search);
+/* inside a field page (?embed=1; tools 13, her catch 30.10 09:20): only the working part — no Live bar, no title, no 📥 Groups (the field
+   has its own), and its steps as small sub-steps under the field's tabs: one row of big tabs on the screen */
+const EMBED = params.get("embed") === "1";
+if(EMBED) document.documentElement.classList.add("embed");
 /* **box phrase** in a speaking task or a follow-up = shown like the box phrases in the examples (checklist 8.07) */
 const boxMarks = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>');
 const calm = () => !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -411,7 +430,7 @@ function wireSpeak(root, rerender){
 
 /* the stages of the task (her rule, 27.10: every tool has stages — at least the practice and the speaking —
    and a group can move between them at any time without clicking through) */
-const stagesHTML = (list, cur) => `<nav class="stages" aria-label="Stages">${list.map(([id, label], i) =>
+const stagesHTML = (list, cur) => `<nav class="stages ${EMBED ? "sub" : ""}" aria-label="Stages">${list.filter(([id]) => !(EMBED && id === "groups")).map(([id, label], i) =>
   `${i ? `<span class="stage-arrow" aria-hidden="true">→</span>` : ""}<button class="stage-btn" data-stage="${id}" ${id === cur ? `aria-current="step"` : ""}>${label}</button>`).join("")}</nav>`;
 
 /* 📋 everything on one screen, folded: to show a card or an example again later in the lesson */
@@ -533,14 +552,14 @@ function wireDrag(root){
     }));
   });
 }
-const liveTools = (path, {last = false, edit = true, fields = ""} = {}) => !(liveTeacher() && path) ? "" : liveHidden(path)
+const liveTools = (path, {last = false, edit = true, fields = ""} = {}) => !(liveTeacher() && path) || EMBED ? "" : liveHidden(path)
   ? `<span class="live-tools"><span class="live-hidden-tag">Hidden from the groups</span>${edit ? `<button class="live-b" data-live-edit="${fields || path}" title="Correct the text" aria-label="Correct the text">✏️</button>` : ""}<button class="live-b live-show" data-live-unhide="${path}" title="Show it to the groups again">Show</button></span>`
   : `<span class="live-tools">${edit ? `<button class="live-b" data-live-edit="${fields || path}" title="Correct the text" aria-label="Correct the text">✏️</button>` : ""}${last ? `<button class="live-b" data-live-last="${path}" title="Move to the end" aria-label="Move to the end">⤓</button>` : ""}<button class="live-b" data-live-hide="${path}" title="Hide it from the groups for now — you can correct it and show it again" aria-label="Hide from the groups">Hide</button></span>`;
 /* her screen: a hidden item stays, greyed (class for its box) */
 const liveDim = path => liveTeacher() && liveHidden(path) ? "is-hidden" : "";
 /* the bar on top of her screen: what she has hidden (tap to show it again), Reset */
 function liveBarHTML(labelOf){
-  if(!liveTeacher()) return "";
+  if(!liveTeacher() || EMBED) return "";
   const removed = LV.hide.map(fromStore).filter(Boolean).map(p => `<button class="live-chip" data-live-unhide="${p}" title="Show it to the groups again">👁 ${esc((labelOf(p) || p).slice(0, 38))}${(labelOf(p) || p).length > 38 ? "…" : ""}</button>`).join("");
   const n = LV.hide.length + LV.last.length + Object.keys(LV.text).length + Object.keys(LV.order).length;
   liveLabelOf = labelOf;
@@ -799,6 +818,46 @@ function gwCardHTML(d){
     <div class="gw-said" data-said></div>
     <details class="gw-earlier" data-earlier></details></article>`;
 }
+/* ---------- 👥 under a chat on the task page (her wish 30.10 09:23: the task and the groups' work on one page) ----------
+   Her view only: every group's text for this chat, live (every 10 s), with the same ✓ Good, ✗ Change, ✎ Correction, 💬 as in 📥 Groups.
+   📥 Groups stays as it is (all the pages at once, who works with whom): the two show the same work. */
+const pcHTML = (tool, chat) => liveTeacher() && SHARE ? `<section class="pc" data-pc="${esc(tool)}|${chat}"><div class="pc-top"><b>👥 The groups on this chat</b><span class="pc-meta"></span></div><div class="pc-grid"></div></section>` : "";
+function pcCardHTML(d, tool, chat){
+  return `<article class="gw-card pc-card" data-dev="${esc(d.dev)}" data-tool="${esc(tool)}" data-chat="${chat}">
+    <div class="gw-who" data-who></div>
+    <div class="gw-text" data-text></div>
+    <div class="gw-notes" data-notes></div>
+    <div class="gw-pick" data-pick></div>
+    <div class="gw-tools"><button class="tool good" data-mk="good">✓ Good</button><button class="tool del" data-mk="change">✗ Change</button><button class="tool ins" data-mk="fix">✎ Correction</button><button class="tool cmt" data-mk="note">💬 Comment</button></div>
+    <div class="gw-quick">${QUICK.map(q => `<button data-quick="${esc(q)}">${esc(q)}</button>`).join("")}</div>
+    <form class="gw-own" data-own><input maxlength="300" placeholder="Or type your note to this group…" aria-label="Your note to this group"><button class="btn slim primary">Send</button></form>
+    <div class="gw-said" data-said></div></article>`;
+}
+function pcPaint(){
+  document.querySelectorAll(".pc[data-pc]").forEach(pc => {
+    const [tool, chat] = pc.dataset.pc.split("|"), list = gwDevices().map(d => ({d, r: d.rows.find(r => r.tool === tool && String(r.chat) === chat)})).filter(x => x.r);
+    const meta = pc.querySelector(".pc-meta"), mt = GW.err ? gwMetaText() : !GW.loaded ? "loading…" : `${list.length} group${list.length === 1 ? "" : "s"} · updated ${hm(GW.at)} · select words, then ✓ ✗ ✎ 💬`;
+    if(meta.innerHTML !== mt) meta.innerHTML = mt;
+    const grid = pc.querySelector(".pc-grid"), want = new Set(list.map(x => x.d.dev));
+    grid.querySelectorAll(".gw-card").forEach(c => { if(!want.has(c.dataset.dev)) c.remove(); });
+    const empty = grid.querySelector(".gw-empty");
+    if(!list.length){ if(!empty) grid.innerHTML = `<div class="gw-empty">Nothing from the groups on this chat yet.</div>`; return; }
+    if(empty) empty.remove();
+    list.forEach(({d, r}) => {
+      let c = grid.querySelector(`.gw-card[data-dev="${d.dev}"]`);
+      if(!c){ grid.insertAdjacentHTML("beforeend", pcCardHTML(d, tool, chat)); c = grid.lastElementChild; wireCard(c); }
+      c.classList.toggle("sent", r.status === "sent"); c.classList.toggle("typing", typingNow(r));
+      const set = (sel, h) => { const el = c.querySelector(sel); if(el.dataset.h !== h){ el.innerHTML = h; el.dataset.h = h; } };
+      set("[data-who]", `<span class="nm">${esc(d.label)}</span><span class="stt">${statusText(r)}</span>`);
+      const tx = c.querySelector("[data-text]"), sel = getSelection(), inside = sel && sel.rangeCount && !sel.isCollapsed && tx.contains(sel.anchorNode) && Date.now() - selAt < 8000;
+      if(!inside){ const h = markedText(r, c.dataset.quote || ""); if(tx.innerHTML !== h) tx.innerHTML = h; }
+      set("[data-notes]", gwNotesHTML(r, d.dev));
+    });
+  });
+}
+/* the task page re-renders on her taps: the panel (a half-typed note, picked words) is kept and put back */
+function pcStash(){ const m = {}; document.querySelectorAll(".pc[data-pc]").forEach(pc => { m[pc.dataset.pc] = pc; }); return m; }
+function pcRestore(m){ document.querySelectorAll(".pc[data-pc]").forEach(pc => { const old = m[pc.dataset.pc]; if(old && old !== pc) pc.replaceWith(old); }); pcPaint(); }
 function groupsHTML(){
   return `<section class="gw ${S && S.enter ? "enter" : ""}"><div class="gw-rooms" id="gw-rooms"></div><div class="gw-top"><b>📥 What the groups are doing</b><span class="gw-meta" id="gw-meta"></span><span class="grow"></span>
     ${LW.stages.length ? `<button class="btn slim" data-say-all>📢 To all rooms</button>` : ""}<button class="btn slim" data-gw-copy="names">📋 Copy all</button><button class="btn slim" data-gw-copy="">📋 Without names</button><button class="btn slim" data-gw-fresh>🧹 Start fresh</button></div>
@@ -838,6 +897,7 @@ function historyHTML(devs){
 function gwPaint(){
   const devs = gwDevices(), n = devs.filter(d => typingNow(d.cur)).length;
   const tab = document.querySelector('.stage-btn[data-stage="groups"]'); if(tab){ let b = tab.querySelector(".gw-n"); if(n){ if(!b){ b = document.createElement("span"); b.className = "gw-n"; tab.appendChild(b); } b.textContent = n; } else if(b) b.remove(); }
+  pcPaint();
   if(!LW.groupsView()) return;
   const meta = document.getElementById("gw-meta"); if(meta){ meta.innerHTML = gwMetaText(); const all = meta.querySelector("[data-gw-all]"); if(all) all.addEventListener("click", () => { if(!GW.showOld && gwSince() > gwNow() - RECENT) store.set(SINCE_KEY, 0); GW.showOld = !GW.showOld; gwRebuild(); }); }
   const rooms = document.getElementById("gw-rooms"); if(rooms){ const h = roomsHTML(); if(rooms.innerHTML !== h) rooms.innerHTML = h; rooms.hidden = !h; }
@@ -879,10 +939,10 @@ async function gwFetch(){
   else GW.err = err;
   gwPaint();
 }
-if(liveTeacher()){ setTimeout(gwFetch, 300); setInterval(() => { if(document.hidden) return; if(LW.groupsView() || !(gwTick++ % 3)) gwFetch(); }, 10000); }
+if(liveTeacher()){ setTimeout(gwFetch, 300); setInterval(() => { if(document.hidden) return; if(LW.groupsView() || document.querySelector(".pc") || !(gwTick++ % 3)) gwFetch(); }, 10000); }
 /* she selects words in a group's text: they stay picked until she sends a note or taps ✕ */
 document.addEventListener("selectionchange", () => {
-  if(!liveTeacher() || !LW.groupsView()) return;
+  if(!liveTeacher()) return;   /* in 📥 Groups and in 👥 under a chat */
   const sel = getSelection(); if(!sel || sel.isCollapsed || !sel.rangeCount) return;
   const tx = sel.anchorNode && (sel.anchorNode.nodeType === 1 ? sel.anchorNode : sel.anchorNode.parentElement).closest(".gw-text"); if(!tx || !tx.contains(sel.focusNode)) return;
   const q = sel.toString().replace(/\s+/g, " ").trim().slice(0, 160); if(!q) return;
@@ -1056,7 +1116,7 @@ function sceneHTML(){
   const ord = order(), i = S.at, sc = D.scenes[i], s = st(i), pos = ord.indexOf(i), last = pos === ord.length - 1;
   const modelI = D.scenes.findIndex(x => x.model);
   const noted = sharing() ? unseenElsewhere() : [];
-  const dots = `<span class="sc-dots">${ord.map(k => `<button class="${k === i ? "on" : sceneDone(k) ? "done" : ""} ${noted.includes(k) ? "noted" : ""}" data-go="${k}" aria-label="Chat ${ord.indexOf(k) + 1}" ${k === i ? `aria-current="step"` : ""}></button>`).join("")}</span>`;
+  const dots = `<span class="sc-dots">${ord.map(k => `<button class="${k === i ? "on" : sceneDone(k) ? "done" : ""} ${noted.includes(k) ? "noted" : ""}" data-go="${k}" aria-label="Chat ${ord.indexOf(k) + 1}" title="Chat ${ord.indexOf(k) + 1}: ${esc(scText(k, "contact"))}" ${k === i ? `aria-current="step"` : ""}>${ord.indexOf(k) + 1}</button>`).join("")}</span>`;
   const chip = !isModel(i) && modelI >= 0 ? `<button class="chip" data-model aria-pressed="${S.modelOpen}">📌 Model</button>` : "";
   const pop = !isModel(i) && S.modelOpen && modelI >= 0 ? `<div class="model-pop"><span class="ml">📌 Model</span><b>${esc(D.scenes[modelI].contact)}:</b> ${esc(scText(modelI, "model")).replace(/\{\{(.+?)\}\}/g, '<b class="bx">$1</b>')}</div>` : "";
   const ctx = `<div class="ctx">${(sc.context || []).map((c, j) => host(sp(i, `context.${j}`), `<p>${bxMarks(liveText(sp(i, `context.${j}`), c))}</p>`)).join("")}</div>`;
@@ -1066,7 +1126,7 @@ function sceneHTML(){
   const next = last ? `<button class="btn ${sceneDone(i) ? "primary" : ""}" data-stage="speak">Speaking →</button>` : `<button class="btn ${sceneDone(i) ? "primary" : ""}" data-next>Next chat →</button>`;
   return `<section class="stage ${S.enter ? "enter" : ""}">${host("scenes." + i, `<div class="scene-top"><span class="sc-label">Chat ${pos + 1} of ${ord.length}${isModel(i) ? " · model" : ""}</span>${dots}<span class="grow"></span>${chip}</div>`, {edit: false})}
     ${sharing() ? `<div class="t-toast" id="ttoast" aria-live="polite">${toastHTML()}</div>` : ""}${pop}<div class="sc-grid"><div class="sc-left">${ctx}<div class="row-act acts wide">${exBtn}<span class="grow"></span>${next}</div></div>${phone}</div>
-    <div class="row-act acts narrow">${exBtn}<span class="grow"></span>${next}</div></section>`;
+    <div class="row-act acts narrow">${exBtn}<span class="grow"></span>${next}</div>${isModel(i) ? "" : pcHTML(PAGE_ID, scPid(i))}</section>`;
 }
 const allChatsHTML = () => allHTML("All the chats", D.scenes.map((sc, i) => (liveTeacher() || !sceneGone(i)) ? `<div class="all-row"><span class="all-sub">${esc(scText(i, "contact"))}</span>
     ${sc.msgs.map((m, j) => `<p>${m.from ? esc(m.from) + ": " : ""}${esc(liveText(sp(i, `msgs.${j}.t`), m.t))}</p>`).join("")}
@@ -1104,7 +1164,9 @@ function render(){
   if(S.view === "groups" && !liveTeacher()) S.view = "chats";
   document.querySelector(".wrap").classList.toggle("groups", S.view === "groups");   /* her Groups tab: the whole width, no box */
   const keepGrid = S.view === "groups" ? document.getElementById("gw-grid") : null;   /* her cards (a half-typed note) survive a re-render */
+  const pcs = pcStash();   /* her 👥 panel under the chat keeps a half-typed note */
   main.innerHTML = liveBarHTML(liveLabel) + headHTML() + (S.view === "speak" ? speakStage() : S.view === "groups" ? groupsHTML() : sceneHTML());
+  pcRestore(pcs);
   if(keepGrid){ const g = document.getElementById("gw-grid"); if(g) g.replaceWith(keepGrid); }
   const sst = side.scrollTop; side.innerHTML = boxHTML(D.box, {clickable: true}) + allChatsHTML(); side.scrollTop = sst;
   wireAll(side); wireBox(side); wireSpeak(main, render);

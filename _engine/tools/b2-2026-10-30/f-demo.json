@@ -1,0 +1,190 @@
+{
+ "type": "revision-field",
+ "demo": true,
+ "board": {
+  "button": "🎓 How the game works"
+ },
+ "title": "How the game works",
+ "boxes": {
+  "BOX": [
+   {
+    "h": "THE NEWS",
+    "items": [
+     "**Just a heads-up** — …",
+     "Gary's **gone missing**!",
+     "He's **been missing since** Friday."
+    ]
+   },
+   {
+    "h": "SHARE A FEELING ↘",
+    "items": [
+     "It's so weird, **isn't it?**",
+     "— It **really is**!"
+    ]
+   },
+   {
+    "h": "REACT AND ASK",
+    "items": [
+     "No way! **When did you last see him?**",
+     "**Thanks for the heads-up!**"
+    ]
+   }
+  ]
+ },
+ "stages": [
+  {
+   "label": "📝 Test yourself",
+   "blocks": [
+    {
+     "kind": "write",
+     "lesson_work": true,
+     "instr": "Gary is the office goldfish. Your colleague texts you. Write a reply together, then send it.",
+     "tip": "First you try on your own — before any help. On the real pages Olya sees what you type and can send you a note.",
+     "items": [
+      {
+       "ctx": "((Your colleague, in the office chat:))",
+       "incoming": "Have you seen Gary? His bowl is empty! 🐟",
+       "label": "Your reply"
+      }
+     ],
+     "example": "No way! That's so weird. **When did you last see him?**"
+    }
+   ]
+  },
+  {
+   "label": "🔁 Recall",
+   "blocks": [
+    {
+     "kind": "text",
+     "instr": "Complete the chat and say the words. Tap the yellow to check.",
+     "tip": "Here comes the text from our lesson, with the first letters. 🔖 = \"we didn't know this\" — Olya sees which gaps were hard.",
+     "lines": [
+      {
+       "s": "Mia",
+       "p": [
+        "Just a ",
+        {
+         "f": "h",
+         "r": "eads-up"
+        },
+        " — Gary's ",
+        {
+         "f": "g",
+         "r": "one missing"
+        },
+        "! 🐟"
+       ]
+      },
+      {
+       "s": "Sam",
+       "p": [
+        "I know! I saw the empty bowl this morning. It's so weird, ",
+        {
+         "f": "i",
+         "r": "sn't it"
+        },
+        "?"
+       ]
+      },
+      {
+       "s": "Mia",
+       "p": [
+        "It ",
+        {
+         "f": "r",
+         "r": "eally is"
+        },
+        ". The bowl's still here, but no Gary."
+       ]
+      },
+      {
+       "s": "Sam",
+       "p": [
+        "UPDATE: found him. Ken took him home for the weekend and forgot to bring him back. He said Gary looked lonely."
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        {
+         "b": "heads-up"
+        }
+       ],
+       "ru": "предупреждение"
+      },
+      {
+       "p": [
+        {
+         "b": "gone missing"
+        }
+       ],
+       "ru": "пропал"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "🃏 Practice",
+   "blocks": [
+    {
+     "kind": "cards",
+     "style": "kwt",
+     "instr": "Three cards, three kinds. Say your answer, then tap the card to check.",
+     "tip": "↺ Again = \"we weren't sure\": the card comes back two or three cards later. ✓ Got it = done. Olya sees which cards came back.",
+     "cards": [
+      {
+       "front": "Nobody knows where Gary is.",
+       "key": "MISSING",
+       "frame": "Gary has ___.",
+       "answer": "gone missing",
+       "back": "Gary has **gone missing**.",
+       "note": "пропал → has gone missing · also fine: Gary is missing."
+      }
+     ]
+    },
+    {
+     "kind": "cards",
+     "style": "ours",
+     "instr": "One of our sentences. Green = good, grey = could be better. How would you make it perfect English?",
+     "check": "Perfect English",
+     "cards": [
+      {
+       "ctx": "в чате офиса",
+       "front": "<g>Gary</g> ~~is missing~~ <g>since Friday</g>.",
+       "back": "Gary **has been missing** since Friday.",
+       "why": "С since — «с тех пор и до сих пор»: has been missing."
+      }
+     ]
+    },
+    {
+     "kind": "cards",
+     "style": "say",
+     "instr": "How do you say it in English?",
+     "cards": [
+      {
+       "front": "((Спасибо, что предупредила!))",
+       "back": "**Thanks for the heads-up!**"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "💬 Use it",
+   "blocks": [
+    {
+     "kind": "questions",
+     "box": "BOX",
+     "instr": "Now talk. Use the box.",
+     "tip": "Tap a phrase in the box when you say it — it turns green. ⬅ Board takes you back to the game.",
+     "items": [
+      "Tell your partner about a time something went missing at work or at home (real or made up!). What was it? Did it turn up? Your partner reacts and asks **two** questions."
+     ],
+     "fast": "If you're done: act out Mia and Sam's chat from memory."
+    }
+   ]
+  }
+ ]
+}

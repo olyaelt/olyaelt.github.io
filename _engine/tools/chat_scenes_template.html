@@ -18,9 +18,11 @@ __BASE_CSS__
 .scene-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .scene-top .grow{flex:1}
 .sc-dots{display:flex;gap:6px}
-.sc-dots button{width:16px;height:16px;border-radius:50%;border:2px solid var(--line);background:var(--card);padding:0}
+.sc-dots button{width:1.7rem;height:1.7rem;border-radius:50%;border:2px solid var(--line);background:var(--card);padding:0;font:inherit;font-weight:900;font-size:.85rem;color:var(--muted);cursor:pointer;display:grid;place-items:center}   /* numbered: tap to go to that chat (her wish 30.10) */
+.sc-dots button:hover{border-color:var(--instr)}
+.sc-dots button.done,.sc-dots button.on{color:#FFFFFF}
 .sc-dots button.done{background:var(--ok);border-color:var(--ok)}
-.sc-dots button.on{background:var(--instr);border-color:var(--instr);transform:scale(1.2)}
+.sc-dots button.on{background:var(--instr);border-color:var(--instr);transform:scale(1.1)}
 .sc-label{color:var(--label);font-weight:900;letter-spacing:.07em;text-transform:uppercase;font-size:.85rem}
 .chip{border:2px solid var(--line);background:var(--card);border-radius:99px;padding:3px 12px;font-weight:700;font-size:.9rem;color:var(--ink)}
 .chip[aria-pressed="true"]{border-color:var(--instr);color:var(--instr)}
@@ -45,7 +47,7 @@ __BASE_CSS__
 .bub.ex{border:2px dashed #25A35A}
 .bub.typing{color:#667781;font-style:italic}
 .mgap{font:inherit;border:0;border-radius:3px;padding:0 2px;background:#FFFF00;color:transparent;cursor:pointer;font-weight:700}
-.mgap.open{color:#0A58CA}
+.mgap.open{color:#1D1D1B}   /* opened: black bold on the yellow (her read-through 30.10, as on every page) */
 .mgap:not(.open):hover{outline:2px solid #E8D800}
 .compose{display:flex;gap:6px;padding:8px;background:#F0F2F5;align-items:flex-end}
 .compose textarea{flex:1;font:inherit;font-size:1rem;border:0;border-radius:18px;padding:8px 12px;resize:none;min-height:2.5rem;max-height:6rem;background:#FFFFFF;color:#111111}
@@ -178,7 +180,7 @@ function sceneHTML(){
   const ord = order(), i = S.at, sc = D.scenes[i], s = st(i), pos = ord.indexOf(i), last = pos === ord.length - 1;
   const modelI = D.scenes.findIndex(x => x.model);
   const noted = sharing() ? unseenElsewhere() : [];
-  const dots = `<span class="sc-dots">${ord.map(k => `<button class="${k === i ? "on" : sceneDone(k) ? "done" : ""} ${noted.includes(k) ? "noted" : ""}" data-go="${k}" aria-label="Chat ${ord.indexOf(k) + 1}" ${k === i ? `aria-current="step"` : ""}></button>`).join("")}</span>`;
+  const dots = `<span class="sc-dots">${ord.map(k => `<button class="${k === i ? "on" : sceneDone(k) ? "done" : ""} ${noted.includes(k) ? "noted" : ""}" data-go="${k}" aria-label="Chat ${ord.indexOf(k) + 1}" title="Chat ${ord.indexOf(k) + 1}: ${esc(scText(k, "contact"))}" ${k === i ? `aria-current="step"` : ""}>${ord.indexOf(k) + 1}</button>`).join("")}</span>`;
   const chip = !isModel(i) && modelI >= 0 ? `<button class="chip" data-model aria-pressed="${S.modelOpen}">📌 Model</button>` : "";
   const pop = !isModel(i) && S.modelOpen && modelI >= 0 ? `<div class="model-pop"><span class="ml">📌 Model</span><b>${esc(D.scenes[modelI].contact)}:</b> ${esc(scText(modelI, "model")).replace(/\{\{(.+?)\}\}/g, '<b class="bx">$1</b>')}</div>` : "";
   const ctx = `<div class="ctx">${(sc.context || []).map((c, j) => host(sp(i, `context.${j}`), `<p>${bxMarks(liveText(sp(i, `context.${j}`), c))}</p>`)).join("")}</div>`;
@@ -188,7 +190,7 @@ function sceneHTML(){
   const next = last ? `<button class="btn ${sceneDone(i) ? "primary" : ""}" data-stage="speak">Speaking →</button>` : `<button class="btn ${sceneDone(i) ? "primary" : ""}" data-next>Next chat →</button>`;
   return `<section class="stage ${S.enter ? "enter" : ""}">${host("scenes." + i, `<div class="scene-top"><span class="sc-label">Chat ${pos + 1} of ${ord.length}${isModel(i) ? " · model" : ""}</span>${dots}<span class="grow"></span>${chip}</div>`, {edit: false})}
     ${sharing() ? `<div class="t-toast" id="ttoast" aria-live="polite">${toastHTML()}</div>` : ""}${pop}<div class="sc-grid"><div class="sc-left">${ctx}<div class="row-act acts wide">${exBtn}<span class="grow"></span>${next}</div></div>${phone}</div>
-    <div class="row-act acts narrow">${exBtn}<span class="grow"></span>${next}</div></section>`;
+    <div class="row-act acts narrow">${exBtn}<span class="grow"></span>${next}</div>${isModel(i) ? "" : pcHTML(PAGE_ID, scPid(i))}</section>`;
 }
 const allChatsHTML = () => allHTML("All the chats", D.scenes.map((sc, i) => (liveTeacher() || !sceneGone(i)) ? `<div class="all-row"><span class="all-sub">${esc(scText(i, "contact"))}</span>
     ${sc.msgs.map((m, j) => `<p>${m.from ? esc(m.from) + ": " : ""}${esc(liveText(sp(i, `msgs.${j}.t`), m.t))}</p>`).join("")}
@@ -226,7 +228,9 @@ function render(){
   if(S.view === "groups" && !liveTeacher()) S.view = "chats";
   document.querySelector(".wrap").classList.toggle("groups", S.view === "groups");   /* her Groups tab: the whole width, no box */
   const keepGrid = S.view === "groups" ? document.getElementById("gw-grid") : null;   /* her cards (a half-typed note) survive a re-render */
+  const pcs = pcStash();   /* her 👥 panel under the chat keeps a half-typed note */
   main.innerHTML = liveBarHTML(liveLabel) + headHTML() + (S.view === "speak" ? speakStage() : S.view === "groups" ? groupsHTML() : sceneHTML());
+  pcRestore(pcs);
   if(keepGrid){ const g = document.getElementById("gw-grid"); if(g) g.replaceWith(keepGrid); }
   const sst = side.scrollTop; side.innerHTML = boxHTML(D.box, {clickable: true}) + allChatsHTML(); side.scrollTop = sst;
   wireAll(side); wireBox(side); wireSpeak(main, render);

@@ -190,6 +190,46 @@ function gwCardHTML(d){
     <div class="gw-said" data-said></div>
     <details class="gw-earlier" data-earlier></details></article>`;
 }
+/* ---------- 👥 under a chat on the task page (her wish 30.10 09:23: the task and the groups' work on one page) ----------
+   Her view only: every group's text for this chat, live (every 10 s), with the same ✓ Good, ✗ Change, ✎ Correction, 💬 as in 📥 Groups.
+   📥 Groups stays as it is (all the pages at once, who works with whom): the two show the same work. */
+const pcHTML = (tool, chat) => liveTeacher() && SHARE ? `<section class="pc" data-pc="${esc(tool)}|${chat}"><div class="pc-top"><b>👥 The groups on this chat</b><span class="pc-meta"></span></div><div class="pc-grid"></div></section>` : "";
+function pcCardHTML(d, tool, chat){
+  return `<article class="gw-card pc-card" data-dev="${esc(d.dev)}" data-tool="${esc(tool)}" data-chat="${chat}">
+    <div class="gw-who" data-who></div>
+    <div class="gw-text" data-text></div>
+    <div class="gw-notes" data-notes></div>
+    <div class="gw-pick" data-pick></div>
+    <div class="gw-tools"><button class="tool good" data-mk="good">✓ Good</button><button class="tool del" data-mk="change">✗ Change</button><button class="tool ins" data-mk="fix">✎ Correction</button><button class="tool cmt" data-mk="note">💬 Comment</button></div>
+    <div class="gw-quick">${QUICK.map(q => `<button data-quick="${esc(q)}">${esc(q)}</button>`).join("")}</div>
+    <form class="gw-own" data-own><input maxlength="300" placeholder="Or type your note to this group…" aria-label="Your note to this group"><button class="btn slim primary">Send</button></form>
+    <div class="gw-said" data-said></div></article>`;
+}
+function pcPaint(){
+  document.querySelectorAll(".pc[data-pc]").forEach(pc => {
+    const [tool, chat] = pc.dataset.pc.split("|"), list = gwDevices().map(d => ({d, r: d.rows.find(r => r.tool === tool && String(r.chat) === chat)})).filter(x => x.r);
+    const meta = pc.querySelector(".pc-meta"), mt = GW.err ? gwMetaText() : !GW.loaded ? "loading…" : `${list.length} group${list.length === 1 ? "" : "s"} · updated ${hm(GW.at)} · select words, then ✓ ✗ ✎ 💬`;
+    if(meta.innerHTML !== mt) meta.innerHTML = mt;
+    const grid = pc.querySelector(".pc-grid"), want = new Set(list.map(x => x.d.dev));
+    grid.querySelectorAll(".gw-card").forEach(c => { if(!want.has(c.dataset.dev)) c.remove(); });
+    const empty = grid.querySelector(".gw-empty");
+    if(!list.length){ if(!empty) grid.innerHTML = `<div class="gw-empty">Nothing from the groups on this chat yet.</div>`; return; }
+    if(empty) empty.remove();
+    list.forEach(({d, r}) => {
+      let c = grid.querySelector(`.gw-card[data-dev="${d.dev}"]`);
+      if(!c){ grid.insertAdjacentHTML("beforeend", pcCardHTML(d, tool, chat)); c = grid.lastElementChild; wireCard(c); }
+      c.classList.toggle("sent", r.status === "sent"); c.classList.toggle("typing", typingNow(r));
+      const set = (sel, h) => { const el = c.querySelector(sel); if(el.dataset.h !== h){ el.innerHTML = h; el.dataset.h = h; } };
+      set("[data-who]", `<span class="nm">${esc(d.label)}</span><span class="stt">${statusText(r)}</span>`);
+      const tx = c.querySelector("[data-text]"), sel = getSelection(), inside = sel && sel.rangeCount && !sel.isCollapsed && tx.contains(sel.anchorNode) && Date.now() - selAt < 8000;
+      if(!inside){ const h = markedText(r, c.dataset.quote || ""); if(tx.innerHTML !== h) tx.innerHTML = h; }
+      set("[data-notes]", gwNotesHTML(r, d.dev));
+    });
+  });
+}
+/* the task page re-renders on her taps: the panel (a half-typed note, picked words) is kept and put back */
+function pcStash(){ const m = {}; document.querySelectorAll(".pc[data-pc]").forEach(pc => { m[pc.dataset.pc] = pc; }); return m; }
+function pcRestore(m){ document.querySelectorAll(".pc[data-pc]").forEach(pc => { const old = m[pc.dataset.pc]; if(old && old !== pc) pc.replaceWith(old); }); pcPaint(); }
 function groupsHTML(){
   return `<section class="gw ${S && S.enter ? "enter" : ""}"><div class="gw-rooms" id="gw-rooms"></div><div class="gw-top"><b>📥 What the groups are doing</b><span class="gw-meta" id="gw-meta"></span><span class="grow"></span>
     ${LW.stages.length ? `<button class="btn slim" data-say-all>📢 To all rooms</button>` : ""}<button class="btn slim" data-gw-copy="names">📋 Copy all</button><button class="btn slim" data-gw-copy="">📋 Without names</button><button class="btn slim" data-gw-fresh>🧹 Start fresh</button></div>
@@ -229,6 +269,7 @@ function historyHTML(devs){
 function gwPaint(){
   const devs = gwDevices(), n = devs.filter(d => typingNow(d.cur)).length;
   const tab = document.querySelector('.stage-btn[data-stage="groups"]'); if(tab){ let b = tab.querySelector(".gw-n"); if(n){ if(!b){ b = document.createElement("span"); b.className = "gw-n"; tab.appendChild(b); } b.textContent = n; } else if(b) b.remove(); }
+  pcPaint();
   if(!LW.groupsView()) return;
   const meta = document.getElementById("gw-meta"); if(meta){ meta.innerHTML = gwMetaText(); const all = meta.querySelector("[data-gw-all]"); if(all) all.addEventListener("click", () => { if(!GW.showOld && gwSince() > gwNow() - RECENT) store.set(SINCE_KEY, 0); GW.showOld = !GW.showOld; gwRebuild(); }); }
   const rooms = document.getElementById("gw-rooms"); if(rooms){ const h = roomsHTML(); if(rooms.innerHTML !== h) rooms.innerHTML = h; rooms.hidden = !h; }
@@ -270,10 +311,10 @@ async function gwFetch(){
   else GW.err = err;
   gwPaint();
 }
-if(liveTeacher()){ setTimeout(gwFetch, 300); setInterval(() => { if(document.hidden) return; if(LW.groupsView() || !(gwTick++ % 3)) gwFetch(); }, 10000); }
+if(liveTeacher()){ setTimeout(gwFetch, 300); setInterval(() => { if(document.hidden) return; if(LW.groupsView() || document.querySelector(".pc") || !(gwTick++ % 3)) gwFetch(); }, 10000); }
 /* she selects words in a group's text: they stay picked until she sends a note or taps ✕ */
 document.addEventListener("selectionchange", () => {
-  if(!liveTeacher() || !LW.groupsView()) return;
+  if(!liveTeacher()) return;   /* in 📥 Groups and in 👥 under a chat */
   const sel = getSelection(); if(!sel || sel.isCollapsed || !sel.rangeCount) return;
   const tx = sel.anchorNode && (sel.anchorNode.nodeType === 1 ? sel.anchorNode : sel.anchorNode.parentElement).closest(".gw-text"); if(!tx || !tx.contains(sel.focusNode)) return;
   const q = sel.toString().replace(/\s+/g, " ").trim().slice(0, 160); if(!q) return;

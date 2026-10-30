@@ -42,7 +42,8 @@ __BASE_CSS__
 .gp{font:inherit;border:0;padding:0;background:transparent;cursor:pointer;color:inherit}
 .gp .f{color:#0000FF;font-weight:900}
 .gp .r{background:#FFFF00;color:transparent;border-radius:3px;padding:0 1px}
-.gp.open .r{color:#0000FF}
+.gp.open .r,.gp.open .f{color:#1D1D1B;font-weight:700;background:#FFFF00}   /* opened: the whole chunk black bold on the yellow (her read-through 30.10: blue on yellow is hard on the eyes) */
+.gp.open .f{border-radius:3px 0 0 3px;padding-left:1px}
 .gp.o .r{background:#F6B26B}
 .gp.o.open .r{background:#FDE7CF;color:#B45309;font-weight:600}
 .gp:not(.open):hover .r{outline:2px solid #E8D800}
@@ -126,9 +127,14 @@ __BASE_CSS__
 .fast h3{margin:0;font-size:1.1rem}
 .fast p{margin:0;font-size:1.08rem}
 .tool-frame{width:100%;height:calc(100vh - 13rem);min-height:32rem;border:2px solid var(--line);border-radius:14px;background:var(--ground)}
+/* 🎓 How it works (handoff 0920): a line above a block that has a tip — always on f-demo, on the other fields when the switch is on */
+.tip{margin:0;color:var(--muted);font-size:1.05rem;font-weight:600;border:2px dashed var(--line);border-radius:12px;padding:6px 12px;background:var(--card)}
+.howto{margin-left:6px}
+.howto[aria-pressed="true"]{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
+.compare{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 /* the box: X{{rest}} = the first letter shown, the rest hidden yellow (tap to open) */
 .ph .bh{background:#FFFF00;color:transparent;border-radius:3px}
-.ph .bh.open{color:#0000FF}
+.ph .bh.open{color:#1D1D1B;font-weight:700}
 /* her group dots on a deck (as on the cards pages) */
 .gdots{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;background:var(--card);border:2px dashed var(--line);border-radius:14px;padding:6px 12px}
 .gd-lbl{font-weight:900;font-size:.9rem}
@@ -179,7 +185,7 @@ D.stages.forEach((st, si) => st.blocks.forEach((b, bi) => {
 const writeItems = BLOCKS.filter(b => b.kind === "write").flatMap(b => b.items);
 const FAST = BLOCKS.map(b => b.fast).filter(Boolean);
 let S;
-function newState(){ S = {stage: 0, at: {}, view: "field", bs: {}, noFirst: false, enter: false, fast: null, look: null}; }
+function newState(){ S = {stage: 0, at: {}, view: "field", bs: {}, noFirst: false, enter: false, fast: null, look: null, howto: !!D.demo}; }
 newState();
 const curBlocks = () => D.stages[S.stage].blocks;
 const bIdx = () => Math.min(S.at[S.stage] || 0, curBlocks().length - 1);
@@ -231,13 +237,15 @@ function writeHTML(b){
       ${sharing() ? `<div class="t-notes" data-tnotes="${it._chat}">${notesOf(it._chat).map(noteHTML).join("")}</div>` : ""}
       ${sv.sent ? `<div class="sentmsg">${esc(sv.text)} <small>✓✓</small></div><div class="w-row"><button class="btn slim" data-wedit="${it._chat}">✏️ Change it</button><span class="share-note">${sharing() ? "Sent ✓ — Olya sees it too." : "Sent ✓ — only on this device."}</span></div>`
         : `<textarea data-wta="${it._chat}" rows="2" placeholder="Type it together…" aria-label="${esc(it.label || "Your message")}">${esc(sv.text || "")}</textarea>
-           <div class="w-row"><button class="btn slim primary" data-wsend="${it._chat}" ${(sv.text || "").trim() ? "" : "disabled"}>Send ➤</button>${sharing() ? `<span class="share-note">👀 Olya sees what you type here${studentCode() ? " (with your name)" : ""} and may send you a quick tip.</span>` : ""}</div>`}</div>`; }).join("")
-    + (b.items.every(it => (saved.w[it._chat] || {}).sent) ? `<p class="share-note">Now compare with our chat (📖).</p>` : "");
+           <div class="w-row"><button class="btn slim primary" data-wsend="${it._chat}" ${(sv.text || "").trim() ? "" : "disabled"}>Send ➤</button>${sharing() ? `<span class="share-note">👀 Olya sees what you type here${studentCode() ? " (with your name)" : ""} and may send you a quick tip.</span>` : ""}</div>`}</div>${pcHTML(PAGE_ID, it._chat)}`; }).join("")
+    + (!b.items.every(it => (saved.w[it._chat] || {}).sent) ? "" : b.example ? `<div class="ans-lines"><p class="ans-h">Example</p><p>${mk(b.example)}</p></div>`
+      : recallStage() > -1 && recallStage() !== b._si ? `<div class="compare"><span class="share-note">Now compare with our lesson:</span><button class="btn slim" data-goto="${recallStage()}">${esc(D.stages[recallStage()].label)} →</button></div>` : "");
 }
 function paintWriteNotes(){
   document.querySelectorAll("[data-tnotes]").forEach(box => { const i = +box.dataset.tnotes, want = notesOf(i).map(n => n.id).join();
     if(box.dataset.ids !== want){ box.innerHTML = notesOf(i).map(noteHTML).join(""); box.dataset.ids = want; } notesOf(i).forEach(n => seenNote(n.id)); });
 }
+const recallStage = () => { const t = BLOCKS.find(x => x.kind === "text"); return t ? t._si : -1; };
 /* ---------- 🔁 say ---------- */
 function sayHTML(b){
   const st = bs(b), opts = [["yes", "✓ We said it like this"], ["close", "≈ Close"], ["no", "✗ Differently"]];
@@ -255,7 +263,7 @@ function calendarsHTML(b){
     ${b.done ? (st.done ? `<p class="cal-done">${mk(b.done)}</p>` : `<div class="row-actions"><button class="btn primary" data-caldone>✓ Done — check the time</button></div>`) : ""}`;
 }
 const toolSrc = b => `${b.page}${LIVE_ON ? "-live" : ""}.html`;
-const toolHTML = b => `<iframe class="tool-frame" src="${toolSrc(b)}" title="${esc(b.instr || b.page)}"></iframe><p class="share-note"><a href="${toolSrc(b)}" target="_blank" rel="noopener">Open it in a new tab ↗</a></p>`;
+const toolHTML = b => `<iframe class="tool-frame" src="${toolSrc(b)}?embed=1" title="${esc(b.instr || b.page)}"></iframe><p class="share-note"><a href="${toolSrc(b)}" target="_blank" rel="noopener">Open it in a new tab ↗</a></p>`;
 function questionsHTML(b){
   const st = bs(b); if(st.spk) spkCur = st.spk; else { spkReset(); st.spk = spkCur; }
   const base = "questions." + b._pid;   /* her ✏️ / Hide / order on these too, kept by permanent numbers */
@@ -343,7 +351,8 @@ function blockHTML(b){
     : b.kind === "picture" ? pictureHTML(b) : b.kind === "calendars" ? calendarsHTML(b) : b.kind === "tool" ? toolHTML(b)
     : b.kind === "questions" ? questionsHTML(b) : b.kind === "cards" ? groupDotsHTML(b) + `<div class="deck">${cardsHTML(b)}</div>` : "";
   const instr = b.kind === "cards" || b.kind === "questions" ? (b.kind === "questions" ? b.instr : "") : b.instr;
-  return `${instr ? `<p class="finstr">${mk(instr)}</p>` : ""}<section class="blk ${S.enter ? "enter" : ""}" data-blk="${b._id}">${body}</section>`;
+  const tip = S.howto && b.tip ? `<p class="tip">🎓 How it works: ${mk(b.tip)}</p>` : "";
+  return `${tip}${instr ? `<p class="finstr">${mk(instr)}</p>` : ""}<section class="blk ${S.enter ? "enter" : ""}" data-blk="${b._id}">${body}</section>`;
 }
 function navHTML(){
   const bl = curBlocks(), i = bIdx(), more = i < bl.length - 1, nextStage = D.stages[S.stage + 1];
@@ -351,11 +360,12 @@ function navHTML(){
   return `<div class="blk-nav">${i ? `<button class="btn slim" data-prev>← Previous</button>` : ""}${dots}<span class="grow"></span>
     ${more ? `<button class="btn slim primary" data-next>Next →</button>` : nextStage ? `<button class="btn slim primary" data-next>Next: ${esc(nextStage.label)} →</button>` : ""}</div>`;
 }
-const cellName = () => D.board ? `${D.board.col} · $${D.board.value}` : "";
+const cellName = () => D.board && D.board.col ? `${D.board.col} · $${D.board.value}` : "";
 const boardHref = () => D.boardPage ? `${D.boardPage}${LIVE_ON ? "-live" : ""}.html` : "";
 function headHTML(){
   const st = D.stages.map((s, i) => [String(i), s.label]).concat(liveTeacher() ? [["groups", "📥 Groups"]] : []);
-  return `<header class="head">${D.board ? `<span class="part">${esc(cellName())}</span>` : ""}<h1>${esc(D.title)}</h1>${stagesHTML(st, S.view === "groups" ? "groups" : String(S.stage))}</header>`;
+  const howto = !D.demo && BLOCKS.some(b => b.tip) && S.view === "field" ? `<button class="btn slim howto" data-howto aria-pressed="${S.howto}" title="Show how each part of this page works (for the screen you share)">🎓 How it works</button>` : "";
+  return `<header class="head">${cellName() ? `<span class="part">${esc(cellName())}</span>` : ""}<h1>${esc(D.title)}</h1>${stagesHTML(st, S.view === "groups" ? "groups" : String(S.stage))}${howto}</header>`;
 }
 function render(){
   liveApply();
@@ -366,10 +376,12 @@ function render(){
   wrap.classList.toggle("groups", S.view === "groups");
   const back = boardHref() ? `<div class="board-back"><a href="${boardHref()}">⬅ Board</a></div>` : "";
   const bar = S.view === "field" ? liveBarHTML(liveLabel) : "";
+  const pcs = pcStash();   /* her 👥 panel under a message keeps a half-typed note */
   if(S.view === "groups") main.innerHTML = headHTML() + groupsHTML() + back;
   else if(S.fast) main.innerHTML = headHTML() + `<p class="finstr">↺ Your hard cards once more</p><section class="blk"><div class="deck">${cardsHTML(S.fast)}</div><div class="row-actions"><button class="btn" data-fast-close>← Back</button></div></section>` + back;
   else main.innerHTML = bar + headHTML() + blockHTML(b) + navHTML() + fastHTML() + back;
   if(keepGrid){ const g = document.getElementById("gw-grid"); if(g) g.replaceWith(keepGrid); }
+  pcRestore(pcs);
   const st = side.scrollTop; side.innerHTML = box && D.boxes[box] ? fieldBoxHTML(D.boxes[box]) : ""; side.scrollTop = st;
   wireBox(side); wireBoxHidden(side);
   S.enter = false; if(b && b.kind === "cards") deckOf(b).fresh = false;
@@ -393,6 +405,8 @@ function wire(root){
   on("[data-next]", () => { const bl = curBlocks(), i = bIdx(); if(i < bl.length - 1){ S.at[S.stage] = i + 1; S.enter = true; render(); scrollTo(0, 0); } else if(S.stage < D.stages.length - 1) goStage(S.stage + 1); });
   on("[data-prev]", () => { S.at[S.stage] = Math.max(0, bIdx() - 1); S.enter = true; render(); scrollTo(0, 0); });
   on("[data-bgo]", x => { S.at[S.stage] = +x.dataset.bgo; S.enter = true; render(); });
+  on("[data-howto]", () => { S.howto = !S.howto; render(); });
+  on("[data-goto]", x => goStage(+x.dataset.goto));
   const b = S.fast || curBlock(); if(!b) return;
   /* gaps */
   on("[data-gap]", x => { const st = bs(b), id = x.dataset.gap; st.open.has(id) ? st.open.delete(id) : st.open.add(id); render(); });

@@ -3,6 +3,10 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":
 const shuffle = a => { a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const store = { get(k){ try{ return JSON.parse(localStorage.getItem(k) || "null"); }catch(e){ return null; } }, set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} } };
 const params = new URLSearchParams(location.search);
+/* inside a field page (?embed=1; tools 13, her catch 30.10 09:20): only the working part — no Live bar, no title, no 📥 Groups (the field
+   has its own), and its steps as small sub-steps under the field's tabs: one row of big tabs on the screen */
+const EMBED = params.get("embed") === "1";
+if(EMBED) document.documentElement.classList.add("embed");
 /* **box phrase** in a speaking task or a follow-up = shown like the box phrases in the examples (checklist 8.07) */
 const boxMarks = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>');
 const calm = () => !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -68,7 +72,7 @@ function wireSpeak(root, rerender){
 
 /* the stages of the task (her rule, 27.10: every tool has stages — at least the practice and the speaking —
    and a group can move between them at any time without clicking through) */
-const stagesHTML = (list, cur) => `<nav class="stages" aria-label="Stages">${list.map(([id, label], i) =>
+const stagesHTML = (list, cur) => `<nav class="stages ${EMBED ? "sub" : ""}" aria-label="Stages">${list.filter(([id]) => !(EMBED && id === "groups")).map(([id, label], i) =>
   `${i ? `<span class="stage-arrow" aria-hidden="true">→</span>` : ""}<button class="stage-btn" data-stage="${id}" ${id === cur ? `aria-current="step"` : ""}>${label}</button>`).join("")}</nav>`;
 
 /* 📋 everything on one screen, folded: to show a card or an example again later in the lesson */
@@ -190,14 +194,14 @@ function wireDrag(root){
     }));
   });
 }
-const liveTools = (path, {last = false, edit = true, fields = ""} = {}) => !(liveTeacher() && path) ? "" : liveHidden(path)
+const liveTools = (path, {last = false, edit = true, fields = ""} = {}) => !(liveTeacher() && path) || EMBED ? "" : liveHidden(path)
   ? `<span class="live-tools"><span class="live-hidden-tag">Hidden from the groups</span>${edit ? `<button class="live-b" data-live-edit="${fields || path}" title="Correct the text" aria-label="Correct the text">✏️</button>` : ""}<button class="live-b live-show" data-live-unhide="${path}" title="Show it to the groups again">Show</button></span>`
   : `<span class="live-tools">${edit ? `<button class="live-b" data-live-edit="${fields || path}" title="Correct the text" aria-label="Correct the text">✏️</button>` : ""}${last ? `<button class="live-b" data-live-last="${path}" title="Move to the end" aria-label="Move to the end">⤓</button>` : ""}<button class="live-b" data-live-hide="${path}" title="Hide it from the groups for now — you can correct it and show it again" aria-label="Hide from the groups">Hide</button></span>`;
 /* her screen: a hidden item stays, greyed (class for its box) */
 const liveDim = path => liveTeacher() && liveHidden(path) ? "is-hidden" : "";
 /* the bar on top of her screen: what she has hidden (tap to show it again), Reset */
 function liveBarHTML(labelOf){
-  if(!liveTeacher()) return "";
+  if(!liveTeacher() || EMBED) return "";
   const removed = LV.hide.map(fromStore).filter(Boolean).map(p => `<button class="live-chip" data-live-unhide="${p}" title="Show it to the groups again">👁 ${esc((labelOf(p) || p).slice(0, 38))}${(labelOf(p) || p).length > 38 ? "…" : ""}</button>`).join("");
   const n = LV.hide.length + LV.last.length + Object.keys(LV.text).length + Object.keys(LV.order).length;
   liveLabelOf = labelOf;

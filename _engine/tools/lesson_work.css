@@ -85,3 +85,9 @@
 .gw-hist summary{cursor:pointer;font-weight:800}
 .gw-hist p{margin:6px 0 0}
 .gw-hist .mv{color:var(--muted);font-size:.9rem}
+
+/* 👥 under a chat on the task page (her view): the groups' texts for this chat */
+.pc{display:grid;gap:8px;border:2px dashed var(--line);border-radius:16px;padding:10px 12px;background:var(--ground)}
+.pc-top{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.pc-meta{color:var(--muted);font-size:.88rem}
+.pc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(20rem,1fr));gap:10px}

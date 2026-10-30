@@ -173,3 +173,10 @@ details.all[open] summary{color:var(--ink)}
 .live-edit{display:grid;gap:8px;background:var(--card);border:2px solid var(--instr);border-radius:12px;padding:10px 12px}
 .live-edit label{display:grid;gap:2px;font-size:.85rem;font-weight:700;color:var(--muted)}
 .live-edit textarea{font:inherit;font-size:1.05rem;font-weight:400;color:var(--ink);background:var(--ground);border:2px solid var(--line);border-radius:8px;padding:6px 8px;width:100%;resize:vertical}
+
+/* inside a field page (?embed=1, tools 13): only the working part; its steps small, under the field's own tabs */
+.embed .head h1,.embed .head .part{display:none}
+.embed footer.legal{display:none}
+.embed .stages.sub{margin-left:0}
+.embed .stages.sub .stage-btn{font-size:.85rem;padding:2px 10px;border-width:1px}
+.embed .stages.sub .stage-arrow{font-size:.8rem}

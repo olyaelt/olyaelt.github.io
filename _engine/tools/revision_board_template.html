@@ -13,7 +13,7 @@ __BASE_CSS__
 .wrap.board .side{display:none}
 .jb{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));gap:8px}
 .jb .colh{background:#1F3B57;color:#FFFFFF;border-radius:10px;padding:8px 6px;text-align:center;font-weight:900;font-size:1rem;line-height:1.15;display:grid;place-items:center;min-height:3.4rem;hyphens:auto;overflow-wrap:anywhere}
-.cell{border-radius:12px;min-height:4.6rem;display:grid;place-items:center;font-weight:900;font-size:1.9rem;text-decoration:none;background:#2B5D8A;color:#FFE27A;border:3px solid transparent;position:relative;transition:transform .15s}
+.cell{border-radius:12px;min-height:clamp(3rem, calc((100vh - 330px) / 6), 4.6rem);display:grid;place-items:center;font-weight:900;font-size:1.9rem;text-decoration:none;background:#2B5D8A;color:#FFE27A;border:3px solid transparent;position:relative;transition:transform .15s}
 .cell.nolink{background:color-mix(in srgb, #2B5D8A 55%, var(--ground));color:color-mix(in srgb, #FFE27A 70%, var(--ground));cursor:default}
 a.cell:hover,button.cell:hover{transform:translateY(-2px)}
 button.cell{font-family:inherit;cursor:pointer}
@@ -23,13 +23,19 @@ button.cell{font-family:inherit;cursor:pointer}
 .cell.now{border-color:#0693E3;box-shadow:0 0 0 4px #9FD3FF;animation:nowPulse 1.6s ease-in-out infinite}
 @keyframes nowPulse{0%,100%{box-shadow:0 0 0 3px #9FD3FF}50%{box-shadow:0 0 0 10px rgba(6,147,227,.25)}}
 .cell.sel{outline:4px dashed var(--instr);outline-offset:2px}
+div.cell.sel{align-content:center;gap:4px;padding:4px}
+div.cell.sel .v{font-size:1rem;line-height:1}
+.cellbtn{all:unset;cursor:pointer;display:grid;place-items:center;width:100%;height:100%;border-radius:inherit}
+.cellacts{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.cellacts button{font:inherit;font-size:.95rem;font-weight:900;border-radius:99px;padding:3px 12px;cursor:pointer;border:2px solid #FFFFFF;background:#FFFFFF;color:#0B5394}
+.cellacts button.ghost{background:transparent;color:inherit;border-color:currentColor;font-size:.8rem;padding:2px 8px}
+.cellacts button:disabled{opacity:.6;cursor:wait}
 .nowstrip{display:flex;align-items:center;gap:12px;background:#0693E3;color:#FFFFFF;border-radius:14px;padding:10px 16px;font-weight:900;font-size:1.2rem;text-decoration:none}
 .nowstrip .go{margin-left:auto;background:#FFFFFF;color:#0693E3;border-radius:99px;padding:4px 14px}
-.cellbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px 14px}
-.cellbar b{margin-right:6px}
-.cellbar .grow{flex:1}
+.boardfoot{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:flex-end}
+.head .howgame{margin-left:auto}
 .legend{color:var(--muted);font-size:.92rem;margin:0}
-@media (max-width:700px){ .cell{font-size:1.15rem;min-height:3.4rem} .jb .colh{font-size:.72rem;min-height:3rem;padding:4px 2px} .jb{gap:5px} }
+@media (max-width:700px){ .cellacts button{font-size:.78rem;padding:2px 7px} .cell{font-size:1.15rem;min-height:3.4rem} .jb .colh{font-size:.72rem;min-height:3rem;padding:4px 2px} .jb{gap:5px} }
 </style>
 </head>
 <body>
@@ -43,34 +49,55 @@ const PAGE_ID = "__PAGE_ID__";
 const LIVE_ON = __LIVE__, LIVE_URL = "__SYNC_URL__";
 __BASE_JS__
 /* The board: columns × values; a cell with a page links to it (the -live board to the -live pages). On the -live board Olya (her code)
-   taps a cell: ▶ Now (everyone's board shows it pulsing, with a strip on top), ✓ Done (greyed, still open), Clear. Her taps go to her
-   table (sheet Live, as every live page: text "now" = cell|time, "done.<cell>" = time; Live log keeps the times for the debrief).
-   The groups' boards ask every 10 s and show it at once (it is a pointer, not a change under their eyes). No table → her voice. */
+   taps a cell and ▶ Play appears on it (her wish 30.10 09:04: one button, not Now + Open): it lights the cell up on every room's board
+   (pulsing, a strip "▶ Now playing … Open →") and opens its page for her. The cell played before turns grey by itself; a played or
+   pulsing cell tapped again offers ↺ Not played (a wrong tap). 🧹 Start fresh (bottom) clears it all before the lesson.
+   Her taps go to her table (sheet Live, as every live page: text "now" = cell|time, "done.<cell>" = time; Live log keeps the times for
+   the debrief). The groups' boards ask every 10 s and show it at once (it is a pointer, not a change under their eyes). No table → her voice. */
 const cellKey = c => "c" + D.cols.indexOf(c.col) + "v" + c.value;
 const cellAt = (col, v) => D.cells.find(c => c.col === col && c.value === v);
 const href = c => c && c.page ? `${c.page}${LIVE_ON ? "-live" : ""}.html` : "";
-const nowKey = () => { const [k, t] = String(LV.text.now || "").split("|"); return k && Date.now() - (Number(t) || 0) < 3 * 3600000 ? k : ""; };   /* ▶ Now goes out by itself after 3 hours */
+const nowKey = () => { const [k, t] = String(LV.text.now || "").split("|"); return k && Date.now() - (Number(t) || 0) < 3 * 3600000 ? k : ""; };   /* the light goes out by itself after 3 hours */
 const doneAt = k => Number(LV.text["done." + k]) || 0;
-let sel = null;
+let sel = null, busy = false, sureFresh = false;
+async function play(k){
+  const c = D.cells.find(x => cellKey(x) === k), prev = nowKey(), t = Date.now(); busy = true; render();
+  await liveOp("text", "now", k + "|" + t);                                   /* first the light, so the rooms see it at once */
+  if(prev && prev !== k && !doneAt(prev)) await liveOp("text", "done." + prev, String(t));   /* the one played before turns grey */
+  busy = false; sel = null; const lit = nowKey() === k;
+  if(lit && href(c)) { location.href = href(c); return; }
+  if(lit) liveMsg = "✓ lit up in every room"; render();
+}
+async function unplay(k){
+  busy = true; render();
+  if(nowKey() === k) await liveOp("untext", "now");
+  if(doneAt(k)) await liveOp("untext", "done." + k);
+  busy = false; sel = null; if(!/^not saved/.test(liveMsg)) liveMsg = "✓ back to new"; render();
+}
 function render(){
   liveApply();
   const mine = liveTeacher(), nk = nowKey(), nowC = D.cells.find(c => cellKey(c) === nk);
-  const strip = nowC ? (href(nowC) ? `<a class="nowstrip" href="${href(nowC)}">▶ Now: ${esc(nowC.col)} · $${nowC.value}<span class="go">Open →</span></a>` : `<div class="nowstrip">▶ Now: ${esc(nowC.col)} · $${nowC.value}</div>`) : "";
+  const strip = nowC ? (href(nowC) ? `<a class="nowstrip" href="${href(nowC)}">▶ Now playing: ${esc(nowC.col)} · $${nowC.value}<span class="go">Open →</span></a>` : `<div class="nowstrip">▶ Now playing: ${esc(nowC.col)} · $${nowC.value}</div>`) : "";
   const grid = `<div class="jb" style="--cols:${D.cols.length}">${D.cols.map(c => `<div class="colh">${esc(c)}</div>`).join("")}
-    ${D.values.map(v => D.cols.map(col => { const c = cellAt(col, v), k = c ? cellKey(c) : "", cls = `cell ${c && c.today && mine ? "today" : ""} ${k && doneAt(k) ? "done" : ""} ${k && k === nk ? "now" : ""} ${sel === k && k ? "sel" : ""}`;
+    ${D.values.map(v => D.cols.map(col => { const c = cellAt(col, v), k = c ? cellKey(c) : "", isNow = k && k === nk;
+      const cls = `cell ${c && c.today && mine ? "today" : ""} ${k && doneAt(k) && !isNow ? "done" : ""} ${isNow ? "now" : ""} ${sel === k && k ? "sel" : ""}`;
+      if(mine && c && sel === k) return `<div class="${cls}" data-cellwrap="${k}"><span class="v">$${v}</span><span class="cellacts"><button data-play ${busy ? "disabled" : ""}>${busy ? "…" : "▶ Play"}</button>${isNow || doneAt(k) ? `<button class="ghost" data-unplay ${busy ? "disabled" : ""}>↺ Not played</button>` : ""}</span></div>`;
       if(mine && c) return `<button class="${cls}" data-cell="${k}" aria-label="${esc(col)} $${v}: ${esc(c.title || "")}">$${v}</button>`;
       return c && c.page ? `<a class="${cls}" href="${href(c)}" aria-label="${esc(col)} $${v}">$${v}</a>` : `<span class="${cls} nolink">$${v}</span>`; }).join("")).join("")}</div>`;
   const sc = sel && D.cells.find(c => cellKey(c) === sel);
-  const bar = mine ? (sc ? `<div class="cellbar"><b>${esc(sc.col)} · $${sc.value}${sc.title ? " — " + esc(sc.title) : ""}</b>
-      <button class="btn slim primary" data-now>▶ Now</button><button class="btn slim" data-done>${doneAt(sel) ? "↺ Not done" : "✓ Done"}</button>${nk === sel ? `<button class="btn slim" data-clear>Clear Now</button>` : ""}
-      <span class="grow"></span>${href(sc) ? `<a class="btn slim" href="${href(sc)}">Open →</a>` : `<span class="legend">no page yet: from the slides</span>`}<span id="live-status" class="legend">${esc(liveMsg)}</span></div>`
-      : `<p class="legend">👩‍🏫 Tap a cell: ▶ Now shows it to every room (pulsing), ✓ Done greys it. Orange = today's fields.</p>`) : "";
-  document.getElementById("main").innerHTML = `<header class="head"><h1>${esc(D.title)}</h1></header>${strip}${bar}${grid}`;
-  document.querySelectorAll("[data-cell]").forEach(b => b.addEventListener("click", () => { sel = sel === b.dataset.cell ? null : b.dataset.cell; liveMsg = ""; render(); }));
+  const note = !mine ? "" : `<p class="legend">${sc ? `<b>${esc(sc.col)} · $${sc.value}${sc.title ? " — " + esc(sc.title) : ""}</b> · ${href(sc) ? "▶ Play lights it up in every room and opens its page." : "▶ Play lights it up in every room (no page: from the slides)."}`
+      : "👩‍🏫 Tap the cell they choose, then ▶ Play: it lights up in every room and its page opens. Orange = today's fields."} <span id="live-status">${esc(liveMsg)}</span></p>`;
+  const foot = !mine ? "" : `<div class="boardfoot">${sureFresh ? `<span class="legend">All cells back to new, nothing lit up?</span><button class="btn slim primary" data-fresh-yes>🧹 Yes, start fresh</button><button class="btn slim" data-fresh-no>Cancel</button>` : `<button class="btn slim" data-fresh>🧹 Start fresh</button>`}</div>`;
+  const btns = (D.buttons || []).map(x => `<a class="btn slim primary howgame" href="${x.page}${LIVE_ON ? "-live" : ""}.html">${esc(x.label)}</a>`).join("");   /* 🎓 How the game works (f-demo) */
+  document.getElementById("main").innerHTML = `<header class="head"><h1>${esc(D.title)}</h1>${btns}</header>${strip}${note}${grid}${foot}`;
+  document.querySelectorAll("[data-cell]").forEach(b => b.addEventListener("click", () => { if(busy) return; sel = b.dataset.cell; liveMsg = ""; sureFresh = false; render(); }));
+  document.querySelectorAll("[data-cellwrap] .v").forEach(b => b.addEventListener("click", () => { if(busy) return; sel = null; render(); }));
   const on = (q, fn) => document.querySelectorAll(q).forEach(b => b.addEventListener("click", fn));
-  on("[data-now]", () => liveOp("text", "now", sel + "|" + Date.now()));
-  on("[data-done]", () => doneAt(sel) ? liveOp("untext", "done." + sel) : liveOp("text", "done." + sel, String(Date.now())));
-  on("[data-clear]", () => liveOp("untext", "now"));
+  on("[data-play]", () => { if(!busy) play(sel); });
+  on("[data-unplay]", () => { if(!busy) unplay(sel); });
+  on("[data-fresh]", () => { sureFresh = true; render(); });
+  on("[data-fresh-no]", () => { sureFresh = false; render(); });
+  on("[data-fresh-yes]", async () => { sureFresh = false; sel = null; await liveOp("reset", ""); if(!/^not saved/.test(liveMsg)) liveMsg = "✓ all cells back to new"; render(); });
 }
 /* the groups' boards: every 10 s, shown at once */
 async function boardPoll(){

@@ -46,7 +46,7 @@
  },
  "stages": [
   {
-   "label": "🔁 Remember",
+   "label": "📝 Test yourself",
    "blocks": [
     {
      "kind": "say",
@@ -68,12 +68,13 @@
       "((Anna:)) Bad news! Our café's closing next month.",
       "((You:)) Oh no, that's a shame! **Do you know why?**",
       "((Для тебя это новость → реагируешь и спрашиваешь))"
-     ]
+     ],
+     "tip": "Say it aloud first, then tap “Show the answer”."
     }
    ]
   },
   {
-   "label": "📖 Linden Street",
+   "label": "🔁 Recall",
    "blocks": [
     {
      "kind": "text",
@@ -141,12 +142,13 @@
         "My laptop and a bag."
        ]
       }
-     ]
+     ],
+     "tip": "The first letters are given. Tap the yellow to check."
     }
    ]
   },
   {
-   "label": "🃏 Cards",
+   "label": "🃏 Practice",
    "blocks": [
     {
      "kind": "cards",
@@ -181,7 +183,8 @@
        "back": "Yes, I **did**. It's scary, isn't it?",
        "why": "Did you…? → I did. Тег — отлично."
       }
-     ]
+     ],
+     "tip": "Green = good, grey = could be better. Say the perfect version, then tap the card. ↺ Again = we weren't sure."
     },
     {
      "kind": "cards",
@@ -232,7 +235,7 @@
    ]
   },
   {
-   "label": "💬 Speaking",
+   "label": "💬 Use it",
    "blocks": [
     {
      "kind": "model",
@@ -316,7 +319,8 @@
      "kind": "tool",
      "page": "tags",
      "instr": "Take a news card and flip a coin: do you both know it, or is it news to B? A starts, B replies. Swap.",
-     "plain": "slide 51 (the same 6 news, a die + a coin)"
+     "plain": "slide 51 (the same 6 news, a die + a coin)",
+     "tip": "Take a news card, then toss the coin: heads = you both know it, tails = it's news to B."
     },
     {
      "kind": "questions",
@@ -326,7 +330,7 @@
       "**2**  Tell your partner something from your week they don't know — good or bad. They react and ask **two** questions."
      ],
      "box": "BOX",
-     "fast": "If you're done: go back to Linden Street (📖) and say the replies from memory. Then tell one piece of news twice: your partner replies both ways."
+     "fast": "If you're done: go back to Linden Street in 🔁 Recall and say the replies from memory. Then tell one piece of news twice: your partner replies both ways."
     }
    ]
   }

@@ -1,0 +1,65 @@
+{
+ "blocks": [
+  {
+   "pid": 0,
+   "sig": "write gary is the office goldfish. your colleague texts you. write a reply together, then send it.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "text complete the chat and say the words. tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "cards three cards, three kinds. say your answer, then tap the card to check.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "cards one of our sentences. green = good, grey = could be better. how would you make it perfect english?",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "cards how do you say it in english?",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "questions now talk. use the box.",
+   "gone": false
+  }
+ ],
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "gone missing gary has gone missing. gary has ___. nobody knows where gary is. missing пропал → has gone missing · also fine: gary is missing.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "gary has been missing since friday. в чате офиса gary is missing since friday. с since — «с тех пор и до сих пор»: has been missing.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "thanks for the heads-up! спасибо, что предупредила!",
+   "gone": false
+  }
+ ],
+ "write": [
+  {
+   "pid": 0,
+   "sig": "your colleague, in the office chat: have you seen gary? his bowl is empty! 🐟 your reply",
+   "gone": false
+  }
+ ],
+ "questions.5": [
+  {
+   "pid": 0,
+   "sig": "tell your partner about a time something went missing at work or at home (real or made up!). what was it? did it turn up? your partner reacts and asks two questions.",
+   "gone": false
+  }
+ ]
+}

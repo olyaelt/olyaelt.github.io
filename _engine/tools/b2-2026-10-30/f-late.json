@@ -30,11 +30,11 @@
  },
  "stages": [
   {
-   "label": "🔁 Remember",
+   "label": "📝 Test yourself",
    "blocks": [
     {
      "kind": "write",
-     "instr": "What would you text? Write your two messages together. Then compare with our chat (📖).",
+     "instr": "What would you text? Write your two messages together. Then compare with our Zoom chat in 🔁 Recall.",
      "lesson_work": true,
      "items": [
       {
@@ -46,12 +46,13 @@
        "incoming": "Sorry, my train's been delayed — I'll be 20 minutes late!",
        "label": "Your reply"
       }
-     ]
+     ],
+     "tip": "Type your two messages together and tap Send — Olya sees them and can send you a note."
     }
    ]
   },
   {
-   "label": "📖 Our Zoom chat",
+   "label": "🔁 Recall",
    "blocks": [
     {
      "kind": "text",
@@ -268,8 +269,14 @@
        "ru": "начнём без вас"
       }
      ],
-     "gloss_note": "Here the glossary is only the Russian of each gap, in order (as on slide 54): its English hides like the gaps."
-    },
+     "gloss_note": "Here the glossary is only the Russian of each gap, in order (as on slide 54): its English hides like the gaps.",
+     "tip": "The first letters are given. Tap the yellow to check. The Russian beside it helps."
+    }
+   ]
+  },
+  {
+   "label": "🃏 Practice",
+   "blocks": [
     {
      "kind": "cards",
      "style": "say",
@@ -291,13 +298,9 @@
        "front": "Anna (group chat): I might be a bit late too, sorry! ((Что хочется сказать: Я, наверное, тоже. Буду через 5 минут!))",
        "back": "**Me too, probably. I'll be there in 5!**"
       }
-     ]
-    }
-   ]
-  },
-  {
-   "label": "🃏 Cards",
-   "blocks": [
+     ],
+     "tip": "Say your answer, then tap the card. ↺ Again = we weren't sure: it comes back two or three cards later."
+    },
     {
      "kind": "cards",
      "style": "kwt",
@@ -353,13 +356,14 @@
    ]
   },
   {
-   "label": "💬 Speaking",
+   "label": "💬 Use it",
    "blocks": [
     {
      "kind": "tool",
      "page": "late",
      "instr": "Read who's writing and how much it matters. Agree together what to write, type it and send.",
-     "plain": "slides 67–77 (the five chats), its speaking stage = slide 77's questions + the fast finisher"
+     "plain": "slides 67–77 (the five chats), its speaking stage = slide 77's questions + the fast finisher",
+     "tip": "A chat on a phone. Read who's writing and how much it matters, type your message together and Send. Then the example opens and they reply. Chat 1 is the model: tap the yellow."
     }
    ]
   }
