@@ -619,7 +619,7 @@ function fieldBoxHTML(box){
 }
 function wireBoxHidden(root){
   root.querySelectorAll("[data-bh]").forEach(x => x.addEventListener("click", e => { if(x.classList.contains("open")) return; e.stopPropagation(); x.classList.add("open"); }, true));
-  root.querySelectorAll("[data-ph]").forEach(btn => btn.addEventListener("click", () => lwSignal("box", btn.dataset.pt, usedPhrases.has(btn.dataset.ph) ? 1 : 0)));
+  /* box ticks: sent by wireBox (tool_base) for every -live page */
 }
 function goStage(i, cloud = true){ if(S.view === "field" && S.stage === i && !S.fast && S.intro === cloud) return; S.intro = cloud; S.view = "field"; S.fast = null; S.stage = i; S.enter = true; render(); scrollTo(0, 0); lwWhere(D.stages[i].label); }
 function wire(root){

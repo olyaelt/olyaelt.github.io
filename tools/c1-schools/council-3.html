@@ -109,6 +109,8 @@ button.ph:hover{background:color-mix(in srgb, var(--used) 35%, transparent)}
 .ph.used{background:var(--used);color:var(--used-ink)}
 .ph .gloss{color:var(--muted);font-style:italic;font-size:.86em}
 .ph .bx{font-weight:900}
+/* her view: how many screens ticked the phrase (her 30.10 18:45) */
+.ph .ph-n{display:inline-block;margin-left:8px;font-size:.78em;font-weight:900;color:var(--instr-ink);background:var(--instr);border-radius:99px;padding:0 8px;vertical-align:1px;white-space:nowrap}
 .ph.used::before{content:"✓";border:0;width:auto;height:auto;top:.18em;left:7px;font-weight:900;color:var(--ok)}
 .box.static .ph{cursor:default}
 .box.static .ph::before{display:none}
@@ -445,7 +447,7 @@ const phHTML = t => { const k = t.indexOf(" – "), en = k < 0 ? t : t.slice(0, 
 const usedPhrases = new Set();
 function boxHTML(box, {clickable = true, collapsible = false, open = true} = {}){
   const items = box.map((g, gi) => `<h4>${esc(g.h)}</h4>` + g.items.map((t, ti) => clickable
-      ? `<button class="ph ${usedPhrases.has(gi + "." + ti) ? "used" : ""}" data-ph="${gi}.${ti}" aria-pressed="${usedPhrases.has(gi + "." + ti)}">${phHTML(t)}</button>`
+      ? `<button class="ph ${usedPhrases.has(gi + "." + ti) ? "used" : ""}" data-ph="${gi}.${ti}" data-pt="${esc(phPlain(t))}" aria-pressed="${usedPhrases.has(gi + "." + ti)}">${phHTML(t)}</button>`
       : `<p class="ph">${phHTML(t)}</p>`).join("")).join("");
   return `<aside class="box ${clickable ? "" : "static"}" aria-label="Useful language">
     <div class="box-top"><img class="sticker" src="${STICKER}" alt="Useful language">${collapsible ? `<button class="linkish" data-box-toggle>Hide</button>` : ""}</div>
@@ -455,8 +457,36 @@ function wireBox(root, rerender){
   root.querySelectorAll("[data-ph]").forEach(b => b.addEventListener("click", () => {
     const k = b.dataset.ph; usedPhrases.has(k) ? usedPhrases.delete(k) : usedPhrases.add(k);
     b.classList.toggle("used", usedPhrases.has(k)); b.setAttribute("aria-pressed", usedPhrases.has(k)); if(usedPhrases.has(k)) pop(b);
+    if(b.dataset.pt) boxTick(b.dataset.pt, usedPhrases.has(k));
   }));
+  paintBoxCounts();
 }
+/* her 30.10 18:45: which box phrases the groups ticked. On a -live page every tick goes to her table (sheet Lesson signals: page, a random
+   device id, the phrase, on / off; latest wins); on her screen each phrase shows "👥 3" = how many screens have it ticked now (this lesson:
+   the last 3 hours, or since her 🧹 Start fresh). Her own device never sends. */
+const phPlain = t => String(t).replace(/\*\*|\{\{|\}\}/g, "");
+const sigNorm = t => String(t == null ? "" : t).replace(/[\r\n]+/g, " ").trim().slice(0, 120);
+const toolDevId = () => { const ok = d => /^[a-z0-9]{12,40}$/.test(d || ""), make = () => Array.from({length: 16}, () => "abcdefghijklmnopqrstuvwxyz0123456789"[Math.floor(Math.random() * 36)]).join("");
+  try{ let d = localStorage.getItem("tool-dev"); if(!ok(d)){ d = make(); localStorage.setItem("tool-dev", d); } return d; }catch(e){ return make(); } };
+function boxTick(text, on){
+  if(!LIVE_ON || !LIVE_URL || liveTeacher()) return;
+  livePost({action: "toolSignal", tool: PAGE_ID, dev: toolDevId(), kind: "box", item: sigNorm(text), value: on ? "1" : "0"});
+}
+let BOXSIG = null;
+async function boxPoll(){
+  if(!LIVE_ON || !LIVE_URL || !liveTeacher() || document.hidden || !document.querySelector("[data-ph][data-pt]")) return;
+  const res = await livePost({action: "toolList", tool: PAGE_ID, code: localStorage.getItem("hw-code") || ""});
+  if(res && res.ok && Array.isArray(res.signals)){ BOXSIG = res.signals; paintBoxCounts(); }
+}
+function paintBoxCounts(){
+  if(!BOXSIG) return;
+  const cut = Math.max(Number(store.get("tool-work-since-" + PAGE_ID)) || 0, Date.now() - 3 * 3600e3), on = {};
+  BOXSIG.forEach(s => { if(s.kind === "box" && String(s.value) === "1" && Number(s.ts) >= cut){ const k = sigNorm(s.item); on[k] = (on[k] || 0) + 1; } });
+  document.querySelectorAll("[data-ph][data-pt]").forEach(b => { const n = on[sigNorm(b.dataset.pt)] || 0; let c = b.querySelector(".ph-n");
+    if(!n){ if(c) c.remove(); return; } if(!c){ c = document.createElement("span"); c.className = "ph-n"; b.appendChild(c); }
+    c.textContent = "👥 " + n; c.title = `${n} screen${n === 1 ? "" : "s"} ticked it`; });
+}
+if(typeof LIVE_ON !== "undefined" && LIVE_ON){ setTimeout(boxPoll, 1500); setInterval(boxPoll, 15000); }
 
 /* ---------- live version (tools 7, her wish 28.10): Olya removes, moves or corrects items during a lesson ----------
    Only on the "-live" pages (LIVE_ON). The page as built is the default; her changes come from her table

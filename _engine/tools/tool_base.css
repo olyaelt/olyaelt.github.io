@@ -91,6 +91,8 @@ button.ph:hover{background:color-mix(in srgb, var(--used) 35%, transparent)}
 .ph.used{background:var(--used);color:var(--used-ink)}
 .ph .gloss{color:var(--muted);font-style:italic;font-size:.86em}
 .ph .bx{font-weight:900}
+/* her view: how many screens ticked the phrase (her 30.10 18:45) */
+.ph .ph-n{display:inline-block;margin-left:8px;font-size:.78em;font-weight:900;color:var(--instr-ink);background:var(--instr);border-radius:99px;padding:0 8px;vertical-align:1px;white-space:nowrap}
 .ph.used::before{content:"✓";border:0;width:auto;height:auto;top:.18em;left:7px;font-weight:900;color:var(--ok)}
 .box.static .ph{cursor:default}
 .box.static .ph::before{display:none}
