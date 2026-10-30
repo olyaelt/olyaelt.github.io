@@ -28,6 +28,10 @@ __BASE_CSS__
 .ipa{color:#B45309;font-weight:600}
 .blk-nav{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .blk-nav .grow{flex:1}
+.stepbar{position:sticky;bottom:0;z-index:6;display:flex;align-items:center;gap:12px;padding:10px 0 12px;background:linear-gradient(to bottom, transparent, var(--ground) 35%)}
+.stepbar .btn{min-width:8.5rem;font-size:1.1rem}
+.stepbar .step-msg{flex:1;text-align:center;font-weight:800;color:var(--again)}
+.blk .speak .row-actions [data-speak-next],.blk .speak .row-actions [data-speak-prev]{display:none}
 .bparts{display:flex;gap:6px;align-items:center}
 .bparts .bp-lbl{font-weight:800;color:var(--muted);font-size:.9rem}
 .bparts button{width:1.7rem;height:1.7rem;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--muted);font:inherit;font-weight:900;font-size:.85rem;padding:0;cursor:pointer;display:grid;place-items:center}
@@ -38,6 +42,7 @@ __BASE_CSS__
 .bdots button.on{background:var(--instr);border-color:var(--instr);transform:scale(1.2)}
 .bdots button.was{background:var(--line)}
 .board-back{display:flex;gap:10px;align-items:center}
+.board-top{font-weight:900;color:var(--instr-text);text-decoration:none;border:2px solid var(--line);border-radius:99px;padding:2px 12px;background:var(--card);font-size:.95rem;white-space:nowrap}
 .board-back a{font-weight:900;color:var(--instr-text);text-decoration:none;border:2px solid var(--line);border-radius:99px;padding:4px 14px;background:var(--card)}
 /* 📖 a gapped text, as the homework dlg: first letters blue bold, the rest yellow; tap to open; IPA hidden orange */
 .tx{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px;align-items:start}
@@ -294,7 +299,7 @@ addEventListener("message", e => { const m = e.data && e.data.lwChat; if(!m || !
 function questionsHTML(b){
   const st = bs(b); if(st.spk) spkCur = st.spk; else { spkReset(); st.spk = spkCur; }
   const base = "questions." + b._pid;   /* her ✏️ / Hide / order on these too, kept by permanent numbers */
-  return speakHTML(liveList(b.items, base), isLast() ? "" : `<button class="btn primary" data-next>Next →</button>`, "Speaking", base);
+  return speakHTML(liveList(b.items, base), "", "Speaking", base);
 }
 
 /* ---------- 🃏 cards: Again comes back 2–3 cards later, Got it into its dot; the end: Come back to these (+ the full list for "ours") ---------- */
@@ -326,7 +331,7 @@ function cardsHTML(b){
     return `${dots}<div class="blk-end"><h3 style="margin:0">${back.length ? "Done! Come back to these" : "Done! You got them all"}</h3>
       ${back.length ? `<ul class="endlist">${back.map(c => `<li><span class="f">${mk(cardFrontPlain(b, c))}</span><span class="b">${mk(c.back)}</span></li>`).join("")}</ul>` : ""}
       ${[...new Set(b.cards.map(c => c._b))].filter(o => o.style === "ours" && o.summary).map(o => `<p class="part-h" style="margin-top:10px">${esc(o.summary)}</p><ul class="endlist all">${b.cards.filter(c => c._b === o).map(c => `<li><span class="f">${mk(c.front)}</span><span class="b">${mk(c.back)}</span></li>`).join("")}</ul>`).join("")}
-      <div class="row-actions" style="margin-top:10px">${back.length ? `<button class="btn" data-redo>Go through these again</button>` : `<button class="btn" data-restart>All the cards again</button>`}${isLast() ? "" : `<button class="btn primary" data-next>Next →</button>`}</div></div>`;
+      <div class="row-actions" style="margin-top:10px">${back.length ? `<button class="btn" data-redo>Go through these again</button>` : `<button class="btn" data-restart>All the cards again</button>`}</div></div>`;
   }
   const i = d.queue[0], c = d.cards[i], first = d.got.size + d.again.size === 0;
   return `${dots}<div class="fc ${d.flipped ? "open" : ""} ${d.fresh ? "enter" : ""}" data-flip ${d.flipped ? "" : `role="button" tabindex="0" aria-label="Show the answer"`}>
@@ -383,25 +388,63 @@ function blockHTML(b){
   const tip = S.howto && b.tip ? `<p class="tip">🎓 How it works: ${mk(b.tip)}</p>` : "";
   return `${tip}${instr ? `<p class="finstr">${mk(instr)}</p>` : ""}<section class="blk ${S.enter ? "enter" : ""}" data-blk="${b._id}">${body}</section>`;
 }
-function navHTML(){
-  const bl = curBlocks(), i = bIdx(), more = i < bl.length - 1, nextStage = D.stages[S.stage + 1];
-  /* her 12:18: while a deck has cards there is no Next — the way on is the method: tap the card, look at the answer, ↺ Again or ✓ Got it;
-     Next comes with the end of the deck (the stage tabs on top still work, for her "move on") */
-  const cb = bl[i], inDeck = cb && cb.kind === "cards" && deckOf(cb).queue.length;
-  /* ← back: the part before, or on the first part the stage before (her 12:23: from the cards back to the gap fill) */
-  const prevStage = D.stages[S.stage - 1], prev = i ? `<button class="btn slim" data-prev>← Previous</button>` : prevStage ? `<button class="btn slim" data-prevstage>← ${esc(prevStage.label)}</button>` : "";
-  /* the parts of a stage: numbered, "Part 1 of 2" (her 12:23: two bare dots said nothing) */
-  const dots = bl.length > 1 ? `<span class="bparts"><span class="bp-lbl">Part</span>${bl.map((b, k) => `<button class="${k === i ? "on" : k < i ? "was" : ""}" data-bgo="${k}" aria-label="Part ${k + 1} of ${bl.length}" title="Part ${k + 1}: ${esc(String(b.instr || b.kind).slice(0, 60))}">${k + 1}</button>`).join("")}<span class="bp-lbl">of ${bl.length}</span></span>` : "";
-  if(inDeck) return prev || dots ? `<div class="blk-nav">${prev}${dots}</div>` : "";
-  return `<div class="blk-nav">${prev}${dots}<span class="grow"></span>
-    ${more ? `<button class="btn slim primary" data-next>Next →</button>` : nextStage ? `<button class="btn slim primary" data-next>Next: ${esc(nextStage.label)} →</button>` : ""}</div>`;
+/* ---------- one control, always in the same place (her rule 30.10 12:29) ----------
+   "← Back" and "Next →" at the bottom of the screen, the same words every time. The steps are ours: after a task they always look at
+   the answers — Next first shows them (the gaps, the answer, the card's back, the time on the calendars), the next Next goes on. There is
+   no way to jump ahead past the answers; only the stage bubbles on top move freely (for her "move on"). */
+const stepbarHTML = () => `<nav class="stepbar" aria-label="Back and next"><button class="btn" data-back ${canBack() ? "" : "disabled"}>← Back</button><span class="step-msg" id="step-msg" aria-live="polite"></span><button class="btn primary" data-step ${canNext() ? "" : "disabled"}>Next →</button></nav>`;
+const canBack = () => !!S.fast || bIdx() > 0 || S.stage > 0;
+const canNext = () => !!S.fast || !isLast() || stepPending(curBlock());
+function stepMsg(t){ const m = document.getElementById("step-msg"); if(m){ m.textContent = t; clearTimeout(stepMsg.t); stepMsg.t = setTimeout(() => { m.textContent = ""; }, 3500); } }
+/* what Next still has to show in this block (the answers), before it goes on */
+function stepPending(b){
+  if(!b) return false; const st = bs(b);
+  if(b.kind === "write") return !liveTeacher() && b.items.some(it => !(saved.w[it._chat] || {}).sent);   /* her own screen (the demo) may go on without typing */
+  if(b.kind === "say") return !st.shown;
+  if(b.kind === "cards") return deckOf(b).queue.length > 0;
+  if(b.kind === "calendars" && b.done && !st.done) return true;
+  if(["text", "model", "calendars"].includes(b.kind)){ const ids = allGaps(b); return ids.length > 0 && !ids.every(id => st.open.has(id)); }
+  if(b.kind === "questions") return !!document.querySelector(".speak [data-speak-next]");
+  return false;
+}
+function sendItem(i, v){ saved.w[i] = {text: v, sent: true}; save(); shareDraft(i, v, true); }
+function deckAnswer(b, ok){
+  const d = deckOf(b), i = d.queue.shift(), c = d.cards[i];
+  if(ok){ d.got.add(i); d.again.delete(i); } else { d.again.add(i); const k = 2 + Math.floor(Math.random() * 2); if(d.queue.length >= k) d.queue.splice(k, 0, i); else d.queue.push(i);
+    if(!saved.again.includes(c._n)){ saved.again.push(c._n); save(); } }
+  if(ok && b._id === "fastdeck"){ saved.again = saved.again.filter(n => n !== c._n); save(); }
+  if(b._id !== "fastdeck") lwDeck(c._n, ok);
+  d.flipped = false; d.fresh = true; render();
+}
+function goBlock(si, bi){ if(si !== S.stage){ S.at[si] = bi; goStage(si); return; } S.at[si] = bi; S.enter = true; render(); scrollTo(0, 0); }
+function stepNext(){
+  const b = S.fast || curBlock(); if(!b) return; const st = bs(b);
+  if(b.kind === "write" && !liveTeacher()){ const open = b.items.filter(it => !(saved.w[it._chat] || {}).sent);
+    if(open.length){ const empty = open.find(it => !((saved.w[it._chat] || {}).text || "").trim());
+      open.filter(it => ((saved.w[it._chat] || {}).text || "").trim()).forEach(it => sendItem(it._chat, saved.w[it._chat].text.trim()));
+      render(); if(empty){ const t = document.querySelector(`[data-wta="${empty._chat}"]`); if(t) t.focus(); stepMsg("✍️ Type your message first"); } return; } }
+  if(b.kind === "say" && !st.shown){ st.shown = true; render(); return; }
+  if(b.kind === "cards"){ const d = deckOf(b);
+    if(d.queue.length){ if(!d.flipped){ d.flipped = true; render(); } else deckAnswer(b, true); return; }   /* an open card + Next = ✓ Got it (her answer 12:18) */
+    if(S.fast){ S.fast = null; render(); return; } }
+  if(b.kind === "calendars" && b.done && !st.done){ st.done = true; render(); return; }
+  if(["text", "model", "calendars"].includes(b.kind)){ const ids = allGaps(b); if(ids.length && !ids.every(id => st.open.has(id))){ ids.forEach(id => st.open.add(id)); render(); return; } }
+  if(b.kind === "questions"){ const nx = document.querySelector(".speak [data-speak-next]"); if(nx){ nx.click(); return; } }
+  const bl = curBlocks(), i = bIdx();
+  if(i < bl.length - 1) goBlock(S.stage, i + 1); else if(S.stage < D.stages.length - 1) goStage(S.stage + 1);
+}
+function stepBack(){
+  if(S.fast){ S.fast = null; render(); return; }
+  const b = curBlock(); if(b && b.kind === "questions"){ const pv = document.querySelector(".speak [data-speak-prev]"); if(pv){ pv.click(); return; } }
+  const i = bIdx(); if(i > 0) goBlock(S.stage, i - 1); else if(S.stage > 0){ const k = S.stage - 1; goBlock(k, D.stages[k].blocks.length - 1); }
 }
 const cellName = () => D.board && D.board.col ? `${D.board.col} · $${D.board.value}` : "";
 const boardHref = () => D.boardPage ? `${D.boardPage}${LIVE_ON ? "-live" : ""}.html` : "";
 function headHTML(){
   const st = D.stages.map((s, i) => [String(i), s.label]).concat(liveTeacher() ? [["groups", "📥 Groups"]] : []);
   const howto = !D.demo && BLOCKS.some(b => b.tip) && S.view === "field" ? `<button class="btn slim howto" data-howto aria-pressed="${S.howto}" title="Show how each part of this page works (for the screen you share)">🎓 How it works</button>` : "";
-  return `<header class="head">${cellName() ? `<span class="part">${esc(cellName())}</span>` : ""}<h1>${esc(D.title)}</h1>${stagesHTML(st, S.view === "groups" ? "groups" : String(S.stage))}${howto}</header>`;
+  const board = boardHref() ? `<a class="board-top" href="${boardHref()}" title="Back to the game board">⬅ Board</a>` : "";   /* on top: the bottom is Back / Next only */
+  return `<header class="head">${board}${cellName() ? `<span class="part">${esc(cellName())}</span>` : ""}<h1>${esc(D.title)}</h1>${stagesHTML(st, S.view === "groups" ? "groups" : String(S.stage))}${howto}</header>`;
 }
 function render(){
   liveApply();
@@ -410,19 +453,19 @@ function render(){
   const keepGrid = S.view === "groups" ? document.getElementById("gw-grid") : null;
   wrap.classList.toggle("nobox", !box && S.view === "field"); wrap.classList.toggle("wide", S.view === "groups" || (b && b.kind === "tool"));
   wrap.classList.toggle("groups", S.view === "groups");
-  const back = boardHref() ? `<div class="board-back"><a href="${boardHref()}">⬅ Board</a></div>` : "";
+  const back = "";
   const bar = S.view === "field" ? liveBarHTML(liveLabel) : "";
   const pcs = pcStash();   /* her 👥 panel under a message keeps a half-typed note */
   if(S.view === "groups") main.innerHTML = headHTML() + groupsHTML() + back;
-  else if(S.fast) main.innerHTML = headHTML() + `<p class="finstr">↺ Your hard cards once more</p><section class="blk"><div class="deck">${cardsHTML(S.fast)}</div><div class="row-actions"><button class="btn" data-fast-close>← Back</button></div></section>` + back;
-  else main.innerHTML = bar + headHTML() + blockHTML(b) + navHTML() + fastHTML() + back;
+  else if(S.fast) main.innerHTML = headHTML() + `<p class="finstr">↺ Your hard cards once more</p><section class="blk"><div class="deck">${cardsHTML(S.fast)}</div></section>` + back + stepbarHTML();
+  else main.innerHTML = bar + headHTML() + blockHTML(b) + fastHTML() + back + stepbarHTML();
   if(keepGrid){ const g = document.getElementById("gw-grid"); if(g) g.replaceWith(keepGrid); }
   pcRestore(pcs);
   const st = side.scrollTop; side.innerHTML = box && D.boxes[box] ? fieldBoxHTML(D.boxes[box]) : ""; side.scrollTop = st;
   wireBox(side); wireBoxHidden(side);
   S.enter = false; if(b && b.kind === "cards") deckOf(b).fresh = false;
   wire(main); wireLive(main, p => { const m = String(p).match(/^questions\.(\d+)\.(\d+)$/); if(!m) return ""; const bl = BLOCKS.find(x => x._pid === +m[1]); return bl ? bl.items[+m[2]] || "" : ""; });
-  if(S.view === "groups") wireGroups(main); else { paintWriteNotes(); gwPaint(); }
+  if(S.view === "groups") wireGroups(main); else { paintWriteNotes(); gwPaint(); const sb = main.querySelector("[data-step]"); if(sb) sb.disabled = !canNext(); }
 }
 /* the box with X{{rest}}: the first letter shown, the rest hidden yellow (tap the yellow to open it; tap the line to tick it) */
 const boxLineHTML = t => phHTML(t).replace(/\{\{(.+?)\}\}/g, '<span class="bh" data-bh>$1</span>');
@@ -438,10 +481,7 @@ function goStage(i){ if(S.view === "field" && S.stage === i && !S.fast) return; 
 function wire(root){
   const on = (q, fn) => root.querySelectorAll(q).forEach(x => x.addEventListener("click", e => fn(x, e)));
   on("[data-stage]", x => { if(x.dataset.stage === "groups"){ if(S.view !== "groups"){ S.view = "groups"; S.fast = null; render(); scrollTo(0, 0); setTimeout(gwFetch, 0); } } else goStage(+x.dataset.stage); });
-  on("[data-next]", () => { const bl = curBlocks(), i = bIdx(); if(i < bl.length - 1){ S.at[S.stage] = i + 1; S.enter = true; render(); scrollTo(0, 0); } else if(S.stage < D.stages.length - 1) goStage(S.stage + 1); });
-  on("[data-prev]", () => { S.at[S.stage] = Math.max(0, bIdx() - 1); S.enter = true; render(); scrollTo(0, 0); });
-  on("[data-prevstage]", () => { const k = S.stage - 1; if(k < 0) return; S.at[k] = D.stages[k].blocks.length - 1; goStage(k); });
-  on("[data-bgo]", x => { S.at[S.stage] = +x.dataset.bgo; S.enter = true; render(); });
+  on("[data-step]", () => stepNext()); on("[data-back]", () => stepBack());
   on("[data-howto]", () => { S.howto = !S.howto; render(); });
   on("[data-goto]", x => goStage(+x.dataset.goto));
   const b = S.fast || curBlock(); if(!b) return;
@@ -457,19 +497,12 @@ function wire(root){
   /* write */
   root.querySelectorAll("[data-wta]").forEach(ta => { const i = +ta.dataset.wta, send = root.querySelector(`[data-wsend="${i}"]`);
     ta.addEventListener("input", () => { saved.w[i] = {text: ta.value, sent: false}; save(); send.disabled = !ta.value.trim(); shareDraft(i, ta.value, false); }); });
-  on("[data-wsend]", x => { const i = +x.dataset.wsend, ta = root.querySelector(`[data-wta="${i}"]`), v = ta.value.trim(); if(!v) return;
-    saved.w[i] = {text: v, sent: true}; save(); shareDraft(i, v, true); render(); });
+  on("[data-wsend]", x => { const i = +x.dataset.wsend, ta = root.querySelector(`[data-wta="${i}"]`), v = ta.value.trim(); if(!v) return; sendItem(i, v); render(); });
   on("[data-wedit]", x => { const i = +x.dataset.wedit; saved.w[i] = {text: (saved.w[i] || {}).text || "", sent: false}; save(); render(); const t = document.querySelector(`[data-wta="${i}"]`); if(t) t.focus(); });
   /* cards */
   const d = b.kind === "cards" ? deckOf(b) : null;
   on("[data-flip]", () => { if(!d || d.flipped) return; d.flipped = true; render(); });
-  const answer = ok => { const i = d.queue.shift(), c = d.cards[i];
-    if(ok){ d.got.add(i); d.again.delete(i); } else { d.again.add(i); const k = 2 + Math.floor(Math.random() * 2); if(d.queue.length >= k) d.queue.splice(k, 0, i); else d.queue.push(i);
-      if(!saved.again.includes(c._n)){ saved.again.push(c._n); save(); } }
-    if(ok && b._id === "fastdeck"){ saved.again = saved.again.filter(n => n !== c._n); save(); }
-    if(b._id !== "fastdeck") lwDeck(c._n, ok);
-    d.flipped = false; d.fresh = true; render(); };
-  on("[data-again]", () => answer(false)); on("[data-got]", () => answer(true));
+  on("[data-again]", () => deckAnswer(b, false)); on("[data-got]", () => deckAnswer(b, true));
   on("[data-redo]", () => { bs(b).deck = newDeck(d.cards.filter((_, i) => d.again.has(i))); if(b._id === "fastdeck") S.fast.cards = bs(b).deck.cards; render(); });
   on("[data-restart]", () => { bs(b).deck = newDeck(b.cards); render(); });
   on("[data-lookdone]", () => { bs(b).look = null; render(); });
@@ -478,7 +511,6 @@ function wire(root){
   if(b.kind === "questions") wireSpeak(root, render);
   /* fast finishers */
   on("[data-fast-cards]", () => { S.fast = fastDeckBlock(); delete S.bs.fastdeck; render(); scrollTo(0, 0); });
-  on("[data-fast-close]", () => { S.fast = null; render(); });
   on("[data-fast-text]", () => { const t = BLOCKS.find(x => x.kind === "text"); S.noFirst = true; bs(t).open.clear(); S.at[t._si] = t._bi; goStage(t._si); render(); });
 }
 document.addEventListener("keydown", e => {

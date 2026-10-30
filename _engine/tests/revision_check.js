@@ -49,7 +49,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
   await A.waitForTimeout(300);
   out.where1 = sheet('Lesson rooms').map(r => [r[3], r[4]]);
   expect('each screen says where it is (Anna by her code)', out.where1.length === 2 && out.where1.some(r => r[0] === 'Anna' && r[1] === '📝 Test yourself'), out.where1);
-  out.board = await A.locator('.board-back a').getAttribute('href'); expect('⬅ Board on the page', out.board === 'jeopardy-live.html', out.board);
+  out.board = await A.locator('.board-top').getAttribute('href'); expect('⬅ Board on the page', out.board === 'jeopardy-live.html', out.board);
   await A.fill('[data-wta="0"]', 'Sorry guys, I stuck in traffic, I be 15 minutes late'); await A.waitForTimeout(3000);
   out.draft = sheet('Lesson work').map(r => [r[2], r[4], r[6], r[7]]); expect('their message goes to her table while they type', out.draft.length === 1 && out.draft[0][1] === 'Anna' && /stuck in traffic/.test(out.draft[0][2]), out.draft);
   await B.click('.stage-btn[data-stage="1"]'); await B.waitForTimeout(300);

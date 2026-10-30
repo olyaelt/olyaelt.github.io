@@ -34,7 +34,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
       const p = await open(L + f + '-live.html', '');
       const labels = await p.evaluate(() => D.stages.map(s => s.label).join('|')); expect(f + ': the four stages', labels === want, labels);
       if (f === 'f-demo') {
-        out.demo = {tips: await p.locator('.tip').count(), sw: await p.locator('[data-howto]').count(), part: await p.locator('.head .part').count(), back: await p.locator('.board-back a').getAttribute('href')};
+        out.demo = {tips: await p.locator('.tip').count(), sw: await p.locator('[data-howto]').count(), part: await p.locator('.head .part').count(), back: await p.locator('.board-top').getAttribute('href')};
         expect('f-demo: tips on from the start, no switch, no cell name, ⬅ Board', out.demo.tips === 1 && out.demo.sw === 0 && out.demo.part === 0 && out.demo.back === 'jeopardy-live.html', out.demo);
         await p.fill('[data-wta]', 'No way! When did you last see him?'); await p.waitForTimeout(2600); await p.click('[data-wsend]'); await p.waitForTimeout(200);
         out.example = await p.locator('.ans-lines').innerText().catch(() => ''); expect('f-demo: after Send the example', /example/i.test(out.example) && /When did you last see him/.test(out.example), out.example);
@@ -89,6 +89,20 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
     const PL = await open(L + 'f-late-live.html', ''); await PL.click('.stage-btn[data-stage="2"]'); await PL.waitForTimeout(150);
     out.lateDeck = await PL.evaluate(() => ({blocks: curBlocks().length, cards: curBlock().cards.length, all: D.stages[2].blocks.reduce((n, b) => n + b.cards.length, 0), kinds: [...new Set(curBlock().cards.map(c => c._b.style))].join(), next: document.querySelectorAll('.blk-nav [data-next]').length}));
     expect('f-late Practice: one deck of every card, three kinds, no Next yet', out.lateDeck.blocks === 1 && out.lateDeck.cards === out.lateDeck.all && out.lateDeck.kinds === 'say,kwt,ours' && out.lateDeck.next === 0, out.lateDeck);
+    // her rule 12:29: one Back / Next, always in the same place; Next first shows the answers, then goes on
+    const C = await open(L + 'f-clocks-live.html', 'anna'); const where = () => C.evaluate(() => [S.stage, bIdx()]);
+    out.steps = {bar: await C.locator('.stepbar [data-back], .stepbar [data-step]').count(), other: await C.locator('[data-next], [data-prev]').count()};
+    await C.click('[data-step]'); await C.waitForTimeout(100); out.steps.say = [await where(), await C.locator('.ans-h').count()];
+    await C.click('[data-step]'); await C.waitForTimeout(150); out.steps.toRecall = await where();
+    await C.click('[data-step]'); await C.waitForTimeout(100); out.steps.gaps = [await where(), await C.evaluate(() => allGaps(curBlock()).every(id => bs(curBlock()).open.has(id)))];
+    await C.click('[data-step]'); await C.waitForTimeout(150); out.steps.toPractice = await where();
+    await C.click('[data-step]'); await C.waitForTimeout(100); out.steps.flipped = await C.evaluate(() => deckOf(curBlock()).flipped);
+    await C.click('[data-step]'); await C.waitForTimeout(100); out.steps.got = await C.locator('.fdots .got').count();
+    await C.click('[data-back]'); await C.waitForTimeout(150); out.steps.back = await where();
+    expect('one Back / Next; Next shows the answer, then goes on; an open card + Next = Got it; Back to Recall', out.steps.bar === 2 && out.steps.other === 0 && JSON.stringify(out.steps.say) === '[[0,0],1]' && JSON.stringify(out.steps.toRecall) === '[1,0]' && out.steps.gaps[1] === true && JSON.stringify(out.steps.gaps[0]) === '[1,0]' && JSON.stringify(out.steps.toPractice) === '[2,0]' && out.steps.flipped === true && out.steps.got === 1 && JSON.stringify(out.steps.back) === '[1,0]', out.steps);
+    const W = await open(L + 'f-late-live.html', 'anna'); await W.click('[data-step]'); await W.waitForTimeout(150);
+    out.write = {at: await W.evaluate(() => S.stage), msg: await W.locator('#step-msg').innerText()}; expect('Test yourself: Next waits for their message', out.write.at === 0 && /Type your message first/.test(out.write.msg), out.write);
+    if (shots) await C.screenshot({path: path.join(shots, 'r2-stepbar.png')});
     // the same work in 📥 Groups
     await O.click('.stage-btn[data-stage="groups"]'); await O.waitForTimeout(500); out.groups = await O.locator('.gw-card').count(); expect('📥 Groups still shows it', out.groups === 1, out.groups);
     // ---- the panel under a message on a field (Test yourself)
