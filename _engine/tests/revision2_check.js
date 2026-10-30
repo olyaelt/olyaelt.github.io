@@ -93,25 +93,35 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
     const C = await open(L + 'f-clocks-live.html', 'anna'); const where = () => C.evaluate(() => [S.stage, bIdx()]);
     out.steps = {bar: await C.locator('.stepbar [data-back], .stepbar [data-step]').count(), other: await C.locator('[data-next], [data-prev]').count()};
     await C.click('[data-step]'); await C.waitForTimeout(100); out.steps.say = [await where(), await C.locator('.ans-h').count()];
+    await C.click('[data-step]'); await C.waitForTimeout(150); out.steps.cloud = await C.evaluate(() => [S.stage, S.intro, document.querySelector('.si-name') ? document.querySelector('.si-name').textContent : '']);
     await C.click('[data-step]'); await C.waitForTimeout(150); out.steps.toRecall = await where();
     await C.click('[data-step]'); await C.waitForTimeout(100); out.steps.gaps = [await where(), await C.evaluate(() => allGaps(curBlock()).every(id => bs(curBlock()).open.has(id)))];
-    await C.click('[data-step]'); await C.waitForTimeout(150); out.steps.toPractice = await where();
+    await C.click('[data-step]'); await C.waitForTimeout(150); await C.click('[data-step]'); await C.waitForTimeout(150); out.steps.toPractice = await where();   // Practice's cloud, then its deck
     await C.click('[data-step]'); await C.waitForTimeout(100); out.steps.flipped = await C.evaluate(() => deckOf(curBlock()).flipped);
     await C.click('[data-step]'); await C.waitForTimeout(100); out.steps.got = await C.locator('.fdots .got').count();
     // her 12:58: Back in a deck = the card before (the answer → its front → the cards answered before, open), Next forward again; past the first card → the task before
-    const cardOn = () => C.evaluate(() => { const b = curBlock(); if(b.kind !== 'cards') return 'stage' + S.stage; const st = bs(b), d = deckOf(b); return st.look != null ? 'look' + st.look : (d.flipped ? 'open' : 'front') + d.queue[0]; });
+    const cardOn = () => C.evaluate(() => { const b = curBlock(); if(S.intro) return 'cloud' + S.stage; if(b.kind !== 'cards') return 'stage' + S.stage; const st = bs(b), d = deckOf(b); return st.look != null ? 'look' + st.look : (d.flipped ? 'open' : 'front') + d.queue[0]; });
     const seq = async (btn, n) => { const r = []; for (let k = 0; k < n; k++) { await C.click(btn); await C.waitForTimeout(80); r.push(await cardOn()); } return r; };
     out.deckBack = [].concat(await seq('[data-back]', 1), await seq('[data-step]', 4), await seq('[data-back]', 4));
     out.steps.back = await where();
-    expect('one Back / Next; Next shows the answer, then goes on; an open card + Next = Got it', out.steps.bar === 2 && out.steps.other === 0 && JSON.stringify(out.steps.say) === '[[0,0],1]' && JSON.stringify(out.steps.toRecall) === '[1,0]' && out.steps.gaps[1] === true && JSON.stringify(out.steps.gaps[0]) === '[1,0]' && JSON.stringify(out.steps.toPractice) === '[2,0]' && out.steps.flipped === true && out.steps.got === 1, out.steps);
+    expect('one Back / Next; Next shows the answer, then goes on; an open card + Next = Got it', out.steps.bar === 2 && out.steps.other === 0 && JSON.stringify(out.steps.say) === '[[0,0],1]' && JSON.stringify(out.steps.cloud) === '[1,true,"Recall"]' && JSON.stringify(out.steps.toRecall) === '[1,0]' && out.steps.gaps[1] === true && JSON.stringify(out.steps.gaps[0]) === '[1,0]' && JSON.stringify(out.steps.toPractice) === '[2,0]' && out.steps.flipped === true && out.steps.got === 1, out.steps);
     expect('Back in a deck: card before, open; Next forward; past the first card → Recall', JSON.stringify(out.deckBack) === '["look0","front1","open1","front2","open2","front2","look1","look0","stage1"]' && JSON.stringify(out.steps.back) === '[1,0]', {seq: out.deckBack, back: out.steps.back});
     // her 13:04: on the very first step Back goes to the board (after Show the answer it first shows the question again)
     const BK = await open(L + 'f-tags-live.html', 'anna'); await BK.click('[data-step]'); await BK.waitForTimeout(80); await BK.click('[data-back]'); await BK.waitForTimeout(80);
     out.firstBack = {shown: await BK.locator('.ans-h').count()};
     await Promise.all([BK.waitForURL(/jeopardy-live\.html$/), BK.click('[data-back]')]); out.firstBack.url = BK.url().split('/').pop();
     expect('first step: Back hides the answer, then goes to the board', out.firstBack.shown === 0 && out.firstBack.url === 'jeopardy-live.html', out.firstBack);
-    const W = await open(L + 'f-late-live.html', 'anna'); await W.click('[data-step]'); await W.waitForTimeout(150);
-    out.write = {at: await W.evaluate(() => S.stage), msg: await W.locator('#step-msg').innerText()}; expect('Test yourself: Next waits for their message', out.write.at === 0 && /Type your message first/.test(out.write.msg), out.write);
+    // her 13:24: typing is optional for now — Next sends what they typed and goes on
+    const W = await open(L + 'f-late-live.html', 'anna'); await W.fill('[data-wta]', 'Sorry, stuck in traffic!'); await W.click('[data-step]'); await W.waitForTimeout(300);
+    out.write = {at: await W.evaluate(() => S.stage), sent: await W.evaluate(() => Object.values(saved.w).filter(x => x.sent).length)}; expect('Test yourself: Next sends what they typed and goes on (typing optional)', out.write.at === 1 && out.write.sent === 1, out.write);
+    // her 13:24: the chat page inside has no Next of its own; the field's Next steps through it like slides
+    await W.click('.stage-btn[data-stage="3"]'); await W.waitForTimeout(1500); const FR = W.frameLocator('.tool-frame');
+    out.innerNext = await FR.locator('.acts [data-next]').first().isVisible().catch(() => false);
+    const chatAt = () => FR.locator('body').evaluate(() => ({at: S.at, view: S.view, gaps: st(S.at).gaps.size, ex: st(S.at).ex}));
+    out.embSteps = [];
+    for (let k = 0; k < 4; k++) { await W.click('[data-step]'); await W.waitForTimeout(400); out.embSteps.push(await chatAt()); }
+    expect('inside: no own Next; the field\'s Next: the model\'s gaps → chat 2 → its example → chat 3', out.innerNext === false && out.embSteps[0].at === 0 && out.embSteps[0].gaps > 0 && out.embSteps[1].at === 1 && !out.embSteps[1].ex && out.embSteps[2].at === 1 && out.embSteps[2].ex && out.embSteps[3].at === 2, {inner: out.innerNext, steps: out.embSteps});
+    await W.click('[data-back]'); await W.waitForTimeout(400); out.embBack = await chatAt(); expect('Back inside: the chat before', out.embBack.at === 1, out.embBack);
     if (shots) await C.screenshot({path: path.join(shots, 'r2-stepbar.png')});
     // the same work in 📥 Groups
     await O.click('.stage-btn[data-stage="groups"]'); await O.waitForTimeout(500); out.groups = await O.locator('.gw-card').count(); expect('📥 Groups still shows it', out.groups === 1, out.groups);

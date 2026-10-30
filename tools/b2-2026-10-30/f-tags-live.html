@@ -210,6 +210,11 @@ details.all[open] summary{color:var(--ink)}
 .ipa{color:#B45309;font-weight:600}
 .blk-nav{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .blk-nav .grow{flex:1}
+.stage-intro{display:grid;place-items:center}
+.stage-intro.enter{animation:enterR .45s cubic-bezier(.2,.8,.2,1)}
+.si-card{position:relative;width:min(100%, calc(58vh * 962 / 649 + 40px));background:#FFFFFF;border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px;display:grid;place-items:center}
+.si-card img{width:100%;height:auto;max-height:58vh;object-fit:contain;display:block}
+.si-name{position:absolute;left:50%;top:50%;transform:translate(-50%,-62%);color:#1D1D1B;font-family:"Permanent Marker","Segoe Print","Bradley Hand","Chalkboard SE","Comic Sans MS",cursive;font-size:clamp(1.8rem, 5vw, 3.4rem);font-weight:700;white-space:nowrap}
 .stepbar{position:sticky;bottom:0;z-index:6;display:flex;align-items:center;gap:12px;padding:10px 0 12px;background:linear-gradient(to bottom, transparent, var(--ground) 35%)}
 .stepbar .btn{min-width:8.5rem;font-size:1.1rem}
 .stepbar .step-msg{flex:1;text-align:center;font-weight:800;color:var(--again)}
@@ -1140,7 +1145,7 @@ D.stages.forEach((st, si) => st.blocks.forEach((b, bi) => { b._id = `s${si}b${bi
 const writeItems = BLOCKS.filter(b => b.kind === "write").flatMap(b => b.items);
 const FAST = BLOCKS.map(b => b.fast).filter(Boolean);
 let S;
-function newState(){ S = {stage: 0, at: {}, view: "field", bs: {}, noFirst: false, enter: false, fast: null, look: null, howto: !!D.demo}; }
+function newState(){ S = {stage: 0, at: {}, view: "field", bs: {}, noFirst: false, enter: false, fast: null, look: null, howto: !!D.demo, intro: false}; }
 newState();
 const curBlocks = () => D.stages[S.stage].blocks;
 const bIdx = () => Math.min(S.at[S.stage] || 0, curBlocks().length - 1);
@@ -1330,7 +1335,7 @@ function stepMsg(t){ const m = document.getElementById("step-msg"); if(m){ m.tex
 /* what Next still has to show in this block (the answers), before it goes on */
 function stepPending(b){
   if(!b) return false; const st = bs(b);
-  if(b.kind === "write") return !liveTeacher() && b.items.some(it => !(saved.w[it._chat] || {}).sent);   /* her own screen (the demo) may go on without typing */
+  if(b.kind === "tool") return true;   /* the page inside says when it has nothing more (lwStepEnd) */
   if(b.kind === "say") return !st.shown;
   if(b.kind === "cards") return deckOf(b).queue.length > 0 || (st.look != null && !!st.lookBack);
   if(b.kind === "calendars" && b.done && !st.done) return true;
@@ -1349,11 +1354,12 @@ function deckAnswer(b, ok){
 }
 function goBlock(si, bi){ if(si !== S.stage){ S.at[si] = bi; goStage(si); return; } S.at[si] = bi; S.enter = true; render(); scrollTo(0, 0); }
 function stepNext(){
+  if(S.intro && !S.fast){ S.intro = false; S.enter = true; render(); return; }   /* the stage's cloud → its first task */
   const b = S.fast || curBlock(); if(!b) return; const st = bs(b);
-  if(b.kind === "write" && !liveTeacher()){ const open = b.items.filter(it => !(saved.w[it._chat] || {}).sent);
-    if(open.length){ const empty = open.find(it => !((saved.w[it._chat] || {}).text || "").trim());
-      open.filter(it => ((saved.w[it._chat] || {}).text || "").trim()).forEach(it => sendItem(it._chat, saved.w[it._chat].text.trim()));
-      render(); if(empty){ const t = document.querySelector(`[data-wta="${empty._chat}"]`); if(t) t.focus(); stepMsg("✍️ Type your message first"); } return; } }
+  /* typing is optional for now (her 13:24: they say it aloud, as on the slides): Next sends what they typed, and goes on */
+  if(b.kind === "write") b.items.filter(it => !(saved.w[it._chat] || {}).sent && ((saved.w[it._chat] || {}).text || "").trim()).forEach(it => sendItem(it._chat, saved.w[it._chat].text.trim()));
+  /* the chat page inside (her 13:24: no Next of its own): the field's Next / Back step through its chats and its speaking */
+  if(b.kind === "tool"){ const f = document.querySelector(".tool-frame"); if(f && f.contentWindow){ f.contentWindow.postMessage({lwStep: "next"}, "*"); return; } }
   if(b.kind === "say" && !st.shown){ st.shown = true; render(); return; }
   if(b.kind === "cards"){ const d = deckOf(b);
     if(st.look != null && !st.lookBack){ st.look = null; render(); return; }   /* her 👥 dot view → back to the cards */
@@ -1363,10 +1369,13 @@ function stepNext(){
   if(b.kind === "calendars" && b.done && !st.done){ st.done = true; render(); return; }
   if(["text", "model", "calendars"].includes(b.kind)){ const ids = allGaps(b); if(ids.length && !ids.every(id => st.open.has(id))){ ids.forEach(id => st.open.add(id)); render(); return; } }
   if(b.kind === "questions"){ const nx = document.querySelector(".speak [data-speak-next]"); if(nx){ nx.click(); return; } }
-  const bl = curBlocks(), i = bIdx();
-  if(i < bl.length - 1) goBlock(S.stage, i + 1); else if(S.stage < D.stages.length - 1) goStage(S.stage + 1);
+  stepOn();
 }
+function stepOn(){ const bl = curBlocks(), i = bIdx(); if(i < bl.length - 1) goBlock(S.stage, i + 1); else if(S.stage < D.stages.length - 1){ goStage(S.stage + 1); S.intro = true; render(); } }
+function stepOff(){ const i = bIdx(); if(i > 0) goBlock(S.stage, i - 1); else if(S.stage > 0){ const k = S.stage - 1; goBlock(k, D.stages[k].blocks.length - 1); } else if(boardHref()) location.href = boardHref(); }
+addEventListener("message", e => { const m = e.data && e.data.lwStepEnd; if(!m) return; const b = curBlock(); if(!b || b.kind !== "tool" || S.fast || S.intro || S.view !== "field") return; m === "next" ? stepOn() : stepOff(); });
 function stepBack(){
+  if(S.intro && !S.fast){ S.intro = false; const k = S.stage - 1; if(k >= 0) goBlock(k, D.stages[k].blocks.length - 1); else render(); return; }
   const b = S.fast || curBlock();
   /* in a deck Back is the card before, like the slide before (her 12:58): the answer side → its front → the card answered before (open,
      "Looking back") → … → the first card → the task before */
@@ -1377,9 +1386,11 @@ function stepBack(){
   if(S.fast){ S.fast = null; render(); return; }
   if(b && b.kind === "say" && bs(b).shown){ bs(b).shown = false; render(); return; }   /* the answer → the question, like the slide before */
   if(b && b.kind === "questions"){ const pv = document.querySelector(".speak [data-speak-prev]"); if(pv){ pv.click(); return; } }
-  const i = bIdx(); if(i > 0) goBlock(S.stage, i - 1); else if(S.stage > 0){ const k = S.stage - 1; goBlock(k, D.stages[k].blocks.length - 1); }
-  else if(boardHref()) location.href = boardHref();   /* the very first step: back to the board (her 13:04) */
+  if(b && b.kind === "tool"){ const f = document.querySelector(".tool-frame"); if(f && f.contentWindow){ f.contentWindow.postMessage({lwStep: "back"}, "*"); return; } }
+  stepOff();   /* the very first step: back to the board (her 13:04) */
 }
+/* a new stage begins with her blue cloud and its name, as on her class slides (her 13:29): Next → its first task */
+const introHTML = () => `<section class="stage-intro ${S.enter ? "enter" : ""}" aria-label="${esc(D.stages[S.stage].label)}"><div class="si-card"><img src="../stage-cloud.png" alt=""><span class="si-name">${esc(String(D.stages[S.stage].label).replace(/^[^A-Za-z]+/, ""))}</span></div></section>`;
 const cellName = () => D.board && D.board.col ? `${D.board.col} · $${D.board.value}` : "";
 const boardHref = () => D.boardPage ? `${D.boardPage}${LIVE_ON ? "-live" : ""}.html` : "";
 function headHTML(){
@@ -1391,7 +1402,7 @@ function headHTML(){
 function render(){
   liveApply();
   const main = document.getElementById("main"), side = document.getElementById("side"), wrap = document.getElementById("wrap");
-  let b = S.fast ? S.fast : curBlock(), box = S.view === "field" ? boxFor(b) : null;
+  let b = S.fast ? S.fast : curBlock(), box = S.view === "field" && !S.intro ? boxFor(b) : null;
   const keepGrid = S.view === "groups" ? document.getElementById("gw-grid") : null;
   wrap.classList.toggle("nobox", !box && S.view === "field"); wrap.classList.toggle("wide", S.view === "groups" || (b && b.kind === "tool"));
   wrap.classList.toggle("groups", S.view === "groups");
@@ -1400,6 +1411,7 @@ function render(){
   const pcs = pcStash();   /* her 👥 panel under a message keeps a half-typed note */
   if(S.view === "groups") main.innerHTML = headHTML() + groupsHTML() + back;
   else if(S.fast) main.innerHTML = headHTML() + `<p class="finstr">↺ Your hard cards once more</p><section class="blk"><div class="deck">${cardsHTML(S.fast)}</div></section>` + back + stepbarHTML();
+  else if(S.intro) main.innerHTML = bar + headHTML() + introHTML() + stepbarHTML();
   else main.innerHTML = bar + headHTML() + blockHTML(b) + fastHTML() + back + stepbarHTML();
   if(keepGrid){ const g = document.getElementById("gw-grid"); if(g) g.replaceWith(keepGrid); }
   pcRestore(pcs);
@@ -1419,7 +1431,7 @@ function wireBoxHidden(root){
   root.querySelectorAll("[data-bh]").forEach(x => x.addEventListener("click", e => { if(x.classList.contains("open")) return; e.stopPropagation(); x.classList.add("open"); }, true));
   root.querySelectorAll("[data-ph]").forEach(btn => btn.addEventListener("click", () => lwSignal("box", btn.dataset.pt, usedPhrases.has(btn.dataset.ph) ? 1 : 0)));
 }
-function goStage(i){ if(S.view === "field" && S.stage === i && !S.fast) return; S.view = "field"; S.fast = null; S.stage = i; S.enter = true; render(); scrollTo(0, 0); lwWhere(D.stages[i].label); }
+function goStage(i){ if(S.view === "field" && S.stage === i && !S.fast && !S.intro) return; S.intro = false; S.view = "field"; S.fast = null; S.stage = i; S.enter = true; render(); scrollTo(0, 0); lwWhere(D.stages[i].label); }
 function wire(root){
   const on = (q, fn) => root.querySelectorAll(q).forEach(x => x.addEventListener("click", e => fn(x, e)));
   on("[data-stage]", x => { if(x.dataset.stage === "groups"){ if(S.view !== "groups"){ S.view = "groups"; S.fast = null; render(); scrollTo(0, 0); setTimeout(gwFetch, 0); } } else goStage(+x.dataset.stage); });
@@ -1457,7 +1469,7 @@ function wire(root){
 }
 document.addEventListener("keydown", e => {
   if(e.target.closest && e.target.closest("input, textarea, select")) return;
-  const b = S.fast || curBlock(); if(S.view !== "field" || !b || b.kind !== "cards") return; const d = deckOf(b); if(!d.queue.length || bs(b).look != null) return;
+  const b = S.fast || curBlock(); if(S.view !== "field" || (S.intro && !S.fast) || !b || b.kind !== "cards") return; const d = deckOf(b); if(!d.queue.length || bs(b).look != null) return;
   if((e.key === " " || e.key === "Enter") && !d.flipped){ if(e.target.closest && e.target.closest("button, a")) return; e.preventDefault(); d.flipped = true; render(); }
 });
 /* lesson work on this page */

@@ -47,6 +47,7 @@ __BASE_CSS__
 .bub.ex{border:2px dashed #25A35A}
 .bub.typing{color:#667781;font-style:italic}
 .mgap{font:inherit;border:0;border-radius:3px;padding:0 2px;background:#FFFF00;color:transparent;cursor:pointer;font-weight:700}
+.embed .acts [data-next],.embed .acts [data-stage="speak"],.embed .speak .row-actions{display:none}   /* inside a field the field's Back / Next lead (her 13:24) */
 .mgap.open{color:#1D1D1B}   /* opened: black bold on the yellow (her read-through 30.10, as on every page) */
 .mgap:not(.open):hover{outline:2px solid #E8D800}
 .compose{display:flex;gap:6px;padding:8px;background:#F0F2F5;align-items:flex-end}
@@ -257,6 +258,26 @@ function render(){
   wireMsgs(); playIn(S.at); paintNotes();
   if(EMBED && window.parent !== window) try{ window.parent.postMessage({lwChat: {tool: PAGE_ID, chat: isModel(S.at) ? null : scPid(S.at)}}, "*"); }catch(e){}   /* inside a field: her 👥 under the frame follows this chat */
 }
+/* inside a field (?embed=1, her 13:24): no Next of its own — the field's Back / Next step through the chats as through slides: the model's
+   gaps → the next chat; a chat: Next sends what they typed (typing is optional) or shows the example → the next chat → the speaking
+   questions one by one; at either end the field goes on (lwStepEnd) */
+function embNext(){
+  if(S.view === "chats"){ const i = S.at, s = st(i), ord = order(), pos = ord.indexOf(i);
+    if(isModel(i)){ if(s.gaps.size < gapsOf(i)){ for(let n = 0; n < gapsOf(i); n++) s.gaps.add(n); paint(); playReply(i); return false; } }
+    else if(!s.ex){ const ta = document.getElementById("msg"), v = ta ? ta.value.trim() : "", send = document.querySelector("[data-send]");
+      if(v && !s.sent && send){ send.click(); return false; } openEx(); return false; }
+    if(pos < ord.length - 1){ goScene(ord[pos + 1]); return false; }
+    if(D.speaking && D.speaking.length){ goStage("speak"); return false; }
+    return true; }
+  if(S.view === "speak"){ const nx = document.querySelector("[data-speak-next]"); if(nx){ nx.click(); return false; } }
+  return true;
+}
+function embBack(){
+  if(S.view === "speak"){ const pv = document.querySelector("[data-speak-prev]"); if(pv){ pv.click(); return false; } goStage("chats"); return false; }
+  if(S.view === "chats"){ const ord = order(), pos = ord.indexOf(S.at); if(pos > 0){ goScene(ord[pos - 1]); return false; } }
+  return true;
+}
+if(EMBED) addEventListener("message", e => { const m = e.data && e.data.lwStep; if(!m) return; const end = m === "next" ? embNext() : embBack(); if(end) try{ window.parent.postMessage({lwStepEnd: m}, "*"); }catch(err){} });
 liveRerender = () => render();
 render();
 </script>

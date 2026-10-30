@@ -34,9 +34,9 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
   out.boardLinks = await GB.evaluate(() => [...document.querySelectorAll('a.cell')].map(a => a.getAttribute('href')));
   expect('board: the four fields link to their -live pages', out.boardLinks.length === 4 && out.boardLinks.every(h => /^f-[a-z]+-live\.html$/.test(h)), out.boardLinks);
   out.today = await OB.locator('.cell.today').count(); expect('her board marks today\'s fields orange', out.today === 4, out.today);
-  await OB.click('[data-cell="c5v100"]');
-  out.onCell = await OB.locator('[data-cellwrap="c5v100"]').innerText(); expect('a tap shows ▶ Play on the cell itself, nothing else for a new cell', /▶ Play/.test(out.onCell) && !/Not played/.test(out.onCell) && await OB.locator('[data-now], [data-done], .cellbar').count() === 0, out.onCell);
-  await Promise.all([OB.waitForURL(/\/f-late-live\.html$/), OB.click('[data-play]')]);
+  // her 13:24 (as on her slides): one click on a cell = ▶ Play — it lights up in every room and its page opens
+  out.noActs = await OB.locator('[data-play], [data-cellwrap], [data-unplay]').count(); expect('no buttons on new cells, no Play / Now / Done bar', out.noActs === 0 && await OB.locator('[data-now], [data-done], .cellbar').count() === 0, out.noActs);
+  await Promise.all([OB.waitForURL(/\/f-late-live\.html$/), OB.click('[data-cell="c5v100"]')]);
   out.opened = OB.url().split('/').pop(); expect('▶ Play opens the cell\'s page for her', out.opened === 'f-late-live.html', out.opened);
   await OB.close(); OB = await open(L + 'jeopardy-live.html', 'teacher');
   await GB.evaluate(() => boardPoll()); await GB.waitForTimeout(200);
@@ -107,7 +107,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
   await T2.click('[data-fast-text]'); await T2.waitForTimeout(150);
   out.noFirst = await T2.evaluate(() => ({stage: D.stages[S.stage].label, f: document.querySelectorAll('.dlg .gp .f').length})); expect('the text again: no first letters', /Recall/.test(out.noFirst.stage) && out.noFirst.f === 0, out.noFirst);
   // the board closes the rooms: she plays the next cell (one from the slides, no page: her board stays)
-  await OB.click('[data-cell="c0v100"]'); await OB.click('[data-play]'); await OB.waitForTimeout(400);
+  await OB.click('[data-cell="c0v100"]'); await OB.waitForTimeout(600);
   out.next = {url: OB.url().split('/').pop(), now: await OB.locator('.cell.now').getAttribute('data-cell'), done: await OB.locator('.cell.done').evaluateAll(xs => xs.map(x => x.dataset.cell)), msg: await OB.locator('#live-status').innerText()};
   expect('the next ▶ Play: no page → her board stays, that cell pulses, the one before turns grey by itself', /_rv_test_jeopardy-live/.test(out.next.url) && out.next.now === 'c0v100' && JSON.stringify(out.next.done) === '["c5v100"]' && /lit up/.test(out.next.msg), out.next);
   await O.click('.stage-btn[data-stage="groups"]'); await O.evaluate(() => gwFetch()); await O.waitForTimeout(400);
@@ -117,15 +117,14 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
   await GB.evaluate(() => boardPoll()); await GB.waitForTimeout(150); out.done = await GB.locator('.cell.done').count(); expect('Done greys the cell for the groups', out.done === 1, out.done);
   if (shots) await O.screenshot({path: path.join(shots, 'rv-groups.png')});
   // a wrong tap: ↺ Not played on the pulsing cell and on a grey one; then 🧹 Start fresh on the board (two steps)
-  await OB.click('[data-cell="c0v100"]'); await OB.click('[data-unplay]'); await OB.waitForTimeout(300);
+  await OB.click('[data-unplay="c0v100"]'); await OB.waitForTimeout(300);
   out.unplay = {now: await OB.locator('.cell.now').count(), strip: await OB.locator('.nowstrip').count()}; expect('↺ Not played on the pulsing cell: nothing pulses, no strip', out.unplay.now === 0 && out.unplay.strip === 0, out.unplay);
-  await OB.click('[data-cell="c5v100"]'); out.greyActs = await OB.locator('[data-cellwrap="c5v100"]').innerText(); expect('a grey cell offers ▶ Play and ↺ Not played', /▶ Play/.test(out.greyActs) && /Not played/.test(out.greyActs), out.greyActs);
-  await OB.click('[data-cellwrap="c5v100"] .v'); out.desel = await OB.locator('[data-cellwrap]').count(); expect('tapping the amount again closes the buttons', out.desel === 0, out.desel);
-  await OB.click('[data-cell="c1v100"]'); await Promise.all([OB.waitForURL(/\/f-crime-live\.html$/), OB.click('[data-play]')]); await OB.close(); OB = await open(L + 'jeopardy-live.html', 'teacher');
+  out.greyActs = await OB.locator('[data-unplay="c5v100"]').count(); expect('a grey cell has its small ↺', out.greyActs === 1, out.greyActs);
+  await Promise.all([OB.waitForURL(/\/f-crime-live\.html$/), OB.click('[data-cell="c1v100"]')]); await OB.close(); OB = await open(L + 'jeopardy-live.html', 'teacher');
   out.before = await OB.locator('.cell.done, .cell.now').count();
   await OB.click('[data-fresh]'); out.sure = await OB.locator('.boardfoot').innerText(); await OB.click('[data-fresh-yes]'); await OB.waitForTimeout(300);
   out.fresh0 = {before: out.before, sure: out.sure, after: await OB.locator('.cell.done, .cell.now').count()}; expect('🧹 Start fresh asks once more, then every cell is new', out.fresh0.before === 2 && /Yes, start fresh/.test(out.fresh0.sure) && out.fresh0.after === 0, out.fresh0);
-  if (shots) { await OB.click('[data-cell="c2v200"]'); await OB.screenshot({path: path.join(shots, 'rv-board-her.png')}); }
+  if (shots) await OB.screenshot({path: path.join(shots, 'rv-board-her.png')});
   // 🧹 Start fresh after her test: no cards, no rooms strip (the table keeps everything)
   await O.click('[data-gw-fresh]'); await O.click('[data-gw-fresh]'); await O.waitForTimeout(200);
   out.fresh = {cards: await O.locator('.gw-card').count(), rooms: await O.locator('#gw-rooms').isVisible()}; expect('Start fresh hides her test screens and the rooms strip', out.fresh.cards === 0 && !out.fresh.rooms, out.fresh);

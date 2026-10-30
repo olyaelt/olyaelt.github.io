@@ -166,6 +166,9 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
         if live and not SYNC: print('WARNING: no SYNC_URL found, %s-live works like the plain page' % name)
         open(os.path.join(out_dir, name + suffix + '.html'), 'w', encoding='utf-8').write(page)
         built.append('tools/%s/%s%s.html' % (lesson, name, suffix))
+# shared pictures of the lesson pages (tools/assets → <site>/tools/): the blue cloud of her stage slides (her 13:29)
+for f in sorted(glob.glob(os.path.join(T, 'assets', '*'))):
+    shutil.copyfile(f, os.path.join(site, 'tools', os.path.basename(f)))
 # tools 9 (her wish 28.10): tools/index.html, a teacher's page with every lesson page, grouped by group and lesson, the live link
 # first (with Copy, for the Zoom chat) and the plain one as the fallback. Shown when her code is on this device (as on the live
 # pages: a lock on the door, the list is in the source); noindex, linked from nowhere.

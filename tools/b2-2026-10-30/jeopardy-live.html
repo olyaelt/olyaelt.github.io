@@ -207,7 +207,7 @@ button.cell{font-family:inherit;cursor:pointer}
 .cell.sel{outline:4px dashed var(--instr);outline-offset:2px}
 div.cell.sel{align-content:center;gap:4px;padding:4px}
 div.cell.sel .v{font-size:1rem;line-height:1}
-.cellbtn{all:unset;cursor:pointer;display:grid;place-items:center;width:100%;height:100%;border-radius:inherit}
+/*unused*/.cellbtn{all:unset;cursor:pointer;display:grid;place-items:center;width:100%;height:100%;border-radius:inherit}
 .cellacts{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
 .cellacts button{font:inherit;font-size:.95rem;font-weight:900;border-radius:99px;padding:3px 12px;cursor:pointer;border:2px solid #FFFFFF;background:#FFFFFF;color:#0B5394}
 .cellacts button.ghost{background:transparent;color:inherit;border-color:currentColor;font-size:.8rem;padding:2px 8px}
@@ -216,6 +216,10 @@ div.cell.sel .v{font-size:1rem;line-height:1}
 .nowstrip .go{margin-left:auto;background:#FFFFFF;color:#0693E3;border-radius:99px;padding:4px 14px}
 .boardfoot{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:flex-end}
 .head .howgame{margin-left:auto}
+.cellwrap{position:relative;display:grid}
+.cellwrap .cell{width:100%;border:3px solid transparent}
+.cellwrap .unplay{position:absolute;left:6px;top:4px;width:1.7rem;height:1.7rem;border-radius:50%;border:0;background:rgba(0,0,0,.28);color:#FFFFFF;font-weight:900;font-size:.95rem;cursor:pointer;display:grid;place-items:center;padding:0}
+.cellwrap .unplay:hover{background:rgba(0,0,0,.5)}
 .legend{color:var(--muted);font-size:.92rem;margin:0}
 @media (max-width:700px){ .cellacts button{font-size:.78rem;padding:2px 7px} .cell{font-size:1.15rem;min-height:3.4rem} .jb .colh{font-size:.72rem;min-height:3rem;padding:4px 2px} .jb{gap:5px} }
 </style>
@@ -489,12 +493,14 @@ const cellAt = (col, v) => D.cells.find(c => c.col === col && c.value === v);
 const href = c => c && c.page ? `${c.page}${LIVE_ON ? "-live" : ""}.html` : "";
 const nowKey = () => { const [k, t] = String(LV.text.now || "").split("|"); return k && Date.now() - (Number(t) || 0) < 3 * 3600000 ? k : ""; };   /* the light goes out by itself after 3 hours */
 const doneAt = k => Number(LV.text["done." + k]) || 0;
-let sel = null, busy = false, sureFresh = false;
+let busy = false, sureFresh = false;
+/* her board (her 13:24, as on her slides): one click on a cell = ▶ Play — it lights up in every room and its page opens (a cell without a
+   page only lights up); the cell played before turns grey by itself; a small ↺ on a played cell = not played (a wrong click) */
 async function play(k){
-  const c = D.cells.find(x => cellKey(x) === k), prev = nowKey(), t = Date.now(); busy = true; render();
+  const c = D.cells.find(x => cellKey(x) === k), prev = nowKey(), t = Date.now(); busy = true; liveMsg = "…"; render();
   await liveOp("text", "now", k + "|" + t);                                   /* first the light, so the rooms see it at once */
   if(prev && prev !== k && !doneAt(prev)) await liveOp("text", "done." + prev, String(t));   /* the one played before turns grey */
-  busy = false; sel = null; const lit = nowKey() === k;
+  busy = false; const lit = nowKey() === k;
   if(lit && href(c)) { location.href = href(c); return; }
   if(lit) liveMsg = "✓ lit up in every room"; render();
 }
@@ -502,32 +508,27 @@ async function unplay(k){
   busy = true; render();
   if(nowKey() === k) await liveOp("untext", "now");
   if(doneAt(k)) await liveOp("untext", "done." + k);
-  busy = false; sel = null; if(!/^not saved/.test(liveMsg)) liveMsg = "✓ back to new"; render();
+  busy = false; if(!/^not saved/.test(liveMsg)) liveMsg = "✓ back to new"; render();
 }
 function render(){
   liveApply();
   const mine = liveTeacher(), nk = nowKey(), nowC = D.cells.find(c => cellKey(c) === nk);
   const strip = nowC ? (href(nowC) ? `<a class="nowstrip" href="${href(nowC)}">▶ Now playing: ${esc(nowC.col)} · $${nowC.value}<span class="go">Open →</span></a>` : `<div class="nowstrip">▶ Now playing: ${esc(nowC.col)} · $${nowC.value}</div>`) : "";
   const grid = `<div class="jb" style="--cols:${D.cols.length}">${D.cols.map(c => `<div class="colh">${esc(c)}</div>`).join("")}
-    ${D.values.map(v => D.cols.map(col => { const c = cellAt(col, v), k = c ? cellKey(c) : "", isNow = k && k === nk;
-      const cls = `cell ${c && c.today && mine ? "today" : ""} ${k && doneAt(k) && !isNow ? "done" : ""} ${isNow ? "now" : ""} ${sel === k && k ? "sel" : ""}`;
-      if(mine && c && sel === k) return `<div class="${cls}" data-cellwrap="${k}"><span class="v">$${v}</span><span class="cellacts"><button data-play ${busy ? "disabled" : ""}>${busy ? "…" : "▶ Play"}</button>${isNow || doneAt(k) ? `<button class="ghost" data-unplay ${busy ? "disabled" : ""}>↺ Not played</button>` : ""}</span></div>`;
-      if(mine && c) return `<button class="${cls}" data-cell="${k}" aria-label="${esc(col)} $${v}: ${esc(c.title || "")}">$${v}</button>`;
+    ${D.values.map(v => D.cols.map(col => { const c = cellAt(col, v), k = c ? cellKey(c) : "", isNow = k && k === nk, played = k && (isNow || doneAt(k));
+      const cls = `cell ${c && c.today && mine ? "today" : ""} ${k && doneAt(k) && !isNow ? "done" : ""} ${isNow ? "now" : ""}`;
+      if(mine && c) return `<div class="cellwrap"><button class="${cls}" data-cell="${k}" ${busy ? "disabled" : ""} aria-label="${esc(col)} $${v}: ${esc(c.title || "")} — play">$${v}</button>${played ? `<button class="unplay" data-unplay="${k}" ${busy ? "disabled" : ""} title="Not played (a wrong click)" aria-label="Not played">↺</button>` : ""}</div>`;
       return c && c.page ? `<a class="${cls}" href="${href(c)}" aria-label="${esc(col)} $${v}">$${v}</a>` : `<span class="${cls} nolink">$${v}</span>`; }).join("")).join("")}</div>`;
-  const sc = sel && D.cells.find(c => cellKey(c) === sel);
-  const note = !mine ? "" : `<p class="legend">${sc ? `<b>${esc(sc.col)} · $${sc.value}${sc.title ? " — " + esc(sc.title) : ""}</b> · ${href(sc) ? "▶ Play lights it up in every room and opens its page." : "▶ Play lights it up in every room (no page: from the slides)."}`
-      : "👩‍🏫 Tap the cell they choose, then ▶ Play: it lights up in every room and its page opens. Orange = today's fields."} <span id="live-status">${esc(liveMsg)}</span></p>`;
+  const note = !mine ? "" : `<p class="legend">👩‍🏫 Click the cell they choose: it lights up in every room and its page opens. ↺ on a played cell = not played. Orange = today's fields. <span id="live-status">${esc(liveMsg)}</span></p>`;
   const foot = !mine ? "" : `<div class="boardfoot">${sureFresh ? `<span class="legend">All cells back to new, nothing lit up?</span><button class="btn slim primary" data-fresh-yes>🧹 Yes, start fresh</button><button class="btn slim" data-fresh-no>Cancel</button>` : `<button class="btn slim" data-fresh>🧹 Start fresh</button>`}</div>`;
   const btns = (D.buttons || []).map(x => `<a class="btn slim primary howgame" href="${x.page}${LIVE_ON ? "-live" : ""}.html">${esc(x.label)}</a>`).join("");   /* 🎓 How the game works (f-demo) */
   document.getElementById("main").innerHTML = `<header class="head"><h1>${esc(D.title)}</h1>${btns}</header>${strip}${note}${grid}${foot}`;
-  document.querySelectorAll("[data-cell]").forEach(b => b.addEventListener("click", () => { if(busy) return; sel = b.dataset.cell; liveMsg = ""; sureFresh = false; render(); }));
-  document.querySelectorAll("[data-cellwrap] .v").forEach(b => b.addEventListener("click", () => { if(busy) return; sel = null; render(); }));
-  const on = (q, fn) => document.querySelectorAll(q).forEach(b => b.addEventListener("click", fn));
-  on("[data-play]", () => { if(!busy) play(sel); });
-  on("[data-unplay]", () => { if(!busy) unplay(sel); });
+  const on = (q, fn) => document.querySelectorAll(q).forEach(b => b.addEventListener("click", e => fn(b, e)));
+  on("[data-cell]", b => { if(!busy){ sureFresh = false; play(b.dataset.cell); } });
+  on("[data-unplay]", (b, e) => { e.stopPropagation(); if(!busy) unplay(b.dataset.unplay); });
   on("[data-fresh]", () => { sureFresh = true; render(); });
   on("[data-fresh-no]", () => { sureFresh = false; render(); });
-  on("[data-fresh-yes]", async () => { sureFresh = false; sel = null; await liveOp("reset", ""); if(!/^not saved/.test(liveMsg)) liveMsg = "✓ all cells back to new"; render(); });
+  on("[data-fresh-yes]", async () => { sureFresh = false; await liveOp("reset", ""); if(!/^not saved/.test(liveMsg)) liveMsg = "✓ all cells back to new"; render(); });
 }
 /* the groups' boards: every 10 s, shown at once */
 async function boardPoll(){
