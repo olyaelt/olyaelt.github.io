@@ -44,7 +44,9 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
         out.mix = {dots: await p.locator('.fdots span').count(), labels: []};
         for (let k = 0; k < 3; k++) { out.mix.labels.push(await p.locator('.fc .lbl').innerText()); await p.click('[data-flip]'); await p.waitForTimeout(80); await p.click(k < 2 ? '[data-again]' : '[data-got]'); await p.waitForTimeout(120); }
         out.mix.again = await p.locator('.fdots .again').count();
-        expect('f-demo Practice: one deck of three, own labels, Again counts', out.mix.dots === 3 && /three kinds/i.test(out.mix.labels[0]) && /our sentences/i.test(out.mix.labels[1]) && /how do you say/i.test(out.mix.labels[2]) && out.mix.again === 2, out.mix);
+        // her 12:18: no Next under a deck while it has cards; f-late's Practice = one deck of all its cards
+        out.mix.nextInDeck = await p.locator('.blk-nav [data-next]').count();
+        expect('f-demo Practice: one deck of three, own labels, Again counts', out.mix.dots === 3 && /three kinds/i.test(out.mix.labels[0]) && /our sentences/i.test(out.mix.labels[1]) && /how do you say/i.test(out.mix.labels[2]) && out.mix.again === 2 && out.mix.nextInDeck === 0, out.mix);
       }
       if (f === 'f-tags') {
         out.tags = {sw: await p.locator('[data-howto]').count(), before: await p.locator('.tip').count()};
@@ -83,6 +85,10 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
     expect('under the frame: Anna\'s text for chat 2, with her marks; nothing inside the frame', /Group \d — Anna/.test(out.underFrame.field) && /I stuck/.test(out.underFrame.field) && /Change this/.test(out.underFrame.field) && out.underFrame.inside === 0, out.underFrame);
     out.namesBtn = await OF.locator('[data-pchost] [data-roster]').first().innerText().catch(() => ''); expect('the card says where to put names', /Names|Add names/.test(out.namesBtn), out.namesBtn);
     if (shots) { await OF.evaluate(() => document.querySelector('[data-pchost]').scrollIntoView()); await OF.screenshot({path: path.join(shots, 'r2-under-frame.png')}); }
+    // f-late's 🃏 Practice: all its cards in one deck (warm replies, rewrites, our sentences), no Next until the end
+    const PL = await open(L + 'f-late-live.html', ''); await PL.click('.stage-btn[data-stage="2"]'); await PL.waitForTimeout(150);
+    out.lateDeck = await PL.evaluate(() => ({blocks: curBlocks().length, cards: curBlock().cards.length, all: D.stages[2].blocks.reduce((n, b) => n + b.cards.length, 0), kinds: [...new Set(curBlock().cards.map(c => c._b.style))].join(), next: document.querySelectorAll('.blk-nav [data-next]').length}));
+    expect('f-late Practice: one deck of every card, three kinds, no Next yet', out.lateDeck.blocks === 1 && out.lateDeck.cards === out.lateDeck.all && out.lateDeck.kinds === 'say,kwt,ours' && out.lateDeck.next === 0, out.lateDeck);
     // the same work in 📥 Groups
     await O.click('.stage-btn[data-stage="groups"]'); await O.waitForTimeout(500); out.groups = await O.locator('.gw-card').count(); expect('📥 Groups still shows it', out.groups === 1, out.groups);
     // ---- the panel under a message on a field (Test yourself)

@@ -95,7 +95,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
   out.dots = await O.locator('[data-gdots] .gd-again').count(); expect('her dots: one orange card', out.dots === 1, out.dots);
   // 🔖 on a gap, ✓/≈/✗, a box phrase
   await B.click('.stage-btn[data-stage="1"]'); await B.locator('[data-gap]').first().click(); await B.waitForTimeout(100); await B.locator('[data-bm]').first().click(); await B.waitForTimeout(300);
-  await A.click('.stage-btn[data-stage="2"]'); await A.waitForTimeout(100); await A.evaluate(() => { S.at[2] = curBlocks().findIndex(b => b.box); render(); }); await A.waitForTimeout(150);
+  await A.click('.stage-btn[data-stage="2"]'); await A.waitForTimeout(100); await A.evaluate(() => { const b = curBlock(), d = deckOf(b), k = d.queue.findIndex(i => b.cards[i]._b.box); d.queue.unshift(d.queue.splice(k, 1)[0]); render(); });   /* one deck per stage (her 12:17): bring an 'ours' card (with the box) to the top */ await A.waitForTimeout(150);
   await A.locator('aside.box [data-ph]').first().click(); await A.waitForTimeout(300);
   const T2 = await open(L + 'f-tags-live.html', 'anna'); await T2.click('[data-sayshow]'); await T2.click('[data-check="close"]'); await T2.waitForTimeout(300);
   out.signals = sheet('Lesson signals').map(r => [r[1].split('/')[1], r[3], r[5]]);

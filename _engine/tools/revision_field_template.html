@@ -28,6 +28,11 @@ __BASE_CSS__
 .ipa{color:#B45309;font-weight:600}
 .blk-nav{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .blk-nav .grow{flex:1}
+.bparts{display:flex;gap:6px;align-items:center}
+.bparts .bp-lbl{font-weight:800;color:var(--muted);font-size:.9rem}
+.bparts button{width:1.7rem;height:1.7rem;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--muted);font:inherit;font-weight:900;font-size:.85rem;padding:0;cursor:pointer;display:grid;place-items:center}
+.bparts button.was{background:var(--line);color:var(--ink)}
+.bparts button.on{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
 .bdots{display:flex;gap:6px}
 .bdots button{width:14px;height:14px;border-radius:50%;border:2px solid var(--line);background:var(--card);padding:0}
 .bdots button.on{background:var(--instr);border-color:var(--instr);transform:scale(1.2)}
@@ -40,7 +45,10 @@ __BASE_CSS__
 .dlg p{margin:0 0 6px;font-size:1.18rem;line-height:1.55}
 .dlg .sp{font-weight:900;margin-right:4px}
 .gp{font:inherit;border:0;padding:0;background:transparent;cursor:pointer;color:inherit}
-.gp .f{color:#0000FF;font-weight:900}
+:root{--first:#0000FF}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){--first:#7DB8FF} }
+:root[data-theme="dark"]{--first:#7DB8FF}   /* first letters: the slide blue; on a dark screen a light blue (pure blue on dark is unreadable) */
+.gp .f{color:var(--first);font-weight:900}
 .gp .r{background:#FFFF00;color:transparent;border-radius:3px;padding:0 1px}
 .gp.open .r,.gp.open .f{color:#1D1D1B;font-weight:700;background:#FFFF00}   /* opened: the whole chunk black bold on the yellow (her read-through 30.10: blue on yellow is hard on the eyes) */
 .gp.open .f{border-radius:3px 0 0 3px;padding-left:1px}
@@ -181,9 +189,19 @@ D.stages.forEach((st, si) => st.blocks.forEach((b, bi) => {
   b._id = `s${si}b${bi}`; b._si = si; b._bi = bi; b._pid = (P.blocks || [])[blockN] != null ? P.blocks[blockN] : blockN; blockN++; BLOCKS.push(b);
   if(b.kind === "write") b.items.forEach(it => { it._chat = (P.write || [])[chatN] != null ? P.write[chatN] : chatN; chatN++; });
   /* a mixed deck from the data (f-demo, her catch 11:58: three kinds of card, one deck): each card its own style, check and label */
-  if(b.kind === "cards") b.cards.forEach(c => { c._n = (P.cards || [])[cardN] != null ? P.cards[cardN] : cardN; cardN++;
-    c._b = b.style === "mix" ? Object.assign({}, b, {style: c.style || "say", check: c.check || "", instr: c.instr || b.instr, instr_next: null}) : b; });
+  if(b.kind === "cards") b.cards.forEach((c, j) => { c._n = (P.cards || [])[cardN] != null ? P.cards[cardN] : cardN; cardN++;
+    c._b = b.style === "mix" ? Object.assign({}, b, {style: c.style || "say", check: c.check || "", instr: c.instr || b.instr, instr_next: null}) : b;
+    c._lbl = b.style === "mix" ? (c.instr || b.instr) : b.style === "share" && c.instr ? c.instr : j === 0 || !b.instr_next ? b.instr : b.instr_next; });
 }));
+/* her rule 30.10 12:17: all the cards of a stage are one deck (a missed Got it + Next must not land in another deck — "a logistical
+   nightmare"); each card keeps its own kind, label, box and check. The data and the permanent numbers stay as they are. */
+D.stages.forEach(st => { const out = [];
+  st.blocks.forEach(b => { const last = out[out.length - 1];
+    if(b.kind === "cards" && last && last._deck){ last.cards = last.cards.concat(b.cards); if(!last.tip && b.tip) last.tip = b.tip; return; }
+    out.push(b.kind === "cards" ? Object.assign({}, b, {style: "mix", _deck: true, cards: b.cards.slice()}) : b); });
+  st.blocks = out; });
+BLOCKS.length = 0;
+D.stages.forEach((st, si) => st.blocks.forEach((b, bi) => { b._id = `s${si}b${bi}`; b._si = si; b._bi = bi; BLOCKS.push(b); }));
 const writeItems = BLOCKS.filter(b => b.kind === "write").flatMap(b => b.items);
 const FAST = BLOCKS.map(b => b.fast).filter(Boolean);
 let S;
@@ -296,7 +314,7 @@ function backHTML(b, c){
   if(st === "share") return `<p class="say">B: ${mk(c.back)}</p>${c.next ? `<p class="next">A: ${mk(c.next)}</p>` : ""}${c.note ? `<p class="note">${mk(c.note)}</p>` : ""}`;
   return `<p class="say">${mk(c.back)}</p>${c.note ? `<p class="note">${mk(c.note)}</p>` : ""}`;
 }
-const cardInstr = (b, k, first) => b.style === "mix" && b._id !== "fastdeck" ? (b.cards[k].instr || b.instr) : b.style === "share" && b.cards[k].instr ? b.cards[k].instr : first || !b.instr_next ? b.instr : b.instr_next;
+const cardInstr = (b, k, first) => b.style === "mix" && b._id !== "fastdeck" ? (b.cards[k]._lbl || b.instr) : b.style === "share" && b.cards[k].instr ? b.cards[k].instr : first || !b.instr_next ? b.instr : b.instr_next;
 function cardsHTML(b){
   const d = deckOf(b), st = bs(b);
   const dots = `<div class="fdots">${d.cards.map((c, i) => `<span class="${d.got.has(i) ? "got" : d.again.has(i) ? "again" : ""} ${d.queue[0] === i && d.queue.length ? "now" : ""}"></span>`).join("")}</div>`;
@@ -307,7 +325,7 @@ function cardsHTML(b){
     const back = d.cards.filter((_, i) => d.again.has(i));
     return `${dots}<div class="blk-end"><h3 style="margin:0">${back.length ? "Done! Come back to these" : "Done! You got them all"}</h3>
       ${back.length ? `<ul class="endlist">${back.map(c => `<li><span class="f">${mk(cardFrontPlain(b, c))}</span><span class="b">${mk(c.back)}</span></li>`).join("")}</ul>` : ""}
-      ${b.style === "ours" && b.summary ? `<p class="part-h" style="margin-top:10px">${esc(b.summary)}</p><ul class="endlist all">${b.cards.map(c => `<li><span class="f">${mk(c.front)}</span><span class="b">${mk(c.back)}</span></li>`).join("")}</ul>` : ""}
+      ${[...new Set(b.cards.map(c => c._b))].filter(o => o.style === "ours" && o.summary).map(o => `<p class="part-h" style="margin-top:10px">${esc(o.summary)}</p><ul class="endlist all">${b.cards.filter(c => c._b === o).map(c => `<li><span class="f">${mk(c.front)}</span><span class="b">${mk(c.back)}</span></li>`).join("")}</ul>`).join("")}
       <div class="row-actions" style="margin-top:10px">${back.length ? `<button class="btn" data-redo>Go through these again</button>` : `<button class="btn" data-restart>All the cards again</button>`}${isLast() ? "" : `<button class="btn primary" data-next>Next →</button>`}</div></div>`;
   }
   const i = d.queue[0], c = d.cards[i], first = d.got.size + d.again.size === 0;
@@ -320,6 +338,8 @@ const cardFrontPlain = (b, c) => (b.style === "mix" ? c._b.style : b.style) === 
 /* the box beside a card: a "share" card says how much support (box · strip · none, her rule: support fades) */
 function boxFor(b){
   if(!b) return null;
+  if(b.kind === "cards" && b.style === "mix"){ const d = deckOf(b), i = d.queue[0], c = i != null ? b.cards[i] : null; if(!c) return null;
+    const o = c._b; if(o.style === "share") return c.support === "box" ? "BOX" : c.support === "strip" ? "STRIP" : null; return o.box || null; }
   if(b.kind === "cards" && b.style === "share"){ const d = deckOf(b), i = d.queue[0], c = i != null ? b.cards[i] : null, sup = c ? c.support : "none";
     return sup === "box" ? "BOX" : sup === "strip" ? "STRIP" : null; }
   return b.box || null;
@@ -365,8 +385,15 @@ function blockHTML(b){
 }
 function navHTML(){
   const bl = curBlocks(), i = bIdx(), more = i < bl.length - 1, nextStage = D.stages[S.stage + 1];
-  const dots = bl.length > 1 ? `<span class="bdots">${bl.map((_, k) => `<button class="${k === i ? "on" : k < i ? "was" : ""}" data-bgo="${k}" aria-label="Part ${k + 1} of ${bl.length}"></button>`).join("")}</span>` : "";
-  return `<div class="blk-nav">${i ? `<button class="btn slim" data-prev>← Previous</button>` : ""}${dots}<span class="grow"></span>
+  /* her 12:18: while a deck has cards there is no Next — the way on is the method: tap the card, look at the answer, ↺ Again or ✓ Got it;
+     Next comes with the end of the deck (the stage tabs on top still work, for her "move on") */
+  const cb = bl[i], inDeck = cb && cb.kind === "cards" && deckOf(cb).queue.length;
+  /* ← back: the part before, or on the first part the stage before (her 12:23: from the cards back to the gap fill) */
+  const prevStage = D.stages[S.stage - 1], prev = i ? `<button class="btn slim" data-prev>← Previous</button>` : prevStage ? `<button class="btn slim" data-prevstage>← ${esc(prevStage.label)}</button>` : "";
+  /* the parts of a stage: numbered, "Part 1 of 2" (her 12:23: two bare dots said nothing) */
+  const dots = bl.length > 1 ? `<span class="bparts"><span class="bp-lbl">Part</span>${bl.map((b, k) => `<button class="${k === i ? "on" : k < i ? "was" : ""}" data-bgo="${k}" aria-label="Part ${k + 1} of ${bl.length}" title="Part ${k + 1}: ${esc(String(b.instr || b.kind).slice(0, 60))}">${k + 1}</button>`).join("")}<span class="bp-lbl">of ${bl.length}</span></span>` : "";
+  if(inDeck) return prev || dots ? `<div class="blk-nav">${prev}${dots}</div>` : "";
+  return `<div class="blk-nav">${prev}${dots}<span class="grow"></span>
     ${more ? `<button class="btn slim primary" data-next>Next →</button>` : nextStage ? `<button class="btn slim primary" data-next>Next: ${esc(nextStage.label)} →</button>` : ""}</div>`;
 }
 const cellName = () => D.board && D.board.col ? `${D.board.col} · $${D.board.value}` : "";
@@ -413,6 +440,7 @@ function wire(root){
   on("[data-stage]", x => { if(x.dataset.stage === "groups"){ if(S.view !== "groups"){ S.view = "groups"; S.fast = null; render(); scrollTo(0, 0); setTimeout(gwFetch, 0); } } else goStage(+x.dataset.stage); });
   on("[data-next]", () => { const bl = curBlocks(), i = bIdx(); if(i < bl.length - 1){ S.at[S.stage] = i + 1; S.enter = true; render(); scrollTo(0, 0); } else if(S.stage < D.stages.length - 1) goStage(S.stage + 1); });
   on("[data-prev]", () => { S.at[S.stage] = Math.max(0, bIdx() - 1); S.enter = true; render(); scrollTo(0, 0); });
+  on("[data-prevstage]", () => { const k = S.stage - 1; if(k < 0) return; S.at[k] = D.stages[k].blocks.length - 1; goStage(k); });
   on("[data-bgo]", x => { S.at[S.stage] = +x.dataset.bgo; S.enter = true; render(); });
   on("[data-howto]", () => { S.howto = !S.howto; render(); });
   on("[data-goto]", x => goStage(+x.dataset.goto));
