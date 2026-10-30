@@ -33,11 +33,16 @@
   {
    "pid": 6,
    "sig": "picture this is maple road. what else has been happening here? take turns to share the news like neighbours. maple-road.jpg",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 7,
    "sig": "questions now real news: a theft or a scam you've heard about.",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "scenes this is maple road. look at the scene: what's been going on here? get ready to share the news like neighbours.",
    "gone": false
   }
  ],

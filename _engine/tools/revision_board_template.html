@@ -87,8 +87,8 @@ function render(){
   liveApply();
   const mine = liveTeacher(), nk = nowKey(), nowC = D.cells.find(c => cellKey(c) === nk);
   const strip = nowC ? (href(nowC) ? `<a class="nowstrip" href="${href(nowC)}">▶ Now playing: ${esc(nowC.col)} · $${nowC.value}<span class="go">Open →</span></a>` : `<div class="nowstrip">▶ Now playing: ${esc(nowC.col)} · $${nowC.value}</div>`) : "";
-  let left = null; try{ left = JSON.parse(sessionStorage.getItem("rf-left") || "null"); }catch(e){}
-  const backTo = left && Date.now() - left.t < 3 * 3600e3 && left.href ? `<a class="backstrip" href="${esc(left.href)}#resume">↩ Back to ${esc(left.cell ? left.cell + " — " : "")}${esc(left.title || "")}<span class="go">Where you were →</span></a>` : "";
+  const left = store.get("tool-place-" + PAGE_ID.split("/")[0] + "/_left");   /* the last field this device had open (handoff 15:15) */
+  const backTo = left && Date.now() - left.t < 3 * 3600e3 && left.href ? `<a class="backstrip" href="${esc(left.href)}">↩ Back to ${esc(left.title || "")}${left.stage ? " · " + esc(left.stage) : ""}<span class="go">Where you were →</span></a>` : "";
   const grid = `<div class="jb" style="--cols:${D.cols.length}">${D.cols.map(c => `<div class="colh">${esc(c)}</div>`).join("")}
     ${D.values.map(v => D.cols.map(col => { const c = cellAt(col, v), k = c ? cellKey(c) : "", isNow = k && k === nk, played = k && (isNow || doneAt(k));
       const cls = `cell ${c && c.today && mine ? "today" : ""} ${k && doneAt(k) && !isNow ? "done" : ""} ${isNow ? "now" : ""}`;
@@ -108,7 +108,7 @@ function render(){
 /* her 15:31: 🧹 Start fresh before the lesson also clears what she typed and tapped while testing on this computer (every page of this
    lesson: messages, cards sent back, her notes' read marks, where she was), and starts her 📥 Groups / 👥 panels from now on every page */
 function clearTraces(){
-  const dir = PAGE_ID.split("/")[0] + "/", pre = ["tool-field-", "tool-chat-", "tool-notes-", "tool-deckstats-", "tool-again-"]; let n = 0;
+  const dir = PAGE_ID.split("/")[0] + "/", pre = ["tool-field-", "tool-chat-", "tool-notes-", "tool-deckstats-", "tool-again-", "tool-place-"]; let n = 0;
   try{
     for(let k = localStorage.length - 1; k >= 0; k--){ const key = localStorage.key(k); if(key && pre.some(p => key.startsWith(p + dir))){ localStorage.removeItem(key); n++; } }
     const pages = new Set(D.cells.filter(c => c.page).map(c => c.page).concat((D.buttons || []).map(x => x.page)));

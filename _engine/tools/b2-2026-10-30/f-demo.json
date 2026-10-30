@@ -108,7 +108,8 @@
       {
        "p": [
         {
-         "b": "heads-up"
+         "f": "h",
+         "r": "eads-up"
         }
        ],
        "ru": "предупреждение"
@@ -116,7 +117,13 @@
       {
        "p": [
         {
-         "b": "gone missing"
+         "f": "g",
+         "r": "one"
+        },
+        " ",
+        {
+         "f": "m",
+         "r": "issing"
         }
        ],
        "ru": "пропал"
@@ -132,7 +139,7 @@
      "kind": "cards",
      "style": "mix",
      "instr": "Three cards, three kinds. Say your answer, then tap the card to check.",
-     "tip": "↺ Again = \"we weren't sure\": the card comes back two or three cards later. ✓ Got it = done. Olya sees which cards came back.",
+     "tip": "↺ Again later = \"we weren't sure\": the card comes back two or three cards later. ✓ Got it = done. Olya sees which cards came back.",
      "cards": [
       {
        "front": "Nobody knows where Gary is.",

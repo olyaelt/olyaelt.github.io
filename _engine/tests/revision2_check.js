@@ -2,7 +2,7 @@
 // f-demo with its button on the board, the chat page inside 💬 Use it shows only its working part (?embed=1), opened gaps black bold on
 // the yellow, and her 👥 panel under a chat / a message: every group's text for this chat, live, with ✓ Good etc.; numbered chat dots.
 //   node tests/revision2_check.js SITE_DIR [shots_dir]
-const {chromium} = require('playwright'); const fs = require('fs'); const path = require('path');
+const {chromium} = require('playwright'); const fs = require('fs'); const path = require('path'); const http = require('http');
 const {makeEnv} = require('./mock');
 const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-10-30/';
 (async () => {
@@ -12,6 +12,11 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
   const env = makeEnv(); env.ctx.setUp(); const T = String(env.sheets.Students.d[1][0]);
   env.sheets.Students.appendRow(['abc123', 'Anna', 'B2', '']);
   const b = await chromium.launch(), tmps = [];
+  // over http, as on the real site (file:// pages don't share device storage reliably)
+  const types = {'.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.jpg': 'image/jpeg', '.woff2': 'font/woff2'};
+  const srv = http.createServer((q, r) => { const f = path.join(site, decodeURIComponent(q.url.split('?')[0])); fs.readFile(f, (e, d) => { if (e) { r.writeHead(404); r.end(); return; }
+    r.writeHead(200, {'Content-Type': types[path.extname(f)] || 'application/octet-stream'}); r.end(d); }); }).listen(0);
+  const base = `http://localhost:${srv.address().port}/`;
   // the pages are copied with the test table's address; the field's iframe loads its tool page the same way (routed)
   const open = async (rel, who, opts = {}) => {
     const c = await b.newContext({viewport: {width: 1280, height: 720}, reducedMotion: 'reduce'});
@@ -19,7 +24,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
     if (who === 'anna') await c.addInitScript(() => { localStorage.setItem('hw-code', 'abc123'); localStorage.setItem('hw-role', ''); });
     await c.route(/script\.google\.com/, r => r.fulfill({status: 200, contentType: 'application/json', headers: {'Access-Control-Allow-Origin': '*'}, body: JSON.stringify(env.post(r.request().postData()))}));
     const p = await c.newPage(); p.on('pageerror', e => errs.push(rel + ': ' + e.message));
-    await p.goto('file://' + path.join(site, rel)); await p.waitForTimeout(500); if(!opts.cloud) await cloudOff(p); return p;
+    await p.goto(base + rel); await p.waitForTimeout(500); if(!opts.cloud) await cloudOff(p); return p;
   };
   const cloudOff = p => p.evaluate(() => { if(typeof S !== 'undefined' && S && S.intro){ S.intro = false; render(); } }).catch(() => {});
   const bubble = async (p, n) => { await p.click(`.stage-btn[data-stage="${n}"]`); await cloudOff(p); };
@@ -125,9 +130,10 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
     await W.waitForTimeout(900); const lw = () => (env.sheets['Lesson work'] ? env.sheets['Lesson work'].d.slice(1) : []).map(r => r.join('|'));
     out.writeRow = lw().filter(r => /stuck in traffic/.test(r));
     const W2 = await open(L + 'f-late-live.html', 'anna'); await W2.locator('[data-wta]').nth(1).fill('No worries, see you soon!'); await W2.waitForTimeout(3200);
-    await bubble(W2, 2); await W2.waitForTimeout(300); await W2.reload(); await W2.waitForTimeout(600); await cloudOff(W2);
+    await bubble(W2, 2); await W2.waitForTimeout(1000); await W2.reload(); await W2.waitForFunction(() => typeof S !== 'undefined' && typeof render === 'function'); await W2.waitForTimeout(600); await cloudOff(W2);
+    out.reopened = await W2.evaluate(() => S.stage); await bubble(W2, 0);   /* the page reopens where it was left (handoff 15:15) */
     out.writeDraft = {row: lw().filter(r => /No worries, see you soon/.test(r)).length, back: await W2.locator('[data-wta]').nth(1).inputValue().catch(() => '')};
-    expect('nothing is lost: Next without Send reaches her table; a draft left by a bubble reaches it too and stays in the box', out.writeRow.length >= 1 && out.writeDraft.row >= 1 && out.writeDraft.back === 'No worries, see you soon!', {row: out.writeRow, draft: out.writeDraft});
+    expect('nothing is lost: Next without Send reaches her table; a draft left by a bubble reaches it too and stays in the box; a reload reopens where it was', out.writeRow.length >= 1 && out.writeDraft.row >= 1 && out.writeDraft.back === 'No worries, see you soon!' && out.reopened === 2, {row: out.writeRow, draft: out.writeDraft, reopened: out.reopened});
     // her 13:24: the chat page inside has no Next of its own; the field's Next steps through it like slides
     await bubble(W, 3); await W.waitForTimeout(1500); const FR = W.frameLocator('.tool-frame');
     out.innerNext = await FR.locator('.acts [data-next]').first().isVisible().catch(() => false);
@@ -165,15 +171,18 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
     // and Next (the seen ones tappable), and the way back from the board to where they were
     const CR = await open(L + 'f-crime-live.html', 'anna'); await bubble(CR, 3); await CR.waitForTimeout(150);
     const crs = () => CR.evaluate(() => ({b: bIdx(), dots: [...document.querySelectorAll('.sdots button')].map(x => x.className.trim() + (x.disabled ? '-' : '')).join(' '), next: !document.querySelector('[data-step]').disabled, fast: !!document.querySelector('.fast'), q: curBlock().kind === 'questions' ? spkCur.key : null}));
-    out.crime = [await crs()]; for (let k = 0; k < 4; k++) { await CR.click('[data-step]'); await CR.waitForTimeout(150); out.crime.push(await crs()); }
+    out.crime = [await crs()]; for (let k = 0; k < 14 && (await CR.evaluate(() => curBlock().kind)) !== 'questions'; k++) { await CR.click('[data-step]'); await CR.waitForTimeout(120); out.crime.push(await crs()); }
+    for (let k = 0; k < 1; k++) { await CR.click('[data-step]'); await CR.waitForTimeout(150); out.crime.push(await crs()); }
     await CR.click('[data-back]'); await CR.waitForTimeout(150); out.crime.push(await crs());
-    const K = out.crime;
-    expect('Use it: numbered screens; ⚡ only on the last question; Next goes on to question 2, also after Back', K[0].dots === 'on- - -' && K[2].dots === 'was on- -' && K[3].q === 0 && K[3].next && !K[3].fast
-      && K[4].q === 1 && !K[4].next && K[4].fast && K[5].q === 0 && K[5].next && !K[5].fast, K);
+    const K = out.crime, Q = K.filter(x => x.q != null);
+    // her 15:14 (handoff 15:15): Maple Road scene by scene — the street, then 8 close-ups, one Next each
+    out.scenesSeen = K.filter(x => x.b === 1).length;
+    expect('Use it: numbered screens; Maple Road street + 8 scenes; ⚡ only on the last question; Next goes on to question 2, also after Back', K[0].dots === 'on- - -' && K.some(x => x.dots === 'was on- -') && out.scenesSeen === 9
+      && Q[0].q === 0 && Q[0].next && !Q[0].fast && Q[1].q === 1 && !Q[1].next && Q[1].fast && Q[2].q === 0 && Q[2].next && !Q[2].fast, {K, scenes: out.scenesSeen});
     await CR.click('.sdots [data-sdot="1"]'); await CR.waitForTimeout(150); out.crimeDot = await CR.evaluate(() => bIdx()); expect('a seen screen can be tapped', out.crimeDot === 1, out.crimeDot);
-    await CR.click('.board-top'); await CR.waitForTimeout(800); out.backstrip = await CR.locator('.backstrip').innerText().catch(() => '');
-    await CR.click('.backstrip'); await CR.waitForTimeout(800); out.resumed = await CR.evaluate(() => [location.hash, S.stage, bIdx(), S.intro]);
-    expect('⬅ Board by mistake: the board offers the way back, and it opens where they were', /Back to Vocabulary · \$100 — Crime around us/.test(out.backstrip) && JSON.stringify(out.resumed) === '["",3,1,false]', [out.backstrip, out.resumed]);
+    await Promise.all([CR.waitForURL(/jeopardy-live\.html/), CR.click('.board-top')]); await CR.waitForTimeout(500); out.backstrip = await CR.locator('.backstrip').innerText().catch(() => '');
+    await Promise.all([CR.waitForURL(/f-crime-live\.html/), CR.click('.backstrip')]); await CR.waitForFunction(() => typeof S !== 'undefined' && typeof render === 'function'); await CR.waitForTimeout(500); out.resumed = await CR.evaluate(() => [location.hash, S.stage, bIdx(), S.intro]);
+    expect('⬅ Board by mistake: the board offers the way back, and it opens where they were', /Back to Crime around us · 💬 Use it/.test(out.backstrip) && JSON.stringify(out.resumed) === '["",3,1,false]', [out.backstrip, out.resumed]);
     // her 15:21–15:23: a rewrite's answer fills in where the gap was (the change blue on light blue, no second sentence); after the
     // last card straight on to the next cloud (no "Done!" screen); Back from that cloud = the last card, open
     const CK = await open(L + 'f-clocks-live.html', 'anna'); await bubble(CK, 2); await CK.click('[data-step]'); await CK.waitForTimeout(120);
@@ -187,14 +196,29 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
     const HF = await open(L + 'f-late-live.html', 'teacher'); await HF.locator('[data-wta]').first().fill('trulala'); await HF.locator('[data-wsend]').first().click(); await HF.waitForTimeout(250);
     const mine = p => p.evaluate(() => Object.keys(localStorage).filter(k => /^tool-(field|chat)-b2-2026-10-30\//.test(k) && !/"w":\{\}/.test(localStorage.getItem(k))).length);
     out.herFresh = {before: await mine(HF)};
-    const HB = await HF.context().newPage(); await HB.goto('file://' + path.join(site, L, 'jeopardy-live.html')); await HB.waitForTimeout(500);
+    const HB = await HF.context().newPage(); await HB.goto(base + L + 'jeopardy-live.html'); await HB.waitForTimeout(500);
     await HB.click('[data-fresh]'); await HB.click('[data-fresh-yes]'); await HB.waitForTimeout(500);
     out.herFresh.after = await mine(HB); out.herFresh.msg = await HB.locator('#live-status').innerText().catch(() => '');
-    await HF.reload(); await HF.waitForTimeout(600); await cloudOff(HF); out.herFresh.sent = await HF.evaluate(() => Object.values(saved.w).filter(x => (x.text || '').trim()).length + document.querySelectorAll('.witem .sentmsg').length); out.herFresh.where = await HF.evaluate(() => [...document.querySelectorAll('.sentmsg')].map(x => x.parentElement.className + ':' + x.textContent.slice(0, 20)));
+    await HF.waitForTimeout(1200); out.herFresh.sent = await HF.evaluate(() => Object.values(saved.w).filter(x => (x.text || '').trim()).length + document.querySelectorAll('.witem .sentmsg').length); out.herFresh.where = await HF.evaluate(() => [...document.querySelectorAll('.sentmsg')].map(x => x.parentElement.className + ':' + x.textContent.slice(0, 20)));
     expect('her 🧹 Start fresh clears her test answers on this computer', out.herFresh.before >= 1 && out.herFresh.after === 0 && out.herFresh.sent === 0 && /test answers cleared/.test(out.herFresh.msg), out.herFresh);
+    // handoff 15:15: the Recall glossary gapped too; ↺ Again later (+ "Back in 2–3 cards" once per device); f-clocks hidden calendars
+    const HC = await open(L + 'f-crime-live.html', 'anna'); await bubble(HC, 1); await HC.click('[data-step]'); await HC.waitForTimeout(120);
+    out.glossGaps = await HC.evaluate(() => document.querySelectorAll('.gloss .gp').length);
+    const AG = await open(L + 'f-clocks-live.html', 'anna'); await bubble(AG, 2); await AG.click('[data-step]'); await AG.waitForTimeout(100);
+    out.againBtn = await AG.locator('[data-again]').innerText(); await AG.click('[data-again]'); await AG.waitForTimeout(150); out.againHint = await AG.locator('.again-hint').innerText().catch(() => '');
+    await AG.waitForTimeout(2300); await AG.click('[data-step]'); await AG.waitForTimeout(100); await AG.click('[data-again]'); await AG.waitForTimeout(150); out.againHint2 = await AG.locator('.again-hint').count();
+    await AG.evaluate(() => { goBlock(3, 1); S.intro = false; render(); }); await AG.waitForTimeout(120);
+    out.cal = {covers: await AG.locator('.cal .cover').count(), rule: await AG.locator('.cal-rule').count(), lbl: await AG.locator('.cal .cover.lbl').innerText()};
+    await AG.click('[data-cov="0-4"]'); out.cal.half = await AG.locator('.cal-done').count(); await AG.click('[data-cov="1-4"]'); await AG.waitForTimeout(150);
+    out.cal.found = [await AG.locator('.cal-done').count(), await AG.locator('.cal-ex p').count()];
+    await AG.click('[data-covall]'); out.cal.again = await AG.locator('.cal .cover').count(); await AG.click('[data-step]'); await AG.waitForTimeout(120); out.cal.nextShows = await AG.locator('.cal-done').count();
+    expect('Recall glossary gapped; ↺ Again later + its hint once; hidden calendars: tap to open, both common = found + example, Next shows it',
+      out.glossGaps > 10 && out.againBtn.includes('Again later') && /Back in 2–3 cards/.test(out.againHint) && out.againHint2 === 0
+      && out.cal.covers === 15 && out.cal.rule === 1 && out.cal.lbl === 'Call with Chris?' && out.cal.half === 0 && JSON.stringify(out.cal.found) === '[1,6]' && out.cal.again === 15 && out.cal.nextShows === 1,
+      {gloss: out.glossGaps, again: [out.againBtn, out.againHint, out.againHint2], cal: out.cal});
   } finally {
     Object.entries(orig).forEach(([fp, s]) => fs.writeFileSync(fp, s));
   }
   console.log(JSON.stringify(out, null, 1)); if (errs.length) fail.push('page errors: ' + errs.join(' | '));
-  console.log(fail.length ? 'FAILED:\n' + fail.join('\n') : 'OK revision 2'); await b.close(); process.exit(fail.length ? 1 : 0);
+  console.log(fail.length ? 'FAILED:\n' + fail.join('\n') : 'OK revision 2'); await b.close(); srv.close(); process.exit(fail.length ? 1 : 0);
 })();

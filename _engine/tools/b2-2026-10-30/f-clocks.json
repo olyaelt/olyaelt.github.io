@@ -233,7 +233,13 @@
        "p": [
         "the clocks ",
         {
-         "b": "go back"
+         "f": "g",
+         "r": "o"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "ack"
         },
         " ",
         {
@@ -248,7 +254,23 @@
        "p": [
         "an ",
         {
-         "b": "hour later for you"
+         "f": "h",
+         "r": "our"
+        },
+        " ",
+        {
+         "f": "l",
+         "r": "ater"
+        },
+        " ",
+        {
+         "f": "f",
+         "r": "or"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
         },
         " ",
         {
@@ -263,11 +285,23 @@
        "p": [
         "ten ",
         {
-         "b": "my time"
+         "f": "m",
+         "r": "y"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "ime"
         },
         ", one ",
         {
-         "b": "your time"
+         "f": "y",
+         "r": "our"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "ime"
         }
        ],
        "ru": "в десять по моему, в час по твоему"
@@ -276,7 +310,18 @@
        "p": [
         "Does that still ",
         {
-         "b": "work for you"
+         "f": "w",
+         "r": "ork"
+        },
+        " ",
+        {
+         "f": "f",
+         "r": "or"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
         },
         "?",
         " ",
@@ -291,7 +336,23 @@
       {
        "p": [
         {
-         "b": "Could we make it"
+         "f": "C",
+         "r": "ould"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "e"
+        },
+        " ",
+        {
+         "f": "m",
+         "r": "ake"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "t"
         },
         " nine?"
        ],
@@ -301,7 +362,23 @@
        "p": [
         "an ",
         {
-         "b": "extra hour of sleep"
+         "f": "e",
+         "r": "xtra"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "our"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "f"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "leep"
         },
         " ",
         {
@@ -350,7 +427,7 @@
        "note": "Перевод часов приносит больше вреда, чем пользы."
       }
      ],
-     "tip": "Read the message, say it again with the word in red, then tap the card. ↺ Again = we weren't sure."
+     "tip": "Read the message, say it again with the word in red, then tap the card. ↺ Again later = we weren't sure: the card comes back two or three cards later."
     }
    ]
   },
@@ -534,8 +611,10 @@
     },
     {
      "kind": "calendars",
+     "hidden": true,
      "instr": "Your turn: find a new time for Chris and Deniz's Monday call. A is Chris, B is Deniz.",
      "who": "((Chris (London): clocks went back · Deniz (Istanbul): no change, 3 hours ahead of Chris now · the call was 15:00 London time))",
+     "rule": "The calendars are hidden. **Before** you suggest a time, check it in **your** calendar: tap the blue box over it. **After** you suggest it, your partner checks **theirs**.",
      "cals": [
       {
        "title": "CHRIS · Monday · London",
@@ -617,7 +696,7 @@
         ],
         [
          "18:00",
-         "School pick-up",
+         "Pick up kids",
          "busy"
         ],
         [
@@ -625,17 +704,45 @@
          "Yoga",
          "busy"
         ]
-       ]
+       ],
+       "call_row": 6,
+       "call_label": "Call with Chris?"
       }
      ],
+     "common": 4,
      "box": "CALL",
      "done": "The time that works for both: **13:00 London = 16:00 Istanbul**.",
-     "tip": "Two calendars: grey = busy, yellow = free, blue = the call. Find a time that works for both, then tap ✓ Done to check."
+     "example_title": "One way it could go",
+     "example": [
+      {
+       "s": "Chris",
+       "t": "Our clocks **went back** on Sunday, so our call is now **an hour later for you**: three **my time**, six **your time**. **Does that still work for you?**"
+      },
+      {
+       "s": "Deniz",
+       "t": "Hmm, I have to pick up my kids at six. **Could we make it** three **my time**? **That's** twelve **your time**."
+      },
+      {
+       "s": "Chris",
+       "t": "Sorry, that's my lunch break. **What about** eleven **my time**? **That's** two **your time**."
+      },
+      {
+       "s": "Deniz",
+       "t": "I've got a doctor's appointment at two. **Could we make it** four **my time**? **That's** one **your time**."
+      },
+      {
+       "s": "Chris",
+       "t": "Great, one **works for me**! So that's one **my time**, four **your time**."
+      }
+     ],
+     "tip": "Whoever shares the screen taps for you both. Check a time in your own calendar before you suggest it; your partner checks theirs after. Grey = busy: say why and suggest another time. Both yellow = you've found a time!"
     },
     {
      "kind": "calendars",
+     "hidden": true,
      "instr": "Swap roles: find a new time for Pablo and Nino's Wednesday call. A is Nino, B is Pablo.",
      "who": "((Pablo (Madrid): clocks went back · Nino (Tbilisi): no change, 3 hours ahead of Pablo now · the call was 16:00 Madrid time))",
+     "rule": "The calendars are hidden. **Before** you suggest a time, check it in **your** calendar: tap the blue box over it. **After** you suggest it, your partner checks **theirs**.",
      "cals": [
       {
        "title": "PABLO · Wednesday · Madrid",
@@ -725,11 +832,38 @@
          "Choir practice",
          "busy"
         ]
-       ]
+       ],
+       "call_row": 7,
+       "call_label": "Call with Pablo?"
       }
      ],
+     "common": 6,
      "box": "CALL",
-     "done": "The time that works for both: **15:00 Madrid = 18:00 Tbilisi**."
+     "done": "The time that works for both: **15:00 Madrid = 18:00 Tbilisi**.",
+     "example_title": "One way it could go",
+     "example": [
+      {
+       "s": "Pablo",
+       "t": "Our clocks **went back**, so our call is now **an hour later for you**: four **my time**, seven **your time**. **Does that still work for you?**"
+      },
+      {
+       "s": "Nino",
+       "t": "Sorry, I've got choir practice at seven. **Could we make it** five **my time**? **That's** two **your time**."
+      },
+      {
+       "s": "Pablo",
+       "t": "Ah, I've got training at two. **What about** eleven **my time**? **That's** two **your time**."
+      },
+      {
+       "s": "Nino",
+       "t": "I'm having lunch then. **Could we make it** six **my time**? **That's** three **your time**."
+      },
+      {
+       "s": "Pablo",
+       "t": "Three **works for me**! So that's three **my time**, six **your time**."
+      }
+     ],
+     "tip": "Whoever shares the screen taps for you both. Check a time in your own calendar before you suggest it; your partner checks theirs after. Grey = busy: say why and suggest another time. Both yellow = you've found a time!"
     },
     {
      "kind": "questions",

@@ -178,7 +178,18 @@
        "p": [
         "two cars ",
         {
-         "b": "got broken into"
+         "f": "g",
+         "r": "ot"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "roken"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "nto"
         },
         " ",
         {
@@ -192,7 +203,8 @@
       {
        "p": [
         {
-         "b": "burglaries"
+         "f": "b",
+         "r": "urglaries"
         },
         " ",
         {
@@ -207,7 +219,13 @@
        "p": [
         "someone ",
         {
-         "b": "broke into"
+         "f": "b",
+         "r": "roke"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "nto"
         },
         " the flat",
         " ",
@@ -222,7 +240,8 @@
       {
        "p": [
         {
-         "b": "stole"
+         "f": "s",
+         "r": "tole"
         },
         " ",
         {
@@ -236,11 +255,13 @@
       {
        "p": [
         {
-         "b": "had"
+         "f": "h",
+         "r": "ad"
         },
         " their bike ",
         {
-         "b": "stolen"
+         "f": "s",
+         "r": "tolen"
         },
         " ",
         {
@@ -255,7 +276,13 @@
        "p": [
         "it ",
         {
-         "b": "was robbed"
+         "f": "w",
+         "r": "as"
+        },
+        " ",
+        {
+         "f": "r",
+         "r": "obbed"
         },
         " ",
         {
@@ -411,7 +438,18 @@
       {
        "p": [
         {
-         "b": "was caught shoplifting"
+         "f": "w",
+         "r": "as"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "aught"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "hoplifting"
         },
         " ",
         {
@@ -425,7 +463,13 @@
       {
        "p": [
         {
-         "b": "got pickpocketed"
+         "f": "g",
+         "r": "ot"
+        },
+        " ",
+        {
+         "f": "p",
+         "r": "ickpocketed"
         },
         " ",
         {
@@ -440,7 +484,8 @@
        "p": [
         "Thanks for the ",
         {
-         "b": "heads-up"
+         "f": "h",
+         "r": "eads-up"
         },
         " ",
         {
@@ -454,7 +499,13 @@
       {
        "p": [
         {
-         "b": "watch out"
+         "f": "w",
+         "r": "atch"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "ut"
         }
        ],
        "ru": "будьте осторожны"
@@ -463,7 +514,18 @@
        "p": [
         "a ",
         {
-         "b": "scam going round"
+         "f": "s",
+         "r": "cam"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "oing"
+        },
+        " ",
+        {
+         "f": "r",
+         "r": "ound"
         },
         " ",
         {
@@ -477,7 +539,18 @@
       {
        "p": [
         {
-         "b": "pretends to be"
+         "f": "p",
+         "r": "retends"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "o"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "e"
         }
        ],
        "ru": "выдаёт себя за"
@@ -485,7 +558,18 @@
       {
        "p": [
         {
-         "b": "Good to know"
+         "f": "G",
+         "r": "ood"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "o"
+        },
+        " ",
+        {
+         "f": "k",
+         "r": "now"
         }
        ],
        "ru": "буду знать!"
@@ -493,7 +577,13 @@
       {
        "p": [
         {
-         "b": "Case closed"
+         "f": "C",
+         "r": "ase"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "losed"
         },
         "!"
        ],
@@ -502,7 +592,8 @@
       {
        "p": [
         {
-         "b": "reporting"
+         "f": "r",
+         "r": "eporting"
         },
         " him to the police"
        ],
@@ -543,7 +634,7 @@
        "why": "Надеюсь, никто не пострадал → I hope nobody… Anyone — в вопросе: Did anyone get hurt?"
       }
      ],
-     "tip": "Green = good, grey = could be better. Say the perfect version, then tap the card. ↺ Again = we weren't sure."
+     "tip": "Green = good, grey = could be better. Say the perfect version, then tap the card. ↺ Again later = we weren't sure: the card comes back two or three cards later."
     },
     {
      "kind": "cards",
@@ -667,12 +758,46 @@
      ]
     },
     {
-     "kind": "picture",
-     "instr": "This is Maple Road. What else has been happening here? Take turns to share the news like neighbours.",
-     "img": "maple-road.jpg",
+     "kind": "scenes",
+     "instr": "This is Maple Road. Look at the scene: what's been going on here? Get ready to share the news like neighbours.",
+     "street": "maple-scene.jpg",
      "box": "NEWS",
-     "task": "One incident each. Your partner reacts and asks **two** questions. End with a tip: **Watch out for** …",
-     "tip": "One incident each from the picture. Tap a phrase in the box when you say it — it turns green."
+     "task": "Tell your partner the news. Your partner reacts and asks **two** questions. Then you end with a tip: **Watch out for** …",
+     "scenes": [
+      {
+       "img": "maple-1-window.jpg",
+       "alt": "a flat broken into"
+      },
+      {
+       "img": "maple-2-car.jpg",
+       "alt": "a car broken into (the cat)"
+      },
+      {
+       "img": "maple-3-bike.jpg",
+       "alt": "a bike stolen"
+      },
+      {
+       "img": "maple-4-bakery.jpg",
+       "alt": "the bakery robbed (the baguette)"
+      },
+      {
+       "img": "maple-5-shoplifter.jpg",
+       "alt": "caught shoplifting"
+      },
+      {
+       "img": "maple-6-pickpocket.jpg",
+       "alt": "pickpocketed at the bus stop"
+      },
+      {
+       "img": "maple-7-gas-man.jpg",
+       "alt": "a man pretending to be from the gas company"
+      },
+      {
+       "img": "maple-8-police.jpg",
+       "alt": "reporting it to the police"
+      }
+     ],
+     "tip": "First look at the whole street. Then Next deals a scene: one each. Tap a phrase in the box when you say it — it turns green."
     },
     {
      "kind": "questions",

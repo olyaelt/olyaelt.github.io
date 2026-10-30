@@ -190,6 +190,9 @@ details.all[open] summary{color:var(--ink)}
 .embed .stages.sub .stage-btn{font-size:.85rem;padding:2px 10px;border-width:1px}
 .embed .stages.sub .stage-arrow{font-size:.8rem}
 
+/* ↺ Again later: "Back in 2–3 cards", once per device (handoff 30.10 15:15) */
+.again-hint{position:fixed;transform:translateX(-50%);z-index:60;background:var(--card);color:var(--again);border:2px solid var(--again);font-weight:900;border-radius:99px;padding:6px 18px;font-size:1.1rem;box-shadow:var(--shadow);pointer-events:none;white-space:nowrap}
+
 /* ---------- situation cards (tools 12, B2 filler «Any recommendations?», 30.10.26; replaces the WHO / WHAT dice of tools 11):
    ready-made situation cards, one die for the answer type ---------- */
 .head .stage-btn{font-size:.9rem;padding:3px 10px}
@@ -320,6 +323,15 @@ const newCursor = () => ({key: null, seen: new Set(), hist: [], move: 0, go: nul
 /* inside a field (and on a field page) the questions go by position, like slides (her 15:18: Next was greyed with a question still to come,
    because both had been seen once): Next = the next one, Back = the one before, the end = the last position */
 let SPK_POS = EMBED;
+/* ↺ Again later (handoff 30.10 15:15, her catch: "Again" looked like "right now"): the first time on this device, a small line where the
+   card flies off — "Back in 2–3 cards" — for about 2 s */
+function againHint(el){
+  try{ if(localStorage.getItem("tool-again-hint")) return; localStorage.setItem("tool-again-hint", "1"); }catch(e){}
+  const r = el ? el.getBoundingClientRect() : {left: innerWidth / 2, width: 0, top: innerHeight / 3};
+  const t = document.createElement("div"); t.className = "again-hint"; t.setAttribute("role", "status"); t.textContent = "↺ Back in 2–3 cards";
+  t.style.left = (r.left + r.width / 2) + "px"; t.style.top = Math.max(8, r.top + 10) + "px";
+  document.body.appendChild(t); setTimeout(() => t.remove(), 2200);
+}
 function cursorPick(cur, list){
   const has = k => list.some(x => x.k === k), unseen = x => !cur.seen.has(x.k) && x.k !== cur.key && !x.hidden;
   if(SPK_POS){ let at = Math.max(0, list.findIndex(x => x.k === cur.key));
@@ -671,8 +683,7 @@ function cardsHTML(){
     <div class="die-row"><span data-die>${dieHTML(c.face)}</span>${how}</div>
     <p class="react">React: ${(D.react || []).map(r => `<b>${esc(r)}</b>`).join(" · ")}</p>
     <div class="row-act"><button class="btn ${c.type ? "" : "primary"}" data-roll>${COIN ? `🪙 ${c.type ? "Flip again" : "Flip the coin"}` : `🎲 ${c.type ? "Roll again" : "Roll"}`}</button>
-      <button class="btn ${c.type && !c.flipped ? "primary" : ""}" data-flip aria-pressed="${c.flipped}">${c.flipped ? "Hide the answers" : "Show the answers"}</button>
-      <span class="grow"></span><button class="btn next-card ${c.flipped ? "primary" : ""}" data-draw>Next card →</button></div>
+      <span class="grow"></span><button class="btn next-card ${c.type ? "primary" : ""}" data-cardnext>Next →</button></div>
     ${c.flipped ? backHTML(c) : ""}</section>`;
 }
 const allCardsHTML = () => allHTML("All the cards", D.cards.map((_, i) => (liveTeacher() || !cardGone(i)) ? `<div class="all-row"><span class="all-sub">${esc(cardText(i, "who"))}: ${esc(cardText(i, "says"))}</span>
@@ -698,6 +709,7 @@ function render(){
   on("[data-roll]", roll);
   /* Flip: the back, the rolled answer first (her rule 6: feedback right after the step); a second tap turns it back */
   on("[data-flip]", flipCard);
+  on("[data-cardnext]", () => { const c = S.cur; if(!c || S.busy) return; if(!c.flipped) flipCard(); else draw(); });   /* one Next, like slides (her 16:09) */
   on("[data-intro-coin]", introCoin);
   if(S.coinIntro && S.view === "example"){ S.coinIntro = false; setTimeout(introCoin, 350); }
   document.querySelectorAll("[data-model]").forEach(d => d.addEventListener("toggle", () => { S.modelOpen = d.open; }));

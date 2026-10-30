@@ -160,6 +160,24 @@ __BASE_CSS__
 .cal .free{background:#FFE699}
 .cal .call{background:#BDD7EE;font-weight:800}
 .cal-done{background:var(--ok-bg);color:var(--ok-ink);border-radius:10px;padding:8px 12px;font-weight:700;margin:0}
+.cal .r.hid{background:#FFFFFF}
+.scn img{width:100%;height:auto;max-height:58vh;object-fit:contain;border-radius:12px;display:block;background:var(--ground)}
+.scn.street img{max-height:52vh}
+.scn.deal{animation:deal .45s cubic-bezier(.2,.8,.2,1)}
+.scn-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.scn-mine{display:flex;flex-wrap:wrap;gap:6px;font-size:.85rem;color:var(--muted)}
+.cal .cover{all:unset;box-sizing:border-box;display:block;margin:2px 4px 2px 0;background:#8BE2FF;border:1px solid #1D1D1B;border-radius:3px;cursor:pointer;min-height:1.2rem;padding:0 8px;font-weight:800;color:#0B3A5A;line-height:1.2rem}
+.cals.hidden .r{font-size:.95rem;min-height:1.5rem;align-items:center}
+.cals.hidden h4{padding:4px 10px}
+.cals.hidden .r span{padding:1px 8px}
+.cal .cover:hover{filter:brightness(.95)}
+.cal .cover:focus-visible{outline:3px solid var(--instr);outline-offset:1px}
+.cal-rule{margin:0;font-size:1.05rem}
+.cal-ex{background:var(--ground);border-radius:12px;padding:8px 14px;display:grid;gap:3px}
+.cal-ex p{margin:0;font-size:1.02rem;line-height:1.4}
+.cal-ex .ex-h{font-weight:900;color:var(--label);letter-spacing:.05em;text-transform:uppercase;font-size:.85rem}
+.cal-ex .nm{color:var(--muted);font-weight:700}
+.blk .redo,.cal-ex + .row-actions .redo{background:none;border:0;padding:2px 0;color:var(--instr-text);font:inherit;font-size:.95rem;font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 /* ⚡ fast finishers */
 .fast{background:var(--bubble);color:var(--bubble-ink);border-radius:16px;padding:12px 16px;display:grid;gap:8px}
 .fast h3{margin:0;font-size:1.1rem}
@@ -238,19 +256,28 @@ const FAST = BLOCKS.map(b => b.fast).filter(Boolean);
 let S;
 function newState(){ S = {stage: 0, at: {}, far: {}, view: "field", bs: {}, noFirst: false, enter: false, fast: null, look: null, howto: !!D.demo, intro: true}; }
 newState();
-/* her 15:17: a tap on ⬅ Board by mistake, and no way back to where they were — the place is kept in this tab; the board offers
-   "↩ Back to …" (#resume), which opens the field where they left it */
-const POS_KEY = "rf-pos:" + PAGE_ID, ses = {get: k => { try{ return JSON.parse(sessionStorage.getItem(k) || "null"); }catch(e){ return null; } },
-  set: (k, v) => { try{ sessionStorage.setItem(k, JSON.stringify(v)); }catch(e){} }};
-function keepPlace(){ if(S.view === "field" && !S.fast) ses.set(POS_KEY, {stage: S.stage, at: S.at, far: S.far, intro: S.intro, t: Date.now()}); }
-function leftForBoard(){ keepPlace(); ses.set("rf-left", {page: PAGE_ID, href: location.pathname.split("/").pop(), cell: cellName(), title: D.title, t: Date.now()}); }
-if(location.hash === "#resume"){ const p = ses.get(POS_KEY);
-  if(p && Date.now() - p.t < 3 * 3600e3 && D.stages[p.stage]){ Object.assign(S, {stage: p.stage, at: p.at || {}, far: p.far || {}, intro: !!p.intro}); }
-  try{ history.replaceState(null, "", location.pathname + location.search); sessionStorage.removeItem("rf-left"); }catch(e){} }
+/* her 15:17 + handoff 15:15: the page reopens where this device left it (stage, screen, card, opened gaps), also after a reload or a tap
+   on ⬅ Board by mistake; the board offers "↩ Back to … · stage" (the last field this device had open). Kept 3 hours; her 🧹 Start fresh clears it */
+const PLACE_KEY = "tool-place-" + PAGE_ID, LEFT_KEY = "tool-place-" + PAGE_ID.split("/")[0] + "/_left";
+function keepPlace(){
+  if(S.view !== "field" || S.fast) return;
+  const bsOut = Object.assign({}, S._restore || {}); Object.entries(S.bs).forEach(([id, st]) => { if(id === "fastdeck") return; const d = st.deck;
+    bsOut[id] = {open: [...st.open], shown: !!st.shown, check: st.check || "", done: !!st.done, bm: [...(st.bm || [])], spk: st.spk ? st.spk.key : null,
+      sc: st.sc || null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, flipped: !!d.flipped} : (st._deck || null)}; });
+  store.set(PLACE_KEY, {stage: S.stage, at: S.at, far: S.far, intro: S.intro, bs: bsOut, t: Date.now()});
+  store.set(LEFT_KEY, {page: PAGE_ID, href: location.pathname.split("/").pop(), cell: cellName(), title: D.title, stage: String(D.stages[S.stage].label || ""), t: Date.now()});
+}
+function leftForBoard(){ keepPlace(); }
+(() => { const p = store.get(PLACE_KEY);
+  if(p && Date.now() - p.t < 3 * 3600e3 && D.stages[p.stage]) Object.assign(S, {stage: p.stage, at: p.at || {}, far: p.far || {}, intro: !!p.intro, _restore: p.bs || {}});
+  if(location.hash) try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){} })();
+function restoreBs(id){ const r = S._restore && S._restore[id]; if(!r) return null; delete S._restore[id];
+  const st = {open: new Set(r.open || []), shown: !!r.shown, check: r.check || "", deck: null, look: null, done: !!r.done, bm: new Set(r.bm || []), _deck: r.deck || null};
+  if(r.spk != null) st.spk = Object.assign(newCursor(), {key: r.spk}); if(r.sc && Array.isArray(r.sc.order)) st.sc = r.sc; return st; }
 const curBlocks = () => D.stages[S.stage].blocks;
 const bIdx = () => Math.min(S.at[S.stage] || 0, curBlocks().length - 1);
 const curBlock = () => curBlocks()[bIdx()];
-const bs = b => S.bs[b._id] = S.bs[b._id] || {open: new Set(), shown: false, check: "", deck: null, look: null, done: false, bm: new Set()};
+const bs = b => S.bs[b._id] = S.bs[b._id] || restoreBs(b._id) || {open: new Set(), shown: false, check: "", deck: null, look: null, done: false, bm: new Set()};
 const isLast = () => S.stage === D.stages.length - 1 && bIdx() === curBlocks().length - 1;
 
 /* ---------- 📖 gaps ---------- */
@@ -322,7 +349,21 @@ function sayHTML(b){
 }
 /* ---------- 🖼 picture, 🗓 calendars, 🔧 tool, 💬 questions ---------- */
 const pictureHTML = b => `<figure class="pic" style="margin:0"><img src="${esc(b.img)}" alt="${esc(b.alt || b.instr || "")}"></figure>${b.task ? `<p class="task">${mk(b.task)}</p>` : ""}`;
+/* hidden calendars (handoff 30.10 15:15, her idea 15:38): every slot under her light-blue box, only A's call open; tap a box = that slot opens;
+   the common row open in both = found → the done line, then "One way it could go" */
+function hiddenCalsHTML(b){
+  const st = bs(b), found = st.done;
+  const cals = b.cals.map((c, ci) => `<div class="cal"><h4>${esc(c.title)}</h4>${c.rows.map(([t, l, s], ri) => { const k = ci + "-" + ri, open = s === "call" || st.open.has(k) || (found && ri === b.common);
+    if(open) return `<div class="r ${esc(s)}"><span class="t">${esc(t)}</span><span>${esc(l)}</span></div>`;
+    const lbl = c.call_row === ri ? c.call_label || "" : "";
+    return `<div class="r hid"><span class="t">${esc(t)}</span><button class="cover ${lbl ? "lbl" : ""}" data-cov="${k}" aria-label="${esc(t)}: tap to check">${esc(lbl)}</button></div>`; }).join("")}</div>`).join("");
+  const ex = found && b.example ? `<div class="cal-ex"><p class="ex-h">${esc(b.example_title || "One way it could go")}</p>${b.example.map(l => `<p><span class="nm">${esc(l.s)}:</span> ${mk(l.t)}</p>`).join("")}</div>` : "";
+  return `${b.who ? `<p class="lctx">${mk(b.who)}</p>` : ""}${b.rule ? `<p class="cal-rule">${mk(b.rule)}</p>` : ""}<div class="cals hidden">${cals}</div>
+    ${found && b.done ? `<p class="cal-done">🎉 ${mk(b.done)}</p>` : ""}${ex}
+    <div class="row-actions"><button class="redo" data-covall>↺ Cover all again</button></div>`;
+}
 function calendarsHTML(b){
+  if(b.hidden) return hiddenCalsHTML(b);
   const st = bs(b);
   return `${b.who ? `<p class="lctx">${mk(b.who)}</p>` : ""}<div class="cals">${b.cals.map(c => `<div class="cal"><h4>${esc(c.title)}</h4>${c.rows.map(([t, l, s]) => `<div class="r ${esc(s)}"><span class="t">${esc(t)}</span><span>${esc(l)}</span></div>`).join("")}</div>`).join("")}</div>
     ${b.lines ? `<div class="dlg">${linesHTML(b.lines, b, "c")}</div>${gapTools(b)}` : ""}
@@ -343,9 +384,30 @@ function questionsHTML(b){
   return speakHTML(liveList(b.items, base), "", "Speaking", base);
 }
 
+/* ---------- 🏙 scenes (handoff 30.10 15:15, Maple Road as in the lesson): the whole street first, then one close-up at a time, big, in a
+   random order without repeats; the box beside; Next deals the next scene (one Next, her rule 12:29); 🏙 The whole street to look back;
+   on -live her Hide per scene ---------- */
+const sceneList = b => liveList(b.scenes.map(x => x.img), "scenes." + b._pid);
+function sceneState(b){ const st = bs(b), ks = sceneList(b).filter(x => !x.hidden).map(x => x.k);
+  if(!st.sc) st.sc = {at: -1, order: shuffle(ks)};
+  st.sc.order = st.sc.order.filter(k => ks.includes(k)).concat(ks.filter(k => !st.sc.order.includes(k)));   /* her Hide / Show during the lesson */
+  if(st.sc.at >= st.sc.order.length) st.sc.at = st.sc.order.length - 1; return st.sc; }
+const sceneAt = b => sceneState(b).at;
+function scenesHTML(b){
+  const sc = sceneState(b), st = bs(b);
+  if(sc.at < 0 || st.peek) return `<figure class="scn street" style="margin:0"><img src="${esc(b.street)}" alt="${esc(b.instr || "The street")}"></figure>${st.peek ? `<div class="row-actions"><button class="redo" data-peek>← Back to the scene</button></div>` : ""}`;
+  const k = sc.order[sc.at], x = b.scenes[k], n = sc.order.length;
+  const dots = `<span class="speak-dots scn-dots" aria-label="Scene ${sc.at + 1} of ${n}">${sc.order.map((_, i) => `<button class="${i === sc.at ? "on" : i < sc.at ? "was" : ""}" ${i < sc.at ? `data-scn="${i}"` : "disabled"} aria-label="Scene ${i + 1}"></button>`).join("")}</span>`;
+  const mine = liveTeacher() ? `<div class="scn-mine">${sceneList(b).map(it => `<span class="live-host ${liveDim("scenes." + b._pid + "." + it.k)}" data-live-host>${esc(b.scenes[it.k].alt || it.t)}${liveTools("scenes." + b._pid + "." + it.k, {edit: false})}</span>`).join("")}</div>` : "";
+  return `<div class="scn-top">${dots}<button class="redo" data-peek>🏙 The whole street</button></div>
+    <figure class="scn ${S.enter || st.dealt ? "deal" : ""}" style="margin:0"><img src="${esc(x.img)}" alt="${esc(x.alt || "")}"></figure>${mine}`;
+}
 /* ---------- 🃏 cards: Again comes back 2–3 cards later, Got it into its dot; the end: Come back to these (+ the full list for "ours") ---------- */
 function newDeck(cards){ return {cards, queue: cards.map((_, i) => i), got: new Set(), again: new Set(), flipped: false, fresh: true, hist: []}; }
-const deckOf = b => { const st = bs(b); if(!st.deck) st.deck = newDeck(b.cards); return st.deck; };
+const deckOf = b => { const st = bs(b);
+  if(!st.deck){ st.deck = newDeck(b.cards); const r = st._deck; st._deck = null;   /* reopened: where this device was in the deck */
+    if(r && r.n === b.cards.length && [].concat(r.queue, r.hist).every(i => i >= 0 && i < b.cards.length)) Object.assign(st.deck, {queue: r.queue, got: new Set(r.got), again: new Set(r.again), hist: r.hist, flipped: !!r.flipped && r.queue.length > 0, fresh: false}); }
+  return st.deck; };
 const kwtFill = c => { const a = c.answer || ((String(c.back || "").match(/\*\*(.+?)\*\*/) || [])[1] || ""); return a ? mk(c.frame).replace(/_{2,}/, `<span class="fill">${esc(a)}</span>`) : mk(c.frame); };
 function frontHTML(b, c, i, open){
   if(b.style === "mix") b = c._b; const st = b.style;
@@ -381,7 +443,7 @@ function cardsHTML(b){
   return `${dots}<div class="fc ${d.flipped ? "open" : ""} ${d.fresh ? "enter" : ""}" data-flip ${d.flipped ? "" : `role="button" tabindex="0" aria-label="Show the answer"`}>
       <span class="lbl">${esc(cardInstr(b, i, first) || "")}</span>${frontHTML(b, c, i, d.flipped)}
       ${d.flipped ? ansHTML(b, c) : `<span class="corner">tap to check ↓</span>`}</div>
-    <div class="deck-act">${d.flipped ? `<button class="btn again" data-again>↺ Again</button><button class="btn ok" data-got>✓ Got it</button>` : ""}</div>`;
+    <div class="deck-act">${d.flipped ? `<button class="btn again" data-again>↺ Again later</button><button class="btn ok" data-got>✓ Got it</button>` : ""}</div>`;
 }
 const cardFrontPlain = (b, c) => (b.style === "mix" ? c._b.style : b.style) === "share" ? c.a : c.front;
 /* the box beside a card: a "share" card says how much support (box · strip · none, her rule: support fades) */
@@ -429,8 +491,8 @@ function fastDeckBlock(){
 function blockHTML(b){
   const body = b.kind === "text" ? textHTML(b) : b.kind === "model" ? modelHTML(b) : b.kind === "write" ? writeHTML(b) : b.kind === "say" ? sayHTML(b)
     : b.kind === "picture" ? pictureHTML(b) : b.kind === "calendars" ? calendarsHTML(b) : b.kind === "tool" ? toolHTML(b)
-    : b.kind === "questions" ? questionsHTML(b) : b.kind === "cards" ? groupDotsHTML(b) + `<div class="deck">${cardsHTML(b)}</div>` : "";
-  const instr = b.kind === "cards" || b.kind === "questions" ? (b.kind === "questions" ? b.instr : "") : b.instr;
+    : b.kind === "questions" ? questionsHTML(b) : b.kind === "cards" ? groupDotsHTML(b) + `<div class="deck">${cardsHTML(b)}</div>` : b.kind === "scenes" ? scenesHTML(b) : "";
+  const instr = b.kind === "cards" || b.kind === "questions" ? (b.kind === "questions" ? b.instr : "") : b.kind === "scenes" && sceneAt(b) >= 0 ? b.task : b.instr;
   const tip = S.howto && b.tip ? `<p class="tip">🎓 How it works: ${mk(b.tip)}</p>` : "";
   return `${tip}${instr ? `<p class="finstr">${mk(instr)}</p>` : ""}<section class="blk ${S.enter ? "enter" : ""}" data-blk="${b._id}">${body}</section>`;
 }
@@ -458,6 +520,7 @@ function stepPending(b){
   if(b.kind === "calendars" && b.done && !st.done) return true;
   if(["text", "model", "calendars"].includes(b.kind)){ const ids = allGaps(b); return ids.length > 0 && !ids.every(id => st.open.has(id)); }
   if(b.kind === "questions") return !!document.querySelector(".speak [data-speak-next]");
+  if(b.kind === "scenes"){ const sc = sceneState(b); return sc.at < sc.order.length - 1 || !!st.peek; }
   return false;
 }
 function sendItem(i, v){ saved.w[i] = {text: v, sent: true}; save(); shareDraft(i, v, true); }
@@ -487,9 +550,10 @@ function stepNext(){
       if(st.look == null){ st.lookBack = false; if(!d.queue.length && !S.fast && !deckHasList(b) && !isLast()){ stepOn(); return; } } render(); return; }
     if(d.queue.length){ if(!d.flipped){ d.flipped = true; render(); } else deckAnswer(b, true); return; }   /* an open card + Next = ✓ Got it (her answer 12:18) */
     if(S.fast){ S.fast = null; render(); return; } }
-  if(b.kind === "calendars" && b.done && !st.done){ st.done = true; render(); return; }
+  if(b.kind === "calendars" && b.done && !st.done){ st.done = true; if(b.hidden && b.common != null) b.cals.forEach((_, ci) => st.open.add(ci + "-" + b.common)); render(); return; }
   if(["text", "model", "calendars"].includes(b.kind)){ const ids = allGaps(b); if(ids.length && !ids.every(id => st.open.has(id))){ ids.forEach(id => st.open.add(id)); render(); return; } }
   if(b.kind === "questions"){ const nx = document.querySelector(".speak [data-speak-next]"); if(nx){ nx.click(); return; } }
+  if(b.kind === "scenes"){ const sc = sceneState(b); if(st.peek){ st.peek = false; render(); return; } if(sc.at < sc.order.length - 1){ sc.at++; st.dealt = true; render(); st.dealt = false; scrollTo(0, 0); return; } }
   stepOn();
 }
 function stepOn(){ const bl = curBlocks(), i = bIdx(); if(i < bl.length - 1) goBlock(S.stage, i + 1); else if(S.stage < D.stages.length - 1) goStage(S.stage + 1); }
@@ -509,6 +573,7 @@ function stepBack(){
   if(S.fast){ S.fast = null; render(); return; }
   if(b && b.kind === "say" && bs(b).shown){ bs(b).shown = false; render(); return; }   /* the answer → the question, like the slide before */
   if(b && b.kind === "questions"){ const pv = document.querySelector(".speak [data-speak-prev]"); if(pv){ pv.click(); return; } }
+  if(b && b.kind === "scenes"){ const st = bs(b), sc = sceneState(b); if(st.peek){ st.peek = false; render(); return; } if(sc.at >= 0){ sc.at--; render(); return; } }
   if(b && b.kind === "tool"){ const f = document.querySelector(".tool-frame"); if(f && f.contentWindow){ f.contentWindow.postMessage({lwStep: "back"}, "*"); return; } }
   stepOff();   /* the very first step: back to the board (her 13:04) */
 }
@@ -575,6 +640,12 @@ function wire(root){
   on("[data-check]", x => { const st = bs(b); st.check = x.dataset.check; lwSignal("check", "b" + b._pid, st.check); render(); });
   /* calendars */
   on("[data-caldone]", () => { bs(b).done = true; render(); });
+  on("[data-cov]", x => { const st = bs(b); st.open.add(x.dataset.cov);
+    const was = st.done; if(b.common != null && b.cals.every((_, ci) => st.open.has(ci + "-" + b.common))) st.done = true; render();
+    if(st.done && !was){ const f = document.querySelector(".cal-done"); if(f){ pop(f); f.scrollIntoView({block: "center", behavior: calm() ? "auto" : "smooth"}); } } });
+  on("[data-peek]", () => { const st = bs(b); st.peek = !st.peek; render(); });
+  on("[data-scn]", x => { sceneState(b).at = +x.dataset.scn; render(); });
+  on("[data-covall]", () => { const st = bs(b); st.open.clear(); st.done = false; render(); });
   /* write */
   root.querySelectorAll("[data-wta]").forEach(ta => { const i = +ta.dataset.wta, send = root.querySelector(`[data-wsend="${i}"]`);
     ta.addEventListener("input", () => { saved.w[i] = {text: ta.value, sent: false}; save(); send.disabled = !ta.value.trim(); shareDraft(i, ta.value, false); }); });
@@ -583,7 +654,7 @@ function wire(root){
   /* cards */
   const d = b.kind === "cards" ? deckOf(b) : null;
   on("[data-flip]", () => { if(!d || d.flipped) return; d.flipped = true; render(); });
-  on("[data-again]", () => deckAnswer(b, false)); on("[data-got]", () => deckAnswer(b, true));
+  on("[data-again]", () => { againHint(root.querySelector(".fc")); deckAnswer(b, false); }); on("[data-got]", () => deckAnswer(b, true));
   on("[data-redo]", () => { bs(b).deck = newDeck(d.cards.filter((_, i) => d.again.has(i))); if(b._id === "fastdeck") S.fast.cards = bs(b).deck.cards; render(); });
   on("[data-restart]", () => { bs(b).deck = newDeck(b.cards); render(); });
   on("[data-lookdone]", () => { bs(b).look = null; render(); });
@@ -606,7 +677,10 @@ LW.tools = [{id: PAGE_ID, title: D.title, chat: n => { const k = writeItems.find
   .concat(Object.entries(D.embeds || {}).map(([page, e]) => ({id: LESSON + "/" + page, title: e.title, chat: n => { const ks = Object.keys(e.chats), k = ks.indexOf(String(n)); return `💬 Chat ${k > -1 ? k + 1 : "#" + n}${e.chats[n] ? " · " + e.chats[n] : ""}`; }})));
 LW.current = () => { const b = curBlock(); if(S.view !== "field" || !b || b.kind !== "write") return null; const open = b.items.find(it => !(saved.w[it._chat] || {}).sent); return open ? open._chat : null; };
 LW.onNotes = () => paintWriteNotes();
-LW.onFresh = () => { saved = {w: {}, again: []}; save(); S.bs = {}; S.far = {}; };   /* 🧹 Start fresh in 📥 Groups: her test answers on this computer go too */
+LW.onFresh = () => { saved = {w: {}, again: []}; save(); S.bs = {}; S.far = {}; try{ localStorage.removeItem(PLACE_KEY); }catch(e){} };
+/* her 🧹 Start fresh on the board, while this page is open in another tab: this tab starts fresh too (and doesn't write the old answers back) */
+addEventListener("storage", e => { if(e.key !== null && e.key !== KEY && e.key !== PLACE_KEY) return; if(e.newValue != null && e.key !== null) return;
+  saved = {w: {}, again: []}; const v = S.view; newState(); S.view = v; render(); });   /* 🧹 Start fresh in 📥 Groups: her test answers on this computer go too */
 LW.onGo = label => { const i = D.stages.findIndex(s => s.label === label); if(i > -1) goStage(i); };
 LW.stages = D.stages.map((s, i) => [i, s.label]);
 LW.board = D.boardPage && D.cell ? {id: LESSON + "/" + D.boardPage, cell: D.cell} : null;

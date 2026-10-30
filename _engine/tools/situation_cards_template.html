@@ -229,8 +229,7 @@ function cardsHTML(){
     <div class="die-row"><span data-die>${dieHTML(c.face)}</span>${how}</div>
     <p class="react">React: ${(D.react || []).map(r => `<b>${esc(r)}</b>`).join(" · ")}</p>
     <div class="row-act"><button class="btn ${c.type ? "" : "primary"}" data-roll>${COIN ? `🪙 ${c.type ? "Flip again" : "Flip the coin"}` : `🎲 ${c.type ? "Roll again" : "Roll"}`}</button>
-      <button class="btn ${c.type && !c.flipped ? "primary" : ""}" data-flip aria-pressed="${c.flipped}">${c.flipped ? "Hide the answers" : "Show the answers"}</button>
-      <span class="grow"></span><button class="btn next-card ${c.flipped ? "primary" : ""}" data-draw>Next card →</button></div>
+      <span class="grow"></span><button class="btn next-card ${c.type ? "primary" : ""}" data-cardnext>Next →</button></div>
     ${c.flipped ? backHTML(c) : ""}</section>`;
 }
 const allCardsHTML = () => allHTML("All the cards", D.cards.map((_, i) => (liveTeacher() || !cardGone(i)) ? `<div class="all-row"><span class="all-sub">${esc(cardText(i, "who"))}: ${esc(cardText(i, "says"))}</span>
@@ -256,6 +255,7 @@ function render(){
   on("[data-roll]", roll);
   /* Flip: the back, the rolled answer first (her rule 6: feedback right after the step); a second tap turns it back */
   on("[data-flip]", flipCard);
+  on("[data-cardnext]", () => { const c = S.cur; if(!c || S.busy) return; if(!c.flipped) flipCard(); else draw(); });   /* one Next, like slides (her 16:09) */
   on("[data-intro-coin]", introCoin);
   if(S.coinIntro && S.view === "example"){ S.coinIntro = false; setTimeout(introCoin, 350); }
   document.querySelectorAll("[data-model]").forEach(d => d.addEventListener("toggle", () => { S.modelOpen = d.open; }));

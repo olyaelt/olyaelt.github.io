@@ -43,6 +43,15 @@ const newCursor = () => ({key: null, seen: new Set(), hist: [], move: 0, go: nul
 /* inside a field (and on a field page) the questions go by position, like slides (her 15:18: Next was greyed with a question still to come,
    because both had been seen once): Next = the next one, Back = the one before, the end = the last position */
 let SPK_POS = EMBED;
+/* ↺ Again later (handoff 30.10 15:15, her catch: "Again" looked like "right now"): the first time on this device, a small line where the
+   card flies off — "Back in 2–3 cards" — for about 2 s */
+function againHint(el){
+  try{ if(localStorage.getItem("tool-again-hint")) return; localStorage.setItem("tool-again-hint", "1"); }catch(e){}
+  const r = el ? el.getBoundingClientRect() : {left: innerWidth / 2, width: 0, top: innerHeight / 3};
+  const t = document.createElement("div"); t.className = "again-hint"; t.setAttribute("role", "status"); t.textContent = "↺ Back in 2–3 cards";
+  t.style.left = (r.left + r.width / 2) + "px"; t.style.top = Math.max(8, r.top + 10) + "px";
+  document.body.appendChild(t); setTimeout(() => t.remove(), 2200);
+}
 function cursorPick(cur, list){
   const has = k => list.some(x => x.k === k), unseen = x => !cur.seen.has(x.k) && x.k !== cur.key && !x.hidden;
   if(SPK_POS){ let at = Math.max(0, list.findIndex(x => x.k === cur.key));

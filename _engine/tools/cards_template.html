@@ -268,9 +268,9 @@ function cardHTML(){
     <div class="actions">${actionsHTML()}</div>`;
 }
 const actionsHTML = () => S.flipped
-  ? `<button class="btn again" data-again>↺ Again</button><button class="btn ok" data-got>✓ Got it</button>` : "";
+  ? `<button class="btn again" data-again>↺ Again later</button><button class="btn ok" data-got>✓ Got it</button>` : "";
 function wireActions(){
-  document.querySelectorAll("[data-again]").forEach(b => b.addEventListener("click", () => answer(false)));
+  document.querySelectorAll("[data-again]").forEach(b => b.addEventListener("click", () => { againHint(document.querySelector(".scene") || document.querySelector(".card")); answer(false); }));
   document.querySelectorAll("[data-got]").forEach(b => b.addEventListener("click", () => answer(true)));
 }
 function endHTML(){

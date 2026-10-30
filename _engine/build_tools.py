@@ -143,6 +143,9 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
                         d['embeds'][b['page']] = {'title': ed['title'], 'chats': {str(pid): x.get('contact', '') for pid, x in zip(ep, ed['scenes'])}}
                 if b.get('kind') == 'picture' and b.get('img'):
                     shutil.copyfile(os.path.join(T, lesson, b['img']), os.path.join(out_dir, b['img']))
+                if b.get('kind') == 'scenes':   # Maple Road scene by scene (handoff 30.10 15:15): the street and each close-up
+                    for im in [b.get('street')] + [x.get('img') for x in b.get('scenes', [])]:
+                        if im: shutil.copyfile(os.path.join(T, lesson, im), os.path.join(out_dir, im))
     if d['type'] == 'revision-board':
         # the lesson's pages with a button on the board (f-demo, "🎓 How the game works", handoff 0920)
         d['buttons'] = []
