@@ -1,0 +1,51 @@
+{
+ "scenes": [
+  {
+   "pid": 0,
+   "sig": "alex 💛 👤 alex — your first date! 📍 you're on the metro. it's stuck in a tunnel. ⏰ you're meeting at 7:30. it's 7:25. ⏳ you'll be about 15 minutes late. hi! i'm here 😊 got us a table by the window. 7:25",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "sarah · hr, brightline 👤 sarah from hr — a job interview! 📍 you're in a taxi. there's been an accident on the motorway. ⏰ the interview is at 10:00. it's 9:40. ⏳ you'll be about 20 minutes late. good morning! just a reminder: your interview is at 10 today. 9:40",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "friday dinner 🍕 👥 your friends — pizza night 📍 you're still at work. your boss wants “a quick chat”. ⏰ dinner was at 7. it's 7:10. ⏳ no idea how long the chat will take. tom we're all here! where are you?? 😄 7:10",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "mark · your boss 👤 mark, your boss — a big client meeting 📍 you're in another call. it's running over. ⏰ the meeting starts at 9:00. it's 8:52. ⏳ you'll be about 10 minutes late. morning! reminder: the client's arriving at 9. 8:52",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "maya 👤 maya, your friend 📍 you're at the cinema. you've got the tickets. ⏰ the film starts at 8:00. it's 7:50. 🙂 this time she's late. make your reply warm — not just “ok.” soooo sorry!! my train's been delayed 😩 i'll be 20 min late! 7:50",
+   "gone": false
+  }
+ ],
+ "speaking": [
+  {
+   "pid": 0,
+   "sig": "when were you last late? who was waiting, and how much did it matter?",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "what did you write? how would you write it now? use two phrases from the box.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "which is worse: 10 minutes late with no message, or 30 minutes late with a heads-up? give two reasons.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "how late is ok with friends, at work, on a first date? agree on one rule for each.",
+   "gone": false
+  }
+ ]
+}

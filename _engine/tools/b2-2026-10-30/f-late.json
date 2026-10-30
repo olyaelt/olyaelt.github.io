@@ -1,0 +1,367 @@
+{
+ "type": "revision-field",
+ "board": {
+  "col": "Everyday English",
+  "value": 100
+ },
+ "title": "Running late",
+ "boxes": {
+  "BOX": [
+   {
+    "h": "GIVING A HEADS-UP",
+    "items": [
+     "**Just a heads-up** — / I'm really sorry —",
+     "I'll **be 10 minutes late**.",
+     "I'm **running a bit late**.",
+     "I'm **stuck in traffic**.",
+     "My meeting is **running over**.",
+     "**Start without me!** · I'll **be there in** 5!"
+    ]
+   },
+   {
+    "h": "REPLYING",
+    "items": [
+     "**No worries!** · **No rush!**",
+     "**Thanks for letting me know!**",
+     "**Join when you can!**"
+    ]
+   }
+  ]
+ },
+ "stages": [
+  {
+   "label": "🔁 Remember",
+   "blocks": [
+    {
+     "kind": "write",
+     "instr": "What would you text? Write your two messages together. Then compare with our chat (📖).",
+     "lesson_work": true,
+     "items": [
+      {
+       "ctx": "(([You're stuck in traffic. You're meeting friends for dinner at 7, and you'll be about 15 minutes late.]))",
+       "label": "Your message"
+      },
+      {
+       "ctx": "(([You're already at the restaurant. Your friend texts:]))",
+       "incoming": "Sorry, my train's been delayed — I'll be 20 minutes late!",
+       "label": "Your reply"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "📖 Our Zoom chat",
+   "blocks": [
+    {
+     "kind": "text",
+     "instr": "Remember our Zoom chat? Complete the messages. The Russian is beside it.",
+     "lines": [
+      {
+       "s": "Marina",
+       "p": [
+        "Hi all! Just a ",
+        {
+         "f": "h",
+         "r": "eads-up"
+        },
+        " — I'll ",
+        {
+         "f": "b",
+         "r": "e 10 minutes late"
+        },
+        ". ",
+        {
+         "f": "S",
+         "r": "tuck in traffic"
+        },
+        " 🙈"
+       ]
+      },
+      {
+       "s": "Kate (teacher)",
+       "p": [
+        {
+         "f": "N",
+         "r": "o worries"
+        },
+        ", Marina! See you soon."
+       ]
+      },
+      {
+       "s": "Pavel",
+       "p": [
+        "My train has been ",
+        {
+         "f": "c",
+         "r": "ancelled"
+        },
+        ", so I'm ",
+        {
+         "f": "r",
+         "r": "unning about 20 minutes late"
+        },
+        ". Sorry!"
+       ]
+      },
+      {
+       "s": "Kate",
+       "p": [
+        "Oh no! ",
+        {
+         "f": "J",
+         "r": "oin when you can"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Lena",
+       "p": [
+        "I ",
+        {
+         "f": "m",
+         "r": "ight be a bit late"
+        },
+        " too — my meeting is ",
+        {
+         "f": "r",
+         "r": "unning over"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Sergey",
+       "p": [
+        {
+         "f": "M",
+         "r": "e too, probably"
+        },
+        ". I'm still at the dentist's 😬 ",
+        {
+         "f": "B",
+         "r": "e there in"
+        },
+        " 5!"
+       ]
+      },
+      {
+       "s": "Kate",
+       "p": [
+        "OK, we'll ",
+        {
+         "f": "s",
+         "r": "tart without you"
+        },
+        ". See you all soon!"
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        {
+         "f": "h",
+         "r": "eads-up"
+        }
+       ],
+       "ru": "предупреждаю"
+      },
+      {
+       "p": [
+        {
+         "f": "b",
+         "r": "e 10 minutes late"
+        }
+       ],
+       "ru": "опоздаю на 10 минут"
+      },
+      {
+       "p": [
+        {
+         "f": "S",
+         "r": "tuck in traffic"
+        }
+       ],
+       "ru": "стою в пробке"
+      },
+      {
+       "p": [
+        {
+         "f": "N",
+         "r": "o worries"
+        }
+       ],
+       "ru": "ничего страшного"
+      },
+      {
+       "p": [
+        {
+         "f": "c",
+         "r": "ancelled"
+        }
+       ],
+       "ru": "поезд отменили"
+      },
+      {
+       "p": [
+        {
+         "f": "r",
+         "r": "unning about 20 minutes late"
+        }
+       ],
+       "ru": "опаздываю примерно на 20 минут"
+      },
+      {
+       "p": [
+        {
+         "f": "J",
+         "r": "oin when you can"
+        }
+       ],
+       "ru": "подключайся, когда сможешь"
+      },
+      {
+       "p": [
+        {
+         "f": "m",
+         "r": "ight be a bit late"
+        }
+       ],
+       "ru": "я, может, тоже немного опоздаю"
+      },
+      {
+       "p": [
+        {
+         "f": "r",
+         "r": "unning over"
+        }
+       ],
+       "ru": "встреча затягивается"
+      },
+      {
+       "p": [
+        {
+         "f": "M",
+         "r": "e too, probably"
+        }
+       ],
+       "ru": "я, наверное, тоже"
+      },
+      {
+       "p": [
+        {
+         "f": "B",
+         "r": "e there in"
+        }
+       ],
+       "ru": "буду через 5 минут"
+      },
+      {
+       "p": [
+        {
+         "f": "s",
+         "r": "tart without you"
+        }
+       ],
+       "ru": "начнём без вас"
+      }
+     ],
+     "gloss_note": "Here the glossary is only the Russian of each gap, in order (as on slide 54): its English hides like the gaps."
+    },
+    {
+     "kind": "cards",
+     "style": "say",
+     "instr": "Warm replies: what would you write? Say a warm reply. Other answers are also possible.",
+     "cards": [
+      {
+       "front": "Tom (dinner): Sorry, I'm stuck in traffic — I'll be 10 minutes late! ((Что хочется сказать: Ничего страшного! До скорого!))",
+       "back": "**No worries!** See you soon!"
+      },
+      {
+       "front": "Lena (before a Zoom call): My last meeting is running over, sorry! ((Что хочется сказать: Спасибо, что написала! Подключайся, когда сможешь.))",
+       "back": "**Thanks for letting me know! Join when you can!**"
+      },
+      {
+       "front": "Pavel: Just a heads-up — my train has been delayed by 20 minutes. ((Что хочется сказать: Спасибо, что предупредил! Не торопись.))",
+       "back": "**Thanks for the heads-up! No rush.**"
+      },
+      {
+       "front": "Anna (group chat): I might be a bit late too, sorry! ((Что хочется сказать: Я, наверное, тоже. Буду через 5 минут!))",
+       "back": "**Me too, probably. I'll be there in 5!**"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "🃏 Cards",
+   "blocks": [
+    {
+     "kind": "cards",
+     "style": "kwt",
+     "instr": "Rewrite the message. Use the word in capitals without changing it.",
+     "cards": [
+      {
+       "front": "I'm on my way, but I'll get there about 20 minutes after the time we agreed.",
+       "key": "RUNNING",
+       "frame": "I'm on my way, but I'm ___.",
+       "answer": "running about 20 minutes late",
+       "back": "I'm on my way, but I'm **running about 20 minutes late**.",
+       "note": "Я в пути, но опаздываю минут на 20. · running late — про себя; running over — про встречу. Тоже верно: running 20 minutes late."
+      },
+      {
+       "front": "The call with my boss is taking longer than we planned.",
+       "key": "OVER",
+       "frame": "The call with my boss ___.",
+       "answer": "is running over",
+       "back": "The call with my boss **is running over**.",
+       "note": "Звонок с начальником затягивается. Тоже верно: is going over (time)."
+      }
+     ]
+    },
+    {
+     "kind": "cards",
+     "style": "ours",
+     "instr": "Our sentences. Green = good, grey = could be better. How would you make it perfect English?",
+     "instr_next": "One more of our sentences. How would you make it perfect English?",
+     "check": "Perfect English",
+     "summary": "Could be better → perfect: the full list",
+     "box": "BOX",
+     "cards": [
+      {
+       "ctx": "сообщение в чат: встреча ещё не началась, вы в пути",
+       "front": "We ~~are~~ <g>half an hour late</g> for the meeting.",
+       "back": "We**'ll be** half an hour late for the meeting.",
+       "why": "Встреча ещё не началась — предупреждаешь заранее: will be. We're late — когда уже опоздали. Можно и так: We're running half an hour late."
+      },
+      {
+       "ctx": "ты опаздываешь на 10 минут",
+       "front": "<g>Sorry, I'll be</g> ~~later~~.",
+       "back": "Sorry, I'll be **10 minutes late**. / Sorry, I'll be **a bit late**.",
+       "why": "Later — «позже», в другое время. Опоздаю → late: be + сколько + late (без for перед временем; late for — перед событием: late for the meeting)."
+      },
+      {
+       "ctx": "ты в пробке, но надеешься скоро доехать",
+       "front": "I ~~wish~~ <g>I'll be there soon</g>.",
+       "back": "I **hope** I'll be there soon.",
+       "why": "I wish — о том, чего не будет (I wish I could come). Надеюсь → hope. Ещё естественнее: Hopefully, I'll be there soon."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "💬 Speaking",
+   "blocks": [
+    {
+     "kind": "tool",
+     "page": "late",
+     "instr": "Read who's writing and how much it matters. Agree together what to write, type it and send.",
+     "plain": "slides 67–77 (the five chats), its speaking stage = slide 77's questions + the fast finisher"
+    }
+   ]
+  }
+ ]
+}

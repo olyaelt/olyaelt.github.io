@@ -1,0 +1,111 @@
+{
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "when i was at school, we memorised lots of dates. back in my day, we learned lots of dates by heart. day",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "most of what we did had nothing to do with real life. most of it was completely out of touch with real life. touch",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "at my kids' school, they learn by doing things themselves. my kids' school is very hands-on. hands",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "we spent months on those dates, and it was all for nothing. it was a complete waste of time. waste",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "i use my latin surprisingly often. i use it more often than you'd think. think",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "it might be useful one day. who knows? you never know when it might come in handy. handy",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "software does a lot of the drawing. the thinking is the part where i'm really useful. the thinking — that's where i really add value. value",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "my law degree? i haven't needed it once in all these years. i've never used it since. since",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "in the new country, my degree and my experience didn't matter. none of it counted. counted",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "i had to begin all over again, from nothing. i had to start from scratch. scratch",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "retraining took a lot of effort, but in the end it was worth it. it was hard, but it paid off. paid",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "a course helps, but only up to a point. a course only gets you so far. far",
+   "gone": false
+  },
+  {
+   "pid": 12,
+   "sig": "my grandmother can still say dozens of poems from memory. my grandmother learned dozens of poems by heart. heart",
+   "gone": false
+  },
+  {
+   "pid": 13,
+   "sig": "we had to figure out how to read contracts on our own. nobody ever taught us how to read a contract. taught",
+   "gone": false
+  },
+  {
+   "pid": 14,
+   "sig": "why do we even learn latin? it's useless. what's the point of latin? point",
+   "gone": false
+  },
+  {
+   "pid": 15,
+   "sig": "you don't need a course for that. you learn it as you go. you pick it up along the way. pick",
+   "gone": false
+  }
+ ],
+ "speaking": [
+  {
+   "pid": 0,
+   "sig": "each of you: three things you learned at school — one that came in handy, one that was a complete waste of time, one you've never used since. whose school was more useful?",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "\"back in my day …\" each of you: two ways school was different then. agree on the one change that was for the better.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "think of someone who had to start from scratch — you, a friend, someone you've heard of. tell the story in five sentences, with two phrases from the box. your partner asks two questions.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "\"it was hard, but it paid off.\" each of you: two things that were hard to learn but paid off. agree which one paid off most.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "which card was the hardest? each of you: two new sentences with it about your own school or work.",
+   "gone": false
+  }
+ ]
+}

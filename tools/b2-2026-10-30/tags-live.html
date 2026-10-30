@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Did you hear? · Revision · Tags: share a feeling</title>
+<link rel="stylesheet" href="../../fonts/homework-sans.css">
+<style>
+/* Lesson tools (pages students open in a breakout room and share on Zoom, ~1280×720).
+   Same colours and font as the homework pages; bigger type; task on the left, Useful language on the right. */
+:root{
+  --ground:#F6F1DC; --card:#FFFFFF; --ink:#1D1D1B; --muted:#6B6B6B; --line:#D9D2B8;
+  --instr:#0693E3; --instr-ink:#FFFFFF; --label:#E00000; --ipa:#0E8A7E;
+  --hl:#FFFF00; --hl-ink:#1D1D1B; --bubble:#FFFF8C; --bubble-ink:#1D1D1B;
+  --date-bg:#FF9900; --date-ink:#1D1D1B;
+  --ok:#2E8B3E; --ok-bg:#EAF7EC; --ok-chip:#CDEFD3; --ok-ink:#1E6B2E;
+  --no:#C0392B; --no-bg:#FDECEB; --no-chip:#F9D2CF; --no-ink:#A1261B;
+  --used:#BFF2B8; --used-ink:#1D1D1B;
+  --a:#0693E3; --a-ink:#FFFFFF; --b:#FF9900; --b-ink:#1D1D1B;
+  --again:#E67E00; --on-ok:#FFFFFF; --on-no:#FFFFFF; --flip-ink:#0679BD; --tick:#B9B092; --instr-text:#0693E3;
+  --shadow:0 2px 0 rgba(29,29,27,.08), 0 10px 28px rgba(29,29,27,.08);
+  --font-body:"Homework Sans","Calibri","Carlito","Segoe UI",system-ui,sans-serif;
+  --radius:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D;
+    --instr:#1578C0; --label:#FF7A7A; --ipa:#4CC5B3; --hl:#FFF34D; --hl-ink:#111111;
+    --bubble:#3B391F; --bubble-ink:#F3F0D0;
+    --ok:#62C774; --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8;
+    --no:#FF8A80; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB;
+    --used:#2F5E35; --used-ink:#F1FFF0; --a:#1578C0; --again:#FFB14A; --on-ok:#0F2412; --on-no:#2A0D0A; --flip-ink:#6CC3FF; --tick:#70757C; --instr-text:#6CC3FF;
+    --shadow:0 2px 0 rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D;
+  --instr:#1578C0; --label:#FF7A7A; --ipa:#4CC5B3; --hl:#FFF34D; --hl-ink:#111111;
+  --bubble:#3B391F; --bubble-ink:#F3F0D0;
+  --ok:#62C774; --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8;
+  --no:#FF8A80; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB;
+  --used:#2F5E35; --used-ink:#F1FFF0; --a:#1578C0; --again:#FFB14A; --on-ok:#0F2412; --on-no:#2A0D0A; --flip-ink:#6CC3FF; --tick:#70757C; --instr-text:#6CC3FF;
+  --shadow:0 2px 0 rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+/* the page grows with the screen, like a slide (her slides keep everything at 15 pt or more), and with its height: a laptop screen minus the browser bar is wider than 16:9, so the size is the smaller of the two (the Useful language box should fit without scrolling) */
+html{font-size:clamp(15px, min(1.4vw, 2.55vh), 28px)}
+html,body{background:var(--ground);margin:0}
+body{color:var(--ink);font-family:var(--font-body);line-height:1.45;padding:0 16px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:disabled{cursor:default}
+:focus-visible{outline:3px solid var(--instr);outline-offset:2px;border-radius:8px}
+h1,h2,h3{margin:0;text-wrap:balance}
+.wrap{max-width:72rem;margin:0 auto;padding:12px 0 16px;display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,30rem);gap:16px 1.4rem;align-items:start}
+.main{display:grid;gap:12px;min-width:0}
+/* the box stays in view while the task scrolls; a box taller than the screen scrolls with the page (no hidden inner scroll) */
+.side{position:sticky;top:10px;display:grid;gap:10px;padding:0 4px 4px 12px;margin-left:-12px}
+@media (max-width:860px){ .wrap{grid-template-columns:1fr} .side{position:static} }
+
+/* header */
+.head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.part{font-weight:900;letter-spacing:.04em;font-size:.85rem;background:var(--date-bg);color:var(--date-ink);padding:3px 10px;border-radius:6px}
+.head h1{font-size:1.85rem;line-height:1.1;font-weight:900}
+.gear{margin-left:auto;border:2px solid var(--line);background:var(--card);border-radius:99px;padding:4px 12px;font-weight:700;font-size:1rem;color:var(--muted);min-height:38px}
+.instr{background:var(--instr);color:var(--instr-ink);border-radius:12px;padding:8px 14px;font-weight:700;font-size:1rem;margin:0}
+.hint-top{background:var(--card);border-left:6px solid var(--instr);border-radius:12px;padding:8px 14px;font-weight:700;font-size:1.15rem;margin:0;box-shadow:var(--shadow)}
+.situation{background:var(--card);border-left:6px solid var(--date-bg);border-radius:12px;padding:12px 16px;font-size:1.1rem;margin:0;box-shadow:var(--shadow)}
+.settings{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font-size:.95rem}
+.seg{display:inline-flex;border:2px solid var(--line);border-radius:99px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:3px 12px;font-weight:700}
+.seg button[aria-pressed="true"]{background:var(--instr);color:var(--instr-ink)}
+
+/* buttons */
+.btn{border:2px solid var(--instr);background:transparent;color:var(--instr-text);border-radius:12px;padding:10px 20px;font-weight:900;font-size:1.05rem;min-height:48px}
+.btn.primary{background:var(--instr);color:var(--instr-ink)}
+.btn.big{font-size:1.4rem;padding:16px 30px;border-radius:16px}
+.btn:disabled{opacity:.35}
+.btn.ok{border-color:var(--ok);color:var(--ok)}
+.btn.ok.on,.btn.ok.solid{background:var(--ok);color:var(--on-ok)}
+.btn.no{border-color:var(--no);color:var(--no)}
+.btn.no.on{background:var(--no);color:var(--on-no)}
+.btn.again{border-color:var(--again);color:var(--again)}
+.linkish{border:0;background:none;color:var(--instr-text);font-weight:700;text-decoration:underline;padding:4px}
+.row-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* Useful language box (as on her slides and the homework pages) */
+.box{background:var(--card);border:2px solid var(--ink);border-radius:4px;padding:8px 12px 10px;position:relative;display:grid;gap:1px;margin-top:2rem}
+.box .sticker{width:8.5rem;height:auto;margin:-1.8rem 0 -4px -8px}
+.box-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.box-top .linkish{font-size:.9rem;margin-top:-6px}
+.box h4{margin:6px 0 1px;color:var(--label);font-size:.92rem;letter-spacing:.07em;font-weight:900;text-transform:uppercase}
+.box h4:first-of-type{margin-top:2px}
+.ph{display:block;width:100%;text-align:left;border:0;background:transparent;border-radius:8px;padding:1px 8px 1px 1.5rem;margin:0 0 0 -8px;line-height:1.2;font-size:1.12rem;position:relative}
+.ph::before{content:"";position:absolute;left:8px;top:.5em;width:.5em;height:.5em;border-radius:50%;border:2px solid var(--line)}
+button.ph:hover{background:color-mix(in srgb, var(--used) 35%, transparent)}
+.ph.used{background:var(--used);color:var(--used-ink)}
+.ph .gloss{color:var(--muted);font-style:italic;font-size:.86em}
+.ph .bx{font-weight:900}
+.ph.used::before{content:"✓";border:0;width:auto;height:auto;top:.18em;left:7px;font-weight:900;color:var(--ok)}
+.box.static .ph{cursor:default}
+.box.static .ph::before{display:none}
+.box.static .ph{padding-left:8px}
+.peek{display:grid;gap:8px;justify-items:start;background:var(--card);border:2px dashed var(--line);border-radius:12px;padding:14px 16px;margin-top:10px}
+.peek p{margin:0;color:var(--muted)}
+.extra{margin:0;font-weight:700;background:var(--bubble);color:var(--bubble-ink);border-radius:10px;padding:8px 12px}
+
+/* If you're done: the speaking tasks */
+.speak{background:var(--bubble);color:var(--bubble-ink);border-radius:18px;padding:18px 22px;display:grid;gap:12px;box-shadow:var(--shadow)}
+.speak.pop{animation:popsoft .35s ease-out}
+.speak-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.speak-h{font-size:.85rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
+.speak-dots{display:flex;gap:0;margin:-6px -5px}
+.speak-dots button{border:0;background:none;padding:6px 5px;line-height:0}
+.speak-dots button::before{content:"";display:block;width:.6rem;height:.6rem;border-radius:50%;background:color-mix(in srgb, var(--bubble-ink) 22%, transparent);transition:transform .15s}
+.speak-dots button.was::before{background:color-mix(in srgb, var(--bubble-ink) 50%, transparent)}
+.speak-dots button.on::before{background:var(--instr);transform:scale(1.25)}   /* "you are here" is blue on every page (tools 6) */
+.speak-dots button:hover::before{transform:scale(1.35)}
+.speak-task{margin:0;font-size:1.45rem;font-weight:700;line-height:1.35}
+.speak-task .bx,.follow-q .bx{color:var(--flip-ink);font-weight:900}
+/* the stages */
+.stages{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-left:auto}
+.stage-btn{border:2px solid var(--line);background:var(--card);color:var(--muted);border-radius:99px;padding:4px 14px;font-weight:900;font-size:1.02rem}
+.stage-btn:hover{border-color:var(--instr);color:var(--instr-text)}
+.stage-btn[aria-current="step"]{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
+.stage-arrow{color:var(--muted);font-weight:900}
+@media (max-width:560px){ .stages{margin-left:0} }
+/* 📋 all of it, folded */
+details.all{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:4px 16px}
+.side details.all{background:transparent;border:2px dashed var(--line);font-size:.92rem;padding:2px 14px}
+.side details.all[open]{background:var(--card)}
+details.all summary{cursor:pointer;font-weight:900;padding:8px 0;color:var(--muted);list-style:none}
+details.all summary::-webkit-details-marker{display:none}
+details.all summary::after{content:" ▸";}
+details.all[open] summary::after{content:" ▾";}
+details.all[open] summary{color:var(--ink)}
+.all-in{display:grid;gap:10px;padding:2px 0 14px}
+.all-row{display:grid;gap:2px;border-top:1px solid var(--line);padding-top:8px}
+.all-row .f{color:var(--ink)} .all-row .f .ctx{color:var(--muted)}
+.all-row .b{color:var(--flip-ink);font-weight:900}
+.all-h{color:var(--label);font-size:.88rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;margin-top:6px}
+.all-sub{font-weight:900}
+.all-row p{margin:0}
+.all-row .bx{color:var(--flip-ink)}
+.all-side{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;font-weight:900;color:var(--muted)}
+/* tactile feedback */
+@keyframes pop{0%{transform:scale(1)}35%{transform:scale(1.18)}100%{transform:scale(1)}}
+@keyframes popsoft{0%{transform:scale(1)}35%{transform:scale(1.035)}100%{transform:scale(1)}}
+.pop{animation:pop .38s cubic-bezier(.3,1.4,.5,1)}
+.ph.pop{animation:popsoft .32s ease-out}
+.legal{max-width:72rem;margin:0 auto;padding:6px 0 18px;font-size:.8rem;color:var(--muted)}
+.legal a{color:var(--muted)}
+@media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
+.btn.slim{min-height:38px;padding:4px 14px;font-size:.95rem;border-radius:10px}
+/* live version (tools 7): Olya's edit buttons and bar — only on her screen */
+.live-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;background:var(--card);border:2px dashed var(--instr);border-radius:12px;padding:6px 12px;margin-bottom:10px;font-size:.95rem}
+.live-bar #live-status{color:var(--muted)}
+.live-removed{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.live-chip,.live-reset{border:2px solid var(--line);background:var(--ground);color:var(--ink);border-radius:99px;padding:1px 10px;font-weight:700;font-size:.9rem}
+.live-reset{margin-left:auto;border-color:var(--no);color:var(--no)}
+.live-host{display:flex;align-items:flex-start;gap:8px}
+.live-host > :first-child{flex:1}
+.live-tools{display:inline-flex;gap:4px;flex:none}
+.live-b{border:2px solid var(--line);background:var(--card);border-radius:8px;padding:1px 6px;font-size:1rem;line-height:1.4}
+.live-b:hover{border-color:var(--instr)}
+.speak-dots.draggable button{cursor:grab;touch-action:none}
+.speak-dots.draggable button::before{width:.85rem;height:.85rem}
+.speak-dots button.dragging{cursor:grabbing;z-index:2;position:relative}
+.speak-dots button.dragging::before{transform:scale(1.5);box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.speak-dots button.drop-here::before{outline:3px solid var(--instr);outline-offset:2px}
+.live-host.is-hidden{flex-direction:column-reverse;gap:4px}   /* hidden, not deleted: greyed, with "Hidden from the groups · ✏️ · Show" on its own line above */
+.live-host.is-hidden > :first-child{opacity:.45}
+.live-host.is-hidden .live-tools{align-self:flex-start}
+.all-row.is-hidden > span:first-child{opacity:.45}
+.live-hidden-tag{align-self:center;font-size:.8rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.live-b.live-show{border-color:var(--instr);background:var(--instr);color:var(--instr-ink);font-weight:900;padding:1px 10px}
+.live-b[data-live-hide]{font-weight:700;font-size:.9rem;padding:1px 8px}
+.speak-dots button.hid::before{background:transparent !important;box-shadow:inset 0 0 0 2px var(--muted)}
+.live-edit{display:grid;gap:8px;background:var(--card);border:2px solid var(--instr);border-radius:12px;padding:10px 12px}
+.live-edit label{display:grid;gap:2px;font-size:.85rem;font-weight:700;color:var(--muted)}
+.live-edit textarea{font:inherit;font-size:1.05rem;font-weight:400;color:var(--ink);background:var(--ground);border:2px solid var(--line);border-radius:8px;padding:6px 8px;width:100%;resize:vertical}
+
+/* ---------- situation cards (tools 12, B2 filler «Any recommendations?», 30.10.26; replaces the WHO / WHAT dice of tools 11):
+   ready-made situation cards, one die for the answer type ---------- */
+.head .stage-btn{font-size:.9rem;padding:3px 10px}
+.head h1{font-size:1.6rem}
+.dice-hint{display:block;line-height:1.3}
+.stage{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 20px;display:grid;gap:10px;align-content:start}
+.stage.enter{animation:enterR .55s cubic-bezier(.2,.8,.2,1)}
+@keyframes enterR{from{opacity:0;transform:translateX(70px) rotate(1.5deg)}to{opacity:1;transform:none}}
+@keyframes enter{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.stage-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.sit-count{flex:none;border:2px solid var(--line);border-radius:99px;padding:2px 12px;font-weight:700;font-size:.95rem;color:var(--ink)}
+.sit-label{color:var(--label);font-weight:900;letter-spacing:.07em;text-transform:uppercase;font-size:.9rem}
+.scard{background:var(--bubble);color:var(--bubble-ink);border-radius:16px;padding:10px 18px 12px;display:grid;gap:2px}
+.scard.in{animation:enter .4s ease-out}
+.scard .who{margin:0;color:var(--label);font-weight:900;letter-spacing:.05em;text-transform:uppercase;font-size:.88rem}
+.scard .says{margin:0;font-size:1.25rem;font-weight:700;line-height:1.33}
+.type.sm{font-size:.82em;padding:0 5px}
+.tline{display:block}
+.type{display:inline-block;background:var(--date-bg);color:var(--date-ink);border-radius:6px;padding:0 7px;margin-right:6px;font-weight:900;white-space:nowrap}
+.types{display:grid;gap:8px}
+.trow{background:var(--ground);border-radius:12px;padding:8px 14px}
+.trow b{font-weight:800}
+.trow .tans{margin:4px 0 0;font-size:1.05rem;line-height:1.4}
+.trow .tans.in{animation:enter .35s ease-out}
+.ex-ask{margin:0;color:var(--muted);font-weight:700}
+.bx{color:var(--flip-ink)}
+.die-row{display:flex;align-items:center;gap:14px;min-height:3.6rem}
+.die-row .dl{color:var(--label);font-weight:900;letter-spacing:.06em;text-transform:uppercase;font-size:.8rem;display:block}
+.die-how{font-size:1.1rem;line-height:1.3}
+.die-how b{font-weight:900}
+.die-how.wait{color:var(--muted)}
+.die{width:3.1rem;height:3.1rem;flex:none;border-radius:11px;background:#FFFFFF;border:3px solid #1D1D1B;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:.42rem;box-shadow:0 4px 0 #1D1D1B;will-change:transform}
+.die i{width:.58rem;height:.58rem;border-radius:50%;background:#1D1D1B;place-self:center;visibility:hidden}
+.die i.p{visibility:visible}
+.die.blank{opacity:.35}
+/* tools 13 (her decision 29.10): a coin for a two-way choice */
+.coin{width:3.3rem;height:3.3rem;flex:none;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFE68A,#E8B730 70%);border:3px solid #9A6B00;display:grid;place-items:center;
+  font-weight:900;font-size:1.3rem;color:#5A3E00;box-shadow:0 3px 0 #9A6B00;will-change:transform}
+.coin.blank{opacity:.4}
+.react{margin:0;color:var(--muted);font-size:.98rem}
+.react b{color:var(--ink)}
+.row-act{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row-act .grow{flex:1}
+.back{display:grid;gap:6px}
+.back.in{animation:enter .35s ease-out}
+.back-main{border:2px solid var(--instr);border-radius:12px;padding:6px 14px 8px;background:var(--card)}
+.back-main .bl,.back-other .bl{font-size:.8rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.back-main p{margin:2px 0 0;font-size:1.1rem;line-height:1.4}
+.back-other{display:grid;gap:4px;padding:0 4px}
+.back-other p{margin:0;font-size:.95rem;line-height:1.35;color:var(--muted)}
+.back-other p .bx{color:inherit;font-weight:800}
+details.model{background:var(--ground);border-radius:12px;padding:4px 12px 6px}
+.side details.model{background:var(--card);border:2px solid var(--line)}
+details.model summary{cursor:pointer;font-weight:700;font-size:.95rem;line-height:1.35;padding:2px 0}
+details.model summary .ml{color:var(--label);font-weight:900;letter-spacing:.05em;text-transform:uppercase;font-size:.8rem;margin-right:4px}
+.model-ans{display:grid;gap:3px;margin-top:4px}
+.model-ans p{margin:0;font-size:.88rem;line-height:1.35}
+.empty-draw{display:grid;justify-items:center;gap:10px;padding:10px 0 6px}
+.empty-draw p{margin:0;color:var(--muted)}
+.btn.big{font-size:1.2rem;padding:10px 26px}
+.all-row .ty{font-weight:900;margin-right:6px}
+@media (max-width:560px){ .stage{padding:14px} .scard .says{font-size:1.15rem} .trow{padding:8px 10px} }
+</style>
+</head>
+<body>
+<div class="wrap"><main class="main" id="main"></main><div class="side" id="side"></div></div>
+<footer class="legal"><a href="../../impressum.html">Impressum</a> · <a href="../../datenschutz.html">Datenschutz</a></footer>
+<script>
+const D = {"type": "situation-cards", "title": "Did you hear?", "part": "Revision · Tags: share a feeling", "hint": "Take a news card and flip a coin: do you both know it, or is it news to B? A starts, B replies. Swap.", "die": {"coin": true, "label": "WHO KNOWS IT?", "map": [{"faces": "heads", "type": "S"}, {"faces": "tails", "type": "N"}]}, "answers": {"S": "Heads: you BOTH know it → B shares a feeling with a tag ↘, A agrees.", "N": "Tails: it's news to B → B reacts and asks a question."}, "model": {"who": "A colleague", "says": "Have you seen the coffee machine? It's broken again!", "S": "I **have**! It's so annoying, **isn't it?** — It **really is**. I've had three teas already.", "N": "No, I haven't! Oh no — **what happened?**"}, "cards": [{"who": "A colleague", "says": "Have you seen the coffee machine? It's broken again!", "S": "I **have**! It's so annoying, **isn't it?**", "N": "No, I haven't! Oh no — **what happened?**"}, {"who": "A friend", "says": "Have you heard? Our favourite café has started charging for tap water!", "S": "I **have**! It's crazy, **isn't it?**", "N": "No! That's awful! **How much is it?**"}, {"who": "A friend", "says": "Did you know the new season of our favourite series is out?", "S": "I **did**! I watched three episodes last night. It's amazing, **isn't it?**", "N": "No way! That's great! **When did it come out?**"}, {"who": "A colleague", "says": "Have you seen the email? Our deadline's been moved to tomorrow!", "S": "I **have**. It's a nightmare, **isn't it?**", "N": "No, I haven't! Oh no, that's awful. **Why?**"}, {"who": "A friend", "says": "Have you heard? My neighbour's dog has had six puppies!", "S": "I **have**! They're so cute, **aren't they?**", "N": "Aw, that's lovely! **Are they going to keep them all?**"}, {"who": "A friend", "says": "Have you seen the forecast? It's going to be sunny all weekend!", "S": "I **have**! It's going to be lovely, **isn't it?**", "N": "No! That's great! **Any plans?**"}], "react": ["It really is!", "They really are!", "I know!", "It is!"], "box": [{"h": "SHORT REPLIES", "items": ["**Yes, I did!** / **No, what happened?**", "**I have!** / **No, I haven't.**"]}, {"h": "SHARE A FEELING ↘", "items": ["It's so annoying, **isn't it?** – бесит, да?", "— It **really is**! – ещё как!", "It was amazing, **wasn't it?** – классно было, да?", "— It **really was**!"]}, {"h": "REACT AND ASK", "items": ["Oh no! **What happened?**", "That's great! **When…?**"]}, {"h": "HOW DOES IT FEEL?", "items": ["awful · scary · crazy", "annoying · stressful", "exhausting · weird", "a shame · a nightmare", "a relief · lovely · amazing"]}], "speaking": ["Something you BOTH know: our lessons, a series you've both seen, something in the news. Share a feeling with a tag — your partner agrees!", "Tell your partner something from your week they don't know — good or bad. They react and ask **two** questions.", "Tell one piece of news twice: your partner replies both ways — first as if they already know it, then as if it's new to them."], "_pids": {"cards": [0, 1, 2, 3, 4, 5], "speaking": [0, 1, 2]}};
+const STICKER = "data:image/png;base64,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";
+const TOOLS_VERSION = "13";
+const PAGE_ID = "b2-2026-10-30/tags";
+const LIVE_ON = true, LIVE_URL = "https://script.google.com/macros/s/AKfycbwHqzwA-2z09POg7JSqiMhqglOKbD8bxs-UG-NcFKZPzTyzmdEW79ct3zHGktUGyLM_/exec";   /* the "-live" page: Olya's changes during the lesson (tools 7) */
+/* shared by the lesson tools: the Useful language box, shuffling, small helpers */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle = a => { a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const store = { get(k){ try{ return JSON.parse(localStorage.getItem(k) || "null"); }catch(e){ return null; } }, set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} } };
+const params = new URLSearchParams(location.search);
+/* **box phrase** in a speaking task or a follow-up = shown like the box phrases in the examples (checklist 8.07) */
+const boxMarks = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>');
+const calm = () => !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+/* a small burst of confetti from an element (the end of a deck): brand colours, falls and fades in about a second; none with reduced motion */
+function confetti(from){
+  if(calm() || !from) return;
+  const r = from.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  const css = getComputedStyle(document.documentElement), col = ["--instr", "--date-bg", "--hl", "--ok", "--label"].map(v => css.getPropertyValue(v).trim() || "#0693E3");
+  for(let i = 0; i < 46; i++){
+    const p = document.createElement("i"), a = Math.random() * Math.PI * 2, d = 90 + Math.random() * 170, w = 6 + Math.random() * 6;
+    p.className = "confetti"; p.style.cssText = `position:fixed;left:${cx}px;top:${cy}px;width:${w}px;height:${w * .45}px;background:${col[i % col.length]};border-radius:2px;pointer-events:none;z-index:50`;
+    document.body.appendChild(p);
+    const dx = Math.cos(a) * d, dy = Math.sin(a) * d * .6 - 60, spin = (Math.random() - .5) * 720;
+    p.animate([{transform: "translate(-50%, -50%) rotate(0)", opacity: 1},
+               {transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) rotate(${spin / 2}deg)`, opacity: 1, offset: .45},
+               {transform: `translate(calc(-50% + ${dx * 1.15}px), calc(-50% + ${dy + 160}px)) rotate(${spin}deg)`, opacity: 0}],
+              {duration: 1100 + Math.random() * 500, easing: "cubic-bezier(.2,.7,.4,1)"}).onfinish = () => p.remove();
+  }
+}
+/* a small "pop" on whatever was just tapped (tactile feedback) */
+const pop = el => { if(!el || calm()) return; el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop"); };
+
+/* "If you're done": speaking tasks for fast finishers, one at a time (her rule, 27.10: a page can't be changed during the lesson,
+   so every tool ends with plenty of talk, and after it the task starts over — it never runs out) */
+/* where a group is in a run of tasks (speaking tasks, follow-ups). It counts which tasks they have SEEN, not positions, so that
+   when Olya moves or removes tasks during the lesson (live version) no group skips anything (her catch, 28.10: on slides she could
+   say "go back to slide 74"; here nobody could). Next = the next unseen task after this one in the current order, then any unseen
+   one they jumped over; Previous = back the way they came; the end buttons come only when everything has been seen. */
+const newCursor = () => ({key: null, seen: new Set(), hist: [], move: 0, go: null});
+function cursorPick(cur, list){
+  const has = k => list.some(x => x.k === k), unseen = x => !cur.seen.has(x.k) && x.k !== cur.key && !x.hidden;
+  let key = cur.key;
+  if(cur.go != null && has(cur.go)){ if(has(key)) cur.hist.push(key); key = cur.go; }
+  else if(cur.move > 0){ const at = list.findIndex(x => x.k === key), nx = list.slice(at + 1).find(unseen) || list.find(unseen);
+    if(nx){ if(has(key)) cur.hist.push(key); key = nx.k; } }
+  else if(cur.move < 0){ while(cur.hist.length){ const pk = cur.hist.pop(); if(has(pk)){ key = pk; break; } } }
+  if(key == null || !has(key)){ const nx = list.find(x => !cur.seen.has(x.k)) || list[0]; key = nx.k; }
+  cur.key = key; cur.move = 0; cur.go = null; cur.seen.add(key);
+  return {i: list.findIndex(x => x.k === key), more: list.some(x => !cur.seen.has(x.k) && !x.hidden), back: cur.hist.some(has)};
+}
+let spkCur = newCursor(), spkView = [];
+const spkReset = () => { spkCur = newCursor(); };
+/* the dots under a run of tasks: each one is a button that opens that task */
+const dotsHTML = (n, i, attr, what, list, base, seen) => { const drag = list && base && liveTeacher();
+  return `<span class="speak-dots ${drag ? "draggable" : ""}" ${drag ? `data-drag="${base}"` : ""}>${Array.from({length: n}, (_, k) =>
+  `<button class="${k === i ? "on" : (seen && list ? seen.has(list[k].k) : k < i) ? "was" : ""} ${list && list[k].hidden ? "hid" : ""}" ${attr}="${k}" aria-label="${what} ${k + 1}" ${k === i ? `aria-current="step"` : ""}${drag ? ` data-k="${list[k].k}" title="${esc(String(list[k].t).replace(/\*\*/g, "").slice(0, 90))} — drag to move"` : ""}></button>`).join("")}</span>`; };
+function speakHTML(list, endButtons, label = "Speaking", base = "speaking"){
+  list = (list || []).map((x, k) => typeof x === "string" ? {k, t: x} : x);
+  if(!list.length) return "";
+  const {i, more, back} = cursorPick(spkCur, list), last = !more; spkView = list; liveViews[base] = list;
+  return `<section class="speak" aria-live="polite"><div class="speak-top"><span class="speak-h">💬 ${esc(label)}</span>
+      ${dotsHTML(list.length, i, "data-speak-go", "Question", list, base, spkCur.seen)}</div>
+    <div class="live-host ${liveDim(base + "." + list[i].k)}" data-live-host><p class="speak-task">${boxMarks(list[i].t)}</p>${liveTools(base + "." + list[i].k, {last: true})}</div>
+    <div class="row-actions">${back ? `<button class="btn" data-speak-prev>← Previous question</button>` : ""}${last ? endButtons : `<button class="btn primary" data-speak-next>Next question →</button>`}</div></section>`;
+}
+function wireSpeak(root, rerender){
+  const show = () => { rerender(); const t = document.querySelector(".speak"); if(t) pop(t); };
+  root.querySelectorAll("[data-speak-next]").forEach(b => b.addEventListener("click", () => { spkCur.move = 1; show(); }));
+  root.querySelectorAll("[data-speak-prev]").forEach(b => b.addEventListener("click", () => { spkCur.move = -1; show(); }));
+  root.querySelectorAll("[data-speak-go]").forEach(b => b.addEventListener("click", () => { const k = +b.dataset.speakGo; spkCur.go = spkView[k] ? spkView[k].k : null; show(); }));
+  wireDrag(root);
+}
+
+/* the stages of the task (her rule, 27.10: every tool has stages — at least the practice and the speaking —
+   and a group can move between them at any time without clicking through) */
+const stagesHTML = (list, cur) => `<nav class="stages" aria-label="Stages">${list.map(([id, label], i) =>
+  `${i ? `<span class="stage-arrow" aria-hidden="true">→</span>` : ""}<button class="stage-btn" data-stage="${id}" ${id === cur ? `aria-current="step"` : ""}>${label}</button>`).join("")}</nav>`;
+
+/* 📋 everything on one screen, folded: to show a card or an example again later in the lesson */
+let allOpen = false;
+const allHTML = (title, inner) => `<details class="all" ${allOpen ? "open" : ""}><summary>📋 ${esc(title)}</summary><div class="all-in">${inner}</div></details>`;
+function wireAll(root){ root.querySelectorAll("details.all").forEach(d => d.addEventListener("toggle", () => { allOpen = d.open; })); }
+
+/* the box: tap a phrase when you've said it (it lights up green); "clickable:false" = a plain list.
+   A line may carry a short Russian gloss after " – " (as on her slides: grey italics) and **bold** key words. */
+const phHTML = t => { const k = t.indexOf(" – "), en = k < 0 ? t : t.slice(0, k), ru = k < 0 ? "" : t.slice(k + 3);
+  return boxMarks(en) + (ru ? ` <span class="gloss">– ${esc(ru)}</span>` : ""); };
+const usedPhrases = new Set();
+function boxHTML(box, {clickable = true, collapsible = false, open = true} = {}){
+  const items = box.map((g, gi) => `<h4>${esc(g.h)}</h4>` + g.items.map((t, ti) => clickable
+      ? `<button class="ph ${usedPhrases.has(gi + "." + ti) ? "used" : ""}" data-ph="${gi}.${ti}" aria-pressed="${usedPhrases.has(gi + "." + ti)}">${phHTML(t)}</button>`
+      : `<p class="ph">${phHTML(t)}</p>`).join("")).join("");
+  return `<aside class="box ${clickable ? "" : "static"}" aria-label="Useful language">
+    <div class="box-top"><img class="sticker" src="${STICKER}" alt="Useful language">${collapsible ? `<button class="linkish" data-box-toggle>Hide</button>` : ""}</div>
+    ${open ? items : ""}</aside>`;
+}
+function wireBox(root, rerender){
+  root.querySelectorAll("[data-ph]").forEach(b => b.addEventListener("click", () => {
+    const k = b.dataset.ph; usedPhrases.has(k) ? usedPhrases.delete(k) : usedPhrases.add(k);
+    b.classList.toggle("used", usedPhrases.has(k)); b.setAttribute("aria-pressed", usedPhrases.has(k)); if(usedPhrases.has(k)) pop(b);
+  }));
+}
+
+/* ---------- live version (tools 7, her wish 28.10): Olya removes, moves or corrects items during a lesson ----------
+   Only on the "-live" pages (LIVE_ON). The page as built is the default; her changes come from her table
+   (sheet "Live", one row per page) when the page opens and every 30 s, and are applied at the group's next tap,
+   so nothing changes under their eyes. If the table doesn't answer, the page simply shows what it was built with.
+   Her own code on this site (typed on any homework page) turns on the edit buttons: ✏️ correct, ⤓ to the end, Hide / Show.
+   Hide, not delete (her wish, 28.10): a hidden item stays on HER screen, greyed, so she can correct it and show it again. */
+let LV = {hide: [], last: [], text: {}, order: {}}, livePending = null, liveRerender = () => {}, liveBusy = false, liveMsg = "";
+const liveCacheKey = "tool-live-" + PAGE_ID;
+const liveSame = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const liveNorm = v => ({hide: (v && v.hide) || [], last: (v && v.last) || [], text: (v && v.text) || {}, order: (v && v.order) || {}});
+if(LIVE_ON){ const c = store.get(liveCacheKey); if(c) LV = liveNorm(c); }
+/* permanent numbers (tools 13, her decision 30.10): her table keeps live changes by an item's permanent number (D._pids, from the build's
+   register), not by its place in the data, so a rebuild that inserts or moves items never moves her ✏️ / Hide / order onto another item.
+   The page works with places; these turn a path into its stored form and back ("cards.4.1" ↔ "cards.<number>.1"). No numbers → the same. */
+const PIDS = (typeof D !== "undefined" && D && D._pids) || {};
+const PID_KEYS = Object.keys(PIDS).sort((a, b) => b.length - a.length);
+const pidOf = (base, k) => PIDS[base] && PIDS[base][k] != null ? PIDS[base][k] : k;
+const idxOf = (base, pid) => PIDS[base] ? PIDS[base].indexOf(+pid) : +pid;
+function pathMap(path, fn){
+  path = String(path); const key = PID_KEYS.find(k => path.startsWith(k + "."));
+  if(!key) return path;
+  const rest = path.slice(key.length + 1), seg = rest.split(".")[0]; if(!/^\d+$/.test(seg)) return path;
+  const n = fn(key, +seg); return n == null || n < 0 ? null : key + "." + n + rest.slice(seg.length);
+}
+const toStore = path => pathMap(path, pidOf);
+const fromStore = path => pathMap(path, idxOf);
+const liveTeacher = () => { if(!LIVE_ON) return false; try{ return localStorage.getItem("hw-role") === "teacher" && !!localStorage.getItem("hw-code"); }catch(e){ return false; } };
+const pathGet = (o, path) => String(path).split(".").reduce((x, k) => x == null ? x : x[k], o);
+const liveText = (path, dflt) => { const p = toStore(path); return Object.prototype.hasOwnProperty.call(LV.text, p) ? LV.text[p] : dflt; };
+const liveHidden = path => LV.hide.includes(toStore(path));
+/* a list as the groups see it now: in the order she dragged it into, removed ones out, corrected texts in
+   (an item she brought back after ordering goes to the end) */
+function liveList(arr, base){
+  const mine = liveTeacher();   /* her screen keeps the hidden ones (greyed), the groups' screens leave them out */
+  let items = (arr || []).map((t, k) => ({k, t: typeof t === "string" ? liveText(base + "." + k, t) : t, hidden: liveHidden(base + "." + k)})).filter(x => mine || !x.hidden);
+  const ord = Array.isArray(LV.order[base]) ? LV.order[base].map(p => idxOf(base, p)).filter(k => k > -1) : null;   /* stored by permanent number */
+  if(ord) items = ord.map(k => items.find(x => x.k === k)).filter(Boolean).concat(items.filter(x => !ord.includes(x.k)));
+  const lastKs = LV.last.filter(p => p.startsWith(base + ".") && /^\d+$/.test(p.slice(base.length + 1))).map(p => idxOf(base, +p.slice(base.length + 1))).filter(k => k > -1);
+  return items.filter(x => !lastKs.includes(x.k)).concat(lastKs.map(k => items.find(x => x.k === k)).filter(Boolean));
+}
+/* "⤓ to the end" and dragging a dot both send the whole new order of that list */
+const liveViews = {};
+function liveMoveTo(base, key, to){
+  const keys = (liveViews[base] || []).map(x => x.k), from = keys.indexOf(key); if(from < 0) return;
+  keys.splice(from, 1); keys.splice(Math.max(0, Math.min(to, keys.length)), 0, key);
+  return liveOp("order", base, JSON.stringify(keys.map(k => pidOf(base, k))));
+}
+async function livePost(body){
+  try{ const r = await fetch(LIVE_URL, {method: "POST", body: JSON.stringify(body), headers: {"Content-Type": "text/plain;charset=utf-8"}}); return await r.json(); }
+  catch(e){ return {ok: false, error: "offline"}; }
+}
+/* new changes wait for the group's next tap (render calls liveApply first); hers apply at once */
+function liveApply(){ if(!livePending) return false; LV = livePending; livePending = null; if(typeof liveAdjust === "function") liveAdjust(); return true; }
+async function liveFetch(first){
+  if(!LIVE_ON || !LIVE_URL) return;
+  const res = await livePost({action: "live", tool: PAGE_ID});
+  if(!res.ok || !res.live) return;
+  const v = liveNorm(res.live); store.set(liveCacheKey, v);
+  if(liveSame(v, LV)) { livePending = null; return; }
+  livePending = v; if(first || liveTeacher()){ liveApply(); if(first && typeof liveFresh === "function") liveFresh(); liveRerender(); }
+}
+if(LIVE_ON){ setTimeout(() => liveFetch(true), 50); setInterval(() => liveFetch(false), 30000); }
+async function liveOp(kind, path, text){
+  if(liveBusy) return; liveBusy = true; liveMsg = "saving…"; liveStatus();
+  const res = await livePost({action: "liveOp", code: localStorage.getItem("hw-code") || "", tool: PAGE_ID, op: {kind, path: kind === "order" || kind === "reset" ? path : toStore(path), text}});
+  liveBusy = false;
+  /* on her own screen, removing or moving the task she's looking at shows what takes its place */
+  /* hiding the task she's on: she stays on it (greyed) to correct it and show it again */
+  if(res.ok && res.live){ LV = liveNorm(res.live); livePending = null; store.set(liveCacheKey, LV); if(typeof liveAdjust === "function") liveAdjust(); liveMsg = "saved ✓ — the groups get it when they move on"; liveRerender(); }
+  else { liveMsg = res.error === "offline" ? "not saved: no connection" : res.error === "unknown-code" ? "not saved: your code isn't in the table" : "not saved: " + (res.error || "error"); liveStatus(); }
+}
+const liveStatus = () => { const s = document.getElementById("live-status"); if(s) s.textContent = liveMsg; };
+/* her buttons next to an item; "fields" = several texts edited together (a card: sentence, answer, key word) */
+/* dragging a dot (her screen only): the task moves to where the dot is dropped; a plain tap still opens the task */
+function wireDrag(root){
+  if(!liveTeacher()) return;
+  root.querySelectorAll(".speak-dots[data-drag]").forEach(row => {
+    const base = row.dataset.drag, dots = [...row.querySelectorAll("button[data-k]")];
+    dots.forEach(dot => dot.addEventListener("pointerdown", e => {
+      if(e.button !== 0) return;
+      const x0 = e.clientX, key = +dot.dataset.k, centers = dots.map(d => { const r = d.getBoundingClientRect(); return r.left + r.width / 2; });
+      let moved = false, to = dots.indexOf(dot);
+      const move = ev => { const dx = ev.clientX - x0; if(!moved && Math.abs(dx) < 5) return; moved = true;
+        dot.classList.add("dragging"); dot.style.transform = `translateX(${dx}px)`;
+        to = centers.reduce((best, c, j) => Math.abs(ev.clientX - c) < Math.abs(ev.clientX - centers[best]) ? j : best, 0);
+        dots.forEach((d, j) => d.classList.toggle("drop-here", j === to && d !== dot)); };
+      const up = () => { removeEventListener("pointermove", move); removeEventListener("pointerup", up);
+        if(!moved) return;
+        dot.addEventListener("click", ev => { ev.stopImmediatePropagation(); ev.preventDefault(); }, {capture: true, once: true});
+        liveMoveTo(base, key, to); };
+      addEventListener("pointermove", move); addEventListener("pointerup", up);
+    }));
+  });
+}
+const liveTools = (path, {last = false, edit = true, fields = ""} = {}) => !(liveTeacher() && path) ? "" : liveHidden(path)
+  ? `<span class="live-tools"><span class="live-hidden-tag">Hidden from the groups</span>${edit ? `<button class="live-b" data-live-edit="${fields || path}" title="Correct the text" aria-label="Correct the text">✏️</button>` : ""}<button class="live-b live-show" data-live-unhide="${path}" title="Show it to the groups again">Show</button></span>`
+  : `<span class="live-tools">${edit ? `<button class="live-b" data-live-edit="${fields || path}" title="Correct the text" aria-label="Correct the text">✏️</button>` : ""}${last ? `<button class="live-b" data-live-last="${path}" title="Move to the end" aria-label="Move to the end">⤓</button>` : ""}<button class="live-b" data-live-hide="${path}" title="Hide it from the groups for now — you can correct it and show it again" aria-label="Hide from the groups">Hide</button></span>`;
+/* her screen: a hidden item stays, greyed (class for its box) */
+const liveDim = path => liveTeacher() && liveHidden(path) ? "is-hidden" : "";
+/* the bar on top of her screen: what she has hidden (tap to show it again), Reset */
+function liveBarHTML(labelOf){
+  if(!liveTeacher()) return "";
+  const removed = LV.hide.map(fromStore).filter(Boolean).map(p => `<button class="live-chip" data-live-unhide="${p}" title="Show it to the groups again">👁 ${esc((labelOf(p) || p).slice(0, 38))}${(labelOf(p) || p).length > 38 ? "…" : ""}</button>`).join("");
+  const n = LV.hide.length + LV.last.length + Object.keys(LV.text).length + Object.keys(LV.order).length;
+  liveLabelOf = labelOf;
+  return `<div class="live-bar"><b>👩‍🏫 Live</b><span id="live-status">${esc(liveMsg || (n ? `${n} change${n === 1 ? "" : "s"} — the groups get them when they move on` : "✏️ correct · ⤓ to the end · Hide / Show — the groups get it when they move on"))}</span>
+    ${removed ? `<span class="live-removed">Hidden: ${removed}</span>` : ""}${n ? `<button class="live-chip" data-live-copy title="For the lesson debrief: what you changed live, to put into the slides and the page">📋 My changes</button><button class="live-reset" data-live-reset>Reset all</button>` : ""}</div>`;
+}
+/* 📋 My changes (her wish 30.10 07:36): after the lesson, the debrief puts them into her slides and the page; plain words, the item's own text */
+let liveLabelOf = p => p;
+function liveChangesText(){
+  const lab = p => { const t = String(liveLabelOf(p) || p).replace(/\*\*|\(\(|\)\)/g, ""); return t.length > 90 ? t.slice(0, 90) + "…" : t; }, out = [];
+  LV.hide.map(fromStore).filter(Boolean).forEach(p => out.push(`Hidden: ${lab(p)}`));
+  Object.keys(LV.text).forEach(sp => { const p = fromStore(sp); if(!p) return; const old = pathGet(D, p);
+    out.push(`Corrected: ${typeof old === "string" ? `"${old.replace(/\*\*/g, "")}"` : lab(p)} → "${LV.text[sp]}"`); });
+  Object.keys(LV.order).forEach(base => { const keys = (LV.order[base] || []).map(x => idxOf(base, x)).filter(k => k > -1);
+    out.push(`New order (${base}): ${keys.map((k, i) => `${i + 1}. ${lab(base + "." + k)}`).join(" · ")}`); });
+  LV.last.map(fromStore).filter(Boolean).forEach(p => out.push(`Moved to the end: ${lab(p)}`));
+  return out.length ? [`${document.title} — what I changed live (${PAGE_ID}${LIVE_ON ? "-live" : ""})`].concat(out).join("\n") : "";
+}
+function wireLive(root, current){
+  if(!liveTeacher()) return;
+  root.querySelectorAll("[data-live-hide]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); liveOp("hide", b.dataset.liveHide); }));
+  root.querySelectorAll("[data-live-unhide]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); liveOp("unhide", b.dataset.liveUnhide); }));
+  root.querySelectorAll("[data-live-last]").forEach(b => b.addEventListener("click", e => { e.stopPropagation();
+    const p = b.dataset.liveLast, base = p.slice(0, p.lastIndexOf(".")), key = +p.slice(p.lastIndexOf(".") + 1);
+    if(p === "speaking." + spkCur.key) spkCur.move = 1; if(typeof liveCursorHook === "function") liveCursorHook(p);   /* she sees what takes its place */
+    liveMoveTo(base, key, Infinity); }));
+  root.querySelectorAll("[data-live-copy]").forEach(b => b.addEventListener("click", async e => { e.stopPropagation(); const t = liveChangesText(); let ok = false;
+    try{ await navigator.clipboard.writeText(t); ok = true; }catch(err){ const ta = document.createElement("textarea"); ta.value = t; document.body.appendChild(ta); ta.select(); try{ ok = document.execCommand("copy"); }catch(x){} ta.remove(); }
+    b.textContent = ok ? "Copied ✓" : "Couldn't copy"; setTimeout(() => { b.textContent = "📋 My changes"; }, 2000); }));
+  root.querySelectorAll("[data-live-reset]").forEach(b => b.addEventListener("click", e => { e.stopPropagation();
+    if(b.dataset.sure){ liveOp("reset", ""); } else { b.dataset.sure = "1"; b.textContent = "Sure? Tap again"; } }));
+  root.querySelectorAll("[data-live-edit]").forEach(b => b.addEventListener("click", e => { e.stopPropagation();
+    const paths = b.dataset.liveEdit.split("|"), labels = ["", "Answer", "Key word"], host = b.closest("[data-live-host]") || b.parentElement.parentElement;
+    const form = document.createElement("div"); form.className = "live-edit";
+    form.innerHTML = paths.map((p, i) => `<label>${paths.length > 1 ? `<span>${i ? labels[i] : "Sentence"}</span>` : ""}<textarea data-p="${p}" rows="${paths.length > 1 ? 2 : 3}">${esc(liveText(p, current(p)))}</textarea></label>`).join("")
+      + `<div class="row-actions"><button class="btn primary slim" data-live-save>Save for the groups</button><button class="btn slim" data-live-cancel>Cancel</button></div>`;
+    host.replaceWith(form); const t = form.querySelector("textarea"); if(t){ t.focus(); t.setSelectionRange(t.value.length, t.value.length); }
+    form.addEventListener("click", ev => ev.stopPropagation());
+    form.querySelector("[data-live-cancel]").addEventListener("click", () => liveRerender());
+    form.querySelector("[data-live-save]").addEventListener("click", async () => {
+      for(const ta of form.querySelectorAll("textarea")){ const p = ta.dataset.p, v = ta.value.trim(); if(v !== liveText(p, current(p))) await liveOp("text", p, v); }
+      liveRerender(); });
+  }));
+}
+
+/* ---------- the cards and the die ----------
+   Her decision 29.10 (after the dice page): ready-made situations — who asks, their whole line, a concrete option they're thinking of —
+   instead of the WHO and WHAT dice; one die stays, YOUR ANSWER (1–2 R · 3–4 W · 5–6 D), so the same card can come back with another answer.
+   The 18 cards come from a shuffled deck, no repeats until all have come up, then a new deck. */
+const TYPES = D.die.map.map(m => m.type);                        /* R, W, D */
+const facesOf = range => String(range).split(/[–-]/).map(Number);  /* "1–2" → [1, 2] */
+/* tools 13: "coin": true = two faces (heads = map[0], tails = map[1]), tossed instead of rolled */
+const COIN = !!D.die.coin;
+const typeOfFace = n => COIN ? (D.die.map[n - 1] || D.die.map[0]).type : (D.die.map.find(m => facesOf(m.faces).includes(n)) || D.die.map[0]).type;
+const facesFor = t => D.die.map[TYPES.indexOf(t)].faces;
+const ansText = t => liveText(`answers.${t}`, D.answers[t]);
+const cardText = (i, f) => liveText(`cards.${i}.${f}`, D.cards[i][f]);
+const modelText = f => liveText(`model.${f}`, D.model[f]);
+const cardGone = i => liveHidden("cards." + i);
+const narrow = () => matchMedia("(max-width: 700px)").matches;
+let S;
+const deckAll = () => D.cards.map((_, i) => i).filter(i => !cardGone(i));
+function newDeck(last){ let d = shuffle(deckAll()); if(d.length > 1 && d[0] === last) d.push(d.shift()); return d; }
+function newGame(view){ S = {view: view || "example", exShown: false, modelOpen: !narrow(), deck: newDeck(), cur: null, seen: 0}; }
+newGame();
+/* her changes arrive: a card she hid leaves the deck */
+function liveAdjust(){ if(S) S.deck = S.deck.filter(i => !cardGone(i)); }
+const liveLabel = p => { const v = pathGet(D, p); return typeof v === "string" ? v : v && v.says ? v.who + ": " + v.says : p; };
+const DECK_SIZE = () => deckAll().length;
+function draw(){
+  if(S.busy) return;
+  if(!S.deck.length) S.deck = newDeck(S.cur && S.cur.i);
+  const i = S.deck.shift(); S.seen++;
+  S.cur = {i, face: 0, type: null, flipped: false}; S.fresh = true; render(); S.fresh = false;
+}
+
+/* ---------- the roll: the same calm motion as the council's die ---------- */
+const PIPS = {1:[5], 2:[1,9], 3:[1,5,9], 4:[1,3,7,9], 5:[1,3,5,7,9], 6:[1,3,4,6,7,9]};
+const coinHTML = n => `<span class="coin ${n ? "" : "blank"}" aria-label="${n === 1 ? "heads" : n === 2 ? "tails" : ""}">${n === 1 ? "H" : n === 2 ? "T" : "?"}</span>`;
+const dieHTML = n => COIN ? coinHTML(n) : `<span class="die ${n ? "" : "blank"}" aria-label="${n || ""}">${Array.from({length: 9}, (_, k) => `<i class="${n && PIPS[n].includes(k + 1) ? "p" : ""}"></i>`).join("")}</span>`;
+const setFace = (die, n) => die.querySelectorAll("i").forEach((p, j) => p.classList.toggle("p", PIPS[n].includes(j + 1)));
+function roll(){
+  const c = S.cur; if(S.busy || !c) return;
+  if(COIN) return toss(c);
+  const final = 1 + Math.floor(Math.random() * 6);
+  const done = () => { c.face = final; c.type = typeOfFace(final); S.rolled = true; render(); S.rolled = false; };
+  const slot = document.querySelector("[data-die]");
+  if(calm() || !slot){ done(); return; }
+  S.busy = true; document.querySelectorAll(".stage button").forEach(b => b.disabled = true);
+  const how = document.querySelector(".die-how"); if(how){ how.classList.add("wait"); how.textContent = "…"; }
+  const any = () => 1 + Math.floor(Math.random() * 6), gaps = [50, 55, 60, 70, 80, 95, 115, 140, 175, 220, 280], LAND = 6;
+  const total = gaps.reduce((a, b) => a + b, 0);
+  let prev = any(); slot.innerHTML = dieHTML(prev); const die = slot.firstElementChild;
+  die.animate([
+    {transform: "translate(0, 0) rotate(0deg)"},
+    {transform: "translate(-8px, -20px) rotate(-240deg)", offset: .22},
+    {transform: "translate(4px, 0) rotate(-470deg)", offset: .5},
+    {transform: "translate(-2px, -8px) rotate(-610deg)", offset: .74},
+    {transform: "translate(0, 0) rotate(-700deg)", offset: .9},
+    {transform: "translate(0, 0) rotate(-720deg)"}], {duration: total, easing: "cubic-bezier(.12,.75,.3,1)"});
+  let t = 0;
+  gaps.forEach((g, i) => { t += g; if(i > LAND) return;
+    setTimeout(() => { let f = final; if(i < LAND){ do f = any(); while(f === prev || (i === LAND - 1 && f === final)); } prev = f; setFace(die, f); }, t); });
+  setTimeout(() => { S.busy = false; done(); }, total + 150);
+}
+
+/* the coin: turns over and over, slows down and lands — calm, no bounce */
+function toss(c){
+  const final = Math.random() < .5 ? 1 : 2;
+  const done = () => { c.face = final; c.type = typeOfFace(final); S.rolled = true; render(); S.rolled = false; };
+  const slot = document.querySelector("[data-die]");
+  if(calm() || !slot){ done(); return; }
+  S.busy = true; document.querySelectorAll(".stage button").forEach(b => b.disabled = true);
+  const how = document.querySelector(".die-how"); if(how){ how.classList.add("wait"); how.textContent = "…"; }
+  const gaps = [70, 70, 80, 90, 100, 120, 140, 170, 210, 260], total = gaps.reduce((a, b) => a + b, 0);
+  let f = final === 1 ? (gaps.length % 2 ? 2 : 1) : (gaps.length % 2 ? 1 : 2);   /* so the last turn lands on the final face */
+  slot.innerHTML = coinHTML(f); const coin = slot.firstElementChild;
+  coin.animate([{transform: "translateY(0) rotateX(0deg)"}, {transform: "translateY(-18px) rotateX(900deg)", offset: .45},
+    {transform: "translateY(0) rotateX(1800deg)"}], {duration: total, easing: "cubic-bezier(.12,.75,.3,1)"});
+  let t = 0; gaps.forEach(g => { t += g; setTimeout(() => { f = 3 - f; coin.textContent = f === 1 ? "H" : "T"; }, t); });
+  setTimeout(() => { S.busy = false; done(); }, total + 150);
+}
+
+/* ---------- views ---------- */
+const exLine = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>');
+const host = (p, inner, opts) => `<div class="live-host ${liveDim(p)}" data-live-host>${inner}${liveTools(p, opts)}</div>`;
+/* ⭐ Example (her flow): the model card alone and the three answer types; the group says all three aloud, then shows the examples */
+function exampleHTML(){
+  return `<section class="stage ${S.enter ? "enter" : ""}"><div class="stage-top"><span class="sit-label">⭐ Example</span></div>
+    <div class="scard">${host("model.who", `<p class="who">${esc(modelText("who"))}</p>`)}${host("model.says", `<p class="says">${esc(modelText("says"))}</p>`)}</div>
+    <p class="ex-ask">How could you answer? Say ${TYPES.length === 2 ? "both" : "all three"} aloud together.</p>
+    <div class="types">${TYPES.map(t => `<div class="trow">${host(`answers.${t}`, `<span class="tline"><span class="type">${esc(facesFor(t))}</span><b>${esc(ansText(t))}</b></span>`)}
+      ${S.exShown ? host(`model.${t}`, `<p class="tans ${S.exAnim ? "in" : ""}">${exLine(modelText(t))}</p>`) : ""}</div>`).join("")}</div>
+    <div class="row-act"><button class="btn ${S.exShown ? "" : "primary"}" data-show-ex aria-pressed="${S.exShown}">${S.exShown ? "Hide the examples" : "Show the examples"}</button>
+      <span class="grow"></span><button class="btn ${S.exShown ? "primary" : ""}" data-start>Start the cards →</button></div></section>`;
+}
+/* 🃏 Cards: the model with its three answers stays pinned on top (foldable) */
+function modelPinHTML(){
+  return `<details class="model" data-model ${S.modelOpen ? "open" : ""}><summary><span class="ml">⭐ Example</span><b>${esc(modelText("who"))}:</b> ${esc(modelText("says"))}</summary>
+    <div class="model-ans">${TYPES.map(t => `<p><span class="type">${esc(facesFor(t))}</span>${exLine(modelText(t))}</p>`).join("")}</div></details>`;
+}
+function backHTML(c){
+  const main = c.type || null, others = TYPES.filter(t => t !== main);
+  const line = (t, badge) => host(`cards.${c.i}.${t}`, `<p>${badge ? `<span class="type sm">${esc(facesFor(t))}</span>` : ""}${exLine(cardText(c.i, t))}</p>`);
+  if(!main) return `<div class="back in" role="region" aria-label="Suggested answers"><div class="back-other">${TYPES.map(t => line(t, true)).join("")}</div></div>`;
+  return `<div class="back ${S.flipAnim ? "in" : ""}" role="region" aria-label="Suggested answers">
+    <div class="back-main"><span class="bl">Suggested answer</span>${line(main, true)}</div>
+    <div class="back-other"><span class="bl">Other ways to answer</span>${others.map(t => line(t, true)).join("")}</div></div>`;
+}
+function cardsHTML(){
+  const c = S.cur, n = DECK_SIZE();
+  const top = `<div class="stage-top"><span class="sit-label">${c ? "Your card" : "Situation cards"}</span>${c ? `<span class="sit-count" aria-label="Card ${S.seen} of ${n}">${((S.seen - 1) % n) + 1} of ${n}</span>` : ""}</div>`;
+  const pin = narrow() ? modelPinHTML() : "";
+  if(!c) return `<section class="stage ${S.enter ? "enter" : ""}">${pin}${top}<div class="empty-draw"><p>One of you reads the card, the other ${COIN ? "tosses the coin" : "rolls"} and answers.</p><button class="btn primary big" data-draw>🃏 Draw a card</button></div></section>`;
+  const how = c.type ? `<span class="die-how"><span class="dl">${esc(D.die.label)}</span><span class="type">${esc(facesFor(c.type))}</span><b>${esc(ansText(c.type))}</b></span>`
+    : `<span class="die-how wait"><span class="dl">${esc(D.die.label)}</span>${COIN ? "Toss the coin" : "Roll the die"}: it decides how you answer.</span>`;
+  return `<section class="stage ${S.enter ? "enter" : ""}">${pin}${top}
+    ${host("cards." + c.i, `<div class="scard ${S.fresh ? "in" : ""}">${host(`cards.${c.i}.who`, `<p class="who">${esc(cardText(c.i, "who"))}</p>`)}${host(`cards.${c.i}.says`, `<p class="says">${esc(cardText(c.i, "says"))}</p>`)}</div>`, {edit: false})}
+    <div class="die-row"><span data-die>${dieHTML(c.face)}</span>${how}</div>
+    <p class="react">React: ${(D.react || []).map(r => `<b>${esc(r)}</b>`).join(" · ")}</p>
+    <div class="row-act"><button class="btn ${c.type ? "" : "primary"}" data-roll>${COIN ? `🪙 ${c.type ? "Toss again" : "Toss the coin"}` : `🎲 ${c.type ? "Roll again" : "Roll"}`}</button>
+      <button class="btn ${c.type && !c.flipped ? "primary" : ""}" data-flip aria-pressed="${c.flipped}">${c.flipped ? "Flip back" : "Flip"}</button>
+      <span class="grow"></span><button class="btn ${c.flipped ? "primary" : ""}" data-draw>Next card →</button></div>
+    ${c.flipped ? backHTML(c) : ""}</section>`;
+}
+const allCardsHTML = () => allHTML("All the cards", D.cards.map((_, i) => (liveTeacher() || !cardGone(i)) ? `<div class="all-row"><span class="all-sub">${esc(cardText(i, "who"))}: ${esc(cardText(i, "says"))}</span>
+    ${TYPES.map(t => `<p><span class="ty">${esc(t)}</span>${exLine(cardText(i, t))}</p>`).join("")}</div>` : "").join(""));
+const speakStage = () => `<section class="stage-wrap ${S.enter ? "enter" : ""}">${speakHTML(liveList(D.speaking, "speaking"), `<button class="btn" data-back>← Back to the cards</button><button class="btn primary" data-restart>Start again</button>`, "Real talk", "speaking")}</section>`;
+function headHTML(){
+  return `<header class="head">${D.part ? `<span class="part">${esc(D.part)}</span>` : ""}<h1>${esc(D.title)}</h1>
+      ${stagesHTML([["example", "⭐ Example"], ["cards", "🃏 Cards"], ["speak", "💬 Real talk"]], S.view)}</header>
+    ${S.view !== "cards" || S.cur ? "" : `<div class="hint-top dice-hint"><span>🃏 ${esc(D.hint)}</span></div>`}`;
+}
+function goStage(v){ if(S.view === v || S.busy) return; S.view = v; S.enter = true; render(); S.enter = false; scrollTo(0, 0); }
+function render(){
+  liveApply();   /* her latest changes, at the group's tap (live version) */
+  const main = document.getElementById("main"), side = document.getElementById("side");
+  main.innerHTML = liveBarHTML(liveLabel) + headHTML() + (S.view === "speak" ? speakStage() : S.view === "cards" ? cardsHTML() : exampleHTML());
+  const st = side.scrollTop; side.innerHTML = boxHTML(D.box, {clickable: true}) + (S.view === "cards" && !narrow() ? modelPinHTML() : "") + allCardsHTML(); side.scrollTop = st;
+  wireAll(side); wireBox(side); wireSpeak(main, render); S.exAnim = false; S.flipAnim = false;
+  wireLive(main, p => pathGet(D, p)); wireLive(side, p => pathGet(D, p));
+  const on = (sel, fn) => document.querySelectorAll(sel).forEach(b => b.addEventListener("click", () => fn(b)));
+  on("[data-show-ex]", () => { S.exShown = !S.exShown; S.exAnim = S.exShown; render(); });
+  on("[data-start]", () => goStage("cards"));
+  on("[data-draw]", draw);
+  on("[data-roll]", roll);
+  /* Flip: the back, the rolled answer first (her rule 6: feedback right after the step); a second tap turns it back */
+  on("[data-flip]", () => { const c = S.cur; c.flipped = !c.flipped; S.flipAnim = c.flipped; render(); if(c.flipped) pop(document.querySelector(".back-main") || document.querySelector(".back")); });
+  document.querySelectorAll("[data-model]").forEach(d => d.addEventListener("toggle", () => { S.modelOpen = d.open; }));
+  on("[data-stage]", b => goStage(b.dataset.stage));
+  on("[data-back]", () => goStage("cards"));
+  on("[data-restart]", () => { usedPhrases.clear(); spkReset(); const keep = {exShown: S.exShown, modelOpen: S.modelOpen}; newGame("cards"); Object.assign(S, keep); S.enter = true; render(); S.enter = false; scrollTo(0, 0); });
+}
+liveRerender = () => render();
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+{
+ "blocks": [
+  {
+   "pid": 0,
+   "sig": "say what would you say? say it aloud. then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "text complete the call and say the words. tap the yellow and orange to check.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "cards rewrite the message. use the word in capitals without changing it.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "calendars look at both calendars. complete sophie and omar's call. then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "calendars your turn: find a new time for chris and deniz's monday call. a is chris, b is deniz.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "calendars swap roles: find a new time for pablo and nino's wednesday call. a is nino, b is pablo.",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "questions now discuss: is changing the clocks worth it? use the box.",
+   "gone": false
+  }
+ ],
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "work for you does nine still work for you? does nine still ___? is nine still ok for you? work тебе всё ещё удобно в девять? · does … work (без s): does that still work for you?",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "affects my sleep the time change really affects my sleep. the time change really ___. the time change is very bad for my sleep. affects перевод часов сильно влияет на мой сон. · really affects /əˈfekts/ (не very affects): very не ставят перед глаголом.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "more harm than good changing the clocks does more harm than good. changing the clocks does ___. changing the clocks causes more problems than it solves. harm перевод часов приносит больше вреда, чем пользы.",
+   "gone": false
+  }
+ ],
+ "write": [],
+ "q6": [
+  {
+   "pid": 0,
+   "sig": "1 name two ways the clock change affects you or people you know: sleep, kids, pets, work calls…",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 does it do more harm than good? give two reasons.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "3 summer time or winter time all year: which would you keep, and why?",
+   "gone": false
+  }
+ ],
+ "questions.6": [
+  {
+   "pid": 0,
+   "sig": "1 name two ways the clock change affects you or people you know: sleep, kids, pets, work calls…",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 does it do more harm than good? give two reasons.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "3 summer time or winter time all year: which would you keep, and why?",
+   "gone": false
+  }
+ ]
+}

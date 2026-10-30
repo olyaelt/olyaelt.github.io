@@ -57,6 +57,18 @@ __BASE_CSS__
 .check input{width:1.1rem;height:1.1rem}
 .stage-wrap.enter{animation:deal .45s cubic-bezier(.2,.8,.2,1)}
 .head .gear{margin-left:0}
+/* the groups' decks on her screen (30.10, her wish): grey = no group has answered the card yet, green = nobody sent it back,
+   orange = sent back into the deck, the bigger the more often; tap → the card, to go through it with the class */
+.gdots{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;background:var(--card);border:2px dashed var(--line);border-radius:14px;padding:6px 12px;min-height:2.6rem}
+.gd-lbl{font-weight:900;font-size:.9rem;margin-right:2px}
+.gd{width:var(--s);height:var(--s);border-radius:50%;border:0;padding:0;background:var(--line);cursor:pointer;flex:none;transition:transform .2s}
+.gd:hover{transform:scale(1.2)}
+.gd.gd-ok{background:var(--ok)}
+.gd.gd-again{background:var(--again)}
+.gd.looked{box-shadow:0 0 0 2px var(--ground),0 0 0 4px var(--instr)}
+.gd-meta{color:var(--muted);font-size:.82rem;margin-left:auto;display:flex;gap:8px;align-items:center}
+.gd-meta button{border:0;background:transparent;color:var(--muted);font-weight:800;font-size:.82rem;text-decoration:underline;padding:0}
+.card .lbl.from-groups{color:var(--again)}
 </style>
 </head>
 <body>
@@ -98,6 +110,81 @@ function liveAdjust(){
 const liveFresh = () => { if(S && !S.shown && !S.flipped && !S.speak && !S.look) newRound(); };
 const liveLabel = p => { const v = pathGet(D, p); return Array.isArray(v) ? v[0].replace(/\(\(|\)\)/g, "") : typeof v === "string" ? v : p; };
 const cardTools = c => c && c.id[0] === "o" ? liveTools("cards." + c.i, {fields: `cards.${c.i}.0|cards.${c.i}.1|cards.${c.i}.2`}) : "";
+/* ---------- the groups' decks (30.10, her wish): on the -live page each group's ↺ Again / ✓ Got it per card goes to her table
+   (a random device id; the name only if a student's code is saved on the device). The counts are never reset (her decision 03:33:
+   a page is made for one group, so after the lesson it is a snapshot of where that group struggled, to come back to next time).
+   Her screen gets a row of dots in card order: grey = no group has answered it yet, green = answered, nobody sent it back,
+   orange = sent back into the deck, the bigger the more often. Tap a dot → that card, to go through it with the class. ---------- */
+const SHARE = LIVE_ON && !!LIVE_URL, sharing = () => SHARE && !liveTeacher();
+const DEV = (() => { const ok = d => /^[a-z0-9]{12,40}$/.test(d || ""), make = () => Array.from({length: 16}, () => "abcdefghijklmnopqrstuvwxyz0123456789"[Math.floor(Math.random() * 36)]).join("");
+  try{ let d = localStorage.getItem("tool-dev"); if(!ok(d)){ d = make(); localStorage.setItem("tool-dev", d); } return d; }catch(e){ return make(); } })();
+const studentCode = () => { try{ return localStorage.getItem("hw-role") === "teacher" ? "" : (localStorage.getItem("hw-code") || ""); }catch(e){ return ""; } };
+const DKEY = "tool-deckstats-" + PAGE_ID;
+let DS = (() => { const v = store.get(DKEY); return v && v.again && Array.isArray(v.got) ? v : {again: {}, got: []}; })(), dsT = null;
+function deckNote(id, ok){
+  if(!sharing() || !id || id[0] !== "o") return; const i = pidOf("cards", +id.slice(1));   /* kept by the card's permanent number */
+  if(ok){ if(!DS.got.includes(i)) DS.got.push(i); } else DS.again[i] = (DS.again[i] || 0) + 1;
+  store.set(DKEY, DS); clearTimeout(dsT); dsT = setTimeout(deckSend, 2000);
+}
+async function deckSend(){
+  dsT = null; const res = await livePost({action: "toolDeck", tool: PAGE_ID, dev: DEV, code: studentCode(), again: DS.again, got: DS.got});
+  if(!res.ok && ["offline", "busy", "server"].includes(res.error)) dsT = setTimeout(deckSend, 10000);
+}
+let GD = {decks: [], err: "", loaded: false}, gdBusy = false;
+const GSINCE = "tool-deck-since-" + PAGE_ID;
+async function gdFetch(){
+  if(!liveTeacher() || gdBusy) return; gdBusy = true;
+  const res = await livePost({action: "toolList", tool: PAGE_ID, code: localStorage.getItem("hw-code") || ""});
+  gdBusy = false;
+  if(res.ok && Array.isArray(res.decks)){ GD.decks = res.decks; GD.loaded = true; GD.err = ""; GD.skew = (Number(res.now) || Date.now()) - Date.now(); }
+  else GD.err = res.ok || res.error === "no-page" ? "old-script" : (res.error || "error");
+  paintGroupDots();
+}
+if(liveTeacher()){ setTimeout(gdFetch, 400); setInterval(() => { if(!document.hidden) gdFetch(); }, 15000); }
+function groupStats(){
+  const since = Number(store.get(GSINCE)) || 0, rows = GD.decks.filter(r => r.ts >= since);
+  return {n: rows.length, hidden: GD.decks.length - rows.length, card: i => rows.reduce((s, r) => { const a = Number((r.again || {})[i]) || 0;
+    return {again: s.again + a, groups: s.groups + (a ? 1 : 0), got: s.got + ((r.got || []).includes(i) ? 1 : 0)}; }, {again: 0, groups: 0, got: 0})};
+}
+const plainFront = i => liveCard(i).f.replace(/\(\(|\)\)/g, "");
+function groupDotsHTML(){
+  if(!liveTeacher() || S.speak) return "";
+  const st = groupStats();
+  const tip = s => s.again ? `back into the deck ${s.again}× (${s.groups} screen${s.groups === 1 ? "" : "s"})` : s.got ? `got it — nobody sent it back` : "no group has answered it yet";
+  const dots = D.cards.map((_, i) => { if(liveHidden("cards." + i)) return ""; const s = st.card(pidOf("cards", i));
+    const size = s.again ? Math.min(2.2, 1.1 + .3 * s.again) : .95;
+    return `<button class="gd ${s.again ? "gd-again" : s.got ? "gd-ok" : ""} ${S.look === "o" + i ? "looked" : ""}" style="--s:${size.toFixed(2)}rem" data-gd="o${i}" title="${esc(plainFront(i))} — ${tip(s)}" aria-label="Card ${i + 1}: ${tip(s)}"></button>`; }).join("");
+  const meta = GD.err === "old-script" ? "⚠️ redeploy the script (Deploy → New version)" : GD.err ? "⚠️ not updated: " + (GD.err === "offline" ? "no connection" : GD.err)
+    : !GD.loaded ? "loading…" : `${st.n} screen${st.n === 1 ? "" : "s"} · every 15 s${st.n ? ` <button data-gd-copy>${GD.copied || "📋 Copy the hard cards"}</button> <button data-gd-fresh>${GD.sure ? "Hide these? Tap again" : "🧹 Start fresh"}</button>` : ""}${st.hidden ? ` <button data-gd-all>Show ${st.hidden} older</button>` : ""}`;
+  return `<div class="gdots" id="gdots"><span class="gd-lbl">👥 The groups:</span>${dots}<span class="gd-meta">${meta}</span></div>`;
+}
+function wireGroupDots(root){
+  root.querySelectorAll("[data-gd]").forEach(b => b.addEventListener("click", () => { const id = b.dataset.gd; if(!byId(id)) return;
+    S.look = S.look === id ? null : id; S.lookFrom = S.look ? "groups" : null; S.fresh = true; render(); }));
+  root.querySelectorAll("[data-gd-fresh]").forEach(b => b.addEventListener("click", () => { if(!GD.sure){ GD.sure = true; paintGroupDots(); return; }
+    GD.sure = false; store.set(GSINCE, Date.now() + (GD.skew || 0)); paintGroupDots(); }));
+  root.querySelectorAll("[data-gd-all]").forEach(b => b.addEventListener("click", () => { store.set(GSINCE, 0); paintGroupDots(); }));
+  root.querySelectorAll("[data-gd-copy]").forEach(b => b.addEventListener("click", async () => {
+    const t = hardCardsText(); GD.copied = !t ? "Nothing sent back yet" : (await copyText(t)) ? "Copied ✓" : "Couldn't copy"; paintGroupDots();
+    setTimeout(() => { GD.copied = ""; paintGroupDots(); }, 2200); }));
+}
+/* 📋 for the next lesson and the homework: the cards sent back, most often first, front → answer */
+function hardCardsText(){
+  const st = groupStats(), plain = s => String(s).replace(/\(\(|\)\)/g, "");
+  const hard = D.cards.map((_, i) => ({i, s: st.card(pidOf("cards", i))})).filter(x => x.s.again && !liveHidden("cards." + x.i)).sort((a, b) => b.s.again - a.s.again || a.i - b.i);
+  if(!hard.length) return "";
+  const ok = D.cards.filter((_, i) => { const s = st.card(pidOf("cards", i)); return s.got && !s.again; }).length, none = D.cards.filter((_, i) => { const s = st.card(pidOf("cards", i)); return !s.got && !s.again; }).length;
+  return [`${D.title}${D.part ? " (" + D.part + ")" : ""} — the cards sent back into the deck`].concat(hard.map(x => { const c = liveCard(x.i);
+    return `${x.s.again}×${x.s.groups > 1 ? ` (on ${x.s.groups} screens)` : ""} · ${plain(c.f)}${c.k ? " " + c.k.toUpperCase() : ""} → ${c.b}`; }), "", `Got it, never sent back: ${ok} · not reached: ${none}`).join("\n");
+}
+async function copyText(t){
+  try{ await navigator.clipboard.writeText(t); return true; }catch(e){}
+  const ta = document.createElement("textarea"); ta.value = t; ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select();
+  let ok = false; try{ ok = document.execCommand("copy"); }catch(e){} ta.remove(); return ok;
+}
+/* only the row of dots changes when new counts come in (the card she is showing stays as it is) */
+function paintGroupDots(){ const el = document.getElementById("gdots"); if(!el) return; const h = groupDotsHTML(); if(el.outerHTML === h) return;
+  el.insertAdjacentHTML("afterend", h); el.remove(); wireGroupDots(document.getElementById("gdots").parentElement); }
 function newRound(cards){
   const list = cards || deck();
   S = { cards: list, queue: list.map(c => c.id), got: new Set(), again: new Set(), shown: 0, flipped: false, fresh: true };
@@ -134,6 +221,7 @@ function answer(ok){
 }
 function commit(ok){
   const id = S.queue.shift();
+  deckNote(id, ok);   /* the -live page: this group's counts go to her table */
   if(ok) S.got.add(id);
   else { S.again.add(id); const k = 2 + Math.floor(Math.random() * 2); if(S.queue.length >= k) S.queue.splice(k, 0, id); else S.queue.push(id); }
   S.flipped = false; S.shown++; S.fresh = true; S.popId = id;
@@ -158,14 +246,14 @@ function progressHTML(){
 function lookHTML(){
   const c = byId(S.look), wasGot = S.got.has(c.id);
   return `<div class="scene"><div class="card open lookback ${S.fresh ? "back-in" : ""}">
-      <span class="lbl">Looking back</span>
+      ${S.lookFrom === "groups" && liveTeacher() ? (() => { const s = groupStats().card(pidOf("cards", c.i)); return `<span class="lbl from-groups">👥 ${s.again ? `Back into the deck ${s.again}× · ${s.groups} screen${s.groups === 1 ? "" : "s"}` : s.got ? "Nobody sent it back" : "No group has answered it yet"}</span>`; })() : `<span class="lbl">Looking back</span>`}
       <p class="say">${fHTML(c.f, c.k)}</p>
       <div class="ans"><p class="say">${esc(c.b)}</p></div>
     </div></div>
     <div class="actions">${wasGot ? `<button class="btn again" data-look-again>↺ Again — back into the deck</button>` : ""}<button class="btn primary" data-look-done>Back to the cards →</button></div>`;
 }
 function lookAgain(){   /* it was "Got it", but they want it once more: it goes back into the deck, 2–3 cards later */
-  const id = S.look; S.got.delete(id); S.again.add(id);
+  const id = S.look; S.got.delete(id); S.again.add(id); deckNote(id, false);
   if(!S.queue.includes(id)){ const k = 2 + Math.floor(Math.random() * 2); if(S.queue.length >= k) S.queue.splice(k, 0, id); else S.queue.push(id); }
   S.look = null; S.popId = id; render();
 }
@@ -200,8 +288,9 @@ function speakView(){
 function render(){
   liveApply();   /* her latest changes, at the group's tap (live version) */
   const main = document.getElementById("main"), side = document.getElementById("side");
-  main.innerHTML = liveBarHTML(liveLabel) + headHTML() + (S.speak ? `<section class="stage-wrap ${S.stageIn ? "enter" : ""}">${speakView()}</section>` : progressHTML() + (S.look ? lookHTML() : S.queue.length ? cardHTML() : endHTML()));
-  wireSpeak(main, render);
+  if(!S.look) S.lookFrom = null;
+  main.innerHTML = liveBarHTML(liveLabel) + headHTML() + groupDotsHTML() + (S.speak ? `<section class="stage-wrap ${S.stageIn ? "enter" : ""}">${speakView()}</section>` : progressHTML() + (S.look ? lookHTML() : S.queue.length ? cardHTML() : endHTML()));
+  wireSpeak(main, render); wireGroupDots(main);
   /* 📋 under the box: a fallback for her, not something to invite a click (27.10) */
   const st = side.scrollTop;
   side.innerHTML = (boxOpen ? boxHTML(D.box, {clickable: true, collapsible: true}) : `<div class="peek"><button class="btn" data-box-show>Show the box</button></div>`)

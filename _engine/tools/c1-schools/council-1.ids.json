@@ -1,0 +1,120 @@
+{
+ "lists.0.items": [
+  {
+   "pid": 0,
+   "sig": "latin",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "greek mythology",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "learning poems by heart",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "memorising dates in history",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "trigonometry",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "the periodic table",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "cell biology",
+   "gone": false
+  }
+ ],
+ "lists.1.items": [
+  {
+   "pid": 0,
+   "sig": "managing money",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "first aid",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "cooking",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "doing your taxes",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "touch typing",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "public speaking",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "basic home repairs",
+   "gone": false
+  }
+ ],
+ "followUp": [
+  {
+   "pid": 0,
+   "sig": "the head teacher says no to one of your four changes. agree on which one she'd most likely reject. then agree on two arguments to change her mind — a phrase from the box for each.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "a parent says: \"we learned latin and it never did us any harm.\" do you agree? agree on two things you'd say to this parent.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "rank your four changes from most to least important. agree on the order, with one reason for your top one.",
+   "gone": false
+  }
+ ],
+ "speaking": [
+  {
+   "pid": 0,
+   "sig": "which of the five people at the school meeting do you agree with most (the history teacher who wants to keep memorising dates · the 16-year-old with an online shop · the engineer against tax lessons · the doctor who wants first-aid lessons · the grandmother against cooking lessons)? each of you: two reasons, a phrase from the box for each. then compare.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "when you were at school: each of you, two subjects you would have cut and one you would have added. anything in common?",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "rank these from most to least useful for a 16-year-old today: cooking · public speaking · managing money · latin · trigonometry. agree on your top two.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "\"nobody ever taught us how to …\" each of you: finish it in three different ways. then agree on the one schools should add first.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "school only gets you so far. agree on three things you mostly learn outside school, and where people pick them up.",
+   "gone": false
+  }
+ ]
+}

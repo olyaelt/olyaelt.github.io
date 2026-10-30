@@ -1,0 +1,121 @@
+{
+ "blocks": [
+  {
+   "pid": 0,
+   "sig": "picture what happened on linden street? tell your partner as many incidents as you can remember. linden-street.jpg",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "text complete the chat and say the words. tap the yellow and orange to check.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "text read on. complete the chat and say the words.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "cards our sentences. green = good, grey = could be better. how would you make it perfect english?",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "cards how do you say it in english? take turns.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "model two neighbours on maple road. complete their chat. then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "picture this is maple road. what else has been happening here? take turns to share the news like neighbours. maple-road.jpg",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "questions now real news: a theft or a scam you've heard about.",
+   "gone": false
+  }
+ ],
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "the police are looking for him. в чате соседей the police is looking for him. the police — всегда множественное число: are, have. looking for him — отлично.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "have the police done anything? в чате соседей: полиция что-нибудь сделала? have the police been done anything? полиция что-то сделала → have done. been здесь лишнее: с ним получился бы пассив (что-то сделали с полицией).",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "i hope nobody got hurt. сосед рассказал про аварию у вашего дома i hope anyone got hurt. надеюсь, никто не пострадал → i hope nobody… anyone — в вопросе: did anyone get hurt?",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "did they take anything? а что-нибудь взяли?",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "did anyone get hurt? никто не пострадал?",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "did they catch him? а его поймали?",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "was there much damage? ущерб большой?",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "what happened next? а что было потом?",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "did you report it to the police? ты заявил в полицию?",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "thanks for the heads-up! спасибо, что предупредил!",
+   "gone": false
+  }
+ ],
+ "write": [],
+ "q7": [
+  {
+   "pid": 0,
+   "sig": "1 a theft or a scam you've seen on the news or heard about in your area: what happened? your partner reacts and asks two questions.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 what should a visitor to your area watch out for? give two tips.",
+   "gone": false
+  }
+ ],
+ "questions.7": [
+  {
+   "pid": 0,
+   "sig": "1 a theft or a scam you've seen on the news or heard about in your area: what happened? your partner reacts and asks two questions.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 what should a visitor to your area watch out for? give two tips.",
+   "gone": false
+  }
+ ]
+}

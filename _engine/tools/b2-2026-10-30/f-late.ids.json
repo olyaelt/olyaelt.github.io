@@ -1,0 +1,93 @@
+{
+ "blocks": [
+  {
+   "pid": 0,
+   "sig": "write what would you text? write your two messages together. then compare with our chat (📖).",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "text remember our zoom chat? complete the messages. the russian is beside it.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "cards warm replies: what would you write? say a warm reply. other answers are also possible.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "cards rewrite the message. use the word in capitals without changing it.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "cards our sentences. green = good, grey = could be better. how would you make it perfect english?",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "tool read who's writing and how much it matters. agree together what to write, type it and send. late",
+   "gone": false
+  }
+ ],
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "no worries! see you soon! tom (dinner): sorry, i'm stuck in traffic — i'll be 10 minutes late! что хочется сказать: ничего страшного! до скорого!",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "thanks for letting me know! join when you can! lena (before a zoom call): my last meeting is running over, sorry! что хочется сказать: спасибо, что написала! подключайся, когда сможешь.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "thanks for the heads-up! no rush. pavel: just a heads-up — my train has been delayed by 20 minutes. что хочется сказать: спасибо, что предупредил! не торопись.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "me too, probably. i'll be there in 5! anna (group chat): i might be a bit late too, sorry! что хочется сказать: я, наверное, тоже. буду через 5 минут!",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "running about 20 minutes late i'm on my way, but i'm running about 20 minutes late. i'm on my way, but i'm ___. i'm on my way, but i'll get there about 20 minutes after the time we agreed. running я в пути, но опаздываю минут на 20. · running late — про себя; running over — про встречу. тоже верно: running 20 minutes late.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "is running over the call with my boss is running over. the call with my boss ___. the call with my boss is taking longer than we planned. over звонок с начальником затягивается. тоже верно: is going over (time).",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "we'll be half an hour late for the meeting. сообщение в чат: встреча ещё не началась, вы в пути we are half an hour late for the meeting. встреча ещё не началась — предупреждаешь заранее: will be. we're late — когда уже опоздали. можно и так: we're running half an hour late.",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "sorry, i'll be 10 minutes late. / sorry, i'll be a bit late. ты опаздываешь на 10 минут sorry, i'll be later. later — «позже», в другое время. опоздаю → late: be + сколько + late (без for перед временем; late for — перед событием: late for the meeting).",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "i hope i'll be there soon. ты в пробке, но надеешься скоро доехать i wish i'll be there soon. i wish — о том, чего не будет (i wish i could come). надеюсь → hope. ещё естественнее: hopefully, i'll be there soon.",
+   "gone": false
+  }
+ ],
+ "write": [
+  {
+   "pid": 0,
+   "sig": "[you're stuck in traffic. you're meeting friends for dinner at 7, and you'll be about 15 minutes late.] your message",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "[you're already at the restaurant. your friend texts:] sorry, my train's been delayed — i'll be 20 minutes late! your reply",
+   "gone": false
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "lists.0.items": [
+  {
+   "pid": 0,
+   "sig": "coding",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "essay writing",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "foreign languages",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "spelling and handwriting",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "mental maths",
+   "gone": false
+  }
+ ],
+ "lists.1.items": [
+  {
+   "pid": 0,
+   "sig": "using ai well (and checking it)",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "how to learn",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "fact-checking",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "dealing with difficult people",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "working in a team",
+   "gone": false
+  }
+ ],
+ "followUp": [
+  {
+   "pid": 0,
+   "sig": "what did you decide about coding and essay writing? give the head teacher two reasons, a phrase from the box for each.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "a student says: \"why learn to write essays if ai does it better?\" do you agree? agree on two things you'd say to this student.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "rank your four changes: which one will make the biggest difference in ten years' time? agree on your top one, with two reasons.",
+   "gone": false
+  }
+ ],
+ "speaking": [
+  {
+   "pid": 0,
+   "sig": "a 20-year-old relative asks: \"what should i study, now that ai can do half the jobs out there?\" agree on three pieces of advice, a phrase from the box for each.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "each of you: two skills you think will stay valuable as ai develops, and one that's already out of date. then agree on the one you'd most recommend learning, and why.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "rank from most to least useful in ten years: coding · essay writing · foreign languages · mental maths · working in a team. agree on your top two.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "each of you: something you picked up the hard way — at work or anywhere else. three sentences, two phrases from the box. your partner asks one question.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "they've stopped hiring juniors. agree on three ways a young person can still get experience, a phrase from the box for each.",
+   "gone": false
+  }
+ ]
+}

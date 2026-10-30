@@ -1,0 +1,76 @@
+{
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "companies don't take on people straight out of university anymore. they've stopped hiring juniors. hiring",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "companies are giving that work to ai now. they're handing that work over to ai. handing",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "what you learn at university might not be current any more by the time you finish. it could be out of date by the time you graduate. date",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "what matters is that you can change when things change. what matters is being able to adapt. adapt",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "before the meeting, i spent the weekend going through articles about the new system. i read up on the new system. read",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "prepare before you talk to the client, so you don't look clueless. do your homework before you talk to the client. homework",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "in my first job, there was so much new stuff, and i had to get up to speed very fast. it was a really steep learning curve. curve",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "i learned it at work, by making my own mistakes. i picked it up on the job, the hard way. job",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "nobody showed me — i learned it all from books and videos. i taught myself. taught",
+   "gone": false
+  }
+ ],
+ "speaking": [
+  {
+   "pid": 0,
+   "sig": "each of you: two things you taught yourself and one you picked up on the job. which took the longest?",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "think of a time something was a steep learning curve for you. each of you: say what actually helped. then rank a course, reading up on it and someone showing you — and agree which works best.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "\"they're handing it over to ai.\" each of you: two tasks — at work or at home — that ai could do, and one it never should. agree on the riskiest one to hand over.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "agree on two things taught at school today that could be out of date by the time today's ten-year-olds graduate, and one skill that will still be useful — a reason for each.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "which card was the hardest? each of you: two new sentences with it about your own work or life.",
+   "gone": false
+  }
+ ]
+}

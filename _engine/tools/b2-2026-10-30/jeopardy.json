@@ -1,0 +1,85 @@
+{
+ "type": "revision-board",
+ "title": "B2 revision · Jeopardy",
+ "cols": [
+  "Sentence transformation",
+  "Vocabulary",
+  "Grammar",
+  "The Intern",
+  "Use of English",
+  "Everyday English"
+ ],
+ "values": [
+  100,
+  200,
+  300,
+  400,
+  500,
+  600
+ ],
+ "cells": [
+  {
+   "col": "Vocabulary",
+   "value": 100,
+   "page": "f-crime",
+   "title": "Crime around us",
+   "today": true
+  },
+  {
+   "col": "Vocabulary",
+   "value": 200,
+   "page": "f-clocks",
+   "title": "The clocks go back",
+   "today": true
+  },
+  {
+   "col": "Grammar",
+   "value": 200,
+   "page": "f-tags",
+   "title": "Tags: sharing a feeling",
+   "today": true
+  },
+  {
+   "col": "Everyday English",
+   "value": 100,
+   "page": "f-late",
+   "title": "Running late",
+   "today": true
+  },
+  {
+   "col": "Vocabulary",
+   "value": 300,
+   "page": null,
+   "title": "Have you seen it?",
+   "later": true
+  },
+  {
+   "col": "Grammar",
+   "value": 100,
+   "page": null,
+   "title": "Present perfect vs past simple",
+   "later": true
+  },
+  {
+   "col": "Sentence transformation",
+   "value": 100,
+   "page": null,
+   "title": "It's been ages since…",
+   "later": true
+  },
+  {
+   "col": "Everyday English",
+   "value": 200,
+   "page": null,
+   "title": "At the water cooler",
+   "later": true
+  },
+  {
+   "col": "Everyday English",
+   "value": 300,
+   "page": null,
+   "title": "Disagree and stay friends",
+   "later": true
+  }
+ ]
+}

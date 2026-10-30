@@ -107,18 +107,33 @@ const liveCacheKey = "tool-live-" + PAGE_ID;
 const liveSame = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 const liveNorm = v => ({hide: (v && v.hide) || [], last: (v && v.last) || [], text: (v && v.text) || {}, order: (v && v.order) || {}});
 if(LIVE_ON){ const c = store.get(liveCacheKey); if(c) LV = liveNorm(c); }
+/* permanent numbers (tools 13, her decision 30.10): her table keeps live changes by an item's permanent number (D._pids, from the build's
+   register), not by its place in the data, so a rebuild that inserts or moves items never moves her ✏️ / Hide / order onto another item.
+   The page works with places; these turn a path into its stored form and back ("cards.4.1" ↔ "cards.<number>.1"). No numbers → the same. */
+const PIDS = (typeof D !== "undefined" && D && D._pids) || {};
+const PID_KEYS = Object.keys(PIDS).sort((a, b) => b.length - a.length);
+const pidOf = (base, k) => PIDS[base] && PIDS[base][k] != null ? PIDS[base][k] : k;
+const idxOf = (base, pid) => PIDS[base] ? PIDS[base].indexOf(+pid) : +pid;
+function pathMap(path, fn){
+  path = String(path); const key = PID_KEYS.find(k => path.startsWith(k + "."));
+  if(!key) return path;
+  const rest = path.slice(key.length + 1), seg = rest.split(".")[0]; if(!/^\d+$/.test(seg)) return path;
+  const n = fn(key, +seg); return n == null || n < 0 ? null : key + "." + n + rest.slice(seg.length);
+}
+const toStore = path => pathMap(path, pidOf);
+const fromStore = path => pathMap(path, idxOf);
 const liveTeacher = () => { if(!LIVE_ON) return false; try{ return localStorage.getItem("hw-role") === "teacher" && !!localStorage.getItem("hw-code"); }catch(e){ return false; } };
 const pathGet = (o, path) => String(path).split(".").reduce((x, k) => x == null ? x : x[k], o);
-const liveText = (path, dflt) => Object.prototype.hasOwnProperty.call(LV.text, path) ? LV.text[path] : dflt;
-const liveHidden = path => LV.hide.includes(path);
+const liveText = (path, dflt) => { const p = toStore(path); return Object.prototype.hasOwnProperty.call(LV.text, p) ? LV.text[p] : dflt; };
+const liveHidden = path => LV.hide.includes(toStore(path));
 /* a list as the groups see it now: in the order she dragged it into, removed ones out, corrected texts in
    (an item she brought back after ordering goes to the end) */
 function liveList(arr, base){
   const mine = liveTeacher();   /* her screen keeps the hidden ones (greyed), the groups' screens leave them out */
   let items = (arr || []).map((t, k) => ({k, t: typeof t === "string" ? liveText(base + "." + k, t) : t, hidden: liveHidden(base + "." + k)})).filter(x => mine || !x.hidden);
-  const ord = LV.order[base];
-  if(Array.isArray(ord)) items = ord.map(k => items.find(x => x.k === k)).filter(Boolean).concat(items.filter(x => !ord.includes(x.k)));
-  const lastKs = LV.last.filter(p => p.startsWith(base + ".") && /^\d+$/.test(p.slice(base.length + 1))).map(p => +p.slice(base.length + 1));
+  const ord = Array.isArray(LV.order[base]) ? LV.order[base].map(p => idxOf(base, p)).filter(k => k > -1) : null;   /* stored by permanent number */
+  if(ord) items = ord.map(k => items.find(x => x.k === k)).filter(Boolean).concat(items.filter(x => !ord.includes(x.k)));
+  const lastKs = LV.last.filter(p => p.startsWith(base + ".") && /^\d+$/.test(p.slice(base.length + 1))).map(p => idxOf(base, +p.slice(base.length + 1))).filter(k => k > -1);
   return items.filter(x => !lastKs.includes(x.k)).concat(lastKs.map(k => items.find(x => x.k === k)).filter(Boolean));
 }
 /* "⤓ to the end" and dragging a dot both send the whole new order of that list */
@@ -126,7 +141,7 @@ const liveViews = {};
 function liveMoveTo(base, key, to){
   const keys = (liveViews[base] || []).map(x => x.k), from = keys.indexOf(key); if(from < 0) return;
   keys.splice(from, 1); keys.splice(Math.max(0, Math.min(to, keys.length)), 0, key);
-  return liveOp("order", base, JSON.stringify(keys));
+  return liveOp("order", base, JSON.stringify(keys.map(k => pidOf(base, k))));
 }
 async function livePost(body){
   try{ const r = await fetch(LIVE_URL, {method: "POST", body: JSON.stringify(body), headers: {"Content-Type": "text/plain;charset=utf-8"}}); return await r.json(); }
@@ -145,7 +160,7 @@ async function liveFetch(first){
 if(LIVE_ON){ setTimeout(() => liveFetch(true), 50); setInterval(() => liveFetch(false), 30000); }
 async function liveOp(kind, path, text){
   if(liveBusy) return; liveBusy = true; liveMsg = "saving…"; liveStatus();
-  const res = await livePost({action: "liveOp", code: localStorage.getItem("hw-code") || "", tool: PAGE_ID, op: {kind, path, text}});
+  const res = await livePost({action: "liveOp", code: localStorage.getItem("hw-code") || "", tool: PAGE_ID, op: {kind, path: kind === "order" || kind === "reset" ? path : toStore(path), text}});
   liveBusy = false;
   /* on her own screen, removing or moving the task she's looking at shows what takes its place */
   /* hiding the task she's on: she stays on it (greyed) to correct it and show it again */
@@ -183,10 +198,23 @@ const liveDim = path => liveTeacher() && liveHidden(path) ? "is-hidden" : "";
 /* the bar on top of her screen: what she has hidden (tap to show it again), Reset */
 function liveBarHTML(labelOf){
   if(!liveTeacher()) return "";
-  const removed = LV.hide.map(p => `<button class="live-chip" data-live-unhide="${p}" title="Show it to the groups again">👁 ${esc((labelOf(p) || p).slice(0, 38))}${(labelOf(p) || p).length > 38 ? "…" : ""}</button>`).join("");
-  const n = LV.hide.length + LV.last.length + Object.keys(LV.text).length;
+  const removed = LV.hide.map(fromStore).filter(Boolean).map(p => `<button class="live-chip" data-live-unhide="${p}" title="Show it to the groups again">👁 ${esc((labelOf(p) || p).slice(0, 38))}${(labelOf(p) || p).length > 38 ? "…" : ""}</button>`).join("");
+  const n = LV.hide.length + LV.last.length + Object.keys(LV.text).length + Object.keys(LV.order).length;
+  liveLabelOf = labelOf;
   return `<div class="live-bar"><b>👩‍🏫 Live</b><span id="live-status">${esc(liveMsg || (n ? `${n} change${n === 1 ? "" : "s"} — the groups get them when they move on` : "✏️ correct · ⤓ to the end · Hide / Show — the groups get it when they move on"))}</span>
-    ${removed ? `<span class="live-removed">Hidden: ${removed}</span>` : ""}${n ? `<button class="live-reset" data-live-reset>Reset all</button>` : ""}</div>`;
+    ${removed ? `<span class="live-removed">Hidden: ${removed}</span>` : ""}${n ? `<button class="live-chip" data-live-copy title="For the lesson debrief: what you changed live, to put into the slides and the page">📋 My changes</button><button class="live-reset" data-live-reset>Reset all</button>` : ""}</div>`;
+}
+/* 📋 My changes (her wish 30.10 07:36): after the lesson, the debrief puts them into her slides and the page; plain words, the item's own text */
+let liveLabelOf = p => p;
+function liveChangesText(){
+  const lab = p => { const t = String(liveLabelOf(p) || p).replace(/\*\*|\(\(|\)\)/g, ""); return t.length > 90 ? t.slice(0, 90) + "…" : t; }, out = [];
+  LV.hide.map(fromStore).filter(Boolean).forEach(p => out.push(`Hidden: ${lab(p)}`));
+  Object.keys(LV.text).forEach(sp => { const p = fromStore(sp); if(!p) return; const old = pathGet(D, p);
+    out.push(`Corrected: ${typeof old === "string" ? `"${old.replace(/\*\*/g, "")}"` : lab(p)} → "${LV.text[sp]}"`); });
+  Object.keys(LV.order).forEach(base => { const keys = (LV.order[base] || []).map(x => idxOf(base, x)).filter(k => k > -1);
+    out.push(`New order (${base}): ${keys.map((k, i) => `${i + 1}. ${lab(base + "." + k)}`).join(" · ")}`); });
+  LV.last.map(fromStore).filter(Boolean).forEach(p => out.push(`Moved to the end: ${lab(p)}`));
+  return out.length ? [`${document.title} — what I changed live (${PAGE_ID}${LIVE_ON ? "-live" : ""})`].concat(out).join("\n") : "";
 }
 function wireLive(root, current){
   if(!liveTeacher()) return;
@@ -196,6 +224,9 @@ function wireLive(root, current){
     const p = b.dataset.liveLast, base = p.slice(0, p.lastIndexOf(".")), key = +p.slice(p.lastIndexOf(".") + 1);
     if(p === "speaking." + spkCur.key) spkCur.move = 1; if(typeof liveCursorHook === "function") liveCursorHook(p);   /* she sees what takes its place */
     liveMoveTo(base, key, Infinity); }));
+  root.querySelectorAll("[data-live-copy]").forEach(b => b.addEventListener("click", async e => { e.stopPropagation(); const t = liveChangesText(); let ok = false;
+    try{ await navigator.clipboard.writeText(t); ok = true; }catch(err){ const ta = document.createElement("textarea"); ta.value = t; document.body.appendChild(ta); ta.select(); try{ ok = document.execCommand("copy"); }catch(x){} ta.remove(); }
+    b.textContent = ok ? "Copied ✓" : "Couldn't copy"; setTimeout(() => { b.textContent = "📋 My changes"; }, 2000); }));
   root.querySelectorAll("[data-live-reset]").forEach(b => b.addEventListener("click", e => { e.stopPropagation();
     if(b.dataset.sure){ liveOp("reset", ""); } else { b.dataset.sure = "1"; b.textContent = "Sure? Tap again"; } }));
   root.querySelectorAll("[data-live-edit]").forEach(b => b.addEventListener("click", e => { e.stopPropagation();

@@ -1,0 +1,114 @@
+{
+ "type": "situation-cards",
+ "title": "Did you hear?",
+ "part": "Revision · Tags: share a feeling",
+ "hint": "Take a news card and flip a coin: do you both know it, or is it news to B? A starts, B replies. Swap.",
+ "die": {
+  "coin": true,
+  "label": "WHO KNOWS IT?",
+  "map": [
+   {
+    "faces": "heads",
+    "type": "S"
+   },
+   {
+    "faces": "tails",
+    "type": "N"
+   }
+  ]
+ },
+ "answers": {
+  "S": "Heads: you BOTH know it → B shares a feeling with a tag ↘, A agrees.",
+  "N": "Tails: it's news to B → B reacts and asks a question."
+ },
+ "model": {
+  "who": "A colleague",
+  "says": "Have you seen the coffee machine? It's broken again!",
+  "S": "I **have**! It's so annoying, **isn't it?** — It **really is**. I've had three teas already.",
+  "N": "No, I haven't! Oh no — **what happened?**"
+ },
+ "cards": [
+  {
+   "who": "A colleague",
+   "says": "Have you seen the coffee machine? It's broken again!",
+   "S": "I **have**! It's so annoying, **isn't it?**",
+   "N": "No, I haven't! Oh no — **what happened?**"
+  },
+  {
+   "who": "A friend",
+   "says": "Have you heard? Our favourite café has started charging for tap water!",
+   "S": "I **have**! It's crazy, **isn't it?**",
+   "N": "No! That's awful! **How much is it?**"
+  },
+  {
+   "who": "A friend",
+   "says": "Did you know the new season of our favourite series is out?",
+   "S": "I **did**! I watched three episodes last night. It's amazing, **isn't it?**",
+   "N": "No way! That's great! **When did it come out?**"
+  },
+  {
+   "who": "A colleague",
+   "says": "Have you seen the email? Our deadline's been moved to tomorrow!",
+   "S": "I **have**. It's a nightmare, **isn't it?**",
+   "N": "No, I haven't! Oh no, that's awful. **Why?**"
+  },
+  {
+   "who": "A friend",
+   "says": "Have you heard? My neighbour's dog has had six puppies!",
+   "S": "I **have**! They're so cute, **aren't they?**",
+   "N": "Aw, that's lovely! **Are they going to keep them all?**"
+  },
+  {
+   "who": "A friend",
+   "says": "Have you seen the forecast? It's going to be sunny all weekend!",
+   "S": "I **have**! It's going to be lovely, **isn't it?**",
+   "N": "No! That's great! **Any plans?**"
+  }
+ ],
+ "react": [
+  "It really is!",
+  "They really are!",
+  "I know!",
+  "It is!"
+ ],
+ "box": [
+  {
+   "h": "SHORT REPLIES",
+   "items": [
+    "**Yes, I did!** / **No, what happened?**",
+    "**I have!** / **No, I haven't.**"
+   ]
+  },
+  {
+   "h": "SHARE A FEELING ↘",
+   "items": [
+    "It's so annoying, **isn't it?** – бесит, да?",
+    "— It **really is**! – ещё как!",
+    "It was amazing, **wasn't it?** – классно было, да?",
+    "— It **really was**!"
+   ]
+  },
+  {
+   "h": "REACT AND ASK",
+   "items": [
+    "Oh no! **What happened?**",
+    "That's great! **When…?**"
+   ]
+  },
+  {
+   "h": "HOW DOES IT FEEL?",
+   "items": [
+    "awful · scary · crazy",
+    "annoying · stressful",
+    "exhausting · weird",
+    "a shame · a nightmare",
+    "a relief · lovely · amazing"
+   ]
+  }
+ ],
+ "speaking": [
+  "Something you BOTH know: our lessons, a series you've both seen, something in the news. Share a feeling with a tag — your partner agrees!",
+  "Tell your partner something from your week they don't know — good or bad. They react and ask **two** questions.",
+  "Tell one piece of news twice: your partner replies both ways — first as if they already know it, then as if it's new to them."
+ ]
+}

@@ -1,0 +1,138 @@
+{
+ "type": "chat-scenes",
+ "title": "Running late",
+ "part": "Revision · Running late",
+ "hint": "Read who's writing and how much it matters. Agree together what to write, type it and send. Then compare with the example.",
+ "scenes": [
+  {
+   "contact": "Alex 💛",
+   "context": [
+    "👤 **Alex — your first date!**",
+    "📍 You're on the metro. It's stuck in a tunnel.",
+    "⏰ You're meeting at 7:30. It's 7:25.",
+    "⏳ You'll be about 15 minutes late."
+   ],
+   "msgs": [
+    {
+     "t": "Hi! I'm here 😊 Got us a table by the window.",
+     "time": "7:25"
+    }
+   ],
+   "example": "Hi! So sorry — my train's **stuck** in a tunnel 🙈 I'm **running about 15 minutes late**. Can't wait to see you!",
+   "reply": {
+    "t": "No worries! 😊 I'll get us some drinks.",
+    "time": "7:27"
+   },
+   "model": "Hi! So sorry — my train's s{{tuck}} in a tunnel 🙈 I'm r{{unning about 15 minutes late}}. Can't wait to see you!"
+  },
+  {
+   "contact": "Sarah · HR, Brightline",
+   "context": [
+    "👤 **Sarah from HR — a job interview!**",
+    "📍 You're in a taxi. There's been an accident on the motorway.",
+    "⏰ The interview is at 10:00. It's 9:40.",
+    "⏳ You'll be about 20 minutes late."
+   ],
+   "msgs": [
+    {
+     "t": "Good morning! Just a reminder: your interview is at 10 today.",
+     "time": "9:40"
+    }
+   ],
+   "example": "I'm so sorry — there's been an accident and I'm **stuck in traffic**. I'll **be about 20 minutes late**. Would 10:20 still work?",
+   "reply": {
+    "t": "Thanks for letting us know. See you at 10:20.",
+    "time": "9:42"
+   }
+  },
+  {
+   "contact": "Friday dinner 🍕",
+   "context": [
+    "👥 **Your friends — pizza night**",
+    "📍 You're still at work. Your boss wants “a quick chat”.",
+    "⏰ Dinner was at 7. It's 7:10.",
+    "⏳ No idea how long the chat will take."
+   ],
+   "msgs": [
+    {
+     "t": "We're all here! Where are you?? 😄",
+     "time": "7:10",
+     "from": "Tom"
+    }
+   ],
+   "example": "Sorry, guys! Still at work — my boss wants “a quick chat” 🙄 **Start without me!** I'll text when I'm on my way.",
+   "reply": {
+    "t": "No worries! We'll save you a slice 🍕",
+    "time": "7:11",
+    "from": "Tom"
+   }
+  },
+  {
+   "contact": "Mark · your boss",
+   "context": [
+    "👤 **Mark, your boss — a big client meeting**",
+    "📍 You're in another call. It's **running over**.",
+    "⏰ The meeting starts at 9:00. It's 8:52.",
+    "⏳ You'll be about 10 minutes late."
+   ],
+   "msgs": [
+    {
+     "t": "Morning! Reminder: the client's arriving at 9.",
+     "time": "8:52"
+    }
+   ],
+   "example": "Morning, Mark! **Just a heads-up** — my call is **running over**. I'll **be there in** 10. Could you **start without me**?",
+   "reply": {
+    "t": "Thanks for the heads-up! We'll start without you.",
+    "time": "8:53"
+   }
+  },
+  {
+   "contact": "Maya",
+   "context": [
+    "👤 **Maya, your friend**",
+    "📍 You're at the cinema. You've got the tickets.",
+    "⏰ The film starts at 8:00. It's 7:50.",
+    "🙂 This time **she**'s late. Make your reply warm — not just “OK.”"
+   ],
+   "msgs": [
+    {
+     "t": "Soooo sorry!! My train's been delayed 😩 I'll be 20 min late!",
+     "time": "7:50"
+    }
+   ],
+   "example": "**No worries!** The ads take ages anyway 😄 I'll wait at the entrance with the tickets.",
+   "reply": {
+    "t": "You're the best 🙏",
+    "time": "7:51"
+   }
+  }
+ ],
+ "box": [
+  {
+   "h": "GIVING A HEADS-UP",
+   "items": [
+    "**Just a heads-up** — / I'm really sorry — – предупреждаю",
+    "I'll **be 10 minutes late**. – опоздаю на 10 минут",
+    "I'm **running a bit late**. – немного опаздываю",
+    "I'm **stuck in traffic**. – стою в пробке",
+    "My meeting is **running over**. – встреча затягивается",
+    "**Start without me!** · I'll **be there in** 5! – начинайте без меня · буду через 5"
+   ]
+  },
+  {
+   "h": "REPLYING",
+   "items": [
+    "**No worries!** · **No rush!** – ничего страшного · не спеши",
+    "**Thanks for letting me know!** – спасибо, что предупредил(а)",
+    "**Join when you can!** – подключайся, когда сможешь"
+   ]
+  }
+ ],
+ "speaking": [
+  "When were you last late? Who was waiting, and how much did it matter?",
+  "What did you write? How would you write it now? Use **two** phrases from the box.",
+  "Which is worse: 10 minutes late with no message, or 30 minutes late with a heads-up? Give **two** reasons.",
+  "How late is OK with friends, at work, on a first date? Agree on **one** rule for each."
+ ]
+}

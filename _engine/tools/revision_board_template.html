@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>__TITLE__</title>
+<link rel="stylesheet" href="../../fonts/homework-sans.css">
+<style>
+__BASE_CSS__
+/* ---------- revision board (tools 13, B2 revision 30.10, her wish 03:26): her Jeopardy board as a page, one link for the whole revision ---------- */
+.wrap.board{grid-template-columns:minmax(0,1fr);max-width:76rem}
+.wrap.board .side{display:none}
+.jb{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));gap:8px}
+.jb .colh{background:#1F3B57;color:#FFFFFF;border-radius:10px;padding:8px 6px;text-align:center;font-weight:900;font-size:1rem;line-height:1.15;display:grid;place-items:center;min-height:3.4rem;hyphens:auto;overflow-wrap:anywhere}
+.cell{border-radius:12px;min-height:4.6rem;display:grid;place-items:center;font-weight:900;font-size:1.9rem;text-decoration:none;background:#2B5D8A;color:#FFE27A;border:3px solid transparent;position:relative;transition:transform .15s}
+.cell.nolink{background:color-mix(in srgb, #2B5D8A 55%, var(--ground));color:color-mix(in srgb, #FFE27A 70%, var(--ground));cursor:default}
+a.cell:hover,button.cell:hover{transform:translateY(-2px)}
+button.cell{font-family:inherit;cursor:pointer}
+.cell.today{background:#FF9900;color:#1D1D1B}
+.cell.done{background:color-mix(in srgb, var(--line) 70%, var(--card));color:var(--muted)}
+.cell.done::after{content:"✓";position:absolute;right:8px;top:4px;font-size:1rem}
+.cell.now{border-color:#0693E3;box-shadow:0 0 0 4px #9FD3FF;animation:nowPulse 1.6s ease-in-out infinite}
+@keyframes nowPulse{0%,100%{box-shadow:0 0 0 3px #9FD3FF}50%{box-shadow:0 0 0 10px rgba(6,147,227,.25)}}
+.cell.sel{outline:4px dashed var(--instr);outline-offset:2px}
+.nowstrip{display:flex;align-items:center;gap:12px;background:#0693E3;color:#FFFFFF;border-radius:14px;padding:10px 16px;font-weight:900;font-size:1.2rem;text-decoration:none}
+.nowstrip .go{margin-left:auto;background:#FFFFFF;color:#0693E3;border-radius:99px;padding:4px 14px}
+.cellbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px 14px}
+.cellbar b{margin-right:6px}
+.cellbar .grow{flex:1}
+.legend{color:var(--muted);font-size:.92rem;margin:0}
+@media (max-width:700px){ .cell{font-size:1.15rem;min-height:3.4rem} .jb .colh{font-size:.72rem;min-height:3rem;padding:4px 2px} .jb{gap:5px} }
+</style>
+</head>
+<body>
+<div class="wrap board"><main class="main" id="main"></main><div class="side" id="side"></div></div>
+<footer class="legal"><a href="../../impressum.html">Impressum</a> · <a href="../../datenschutz.html">Datenschutz</a></footer>
+<script>
+const D = __DATA__;
+const STICKER = "__STICKER__";
+const TOOLS_VERSION = "__TOOLS_VERSION__";
+const PAGE_ID = "__PAGE_ID__";
+const LIVE_ON = __LIVE__, LIVE_URL = "__SYNC_URL__";
+__BASE_JS__
+/* The board: columns × values; a cell with a page links to it (the -live board to the -live pages). On the -live board Olya (her code)
+   taps a cell: ▶ Now (everyone's board shows it pulsing, with a strip on top), ✓ Done (greyed, still open), Clear. Her taps go to her
+   table (sheet Live, as every live page: text "now" = cell|time, "done.<cell>" = time; Live log keeps the times for the debrief).
+   The groups' boards ask every 10 s and show it at once (it is a pointer, not a change under their eyes). No table → her voice. */
+const cellKey = c => "c" + D.cols.indexOf(c.col) + "v" + c.value;
+const cellAt = (col, v) => D.cells.find(c => c.col === col && c.value === v);
+const href = c => c && c.page ? `${c.page}${LIVE_ON ? "-live" : ""}.html` : "";
+const nowKey = () => { const [k, t] = String(LV.text.now || "").split("|"); return k && Date.now() - (Number(t) || 0) < 3 * 3600000 ? k : ""; };   /* ▶ Now goes out by itself after 3 hours */
+const doneAt = k => Number(LV.text["done." + k]) || 0;
+let sel = null;
+function render(){
+  liveApply();
+  const mine = liveTeacher(), nk = nowKey(), nowC = D.cells.find(c => cellKey(c) === nk);
+  const strip = nowC ? (href(nowC) ? `<a class="nowstrip" href="${href(nowC)}">▶ Now: ${esc(nowC.col)} · $${nowC.value}<span class="go">Open →</span></a>` : `<div class="nowstrip">▶ Now: ${esc(nowC.col)} · $${nowC.value}</div>`) : "";
+  const grid = `<div class="jb" style="--cols:${D.cols.length}">${D.cols.map(c => `<div class="colh">${esc(c)}</div>`).join("")}
+    ${D.values.map(v => D.cols.map(col => { const c = cellAt(col, v), k = c ? cellKey(c) : "", cls = `cell ${c && c.today && mine ? "today" : ""} ${k && doneAt(k) ? "done" : ""} ${k && k === nk ? "now" : ""} ${sel === k && k ? "sel" : ""}`;
+      if(mine && c) return `<button class="${cls}" data-cell="${k}" aria-label="${esc(col)} $${v}: ${esc(c.title || "")}">$${v}</button>`;
+      return c && c.page ? `<a class="${cls}" href="${href(c)}" aria-label="${esc(col)} $${v}">$${v}</a>` : `<span class="${cls} nolink">$${v}</span>`; }).join("")).join("")}</div>`;
+  const sc = sel && D.cells.find(c => cellKey(c) === sel);
+  const bar = mine ? (sc ? `<div class="cellbar"><b>${esc(sc.col)} · $${sc.value}${sc.title ? " — " + esc(sc.title) : ""}</b>
+      <button class="btn slim primary" data-now>▶ Now</button><button class="btn slim" data-done>${doneAt(sel) ? "↺ Not done" : "✓ Done"}</button>${nk === sel ? `<button class="btn slim" data-clear>Clear Now</button>` : ""}
+      <span class="grow"></span>${href(sc) ? `<a class="btn slim" href="${href(sc)}">Open →</a>` : `<span class="legend">no page yet: from the slides</span>`}<span id="live-status" class="legend">${esc(liveMsg)}</span></div>`
+      : `<p class="legend">👩‍🏫 Tap a cell: ▶ Now shows it to every room (pulsing), ✓ Done greys it. Orange = today's fields.</p>`) : "";
+  document.getElementById("main").innerHTML = `<header class="head"><h1>${esc(D.title)}</h1></header>${strip}${bar}${grid}`;
+  document.querySelectorAll("[data-cell]").forEach(b => b.addEventListener("click", () => { sel = sel === b.dataset.cell ? null : b.dataset.cell; liveMsg = ""; render(); }));
+  const on = (q, fn) => document.querySelectorAll(q).forEach(b => b.addEventListener("click", fn));
+  on("[data-now]", () => liveOp("text", "now", sel + "|" + Date.now()));
+  on("[data-done]", () => doneAt(sel) ? liveOp("untext", "done." + sel) : liveOp("text", "done." + sel, String(Date.now())));
+  on("[data-clear]", () => liveOp("untext", "now"));
+}
+/* the groups' boards: every 10 s, shown at once */
+async function boardPoll(){
+  if(!LIVE_ON || !LIVE_URL || document.hidden) return;
+  const res = await livePost({action: "live", tool: PAGE_ID}); if(!res.ok || !res.live) return;
+  const v = liveNorm(res.live); store.set(liveCacheKey, v); if(liveSame(v, LV)) return; LV = v; livePending = null; render();
+}
+if(LIVE_ON){ setInterval(boardPoll, 10000); }
+liveRerender = () => render();
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,686 @@
+{
+ "type": "revision-field",
+ "board": {
+  "col": "Vocabulary",
+  "value": 100
+ },
+ "title": "Crime around us",
+ "boxes": {
+  "ASK": [
+   {
+    "h": "START",
+    "items": [
+     "**You won't believe** what happened!",
+     "**Did you hear about** …?"
+    ]
+   },
+   {
+    "h": "REACT AND ASK",
+    "items": [
+     "Oh no! That's awful!",
+     "**Did they take** anything?",
+     "**Did anyone get hurt?**",
+     "**Did they catch** him?",
+     "**What happened next?**"
+    ]
+   },
+   {
+    "h": "END",
+    "items": [
+     "**Watch out** — …",
+     "**Thanks for the heads-up!**"
+    ]
+   }
+  ],
+  "NEWS": [
+   {
+    "h": "THE NEWS",
+    "items": [
+     "a car / a flat got b{{roken}} into",
+     "had their bike s{{tolen}}",
+     "the bakery was r{{obbed}}",
+     "was c{{aught}} shoplifting",
+     "got p{{ickpocketed}}",
+     "p{{retended}} to be from…",
+     "r{{eported}} it to the police"
+    ]
+   },
+   {
+    "h": "REACT AND ASK",
+    "items": [
+     "Oh no! **Did anyone get hurt?**",
+     "**Did they catch** him?",
+     "**Watch out for** … / **Thanks for the heads-up!**"
+    ]
+   }
+  ]
+ },
+ "stages": [
+  {
+   "label": "🔁 Remember",
+   "blocks": [
+    {
+     "kind": "picture",
+     "instr": "What happened on Linden Street? Tell your partner as many incidents as you can remember.",
+     "img": "linden-street.jpg"
+    }
+   ]
+  },
+  {
+   "label": "📖 The chat",
+   "blocks": [
+    {
+     "kind": "text",
+     "instr": "Complete the chat and say the words. Tap the yellow and orange to check.",
+     "lines": [
+      {
+       "s": "Anna",
+       "p": [
+        "Heads up, everyone — two cars ",
+        {
+         "f": "g",
+         "r": "ot"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "roken"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "nto"
+        },
+        " on our street last night."
+       ]
+      },
+      {
+       "s": "Tom",
+       "p": [
+        "Oh no! Whose cars?"
+       ]
+      },
+      {
+       "s": "Anna",
+       "p": [
+        "Mine and the van outside number 12. They took my laptop and a bag. The police say there have been a lot of ",
+        {
+         "f": "b",
+         "r": "urglaries"
+        },
+        " in the area recently."
+       ]
+      },
+      {
+       "s": "Tom",
+       "p": [
+        "Sorry to hear that, Anna!"
+       ]
+      },
+      {
+       "s": "Ben",
+       "p": [
+        "Same here, actually. Someone ",
+        {
+         "f": "b",
+         "r": "roke"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "nto"
+        },
+        " the flat above ours last month and ",
+        {
+         "f": "s",
+         "r": "tole"
+        },
+        " some jewellery."
+       ]
+      },
+      {
+       "s": "Lucy",
+       "p": [
+        "Seriously?! Has anyone else ",
+        {
+         "f": "h",
+         "r": "ad"
+        },
+        " their bike ",
+        {
+         "f": "s",
+         "r": "tolen"
+        },
+        " from the courtyard? Mine disappeared on Saturday."
+       ]
+      },
+      {
+       "s": "Tom",
+       "p": [
+        "Not mine, luckily. But did you hear about the petrol station? It was ",
+        {
+         "f": "r",
+         "r": "obbed"
+        },
+        " on Sunday night — the guy had a knife!"
+       ]
+      },
+      {
+       "s": "Anna",
+       "p": [
+        "That's scary!"
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        "two cars ",
+        {
+         "b": "got broken into"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "/ɡɒt ˈbrəʊkən ˈɪntə/",
+         "o": 1
+        }
+       ],
+       "ru": "вскрыли две машины"
+      },
+      {
+       "p": [
+        {
+         "b": "burglaries"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "/ˈbɜːɡləriz/",
+         "o": 1
+        }
+       ],
+       "ru": "кражи со взломом"
+      },
+      {
+       "p": [
+        "someone ",
+        {
+         "b": "broke into"
+        },
+        " the flat",
+        " ",
+        {
+         "f": "",
+         "r": "/ˌbrəʊk ˈɪntə/",
+         "o": 1
+        }
+       ],
+       "ru": "вломился в квартиру"
+      },
+      {
+       "p": [
+        {
+         "b": "stole"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "/stəʊl/",
+         "o": 1
+        }
+       ],
+       "ru": "украл"
+      },
+      {
+       "p": [
+        {
+         "b": "had"
+        },
+        " their bike ",
+        {
+         "b": "stolen"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "/ˈstəʊlən/",
+         "o": 1
+        }
+       ],
+       "ru": "у кого-то украли велосипед"
+      },
+      {
+       "p": [
+        "it ",
+        {
+         "b": "was robbed"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "/rɒbd/",
+         "o": 1
+        }
+       ],
+       "ru": "её ограбили"
+      }
+     ]
+    },
+    {
+     "kind": "text",
+     "instr": "Read on. Complete the chat and say the words.",
+     "lines": [
+      {
+       "s": "Ben",
+       "p": [
+        "And a teenager was ",
+        {
+         "f": "c",
+         "r": "aught"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "hoplifting"
+        },
+        " at the supermarket yesterday."
+       ]
+      },
+      {
+       "s": "Anna",
+       "p": [
+        "What's going on with this street?!"
+       ]
+      },
+      {
+       "s": "Lucy",
+       "p": [
+        "Be careful on the tram, too. My neighbour got ",
+        {
+         "f": "p",
+         "r": "ickpocketed"
+        },
+        " there last week."
+       ]
+      },
+      {
+       "s": "Tom",
+       "p": [
+        "Thanks for the ",
+        {
+         "f": "h",
+         "r": "eads-up"
+        },
+        ". My phone lives in my front pocket now."
+       ]
+      },
+      {
+       "s": "Anna",
+       "p": [
+        "And ",
+        {
+         "f": "w",
+         "r": "atch"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "ut"
+        },
+        " — there's a new ",
+        {
+         "f": "s",
+         "r": "cam"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "oing"
+        },
+        " ",
+        {
+         "f": "r",
+         "r": "ound"
+        },
+        ". Someone ",
+        {
+         "f": "p",
+         "r": "retends"
+        },
+        " to ",
+        {
+         "f": "b",
+         "r": "e"
+        },
+        " from the gas company and asks to come in and check the meter."
+       ]
+      },
+      {
+       "s": "Ben",
+       "p": [
+        {
+         "f": "G",
+         "r": "ood"
+        },
+        " to ",
+        {
+         "f": "k",
+         "r": "now"
+        },
+        ". I'm not opening the door to anyone!"
+       ]
+      },
+      {
+       "s": "Lucy",
+       "p": [
+        "UPDATE: found my bike. My son borrowed it and didn't tell me."
+       ]
+      },
+      {
+       "s": "Tom",
+       "p": [
+        "Haha! ",
+        {
+         "f": "C",
+         "r": "ase"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "losed"
+        },
+        "!"
+       ]
+      },
+      {
+       "s": "Anna",
+       "p": [
+        "So… are we ",
+        {
+         "f": "r",
+         "r": "eporting"
+        },
+        " him to the police? 😄"
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        {
+         "b": "was caught shoplifting"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "/kɔːt ˈʃɒplɪftɪŋ/",
+         "o": 1
+        }
+       ],
+       "ru": "поймали на краже в магазине"
+      },
+      {
+       "p": [
+        {
+         "b": "got pickpocketed"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "/ˈpɪkpɒkɪtɪd/",
+         "o": 1
+        }
+       ],
+       "ru": "обокрал карманник"
+      },
+      {
+       "p": [
+        "Thanks for the ",
+        {
+         "b": "heads-up"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "/ˈhedz ʌp/",
+         "o": 1
+        }
+       ],
+       "ru": "спасибо, что предупредила"
+      },
+      {
+       "p": [
+        {
+         "b": "watch out"
+        }
+       ],
+       "ru": "будьте осторожны"
+      },
+      {
+       "p": [
+        "a ",
+        {
+         "b": "scam going round"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "/skæm/",
+         "o": 1
+        }
+       ],
+       "ru": "ходит новая схема развода"
+      },
+      {
+       "p": [
+        {
+         "b": "pretends to be"
+        }
+       ],
+       "ru": "выдаёт себя за"
+      },
+      {
+       "p": [
+        {
+         "b": "Good to know"
+        }
+       ],
+       "ru": "буду знать!"
+      },
+      {
+       "p": [
+        {
+         "b": "Case closed"
+        },
+        "!"
+       ],
+       "ru": "дело закрыто!"
+      },
+      {
+       "p": [
+        {
+         "b": "reporting"
+        },
+        " him to the police"
+       ],
+       "ru": "заявим на него"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "🃏 Cards",
+   "blocks": [
+    {
+     "kind": "cards",
+     "style": "ours",
+     "instr": "Our sentences. Green = good, grey = could be better. How would you make it perfect English?",
+     "instr_next": "One more of our sentences. How would you make it perfect English?",
+     "check": "Perfect English",
+     "summary": "Could be better → perfect: the full list",
+     "box": null,
+     "cards": [
+      {
+       "ctx": "в чате соседей",
+       "front": "<g>The police</g> ~~is~~ <g>looking for him</g>.",
+       "back": "The police **are** looking for him.",
+       "why": "The police — всегда множественное число: are, have. Looking for him — отлично."
+      },
+      {
+       "ctx": "в чате соседей: полиция что-нибудь сделала?",
+       "front": "<g>Have the police</g> ~~been~~ <g>done anything</g>?",
+       "back": "Have the police done anything?",
+       "why": "Полиция что-то сделала → have done. Been здесь лишнее: с ним получился бы пассив (что-то сделали с полицией)."
+      },
+      {
+       "ctx": "сосед рассказал про аварию у вашего дома",
+       "front": "I hope ~~anyone~~ <g>got hurt</g>.",
+       "back": "I hope **nobody** got hurt.",
+       "why": "Надеюсь, никто не пострадал → I hope nobody… Anyone — в вопросе: Did anyone get hurt?"
+      }
+     ]
+    },
+    {
+     "kind": "cards",
+     "style": "say",
+     "instr": "How do you say it in English? Take turns.",
+     "cards": [
+      {
+       "front": "((А что-нибудь взяли?))",
+       "back": "Did they take anything?"
+      },
+      {
+       "front": "((Никто не пострадал?))",
+       "back": "Did anyone get hurt?"
+      },
+      {
+       "front": "((А его поймали?))",
+       "back": "Did they catch him?"
+      },
+      {
+       "front": "((Ущерб большой?))",
+       "back": "Was there much damage?"
+      },
+      {
+       "front": "((А что было потом?))",
+       "back": "What happened next?"
+      },
+      {
+       "front": "((Ты заявил в полицию?))",
+       "back": "Did you report it to the police?"
+      },
+      {
+       "front": "((Спасибо, что предупредил!))",
+       "back": "Thanks for the heads-up!"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "💬 Speaking",
+   "blocks": [
+    {
+     "kind": "model",
+     "instr": "Two neighbours on Maple Road. Complete their chat. Then tap the yellow to check.",
+     "box": "ASK",
+     "parts": [
+      {
+       "title": "",
+       "lines": [
+        {
+         "s": "A",
+         "p": [
+          {
+           "f": "D",
+           "r": "id you hear about"
+          },
+          " the bakery? It ",
+          {
+           "f": "g",
+           "r": "ot robbed"
+          },
+          " this morning!"
+         ]
+        },
+        {
+         "s": "B",
+         "p": [
+          "No! That's awful! ",
+          {
+           "f": "D",
+           "r": "id anyone get hurt"
+          },
+          "?"
+         ]
+        },
+        {
+         "s": "A",
+         "p": [
+          "No, luckily. But the guy took the cash box — and a baguette!"
+         ]
+        },
+        {
+         "s": "B",
+         "p": [
+          "Seriously? ",
+          {
+           "f": "D",
+           "r": "id they catch him"
+          },
+          "?"
+         ]
+        },
+        {
+         "s": "A",
+         "p": [
+          "Not yet. Apparently, the police ",
+          {
+           "f": "a",
+           "r": "re looking for"
+          },
+          " him. So ",
+          {
+           "f": "w",
+           "r": "atch out"
+          },
+          " for a guy with a baguette!"
+         ]
+        },
+        {
+         "s": "B",
+         "p": [
+          {
+           "f": "T",
+           "r": "hanks for the heads-up"
+          },
+          "!"
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "kind": "picture",
+     "instr": "This is Maple Road. What else has been happening here? Take turns to share the news like neighbours.",
+     "img": "maple-road.jpg",
+     "box": "NEWS",
+     "task": "One incident each. Your partner reacts and asks **two** questions. End with a tip: **Watch out for** …"
+    },
+    {
+     "kind": "questions",
+     "instr": "Now real news: a theft or a scam you've heard about.",
+     "items": [
+      "**1**  A theft or a scam you've seen on the news or heard about in your area: what happened? Your partner reacts and asks **two** questions.",
+      "**2**  What should a visitor to your area **watch out for**? Give **two** tips."
+     ],
+     "box": "ASK",
+     "fast": "If you're done: go back to the neighbours' chat (📖) and say the missing words. Then: how safe is your area? “I'd say it's pretty safe, but…”"
+    }
+   ]
+  }
+ ]
+}

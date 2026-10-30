@@ -1,0 +1,51 @@
+{
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "no, i haven't! oh no — what happened? i have! it's so annoying, isn't it? have you seen the coffee machine? it's broken again! a colleague",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "no! that's awful! how much is it? i have! it's crazy, isn't it? have you heard? our favourite café has started charging for tap water! a friend",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "no way! that's great! when did it come out? i did! i watched three episodes last night. it's amazing, isn't it? did you know the new season of our favourite series is out? a friend",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "no, i haven't! oh no, that's awful. why? i have. it's a nightmare, isn't it? have you seen the email? our deadline's been moved to tomorrow! a colleague",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "aw, that's lovely! are they going to keep them all? i have! they're so cute, aren't they? have you heard? my neighbour's dog has had six puppies! a friend",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "no! that's great! any plans? i have! it's going to be lovely, isn't it? have you seen the forecast? it's going to be sunny all weekend! a friend",
+   "gone": false
+  }
+ ],
+ "speaking": [
+  {
+   "pid": 0,
+   "sig": "something you both know: our lessons, a series you've both seen, something in the news. share a feeling with a tag — your partner agrees!",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "tell your partner something from your week they don't know — good or bad. they react and ask two questions.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "tell one piece of news twice: your partner replies both ways — first as if they already know it, then as if it's new to them.",
+   "gone": false
+  }
+ ]
+}

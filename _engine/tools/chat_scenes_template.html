@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>__TITLE__</title>
+<link rel="stylesheet" href="../../fonts/homework-sans.css">
+<style>
+__BASE_CSS__
+/* ---------- chat scenes (tools 13, B2 revision 30.10 «Running late»): a chat on a phone; the pair agrees what to type ---------- */
+.head .stage-btn{font-size:.9rem;padding:3px 10px}
+.head h1{font-size:1.6rem}
+.stage{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:12px 16px;display:grid;gap:10px;align-content:start}
+.stage.enter{animation:enterR .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes enterR{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:none}}
+@keyframes enter{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+.scene-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.scene-top .grow{flex:1}
+.sc-dots{display:flex;gap:6px}
+.sc-dots button{width:16px;height:16px;border-radius:50%;border:2px solid var(--line);background:var(--card);padding:0}
+.sc-dots button.done{background:var(--ok);border-color:var(--ok)}
+.sc-dots button.on{background:var(--instr);border-color:var(--instr);transform:scale(1.2)}
+.sc-label{color:var(--label);font-weight:900;letter-spacing:.07em;text-transform:uppercase;font-size:.85rem}
+.chip{border:2px solid var(--line);background:var(--card);border-radius:99px;padding:3px 12px;font-weight:700;font-size:.9rem;color:var(--ink)}
+.chip[aria-pressed="true"]{border-color:var(--instr);color:var(--instr)}
+.model-pop{background:var(--ground);border-radius:12px;padding:8px 12px;font-size:.95rem;line-height:1.4}
+.model-pop .ml{color:var(--label);font-weight:900;letter-spacing:.05em;text-transform:uppercase;font-size:.8rem;margin-right:6px}
+.sc-grid{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,1fr);gap:14px;align-items:start}
+.ctx{background:var(--ground);border-radius:14px;padding:10px 12px;display:grid;gap:6px}
+.ctx p{margin:0;line-height:1.35;font-size:1rem}
+.ctx .bx{color:var(--flip-ink)}
+.phone{border:3px solid #1D1D1B;border-radius:22px;overflow:hidden;background:#ECE5DD;display:grid;grid-template-rows:auto 1fr auto;min-height:20rem}
+.ph-top{background:#075E54;color:#FFFFFF;padding:8px 14px;font-weight:800;display:flex;align-items:center;gap:8px}
+.ph-top .av{width:1.9rem;height:1.9rem;border-radius:50%;background:#D9D9D9;color:#075E54;display:grid;place-items:center;font-size:.95rem}
+.msgs{padding:10px 10px 8px;display:flex;flex-direction:column;gap:6px;max-height:21rem;overflow-y:auto}
+.bub{max-width:85%;border-radius:12px;padding:6px 10px 4px;font-size:1.02rem;line-height:1.35;box-shadow:0 1px 0 rgba(0,0,0,.12);color:#111111}
+.bub.in{align-self:flex-start;background:#FFFFFF;border-top-left-radius:3px}
+.bub.out{align-self:flex-end;background:#D9FDD3;border-top-right-radius:3px}
+.bub.new{animation:enter .3s ease-out}
+.bub .from{display:block;font-size:.82rem;font-weight:800;color:#C2410C}
+.bub .tm{display:block;text-align:right;font-size:.72rem;color:#667781;margin-top:1px}
+.bub .tag{display:block;font-size:.72rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#0B7A3E;margin-bottom:1px}
+.bub .bx{color:#0A58CA}
+.bub.ex{border:2px dashed #25A35A}
+.bub.typing{color:#667781;font-style:italic}
+.mgap{font:inherit;border:0;border-radius:3px;padding:0 2px;background:#FFFF00;color:transparent;cursor:pointer;font-weight:700}
+.mgap.open{color:#0A58CA}
+.mgap:not(.open):hover{outline:2px solid #E8D800}
+.compose{display:flex;gap:6px;padding:8px;background:#F0F2F5;align-items:flex-end}
+.compose textarea{flex:1;font:inherit;font-size:1rem;border:0;border-radius:18px;padding:8px 12px;resize:none;min-height:2.5rem;max-height:6rem;background:#FFFFFF;color:#111111}
+.compose .send{border:0;border-radius:50%;width:2.6rem;height:2.6rem;background:#25A35A;color:#FFFFFF;font-size:1.15rem;font-weight:900;flex:none}
+.compose .send:disabled{opacity:.4}
+.compose-note{font-size:.85rem;color:#667781;padding:0 12px 8px;background:#F0F2F5;margin:0}
+.row-act{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sc-left{display:grid;gap:12px;align-content:start}
+.acts.narrow{display:none}
+@media (max-width:700px){ .acts.wide{display:none} .acts.narrow{display:flex} }
+.row-act .grow{flex:1}
+.exbtn{border:2px solid #25A35A;background:var(--card);color:var(--ink);border-radius:99px;padding:6px 16px;font-weight:900;font-size:1rem}
+@media (max-width:700px){ .sc-grid{grid-template-columns:1fr} .msgs{max-height:none} .stage{padding:12px} .phone{min-height:13rem} }
+/* lesson work in the phone (the shared part: lesson_work.css) */
+.share-note{font-size:.82rem;color:#667781;padding:0 12px 7px;background:#F0F2F5;margin:0}
+.t-notes{display:grid;gap:6px;padding:8px 10px 0;background:#F0F2F5}
+.t-notes:empty{display:none}
+.t-toast{background:#FFF4C2;border:2px solid #E8B800;border-radius:12px;padding:6px 12px;font-weight:700;color:#111111;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.t-toast:empty{display:none}
+.t-toast button{border:2px solid #111111;background:#FFFFFF;color:#111111;border-radius:99px;padding:2px 12px;font-weight:900}
+.sc-dots button.noted{box-shadow:0 0 0 3px #E8B800}
+__LW_CSS__
+</style>
+</head>
+<body>
+<div class="wrap"><main class="main" id="main"></main><div class="side" id="side"></div></div>
+<footer class="legal"><a href="../../impressum.html">Impressum</a> · <a href="../../datenschutz.html">Datenschutz</a></footer>
+<script>
+const D = __DATA__;
+const STICKER = "__STICKER__";
+const TOOLS_VERSION = "__TOOLS_VERSION__";
+const PAGE_ID = "__PAGE_ID__";
+const LIVE_ON = __LIVE__, LIVE_URL = "__SYNC_URL__";   /* the "-live" page: Olya's changes during the lesson (tools 7) */
+__BASE_JS__
+/* ---------- the scenes ----------
+   Her decision 29.10: her students don't like writing in class, but agreeing together on one short chat message is real and quick;
+   who is writing (a first date, a job interview, friends, the boss) is what makes them choose the register.
+   Scene 1 is the model: its message is given with gaps (her rule: when a task may not land the first time, the model first);
+   it stays reachable from every later scene (📌 Model). On the plain page what they type stays on this device only;
+   on the -live page it also goes to Olya's table while they type (lesson work, below), and the page says so under the input. */
+const bxMarks = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>');
+const sp = (i, f) => `scenes.${i}.${f}`;
+const scText = (i, f) => liveText(sp(i, f), pathGet(D.scenes[i], f));
+const sceneGone = i => liveHidden("scenes." + i);
+const order = () => D.scenes.map((_, i) => i).filter(i => liveTeacher() || !sceneGone(i));
+const isModel = i => !!D.scenes[i].model;
+const narrow = () => matchMedia("(max-width: 700px)").matches;
+const KEY = "tool-chat-" + PAGE_ID;
+let saved = store.get(KEY) || {};          /* {sceneIndex: {text, sent}} — this device only */
+const save = () => store.set(KEY, saved);
+let S;
+function newGame(){ S = {view: "chats", at: 0, sc: {}, modelOpen: false}; }
+newGame();
+function liveAdjust(){ if(S && !order().includes(S.at)) S.at = order()[0] || 0; }
+const liveLabel = p => { const m = String(p).match(/^scenes\.(\d+)$/); if(m) return D.scenes[+m[1]].contact; const v = pathGet(D, p); return typeof v === "string" ? v : p; };
+__LW_JS__
+/* lesson work on this page (tools 13): her 📥 Groups view lists the chats by contact; notes show above the input of their chat */
+/* the chats are kept by their permanent numbers (a rebuild may insert or move chats): pidOf("scenes", place) ↔ idxOf("scenes", number) */
+const scPid = i => pidOf("scenes", i);
+LW.tools = [{id: PAGE_ID, title: D.title, chat: n => { const i = idxOf("scenes", n); return i < 0 ? `Chat #${n} (removed)` : `Chat ${i + 1}${D.scenes[i] ? " · " + scText(i, "contact") : ""}`; }}];
+LW.current = () => S && S.view === "chats" && !isModel(S.at) && !st(S.at).sent ? scPid(S.at) : null;
+LW.onNotes = () => paintNotes();
+LW.groupsView = () => !!S && S.view === "groups";
+const unseenElsewhere = () => [...new Set(NOTES.filter(n => !shown.has(n.id) && n.chat !== scPid(S.at) && n.k !== "go" && n.k !== "say").map(n => idxOf("scenes", n.chat)))].filter(i => order().includes(i));
+const notesBoxHTML = i => sharing() ? `<div class="t-notes" id="tnotes" aria-live="polite">${notesOf(scPid(i)).map(noteHTML).join("")}</div>` : "";
+const toastHTML = () => { const k = unseenElsewhere(); return k.length ? `👩‍🏫 Olya sent you a note in ${k.map(i => `chat ${order().indexOf(i) + 1}`).join(", ")} ${k.map(i => `<button data-go="${i}">Open chat ${order().indexOf(i) + 1}</button>`).join("")}` : ""; };
+/* only the notes, the dots and the toast change (their text keeps its place and focus) */
+function paintNotes(){
+  if(S.view !== "chats") return;
+  const box = document.getElementById("tnotes");
+  const here = notesOf(scPid(S.at));
+  if(box){ const want = here.map(n => n.id).join(); if(box.dataset.ids !== want){ box.innerHTML = here.map(noteHTML).join(""); box.dataset.ids = want; } }
+  here.forEach(n => seenNote(n.id));
+  const k = unseenElsewhere(); document.querySelectorAll(".sc-dots [data-go]").forEach(b => b.classList.toggle("noted", k.includes(+b.dataset.go)));
+  const t = document.getElementById("ttoast"); if(t){ const h = toastHTML(); if(t.innerHTML !== h){ t.innerHTML = h; t.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", () => goScene(+b.dataset.go))); } }
+}
+
+/* a scene's state on screen: how many incoming messages are shown, typing…, example, reply, gaps */
+function st(i){
+  if(!S.sc[i]){ const sv = saved[i] || {}, done = !!sv.sent;
+    S.sc[i] = {shown: done ? D.scenes[i].msgs.length : 0, typing: false, sent: done, ex: done, reply: done, gaps: new Set(), started: false}; }
+  return S.sc[i];
+}
+const gapsOf = i => (scText(i, "model").match(/\{\{(.+?)\}\}/g) || []).length;
+const sceneDone = i => isModel(i) ? st(i).gaps.size >= gapsOf(i) : st(i).sent;
+let timers = [];
+const later = (ms, fn) => { const t = setTimeout(fn, calm() ? 0 : ms); timers.push(t); };
+function stopTimers(){ timers.forEach(clearTimeout); timers = []; }
+/* the incoming messages arrive one by one after a short "typing…" (calm, no sound) */
+function playIn(i){
+  const s = st(i); if(s.started || s.shown >= D.scenes[i].msgs.length) return; s.started = true;
+  const step = () => { if(S.at !== i || S.view !== "chats") return;
+    s.typing = true; paint(); later(900, () => { s.typing = false; s.shown++; s.fresh = "in" + (s.shown - 1); paint(); if(s.shown < D.scenes[i].msgs.length) later(500, step); }); };
+  later(350, step);
+}
+function playReply(i){
+  const s = st(i); if(s.reply || s.replyTyping) return; s.replyTyping = true;
+  later(700, () => { if(S.at !== i) { s.replyTyping = false; return; } s.typing = true; paint();
+    later(1100, () => { s.typing = false; s.replyTyping = false; s.reply = true; s.fresh = "reply"; paint(); }); });
+}
+
+/* ---------- views ---------- */
+const timeHTML = t => t ? `<span class="tm">${esc(t)}</span>` : "";
+const host = (p, inner, opts) => `<div class="live-host ${liveDim(p)}" data-live-host>${inner}${liveTools(p, opts)}</div>`;
+function modelBubbleHTML(i){
+  const s = st(i); let k = 0;
+  const txt = esc(scText(i, "model")).replace(/\{\{(.+?)\}\}/g, (_, g) => { const n = k++; return `<button class="mgap ${s.gaps.has(n) ? "open" : ""}" data-gap="${n}" aria-label="Show the missing part">${g}</button>`; });
+  return `<div class="bub out"><span class="tag">Model — tap the yellow</span>${txt}</div>`;
+}
+function msgsHTML(i){
+  const sc = D.scenes[i], s = st(i), out = [];
+  sc.msgs.slice(0, s.shown).forEach((m, j) => out.push(`<div class="bub in ${s.fresh === "in" + j ? "new" : ""}">${m.from ? `<span class="from">${esc(m.from)}</span>` : ""}${host(sp(i, `msgs.${j}.t`), `<span>${esc(liveText(sp(i, `msgs.${j}.t`), m.t))}</span>`)}${timeHTML(m.time)}</div>`));
+  if(s.shown >= sc.msgs.length){
+    if(isModel(i)) out.push(modelBubbleHTML(i));
+    else if(s.sent) out.push(`<div class="bub out">${esc((saved[i] || {}).text || "")}<span class="tm">✓✓</span></div>`);
+    if(!isModel(i) && s.ex) out.push(`<div class="bub out ex ${s.fresh === "ex" ? "new" : ""}"><span class="tag">💡 Example</span>${host(sp(i, "example"), `<span>${bxMarks(scText(i, "example"))}</span>`)}</div>`);
+    if(s.reply && sc.reply) out.push(`<div class="bub in ${s.fresh === "reply" ? "new" : ""}">${sc.reply.from ? `<span class="from">${esc(sc.reply.from)}</span>` : ""}${host(sp(i, "reply.t"), `<span>${esc(scText(i, "reply.t"))}</span>`)}${timeHTML(sc.reply.time)}</div>`);
+  }
+  if(s.typing) out.push(`<div class="bub in typing" aria-live="polite">typing…</div>`);
+  return out.join("");
+}
+function composeHTML(i){
+  if(isModel(i)) return `<p class="compose-note">Scene 1 is the model: tap the yellow to see the missing words.</p>`;
+  const s = st(i), sv = saved[i] || {};
+  if(s.sent) return `<p class="compose-note">${sharing() ? "Sent ✓ — Olya sees it too." : "Sent ✓ — only on this device; nobody else sees it."}</p>`;
+  return `<div class="compose"><textarea id="msg" rows="1" placeholder="Type your message together…" aria-label="Your message">${esc(sv.text || "")}</textarea>
+    <button class="send" data-send aria-label="Send" ${(sv.text || "").trim() ? "" : "disabled"}>➤</button></div>${sharing() ? `<p class="share-note">👀 Olya sees what you type here${studentCode() ? " (with your name)" : ""} and may send you a quick tip.</p>` : ""}`;
+}
+function sceneHTML(){
+  const ord = order(), i = S.at, sc = D.scenes[i], s = st(i), pos = ord.indexOf(i), last = pos === ord.length - 1;
+  const modelI = D.scenes.findIndex(x => x.model);
+  const noted = sharing() ? unseenElsewhere() : [];
+  const dots = `<span class="sc-dots">${ord.map(k => `<button class="${k === i ? "on" : sceneDone(k) ? "done" : ""} ${noted.includes(k) ? "noted" : ""}" data-go="${k}" aria-label="Chat ${ord.indexOf(k) + 1}" ${k === i ? `aria-current="step"` : ""}></button>`).join("")}</span>`;
+  const chip = !isModel(i) && modelI >= 0 ? `<button class="chip" data-model aria-pressed="${S.modelOpen}">📌 Model</button>` : "";
+  const pop = !isModel(i) && S.modelOpen && modelI >= 0 ? `<div class="model-pop"><span class="ml">📌 Model</span><b>${esc(D.scenes[modelI].contact)}:</b> ${esc(scText(modelI, "model")).replace(/\{\{(.+?)\}\}/g, '<b class="bx">$1</b>')}</div>` : "";
+  const ctx = `<div class="ctx">${(sc.context || []).map((c, j) => host(sp(i, `context.${j}`), `<p>${bxMarks(liveText(sp(i, `context.${j}`), c))}</p>`)).join("")}</div>`;
+  const phone = `<div class="phone"><div class="ph-top"><span class="av" aria-hidden="true">${esc(String(sc.contact).trim()[0] || "?")}</span>${host(sp(i, "contact"), `<span>${esc(scText(i, "contact"))}</span>`)}</div>
+    <div class="msgs" id="msgs">${msgsHTML(i)}</div>${notesBoxHTML(i)}${composeHTML(i)}</div>`;
+  const exBtn = !isModel(i) && !s.ex && s.shown >= sc.msgs.length ? `<button class="exbtn" data-ex>💡 Example</button>` : "";
+  const next = last ? `<button class="btn ${sceneDone(i) ? "primary" : ""}" data-stage="speak">Speaking →</button>` : `<button class="btn ${sceneDone(i) ? "primary" : ""}" data-next>Next chat →</button>`;
+  return `<section class="stage ${S.enter ? "enter" : ""}">${host("scenes." + i, `<div class="scene-top"><span class="sc-label">Chat ${pos + 1} of ${ord.length}${isModel(i) ? " · model" : ""}</span>${dots}<span class="grow"></span>${chip}</div>`, {edit: false})}
+    ${sharing() ? `<div class="t-toast" id="ttoast" aria-live="polite">${toastHTML()}</div>` : ""}${pop}<div class="sc-grid"><div class="sc-left">${ctx}<div class="row-act acts wide">${exBtn}<span class="grow"></span>${next}</div></div>${phone}</div>
+    <div class="row-act acts narrow">${exBtn}<span class="grow"></span>${next}</div></section>`;
+}
+const allChatsHTML = () => allHTML("All the chats", D.scenes.map((sc, i) => (liveTeacher() || !sceneGone(i)) ? `<div class="all-row"><span class="all-sub">${esc(scText(i, "contact"))}</span>
+    ${sc.msgs.map((m, j) => `<p>${m.from ? esc(m.from) + ": " : ""}${esc(liveText(sp(i, `msgs.${j}.t`), m.t))}</p>`).join("")}
+    <p>→ ${sc.model ? esc(scText(i, "model")).replace(/\{\{(.+?)\}\}/g, '<b class="bx">$1</b>') : bxMarks(scText(i, "example"))}</p>${sc.reply ? `<p>${esc(scText(i, "reply.t"))}</p>` : ""}</div>` : "").join(""));
+const speakStage = () => `<section class="stage-wrap ${S.enter ? "enter" : ""}">${speakHTML(liveList(D.speaking, "speaking"), `<button class="btn" data-back>← Back to the chats</button><button class="btn primary" data-restart>All chats again</button>`, "Speaking", "speaking")}</section>`;
+function headHTML(){
+  return `<header class="head">${D.part ? `<span class="part">${esc(D.part)}</span>` : ""}<h1>${esc(D.title)}</h1>
+      ${stagesHTML([["chats", "💬 Chats"], ["speak", "🗣 Speaking"]].concat(liveTeacher() ? [["groups", "📥 Groups"]] : []), S.view)}</header>
+    ${S.view !== "chats" ? "" : `<div class="hint-top"><span>💬 ${esc(D.hint)}</span></div>`}`;
+}
+/* only the messages change while a chat plays (the text they're typing keeps its place and focus) */
+function paint(){
+  const m = document.getElementById("msgs"); if(!m || S.view !== "chats"){ return; }
+  m.innerHTML = msgsHTML(S.at); m.scrollTop = m.scrollHeight; st(S.at).fresh = null; wireMsgs();
+  const done = sceneDone(S.at); document.querySelectorAll(".acts [data-next], .acts [data-stage='speak']").forEach(nx => nx.classList.toggle("primary", done));
+  const dot = document.querySelector(`.sc-dots [data-go="${S.at}"]`); if(dot) dot.classList.toggle("done", done);
+  const s = st(S.at), sc = D.scenes[S.at];
+  if(!document.querySelector("[data-ex]") && !isModel(S.at) && !s.ex && s.shown >= sc.msgs.length) document.querySelectorAll(".stage .acts").forEach(row => {
+    row.insertAdjacentHTML("afterbegin", `<button class="exbtn" data-ex>💡 Example</button>`); row.querySelector("[data-ex]").addEventListener("click", openEx); });
+  if(s.ex) document.querySelectorAll("[data-ex]").forEach(b => b.remove());
+  wireLive(m, p => pathGet(D, p));
+}
+function wireMsgs(){
+  document.querySelectorAll("#msgs [data-gap]").forEach(b => b.addEventListener("click", () => { const s = st(S.at), n = +b.dataset.gap;
+    s.gaps.has(n) ? s.gaps.delete(n) : s.gaps.add(n); b.classList.toggle("open", s.gaps.has(n));
+    if(s.gaps.size >= gapsOf(S.at)) playReply(S.at); paint(); }));
+}
+function openEx(){ const s = st(S.at); if(s.ex) return; s.ex = true; s.fresh = "ex"; paint(); playReply(S.at); }
+function goScene(i){ if(i === S.at) return; stopTimers(); Object.values(S.sc).forEach(s => { s.started = false; s.typing = false; s.replyTyping = false; }); S.at = i; S.modelOpen = false; S.enter = true; render(); S.enter = false; }
+function goStage(v){ if(S.view === v) return; if(v === "groups") setTimeout(gwFetch, 0); stopTimers(); Object.values(S.sc).forEach(s => { s.started = false; s.typing = false; s.replyTyping = false; }); S.view = v; S.enter = true; render(); S.enter = false; scrollTo(0, 0); }
+function render(){
+  liveApply();   /* her latest changes, at the group's tap (live version) */
+  if(!order().includes(S.at)) S.at = order()[0] || 0;
+  const main = document.getElementById("main"), side = document.getElementById("side");
+  if(S.view === "groups" && !liveTeacher()) S.view = "chats";
+  document.querySelector(".wrap").classList.toggle("groups", S.view === "groups");   /* her Groups tab: the whole width, no box */
+  const keepGrid = S.view === "groups" ? document.getElementById("gw-grid") : null;   /* her cards (a half-typed note) survive a re-render */
+  main.innerHTML = liveBarHTML(liveLabel) + headHTML() + (S.view === "speak" ? speakStage() : S.view === "groups" ? groupsHTML() : sceneHTML());
+  if(keepGrid){ const g = document.getElementById("gw-grid"); if(g) g.replaceWith(keepGrid); }
+  const sst = side.scrollTop; side.innerHTML = boxHTML(D.box, {clickable: true}) + allChatsHTML(); side.scrollTop = sst;
+  wireAll(side); wireBox(side); wireSpeak(main, render);
+  wireLive(main, p => pathGet(D, p)); wireLive(side, p => pathGet(D, p));
+  const on = (sel, fn) => document.querySelectorAll(sel).forEach(b => b.addEventListener("click", () => fn(b)));
+  on("[data-stage]", b => goStage(b.dataset.stage));
+  on("[data-back]", () => goStage("chats"));
+  on("[data-restart]", () => { saved = {}; save(); usedPhrases.clear(); spkReset(); stopTimers(); newGame(); S.enter = true; render(); S.enter = false; scrollTo(0, 0); });
+  if(S.view === "groups"){ wireGroups(main); return; }
+  gwPaint();
+  if(S.view !== "chats") return;
+  on("[data-go]", b => goScene(+b.dataset.go));
+  on("[data-next]", () => { const ord = order(), pos = ord.indexOf(S.at); if(pos < ord.length - 1) goScene(ord[pos + 1]); });
+  on("[data-model]", () => { S.modelOpen = !S.modelOpen; render(); });
+  on("[data-ex]", openEx);
+  const ta = document.getElementById("msg"), send = document.querySelector("[data-send]");
+  if(ta){ const fit = () => { ta.style.height = "auto"; ta.style.height = Math.min(ta.scrollHeight, 96) + "px"; };
+    ta.addEventListener("input", () => { saved[S.at] = {text: ta.value, sent: false}; save(); send.disabled = !ta.value.trim(); fit(); shareDraft(scPid(S.at), ta.value, false); });
+    ta.addEventListener("keydown", e => { if(e.key === "Enter" && !e.shiftKey){ e.preventDefault(); if(ta.value.trim()) send.click(); } }); fit(); }
+  if(send) send.addEventListener("click", () => { const v = ta.value.trim(); if(!v) return; const s = st(S.at);
+    saved[S.at] = {text: v, sent: true}; save(); s.sent = true; shareDraft(scPid(S.at), v, true); render();
+    later(500, () => { if(!s.ex){ s.ex = true; s.fresh = "ex"; paint(); } playReply(S.at); }); });   /* after Send the example opens by itself, then the reply */
+  const m = document.getElementById("msgs"); if(m) m.scrollTop = m.scrollHeight;
+  wireMsgs(); playIn(S.at); paintNotes();
+}
+liveRerender = () => render();
+render();
+</script>
+</body>
+</html>

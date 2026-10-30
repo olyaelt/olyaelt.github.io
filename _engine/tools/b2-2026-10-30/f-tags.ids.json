@@ -1,0 +1,106 @@
+{
+ "blocks": [
+  {
+   "pid": 0,
+   "sig": "say share a feeling, or react and ask? what would you say? then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "text remember linden street? complete the replies. then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "cards our sentences. green = good, grey = could be better. how would you make it perfect english?",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "cards share a feeling, or react and ask? use the box.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "model here's how the game sounds. complete the replies. then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "tool take a news card and flip a coin: do you both know it, or is it news to b? a starts, b replies. swap. tags",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "questions round 2: your real news. then one more round with the cards.",
+   "gone": false
+  }
+ ],
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "it was far too long, wasn't it? о сериале, который вы оба смотрели it was far too long, isn't it? was → wasn't: тег повторяет тот же глагол в том же времени. far too long — отлично.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "there are lots of pools, aren't there? вы вместе отдыхаете в одном отеле there are lots of pools, aren't they? there are → aren't there. и ответ: there really are!",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "this place has a great view, doesn't it? вы вместе на террасе нового кафе this place has a great view, isn't it? has здесь — обычный глагол (иметь), вспомогательного нет → does: doesn't it? сравни: it's great, isn't it?",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "yes, i did. it's scary, isn't it? коллега: «did you hear about the fire?» yes, i have. it's scary, isn't it? did you…? → i did. тег — отлично.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "have you seen the printer? it's broken again! i have! it's so annoying, isn't it? you and your colleague sam share an office printer. it keeps breaking down. you both saw it this morning. it really is. i've started printing everything at home! вы оба это знаете → делишься впечатлением: тег, интонация вниз ↘ · или: i know! it's a nightmare, isn't it?",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "guess what? they've found me a seat on a flight tonight! oh, that's a relief! what time do you leave? yesterday your friend lucy's flight home was cancelled. you haven't heard anything since then. at eight. i'll be home by midnight. для тебя это новость → реагируешь и спрашиваешь · или: phew, that's great news!",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "did you see the match last night? i did! it was amazing, wasn't it? you and ben support the same team. you both watched the final last night — your team won in the last minute. it really was! i was shouting so loud i woke up the neighbours. вы оба это знаете → делишься впечатлением: тег, интонация вниз ↘ · всё уже закончилось → was … wasn't it?",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "finally, some sun! i know! it's lovely, isn't it? it's the first sunny day after two weeks of rain. you meet a neighbour outside. it's gorgeous! i'm not going back inside today. вы оба это знаете → делишься впечатлением: тег, интонация вниз ↘ · или: it's amazing, isn't it?",
+   "gone": false
+  }
+ ],
+ "write": [],
+ "q6": [
+  {
+   "pid": 0,
+   "sig": "1 something you both know: our lessons, a series you've both seen, something in the news. share a feeling with a tag — your partner agrees!",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 tell your partner something from your week they don't know — good or bad. they react and ask two questions.",
+   "gone": false
+  }
+ ],
+ "questions.6": [
+  {
+   "pid": 0,
+   "sig": "1 something you both know: our lessons, a series you've both seen, something in the news. share a feeling with a tag — your partner agrees!",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 tell your partner something from your week they don't know — good or bad. they react and ask two questions.",
+   "gone": false
+  }
+ ]
+}

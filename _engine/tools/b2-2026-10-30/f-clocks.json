@@ -1,0 +1,744 @@
+{
+ "type": "revision-field",
+ "board": {
+  "col": "Vocabulary",
+  "value": 200
+ },
+ "title": "The clocks go back",
+ "boxes": {
+  "BOX": [
+   {
+    "h": "THE CALL",
+    "items": [
+     "Our clocks **went back**.",
+     "It's **an hour later for you**.",
+     "**ten my time**, **one your time**",
+     "**Does that still work for you?**",
+     "**Could we make it** nine?"
+    ]
+   },
+   {
+    "h": "SMALL TALK",
+    "items": [
+     "**an extra hour of sleep**",
+     "It **really affects** my sleep.",
+     "I **find it hard to get used to**.",
+     "It **does more harm than good**."
+    ]
+   }
+  ],
+  "CALL": [
+   {
+    "h": "THE CLOCKS WENT BACK",
+    "items": [
+     "Our clocks **went back** on Sunday,",
+     "so our call is now",
+     "**an hour later for you**:",
+     "**ten my time, one your time**.",
+     "**Does that still work for you?**"
+    ]
+   },
+   {
+    "h": "FIND A NEW TIME",
+    "items": [
+     "**Could we make it** earlier?",
+     "**That's** nine **my time**.",
+     "**What about** eleven **my time**?",
+     "Two **works for me**!"
+    ]
+   }
+  ]
+ },
+ "stages": [
+  {
+   "label": "🔁 Remember",
+   "blocks": [
+    {
+     "kind": "say",
+     "instr": "What would you say? Say it aloud. Then tap “Show the answer”.",
+     "task": [
+      "(([You live in Berlin. Your weekly call with Omar, a colleague in Dubai, is at 10 am your time. Your clocks went back last Sunday. In Dubai they don't change the clocks.]))",
+      "Leave Omar a voice message: tell him about the clocks and check the new time.",
+      "• • •"
+     ],
+     "answer": [
+      "(([You live in Berlin. Your weekly call with Omar, a colleague in Dubai, is at 10 am your time. Your clocks went back last Sunday. In Dubai they don't change the clocks.]))",
+      "Leave Omar a voice message: tell him about the clocks and check the new time.",
+      "Hi Omar! Just a heads-up: our clocks **went back** on Sunday, so our call is now **an hour later for you** — **ten my time**, **one your time**. **Does that still work for you?**",
+      "((go back → went back (не get back) · Does that still work (без s)))"
+     ],
+     "answer_title": "Suggested answer"
+    }
+   ]
+  },
+  {
+   "label": "📖 The call",
+   "blocks": [
+    {
+     "kind": "text",
+     "instr": "Complete the call and say the words. Tap the yellow and orange to check.",
+     "lines": [
+      {
+       "s": "Fiona",
+       "p": [
+        "Oh, I almost forgot! The clocks ",
+        {
+         "f": "g",
+         "r": "o"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "ack"
+        },
+        " on Sunday, so from next week our call will be an ",
+        {
+         "f": "h",
+         "r": "our"
+        },
+        " ",
+        {
+         "f": "l",
+         "r": "ater"
+        },
+        " ",
+        {
+         "f": "f",
+         "r": "or"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Emre",
+       "p": [
+        "So one o'clock for me?"
+       ]
+      },
+      {
+       "s": "Fiona",
+       "p": [
+        "Yes — ten ",
+        {
+         "f": "m",
+         "r": "y"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "ime"
+        },
+        ", one ",
+        {
+         "f": "y",
+         "r": "our"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "ime"
+        },
+        ". Does that still ",
+        {
+         "f": "w",
+         "r": "ork"
+        },
+        " ",
+        {
+         "f": "f",
+         "r": "or"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        "?"
+       ]
+      },
+      {
+       "s": "Emre",
+       "p": [
+        "Hmm, that's my lunch break. ",
+        {
+         "f": "C",
+         "r": "ould"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "e"
+        },
+        " ",
+        {
+         "f": "m",
+         "r": "ake"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "t"
+        },
+        " nine your time?"
+       ]
+      },
+      {
+       "s": "Fiona",
+       "p": [
+        "Sure! My body will still think it's ten."
+       ]
+      },
+      {
+       "s": "Emre",
+       "p": [
+        "Ha! We don't change the clocks here, so I never remember: do you lose an hour or get an extra one?"
+       ]
+      },
+      {
+       "s": "Fiona",
+       "p": [
+        "We get one! An ",
+        {
+         "f": "e",
+         "r": "xtra"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "our"
+        },
+        " of ",
+        {
+         "f": "s",
+         "r": "leep"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Emre",
+       "p": [
+        "Lucky you! See you next Friday, then — nine your time."
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        "the clocks ",
+        {
+         "b": "go back"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "/ɡəʊ ˈbæk/",
+         "o": 1
+        }
+       ],
+       "ru": "переводят часы назад (весной: go forward)"
+      },
+      {
+       "p": [
+        "an ",
+        {
+         "b": "hour later for you"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "/ˈaʊə ˈleɪtə/",
+         "o": 1
+        }
+       ],
+       "ru": "для тебя на час позже"
+      },
+      {
+       "p": [
+        "ten ",
+        {
+         "b": "my time"
+        },
+        ", one ",
+        {
+         "b": "your time"
+        }
+       ],
+       "ru": "в десять по моему, в час по твоему"
+      },
+      {
+       "p": [
+        "Does that still ",
+        {
+         "b": "work for you"
+        },
+        "?",
+        " ",
+        {
+         "f": "",
+         "r": "/wɜːk/",
+         "o": 1
+        }
+       ],
+       "ru": "тебе так всё ещё удобно?"
+      },
+      {
+       "p": [
+        {
+         "b": "Could we make it"
+        },
+        " nine?"
+       ],
+       "ru": "может, в девять?"
+      },
+      {
+       "p": [
+        "an ",
+        {
+         "b": "extra hour of sleep"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "/ˈekstrə ˈaʊər/",
+         "o": 1
+        }
+       ],
+       "ru": "поспать на час дольше"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "🃏 Cards",
+   "blocks": [
+    {
+     "kind": "cards",
+     "style": "kwt",
+     "instr": "Rewrite the message. Use the word in capitals without changing it.",
+     "cards": [
+      {
+       "front": "Is nine still OK for you?",
+       "key": "WORK",
+       "frame": "Does nine still ___?",
+       "answer": "work for you",
+       "back": "Does nine still **work for you**?",
+       "note": "Тебе всё ещё удобно в девять? · Does … work (без s): Does that still work for you?"
+      },
+      {
+       "front": "The time change is very bad for my sleep.",
+       "key": "AFFECTS",
+       "frame": "The time change really ___.",
+       "answer": "affects my sleep",
+       "back": "The time change really **affects my sleep**.",
+       "note": "Перевод часов сильно влияет на мой сон. · really affects ##/əˈfekts/## (не very affects): very не ставят перед глаголом."
+      },
+      {
+       "front": "Changing the clocks causes more problems than it solves.",
+       "key": "HARM",
+       "frame": "Changing the clocks does ___.",
+       "answer": "more harm than good",
+       "back": "Changing the clocks does **more harm than good**.",
+       "note": "Перевод часов приносит больше вреда, чем пользы."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "💬 Speaking",
+   "blocks": [
+    {
+     "kind": "calendars",
+     "instr": "Look at both calendars. Complete Sophie and Omar's call. Then tap the yellow to check.",
+     "cals": [
+      {
+       "title": "SOPHIE · Friday · Berlin",
+       "rows": [
+        [
+         "9:00",
+         "Team meeting",
+         "busy"
+        ],
+        [
+         "10:00",
+         "Call with Omar?",
+         "call"
+        ],
+        [
+         "11:00",
+         "free",
+         "free"
+        ],
+        [
+         "12:00",
+         "Lunch",
+         "busy"
+        ],
+        [
+         "13:00",
+         "free",
+         "free"
+        ],
+        [
+         "14:00",
+         "Dentist",
+         "busy"
+        ],
+        [
+         "15:00",
+         "free",
+         "free"
+        ],
+        [
+         "16:00",
+         "School pick-up",
+         "busy"
+        ]
+       ]
+      },
+      {
+       "title": "OMAR · Friday · Dubai",
+       "rows": [
+        [
+         "12:00",
+         "free",
+         "free"
+        ],
+        [
+         "13:00",
+         "Lunch with a client",
+         "busy"
+        ],
+        [
+         "14:00",
+         "free",
+         "free"
+        ],
+        [
+         "15:00",
+         "free",
+         "free"
+        ],
+        [
+         "16:00",
+         "Gym",
+         "busy"
+        ],
+        [
+         "17:00",
+         "free",
+         "free"
+        ],
+        [
+         "18:00",
+         "Family dinner",
+         "busy"
+        ],
+        [
+         "19:00",
+         "free",
+         "free"
+        ]
+       ]
+      }
+     ],
+     "who": "((Sophie: clocks went back · Omar: no clock change (3 hours ahead of her now)))",
+     "lines": [
+      {
+       "s": "Sophie",
+       "p": [
+        "Hi Omar! Our clocks ",
+        {
+         "f": "w",
+         "r": "ent back"
+        },
+        " on Sunday, so our call is now an ",
+        {
+         "f": "h",
+         "r": "our later for you"
+        },
+        ": ten ",
+        {
+         "f": "m",
+         "r": "y time"
+        },
+        ", one ",
+        {
+         "f": "y",
+         "r": "our time"
+        },
+        ". ",
+        {
+         "f": "D",
+         "r": "oes that still work for you"
+        },
+        "?"
+       ]
+      },
+      {
+       "s": "Omar",
+       "p": [
+        "Hmm, I've got lunch with a client at one. ",
+        {
+         "f": "C",
+         "r": "ould we make it"
+        },
+        " earlier? Twelve my time?"
+       ]
+      },
+      {
+       "s": "Sophie",
+       "p": [
+        "That's nine my time — I've got a team meeting. What about eleven ",
+        {
+         "f": "m",
+         "r": "y time"
+        },
+        "? That's two ",
+        {
+         "f": "y",
+         "r": "our time"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Omar",
+       "p": [
+        "Two ",
+        {
+         "f": "w",
+         "r": "orks for me"
+        },
+        "!"
+       ]
+      },
+      {
+       "s": "Sophie",
+       "p": [
+        "Great — eleven my time, two your time. See you on Friday!"
+       ]
+      }
+     ],
+     "box": "CALL"
+    },
+    {
+     "kind": "calendars",
+     "instr": "Your turn: find a new time for Chris and Deniz's Monday call. A is Chris, B is Deniz.",
+     "who": "((Chris (London): clocks went back · Deniz (Istanbul): no change, 3 hours ahead of Chris now · the call was 15:00 London time))",
+     "cals": [
+      {
+       "title": "CHRIS · Monday · London",
+       "rows": [
+        [
+         "9:00",
+         "free",
+         "free"
+        ],
+        [
+         "10:00",
+         "Meeting",
+         "busy"
+        ],
+        [
+         "11:00",
+         "free",
+         "free"
+        ],
+        [
+         "12:00",
+         "Lunch",
+         "busy"
+        ],
+        [
+         "13:00",
+         "free",
+         "free"
+        ],
+        [
+         "14:00",
+         "Training",
+         "busy"
+        ],
+        [
+         "15:00",
+         "Call with Deniz?",
+         "call"
+        ],
+        [
+         "16:00",
+         "free",
+         "free"
+        ]
+       ]
+      },
+      {
+       "title": "DENIZ · Monday · Istanbul",
+       "rows": [
+        [
+         "12:00",
+         "Meeting",
+         "busy"
+        ],
+        [
+         "13:00",
+         "free",
+         "free"
+        ],
+        [
+         "14:00",
+         "Doctor",
+         "busy"
+        ],
+        [
+         "15:00",
+         "free",
+         "free"
+        ],
+        [
+         "16:00",
+         "free",
+         "free"
+        ],
+        [
+         "17:00",
+         "free",
+         "free"
+        ],
+        [
+         "18:00",
+         "School pick-up",
+         "busy"
+        ],
+        [
+         "19:00",
+         "Yoga",
+         "busy"
+        ]
+       ]
+      }
+     ],
+     "box": "CALL",
+     "done": "The time that works for both: **13:00 London = 16:00 Istanbul**."
+    },
+    {
+     "kind": "calendars",
+     "instr": "Swap roles: find a new time for Pablo and Nino's Wednesday call. A is Nino, B is Pablo.",
+     "who": "((Pablo (Madrid): clocks went back · Nino (Tbilisi): no change, 3 hours ahead of Pablo now · the call was 16:00 Madrid time))",
+     "cals": [
+      {
+       "title": "PABLO · Wednesday · Madrid",
+       "rows": [
+        [
+         "9:00",
+         "free",
+         "free"
+        ],
+        [
+         "10:00",
+         "Doctor",
+         "busy"
+        ],
+        [
+         "11:00",
+         "free",
+         "free"
+        ],
+        [
+         "12:00",
+         "Lunch",
+         "busy"
+        ],
+        [
+         "13:00",
+         "free",
+         "free"
+        ],
+        [
+         "14:00",
+         "Training",
+         "busy"
+        ],
+        [
+         "15:00",
+         "free",
+         "free"
+        ],
+        [
+         "16:00",
+         "Call with Nino?",
+         "call"
+        ]
+       ]
+      },
+      {
+       "title": "NINO · Wednesday · Tbilisi",
+       "rows": [
+        [
+         "12:00",
+         "Meeting",
+         "busy"
+        ],
+        [
+         "13:00",
+         "free",
+         "free"
+        ],
+        [
+         "14:00",
+         "Lunch",
+         "busy"
+        ],
+        [
+         "15:00",
+         "free",
+         "free"
+        ],
+        [
+         "16:00",
+         "Gym",
+         "busy"
+        ],
+        [
+         "17:00",
+         "free",
+         "free"
+        ],
+        [
+         "18:00",
+         "free",
+         "free"
+        ],
+        [
+         "19:00",
+         "Choir practice",
+         "busy"
+        ]
+       ]
+      }
+     ],
+     "box": "CALL",
+     "done": "The time that works for both: **15:00 Madrid = 18:00 Tbilisi**."
+    },
+    {
+     "kind": "questions",
+     "instr": "Now discuss: is changing the clocks worth it? Use the box.",
+     "items": [
+      "**1**  Name **two** ways the clock change affects you or people you know: sleep, kids, pets, work calls…",
+      "**2**  Does it do more harm than good? Give **two** reasons.",
+      "**3**  Summer time or winter time all year: which would you keep, and why?"
+     ],
+     "box": "BOX",
+     "fast": "If you're done: who do you talk to in other time zones? Tell your partner what time it is there now: “It's … my time, … their time.”"
+    }
+   ]
+  }
+ ]
+}

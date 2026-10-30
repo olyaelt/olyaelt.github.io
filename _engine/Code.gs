@@ -29,6 +29,18 @@ const LIVELOG = "Live log";    // every change she made, for the lesson debrief:
 const LIVELOG_HEAD = ["Time", "Page", "Change", "Item", "Text"];
 const PUB = "Published";        // drafts ("listed": false) Olya published with the button on the page: Page | Published | Date
 const PUB_HEAD = ["Page", "Published", "Date"];
+const LWORK = "Lesson work";    // lesson tools (-live pages, 30.10): what each group types during the lesson, one row per device + chat
+const LWORK_HEAD = ["Key", "Page", "Chat", "Device", "Name", "Group", "Text", "Status", "Started", "Updated", "Started (ms)", "Updated (ms)"];
+const LNOTES = "Lesson notes";  // Olya's quick notes to a group while they are still typing (the group sees them above their input)
+const LNOTES_HEAD = ["ID", "Time", "Page", "Chat", "Device", "Name", "Words she pointed at", "Mark", "Note / correction", "Seen", "Time (ms)"];
+const LN_MARKS = ["good", "change", "fix", "note", "go", "say"];   // her homework feedback buttons (✓ Good, ✗ Change, ✎ Correction, 💬 Comment); go = "move on to …" (the group may say Not yet), say = 📢 a message to the room
+const LDECK = "Lesson decks";   // card pages (-live): per device, how often each card went back into the deck (↺ Again) and which were ✓ Got it
+const LDECK_HEAD = ["Key", "Page", "Device", "Name", "Again (card: times)", "Got it (cards)", "Updated", "Updated (ms)"];
+const LROOMS = "Lesson rooms";  // revision pages (30.10): where each screen is (stage), since when; who sits at it (her roster) and the moves
+const LROOMS_HEAD = ["Key", "Page", "Device", "Name (code)", "Where", "Where since", "First seen", "People (her roster)", "Moves", "Updated", "Where since (ms)", "First seen (ms)", "Updated (ms)"];
+const LSIG = "Lesson signals";  // revision pages: ✓/≈/✗ after "Show the answer", 🔖 on a gap, box phrases they ticked — one row per screen + item
+const LSIG_HEAD = ["Key", "Page", "Device", "Kind", "Item", "Value", "Updated", "Updated (ms)"];
+const LSIG_KINDS = ["check", "gap", "box", "reply"];   // reply = the group's answer to her "move on" / 📢 (go · later · ok)   // her homework feedback buttons: ✓ Good, ✗ Change, ✎ Correction, 💬 Comment
 const LEVELS = { easy: "easy", ok: "ok", hard: "hard" };
 const FIRST_STUDENT_ROW = 4;   // progress tabs: row 1 hidden keys, row 2 date, row 3 task names
 const WORDS = ["apple","berry","cloud","daisy","eagle","fern","grape","honey","iris","kite",
@@ -471,6 +483,8 @@ function teacher_(stu, p) {
   if (p.action === "summary") { const g = groupOfPage_((p.pages || [])[0]); return { ok: true, role: "teacher", name: stu.name, pages: {}, group: g ? groupStats_(g) : null, published: published_(p.pages) }; }
   if (p.action === "overview") return overview_(p);
   if (p.action === "liveOp") return liveOp_(clean_(p.tool, 80), p.op || {});
+  if (p.action === "toolNote") return toolNote_(stu, p);
+  if (p.action === "toolRoster") return toolRoster_(p);
   const page = clean_(p.page, 80);
   if (!page) return { ok: false, error: "no-page" };
   if (p.action === "feedback") return setFeedback_(p.id, p.text);
@@ -612,6 +626,160 @@ function liveOp_(tool, op) {
   return { ok: true, live: v };
 }
 
+// ---------- lesson tools, live version (30.10, «Running late»): Olya sees what the groups type and can leave them a quick note ----------
+// A group's page sends its text while they type (a draft) and when they press Send; one row per device + chat, the latest text wins.
+// The device is a random id kept on that device; the name only if a student's code is saved on it (else the group stays anonymous).
+// No code is needed to send (the groups often work on someone's laptop without a code); a cap per page keeps the sheet small.
+const LW_TOOL = /^[a-z0-9-]{1,40}\/[a-z0-9-]{1,40}$/, LW_DEV = /^[a-z0-9]{12,40}$/;
+function lwRows_(tool) {
+  const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(LWORK);
+  if (!sh || sh.getLastRow() < 2) return [];
+  return sh.getRange(2, 1, sh.getLastRow() - 1, LWORK_HEAD.length).getValues().map((r, i) => ({ row: i + 2, r: r })).filter(x => String(x.r[1]) === tool);
+}
+function lnRows_(tool, dev) {
+  const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(LNOTES);
+  if (!sh || sh.getLastRow() < 2) return [];
+  return sh.getRange(2, 1, sh.getLastRow() - 1, LNOTES_HEAD.length).getValues().map((r, i) => ({ row: i + 2, r: r }))
+    .filter(x => String(x.r[2]) === tool && (!dev || String(x.r[4]) === dev));
+}
+const lnOut_ = x => ({ id: String(x.r[0]), chat: Number(x.r[3]), dev: String(x.r[4]), q: String(x.r[6] || "").replace(/^'/, ""), k: String(x.r[7] || "note"), c: String(x.r[8] || "").replace(/^'/, ""), seen: !!x.r[9], ts: Number(x.r[10]) || 0 });
+function toolPost_(p) {
+  const tool = String(p.tool || ""), dev = String(p.dev || ""), chat = Number(p.chat);
+  if (!LW_TOOL.test(tool) || !LW_DEV.test(dev) || !Number.isInteger(chat) || chat < 0 || chat > 40) return { ok: false, error: "bad-input" };
+  const text = String(p.text == null ? "" : p.text).replace(/\r/g, "").slice(0, 1000), now = Date.now();
+  const sh = sheet_(LWORK, LWORK_HEAD), rows = lwRows_(tool), key = tool + "|" + chat + "|" + dev;
+  const old = rows.filter(x => String(x.r[0]) === key)[0];
+  if (!old && !text.trim()) return { ok: true, notes: toolNotesFor_(tool, dev) };
+  if (!old && rows.length >= 400) return { ok: false, error: "full" };
+  const stu = p.code ? findStudent_(p.code) : null;
+  const name = stu ? stu.name : old ? String(old.r[4]) : "", group = stu ? stu.group : old ? String(old.r[5]) : "";
+  const started = old ? Number(old.r[10]) || now : now;
+  const row = [key, tool, chat, dev, name, group, safeText_(text), p.sent === true ? "sent" : "typing", fmtDate_(started), fmtDate_(now), started, now];
+  sh.getRange(old ? old.row : Math.max(sh.getLastRow(), 1) + 1, 1, 1, row.length).setValues([row]);
+  return { ok: true, saved: true, notes: toolNotesFor_(tool, dev) };
+}
+// the group's page asks for Olya's notes (by its device id, no code); "seen" = the notes it has shown
+function toolNotesFor_(tool, dev) { return lnRows_(tool, dev).map(lnOut_).map(n => ({ id: n.id, chat: n.chat, q: n.q, k: n.k, c: n.c, ts: n.ts })); }
+function toolSeen_(tool, dev, ids) {
+  const want = (Array.isArray(ids) ? ids : []).map(String).slice(0, 50);
+  if (!want.length) return;
+  const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(LNOTES);
+  lnRows_(tool, dev).forEach(x => { if (!x.r[9] && want.indexOf(String(x.r[0])) > -1) sh.getRange(x.row, 10).setValue(fmtDate_(Date.now())); });
+}
+// a group's deck on a cards page: card number → times it went back into the deck, and the cards they got (one row per device, latest wins)
+function toolDeck_(p) {
+  const tool = String(p.tool || ""), dev = String(p.dev || "");
+  if (!LW_TOOL.test(tool) || !LW_DEV.test(dev)) return { ok: false, error: "bad-input" };
+  const card = x => { const i = Number(x); return Number.isInteger(i) && i >= 0 && i < 500 ? i : -1; };
+  const again = {}, got = [], a = p.again && typeof p.again === "object" ? p.again : {};
+  Object.keys(a).slice(0, 300).forEach(k => { const i = card(k), n = Number(a[k]); if (i > -1 && Number.isInteger(n) && n > 0 && n < 1000) again[i] = n; });
+  (Array.isArray(p.got) ? p.got : []).slice(0, 500).forEach(x => { const i = card(x); if (i > -1 && got.indexOf(i) < 0) got.push(i); });
+  const sh = sheet_(LDECK, LDECK_HEAD), n = sh.getLastRow() - 1, key = tool + "|" + dev;
+  const keys = n > 0 ? sh.getRange(2, 1, n, 1).getValues().map(r => String(r[0])) : [];
+  const i = keys.indexOf(key);
+  if (i < 0 && keys.filter(k => k.indexOf(tool + "|") === 0).length >= 200) return { ok: false, error: "full" };
+  const stu = p.code ? findStudent_(p.code) : null, now = Date.now();
+  const name = stu ? stu.name : i > -1 ? String(sh.getRange(i + 2, 4).getValue()) : "";
+  sh.getRange(i > -1 ? i + 2 : n + 2, 1, 1, LDECK_HEAD.length).setValues([[key, tool, dev, name, JSON.stringify(again), JSON.stringify(got), fmtDate_(now), now]]);
+  return { ok: true, saved: true };
+}
+function deckRows_(tool) {
+  const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(LDECK);
+  if (!sh || sh.getLastRow() < 2) return [];
+  const js = (v, d) => { try { return JSON.parse(String(v)) || d; } catch (err) { return d; } };
+  return sh.getRange(2, 1, sh.getLastRow() - 1, LDECK_HEAD.length).getValues().filter(r => String(r[1]) === tool)
+    .map(r => ({ dev: String(r[2]), name: String(r[3] || ""), again: js(r[4], {}), got: js(r[5], []), ts: Number(r[7]) || 0 }));
+}
+
+// where a screen is now (a stage of a revision page): no code; her own device never counts (the rooms open with the first group's screen)
+function toolWhere_(p) {
+  const tool = String(p.tool || ""), dev = String(p.dev || ""), at = String(p.at == null ? "" : p.at).replace(/[\r\n]+/g, " ").trim().slice(0, 80);
+  if (!LW_TOOL.test(tool) || !LW_DEV.test(dev)) return { ok: false, error: "bad-input" };
+  const stu = p.code ? findStudent_(p.code) : null;
+  if (stu && stu.group === TEACHER) return { ok: true, skipped: true };
+  const sh = sheet_(LROOMS, LROOMS_HEAD), n = sh.getLastRow() - 1, key = tool + "|" + dev, now = Date.now();
+  const rows = n > 0 ? sh.getRange(2, 1, n, LROOMS_HEAD.length).getValues() : [];
+  let i = -1; for (let k = 0; k < rows.length; k++) if (String(rows[k][0]) === key) { i = k; break; }
+  if (i < 0 && rows.filter(r => String(r[1]) === tool).length >= 100) return { ok: false, error: "full" };
+  const stale = old0 => !old0 || now - (Number(old0[12]) || 0) > 3 * 3600000;   // nothing from this screen for 3 hours: a new lesson (her rooms and list start again)
+  const old = i > -1 ? rows[i] : null, fresh = stale(old), first = !fresh ? Number(old[11]) || now : now;
+  const since = !fresh && String(old[4]) === at ? Number(old[10]) || now : now;
+  const name = stu ? stu.name : old ? String(old[3]) : "";
+  const row = [key, tool, dev, name, safeText_(at), fmtDate_(since), fmtDate_(first), old && !fresh ? old[7] : "", old && !fresh ? old[8] : "", fmtDate_(now), since, first, now];
+  sh.getRange(i > -1 ? i + 2 : n + 2, 1, 1, row.length).setValues([row]);
+  return { ok: true, saved: true };
+}
+// one tap of a group: ✓/≈/✗ after "Show the answer" (check), 🔖 on a gap (gap), a box phrase ticked (box); latest wins
+function toolSignal_(p) {
+  const tool = String(p.tool || ""), dev = String(p.dev || ""), kind = String(p.kind || "");
+  const item = String(p.item == null ? "" : p.item).replace(/[\r\n]+/g, " ").trim().slice(0, 120), value = String(p.value == null ? "" : p.value).trim().slice(0, 20);
+  if (!LW_TOOL.test(tool) || !LW_DEV.test(dev) || LSIG_KINDS.indexOf(kind) < 0 || !item) return { ok: false, error: "bad-input" };
+  const sh = sheet_(LSIG, LSIG_HEAD), n = sh.getLastRow() - 1, key = tool + "|" + dev + "|" + kind + "|" + item, now = Date.now();
+  const keys = n > 0 ? sh.getRange(2, 1, n, 1).getValues().map(r => String(r[0])) : [];
+  const i = keys.indexOf(key);
+  if (i < 0 && keys.filter(k => k.indexOf(tool + "|") === 0).length >= 3000) return { ok: false, error: "full" };
+  sh.getRange(i > -1 ? i + 2 : n + 2, 1, 1, LSIG_HEAD.length).setValues([[key, tool, dev, kind, safeText_(item), safeText_(value), fmtDate_(now), now]]);
+  return { ok: true, saved: true };
+}
+// her roster: who sits at which screen in this activity (tap a name, then a room); every move is kept with its time
+function toolRoster_(p) {
+  const tool = String(p.tool || ""), dev = String(p.dev || "");
+  if (!LW_TOOL.test(tool) || !LW_DEV.test(dev)) return { ok: false, error: "bad-input" };
+  const names = (Array.isArray(p.names) ? p.names : []).map(x => clean_(x, 40)).filter(Boolean).slice(0, 8);
+  const move = clean_(p.move, 120);
+  const sh = sheet_(LROOMS, LROOMS_HEAD), n = sh.getLastRow() - 1, key = tool + "|" + dev, now = Date.now();
+  const rows = n > 0 ? sh.getRange(2, 1, n, LROOMS_HEAD.length).getValues() : [];
+  let i = -1; for (let k = 0; k < rows.length; k++) if (String(rows[k][0]) === key) { i = k; break; }
+  const old = i > -1 ? rows[i] : null;
+  let moves = []; try { moves = JSON.parse(String(old ? old[8] : "") || "[]") || []; } catch (err) {}
+  if (move) moves = moves.concat([move]).slice(-60);
+  const row = old ? old.slice() : [key, tool, dev, "", "", "", "", "", "", "", "", "", ""];
+  row[7] = JSON.stringify(names); row[8] = JSON.stringify(moves); row[9] = fmtDate_(now); row[12] = now;
+  sh.getRange(i > -1 ? i + 2 : n + 2, 1, 1, row.length).setValues([row]);
+  return toolList_(tool);
+}
+function roomRows_(tool) {
+  const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(LROOMS);
+  if (!sh || sh.getLastRow() < 2) return [];
+  const js = (v, d) => { try { return JSON.parse(String(v)) || d; } catch (err) { return d; } };
+  return sh.getRange(2, 1, sh.getLastRow() - 1, LROOMS_HEAD.length).getValues().filter(r => String(r[1]) === tool)
+    .map(r => ({ dev: String(r[2]), name: String(r[3] || ""), at: String(r[4] || "").replace(/^'/, ""), names: js(r[7], []), moves: js(r[8], []), since: Number(r[10]) || 0, first: Number(r[11]) || 0, ts: Number(r[12]) || 0 }));
+}
+function signalRows_(tool) {
+  const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(LSIG);
+  if (!sh || sh.getLastRow() < 2) return [];
+  return sh.getRange(2, 1, sh.getLastRow() - 1, LSIG_HEAD.length).getValues().filter(r => String(r[1]) === tool)
+    .map(r => ({ dev: String(r[2]), kind: String(r[3]), item: String(r[4]).replace(/^'/, ""), value: String(r[5]).replace(/^'/, ""), ts: Number(r[7]) || 0 }));
+}
+// her roster's list: the students of the page's group (b2-… → B2), names only, for her screen
+function groupNames_(tool) {
+  const g = String(tool).split("-")[0].toUpperCase(), st = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(STUDENTS);
+  if (!st || st.getLastRow() < 2 || ["B2", "C1"].indexOf(g) < 0) return [];
+  return st.getRange(2, 1, st.getLastRow() - 1, 3).getValues().filter(r => String(r[2]).trim().toUpperCase() === g && String(r[1]).trim()).map(r => String(r[1]).trim());
+}
+
+// her screen: everything the groups typed on this page, with her notes (and the groups' decks on a cards page)
+function toolList_(tool) {
+  if (!LW_TOOL.test(tool)) return { ok: false, error: "bad-input" };
+  const notes = lnRows_(tool, "").map(lnOut_);
+  const rows = lwRows_(tool).map(x => ({ chat: Number(x.r[2]), dev: String(x.r[3]), name: String(x.r[4] || ""), text: String(x.r[6] || "").replace(/^'/, ""),
+    status: String(x.r[7]), started: Number(x.r[10]) || 0, ts: Number(x.r[11]) || 0 }));
+  rows.forEach(w => { w.notes = notes.filter(n => n.dev === w.dev && n.chat === w.chat).map(n => ({ id: n.id, q: n.q, k: n.k, c: n.c, seen: n.seen, ts: n.ts })); });
+  return { ok: true, rows: rows, notes: notes, decks: deckRows_(tool), rooms: roomRows_(tool), signals: signalRows_(tool), students: groupNames_(tool), now: Date.now() };
+}
+function toolNote_(stu, p) {
+  const tool = String(p.tool || ""), dev = String(p.dev || ""), chat = Number(p.chat);
+  if (!LW_TOOL.test(tool) || !LW_DEV.test(dev) || !Number.isInteger(chat) || chat < 0 || chat > 40) return { ok: false, error: "bad-input" };
+  const c = String(p.note == null ? "" : p.note).replace(/[\r\n]+/g, " ").trim().slice(0, 300), q = String(p.quote == null ? "" : p.quote).replace(/[\r\n]+/g, " ").trim().slice(0, 160);
+  const k = LN_MARKS.indexOf(p.mark) > -1 ? p.mark : "note";
+  if ((k === "note" || k === "fix" || k === "go" || k === "say") && !c) return { ok: false, error: "empty" };
+  if ((k === "good" || k === "change" || k === "fix") && !q) return { ok: false, error: "no-words" };
+  const w = lwRows_(tool).filter(x => String(x.r[0]) === tool + "|" + chat + "|" + dev)[0];
+  const now = Date.now(), id = now.toString(36) + Math.floor(Math.random() * 1e6).toString(36);
+  sheet_(LNOTES, LNOTES_HEAD).appendRow([id, fmtDate_(now), tool, chat, dev, w ? String(w.r[4]) : "", safeText_(q), k, safeText_(c), "", now]);
+  return toolList_(tool);
+}
+
 // "Where they got stuck" → ✓ Discussed: the marks and questions she went through in class (by work ID), and how many "hard" she has seen
 function discussed_(page, p) {
   const task = clean_(p.task, 80);
@@ -644,12 +812,35 @@ function setFeedback_(id, text) {
 
 function safeText_(s) { return /^[=+\-@]/.test(s) ? "'" + s : s; }
 
+// read-only questions skip the lock, so the groups' pages and her screen don't queue behind each other during a lesson
+function readOnly_(p) {
+  if (p.action === "live") return { ok: true, live: liveGet_(clean_(p.tool, 80)) };          // a lesson tool (live version) asks for Olya's changes: no code, no personal data
+  if (p.action === "toolNotes" && !(Array.isArray(p.seen) && p.seen.length)) {                 // a group's page asks for her notes to this device
+    const tool = String(p.tool || ""), dev = String(p.dev || "");
+    return LW_TOOL.test(tool) && LW_DEV.test(dev) ? { ok: true, notes: toolNotesFor_(tool, dev) } : { ok: false, error: "bad-input" };
+  }
+  if (p.action === "toolList") {                                                                // her screen: what the groups typed (her code only)
+    const stu = findStudent_(p.code);
+    if (!stu) return { ok: false, error: "unknown-code" };
+    return stu.group === TEACHER ? toolList_(String(p.tool || "")) : { ok: false, error: "not-teacher" };
+  }
+  return null;
+}
+
 function sync_(p) {
+  const quick = readOnly_(p);
+  if (quick) return quick;
   const lock = LockService.getScriptLock();
   try { lock.waitLock(20000); } catch (err) { return { ok: false, error: "busy" }; }
   try {
     if (p.action === "published") return { ok: true, published: published_(p.pages) };   // the group list without a code: page keys only
-    if (p.action === "live") return { ok: true, live: liveGet_(clean_(p.tool, 80)) };          // a lesson tool (live version) asks for Olya's changes: no code, no personal data
+    if (p.action === "toolPost") return toolPost_(p);
+    if (p.action === "toolDeck") return toolDeck_(p);
+    if (p.action === "toolWhere") return toolWhere_(p);                                        // where a group's screen is now (revision pages)
+    if (p.action === "toolSignal") return toolSignal_(p);                                      // ✓/≈/✗, 🔖 on a gap, a box phrase                                          // a group's ↺ Again / ✓ Got it on a cards page (-live): no code needed                                          // a group's text from a lesson tool (-live page): no code needed
+    if (p.action === "toolNotes") { const tool = String(p.tool || ""), dev = String(p.dev || "");   // her notes, and which ones the group has seen
+      if (!LW_TOOL.test(tool) || !LW_DEV.test(dev)) return { ok: false, error: "bad-input" };
+      toolSeen_(tool, dev, p.seen); return { ok: true, notes: toolNotesFor_(tool, dev) }; }
     const stu = findStudent_(p.code);
     if (!stu) return { ok: false, error: "unknown-code" };
     if (stu.group === TEACHER) return teacher_(stu, p);

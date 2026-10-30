@@ -1,0 +1,334 @@
+{
+ "type": "revision-field",
+ "board": {
+  "col": "Grammar",
+  "value": 200
+ },
+ "title": "Tags: sharing a feeling",
+ "boxes": {
+  "BOX": [
+   {
+    "h": "SHORT REPLIES",
+    "items": [
+     "**Yes, I did!** / **No, what happened?**",
+     "**I have!** / **No, I haven't.**"
+    ]
+   },
+   {
+    "h": "SHARE A FEELING ↘",
+    "items": [
+     "It's so annoying, **isn't it?**",
+     "— It **really is**!",
+     "It was amazing, **wasn't it?**",
+     "— It **really was**!"
+    ]
+   },
+   {
+    "h": "REACT AND ASK",
+    "items": [
+     "Oh no! **What happened?**",
+     "That's great! **When…?**"
+    ]
+   }
+  ],
+  "STRIP": [
+   {
+    "h": "HOW DOES IT FEEL?",
+    "items": [
+     "awful · scary · crazy",
+     "annoying · stressful",
+     "exhausting · weird",
+     "a shame · a nightmare",
+     "a relief · lovely · amazing"
+    ]
+   }
+  ]
+ },
+ "stages": [
+  {
+   "label": "🔁 Remember",
+   "blocks": [
+    {
+     "kind": "say",
+     "instr": "Share a feeling, or react and ask? What would you say? Then tap “Show the answer”.",
+     "task": [
+      "**1**  (([You and your colleague Dan have had five video calls today, one after another.]))",
+      "((Dan:)) Five calls in a row! My brain's stopped working.",
+      "((You:)) • • •",
+      "**2**  (([You and Anna both love the same little café. You haven't heard this news.]))",
+      "((Anna:)) Bad news! Our café's closing next month.",
+      "((You:)) • • •"
+     ],
+     "answer": [
+      "**1**  (([You and your colleague Dan have had five video calls today, one after another.]))",
+      "((Dan:)) Five calls in a row! My brain's stopped working.",
+      "((You:)) I know! It's **exhausting, isn't it?** ↘",
+      "((Вы оба это знаете → делишься впечатлением: тег, интонация вниз ↘))",
+      "**2**  (([You and Anna both love the same little café. You haven't heard this news.]))",
+      "((Anna:)) Bad news! Our café's closing next month.",
+      "((You:)) Oh no, that's a shame! **Do you know why?**",
+      "((Для тебя это новость → реагируешь и спрашиваешь))"
+     ]
+    }
+   ]
+  },
+  {
+   "label": "📖 Linden Street",
+   "blocks": [
+    {
+     "kind": "text",
+     "instr": "Remember Linden Street? Complete the replies. Then tap the yellow to check.",
+     "lines": [
+      {
+       "ctx": "A · Lucy and Ben have both read the chat."
+      },
+      {
+       "s": "Lucy",
+       "p": [
+        "Did you see Anna's message? Two cars in one night!"
+       ]
+      },
+      {
+       "s": "Ben",
+       "p": [
+        "I ",
+        {
+         "f": "d",
+         "r": "id"
+        },
+        ". It's awful, ",
+        {
+         "f": "i",
+         "r": "sn't it"
+        },
+        "?"
+       ]
+      },
+      {
+       "s": "Lucy",
+       "p": [
+        "It ",
+        {
+         "f": "r",
+         "r": "eally is"
+        },
+        ". I'm parking in the garage from now on."
+       ]
+      },
+      {
+       "ctx": "B · Tom hasn't read the chat."
+      },
+      {
+       "s": "Anna",
+       "p": [
+        "You won't believe what happened! Someone broke into my car last night!"
+       ]
+      },
+      {
+       "s": "Tom",
+       "p": [
+        "Oh no! That's awful! ",
+        {
+         "f": "D",
+         "r": "id they take anything"
+        },
+        "?"
+       ]
+      },
+      {
+       "s": "Anna",
+       "p": [
+        "My laptop and a bag."
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "🃏 Cards",
+   "blocks": [
+    {
+     "kind": "cards",
+     "style": "ours",
+     "instr": "Our sentences. Green = good, grey = could be better. How would you make it perfect English?",
+     "instr_next": "One more of our sentences. How would you make it perfect English?",
+     "check": "Perfect English",
+     "summary": "Could be better → perfect: the full list",
+     "box": "BOX",
+     "cards": [
+      {
+       "ctx": "о сериале, который вы оба смотрели",
+       "front": "<g>It was far too long</g>, ~~isn't~~ it?",
+       "back": "It was far too long, **wasn't** it?",
+       "why": "Was → wasn't: тег повторяет тот же глагол в том же времени. Far too long — отлично."
+      },
+      {
+       "ctx": "вы вместе отдыхаете в одном отеле",
+       "front": "<g>There are lots of pools</g>, aren't ~~they~~?",
+       "back": "There are lots of pools, aren't **there**?",
+       "why": "There are → aren't there. И ответ: There really are!"
+      },
+      {
+       "ctx": "вы вместе на террасе нового кафе",
+       "front": "<g>This place has a great view</g>, ~~isn't~~ it?",
+       "back": "This place has a great view, **doesn't** it?",
+       "why": "Has здесь — обычный глагол (иметь), вспомогательного нет → does: doesn't it? Сравни: It's great, isn't it?"
+      },
+      {
+       "ctx": "коллега: «Did you hear about the fire?»",
+       "front": "Yes, I ~~have~~. <g>It's scary, isn't it?</g>",
+       "back": "Yes, I **did**. It's scary, isn't it?",
+       "why": "Did you…? → I did. Тег — отлично."
+      }
+     ]
+    },
+    {
+     "kind": "cards",
+     "style": "share",
+     "instr": "Share a feeling, or react and ask? Use the box.",
+     "instr_next": "Share a feeling, or react and ask?",
+     "box_rule": "card 1: the box beside · cards 2–3: only the strip of feeling words (STRIP) · card 4: nothing (\"Now without the box\")",
+     "cards": [
+      {
+       "ctx": "You and your colleague Sam share an office printer. It keeps breaking down. You both saw it this morning.",
+       "a": "Have you seen the printer? It's broken again!",
+       "hint": "[short reply] [share a feeling]",
+       "back": "I have! It's so annoying, **isn't it?**",
+       "next": "It really is. I've started printing everything at home!",
+       "note": "Вы оба это знаете → делишься впечатлением: тег, интонация вниз ↘ · или: I know! It's a nightmare, isn't it?",
+       "support": "box"
+      },
+      {
+       "ctx": "Yesterday your friend Lucy's flight home was cancelled. You haven't heard anything since then.",
+       "a": "Guess what? They've found me a seat on a flight tonight!",
+       "hint": null,
+       "back": "Oh, that's a relief! **What time do you leave?**",
+       "next": "At eight. I'll be home by midnight.",
+       "note": "Для тебя это новость → реагируешь и спрашиваешь · или: Phew, that's great news!",
+       "support": "strip"
+      },
+      {
+       "ctx": "You and Ben support the same team. You both watched the final last night — your team won in the last minute.",
+       "a": "Did you see the match last night?",
+       "hint": null,
+       "back": "I did! It was amazing, **wasn't it?**",
+       "next": "It really was! I was shouting so loud I woke up the neighbours.",
+       "note": "Вы оба это знаете → делишься впечатлением: тег, интонация вниз ↘ · всё уже закончилось → was … wasn't it?",
+       "support": "strip"
+      },
+      {
+       "ctx": "It's the first sunny day after two weeks of rain. You meet a neighbour outside.",
+       "a": "Finally, some sun!",
+       "hint": null,
+       "back": "I know! It's lovely, **isn't it?**",
+       "next": "It's gorgeous! I'm not going back inside today.",
+       "note": "Вы оба это знаете → делишься впечатлением: тег, интонация вниз ↘ · или: It's amazing, isn't it?",
+       "support": "none",
+       "instr": "Now without the box: share a feeling, or react and ask?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "💬 Speaking",
+   "blocks": [
+    {
+     "kind": "model",
+     "instr": "Here's how the game sounds. Complete the replies. Then tap the yellow to check.",
+     "box": "BOX",
+     "parts": [
+      {
+       "title": "Card 1 · heads: you both know",
+       "lines": [
+        {
+         "s": "A",
+         "p": [
+          "Have you seen the coffee machine? It's broken again!"
+         ]
+        },
+        {
+         "s": "B",
+         "p": [
+          "I ",
+          {
+           "f": "h",
+           "r": "ave"
+          },
+          "! It's so annoying, ",
+          {
+           "f": "i",
+           "r": "sn't it"
+          },
+          "?"
+         ]
+        },
+        {
+         "s": "A",
+         "p": [
+          "It ",
+          {
+           "f": "r",
+           "r": "eally is"
+          },
+          ". I've had three teas already."
+         ]
+        }
+       ]
+      },
+      {
+       "title": "Card 5 · tails: news to B",
+       "lines": [
+        {
+         "s": "A",
+         "p": [
+          "Guess what? My neighbour's dog has had six puppies!"
+         ]
+        },
+        {
+         "s": "B",
+         "p": [
+          "Aw, ",
+          {
+           "f": "t",
+           "r": "hat's lovely"
+          },
+          "! ",
+          {
+           "f": "A",
+           "r": "re they going to keep them all"
+          },
+          "?"
+         ]
+        },
+        {
+         "s": "A",
+         "p": [
+          "No way! Do you want one?"
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "kind": "tool",
+     "page": "tags",
+     "instr": "Take a news card and flip a coin: do you both know it, or is it news to B? A starts, B replies. Swap.",
+     "plain": "slide 51 (the same 6 news, a die + a coin)"
+    },
+    {
+     "kind": "questions",
+     "instr": "Round 2: your real news. Then one more round with the cards.",
+     "items": [
+      "**1**  Something you BOTH know: our lessons, a series you've both seen, something in the news. Share a feeling with a tag — your partner agrees!",
+      "**2**  Tell your partner something from your week they don't know — good or bad. They react and ask **two** questions."
+     ],
+     "box": "BOX",
+     "fast": "If you're done: go back to Linden Street (📖) and say the replies from memory. Then tell one piece of news twice: your partner replies both ways."
+    }
+   ]
+  }
+ ]
+}

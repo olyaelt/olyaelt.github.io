@@ -1,0 +1,86 @@
+{
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "everyone at work talks about it all the time. it's getting a bit much. everyone at work keeps going on about it.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "i stopped watching after the third episode. i gave up after episode three.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "it was slow at first, but from episode four it's much better. it really picks up in episode four.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "people say it's brilliant, but i don't think so. it's not as good as everyone says.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "i've watched a few short clips, not the whole thing. i've only seen bits of it.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "some of the jokes feel wrong today. some of the jokes haven't aged well.",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "it reminds me of when i was young. it takes me back.",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "don't waste your time on it. honestly? i wouldn't bother.",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "watch an episode or two and see if you like it. give it a try.",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "ok, the music is good. i admit that. the music's good, i'll give it that.",
+   "gone": false
+  }
+ ],
+ "speaking": [
+  {
+   "pid": 0,
+   "sig": "name two films or series everyone keeps going on about right now. have you seen them — or only bits of them? agree which one you'd tell a friend to give a try.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "which is the worst: a slow start, a disappointing ending, or jokes that haven't aged well? put them in order and give a reason for each.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "think of a series you gave up on — or a popular one lots of people give up on. give two reasons why it's hard to get into. is it worth a second try?",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "name one series that really picks up after a slow start and one that's not as good as everyone says — and say why. haven't seen them? say what you've heard.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "an old film or cartoon that takes you back: name one thing that still works and one thing that hasn't aged well.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "name two films or series with a lot of hype. agree which one is really good and which one is not as good as everyone says. haven't seen one? say if all the hype put you off.",
+   "gone": false
+  }
+ ]
+}

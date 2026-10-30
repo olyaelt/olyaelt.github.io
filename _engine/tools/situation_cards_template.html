@@ -43,6 +43,10 @@ __BASE_CSS__
 .die i{width:.58rem;height:.58rem;border-radius:50%;background:#1D1D1B;place-self:center;visibility:hidden}
 .die i.p{visibility:visible}
 .die.blank{opacity:.35}
+/* tools 13 (her decision 29.10): a coin for a two-way choice */
+.coin{width:3.3rem;height:3.3rem;flex:none;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFE68A,#E8B730 70%);border:3px solid #9A6B00;display:grid;place-items:center;
+  font-weight:900;font-size:1.3rem;color:#5A3E00;box-shadow:0 3px 0 #9A6B00;will-change:transform}
+.coin.blank{opacity:.4}
 .react{margin:0;color:var(--muted);font-size:.98rem}
 .react b{color:var(--ink)}
 .row-act{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
@@ -84,7 +88,9 @@ __BASE_JS__
    The 18 cards come from a shuffled deck, no repeats until all have come up, then a new deck. */
 const TYPES = D.die.map.map(m => m.type);                        /* R, W, D */
 const facesOf = range => String(range).split(/[–-]/).map(Number);  /* "1–2" → [1, 2] */
-const typeOfFace = n => (D.die.map.find(m => facesOf(m.faces).includes(n)) || D.die.map[0]).type;
+/* tools 13: "coin": true = two faces (heads = map[0], tails = map[1]), tossed instead of rolled */
+const COIN = !!D.die.coin;
+const typeOfFace = n => COIN ? (D.die.map[n - 1] || D.die.map[0]).type : (D.die.map.find(m => facesOf(m.faces).includes(n)) || D.die.map[0]).type;
 const facesFor = t => D.die.map[TYPES.indexOf(t)].faces;
 const ansText = t => liveText(`answers.${t}`, D.answers[t]);
 const cardText = (i, f) => liveText(`cards.${i}.${f}`, D.cards[i][f]);
@@ -109,10 +115,12 @@ function draw(){
 
 /* ---------- the roll: the same calm motion as the council's die ---------- */
 const PIPS = {1:[5], 2:[1,9], 3:[1,5,9], 4:[1,3,7,9], 5:[1,3,5,7,9], 6:[1,3,4,6,7,9]};
-const dieHTML = n => `<span class="die ${n ? "" : "blank"}" aria-label="${n || ""}">${Array.from({length: 9}, (_, k) => `<i class="${n && PIPS[n].includes(k + 1) ? "p" : ""}"></i>`).join("")}</span>`;
+const coinHTML = n => `<span class="coin ${n ? "" : "blank"}" aria-label="${n === 1 ? "heads" : n === 2 ? "tails" : ""}">${n === 1 ? "H" : n === 2 ? "T" : "?"}</span>`;
+const dieHTML = n => COIN ? coinHTML(n) : `<span class="die ${n ? "" : "blank"}" aria-label="${n || ""}">${Array.from({length: 9}, (_, k) => `<i class="${n && PIPS[n].includes(k + 1) ? "p" : ""}"></i>`).join("")}</span>`;
 const setFace = (die, n) => die.querySelectorAll("i").forEach((p, j) => p.classList.toggle("p", PIPS[n].includes(j + 1)));
 function roll(){
   const c = S.cur; if(S.busy || !c) return;
+  if(COIN) return toss(c);
   const final = 1 + Math.floor(Math.random() * 6);
   const done = () => { c.face = final; c.type = typeOfFace(final); S.rolled = true; render(); S.rolled = false; };
   const slot = document.querySelector("[data-die]");
@@ -135,6 +143,23 @@ function roll(){
   setTimeout(() => { S.busy = false; done(); }, total + 150);
 }
 
+/* the coin: turns over and over, slows down and lands — calm, no bounce */
+function toss(c){
+  const final = Math.random() < .5 ? 1 : 2;
+  const done = () => { c.face = final; c.type = typeOfFace(final); S.rolled = true; render(); S.rolled = false; };
+  const slot = document.querySelector("[data-die]");
+  if(calm() || !slot){ done(); return; }
+  S.busy = true; document.querySelectorAll(".stage button").forEach(b => b.disabled = true);
+  const how = document.querySelector(".die-how"); if(how){ how.classList.add("wait"); how.textContent = "…"; }
+  const gaps = [70, 70, 80, 90, 100, 120, 140, 170, 210, 260], total = gaps.reduce((a, b) => a + b, 0);
+  let f = final === 1 ? (gaps.length % 2 ? 2 : 1) : (gaps.length % 2 ? 1 : 2);   /* so the last turn lands on the final face */
+  slot.innerHTML = coinHTML(f); const coin = slot.firstElementChild;
+  coin.animate([{transform: "translateY(0) rotateX(0deg)"}, {transform: "translateY(-18px) rotateX(900deg)", offset: .45},
+    {transform: "translateY(0) rotateX(1800deg)"}], {duration: total, easing: "cubic-bezier(.12,.75,.3,1)"});
+  let t = 0; gaps.forEach(g => { t += g; setTimeout(() => { f = 3 - f; coin.textContent = f === 1 ? "H" : "T"; }, t); });
+  setTimeout(() => { S.busy = false; done(); }, total + 150);
+}
+
 /* ---------- views ---------- */
 const exLine = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>');
 const host = (p, inner, opts) => `<div class="live-host ${liveDim(p)}" data-live-host>${inner}${liveTools(p, opts)}</div>`;
@@ -142,7 +167,7 @@ const host = (p, inner, opts) => `<div class="live-host ${liveDim(p)}" data-live
 function exampleHTML(){
   return `<section class="stage ${S.enter ? "enter" : ""}"><div class="stage-top"><span class="sit-label">⭐ Example</span></div>
     <div class="scard">${host("model.who", `<p class="who">${esc(modelText("who"))}</p>`)}${host("model.says", `<p class="says">${esc(modelText("says"))}</p>`)}</div>
-    <p class="ex-ask">How could you answer? Say all three aloud together.</p>
+    <p class="ex-ask">How could you answer? Say ${TYPES.length === 2 ? "both" : "all three"} aloud together.</p>
     <div class="types">${TYPES.map(t => `<div class="trow">${host(`answers.${t}`, `<span class="tline"><span class="type">${esc(facesFor(t))}</span><b>${esc(ansText(t))}</b></span>`)}
       ${S.exShown ? host(`model.${t}`, `<p class="tans ${S.exAnim ? "in" : ""}">${exLine(modelText(t))}</p>`) : ""}</div>`).join("")}</div>
     <div class="row-act"><button class="btn ${S.exShown ? "" : "primary"}" data-show-ex aria-pressed="${S.exShown}">${S.exShown ? "Hide the examples" : "Show the examples"}</button>
@@ -165,14 +190,14 @@ function cardsHTML(){
   const c = S.cur, n = DECK_SIZE();
   const top = `<div class="stage-top"><span class="sit-label">${c ? "Your card" : "Situation cards"}</span>${c ? `<span class="sit-count" aria-label="Card ${S.seen} of ${n}">${((S.seen - 1) % n) + 1} of ${n}</span>` : ""}</div>`;
   const pin = narrow() ? modelPinHTML() : "";
-  if(!c) return `<section class="stage ${S.enter ? "enter" : ""}">${pin}${top}<div class="empty-draw"><p>One of you reads the card, the other rolls and answers.</p><button class="btn primary big" data-draw>🃏 Draw a card</button></div></section>`;
+  if(!c) return `<section class="stage ${S.enter ? "enter" : ""}">${pin}${top}<div class="empty-draw"><p>One of you reads the card, the other ${COIN ? "tosses the coin" : "rolls"} and answers.</p><button class="btn primary big" data-draw>🃏 Draw a card</button></div></section>`;
   const how = c.type ? `<span class="die-how"><span class="dl">${esc(D.die.label)}</span><span class="type">${esc(facesFor(c.type))}</span><b>${esc(ansText(c.type))}</b></span>`
-    : `<span class="die-how wait"><span class="dl">${esc(D.die.label)}</span>Roll the die: it decides how you answer.</span>`;
+    : `<span class="die-how wait"><span class="dl">${esc(D.die.label)}</span>${COIN ? "Toss the coin" : "Roll the die"}: it decides how you answer.</span>`;
   return `<section class="stage ${S.enter ? "enter" : ""}">${pin}${top}
     ${host("cards." + c.i, `<div class="scard ${S.fresh ? "in" : ""}">${host(`cards.${c.i}.who`, `<p class="who">${esc(cardText(c.i, "who"))}</p>`)}${host(`cards.${c.i}.says`, `<p class="says">${esc(cardText(c.i, "says"))}</p>`)}</div>`, {edit: false})}
     <div class="die-row"><span data-die>${dieHTML(c.face)}</span>${how}</div>
     <p class="react">React: ${(D.react || []).map(r => `<b>${esc(r)}</b>`).join(" · ")}</p>
-    <div class="row-act"><button class="btn ${c.type ? "" : "primary"}" data-roll>🎲 ${c.type ? "Roll again" : "Roll"}</button>
+    <div class="row-act"><button class="btn ${c.type ? "" : "primary"}" data-roll>${COIN ? `🪙 ${c.type ? "Toss again" : "Toss the coin"}` : `🎲 ${c.type ? "Roll again" : "Roll"}`}</button>
       <button class="btn ${c.type && !c.flipped ? "primary" : ""}" data-flip aria-pressed="${c.flipped}">${c.flipped ? "Flip back" : "Flip"}</button>
       <span class="grow"></span><button class="btn ${c.flipped ? "primary" : ""}" data-draw>Next card →</button></div>
     ${c.flipped ? backHTML(c) : ""}</section>`;

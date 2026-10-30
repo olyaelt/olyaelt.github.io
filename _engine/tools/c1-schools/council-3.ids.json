@@ -1,0 +1,125 @@
+{
+ "lists.0.items": [
+  {
+   "pid": 0,
+   "sig": "managing money",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "first aid",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "cooking",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "doing your taxes",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "public speaking",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "using ai well (and checking it)",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "how to learn",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "dealing with difficult people",
+   "gone": false
+  }
+ ],
+ "lists.1.items": [
+  {
+   "pid": 0,
+   "sig": "latin",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "memorising dates in history",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "trigonometry",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "the periodic table",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "foreign languages",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "reading the classics",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "pe",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "music and art",
+   "gone": false
+  }
+ ],
+ "followUp": [
+  {
+   "pid": 0,
+   "sig": "the principal says no to one of your four changes. which one, do you think? what two arguments could change her mind? a phrase from the box for each.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "a parent says: \"we learned latin and it never did us any harm.\" what two things would you say back?",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "a student says: \"why read tolstoy when you can just read the summary online?\" what two things would you say back?",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "now the school wants to add one more subject from the list. which one? what would you cut to make room for it, and who'd be most upset?",
+   "gone": false
+  }
+ ],
+ "speaking": [
+  {
+   "pid": 0,
+   "sig": "think back to your own school: each of you, two subjects you would have cut and one you would have added. anything in common?",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "a 20-year-old relative asks: \"what should i study, now that ai can do half the jobs out there?\" what three pieces of advice would you give, with a phrase from the box for each?",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "cooking · public speaking · managing money · latin · foreign languages: which two would you keep for a 16-year-old, and which one would you drop? why?",
+   "gone": false
+  }
+ ]
+}

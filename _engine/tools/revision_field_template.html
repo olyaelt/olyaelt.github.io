@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>__TITLE__</title>
+<link rel="stylesheet" href="../../fonts/homework-sans.css">
+<style>
+__BASE_CSS__
+/* ---------- revision field (tools 13, B2 revision 30.10, her wish 03:26): one Jeopardy question = one page — Remember → 📖 text → 🃏 cards → 💬 speaking ---------- */
+.wrap.nobox{grid-template-columns:minmax(0,1fr);max-width:72rem}
+.wrap.nobox .side{display:none}
+.wrap.wide{grid-template-columns:minmax(0,1fr);max-width:90rem}
+.wrap.wide .side{display:none}
+.head .part{white-space:nowrap}
+.head h1{font-size:1.6rem}
+.blk{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 18px;display:grid;gap:12px;align-content:start}
+.blk.enter{animation:enterR .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes enterR{from{opacity:0;transform:translateX(50px)}to{opacity:1;transform:none}}
+.finstr{background:var(--card);color:var(--ink);border-left:6px solid var(--instr);border-radius:12px;padding:8px 14px;font-weight:700;font-size:1.12rem;margin:0;box-shadow:var(--shadow)}
+.finstr .bx{color:var(--flip-ink)}
+.ctx,.lctx{color:var(--muted)}
+.lctx{margin:4px 0 0;font-style:italic;font-size:1rem}
+.bx{color:var(--flip-ink);font-weight:900}
+.m-good{background:#BFF2B8;color:#111111;border-radius:3px}
+.m-del{text-decoration:line-through;color:#8A8D91}
+.ipa{color:#B45309;font-weight:600}
+.blk-nav{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.blk-nav .grow{flex:1}
+.bdots{display:flex;gap:6px}
+.bdots button{width:14px;height:14px;border-radius:50%;border:2px solid var(--line);background:var(--card);padding:0}
+.bdots button.on{background:var(--instr);border-color:var(--instr);transform:scale(1.2)}
+.bdots button.was{background:var(--line)}
+.board-back{display:flex;gap:10px;align-items:center}
+.board-back a{font-weight:900;color:var(--instr-text);text-decoration:none;border:2px solid var(--line);border-radius:99px;padding:4px 14px;background:var(--card)}
+/* 📖 a gapped text, as the homework dlg: first letters blue bold, the rest yellow; tap to open; IPA hidden orange */
+.tx{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px;align-items:start}
+.tx.single{grid-template-columns:minmax(0,1fr)}
+.dlg p{margin:0 0 6px;font-size:1.18rem;line-height:1.55}
+.dlg .sp{font-weight:900;margin-right:4px}
+.gp{font:inherit;border:0;padding:0;background:transparent;cursor:pointer;color:inherit}
+.gp .f{color:#0000FF;font-weight:900}
+.gp .r{background:#FFFF00;color:transparent;border-radius:3px;padding:0 1px}
+.gp.open .r{color:#0000FF}
+.gp.o .r{background:#F6B26B}
+.gp.o.open .r{background:#FDE7CF;color:#B45309;font-weight:600}
+.gp:not(.open):hover .r{outline:2px solid #E8D800}
+.bm{border:0;background:transparent;font-size:.8rem;padding:0 2px;opacity:.3;cursor:pointer;vertical-align:super}
+.bm.on{opacity:1}
+.bm:hover{opacity:.8}
+.gloss{background:var(--ground);border-radius:12px;padding:8px 12px;display:grid;gap:4px;font-size:1.02rem}
+.gloss .gl{margin:0;line-height:1.35}
+.gloss .ru{color:var(--muted);font-style:italic}
+.tx-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tx-tools .hint{color:var(--muted);font-size:.9rem}
+.parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr));gap:14px}
+.part-h{font-weight:900;color:var(--label);letter-spacing:.05em;text-transform:uppercase;font-size:.85rem;margin:0 0 4px}
+/* ✍️ write: the situation, their message, Send; on -live her notes above the input */
+.witem{display:grid;gap:6px;border-top:1px dashed var(--line);padding-top:10px}
+.witem:first-of-type{border-top:0;padding-top:0}
+.witem .lbl{font-weight:900;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;color:var(--label)}
+.witem .inmsg{justify-self:start;background:#FFFFFF;color:#111111;border-radius:12px;border-top-left-radius:3px;padding:6px 10px;box-shadow:0 1px 0 rgba(0,0,0,.12);border:1px solid var(--line);font-size:1.05rem}
+.witem textarea{font:inherit;font-size:1.1rem;border:2px solid var(--line);border-radius:12px;padding:8px 12px;min-height:3.2rem;resize:vertical;background:var(--card);color:var(--ink)}
+.witem .sentmsg{justify-self:end;background:#D9FDD3;color:#111111;border-radius:12px;border-top-right-radius:3px;padding:6px 10px;font-size:1.05rem;max-width:90%}
+.witem .w-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.share-note{font-size:.85rem;color:var(--muted);margin:0}
+.t-notes{display:grid;gap:6px}
+.t-notes:empty{display:none}
+/* 🔁 say: the task, Show the answer, one tap: how close were we */
+.say-lines p,.ans-lines p{margin:0 0 4px;font-size:1.15rem;line-height:1.45}
+.ans-lines{border-top:2px dashed var(--line);padding-top:10px}
+.ans-h{font-weight:900;color:var(--ok);letter-spacing:.06em;text-transform:uppercase;font-size:.85rem}
+.selfcheck{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.selfcheck .q{font-weight:800;color:var(--muted)}
+.selfcheck button{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:4px 12px;font-weight:800}
+.selfcheck button.on{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
+/* 🖼 picture */
+.pic img{width:100%;height:auto;max-height:52vh;object-fit:contain;border-radius:12px;display:block;background:var(--ground)}
+.pic .task{font-size:1.15rem;margin:0}
+/* 🃏 cards */
+.deck{display:grid;gap:12px}
+.fdots{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.fdots span,.fdots button{width:.95rem;height:.95rem;border-radius:50%;background:var(--line);border:0;padding:0}
+.fdots .got{background:var(--ok)}
+.fdots .again{background:var(--again)}
+.fdots .now{transform:scale(1.35);box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--instr)}
+.fc{position:relative;min-height:12rem;background:var(--card);border-radius:20px;border:2px solid var(--line);box-shadow:var(--shadow);display:grid;align-content:start;gap:10px;padding:22px 26px 28px;cursor:pointer}
+.fc.open{cursor:default;border-color:var(--instr)}
+.fc.enter{animation:deal .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes deal{from{opacity:0;transform:translateX(50px) rotate(2deg)}to{opacity:1;transform:none}}
+.fc .lbl{font-size:.85rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
+.fc .say{font-size:1.6rem;font-weight:700;line-height:1.3;margin:0}
+.fc .sm{font-size:1.15rem;margin:0}
+.fc .kw{color:var(--label);font-weight:900;letter-spacing:.03em;text-transform:uppercase;margin-left:.4em}
+.fc .frame{font-size:1.35rem;font-weight:700;margin:0}
+.fc .ans{border-top:2px dashed var(--line);padding-top:12px;display:grid;gap:6px}
+.fc .ans .say{color:var(--flip-ink)}
+.fc .ans .say .bx{color:var(--flip-ink);text-decoration:underline;text-decoration-thickness:2px}
+.fc .note{color:var(--muted);font-size:1rem;margin:0}
+.fc .chk{display:inline-block;background:var(--ok);color:var(--on-ok);border-radius:6px;padding:1px 8px;font-size:.8rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase}
+.fc .next{margin:0;font-size:1.1rem}
+.fc .corner{position:absolute;right:16px;bottom:8px;color:var(--muted);font-size:.88rem}
+.fc .hintline{color:var(--muted);margin:0}
+.fc.look{border-style:dashed}
+.deck-act{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.deck-act .btn{min-width:10rem}
+.endlist{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.endlist li{background:var(--ground);border-left:5px solid var(--again);border-radius:10px;padding:8px 14px}
+.endlist.all li{border-left-color:var(--ok)}
+.endlist .f{color:var(--muted);display:block;font-size:.95rem}
+.endlist .b{font-weight:900;color:var(--flip-ink);font-size:1.1rem}
+/* 🗓 calendars */
+.cals{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:14px}
+.cal{border:2px solid #3E6A8A;border-radius:10px;overflow:hidden;background:#FFFFFF;color:#111111}
+.cal h4{margin:0;background:#3E6A8A;color:#FFFFFF;padding:6px 10px;font-size:.95rem;letter-spacing:.04em}
+.cal .r{display:grid;grid-template-columns:4.2rem 1fr;border-top:1px solid #FFFFFF;font-size:1rem}
+.cal .r span{padding:4px 8px}
+.cal .r .t{font-weight:800}
+.cal .busy{background:#D9D9D9}
+.cal .free{background:#FFE699}
+.cal .call{background:#BDD7EE;font-weight:800}
+.cal-done{background:var(--ok-bg);color:var(--ok-ink);border-radius:10px;padding:8px 12px;font-weight:700;margin:0}
+/* ⚡ fast finishers */
+.fast{background:var(--bubble);color:var(--bubble-ink);border-radius:16px;padding:12px 16px;display:grid;gap:8px}
+.fast h3{margin:0;font-size:1.1rem}
+.fast p{margin:0;font-size:1.08rem}
+.tool-frame{width:100%;height:calc(100vh - 13rem);min-height:32rem;border:2px solid var(--line);border-radius:14px;background:var(--ground)}
+/* the box: X{{rest}} = the first letter shown, the rest hidden yellow (tap to open) */
+.ph .bh{background:#FFFF00;color:transparent;border-radius:3px}
+.ph .bh.open{color:#0000FF}
+/* her group dots on a deck (as on the cards pages) */
+.gdots{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;background:var(--card);border:2px dashed var(--line);border-radius:14px;padding:6px 12px}
+.gd-lbl{font-weight:900;font-size:.9rem}
+.gd{width:var(--s);height:var(--s);border-radius:50%;border:0;padding:0;background:var(--line);cursor:pointer;flex:none}
+.gd.gd-ok{background:var(--ok)}
+.gd.gd-again{background:var(--again)}
+.gd-meta{color:var(--muted);font-size:.82rem;margin-left:auto}
+__LW_CSS__
+@media (max-width:760px){ .tx{grid-template-columns:1fr} .blk{padding:12px} .fc .say{font-size:1.3rem} .tool-frame{height:80vh} }
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap"><main class="main" id="main"></main><div class="side" id="side"></div></div>
+<footer class="legal"><a href="../../impressum.html">Impressum</a> · <a href="../../datenschutz.html">Datenschutz</a></footer>
+<script>
+const D = __DATA__;
+const STICKER = "__STICKER__";
+const TOOLS_VERSION = "__TOOLS_VERSION__";
+const PAGE_ID = "__PAGE_ID__";
+const LIVE_ON = __LIVE__, LIVE_URL = "__SYNC_URL__";
+__BASE_JS__
+__LW_JS__
+/* ---------- the field ----------
+   Stages in a row on top, clickable both ways (her rule); a stage = blocks one after another (← Previous / Next →, dots); ⬅ Board under
+   everything. On the -live page the groups' work goes to her table (lesson work above): their texts, the cards they send back, ✓/≈/✗
+   after "Show the answer", 🔖 on a gap, the box phrases they tick, and where they are. What they type is also kept on this device. */
+const LESSON = PAGE_ID.split("/")[0];
+const mk = s => esc(s == null ? "" : s)
+  .replace(/##(\/[^#]+?\/)##/g, '<span class="ipa">$1</span>')
+  .replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>')
+  .replace(/\(\((.+?)\)\)/g, '<span class="ctx">$1</span>')
+  .replace(/&lt;g&gt;(.+?)&lt;\/g&gt;/g, '<span class="m-good">$1</span>')
+  .replace(/~~(.+?)~~/g, '<span class="m-del">$1</span>');
+const KEY = "tool-field-" + PAGE_ID;
+let saved = store.get(KEY) || {w: {}, again: []};      /* this device: what they wrote ({chat: {text, sent}}), the cards they sent back */
+if(!saved.w) saved.w = {}; if(!Array.isArray(saved.again)) saved.again = [];
+const save = () => store.set(KEY, saved);
+/* every block gets an id; write items a chat number (her 📥 Groups), cards a number across the page (her dots) */
+/* permanent numbers from the build (her decision 30.10): blocks, cards and write items keep their number whatever is inserted or moved later,
+   so her table's counts, texts and notes stay with the same card */
+let chatN = 0, cardN = 0, blockN = 0;
+const BLOCKS = [], P = D._pids || {};
+D.stages.forEach((st, si) => st.blocks.forEach((b, bi) => {
+  b._id = `s${si}b${bi}`; b._si = si; b._bi = bi; b._pid = (P.blocks || [])[blockN] != null ? P.blocks[blockN] : blockN; blockN++; BLOCKS.push(b);
+  if(b.kind === "write") b.items.forEach(it => { it._chat = (P.write || [])[chatN] != null ? P.write[chatN] : chatN; chatN++; });
+  if(b.kind === "cards") b.cards.forEach(c => { c._n = (P.cards || [])[cardN] != null ? P.cards[cardN] : cardN; cardN++; c._b = b; });
+}));
+const writeItems = BLOCKS.filter(b => b.kind === "write").flatMap(b => b.items);
+const FAST = BLOCKS.map(b => b.fast).filter(Boolean);
+let S;
+function newState(){ S = {stage: 0, at: {}, view: "field", bs: {}, noFirst: false, enter: false, fast: null, look: null}; }
+newState();
+const curBlocks = () => D.stages[S.stage].blocks;
+const bIdx = () => Math.min(S.at[S.stage] || 0, curBlocks().length - 1);
+const curBlock = () => curBlocks()[bIdx()];
+const bs = b => S.bs[b._id] = S.bs[b._id] || {open: new Set(), shown: false, check: "", deck: null, look: null, done: false, bm: new Set()};
+const isLast = () => S.stage === D.stages.length - 1 && bIdx() === curBlocks().length - 1;
+
+/* ---------- 📖 gaps ---------- */
+function partsHTML(parts, b, prefix){
+  let k = 0; const st = bs(b);
+  return (parts || []).map(x => {
+    if(typeof x === "string") return mk(x);
+    if(x.b != null) return `<b class="bx">${esc(x.b)}</b>`;
+    const id = `${prefix}${k++}`, open = st.open.has(id), nf = S.noFirst && b.kind === "text";
+    const bm = open && !x.o && sharing() ? `<button class="bm ${st.bm.has(id) ? "on" : ""}" data-bm="${id}" title="We didn't know this" aria-label="We didn't know this">🔖</button>` : "";
+    return `<button class="gp ${open ? "open" : ""} ${x.o ? "o" : ""}" data-gap="${id}" aria-label="Show the missing part">${nf || !x.f ? "" : `<span class="f">${esc(x.f)}</span>`}<span class="r">${esc(nf ? (x.f || "") + x.r : x.r)}</span></button>${bm}`;
+  }).join("");
+}
+/* a gap's words (for 🔖: kept by the words, not by the place, so a corrected line keeps its marks) */
+function gapAnswer(b, id){
+  const m = id.match(/^([a-z]\d*)l(\d+)g(\d+)$/); if(!m) return id;
+  const lines = m[1] === "t" ? b.lines : m[1] === "x" ? (b.gloss || []).map(g => ({p: g.p})) : m[1] === "c" ? b.lines : m[1][0] === "m" ? b.parts[+m[1].slice(1)].lines : [];
+  const gaps = ((lines[+m[2]] || {}).p || []).filter(x => x && typeof x === "object" && x.r != null), g = gaps[+m[3]];
+  return g ? (g.f || "") + g.r : id;
+}
+const linesHTML = (lines, b, pre) => (lines || []).map((l, li) => l.ctx != null ? `<p class="lctx">${mk(l.ctx)}</p>` : `<p>${l.s ? `<b class="sp">${esc(l.s)}:</b>` : ""}${partsHTML(l.p, b, `${pre}l${li}g`)}</p>`).join("");
+const gapIds = (lines, pre) => (lines || []).flatMap((l, li) => (l.p || []).filter(x => x && typeof x === "object" && x.r != null).map((_, k) => `${pre}l${li}g${k}`));
+function allGaps(b){
+  if(b.kind === "text") return gapIds(b.lines, "t").concat(gapIds((b.gloss || []).map(g => ({p: g.p})), "x"));
+  if(b.kind === "model") return b.parts.flatMap((p, pi) => gapIds(p.lines, `m${pi}`));
+  if(b.kind === "calendars") return gapIds(b.lines, "c");
+  return [];
+}
+function textHTML(b){
+  const gl = b.gloss && b.gloss.length ? `<aside class="gloss" aria-label="Glossary">${b.gloss.map((g, gi) => `<p class="gl">${partsHTML(g.p, b, `xl${gi}g`)} <span class="ru">– ${esc(g.ru)}</span></p>`).join("")}</aside>` : "";
+  return `<div class="tx ${gl ? "" : "single"}"><div class="dlg">${linesHTML(b.lines, b, "t")}</div>${gl}</div>${gapTools(b)}`;
+}
+function gapTools(b){
+  const ids = allGaps(b), st = bs(b), all = ids.length && ids.every(id => st.open.has(id));
+  return ids.length ? `<div class="tx-tools"><button class="btn slim" data-showall="${b._id}">${all ? "Hide all" : "Show all"}</button>${S.noFirst && b.kind === "text" ? `<span class="hint">⚡ No first letters this time.</span>` : sharing() ? `<span class="hint">🔖 next to an opened gap = we didn't know this</span>` : ""}</div>` : "";
+}
+const modelHTML = b => `<div class="parts">${b.parts.map((p, pi) => `<div class="dlg">${p.title ? `<p class="part-h">${esc(p.title)}</p>` : ""}${linesHTML(p.lines, b, `m${pi}`)}</div>`).join("")}</div>${gapTools(b)}`;
+
+/* ---------- ✍️ write ---------- */
+function writeHTML(b){
+  return b.items.map(it => { const sv = saved.w[it._chat] || {};
+    return `<div class="witem" data-w="${it._chat}">${it.ctx ? `<p class="lctx">${mk(it.ctx)}</p>` : ""}${it.incoming ? `<div class="inmsg">${mk(it.incoming)}</div>` : ""}
+      <span class="lbl">${esc(it.label || "Your message")}</span>
+      ${sharing() ? `<div class="t-notes" data-tnotes="${it._chat}">${notesOf(it._chat).map(noteHTML).join("")}</div>` : ""}
+      ${sv.sent ? `<div class="sentmsg">${esc(sv.text)} <small>✓✓</small></div><div class="w-row"><button class="btn slim" data-wedit="${it._chat}">✏️ Change it</button><span class="share-note">${sharing() ? "Sent ✓ — Olya sees it too." : "Sent ✓ — only on this device."}</span></div>`
+        : `<textarea data-wta="${it._chat}" rows="2" placeholder="Type it together…" aria-label="${esc(it.label || "Your message")}">${esc(sv.text || "")}</textarea>
+           <div class="w-row"><button class="btn slim primary" data-wsend="${it._chat}" ${(sv.text || "").trim() ? "" : "disabled"}>Send ➤</button>${sharing() ? `<span class="share-note">👀 Olya sees what you type here${studentCode() ? " (with your name)" : ""} and may send you a quick tip.</span>` : ""}</div>`}</div>`; }).join("")
+    + (b.items.every(it => (saved.w[it._chat] || {}).sent) ? `<p class="share-note">Now compare with our chat (📖).</p>` : "");
+}
+function paintWriteNotes(){
+  document.querySelectorAll("[data-tnotes]").forEach(box => { const i = +box.dataset.tnotes, want = notesOf(i).map(n => n.id).join();
+    if(box.dataset.ids !== want){ box.innerHTML = notesOf(i).map(noteHTML).join(""); box.dataset.ids = want; } notesOf(i).forEach(n => seenNote(n.id)); });
+}
+/* ---------- 🔁 say ---------- */
+function sayHTML(b){
+  const st = bs(b), opts = [["yes", "✓ We said it like this"], ["close", "≈ Close"], ["no", "✗ Differently"]];
+  return `<div class="say-lines">${(st.shown ? b.answer : b.task).map(l => `<p>${mk(l)}</p>`).join("")}</div>
+    ${st.shown ? `<p class="ans-h">${esc(b.answer_title || "Check")}</p>
+      <div class="selfcheck"><span class="q">How close were you?</span>${opts.map(([v, l]) => `<button data-check="${v}" class="${st.check === v ? "on" : ""}" aria-pressed="${st.check === v}">${l}</button>`).join("")}</div>`
+      : `<div class="row-actions"><button class="btn primary" data-sayshow>Show the answer</button></div>`}`;
+}
+/* ---------- 🖼 picture, 🗓 calendars, 🔧 tool, 💬 questions ---------- */
+const pictureHTML = b => `<figure class="pic" style="margin:0"><img src="${esc(b.img)}" alt="${esc(b.alt || b.instr || "")}"></figure>${b.task ? `<p class="task">${mk(b.task)}</p>` : ""}`;
+function calendarsHTML(b){
+  const st = bs(b);
+  return `${b.who ? `<p class="lctx">${mk(b.who)}</p>` : ""}<div class="cals">${b.cals.map(c => `<div class="cal"><h4>${esc(c.title)}</h4>${c.rows.map(([t, l, s]) => `<div class="r ${esc(s)}"><span class="t">${esc(t)}</span><span>${esc(l)}</span></div>`).join("")}</div>`).join("")}</div>
+    ${b.lines ? `<div class="dlg">${linesHTML(b.lines, b, "c")}</div>${gapTools(b)}` : ""}
+    ${b.done ? (st.done ? `<p class="cal-done">${mk(b.done)}</p>` : `<div class="row-actions"><button class="btn primary" data-caldone>✓ Done — check the time</button></div>`) : ""}`;
+}
+const toolSrc = b => `${b.page}${LIVE_ON ? "-live" : ""}.html`;
+const toolHTML = b => `<iframe class="tool-frame" src="${toolSrc(b)}" title="${esc(b.instr || b.page)}"></iframe><p class="share-note"><a href="${toolSrc(b)}" target="_blank" rel="noopener">Open it in a new tab ↗</a></p>`;
+function questionsHTML(b){
+  const st = bs(b); if(st.spk) spkCur = st.spk; else { spkReset(); st.spk = spkCur; }
+  const base = "questions." + b._pid;   /* her ✏️ / Hide / order on these too, kept by permanent numbers */
+  return speakHTML(liveList(b.items, base), isLast() ? "" : `<button class="btn primary" data-next>Next →</button>`, "Speaking", base);
+}
+
+/* ---------- 🃏 cards: Again comes back 2–3 cards later, Got it into its dot; the end: Come back to these (+ the full list for "ours") ---------- */
+function newDeck(cards){ return {cards, queue: cards.map((_, i) => i), got: new Set(), again: new Set(), flipped: false, fresh: true}; }
+const deckOf = b => { const st = bs(b); if(!st.deck) st.deck = newDeck(b.cards); return st.deck; };
+function frontHTML(b, c, i){
+  if(b.style === "mix") b = c._b; const st = b.style;
+  if(st === "kwt") return `<p class="sm">${mk(c.front)}</p><p class="frame">${mk(c.frame)}<span class="kw">${esc(c.key)}</span></p>`;
+  if(st === "ours") return `${c.ctx ? `<p class="lctx">${esc(c.ctx)}</p>` : ""}<p class="say">${mk(c.front)}</p>`;
+  if(st === "share") return `${c.ctx ? `<p class="lctx">${mk(c.ctx)}</p>` : ""}<p class="say">A: ${mk(c.a)}</p>${c.hint ? `<p class="hintline">${esc(c.hint)}</p>` : ""}`;
+  return `<p class="say">${mk(c.front)}</p>`;
+}
+function backHTML(b, c){
+  if(b.style === "mix") b = c._b; const st = b.style;
+  if(st === "kwt") return `<p class="say">${mk(c.back)}</p>${c.note ? `<p class="note">${mk(c.note)}</p>` : ""}`;
+  if(st === "ours") return `${b.check ? `<span class="chk">${esc(b.check)}</span>` : ""}<p class="say">${mk(c.back)}</p>${c.why ? `<p class="note">${mk(c.why)}</p>` : ""}`;
+  if(st === "share") return `<p class="say">B: ${mk(c.back)}</p>${c.next ? `<p class="next">A: ${mk(c.next)}</p>` : ""}${c.note ? `<p class="note">${mk(c.note)}</p>` : ""}`;
+  return `<p class="say">${mk(c.back)}</p>${c.note ? `<p class="note">${mk(c.note)}</p>` : ""}`;
+}
+const cardInstr = (b, k, first) => b.style === "share" && b.cards[k].instr ? b.cards[k].instr : first || !b.instr_next ? b.instr : b.instr_next;
+function cardsHTML(b){
+  const d = deckOf(b), st = bs(b);
+  const dots = `<div class="fdots">${d.cards.map((c, i) => `<span class="${d.got.has(i) ? "got" : d.again.has(i) ? "again" : ""} ${d.queue[0] === i && d.queue.length ? "now" : ""}"></span>`).join("")}</div>`;
+  if(st.look != null){ const c = d.cards[st.look];
+    return `${dots}<div class="fc open look"><span class="lbl from-groups">${esc(st.lookLbl || "Looking back")}</span>${frontHTML(b, c, st.look)}<div class="ans">${backHTML(b, c)}</div></div>
+      <div class="deck-act"><button class="btn primary" data-lookdone>Back to the cards →</button></div>`; }
+  if(!d.queue.length){
+    const back = d.cards.filter((_, i) => d.again.has(i));
+    return `${dots}<div class="blk-end"><h3 style="margin:0">${back.length ? "Done! Come back to these" : "Done! You got them all"}</h3>
+      ${back.length ? `<ul class="endlist">${back.map(c => `<li><span class="f">${mk(cardFrontPlain(b, c))}</span><span class="b">${mk(c.back)}</span></li>`).join("")}</ul>` : ""}
+      ${b.style === "ours" && b.summary ? `<p class="part-h" style="margin-top:10px">${esc(b.summary)}</p><ul class="endlist all">${b.cards.map(c => `<li><span class="f">${mk(c.front)}</span><span class="b">${mk(c.back)}</span></li>`).join("")}</ul>` : ""}
+      <div class="row-actions" style="margin-top:10px">${back.length ? `<button class="btn" data-redo>Go through these again</button>` : `<button class="btn" data-restart>All the cards again</button>`}${isLast() ? "" : `<button class="btn primary" data-next>Next →</button>`}</div></div>`;
+  }
+  const i = d.queue[0], c = d.cards[i], first = d.got.size + d.again.size === 0;
+  return `${dots}<div class="fc ${d.flipped ? "open" : ""} ${d.fresh ? "enter" : ""}" data-flip ${d.flipped ? "" : `role="button" tabindex="0" aria-label="Show the answer"`}>
+      <span class="lbl">${esc(cardInstr(b, i, first) || "")}</span>${frontHTML(b, c, i)}
+      ${d.flipped ? `<div class="ans">${backHTML(b, c)}</div>` : `<span class="corner">tap to check ↓</span>`}</div>
+    <div class="deck-act">${d.flipped ? `<button class="btn again" data-again>↺ Again</button><button class="btn ok" data-got>✓ Got it</button>` : ""}</div>`;
+}
+const cardFrontPlain = (b, c) => (b.style === "mix" ? c._b.style : b.style) === "share" ? c.a : c.front;
+/* the box beside a card: a "share" card says how much support (box · strip · none, her rule: support fades) */
+function boxFor(b){
+  if(!b) return null;
+  if(b.kind === "cards" && b.style === "share"){ const d = deckOf(b), i = d.queue[0], c = i != null ? b.cards[i] : null, sup = c ? c.support : "none";
+    return sup === "box" ? "BOX" : sup === "strip" ? "STRIP" : null; }
+  return b.box || null;
+}
+
+/* ---------- her dots on a deck: which cards the groups sent back (as on the cards pages) ---------- */
+function deckStats(n){
+  const rows = (GW.decks || []).filter(r => r.ts >= gwSince());
+  return rows.reduce((s, r) => { const a = Number((r.again || {})[n]) || 0; return {again: s.again + a, screens: s.screens + (a ? 1 : 0), got: s.got + ((r.got || []).includes(n) ? 1 : 0)}; }, {again: 0, screens: 0, got: 0});
+}
+function groupDotsHTML(b){
+  if(!liveTeacher()) return "";
+  const n = (GW.decks || []).filter(r => r.ts >= gwSince()).length;
+  return `<div class="gdots" data-gdots="${b._id}"><span class="gd-lbl">👥 The groups:</span>${b.cards.map((c, i) => { const s = deckStats(c._n), size = s.again ? Math.min(2.2, 1.1 + .3 * s.again) : .95;
+    const tip = s.again ? `back into the deck ${s.again}× (${s.screens} screen${s.screens === 1 ? "" : "s"})` : s.got ? "got it — nobody sent it back" : "no group has answered it yet";
+    return `<button class="gd ${s.again ? "gd-again" : s.got ? "gd-ok" : ""}" style="--s:${size.toFixed(2)}rem" data-gd="${i}" title="${esc(cardFrontPlain(b, c).replace(/\(\(|\)\)|\*\*/g, ""))} — ${tip}" aria-label="Card ${i + 1}: ${tip}"></button>`; }).join("")}<span class="gd-meta">${n} screen${n === 1 ? "" : "s"}</span></div>`;
+}
+function onGroupData(){ document.querySelectorAll("[data-gdots]").forEach(el => { const b = BLOCKS.find(x => x._id === el.dataset.gdots); const h = groupDotsHTML(b); if(el.outerHTML !== h){ el.outerHTML = h; wireGroupDots(); } }); }
+function wireGroupDots(){ document.querySelectorAll("[data-gdots] [data-gd]").forEach(btn => btn.addEventListener("click", () => {
+  const b = BLOCKS.find(x => x._id === btn.closest("[data-gdots]").dataset.gdots), st = bs(b), i = +btn.dataset.gd, s = deckStats(b.cards[i]._n);
+  st.look = st.look === i ? null : i; st.lookLbl = `👥 ${s.again ? `Back into the deck ${s.again}× · ${s.screens} screen${s.screens === 1 ? "" : "s"}` : s.got ? "Nobody sent it back" : "No group has answered it yet"}`; render(); })); }
+
+/* ---------- ⚡ fast finishers (the last block): the fast line, their ↺ cards once more, the text again without first letters ---------- */
+function fastHTML(){
+  if(!isLast() || S.view !== "field") return "";
+  const again = saved.again.length, text = BLOCKS.find(b => b.kind === "text");
+  return `<section class="fast"><h3>⚡ If you're done</h3>${FAST.map(f => `<p>${mk(f)}</p>`).join("")}
+    <div class="row-actions">${again ? `<button class="btn slim" data-fast-cards>↺ Your ${again} hard card${again === 1 ? "" : "s"} once more</button>` : ""}${text ? `<button class="btn slim" data-fast-text>📖 The text again — no first letters</button>` : ""}</div></section>`;
+}
+function fastDeckBlock(){
+  const cards = saved.again.map(n => BLOCKS.filter(b => b.kind === "cards").flatMap(b => b.cards).find(c => c._n === n)).filter(Boolean);
+  return {kind: "cards", style: "mix", _id: "fastdeck", instr: "Your hard cards once more", cards};
+}
+
+/* ---------- the page ---------- */
+function blockHTML(b){
+  const body = b.kind === "text" ? textHTML(b) : b.kind === "model" ? modelHTML(b) : b.kind === "write" ? writeHTML(b) : b.kind === "say" ? sayHTML(b)
+    : b.kind === "picture" ? pictureHTML(b) : b.kind === "calendars" ? calendarsHTML(b) : b.kind === "tool" ? toolHTML(b)
+    : b.kind === "questions" ? questionsHTML(b) : b.kind === "cards" ? groupDotsHTML(b) + `<div class="deck">${cardsHTML(b)}</div>` : "";
+  const instr = b.kind === "cards" || b.kind === "questions" ? (b.kind === "questions" ? b.instr : "") : b.instr;
+  return `${instr ? `<p class="finstr">${mk(instr)}</p>` : ""}<section class="blk ${S.enter ? "enter" : ""}" data-blk="${b._id}">${body}</section>`;
+}
+function navHTML(){
+  const bl = curBlocks(), i = bIdx(), more = i < bl.length - 1, nextStage = D.stages[S.stage + 1];
+  const dots = bl.length > 1 ? `<span class="bdots">${bl.map((_, k) => `<button class="${k === i ? "on" : k < i ? "was" : ""}" data-bgo="${k}" aria-label="Part ${k + 1} of ${bl.length}"></button>`).join("")}</span>` : "";
+  return `<div class="blk-nav">${i ? `<button class="btn slim" data-prev>← Previous</button>` : ""}${dots}<span class="grow"></span>
+    ${more ? `<button class="btn slim primary" data-next>Next →</button>` : nextStage ? `<button class="btn slim primary" data-next>Next: ${esc(nextStage.label)} →</button>` : ""}</div>`;
+}
+const cellName = () => D.board ? `${D.board.col} · $${D.board.value}` : "";
+const boardHref = () => D.boardPage ? `${D.boardPage}${LIVE_ON ? "-live" : ""}.html` : "";
+function headHTML(){
+  const st = D.stages.map((s, i) => [String(i), s.label]).concat(liveTeacher() ? [["groups", "📥 Groups"]] : []);
+  return `<header class="head">${D.board ? `<span class="part">${esc(cellName())}</span>` : ""}<h1>${esc(D.title)}</h1>${stagesHTML(st, S.view === "groups" ? "groups" : String(S.stage))}</header>`;
+}
+function render(){
+  liveApply();
+  const main = document.getElementById("main"), side = document.getElementById("side"), wrap = document.getElementById("wrap");
+  let b = S.fast ? S.fast : curBlock(), box = S.view === "field" ? boxFor(b) : null;
+  const keepGrid = S.view === "groups" ? document.getElementById("gw-grid") : null;
+  wrap.classList.toggle("nobox", !box && S.view === "field"); wrap.classList.toggle("wide", S.view === "groups" || (b && b.kind === "tool"));
+  wrap.classList.toggle("groups", S.view === "groups");
+  const back = boardHref() ? `<div class="board-back"><a href="${boardHref()}">⬅ Board</a></div>` : "";
+  const bar = S.view === "field" ? liveBarHTML(liveLabel) : "";
+  if(S.view === "groups") main.innerHTML = headHTML() + groupsHTML() + back;
+  else if(S.fast) main.innerHTML = headHTML() + `<p class="finstr">↺ Your hard cards once more</p><section class="blk"><div class="deck">${cardsHTML(S.fast)}</div><div class="row-actions"><button class="btn" data-fast-close>← Back</button></div></section>` + back;
+  else main.innerHTML = bar + headHTML() + blockHTML(b) + navHTML() + fastHTML() + back;
+  if(keepGrid){ const g = document.getElementById("gw-grid"); if(g) g.replaceWith(keepGrid); }
+  const st = side.scrollTop; side.innerHTML = box && D.boxes[box] ? fieldBoxHTML(D.boxes[box]) : ""; side.scrollTop = st;
+  wireBox(side); wireBoxHidden(side);
+  S.enter = false; if(b && b.kind === "cards") deckOf(b).fresh = false;
+  wire(main); wireLive(main, p => { const m = String(p).match(/^questions\.(\d+)\.(\d+)$/); if(!m) return ""; const bl = BLOCKS.find(x => x._pid === +m[1]); return bl ? bl.items[+m[2]] || "" : ""; });
+  if(S.view === "groups") wireGroups(main); else { paintWriteNotes(); gwPaint(); }
+}
+/* the box with X{{rest}}: the first letter shown, the rest hidden yellow (tap the yellow to open it; tap the line to tick it) */
+const boxLineHTML = t => phHTML(t).replace(/\{\{(.+?)\}\}/g, '<span class="bh" data-bh>$1</span>');
+function fieldBoxHTML(box){
+  const items = box.map((g, gi) => `<h4>${esc(g.h)}</h4>` + g.items.map((t, ti) => `<button class="ph ${usedPhrases.has(gi + "." + ti) ? "used" : ""}" data-ph="${gi}.${ti}" data-pt="${esc(t.replace(/\*\*|\{\{|\}\}/g, ""))}" aria-pressed="${usedPhrases.has(gi + "." + ti)}">${boxLineHTML(t)}</button>`).join("")).join("");
+  return `<aside class="box" aria-label="Useful language"><div class="box-top"><img class="sticker" src="${STICKER}" alt="Useful language"></div>${items}</aside>`;
+}
+function wireBoxHidden(root){
+  root.querySelectorAll("[data-bh]").forEach(x => x.addEventListener("click", e => { if(x.classList.contains("open")) return; e.stopPropagation(); x.classList.add("open"); }, true));
+  root.querySelectorAll("[data-ph]").forEach(btn => btn.addEventListener("click", () => lwSignal("box", btn.dataset.pt, usedPhrases.has(btn.dataset.ph) ? 1 : 0)));
+}
+function goStage(i){ if(S.view === "field" && S.stage === i && !S.fast) return; S.view = "field"; S.fast = null; S.stage = i; S.enter = true; render(); scrollTo(0, 0); lwWhere(D.stages[i].label); }
+function wire(root){
+  const on = (q, fn) => root.querySelectorAll(q).forEach(x => x.addEventListener("click", e => fn(x, e)));
+  on("[data-stage]", x => { if(x.dataset.stage === "groups"){ if(S.view !== "groups"){ S.view = "groups"; S.fast = null; render(); scrollTo(0, 0); setTimeout(gwFetch, 0); } } else goStage(+x.dataset.stage); });
+  on("[data-next]", () => { const bl = curBlocks(), i = bIdx(); if(i < bl.length - 1){ S.at[S.stage] = i + 1; S.enter = true; render(); scrollTo(0, 0); } else if(S.stage < D.stages.length - 1) goStage(S.stage + 1); });
+  on("[data-prev]", () => { S.at[S.stage] = Math.max(0, bIdx() - 1); S.enter = true; render(); scrollTo(0, 0); });
+  on("[data-bgo]", x => { S.at[S.stage] = +x.dataset.bgo; S.enter = true; render(); });
+  const b = S.fast || curBlock(); if(!b) return;
+  /* gaps */
+  on("[data-gap]", x => { const st = bs(b), id = x.dataset.gap; st.open.has(id) ? st.open.delete(id) : st.open.add(id); render(); });
+  on("[data-showall]", () => { const st = bs(b), ids = allGaps(b), all = ids.every(id => st.open.has(id)); ids.forEach(id => all ? st.open.delete(id) : st.open.add(id)); render(); });
+  on("[data-bm]", (x, e) => { e.stopPropagation(); const st = bs(b), id = x.dataset.bm, onNow = !st.bm.has(id); onNow ? st.bm.add(id) : st.bm.delete(id); lwSignal("gap", `b${b._pid}:${gapAnswer(b, id)}`, onNow ? 1 : 0); render(); });
+  /* say */
+  on("[data-sayshow]", () => { bs(b).shown = true; render(); });
+  on("[data-check]", x => { const st = bs(b); st.check = x.dataset.check; lwSignal("check", "b" + b._pid, st.check); render(); });
+  /* calendars */
+  on("[data-caldone]", () => { bs(b).done = true; render(); });
+  /* write */
+  root.querySelectorAll("[data-wta]").forEach(ta => { const i = +ta.dataset.wta, send = root.querySelector(`[data-wsend="${i}"]`);
+    ta.addEventListener("input", () => { saved.w[i] = {text: ta.value, sent: false}; save(); send.disabled = !ta.value.trim(); shareDraft(i, ta.value, false); }); });
+  on("[data-wsend]", x => { const i = +x.dataset.wsend, ta = root.querySelector(`[data-wta="${i}"]`), v = ta.value.trim(); if(!v) return;
+    saved.w[i] = {text: v, sent: true}; save(); shareDraft(i, v, true); render(); });
+  on("[data-wedit]", x => { const i = +x.dataset.wedit; saved.w[i] = {text: (saved.w[i] || {}).text || "", sent: false}; save(); render(); const t = document.querySelector(`[data-wta="${i}"]`); if(t) t.focus(); });
+  /* cards */
+  const d = b.kind === "cards" ? deckOf(b) : null;
+  on("[data-flip]", () => { if(!d || d.flipped) return; d.flipped = true; render(); });
+  const answer = ok => { const i = d.queue.shift(), c = d.cards[i];
+    if(ok){ d.got.add(i); d.again.delete(i); } else { d.again.add(i); const k = 2 + Math.floor(Math.random() * 2); if(d.queue.length >= k) d.queue.splice(k, 0, i); else d.queue.push(i);
+      if(!saved.again.includes(c._n)){ saved.again.push(c._n); save(); } }
+    if(ok && b._id === "fastdeck"){ saved.again = saved.again.filter(n => n !== c._n); save(); }
+    if(b._id !== "fastdeck") lwDeck(c._n, ok);
+    d.flipped = false; d.fresh = true; render(); };
+  on("[data-again]", () => answer(false)); on("[data-got]", () => answer(true));
+  on("[data-redo]", () => { bs(b).deck = newDeck(d.cards.filter((_, i) => d.again.has(i))); if(b._id === "fastdeck") S.fast.cards = bs(b).deck.cards; render(); });
+  on("[data-restart]", () => { bs(b).deck = newDeck(b.cards); render(); });
+  on("[data-lookdone]", () => { bs(b).look = null; render(); });
+  wireGroupDots();
+  /* questions */
+  if(b.kind === "questions") wireSpeak(root, render);
+  /* fast finishers */
+  on("[data-fast-cards]", () => { S.fast = fastDeckBlock(); delete S.bs.fastdeck; render(); scrollTo(0, 0); });
+  on("[data-fast-close]", () => { S.fast = null; render(); });
+  on("[data-fast-text]", () => { const t = BLOCKS.find(x => x.kind === "text"); S.noFirst = true; bs(t).open.clear(); S.at[t._si] = t._bi; goStage(t._si); render(); });
+}
+document.addEventListener("keydown", e => {
+  if(e.target.closest && e.target.closest("input, textarea, select")) return;
+  const b = S.fast || curBlock(); if(S.view !== "field" || !b || b.kind !== "cards") return; const d = deckOf(b); if(!d.queue.length || bs(b).look != null) return;
+  if((e.key === " " || e.key === "Enter") && !d.flipped){ if(e.target.closest && e.target.closest("button, a")) return; e.preventDefault(); d.flipped = true; render(); }
+});
+/* lesson work on this page */
+/* her live bar: a question's own text as its label (paths "questions.<block number>.<place>") */
+const liveLabel = p => { const m = String(p).match(/^questions\.(\d+)\.(\d+)$/); if(!m) return p; const bl = BLOCKS.find(x => x._pid === +m[1]); return bl ? String(bl.items[+m[2]] || p) : p; };
+LW.tools = [{id: PAGE_ID, title: D.title, chat: n => { const k = writeItems.findIndex(it => it._chat === n), it = writeItems[k]; return it ? `🔁 ${it.label || "Your message"}${writeItems.length > 1 ? ` (${k + 1})` : ""}` : `Message #${n}`; }}]
+  .concat(Object.entries(D.embeds || {}).map(([page, e]) => ({id: LESSON + "/" + page, title: e.title, chat: n => { const ks = Object.keys(e.chats), k = ks.indexOf(String(n)); return `💬 Chat ${k > -1 ? k + 1 : "#" + n}${e.chats[n] ? " · " + e.chats[n] : ""}`; }})));
+LW.current = () => { const b = curBlock(); if(S.view !== "field" || !b || b.kind !== "write") return null; const open = b.items.find(it => !(saved.w[it._chat] || {}).sent); return open ? open._chat : null; };
+LW.onNotes = () => paintWriteNotes();
+LW.onGo = label => { const i = D.stages.findIndex(s => s.label === label); if(i > -1) goStage(i); };
+LW.stages = D.stages.map((s, i) => [i, s.label]);
+LW.board = D.boardPage && D.cell ? {id: LESSON + "/" + D.boardPage, cell: D.cell} : null;
+LW.groupsView = () => !!S && S.view === "groups";
+liveRerender = () => render();
+render();
+lwWhere(D.stages[0].label);
+</script>
+</body>
+</html>
