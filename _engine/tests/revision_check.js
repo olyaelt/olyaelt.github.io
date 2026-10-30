@@ -25,8 +25,10 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
     const p = await c.newPage(); p.on('pageerror', e => errs.push(rel + ': ' + e.message));
     const src = fs.readFileSync(path.join(site, rel), 'utf8').replace(/LIVE_URL = "https:\/\/script\.google\.com[^"]*"/, `LIVE_URL = "${URL_}"`);
     const tmp = path.join(path.dirname(path.join(site, rel)), '_rv_test_' + path.basename(rel)); fs.writeFileSync(tmp, src);
-    await p.goto('file://' + tmp); await p.waitForTimeout(400); fs.unlinkSync(tmp); return p;
+    await p.goto('file://' + tmp); await p.waitForTimeout(400); fs.unlinkSync(tmp); if(!opts.cloud) await cloudOff(p); return p;
   };
+  const cloudOff = p => p.evaluate(() => { if(typeof S !== 'undefined' && S && S.intro){ S.intro = false; render(); } }).catch(() => {});
+  const bubble = async (p, n) => { await p.click(`.stage-btn[data-stage="${n}"]`); await cloudOff(p); };
   const sheet = n => (env.sheets[n] ? env.sheets[n].d.slice(1) : []);
 
   // ---- the board: her ▶ Play reaches the groups' boards
@@ -52,7 +54,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
   out.board = await A.locator('.board-top').getAttribute('href'); expect('⬅ Board on the page', out.board === 'jeopardy-live.html', out.board);
   await A.fill('[data-wta="0"]', 'Sorry guys, I stuck in traffic, I be 15 minutes late'); await A.waitForTimeout(3000);
   out.draft = sheet('Lesson work').map(r => [r[2], r[4], r[6], r[7]]); expect('their message goes to her table while they type', out.draft.length === 1 && out.draft[0][1] === 'Anna' && /stuck in traffic/.test(out.draft[0][2]), out.draft);
-  await B.click('.stage-btn[data-stage="1"]'); await B.waitForTimeout(300);
+  await bubble(B, 1); await B.waitForTimeout(300);
   // her 📥 Groups
   const O = await open(L + 'f-late-live.html', 'teacher');
   out.teacherWhere = sheet('Lesson rooms').length; expect('her own screen never counts as a room', out.teacherWhere === 2, out.teacherWhere);
@@ -89,20 +91,21 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
   await B.evaluate(() => notesPoll()); await B.waitForTimeout(250);
   out.say = await B.locator('.lw-strip').innerText().catch(() => ''); expect('📢 reaches the rooms with OK', /2 minutes left/.test(out.say) && /OK/.test(out.say), out.say);
   // cards: Anna's screen sends a kwt card back; her dots on that deck
-  await A.evaluate(() => { const d = deckOf(curBlock()); }); await A.click('[data-flip]'); await A.click('[data-again]'); await A.waitForTimeout(2600);
+  out.goCloud = await A.evaluate(() => S.intro); expect('her ⏩ Go lands on the stage\'s cloud (her 13:41)', out.goCloud === true, out.goCloud); await cloudOff(A);
+  await A.click('[data-flip]'); await A.click('[data-again]'); await A.waitForTimeout(2600);
   out.deck = sheet('Lesson decks').map(r => r[4]); expect('Again goes to her table', out.deck.length === 1 && Object.values(JSON.parse(out.deck[0])).join() === '1', out.deck);
-  await O.click('.stage-btn[data-stage="2"]'); await O.waitForTimeout(200); await O.evaluate(() => gwFetch()); await O.waitForTimeout(300);
+  await bubble(O, 2); await O.waitForTimeout(200); await O.evaluate(() => gwFetch()); await O.waitForTimeout(300);
   out.dots = await O.locator('[data-gdots] .gd-again').count(); expect('her dots: one orange card', out.dots === 1, out.dots);
   // 🔖 on a gap, ✓/≈/✗, a box phrase
-  await B.click('.stage-btn[data-stage="1"]'); await B.locator('[data-gap]').first().click(); await B.waitForTimeout(100); await B.locator('[data-bm]').first().click(); await B.waitForTimeout(300);
-  await A.click('.stage-btn[data-stage="2"]'); await A.waitForTimeout(100); await A.evaluate(() => { const b = curBlock(), d = deckOf(b), k = d.queue.findIndex(i => b.cards[i]._b.box); d.queue.unshift(d.queue.splice(k, 1)[0]); render(); });   /* one deck per stage (her 12:17): bring an 'ours' card (with the box) to the top */ await A.waitForTimeout(150);
+  await bubble(B, 1); await B.locator('[data-gap]').first().click(); await B.waitForTimeout(100); await B.locator('[data-bm]').first().click(); await B.waitForTimeout(300);
+  await bubble(A, 2); await A.waitForTimeout(100); await A.evaluate(() => { const b = curBlock(), d = deckOf(b), k = d.queue.findIndex(i => b.cards[i]._b.box); d.queue.unshift(d.queue.splice(k, 1)[0]); render(); });   /* one deck per stage (her 12:17): bring an 'ours' card (with the box) to the top */ await A.waitForTimeout(150);
   await A.locator('aside.box [data-ph]').first().click(); await A.waitForTimeout(300);
   const T2 = await open(L + 'f-tags-live.html', 'anna'); await T2.click('[data-sayshow]'); await T2.click('[data-check="close"]'); await T2.waitForTimeout(300);
   out.signals = sheet('Lesson signals').map(r => [r[1].split('/')[1], r[3], r[5]]);
   expect('signals kept: 🔖 gap, box phrase, ≈ close', out.signals.some(r => r[1] === 'gap' && r[2] === '1') && out.signals.some(r => r[1] === 'box' && r[2] === '1') && out.signals.some(r => r[0] === 'f-tags' && r[1] === 'check' && r[2] === 'close'), out.signals);
   // ⚡ fast finishers: the last block of f-tags, with the hard card from this screen
-  await T2.click('.stage-btn[data-stage="2"]'); await T2.click('[data-flip]'); await T2.click('[data-again]'); await T2.waitForTimeout(100);
-  await T2.click('.stage-btn[data-stage="3"]'); await T2.evaluate(() => { S.at[3] = D.stages[3].blocks.length - 1; render(); }); await T2.waitForTimeout(150);
+  await bubble(T2, 2); await T2.click('[data-flip]'); await T2.click('[data-again]'); await T2.waitForTimeout(100);
+  await bubble(T2, 3); await T2.evaluate(() => { S.at[3] = D.stages[3].blocks.length - 1; render(); let g = 0; while (document.querySelector('.speak [data-speak-next]') && g++ < 20) document.querySelector('.speak [data-speak-next]').click(); }); await T2.waitForTimeout(150);   /* ⚡ only on the last question (her 15:17) */
   out.fast = await T2.locator('.fast').innerText().catch(() => ''); expect('⚡ If you\'re done: the fast line, the hard card, the text without first letters', /If you're done/.test(out.fast) && /Linden Street/.test(out.fast) && /1 hard card/.test(out.fast) && /no first letters/.test(out.fast), out.fast);
   await T2.click('[data-fast-text]'); await T2.waitForTimeout(150);
   out.noFirst = await T2.evaluate(() => ({stage: D.stages[S.stage].label, f: document.querySelectorAll('.dlg .gp .f').length})); expect('the text again: no first letters', /Recall/.test(out.noFirst.stage) && out.noFirst.f === 0, out.noFirst);

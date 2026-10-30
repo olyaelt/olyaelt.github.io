@@ -9,7 +9,7 @@
   --no:#C0392B; --no-bg:#FDECEB; --no-chip:#F9D2CF; --no-ink:#A1261B;
   --used:#BFF2B8; --used-ink:#1D1D1B;
   --a:#0693E3; --a-ink:#FFFFFF; --b:#FF9900; --b-ink:#1D1D1B;
-  --again:#E67E00; --on-ok:#FFFFFF; --on-no:#FFFFFF; --flip-ink:#0679BD; --tick:#B9B092; --instr-text:#0693E3;
+  --again:#E67E00; --on-ok:#FFFFFF; --on-no:#FFFFFF; --flip-ink:#0679BD; --tick:#B9B092; --instr-text:#0693E3; --fix-bg:#D6E6FF;
   --shadow:0 2px 0 rgba(29,29,27,.08), 0 10px 28px rgba(29,29,27,.08);
   --font-body:"Homework Sans","Calibri","Carlito","Segoe UI",system-ui,sans-serif;
   --radius:16px;
@@ -21,7 +21,7 @@
     --bubble:#3B391F; --bubble-ink:#F3F0D0;
     --ok:#62C774; --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8;
     --no:#FF8A80; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB;
-    --used:#2F5E35; --used-ink:#F1FFF0; --a:#1578C0; --again:#FFB14A; --on-ok:#0F2412; --on-no:#2A0D0A; --flip-ink:#6CC3FF; --tick:#70757C; --instr-text:#6CC3FF;
+    --used:#2F5E35; --used-ink:#F1FFF0; --a:#1578C0; --again:#FFB14A; --on-ok:#0F2412; --on-no:#2A0D0A; --flip-ink:#6CC3FF; --tick:#70757C; --instr-text:#6CC3FF; --fix-bg:#22345A;
     --shadow:0 2px 0 rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
     color-scheme:dark;
   }
@@ -32,7 +32,7 @@
   --bubble:#3B391F; --bubble-ink:#F3F0D0;
   --ok:#62C774; --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8;
   --no:#FF8A80; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB;
-  --used:#2F5E35; --used-ink:#F1FFF0; --a:#1578C0; --again:#FFB14A; --on-ok:#0F2412; --on-no:#2A0D0A; --flip-ink:#6CC3FF; --tick:#70757C; --instr-text:#6CC3FF;
+  --used:#2F5E35; --used-ink:#F1FFF0; --a:#1578C0; --again:#FFB14A; --on-ok:#0F2412; --on-no:#2A0D0A; --flip-ink:#6CC3FF; --tick:#70757C; --instr-text:#6CC3FF; --fix-bg:#22345A;
   --shadow:0 2px 0 rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
   color-scheme:dark;
 }

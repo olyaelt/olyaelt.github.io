@@ -125,7 +125,8 @@ const gwSince = () => Number(store.get(SINCE_KEY)) || 0;
 const RECENT = 3 * 3600000;
 const gwCut = () => GW.showOld ? gwSince() : Math.max(gwSince(), gwNow() - RECENT);
 const gwRows = () => GW.rows.filter(r => r.ts >= gwCut());
-const gwRooms = () => GW.rooms.filter(r => r.ts >= gwCut());
+/* her 15:35: a test screen left open since the morning kept "Rooms opened 08:51" — after her 🧹 Start fresh only screens that came after it count */
+const gwRooms = () => GW.rooms.filter(r => r.ts >= gwCut() && (GW.showOld || (r.first || r.ts) >= gwSince()));
 const toolOf = id => LW.tools.find(t => t.id === id) || {id, title: id, chat: i => `Chat ${i + 1}`};
 const chatName = (tool, i) => toolOf(tool).chat(i);
 function gwDevices(){
@@ -393,7 +394,7 @@ function wireGroups(root){
     b.textContent = !t ? "Nothing to copy yet" : (await copyText(t)) ? "Copied ✓" : "Couldn't copy"; setTimeout(() => { b.textContent = was; }, 2200); }));
   root.querySelectorAll("[data-gw-fresh]").forEach(b => b.addEventListener("click", () => {
     if(!b.dataset.sure){ b.dataset.sure = "1"; b.textContent = "Hide what's here now? Tap again"; return; }
-    store.set(SINCE_KEY, gwNow()); delete b.dataset.sure; b.textContent = "🧹 Start fresh"; gwRebuild(); }));
+    store.set(SINCE_KEY, gwNow()); if(LW.onFresh) LW.onFresh(); delete b.dataset.sure; b.textContent = "🧹 Start fresh"; gwRebuild(); }));   /* her 15:31: her own test answers on this page go too */
   /* 📢 to all rooms: the same strip on every screen of this page, with OK */
   const box = root.querySelector("#gw-sayall");
   root.querySelectorAll("[data-say-all]").forEach(b => b.addEventListener("click", () => { box.hidden = !box.hidden; if(!box.hidden) box.querySelector("input").focus(); }));

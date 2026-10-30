@@ -18,7 +18,7 @@
   --no:#C0392B; --no-bg:#FDECEB; --no-chip:#F9D2CF; --no-ink:#A1261B;
   --used:#BFF2B8; --used-ink:#1D1D1B;
   --a:#0693E3; --a-ink:#FFFFFF; --b:#FF9900; --b-ink:#1D1D1B;
-  --again:#E67E00; --on-ok:#FFFFFF; --on-no:#FFFFFF; --flip-ink:#0679BD; --tick:#B9B092; --instr-text:#0693E3;
+  --again:#E67E00; --on-ok:#FFFFFF; --on-no:#FFFFFF; --flip-ink:#0679BD; --tick:#B9B092; --instr-text:#0693E3; --fix-bg:#D6E6FF;
   --shadow:0 2px 0 rgba(29,29,27,.08), 0 10px 28px rgba(29,29,27,.08);
   --font-body:"Homework Sans","Calibri","Carlito","Segoe UI",system-ui,sans-serif;
   --radius:16px;
@@ -30,7 +30,7 @@
     --bubble:#3B391F; --bubble-ink:#F3F0D0;
     --ok:#62C774; --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8;
     --no:#FF8A80; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB;
-    --used:#2F5E35; --used-ink:#F1FFF0; --a:#1578C0; --again:#FFB14A; --on-ok:#0F2412; --on-no:#2A0D0A; --flip-ink:#6CC3FF; --tick:#70757C; --instr-text:#6CC3FF;
+    --used:#2F5E35; --used-ink:#F1FFF0; --a:#1578C0; --again:#FFB14A; --on-ok:#0F2412; --on-no:#2A0D0A; --flip-ink:#6CC3FF; --tick:#70757C; --instr-text:#6CC3FF; --fix-bg:#22345A;
     --shadow:0 2px 0 rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
     color-scheme:dark;
   }
@@ -41,7 +41,7 @@
   --bubble:#3B391F; --bubble-ink:#F3F0D0;
   --ok:#62C774; --ok-bg:#18301E; --ok-chip:#24502E; --ok-ink:#9BE3A8;
   --no:#FF8A80; --no-bg:#3A1E1C; --no-chip:#5A2622; --no-ink:#FFB4AB;
-  --used:#2F5E35; --used-ink:#F1FFF0; --a:#1578C0; --again:#FFB14A; --on-ok:#0F2412; --on-no:#2A0D0A; --flip-ink:#6CC3FF; --tick:#70757C; --instr-text:#6CC3FF;
+  --used:#2F5E35; --used-ink:#F1FFF0; --a:#1578C0; --again:#FFB14A; --on-ok:#0F2412; --on-no:#2A0D0A; --flip-ink:#6CC3FF; --tick:#70757C; --instr-text:#6CC3FF; --fix-bg:#22345A;
   --shadow:0 2px 0 rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
   color-scheme:dark;
 }
@@ -214,6 +214,9 @@ div.cell.sel .v{font-size:1rem;line-height:1}
 .cellacts button:disabled{opacity:.6;cursor:wait}
 .nowstrip{display:flex;align-items:center;gap:12px;background:#0693E3;color:#FFFFFF;border-radius:14px;padding:10px 16px;font-weight:900;font-size:1.2rem;text-decoration:none}
 .nowstrip .go{margin-left:auto;background:#FFFFFF;color:#0693E3;border-radius:99px;padding:4px 14px}
+/* her 15:17: ⬅ Board tapped by mistake — the way back to where they were */
+.backstrip{display:flex;align-items:center;gap:12px;border:3px solid #0693E3;color:var(--instr-text);background:var(--card);border-radius:14px;padding:8px 16px;font-weight:900;font-size:1.15rem;text-decoration:none}
+.backstrip .go{margin-left:auto;background:#0693E3;color:#FFFFFF;border-radius:99px;padding:4px 14px}
 .boardfoot{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:flex-end}
 .head .howgame{margin-left:auto}
 .cellwrap{position:relative;display:grid}
@@ -242,6 +245,10 @@ const params = new URLSearchParams(location.search);
    has its own), and its steps as small sub-steps under the field's tabs: one row of big tabs on the screen */
 const EMBED = params.get("embed") === "1";
 if(EMBED) document.documentElement.classList.add("embed");
+/* inside a field the field's Back / Next lead (her 13:24, 14:56): a page steps through its own parts with embNext / embBack and says when it has
+   nothing more (lwStepEnd); a page without them hands the step straight back, so the field's Next never does nothing */
+if(EMBED) addEventListener("message", e => { const m = e.data && e.data.lwStep; if(!m) return;
+  const end = typeof embNext !== "function" || (m === "next" ? embNext() : embBack()); if(end) try{ window.parent.postMessage({lwStepEnd: m}, "*"); }catch(err){} });
 /* **box phrase** in a speaking task or a follow-up = shown like the box phrases in the examples (checklist 8.07) */
 const boxMarks = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>');
 const calm = () => !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -271,8 +278,16 @@ const pop = el => { if(!el || calm()) return; el.classList.remove("pop"); void e
    say "go back to slide 74"; here nobody could). Next = the next unseen task after this one in the current order, then any unseen
    one they jumped over; Previous = back the way they came; the end buttons come only when everything has been seen. */
 const newCursor = () => ({key: null, seen: new Set(), hist: [], move: 0, go: null});
+/* inside a field (and on a field page) the questions go by position, like slides (her 15:18: Next was greyed with a question still to come,
+   because both had been seen once): Next = the next one, Back = the one before, the end = the last position */
+let SPK_POS = EMBED;
 function cursorPick(cur, list){
   const has = k => list.some(x => x.k === k), unseen = x => !cur.seen.has(x.k) && x.k !== cur.key && !x.hidden;
+  if(SPK_POS){ let at = Math.max(0, list.findIndex(x => x.k === cur.key));
+    if(cur.go != null && has(cur.go)) at = list.findIndex(x => x.k === cur.go);
+    else if(cur.move > 0) at = Math.min(at + 1, list.length - 1); else if(cur.move < 0) at = Math.max(at - 1, 0);
+    cur.key = list[at].k; cur.move = 0; cur.go = null; cur.seen.add(cur.key);
+    return {i: at, more: at < list.length - 1, back: at > 0}; }
   let key = cur.key;
   if(cur.go != null && has(cur.go)){ if(has(key)) cur.hist.push(key); key = cur.go; }
   else if(cur.move > 0){ const at = list.findIndex(x => x.k === key), nx = list.slice(at + 1).find(unseen) || list.find(unseen);
@@ -514,21 +529,36 @@ function render(){
   liveApply();
   const mine = liveTeacher(), nk = nowKey(), nowC = D.cells.find(c => cellKey(c) === nk);
   const strip = nowC ? (href(nowC) ? `<a class="nowstrip" href="${href(nowC)}">▶ Now playing: ${esc(nowC.col)} · $${nowC.value}<span class="go">Open →</span></a>` : `<div class="nowstrip">▶ Now playing: ${esc(nowC.col)} · $${nowC.value}</div>`) : "";
+  let left = null; try{ left = JSON.parse(sessionStorage.getItem("rf-left") || "null"); }catch(e){}
+  const backTo = left && Date.now() - left.t < 3 * 3600e3 && left.href ? `<a class="backstrip" href="${esc(left.href)}#resume">↩ Back to ${esc(left.cell ? left.cell + " — " : "")}${esc(left.title || "")}<span class="go">Where you were →</span></a>` : "";
   const grid = `<div class="jb" style="--cols:${D.cols.length}">${D.cols.map(c => `<div class="colh">${esc(c)}</div>`).join("")}
     ${D.values.map(v => D.cols.map(col => { const c = cellAt(col, v), k = c ? cellKey(c) : "", isNow = k && k === nk, played = k && (isNow || doneAt(k));
       const cls = `cell ${c && c.today && mine ? "today" : ""} ${k && doneAt(k) && !isNow ? "done" : ""} ${isNow ? "now" : ""}`;
       if(mine && c) return `<div class="cellwrap"><button class="${cls}" data-cell="${k}" ${busy ? "disabled" : ""} aria-label="${esc(col)} $${v}: ${esc(c.title || "")} — play">$${v}</button>${played ? `<button class="unplay" data-unplay="${k}" ${busy ? "disabled" : ""} title="Not played (a wrong click)" aria-label="Not played">↺</button>` : ""}</div>`;
       return c && c.page ? `<a class="${cls}" href="${href(c)}" aria-label="${esc(col)} $${v}">$${v}</a>` : `<span class="${cls} nolink">$${v}</span>`; }).join("")).join("")}</div>`;
   const note = !mine ? "" : `<p class="legend">👩‍🏫 Click the cell they choose: it lights up in every room and its page opens. ↺ on a played cell = not played. Orange = today's fields. <span id="live-status">${esc(liveMsg)}</span></p>`;
-  const foot = !mine ? "" : `<div class="boardfoot">${sureFresh ? `<span class="legend">All cells back to new, nothing lit up?</span><button class="btn slim primary" data-fresh-yes>🧹 Yes, start fresh</button><button class="btn slim" data-fresh-no>Cancel</button>` : `<button class="btn slim" data-fresh>🧹 Start fresh</button>`}</div>`;
+  const foot = !mine ? "" : `<div class="boardfoot">${sureFresh ? `<span class="legend">All cells back to new, and your test answers on this computer cleared?</span><button class="btn slim primary" data-fresh-yes>🧹 Yes, start fresh</button><button class="btn slim" data-fresh-no>Cancel</button>` : `<button class="btn slim" data-fresh>🧹 Start fresh</button>`}</div>`;
   const btns = (D.buttons || []).map(x => `<a class="btn slim primary howgame" href="${x.page}${LIVE_ON ? "-live" : ""}.html">${esc(x.label)}</a>`).join("");   /* 🎓 How the game works (f-demo) */
-  document.getElementById("main").innerHTML = `<header class="head"><h1>${esc(D.title)}</h1>${btns}</header>${strip}${note}${grid}${foot}`;
+  document.getElementById("main").innerHTML = `<header class="head"><h1>${esc(D.title)}</h1>${btns}</header>${backTo}${strip}${note}${grid}${foot}`;
   const on = (q, fn) => document.querySelectorAll(q).forEach(b => b.addEventListener("click", e => fn(b, e)));
   on("[data-cell]", b => { if(!busy){ sureFresh = false; play(b.dataset.cell); } });
   on("[data-unplay]", (b, e) => { e.stopPropagation(); if(!busy) unplay(b.dataset.unplay); });
   on("[data-fresh]", () => { sureFresh = true; render(); });
   on("[data-fresh-no]", () => { sureFresh = false; render(); });
-  on("[data-fresh-yes]", async () => { sureFresh = false; await liveOp("reset", ""); if(!/^not saved/.test(liveMsg)) liveMsg = "✓ all cells back to new"; render(); });
+  on("[data-fresh-yes]", async () => { sureFresh = false; const n = clearTraces(); await liveOp("reset", ""); if(!/^not saved/.test(liveMsg)) liveMsg = `✓ all cells back to new · your test answers cleared${n ? "" : ""}`; render(); });
+}
+/* her 15:31: 🧹 Start fresh before the lesson also clears what she typed and tapped while testing on this computer (every page of this
+   lesson: messages, cards sent back, her notes' read marks, where she was), and starts her 📥 Groups / 👥 panels from now on every page */
+function clearTraces(){
+  const dir = PAGE_ID.split("/")[0] + "/", pre = ["tool-field-", "tool-chat-", "tool-notes-", "tool-deckstats-", "tool-again-"]; let n = 0;
+  try{
+    for(let k = localStorage.length - 1; k >= 0; k--){ const key = localStorage.key(k); if(key && pre.some(p => key.startsWith(p + dir))){ localStorage.removeItem(key); n++; } }
+    const pages = new Set(D.cells.filter(c => c.page).map(c => c.page).concat((D.buttons || []).map(x => x.page)));
+    for(let k = 0; k < localStorage.length; k++){ const key = localStorage.key(k); if(key && key.startsWith("tool-work-since-" + dir)) pages.add(key.slice(("tool-work-since-" + dir).length)); }
+    pages.forEach(pg => localStorage.setItem("tool-work-since-" + dir + pg, JSON.stringify(Date.now())));
+    for(let k = sessionStorage.length - 1; k >= 0; k--){ const key = sessionStorage.key(k); if(key && (key === "rf-left" || key.startsWith("rf-pos:" + dir))) sessionStorage.removeItem(key); }
+  }catch(e){}
+  return n;
 }
 /* the groups' boards: every 10 s, shown at once */
 async function boardPoll(){

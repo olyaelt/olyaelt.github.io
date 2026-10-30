@@ -320,7 +320,7 @@
      "page": "tags",
      "instr": "Take a news card and flip a coin: do you both know it, or is it news to B? A starts, B replies. Swap.",
      "plain": "slide 51 (the same 6 news, a die + a coin)",
-     "tip": "Take a news card, then toss the coin: heads = you both know it, tails = it's news to B."
+     "tip": "Take a news card, then flip the coin: heads = you both know it, tails = it's news to B."
     },
     {
      "kind": "questions",

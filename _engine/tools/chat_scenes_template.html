@@ -111,6 +111,7 @@ const scPid = i => pidOf("scenes", i);
 LW.tools = [{id: PAGE_ID, title: D.title, chat: n => { const i = idxOf("scenes", n); return i < 0 ? `Chat #${n} (removed)` : `Chat ${i + 1}${D.scenes[i] ? " · " + scText(i, "contact") : ""}`; }}];
 LW.current = () => S && S.view === "chats" && !isModel(S.at) && !st(S.at).sent ? scPid(S.at) : null;
 LW.onNotes = () => paintNotes();
+LW.onFresh = () => { const v = S.view; saved = {}; save(); newGame(); S.view = v; };   /* 🧹 Start fresh in 📥 Groups: her test messages on this computer go too */
 LW.groupsView = () => !!S && S.view === "groups";
 const unseenElsewhere = () => [...new Set(NOTES.filter(n => !shown.has(n.id) && n.chat !== scPid(S.at) && n.k !== "go" && n.k !== "say").map(n => idxOf("scenes", n.chat)))].filter(i => order().includes(i));
 const notesBoxHTML = i => sharing() ? `<div class="t-notes" id="tnotes" aria-live="polite">${notesOf(scPid(i)).map(noteHTML).join("")}</div>` : "";
@@ -277,7 +278,6 @@ function embBack(){
   if(S.view === "chats"){ const ord = order(), pos = ord.indexOf(S.at); if(pos > 0){ goScene(ord[pos - 1]); return false; } }
   return true;
 }
-if(EMBED) addEventListener("message", e => { const m = e.data && e.data.lwStep; if(!m) return; const end = m === "next" ? embNext() : embBack(); if(end) try{ window.parent.postMessage({lwStepEnd: m}, "*"); }catch(err){} });
 liveRerender = () => render();
 render();
 </script>
