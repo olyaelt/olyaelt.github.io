@@ -18,12 +18,12 @@
   {
    "pid": 3,
    "sig": "cards one of our sentences. green = good, grey = could be better. how would you make it perfect english?",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 4,
    "sig": "cards how do you say it in english?",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 5,
@@ -34,17 +34,17 @@
  "cards": [
   {
    "pid": 0,
-   "sig": "gone missing gary has gone missing. gary has ___. nobody knows where gary is. missing пропал → has gone missing · also fine: gary is missing.",
+   "sig": "gone missing gary has gone missing. gary has ___. nobody knows where gary is. missing пропал → has gone missing · also fine: gary is missing. kwt",
    "gone": false
   },
   {
    "pid": 1,
-   "sig": "gary has been missing since friday. в чате офиса gary is missing since friday. с since — «с тех пор и до сих пор»: has been missing.",
+   "sig": "gary has been missing since friday. perfect english в чате офиса gary is missing since friday. ours с since — «с тех пор и до сих пор»: has been missing.",
    "gone": false
   },
   {
    "pid": 2,
-   "sig": "thanks for the heads-up! спасибо, что предупредила!",
+   "sig": "thanks for the heads-up! спасибо, что предупредила! say",
    "gone": false
   }
  ],

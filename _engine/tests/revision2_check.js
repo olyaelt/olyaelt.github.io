@@ -39,6 +39,12 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
         await p.fill('[data-wta]', 'No way! When did you last see him?'); await p.waitForTimeout(2600); await p.click('[data-wsend]'); await p.waitForTimeout(200);
         out.example = await p.locator('.ans-lines').innerText().catch(() => ''); expect('f-demo: after Send the example', /example/i.test(out.example) && /When did you last see him/.test(out.example), out.example);
         if (shots) await p.screenshot({path: path.join(shots, 'r2-demo.png')});
+        // her catch 11:58: the three practice cards are one deck (three dots), each with its own label
+        await p.click('.stage-btn[data-stage="2"]'); await p.waitForTimeout(150);
+        out.mix = {dots: await p.locator('.fdots span').count(), labels: []};
+        for (let k = 0; k < 3; k++) { out.mix.labels.push(await p.locator('.fc .lbl').innerText()); await p.click('[data-flip]'); await p.waitForTimeout(80); await p.click(k < 2 ? '[data-again]' : '[data-got]'); await p.waitForTimeout(120); }
+        out.mix.again = await p.locator('.fdots .again').count();
+        expect('f-demo Practice: one deck of three, own labels, Again counts', out.mix.dots === 3 && /three kinds/i.test(out.mix.labels[0]) && /our sentences/i.test(out.mix.labels[1]) && /how do you say/i.test(out.mix.labels[2]) && out.mix.again === 2, out.mix);
       }
       if (f === 'f-tags') {
         out.tags = {sw: await p.locator('[data-howto]').count(), before: await p.locator('.tip').count()};

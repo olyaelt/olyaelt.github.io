@@ -1110,7 +1110,9 @@ const BLOCKS = [], P = D._pids || {};
 D.stages.forEach((st, si) => st.blocks.forEach((b, bi) => {
   b._id = `s${si}b${bi}`; b._si = si; b._bi = bi; b._pid = (P.blocks || [])[blockN] != null ? P.blocks[blockN] : blockN; blockN++; BLOCKS.push(b);
   if(b.kind === "write") b.items.forEach(it => { it._chat = (P.write || [])[chatN] != null ? P.write[chatN] : chatN; chatN++; });
-  if(b.kind === "cards") b.cards.forEach(c => { c._n = (P.cards || [])[cardN] != null ? P.cards[cardN] : cardN; cardN++; c._b = b; });
+  /* a mixed deck from the data (f-demo, her catch 11:58: three kinds of card, one deck): each card its own style, check and label */
+  if(b.kind === "cards") b.cards.forEach(c => { c._n = (P.cards || [])[cardN] != null ? P.cards[cardN] : cardN; cardN++;
+    c._b = b.style === "mix" ? Object.assign({}, b, {style: c.style || "say", check: c.check || "", instr: c.instr || b.instr, instr_next: null}) : b; });
 }));
 const writeItems = BLOCKS.filter(b => b.kind === "write").flatMap(b => b.items);
 const FAST = BLOCKS.map(b => b.fast).filter(Boolean);
@@ -1224,7 +1226,7 @@ function backHTML(b, c){
   if(st === "share") return `<p class="say">B: ${mk(c.back)}</p>${c.next ? `<p class="next">A: ${mk(c.next)}</p>` : ""}${c.note ? `<p class="note">${mk(c.note)}</p>` : ""}`;
   return `<p class="say">${mk(c.back)}</p>${c.note ? `<p class="note">${mk(c.note)}</p>` : ""}`;
 }
-const cardInstr = (b, k, first) => b.style === "share" && b.cards[k].instr ? b.cards[k].instr : first || !b.instr_next ? b.instr : b.instr_next;
+const cardInstr = (b, k, first) => b.style === "mix" && b._id !== "fastdeck" ? (b.cards[k].instr || b.instr) : b.style === "share" && b.cards[k].instr ? b.cards[k].instr : first || !b.instr_next ? b.instr : b.instr_next;
 function cardsHTML(b){
   const d = deckOf(b), st = bs(b);
   const dots = `<div class="fdots">${d.cards.map((c, i) => `<span class="${d.got.has(i) ? "got" : d.again.has(i) ? "again" : ""} ${d.queue[0] === i && d.queue.length ? "now" : ""}"></span>`).join("")}</div>`;

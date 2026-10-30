@@ -130,7 +130,7 @@
    "blocks": [
     {
      "kind": "cards",
-     "style": "kwt",
+     "style": "mix",
      "instr": "Three cards, three kinds. Say your answer, then tap the card to check.",
      "tip": "↺ Again = \"we weren't sure\": the card comes back two or three cards later. ✓ Got it = done. Olya sees which cards came back.",
      "cards": [
@@ -140,32 +140,23 @@
        "frame": "Gary has ___.",
        "answer": "gone missing",
        "back": "Gary has **gone missing**.",
-       "note": "пропал → has gone missing · also fine: Gary is missing."
-      }
-     ]
-    },
-    {
-     "kind": "cards",
-     "style": "ours",
-     "instr": "One of our sentences. Green = good, grey = could be better. How would you make it perfect English?",
-     "check": "Perfect English",
-     "cards": [
+       "note": "пропал → has gone missing · also fine: Gary is missing.",
+       "style": "kwt"
+      },
       {
        "ctx": "в чате офиса",
        "front": "<g>Gary</g> ~~is missing~~ <g>since Friday</g>.",
        "back": "Gary **has been missing** since Friday.",
-       "why": "С since — «с тех пор и до сих пор»: has been missing."
-      }
-     ]
-    },
-    {
-     "kind": "cards",
-     "style": "say",
-     "instr": "How do you say it in English?",
-     "cards": [
+       "why": "С since — «с тех пор и до сих пор»: has been missing.",
+       "style": "ours",
+       "instr": "One of our sentences. Green = good, grey = could be better. How would you make it perfect English?",
+       "check": "Perfect English"
+      },
       {
        "front": "((Спасибо, что предупредила!))",
-       "back": "**Thanks for the heads-up!**"
+       "back": "**Thanks for the heads-up!**",
+       "style": "say",
+       "instr": "How do you say it in English?"
       }
      ]
     }
