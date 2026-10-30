@@ -303,7 +303,7 @@ function questionsHTML(b){
 }
 
 /* ---------- 🃏 cards: Again comes back 2–3 cards later, Got it into its dot; the end: Come back to these (+ the full list for "ours") ---------- */
-function newDeck(cards){ return {cards, queue: cards.map((_, i) => i), got: new Set(), again: new Set(), flipped: false, fresh: true}; }
+function newDeck(cards){ return {cards, queue: cards.map((_, i) => i), got: new Set(), again: new Set(), flipped: false, fresh: true, hist: []}; }
 const deckOf = b => { const st = bs(b); if(!st.deck) st.deck = newDeck(b.cards); return st.deck; };
 function frontHTML(b, c, i){
   if(b.style === "mix") b = c._b; const st = b.style;
@@ -322,10 +322,11 @@ function backHTML(b, c){
 const cardInstr = (b, k, first) => b.style === "mix" && b._id !== "fastdeck" ? (b.cards[k]._lbl || b.instr) : b.style === "share" && b.cards[k].instr ? b.cards[k].instr : first || !b.instr_next ? b.instr : b.instr_next;
 function cardsHTML(b){
   const d = deckOf(b), st = bs(b);
-  const dots = `<div class="fdots">${d.cards.map((c, i) => `<span class="${d.got.has(i) ? "got" : d.again.has(i) ? "again" : ""} ${d.queue[0] === i && d.queue.length ? "now" : ""}"></span>`).join("")}</div>`;
+  const nowI = st.look != null ? st.look : d.queue.length ? d.queue[0] : -1;   /* looking back: the dot of the card on screen */
+  const dots = `<div class="fdots">${d.cards.map((c, i) => `<span class="${d.got.has(i) ? "got" : d.again.has(i) ? "again" : ""} ${i === nowI ? "now" : ""}"></span>`).join("")}</div>`;
   if(st.look != null){ const c = d.cards[st.look];
     return `${dots}<div class="fc open look"><span class="lbl from-groups">${esc(st.lookLbl || "Looking back")}</span>${frontHTML(b, c, st.look)}<div class="ans">${backHTML(b, c)}</div></div>
-      <div class="deck-act"><button class="btn primary" data-lookdone>Back to the cards →</button></div>`; }
+      ${st.lookBack ? "" : `<div class="deck-act"><button class="btn primary" data-lookdone>Back to the cards →</button></div>`}`; }
   if(!d.queue.length){
     const back = d.cards.filter((_, i) => d.again.has(i));
     return `${dots}<div class="blk-end"><h3 style="margin:0">${back.length ? "Done! Come back to these" : "Done! You got them all"}</h3>
@@ -393,7 +394,7 @@ function blockHTML(b){
    the answers — Next first shows them (the gaps, the answer, the card's back, the time on the calendars), the next Next goes on. There is
    no way to jump ahead past the answers; only the stage bubbles on top move freely (for her "move on"). */
 const stepbarHTML = () => `<nav class="stepbar" aria-label="Back and next"><button class="btn" data-back ${canBack() ? "" : "disabled"}>← Back</button><span class="step-msg" id="step-msg" aria-live="polite"></span><button class="btn primary" data-step ${canNext() ? "" : "disabled"}>Next →</button></nav>`;
-const canBack = () => !!S.fast || bIdx() > 0 || S.stage > 0;
+const canBack = () => !!S.fast || bIdx() > 0 || S.stage > 0 || !!boardHref();
 const canNext = () => !!S.fast || !isLast() || stepPending(curBlock());
 function stepMsg(t){ const m = document.getElementById("step-msg"); if(m){ m.textContent = t; clearTimeout(stepMsg.t); stepMsg.t = setTimeout(() => { m.textContent = ""; }, 3500); } }
 /* what Next still has to show in this block (the answers), before it goes on */
@@ -401,7 +402,7 @@ function stepPending(b){
   if(!b) return false; const st = bs(b);
   if(b.kind === "write") return !liveTeacher() && b.items.some(it => !(saved.w[it._chat] || {}).sent);   /* her own screen (the demo) may go on without typing */
   if(b.kind === "say") return !st.shown;
-  if(b.kind === "cards") return deckOf(b).queue.length > 0;
+  if(b.kind === "cards") return deckOf(b).queue.length > 0 || (st.look != null && !!st.lookBack);
   if(b.kind === "calendars" && b.done && !st.done) return true;
   if(["text", "model", "calendars"].includes(b.kind)){ const ids = allGaps(b); return ids.length > 0 && !ids.every(id => st.open.has(id)); }
   if(b.kind === "questions") return !!document.querySelector(".speak [data-speak-next]");
@@ -409,7 +410,7 @@ function stepPending(b){
 }
 function sendItem(i, v){ saved.w[i] = {text: v, sent: true}; save(); shareDraft(i, v, true); }
 function deckAnswer(b, ok){
-  const d = deckOf(b), i = d.queue.shift(), c = d.cards[i];
+  const d = deckOf(b), i = d.queue.shift(), c = d.cards[i]; d.hist.push(i);
   if(ok){ d.got.add(i); d.again.delete(i); } else { d.again.add(i); const k = 2 + Math.floor(Math.random() * 2); if(d.queue.length >= k) d.queue.splice(k, 0, i); else d.queue.push(i);
     if(!saved.again.includes(c._n)){ saved.again.push(c._n); save(); } }
   if(ok && b._id === "fastdeck"){ saved.again = saved.again.filter(n => n !== c._n); save(); }
@@ -425,6 +426,8 @@ function stepNext(){
       render(); if(empty){ const t = document.querySelector(`[data-wta="${empty._chat}"]`); if(t) t.focus(); stepMsg("✍️ Type your message first"); } return; } }
   if(b.kind === "say" && !st.shown){ st.shown = true; render(); return; }
   if(b.kind === "cards"){ const d = deckOf(b);
+    if(st.look != null && !st.lookBack){ st.look = null; render(); return; }   /* her 👥 dot view → back to the cards */
+    if(st.look != null && st.lookBack){ const k = d.hist.lastIndexOf(st.look); st.look = k > -1 && k < d.hist.length - 1 ? d.hist[k + 1] : null; if(st.look == null) st.lookBack = false; render(); return; }
     if(d.queue.length){ if(!d.flipped){ d.flipped = true; render(); } else deckAnswer(b, true); return; }   /* an open card + Next = ✓ Got it (her answer 12:18) */
     if(S.fast){ S.fast = null; render(); return; } }
   if(b.kind === "calendars" && b.done && !st.done){ st.done = true; render(); return; }
@@ -434,9 +437,18 @@ function stepNext(){
   if(i < bl.length - 1) goBlock(S.stage, i + 1); else if(S.stage < D.stages.length - 1) goStage(S.stage + 1);
 }
 function stepBack(){
+  const b = S.fast || curBlock();
+  /* in a deck Back is the card before, like the slide before (her 12:58): the answer side → its front → the card answered before (open,
+     "Looking back") → … → the first card → the task before */
+  if(b && b.kind === "cards"){ const d = deckOf(b), st = bs(b);
+    if(st.look != null && st.lookBack){ const k = d.hist.lastIndexOf(st.look); if(k > 0){ st.look = d.hist[k - 1]; render(); return; } st.look = null; st.lookBack = false; }
+    else if(d.flipped){ d.flipped = false; render(); return; }
+    else if(d.hist.length){ st.look = d.hist[d.hist.length - 1]; st.lookBack = true; st.lookLbl = "↩ Looking back"; render(); return; } }
   if(S.fast){ S.fast = null; render(); return; }
-  const b = curBlock(); if(b && b.kind === "questions"){ const pv = document.querySelector(".speak [data-speak-prev]"); if(pv){ pv.click(); return; } }
+  if(b && b.kind === "say" && bs(b).shown){ bs(b).shown = false; render(); return; }   /* the answer → the question, like the slide before */
+  if(b && b.kind === "questions"){ const pv = document.querySelector(".speak [data-speak-prev]"); if(pv){ pv.click(); return; } }
   const i = bIdx(); if(i > 0) goBlock(S.stage, i - 1); else if(S.stage > 0){ const k = S.stage - 1; goBlock(k, D.stages[k].blocks.length - 1); }
+  else if(boardHref()) location.href = boardHref();   /* the very first step: back to the board (her 13:04) */
 }
 const cellName = () => D.board && D.board.col ? `${D.board.col} · $${D.board.value}` : "";
 const boardHref = () => D.boardPage ? `${D.boardPage}${LIVE_ON ? "-live" : ""}.html` : "";

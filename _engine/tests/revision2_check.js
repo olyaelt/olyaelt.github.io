@@ -98,8 +98,18 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
     await C.click('[data-step]'); await C.waitForTimeout(150); out.steps.toPractice = await where();
     await C.click('[data-step]'); await C.waitForTimeout(100); out.steps.flipped = await C.evaluate(() => deckOf(curBlock()).flipped);
     await C.click('[data-step]'); await C.waitForTimeout(100); out.steps.got = await C.locator('.fdots .got').count();
-    await C.click('[data-back]'); await C.waitForTimeout(150); out.steps.back = await where();
-    expect('one Back / Next; Next shows the answer, then goes on; an open card + Next = Got it; Back to Recall', out.steps.bar === 2 && out.steps.other === 0 && JSON.stringify(out.steps.say) === '[[0,0],1]' && JSON.stringify(out.steps.toRecall) === '[1,0]' && out.steps.gaps[1] === true && JSON.stringify(out.steps.gaps[0]) === '[1,0]' && JSON.stringify(out.steps.toPractice) === '[2,0]' && out.steps.flipped === true && out.steps.got === 1 && JSON.stringify(out.steps.back) === '[1,0]', out.steps);
+    // her 12:58: Back in a deck = the card before (the answer → its front → the cards answered before, open), Next forward again; past the first card → the task before
+    const cardOn = () => C.evaluate(() => { const b = curBlock(); if(b.kind !== 'cards') return 'stage' + S.stage; const st = bs(b), d = deckOf(b); return st.look != null ? 'look' + st.look : (d.flipped ? 'open' : 'front') + d.queue[0]; });
+    const seq = async (btn, n) => { const r = []; for (let k = 0; k < n; k++) { await C.click(btn); await C.waitForTimeout(80); r.push(await cardOn()); } return r; };
+    out.deckBack = [].concat(await seq('[data-back]', 1), await seq('[data-step]', 4), await seq('[data-back]', 4));
+    out.steps.back = await where();
+    expect('one Back / Next; Next shows the answer, then goes on; an open card + Next = Got it', out.steps.bar === 2 && out.steps.other === 0 && JSON.stringify(out.steps.say) === '[[0,0],1]' && JSON.stringify(out.steps.toRecall) === '[1,0]' && out.steps.gaps[1] === true && JSON.stringify(out.steps.gaps[0]) === '[1,0]' && JSON.stringify(out.steps.toPractice) === '[2,0]' && out.steps.flipped === true && out.steps.got === 1, out.steps);
+    expect('Back in a deck: card before, open; Next forward; past the first card → Recall', JSON.stringify(out.deckBack) === '["look0","front1","open1","front2","open2","front2","look1","look0","stage1"]' && JSON.stringify(out.steps.back) === '[1,0]', {seq: out.deckBack, back: out.steps.back});
+    // her 13:04: on the very first step Back goes to the board (after Show the answer it first shows the question again)
+    const BK = await open(L + 'f-tags-live.html', 'anna'); await BK.click('[data-step]'); await BK.waitForTimeout(80); await BK.click('[data-back]'); await BK.waitForTimeout(80);
+    out.firstBack = {shown: await BK.locator('.ans-h').count()};
+    await Promise.all([BK.waitForURL(/jeopardy-live\.html$/), BK.click('[data-back]')]); out.firstBack.url = BK.url().split('/').pop();
+    expect('first step: Back hides the answer, then goes to the board', out.firstBack.shown === 0 && out.firstBack.url === 'jeopardy-live.html', out.firstBack);
     const W = await open(L + 'f-late-live.html', 'anna'); await W.click('[data-step]'); await W.waitForTimeout(150);
     out.write = {at: await W.evaluate(() => S.stage), msg: await W.locator('#step-msg').innerText()}; expect('Test yourself: Next waits for their message', out.write.at === 0 && /Type your message first/.test(out.write.msg), out.write);
     if (shots) await C.screenshot({path: path.join(shots, 'r2-stepbar.png')});
