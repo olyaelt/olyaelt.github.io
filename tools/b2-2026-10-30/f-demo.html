@@ -846,7 +846,7 @@ function gwWhoHTML(d, row){
   const room = d.room, mins = room && room.since ? Math.max(0, Math.round((gwNow() - room.since) / 60000)) : 0;
   const where = room && room.at ? `<span class="wh ${mins >= 8 ? "long" : ""}">${esc(room.at)} · ${mins} min</span>` : "";
   const away = room && !hereNow(room) ? `<span class="away">· not on this page now</span>` : "";
-  return `<span class="nm">${esc(d.label)}</span><button class="gw-ppl" data-roster aria-expanded="${rosterOpen === d.dev}" title="Who is in this room">👥</button>${where}${away}
+  return `<span class="nm">${esc(d.label)}</span><button class="gw-ppl" data-roster aria-expanded="${rosterOpen === d.dev}" title="Who is in this room: tap names">👥 ${d.people.length ? "Names" : "Who is it? Add names"}</button>${where}${away}
     ${row ? `<span class="ch">${esc(chatName(row.tool, row.chat))}</span><span class="stt">${statusText(row)}${row !== d.cur ? ` · now on ${esc(chatName(d.cur.tool, d.cur.chat))}` : ""}</span>` : ""}`;
 }
 /* who is in this room: tap a name to put them here (from another room: kept as a move with the time), tap again to take them out */
@@ -874,17 +874,9 @@ function gwCardHTML(d){
 /* ---------- 👥 under a chat on the task page (her wish 30.10 09:23: the task and the groups' work on one page) ----------
    Her view only: every group's text for this chat, live (every 10 s), with the same ✓ Good, ✗ Change, ✎ Correction, 💬 as in 📥 Groups.
    📥 Groups stays as it is (all the pages at once, who works with whom): the two show the same work. */
-const pcHTML = (tool, chat) => liveTeacher() && SHARE ? `<section class="pc" data-pc="${esc(tool)}|${chat}"><div class="pc-top"><b>👥 The groups on this chat</b><span class="pc-meta"></span></div><div class="pc-grid"></div></section>` : "";
+const pcHTML = (tool, chat) => liveTeacher() && SHARE && !EMBED ? `<section class="pc" data-pc="${esc(tool)}|${chat}"><div class="pc-top"><b>👥 The groups on this chat</b><span class="pc-meta"></span></div><div class="pc-grid"></div></section>` : "";
 function pcCardHTML(d, tool, chat){
-  return `<article class="gw-card pc-card" data-dev="${esc(d.dev)}" data-tool="${esc(tool)}" data-chat="${chat}">
-    <div class="gw-who" data-who></div>
-    <div class="gw-text" data-text></div>
-    <div class="gw-notes" data-notes></div>
-    <div class="gw-pick" data-pick></div>
-    <div class="gw-tools"><button class="tool good" data-mk="good">✓ Good</button><button class="tool del" data-mk="change">✗ Change</button><button class="tool ins" data-mk="fix">✎ Correction</button><button class="tool cmt" data-mk="note">💬 Comment</button></div>
-    <div class="gw-quick">${QUICK.map(q => `<button data-quick="${esc(q)}">${esc(q)}</button>`).join("")}</div>
-    <form class="gw-own" data-own><input maxlength="300" placeholder="Or type your note to this group…" aria-label="Your note to this group"><button class="btn slim primary">Send</button></form>
-    <div class="gw-said" data-said></div></article>`;
+  return gwCardHTML(d).replace('<article class="gw-card"', '<article class="gw-card pc-card"').replace(/data-tool="[^"]*" data-chat="[^"]*"/, "").replace('data-dev="' + esc(d.dev) + '"', `data-dev="${esc(d.dev)}" data-tool="${esc(tool)}" data-chat="${chat}"`);
 }
 function pcPaint(){
   document.querySelectorAll(".pc[data-pc]").forEach(pc => {
@@ -901,7 +893,9 @@ function pcPaint(){
       if(!c){ grid.insertAdjacentHTML("beforeend", pcCardHTML(d, tool, chat)); c = grid.lastElementChild; wireCard(c); }
       c.classList.toggle("sent", r.status === "sent"); c.classList.toggle("typing", typingNow(r));
       const set = (sel, h) => { const el = c.querySelector(sel); if(el.dataset.h !== h){ el.innerHTML = h; el.dataset.h = h; } };
-      set("[data-who]", `<span class="nm">${esc(d.label)}</span><span class="stt">${statusText(r)}</span>`);
+      set("[data-who]", gwWhoHTML(d, r));
+      const rb = c.querySelector("[data-roster-box]"), rh = rosterHTML(d, gwDevices()); if(rb.dataset.h !== rh){ rb.innerHTML = rh; rb.dataset.h = rh; wireRoster(rb, d); }
+      set("[data-nudge]", gwNudgesHTML(d));
       const tx = c.querySelector("[data-text]"), sel = getSelection(), inside = sel && sel.rangeCount && !sel.isCollapsed && tx.contains(sel.anchorNode) && Date.now() - selAt < 8000;
       if(!inside){ const h = markedText(r, c.dataset.quote || ""); if(tx.innerHTML !== h) tx.innerHTML = h; }
       set("[data-notes]", gwNotesHTML(r, d.dev));
@@ -1199,7 +1193,14 @@ function calendarsHTML(b){
     ${b.done ? (st.done ? `<p class="cal-done">${mk(b.done)}</p>` : `<div class="row-actions"><button class="btn primary" data-caldone>✓ Done — check the time</button></div>`) : ""}`;
 }
 const toolSrc = b => `${b.page}${LIVE_ON ? "-live" : ""}.html`;
-const toolHTML = b => `<iframe class="tool-frame" src="${toolSrc(b)}?embed=1" title="${esc(b.instr || b.page)}"></iframe><p class="share-note"><a href="${toolSrc(b)}" target="_blank" rel="noopener">Open it in a new tab ↗</a></p>`;
+const toolHTML = b => `<iframe class="tool-frame" src="${toolSrc(b)}?embed=1" title="${esc(b.instr || b.page)}"></iframe><p class="share-note"><a href="${toolSrc(b)}" target="_blank" rel="noopener">Open it in a new tab ↗</a></p>${liveTeacher() && SHARE ? `<div data-pchost>${embPanel()}</div>` : ""}`;
+/* her 👥 for the page inside (her wish 10:07: under it, as a page of its own, not squeezed into the frame): the page inside says which
+   chat is open (postMessage), and the groups' cards for that chat show here, as in 📥 Groups */
+let EMB = null;
+const embPanel = () => !EMB ? "" : EMB.chat == null ? `<section class="pc"><div class="pc-top"><b>👥 The groups on this chat</b><span class="pc-meta">Chat 1 is the model — open chat 2, 3… to see what each group wrote</span></div></section>` : pcHTML(EMB.tool, EMB.chat);
+addEventListener("message", e => { const m = e.data && e.data.lwChat; if(!m || !liveTeacher()) return;
+  if(EMB && EMB.tool === m.tool && EMB.chat === m.chat) return; EMB = {tool: String(m.tool), chat: m.chat == null ? null : +m.chat};
+  const host = document.querySelector("[data-pchost]"); if(host){ host.innerHTML = embPanel(); pcPaint(); } });
 function questionsHTML(b){
   const st = bs(b); if(st.spk) spkCur = st.spk; else { spkReset(); st.spk = spkCur; }
   const base = "questions." + b._pid;   /* her ✏️ / Hide / order on these too, kept by permanent numbers */

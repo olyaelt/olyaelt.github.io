@@ -255,6 +255,7 @@ function render(){
     later(500, () => { if(!s.ex){ s.ex = true; s.fresh = "ex"; paint(); } playReply(S.at); }); });   /* after Send the example opens by itself, then the reply */
   const m = document.getElementById("msgs"); if(m) m.scrollTop = m.scrollHeight;
   wireMsgs(); playIn(S.at); paintNotes();
+  if(EMBED && window.parent !== window) try{ window.parent.postMessage({lwChat: {tool: PAGE_ID, chat: isModel(S.at) ? null : scPid(S.at)}}, "*"); }catch(e){}   /* inside a field: her 👥 under the frame follows this chat */
 }
 liveRerender = () => render();
 render();

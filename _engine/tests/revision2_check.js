@@ -69,6 +69,14 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
     out.marked = await O.locator('.pc .gw-text .m-del').innerText().catch(() => ''); expect('the panel shows her mark', out.marked === 'I stuck', out.marked);
     await O.locator('.sc-dots button').nth(0).click(); await O.waitForTimeout(200); out.model = await O.locator('.pc').count(); expect('no panel on the model chat', out.model === 0, out.model);
     if (shots) { await O.locator('.sc-dots button').nth(1).click(); await O.waitForTimeout(300); await O.evaluate(() => document.querySelector('.pc').scrollIntoView()); await O.screenshot({path: path.join(shots, 'r2-panel.png')}); }
+    // inside a field (her wish 10:07): the panel is under the frame, on the field itself, and follows the chat open inside
+    const OF = await open(L + 'f-late-live.html', 'teacher'); await OF.click('.stage-btn[data-stage="3"]'); await OF.waitForTimeout(1500);
+    out.fieldModel = await OF.locator('[data-pchost] .pc').innerText().catch(() => ''); expect('under the frame: chat 1 is the model', /model/.test(out.fieldModel), out.fieldModel);
+    await OF.frameLocator('.tool-frame').locator('.sc-dots button').nth(1).click(); await OF.waitForTimeout(400); await OF.evaluate(() => gwFetch()); await OF.waitForTimeout(500);
+    out.underFrame = {field: await OF.locator('[data-pchost] .pc').innerText().catch(() => ''), inside: await OF.frameLocator('.tool-frame').locator('.pc').count()};
+    expect('under the frame: Anna\'s text for chat 2, with her marks; nothing inside the frame', /Group \d — Anna/.test(out.underFrame.field) && /I stuck/.test(out.underFrame.field) && /Change this/.test(out.underFrame.field) && out.underFrame.inside === 0, out.underFrame);
+    out.namesBtn = await OF.locator('[data-pchost] [data-roster]').first().innerText().catch(() => ''); expect('the card says where to put names', /Names|Add names/.test(out.namesBtn), out.namesBtn);
+    if (shots) { await OF.evaluate(() => document.querySelector('[data-pchost]').scrollIntoView()); await OF.screenshot({path: path.join(shots, 'r2-under-frame.png')}); }
     // the same work in 📥 Groups
     await O.click('.stage-btn[data-stage="groups"]'); await O.waitForTimeout(500); out.groups = await O.locator('.gw-card').count(); expect('📥 Groups still shows it', out.groups === 1, out.groups);
     // ---- the panel under a message on a field (Test yourself)

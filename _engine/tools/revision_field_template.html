@@ -263,7 +263,14 @@ function calendarsHTML(b){
     ${b.done ? (st.done ? `<p class="cal-done">${mk(b.done)}</p>` : `<div class="row-actions"><button class="btn primary" data-caldone>✓ Done — check the time</button></div>`) : ""}`;
 }
 const toolSrc = b => `${b.page}${LIVE_ON ? "-live" : ""}.html`;
-const toolHTML = b => `<iframe class="tool-frame" src="${toolSrc(b)}?embed=1" title="${esc(b.instr || b.page)}"></iframe><p class="share-note"><a href="${toolSrc(b)}" target="_blank" rel="noopener">Open it in a new tab ↗</a></p>`;
+const toolHTML = b => `<iframe class="tool-frame" src="${toolSrc(b)}?embed=1" title="${esc(b.instr || b.page)}"></iframe><p class="share-note"><a href="${toolSrc(b)}" target="_blank" rel="noopener">Open it in a new tab ↗</a></p>${liveTeacher() && SHARE ? `<div data-pchost>${embPanel()}</div>` : ""}`;
+/* her 👥 for the page inside (her wish 10:07: under it, as a page of its own, not squeezed into the frame): the page inside says which
+   chat is open (postMessage), and the groups' cards for that chat show here, as in 📥 Groups */
+let EMB = null;
+const embPanel = () => !EMB ? "" : EMB.chat == null ? `<section class="pc"><div class="pc-top"><b>👥 The groups on this chat</b><span class="pc-meta">Chat 1 is the model — open chat 2, 3… to see what each group wrote</span></div></section>` : pcHTML(EMB.tool, EMB.chat);
+addEventListener("message", e => { const m = e.data && e.data.lwChat; if(!m || !liveTeacher()) return;
+  if(EMB && EMB.tool === m.tool && EMB.chat === m.chat) return; EMB = {tool: String(m.tool), chat: m.chat == null ? null : +m.chat};
+  const host = document.querySelector("[data-pchost]"); if(host){ host.innerHTML = embPanel(); pcPaint(); } });
 function questionsHTML(b){
   const st = bs(b); if(st.spk) spkCur = st.spk; else { spkReset(); st.spk = spkCur; }
   const base = "questions." + b._pid;   /* her ✏️ / Hide / order on these too, kept by permanent numbers */
