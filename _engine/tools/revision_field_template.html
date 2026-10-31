@@ -142,16 +142,16 @@ __BASE_CSS__
 .fc.enter{animation:deal .45s cubic-bezier(.2,.8,.2,1)}
 @keyframes deal{from{opacity:0;transform:translateX(50px) rotate(2deg)}to{opacity:1;transform:none}}
 .fc .lbl{font-size:.85rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
-.fc .say{font-size:1.6rem;font-weight:700;line-height:1.3;margin:0}
-.fc .sm{font-size:1.15rem;margin:0}
+.fc .say{font-size:calc(1.6rem * var(--k, 1));font-weight:700;line-height:1.3;margin:0}
+.fc .sm{font-size:calc(1.15rem * var(--k, 1));margin:0}
 .fc .kw{color:var(--label);font-weight:900;letter-spacing:.03em;text-transform:uppercase;margin-left:.4em}
-.fc .frame{font-size:1.35rem;font-weight:700;margin:0}
+.fc .frame{font-size:calc(1.35rem * var(--k, 1));font-weight:700;margin:0}
 .fc .ans{border-top:2px dashed var(--line);padding-top:12px;display:grid;gap:6px}
 /* her 15:33: answers looked like links (blue, underlined) — now as in her corrections: the sentence in black, what they had to produce
    (**…**) blue on light blue, never underlined */
 .fc .ans .say{color:var(--ink)}
 .fc .ans .say .bx{color:var(--flip-ink);font-weight:900;background:var(--fix-bg);border-radius:4px;padding:0 4px;text-decoration:none;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-.fc .note{color:var(--muted);font-size:1rem;margin:0}
+.fc .note{color:var(--muted);font-size:calc(1rem * var(--k, 1));margin:0}
 /* her 15:21: the answer like her corrections — the same sentence in the same type, only what goes in is blue on light blue */
 .fc .fill{color:var(--flip-ink);font-weight:900;background:var(--fix-bg);border-radius:4px;padding:0 4px}
 .fc .ans .say.fixline{color:var(--ink)}
@@ -170,21 +170,25 @@ __BASE_CSS__
 .fc:has(> .skp) .corner{right:220px}
 .fc.open .skp.idea{animation:skpop .45s cubic-bezier(.2,.8,.2,1)}
 @keyframes skpop{from{transform:translateY(10px) scale(.9);opacity:.2}to{transform:none;opacity:1}}
-.fc .sit{font-size:1.25rem;font-weight:600;line-height:1.32;margin:0}
+.fc .sit{font-size:calc(1.25rem * var(--k, 1));font-weight:600;line-height:1.32;margin:0}
 .chkrow{display:flex;align-items:center;gap:8px}
 .chkrow .chk{flex:1}
 .chkrow .bulb{height:30px;width:auto;margin:-6px 0;animation:skpop .45s cubic-bezier(.2,.8,.2,1)}
 .scene{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:end;gap:8px 14px;margin-top:2px}
-.scene .fig{height:124px;width:auto;display:block}
+.scene .fig{height:calc(124px * var(--k, 1));width:auto;display:block}
 .bub{position:relative;align-self:start;margin:0 0 44px;min-height:3.9rem;display:grid;place-items:center;text-align:center;background:var(--card);border:3px solid var(--ink);
-  border-radius:34px 42px 36px 44px / 30px 36px 40px 32px;padding:10px 22px;font-size:1.4rem;font-weight:700;line-height:1.28}
+  border-radius:34px 42px 36px 44px / 30px 36px 40px 32px;padding:10px 22px;font-size:calc(1.4rem * var(--k, 1));font-weight:700;line-height:1.28}
 .bub .dots{letter-spacing:.3em;color:var(--muted);font-size:1.6rem}
 .bub .tail{position:absolute;right:13%;bottom:-31px;width:46px;height:34px;overflow:visible}
 .bub.said{animation:skpop .45s cubic-bezier(.2,.8,.2,1)}
 .m-red{color:var(--label);font-weight:800}
 .dlg .lh{margin:10px 0 0;color:var(--label);font-size:.92rem;letter-spacing:.07em;font-weight:900;text-transform:uppercase}
 .dlg .lh:first-child{margin-top:0}
-@media (min-width:900px){ .dlg.cols{columns:2;column-gap:40px} .dlg.cols p{break-inside:avoid;font-size:1.06rem;line-height:1.45;margin-bottom:5px} .dlg.cols p.lh{font-size:.88rem} .dlg.cols .lh{break-after:avoid} }
+.fc.open .say.orig{font-size:calc(1.25rem * var(--k, 1))}   /* tools 18: once open, the answer is the big line */
+.fc .turn{margin:4px 0 0;font-weight:800;font-size:calc(1.12rem * var(--k, 1));color:var(--ink)}
+.fc{gap:calc(10px * var(--k, 1))}
+@media (min-width:900px){ .dlg.cols p.wide{column-span:all;margin-bottom:10px} .dlg.cols .lh.colbreak{break-before:column;margin-top:0} }
+@media (min-width:900px){ .dlg.cols{columns:2;column-gap:40px} .dlg.cols p{break-inside:avoid;font-size:1.06rem;line-height:1.42;margin-bottom:4px} .dlg.cols p.lh{font-size:.88rem} .dlg.cols .lh{break-after:avoid} }
 .say-later{margin:6px 0 0;color:var(--muted);font-size:1rem}
 .postits{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:26px;padding:10px 6px 16px}
 .postit{position:relative;min-height:9.5rem;padding:16px 18px 30px;font-size:1.35rem;font-weight:600;line-height:1.3;border:2px solid #1D1D1B;border-radius:3px 3px 3px 26px;box-shadow:3px 5px 0 rgba(0,0,0,.14);transform:rotate(-1.6deg)}
@@ -237,7 +241,7 @@ __BASE_CSS__
 .fast{background:var(--bubble);color:var(--bubble-ink);border-radius:16px;padding:12px 16px;display:grid;gap:8px}
 .fast h3{margin:0;font-size:1.1rem}
 .fast p{margin:0;font-size:1.08rem}
-.tool-frame{width:100%;height:calc(100vh - 13rem);min-height:32rem;border:2px solid var(--line);border-radius:14px;background:var(--ground)}
+.tool-frame{width:100%;height:calc(100vh - 16.8rem);min-height:22rem;border:2px solid var(--line);border-radius:14px;background:var(--ground)}
 /* 🎓 How it works (handoff 0920): a line above a block that has a tip — always on f-demo, on the other fields when the switch is on */
 .tip{margin:0;color:var(--muted);font-size:1.05rem;font-weight:600;border:2px dashed var(--line);border-radius:12px;padding:6px 12px;background:var(--card)}
 .howto{margin-left:6px}
@@ -493,7 +497,7 @@ function gapAnswer(b, id){
   const gaps = ((lines[+m[2]] || {}).p || []).filter(x => x && typeof x === "object" && x.r != null), g = gaps[+m[3]];
   return g ? (g.f || "") + g.r : id;
 }
-const linesHTML = (lines, b, pre) => (lines || []).map((l, li) => l.h != null ? `<p class="lh">${esc(l.h)}</p>` : l.ctx != null ? `<p class="lctx">${mk(l.ctx)}</p>` : `<p>${l.s ? `<b class="sp">${esc(l.s)}:</b>` : ""}${partsHTML(l.p, b, `${pre}l${li}g`)}</p>`).join("");
+const linesHTML = (lines, b, pre) => (lines || []).map((l, li) => l.h != null ? `<p class="lh${l.col ? " colbreak" : ""}">${esc(l.h)}</p>` : l.ctx != null ? `<p class="lctx">${mk(l.ctx)}</p>` : `<p${l.wide ? ` class="wide"` : ""}>${l.s ? `<b class="sp">${esc(l.s)}:</b>` : ""}${partsHTML(l.p, b, `${pre}l${li}g`)}</p>`).join("");
 const gapIds = (lines, pre) => (lines || []).flatMap((l, li) => (l.p || []).filter(x => x && typeof x === "object" && x.r != null).map((_, k) => `${pre}l${li}g${k}`));
 function allGaps(b){
   if(b.kind === "text") return gapIds(b.lines, "t").concat(gapIds((b.gloss || []).map(g => ({p: g.p})), "x"));
@@ -628,7 +632,7 @@ const kwtFill = c => { const a = c.answer || ((String(c.back || "").match(/\*\*(
 function frontHTML(b, c, i, open){
   if(b.style === "mix") b = c._b; const st = b.style;
   if(st === "kwt") return `<p class="sm">${mk(c.front)}</p><p class="frame">${open ? kwtFill(c) : mk(c.frame)}<span class="kw">${esc(c.key)}</span></p>`;
-  if(st === "ours") return `${c.ctx ? `<p class="lctx">${esc(c.ctx)}</p>` : ""}<p class="say">${mk(c.front)}</p>`;
+  if(st === "ours") return `${c.ctx ? `<p class="lctx">${esc(c.ctx)}</p>` : ""}<p class="say orig">${mk(c.front)}${c.key ? `<span class="kw">${esc(c.key)}</span>` : ""}</p>`;
   if(st === "share") return `${c.ctx ? `<p class="lctx">${mk(c.ctx)}</p>` : ""}<p class="say">A: ${mk(c.a)}</p>${c.hint ? `<p class="hintline">${esc(c.hint)}</p>` : ""}`;
   if(st === "bubble") return `<p class="sit">${mk(c.ctx)}</p><div class="scene"><img class="skimg fig" src="../sk-listen.png" alt="">
     <div class="bub ${open ? "said" : ""}">${open ? `<span>${mk(c.back)}</span>` : `<span class="dots" aria-label="What might they say?">•••</span>`}${TAIL}</div><img class="skimg fig" src="../sk-talk.png" alt=""></div>`;
@@ -642,7 +646,7 @@ const ansHTML = (b, c) => { const h = backHTML(b, c); return h ? `<div class="an
 function backHTML(b, c){
   if(b.style === "mix") b = c._b; const st = b.style;
   if(st === "kwt") return c.note ? `<p class="note">${mk(c.note)}</p>` : "";
-  if(st === "ours") return `${b.check ? (b.pic === "check" ? `<span class="chkrow"><span class="chk">${esc(b.check)}</span><img class="skimg bulb" src="../sk-bulb.png" alt=""></span>` : `<span class="chk">${esc(b.check)}</span>`) : ""}<p class="say fixline">${mk(c.back)}</p>${c.why ? `<p class="note">${mk(c.why)}</p>` : ""}`;
+  if(st === "ours") return `${b.check ? (b.pic === "check" ? `<span class="chkrow"><span class="chk">${esc(b.check)}</span><img class="skimg bulb" src="../sk-bulb.png" alt=""></span>` : `<span class="chk">${esc(b.check)}</span>`) : ""}<p class="say fixline">${mk(c.back)}</p>${c.why ? `<p class="note">${mk(c.why)}</p>` : ""}${c.turn ? `<p class="turn">💬 ${mk(c.turn)}</p>` : ""}`;
   if(st === "bubble") return c.note ? `<p class="note">${mk(c.note)}</p>` : "";
   if(st === "share") return `<p class="say">B: ${mk(c.back)}</p>${c.next ? `<p class="next">A: ${mk(c.next)}</p>` : ""}${c.note ? `<p class="note">${mk(c.note)}</p>` : ""}`;
   return `<p class="say">${mk(c.back)}</p>${c.note ? `<p class="note">${mk(c.note)}</p>` : ""}`;
@@ -1013,7 +1017,17 @@ function render(){
   S.enter = false; if(b && b.kind === "cards") deckOf(b).fresh = false;
   wire(main); wireLive(main, p => { const m = String(p).match(/^questions\.(\d+)\.(\d+)$/); if(!m) return ""; const bl = BLOCKS.find(x => x._pid === +m[1]); return bl ? bl.items[+m[2]] || "" : ""; });
   if(S.view === "groups") wireGroups(main); else { paintWriteNotes(); gwPaint(); const sb = main.querySelector("[data-step]"); if(sb) sb.disabled = !canNext(); }
+  fitCard();
 }
+/* tools 18 (C1 04.11: an "our sentences" card with its answer, the note and "Your turn" beside the box ran under Back / Next): a long card
+   makes its type smaller, step by step, until the card and its buttons fit above them — her rule, a whole card on the shared screen. A phone scrolls as before. */
+function fitCard(){
+  const fc = document.querySelector("#main .deck .fc"), blk = document.querySelector("#main .blk"), bar = document.querySelector("#main .stepbar");
+  if(!fc || !blk || !bar || innerWidth < 760) return;
+  const over = () => blk.getBoundingClientRect().bottom + 2 > bar.getBoundingClientRect().top;
+  for(const k of [.92, .85, .78, .72]){ if(!over()) return; fc.style.setProperty("--k", k); }
+}
+addEventListener("resize", () => { clearTimeout(fitCard.t); fitCard.t = setTimeout(() => { const fc = document.querySelector("#main .deck .fc"); if(fc) fc.style.removeProperty("--k"); fitCard(); }, 150); });
 /* the box with X{{rest}}: the first letter shown, the rest hidden yellow (tap the yellow to open it; tap the line to tick it) */
 const boxLineHTML = t => phHTML(t).replace(/\{\{(.+?)\}\}/g, '<span class="bh" data-bh>$1</span>');
 function fieldBoxHTML(box){

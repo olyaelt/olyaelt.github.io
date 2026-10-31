@@ -1,0 +1,1277 @@
+{
+ "type": "revision-field",
+ "file": "practical-things",
+ "title": "Should schools teach more practical things?",
+ "part": "Lesson 7 · 04.11 · the last part",
+ "sketch": true,
+ "boxes": {
+  "BOX": [
+   {
+    "h": "USEFUL OR NOT?",
+    "items": [
+     "It was **a complete waste of time**.",
+     "I've **never used it since**.",
+     "You **never know when it might come in handy**.",
+     "It's **more … than you'd think**.",
+     "**What's the point of** …?",
+     "**None of it counted**.",
+     "I had to **start from scratch**.",
+     "School **only gets you so far**.",
+     "That's where I really **add value**."
+    ]
+   },
+   {
+    "h": "LEARNING",
+    "items": [
+     "It was a **steep learning curve**.",
+     "I **picked it up on the job**.",
+     "I **learned it the hard way**.",
+     "I **read up on** it. I **did my homework**.",
+     "I **taught myself**."
+    ]
+   },
+   {
+    "h": "TODAY",
+    "items": [
+     "They've **stopped hiring juniors**.",
+     "They're **handing** it **over to AI**.",
+     "It's **out of date**. You need to **adapt**."
+    ]
+   }
+  ],
+  "YOU": [
+   {
+    "h": "YOU CAN SAY",
+    "items": [
+     "It's [more useful] **than you'd think**.",
+     "I use it [more] **than you'd think**.",
+     "It takes [longer] **than you'd think**.",
+     "There's [more to it] **than you'd think**.",
+     "**than you'd think** /ðən juːd ˈθɪŋk/ – «…, чем кажется» (= more/-er than people expect)",
+     "stronger: **a lot** harder · **a lot** more"
+    ]
+   }
+  ],
+  "CATCH": [
+   {
+    "h": "CATCHING UP",
+    "items": [
+     "**It's been ages!** How have you been?",
+     "**Last I heard,** you were …",
+     "So **how are you finding** it?",
+     "**I've been meaning to get in touch** for ages.",
+     "So, **what have you been up to?**"
+    ]
+   },
+   {
+    "h": "AT THE END",
+    "items": [
+     "**It's been great catching up!**"
+    ]
+   }
+  ]
+ },
+ "stages": [
+  {
+   "label": "❤️ From Friday",
+   "blocks": [
+    {
+     "kind": "say",
+     "instr": "Good lines from Friday. Which two could you say too — and why?",
+     "task": [
+      "❤️  Most of what I know, I **picked up on the job** — but I wouldn't say it was the hard way: I learned a lot from my colleagues.",
+      "❤️  **You never know when it might come in handy.** ((two of you built this one together))",
+      "❤️  I find teaching myself works better: I can **read up on** the subject as much as I want.",
+      "❤️  Learning English without dancing was **a steep learning curve** :-)",
+      "❤️  **Back in my day**, everyone was expected to get a solid education — and it really mattered.",
+      "❤️  At the end of the day, what we learned meant nothing. It was **out of touch with real life**.",
+      "❤️  Maybe it would be more useful to learn some **hands-on** skills, like how to cook, sew on a button or hammer in a nail.",
+      "❤️  Schools should probably also teach children how to **adapt** — no one actually knows what the future holds."
+     ]
+    },
+    {
+     "kind": "text",
+     "instr": "Can you remember the phrases? Say the whole line, then tap the yellow to check.",
+     "lines": [
+      {
+       "p": [
+        {
+         "f": "B",
+         "r": "ack"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "n"
+        },
+        " ",
+        {
+         "f": "m",
+         "r": "y"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "ay"
+        },
+        ", everyone was expected to get a solid education — and it really mattered."
+       ]
+      },
+      {
+       "p": [
+        "Most of what I know, I ",
+        {
+         "f": "p",
+         "r": "icked"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "p"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "n"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "he"
+        },
+        " ",
+        {
+         "f": "j",
+         "r": "ob"
+        },
+        " — but I wouldn't say it was the hard way: I learned a lot from my colleagues."
+       ]
+      },
+      {
+       "p": [
+        "Maybe it would be more useful to learn some ",
+        {
+         "f": "h",
+         "r": "ands-on"
+        },
+        " skills, like how to cook, sew on a button or hammer in a nail."
+       ]
+      },
+      {
+       "p": [
+        "Learning English without dancing was ",
+        {
+         "b": "a"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "teep"
+        },
+        " ",
+        {
+         "f": "l",
+         "r": "earning"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "urve"
+        },
+        " :-)"
+       ]
+      },
+      {
+       "p": [
+        {
+         "b": "You never know when it might"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "ome"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "n"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "andy"
+        },
+        "."
+       ]
+      },
+      {
+       "p": [
+        "Schools should probably also teach children how to ",
+        {
+         "f": "a",
+         "r": "dapt"
+        },
+        " — no one actually knows what the future holds."
+       ]
+      },
+      {
+       "p": [
+        "At the end of the day, what we learned meant nothing. It was ",
+        {
+         "f": "o",
+         "r": "ut"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "f"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "ouch"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "ith"
+        },
+        " ",
+        {
+         "f": "r",
+         "r": "eal"
+        },
+        " ",
+        {
+         "f": "l",
+         "r": "ife"
+        },
+        "."
+       ]
+      },
+      {
+       "p": [
+        "I find teaching myself works better: I can ",
+        {
+         "f": "r",
+         "r": "ead"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "p"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "n"
+        },
+        " the subject as much as I want."
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "✏️ Your sentences",
+   "blocks": [
+    {
+     "kind": "text",
+     "cols": 2,
+     "instr": "Can you remember all the phrases? Say each one, then tap the yellow to check.",
+     "lines": [
+      {
+       "h": "USEFUL OR NOT?"
+      },
+      {
+       "p": [
+        "It was ",
+        {
+         "b": "a"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "omplete"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "aste"
+        },
+        " ",
+        {
+         "b": "of"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "ime"
+        },
+        ".",
+        "  ((– пустая трата времени))"
+       ]
+      },
+      {
+       "p": [
+        "I've ",
+        {
+         "f": "n",
+         "r": "ever"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "sed"
+        },
+        " ",
+        {
+         "b": "it"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "ince"
+        },
+        ".",
+        "  ((– с тех пор ни разу не пригодилось))"
+       ]
+      },
+      {
+       "p": [
+        "You ",
+        {
+         "f": "n",
+         "r": "ever"
+        },
+        " ",
+        {
+         "f": "k",
+         "r": "now"
+        },
+        " ",
+        {
+         "b": "when it"
+        },
+        " ",
+        {
+         "f": "m",
+         "r": "ight"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "ome"
+        },
+        " ",
+        {
+         "b": "in"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "andy"
+        },
+        ".",
+        "  ((– никогда не знаешь, когда пригодится))"
+       ]
+      },
+      {
+       "p": [
+        "It's ",
+        {
+         "f": "m",
+         "r": "ore"
+        },
+        " ",
+        {
+         "b": "… than"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou'd"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "hink"
+        },
+        ".",
+        "  ((– это …, чем кажется))"
+       ]
+      },
+      {
+       "p": [
+        {
+         "f": "W",
+         "r": "hat's"
+        },
+        " ",
+        {
+         "b": "the"
+        },
+        " ",
+        {
+         "f": "p",
+         "r": "oint"
+        },
+        " ",
+        {
+         "b": "of"
+        },
+        " …?",
+        "  ((– какой смысл в …?))"
+       ]
+      },
+      {
+       "p": [
+        {
+         "f": "N",
+         "r": "one"
+        },
+        " ",
+        {
+         "b": "of it"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "ounted"
+        },
+        ".",
+        "  ((– ничего не засчитали))"
+       ]
+      },
+      {
+       "p": [
+        "I had to ",
+        {
+         "f": "s",
+         "r": "tart"
+        },
+        " ",
+        {
+         "f": "f",
+         "r": "rom"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "cratch"
+        },
+        ".",
+        "  ((– пришлось начинать с нуля))"
+       ]
+      },
+      {
+       "p": [
+        "School ",
+        {
+         "f": "o",
+         "r": "nly"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "ets"
+        },
+        " ",
+        {
+         "b": "you so"
+        },
+        " ",
+        {
+         "f": "f",
+         "r": "ar"
+        },
+        ".",
+        "  ((– школа даёт лишь базу))"
+       ]
+      },
+      {
+       "p": [
+        "That's where I really ",
+        {
+         "f": "a",
+         "r": "dd"
+        },
+        " ",
+        {
+         "f": "v",
+         "r": "alue"
+        },
+        ".",
+        "  ((– вот где от меня польза))"
+       ]
+      },
+      {
+       "h": "LEARNING",
+       "col": true
+      },
+      {
+       "p": [
+        "It was a ",
+        {
+         "f": "s",
+         "r": "teep"
+        },
+        " ",
+        {
+         "f": "l",
+         "r": "earning"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "urve"
+        },
+        ".",
+        "  ((– пришлось очень быстро всему учиться))"
+       ]
+      },
+      {
+       "p": [
+        "I ",
+        {
+         "f": "p",
+         "r": "icked"
+        },
+        " ",
+        {
+         "b": "it up on the"
+        },
+        " ",
+        {
+         "f": "j",
+         "r": "ob"
+        },
+        ".",
+        "  ((– научилась на работе))"
+       ]
+      },
+      {
+       "p": [
+        "I ",
+        {
+         "f": "l",
+         "r": "earned"
+        },
+        " ",
+        {
+         "b": "it the"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "ard"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "ay"
+        },
+        ".",
+        "  ((– научилась на своих ошибках))"
+       ]
+      },
+      {
+       "p": [
+        "I ",
+        {
+         "f": "r",
+         "r": "ead"
+        },
+        " ",
+        {
+         "b": "up on"
+        },
+        " it. I ",
+        {
+         "f": "d",
+         "r": "id"
+        },
+        " ",
+        {
+         "b": "my"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "omework"
+        },
+        ".",
+        "  ((– почитала об этом · подготовилась))"
+       ]
+      },
+      {
+       "p": [
+        "I ",
+        {
+         "f": "t",
+         "r": "aught"
+        },
+        " ",
+        {
+         "f": "m",
+         "r": "yself"
+        },
+        ".",
+        "  ((– научилась сама))"
+       ]
+      },
+      {
+       "h": "TODAY"
+      },
+      {
+       "p": [
+        "They've ",
+        {
+         "f": "s",
+         "r": "topped"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "iring"
+        },
+        " ",
+        {
+         "f": "j",
+         "r": "uniors"
+        },
+        ".",
+        "  ((– перестали нанимать джунов))"
+       ]
+      },
+      {
+       "p": [
+        "They're ",
+        {
+         "f": "h",
+         "r": "anding"
+        },
+        " it ",
+        {
+         "f": "o",
+         "r": "ver"
+        },
+        " ",
+        {
+         "b": "to"
+        },
+        " ",
+        {
+         "f": "A",
+         "r": "I"
+        },
+        ".",
+        "  ((– передают это ИИ))"
+       ]
+      },
+      {
+       "p": [
+        "It's ",
+        {
+         "f": "o",
+         "r": "ut"
+        },
+        " ",
+        {
+         "b": "of"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "ate"
+        },
+        ". You need to ",
+        {
+         "f": "a",
+         "r": "dapt"
+        },
+        ".",
+        "  ((– это устарело · нужно приспосабливаться))"
+       ]
+      },
+      {
+       "h": "SAY IT RIGHT"
+      },
+      {
+       "p": [
+        "adapt ##/əˈdæpt/## ≠ adopt ##/əˈdɒpt/## · curve ##/kɜːv/##"
+       ]
+      }
+     ]
+    },
+    {
+     "kind": "cards",
+     "style": "ours",
+     "check": "Perfect English",
+     "box": "BOX",
+     "pic": "check",
+     "summary": "Could be better → perfect: the full list",
+     "instr": "One more of our sentences. Green = good, grey = could be better. Say the grey part with a phrase from the box (the word in red).",
+     "cards": [
+      {
+       "ctx": "чешский похож на русский — казалось, будет легко",
+       "front": "<g>For me it was Czech.</g> ~~I thought it's easy to learn a language which is similar.~~",
+       "key": "THINK",
+       "back": "For me it was Czech. **It's really close to Russian, but it's a lot harder than you'd think.**",
+       "why": "harder than you'd think = what anyone expects vs reality. About your own past expectation: I thought it would be easy. ((«сложнее, чем кажется»))",
+       "turn": "Your turn: a language, a city or a job that was harder than you'd think. Why?"
+      },
+      {
+       "instr": "And this one? No red word this time.",
+       "ctx": "чему учишься на работе: говорить с менеджерами без технического бэкграунда",
+       "front": "<g>Communication with non-technical managers</g> — it's ~~harder than I was thinking~~.",
+       "back": "Communication with non-technical managers — it's **a lot harder than you'd think**.",
+       "why": "than I was thinking is a calque. Anyone would think so → than you'd think; only you → than I thought. ((калька с «чем я думала»))",
+       "turn": "Your turn: one thing at work or at home that's a lot harder than you'd think."
+      },
+      {
+       "instr": "Could be better English: how would you say the grey part?",
+       "ctx": "управлять людьми учишься у своих руководителей",
+       "front": "<g>I picked up</g> how to manage staff <g>on the job</g>, from my general managers. ~~You can't learn it at uni.~~",
+       "key": "FAR",
+       "back": "I picked up how to manage staff on the job, from my general managers. **University only gets you so far.**",
+       "why": "You can't learn it at university is correct. The box phrase says more: university gives you the basics, the rest comes on the job. ((вуз даёт базу — дальше на работе)) · staff ##/stɑːf/## (AmE ##/stæf/##) — персонал · stuff ##/stʌf/## — вещи",
+       "turn": "Your turn: one thing you picked up on the job — not at university or school."
+      },
+      {
+       "instr": "And this one? No red word this time.",
+       "ctx": "зачем работать на полный день, ещё учась в вузе",
+       "front": "~~I understood that just studying at university isn't enough for me~~, <g>so I found a full-time job</g>.",
+       "back": "I **realised** that **university only gets you so far**, so I found a full-time job.",
+       "why": "understood → realised (it became clear to you); isn't enough for me → only gets you so far. ((осознала · даёт базу — и не больше))",
+       "turn": "Your turn: your degree or your school — where did it only get you so far?"
+      },
+      {
+       "instr": "Could be better English: how would you say the grey part?",
+       "ctx": "когда пишешь код вместе с ИИ",
+       "front": "<g>AI helps me make suggestions</g>, but ~~finally I choose the best one with my own experience~~.",
+       "key": "VALUE",
+       "back": "AI helps me make suggestions, but **choosing the best one — that's where I really add value**.",
+       "why": "finally in mid-sentence sounds like «наконец-то»; «в итоге» is in the end. add value = what you bring that AI can't. ((«вот где от меня польза»))",
+       "turn": "Your turn: in your work or your life now, where do you really add value?"
+      },
+      {
+       "instr": "And this one? No red word this time.",
+       "ctx": "что остаётся за топ-менеджерами, когда ИИ есть на всех уровнях",
+       "front": "<g>Networking, department heads, motivation</g> — ~~in this kind of area, I believe AI is still helpless~~.",
+       "back": "Networking, department heads, motivation — **that's where people still add value**.",
+       "why": "helpless is usually about people. The box phrase talks about what people do well, not what AI can't do. ((helpless — «беспомощный», обычно о людях))",
+       "turn": "Your turn: two things where people still add value — and AI doesn't, yet."
+      },
+      {
+       "instr": "Could be better English: how would you say the grey part?",
+       "ctx": "почему серьёзные документы не доверяют ИИ",
+       "front": "<g>Top managers still work with paper documents</g> — they could go to jail. ~~That's why we don't use AI for serious work.~~",
+       "key": "HAND",
+       "back": "Top managers still work with paper documents — they could go to jail. **That's why we don't hand anything serious over to AI.**",
+       "why": "hand sth over to AI = give AI the whole job, not just use it. ((«передать ИИ целиком»))",
+       "turn": "Your turn: one thing you'd never hand over to AI. Why not?"
+      },
+      {
+       "instr": "And this one? No red word this time.",
+       "ctx": "что ИИ теперь делает за тебя на работе",
+       "front": "Things that took me five hours <g>a couple of years ago</g>, ~~AI could do for five minutes~~.",
+       "back": "Things that took me five hours a couple of years ago, **I now hand over to AI — it does them in five minutes**.",
+       "why": "in five minutes = how long it takes to finish; for five minutes = how long it goes on. ((«за пять минут» — in five minutes))",
+       "turn": "Your turn: one task you've handed over to AI — or would love to."
+      },
+      {
+       "instr": "Could be better English: how would you say the grey part?",
+       "ctx": "что пригодилось из того, чему учились сами",
+       "front": "<g>This is touch typing.</g> ~~And it's very useful for typing.~~",
+       "key": "HANDY",
+       "back": "This is touch typing. **It comes in really handy.**",
+       "why": "very useful for typing repeats typing; it comes in handy = it turns out to be useful. Touch typing, not blind typing. ((«пригождается» · слепая печать — touch typing))",
+       "turn": "Your turn: a skill that came in really handy. When?"
+      },
+      {
+       "instr": "Could be better English: how would you say the grey part?",
+       "ctx": "о домашке, когда есть ИИ",
+       "front": "<g>Children just go home, ask AI and write it down.</g> ~~It's useless at all.~~",
+       "key": "POINT",
+       "back": "Children just go home, ask AI and write it down. **So what's the point of homework?**",
+       "why": "at all goes with not and questions (not useful at all). What's the point of…? = «какой смысл в…?» ((«какой смысл в…?»))",
+       "turn": "Your turn: something where you thought: what's the point of this?"
+      }
+     ]
+    },
+    {
+     "kind": "questions",
+     "instr": "If you're done: in pairs. Use the box.",
+     "box": "BOX",
+     "items": [
+      "**1**  Go back through the ten sentences: say each upgrade without looking.",
+      "**2**  Which of the ten sentences is closest to your own story — and which is furthest from it? Why?",
+      "**3**  Something you learned recently that has already **come in handy** — and something where you thought: **what's the point of** this?"
+     ]
+    }
+   ]
+  },
+  {
+   "label": "🎲 School council",
+   "blocks": [
+    {
+     "kind": "text",
+     "cols": 2,
+     "instr": "In rooms: read the situation. Quick vote: which two would you cut, and which two would you add? No reasons yet.",
+     "lines": [
+      {
+       "p": [
+        "An international school is changing its curriculum. The head ((AmE: principal)) wants to cut coding and essay writing: “AI can do all that now.” Two new subjects could be added."
+       ],
+       "wide": true
+      },
+      {
+       "h": "COULD BE CUT"
+      },
+      {
+       "p": [
+        "• coding"
+       ]
+      },
+      {
+       "p": [
+        "• essay writing"
+       ]
+      },
+      {
+       "p": [
+        "• foreign languages"
+       ]
+      },
+      {
+       "p": [
+        "• spelling and handwriting"
+       ]
+      },
+      {
+       "p": [
+        "• mental maths ((AmE: math · устный счёт))"
+       ]
+      },
+      {
+       "h": "COULD BE ADDED",
+       "col": true
+      },
+      {
+       "p": [
+        "• using AI well (and checking it)"
+       ]
+      },
+      {
+       "p": [
+        "• how to learn"
+       ]
+      },
+      {
+       "p": [
+        "• fact-checking ((проверка фактов))"
+       ]
+      },
+      {
+       "p": [
+        "• dealing with difficult people"
+       ]
+      },
+      {
+       "p": [
+        "• working in a team"
+       ]
+      }
+     ]
+    },
+    {
+     "kind": "cards",
+     "style": "bubble",
+     "box": "BOX",
+     "instr": "What might they say? Use the box. Then tap the card.",
+     "cards": [
+      {
+       "instr": "At the school meeting: what might they say? Use the box. Then tap the card.",
+       "ctx": "**Finn, 17,** student. Wants to cut coding.",
+       "back": "**What's the point of** learning to code? A lot of tech companies have **stopped hiring juniors**. They're **handing all that work over to AI**. Whatever we learn now will be **out of date** by the time we graduate from university."
+      },
+      {
+       "ctx": "**Omar, 52,** a parent. Runs a group of small hotels and does the hiring. Wants to add “how to learn”.",
+       "back": "I don't need people who know a particular booking system: it'll be **out of date** in two years. They need to **adapt**. I need people who can **read up on** something new and **teach themselves**."
+      },
+      {
+       "ctx": "**Chloe, 24,** a former student. Her first job was in a call centre. Wants to add “dealing with difficult people”.",
+       "back": "Nobody prepared us for angry customers. I **had to learn the hard way**. And it would have been so easy to teach: two or three role-plays in class."
+      }
+     ]
+    },
+    {
+     "kind": "tool",
+     "page": "../c1-schools/council-2",
+     "instr": "In pairs, on the page: the dice tells you how many reasons to give, for and against. Use the box. Then agree on two to cut and two to add.",
+     "plain": "slides 37–43: the lists, example reasons, follow-up questions and extra speaking are on the council page"
+    }
+   ]
+  },
+  {
+   "label": "🗣 Say it naturally",
+   "blocks": [
+    {
+     "kind": "say",
+     "box": "YOU",
+     "instr": "You can say. What comes before than you'd think? Then tap “Show the answer”.",
+     "task": [
+      "((Friday, in a room:)) One thing I learned at school that's come in handy… I use it **more than you'd think**.",
+      "((Your homework:)) Cooking dinner for twelve? It was **a lot harder than you'd think**."
+     ],
+     "answer": [
+      "((Friday, in a room:)) One thing I learned at school that's come in handy… I use it **more than you'd think**.",
+      "((Your homework:)) Cooking dinner for twelve? It was **a lot harder than you'd think**.",
+      "**A comparative:** more, harder, longer."
+     ],
+     "answer_title": "Check"
+    },
+    {
+     "kind": "cards",
+     "style": "say",
+     "box": "YOU",
+     "instr": "You can also say. Take turns: read the line, your partner replies with the frame. Then tap the card.",
+     "cards": [
+      {
+       "front": "Yoga? Isn't that just stretching?",
+       "back": "It's **a lot harder than you'd think** — I couldn't walk the next day."
+      },
+      {
+       "front": "The walk up to the castle? It can't be far, can it?",
+       "back": "It's **a lot steeper than you'd think** — take water."
+      },
+      {
+       "front": "Your neighbours? They look a bit grumpy.",
+       "back": "They're **a lot friendlier than you'd think** — they fed our cat all summer."
+      },
+      {
+       "front": "Your dad has a smartphone? Does he ever actually use it?",
+       "back": "He's on it **more than you'd think** — mostly sending me memes."
+      }
+     ]
+    },
+    {
+     "kind": "say",
+     "box": "YOU",
+     "instr": "Can I say…? Something that's harder, easier or more fun than people expect. Say it with the frame.",
+     "task": [
+      "Your partner reacts: **Really? How so?** Then you give one example.",
+      "((Ideas: a dish · a place you've been to · a sport · your city · someone in your family · an app))"
+     ]
+    },
+    {
+     "kind": "text",
+     "box": "YOU",
+     "instr": "Act out the exchange. Then do it again with another place, without looking.",
+     "lines": [
+      {
+       "s": "A",
+       "p": [
+        "A week in Ljubljana? What are you going to do there for a whole week?"
+       ]
+      },
+      {
+       "s": "B",
+       "p": [
+        "There's ",
+        {
+         "b": "more to do than you'd think"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "A",
+       "p": [
+        "Really? Like what?"
+       ]
+      },
+      {
+       "s": "B",
+       "p": [
+        "The lakes and the mountains are an hour away, and the food alone is worth the trip."
+       ]
+      },
+      {
+       "ctx": "Round 2: your city? a place you've been to? your own idea"
+      },
+      {
+       "ctx": "If you're done: say the four replies from “You can also say” without looking, then swap."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "🔁 Catching up",
+   "blocks": [
+    {
+     "kind": "text",
+     "instr": "Catching up. Read the Russian and think. Take turns to say it in English; your partner agrees or not. Then tap the yellow to check.",
+     "lines": [
+      {
+       "ctx": "Сто лет не виделись! Как ты?"
+      },
+      {
+       "p": [
+        "→ ",
+        {
+         "f": "I",
+         "r": "t's"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "een"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "ges!"
+        },
+        " ",
+        {
+         "f": "H",
+         "r": "ow"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "ave"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "een?"
+        }
+       ]
+      },
+      {
+       "ctx": "Последнее, что я слышала, — ты переезжал в Монреаль!"
+      },
+      {
+       "p": [
+        "→ ",
+        {
+         "f": "L",
+         "r": "ast"
+        },
+        " ",
+        {
+         "b": "I"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "eard,"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "ere"
+        },
+        " ",
+        {
+         "f": "m",
+         "r": "oving"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "o"
+        },
+        " ",
+        {
+         "f": "M",
+         "r": "ontreal!"
+        }
+       ]
+      },
+      {
+       "ctx": "Ну и как тебе там?"
+      },
+      {
+       "p": [
+        "→ ",
+        {
+         "f": "S",
+         "r": "o"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "ow"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "re"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "f",
+         "r": "inding"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "t?"
+        }
+       ]
+      },
+      {
+       "ctx": "Я сто лет собиралась тебе написать!"
+      },
+      {
+       "p": [
+        "→ ",
+        {
+         "f": "I",
+         "r": "'ve"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "een"
+        },
+        " ",
+        {
+         "f": "m",
+         "r": "eaning"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "o"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "et"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "n"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "ouch"
+        },
+        " ",
+        {
+         "f": "f",
+         "r": "or"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "ges!"
+        }
+       ]
+      },
+      {
+       "ctx": "Ну, рассказывай, чем занимался?"
+      },
+      {
+       "p": [
+        "→ ",
+        {
+         "f": "S",
+         "r": "o,"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "hat"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "ave"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "een"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "p"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "o?"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "💬 Who does what at home?",
+   "blocks": [
+    {
+     "kind": "say",
+     "box": "CATCH",
+     "instr": "In rooms, part 1 (3 min): you bump into each other for the first time in years. Catch up. Then part 2 — the next screen.",
+     "task": [
+      "What you've been up to, how you're finding your new job or city. Then pick another place.",
+      "**Where?**",
+      "• at a friend's wedding",
+      "• at an airport gate",
+      "• in a supermarket queue ((AmE: line)), in a city neither of you lives in"
+     ]
+    },
+    {
+     "kind": "questions",
+     "instr": "Same rooms, part 2 (about 10 min). We'll record it so we can see what you want to say but can't yet. No box — just talk.",
+     "items": [
+      "**1**  Who's the cook in your house — and who did the cooking in your family when you were growing up? What's changed since then?",
+      "**2**  Who does the paperwork and the tech stuff? How did it end up like that? And two jobs nobody in your house wants to do. ((Live alone? What do you do yourself, and what do you get someone else to do?))",
+      "**3**  Which job around the house would you happily hand over to someone else — and which would you never give up?"
+     ]
+    },
+    {
+     "kind": "say",
+     "instr": "Back in the main room",
+     "task": [
+      "**1**  What did you want to say but couldn't? Type it in Russian in the chat.",
+      "**2**  One thing that surprised you about how things work in your partner's home."
+     ]
+    }
+   ]
+  }
+ ]
+}

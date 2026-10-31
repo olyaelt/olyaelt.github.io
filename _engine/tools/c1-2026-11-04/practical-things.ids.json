@@ -1,0 +1,206 @@
+{
+ "blocks": [
+  {
+   "pid": 0,
+   "sig": "say good lines from friday. which two could you say too — and why?",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "text can you remember the phrases? say the whole line, then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "text can you remember all the phrases? say each one, then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "cards one more of our sentences. green = good, grey = could be better. say the grey part with a phrase from the box (the word in red).",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "questions if you're done: in pairs. use the box.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "text in rooms: read the situation. quick vote: which two would you cut, and which two would you add? no reasons yet.",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "cards what might they say? use the box. then tap the card.",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "tool in pairs, on the page: the dice tells you how many reasons to give, for and against. use the box. then agree on two to cut and two to add. ../c1-schools/council-2",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "say you can say. what comes before than you'd think? then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "cards you can also say. take turns: read the line, your partner replies with the frame. then tap the card.",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "say can i say…? something that's harder, easier or more fun than people expect. say it with the frame.",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "text act out the exchange. then do it again with another place, without looking.",
+   "gone": false
+  },
+  {
+   "pid": 12,
+   "sig": "text catching up. read the russian and think. take turns to say it in english; your partner agrees or not. then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 13,
+   "sig": "say in rooms, part 1 (3 min): you bump into each other for the first time in years. catch up. then part 2 — the next screen.",
+   "gone": false
+  },
+  {
+   "pid": 14,
+   "sig": "questions same rooms, part 2 (about 10 min). we'll record it so we can see what you want to say but can't yet. no box — just talk.",
+   "gone": false
+  },
+  {
+   "pid": 15,
+   "sig": "say back in the main room",
+   "gone": false
+  }
+ ],
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "for me it was czech. it's really close to russian, but it's a lot harder than you'd think. чешский похож на русский — казалось, будет легко for me it was czech. i thought it's easy to learn a language which is similar. think your turn: a language, a city or a job that was harder than you'd think. why? harder than you'd think = what anyone expects vs reality. about your own past expectation: i thought it would be easy. «сложнее, чем кажется»",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "communication with non-technical managers — it's a lot harder than you'd think. чему учишься на работе: говорить с менеджерами без технического бэкграунда communication with non-technical managers — it's harder than i was thinking. your turn: one thing at work or at home that's a lot harder than you'd think. than i was thinking is a calque. anyone would think so → than you'd think; only you → than i thought. калька с «чем я думала»",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "i picked up how to manage staff on the job, from my general managers. university only gets you so far. управлять людьми учишься у своих руководителей i picked up how to manage staff on the job, from my general managers. you can't learn it at uni. far your turn: one thing you picked up on the job — not at university or school. you can't learn it at university is correct. the box phrase says more: university gives you the basics, the rest comes on the job. вуз даёт базу — дальше на работе · staff /stɑːf/ (ame /stæf/) — персонал · stuff /stʌf/ — вещи",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "i realised that university only gets you so far, so i found a full-time job. зачем работать на полный день, ещё учась в вузе i understood that just studying at university isn't enough for me, so i found a full-time job. your turn: your degree or your school — where did it only get you so far? understood → realised (it became clear to you); isn't enough for me → only gets you so far. осознала · даёт базу — и не больше",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "ai helps me make suggestions, but choosing the best one — that's where i really add value. когда пишешь код вместе с ии ai helps me make suggestions, but finally i choose the best one with my own experience. value your turn: in your work or your life now, where do you really add value? finally in mid-sentence sounds like «наконец-то»; «в итоге» is in the end. add value = what you bring that ai can't. «вот где от меня польза»",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "networking, department heads, motivation — that's where people still add value. что остаётся за топ-менеджерами, когда ии есть на всех уровнях networking, department heads, motivation — in this kind of area, i believe ai is still helpless. your turn: two things where people still add value — and ai doesn't, yet. helpless is usually about people. the box phrase talks about what people do well, not what ai can't do. helpless — «беспомощный», обычно о людях",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "top managers still work with paper documents — they could go to jail. that's why we don't hand anything serious over to ai. почему серьёзные документы не доверяют ии top managers still work with paper documents — they could go to jail. that's why we don't use ai for serious work. hand your turn: one thing you'd never hand over to ai. why not? hand sth over to ai = give ai the whole job, not just use it. «передать ии целиком»",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "things that took me five hours a couple of years ago, i now hand over to ai — it does them in five minutes. что ии теперь делает за тебя на работе things that took me five hours a couple of years ago, ai could do for five minutes. your turn: one task you've handed over to ai — or would love to. in five minutes = how long it takes to finish; for five minutes = how long it goes on. «за пять минут» — in five minutes",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "this is touch typing. it comes in really handy. что пригодилось из того, чему учились сами this is touch typing. and it's very useful for typing. handy your turn: a skill that came in really handy. when? very useful for typing repeats typing; it comes in handy = it turns out to be useful. touch typing, not blind typing. «пригождается» · слепая печать — touch typing",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "children just go home, ask ai and write it down. so what's the point of homework? о домашке, когда есть ии children just go home, ask ai and write it down. it's useless at all. point your turn: something where you thought: what's the point of this? at all goes with not and questions (not useful at all). what's the point of…? = «какой смысл в…?» «какой смысл в…?»",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "what's the point of learning to code? a lot of tech companies have stopped hiring juniors. they're handing all that work over to ai. whatever we learn now will be out of date by the time we graduate from university. finn, 17, student. wants to cut coding.",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "i don't need people who know a particular booking system: it'll be out of date in two years. they need to adapt. i need people who can read up on something new and teach themselves. omar, 52, a parent. runs a group of small hotels and does the hiring. wants to add “how to learn”.",
+   "gone": false
+  },
+  {
+   "pid": 12,
+   "sig": "nobody prepared us for angry customers. i had to learn the hard way. and it would have been so easy to teach: two or three role-plays in class. chloe, 24, a former student. her first job was in a call centre. wants to add “dealing with difficult people”.",
+   "gone": false
+  },
+  {
+   "pid": 13,
+   "sig": "it's a lot harder than you'd think — i couldn't walk the next day. yoga? isn't that just stretching?",
+   "gone": false
+  },
+  {
+   "pid": 14,
+   "sig": "it's a lot steeper than you'd think — take water. the walk up to the castle? it can't be far, can it?",
+   "gone": false
+  },
+  {
+   "pid": 15,
+   "sig": "they're a lot friendlier than you'd think — they fed our cat all summer. your neighbours? they look a bit grumpy.",
+   "gone": false
+  },
+  {
+   "pid": 16,
+   "sig": "he's on it more than you'd think — mostly sending me memes. your dad has a smartphone? does he ever actually use it?",
+   "gone": false
+  }
+ ],
+ "write": [],
+ "questions.4": [
+  {
+   "pid": 0,
+   "sig": "1 go back through the ten sentences: say each upgrade without looking.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 which of the ten sentences is closest to your own story — and which is furthest from it? why?",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "3 something you learned recently that has already come in handy — and something where you thought: what's the point of this?",
+   "gone": false
+  }
+ ],
+ "questions.14": [
+  {
+   "pid": 0,
+   "sig": "1 who's the cook in your house — and who did the cooking in your family when you were growing up? what's changed since then?",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 who does the paperwork and the tech stuff? how did it end up like that? and two jobs nobody in your house wants to do. live alone? what do you do yourself, and what do you get someone else to do?",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "3 which job around the house would you happily hand over to someone else — and which would you never give up?",
+   "gone": false
+  }
+ ]
+}
