@@ -262,6 +262,11 @@ __BASE_CSS__
 .rt-hg .ghg-svg{width:5.6rem}
 .rt-hg .ghg-num{display:none}   /* her 19:55: only the sand, no numbers to watch */
 @media (max-width:760px){ .retell{grid-template-columns:1fr} .rt-lead{font-size:1.25rem} }
+.bub.frame{text-align:left;place-items:center start}
+.scene.tc.solo{grid-template-columns:minmax(0,1fr) auto}   /* a frame needs the room: only the speaking figure */
+.scene.tc .bub.frame{font-size:calc(1.5rem * var(--k, 1));padding:14px 24px}
+.bub .opt{color:var(--muted);font-weight:600;font-size:.8em}
+.fc .tc-note{margin:-34px 0 0;text-align:center;color:var(--muted);font-size:calc(.98rem * var(--k, 1))}
 .tc-next{color:var(--muted);font-size:.95rem;padding:10px 0}
 .fc .turn{margin:4px 0 0;font-weight:800;font-size:calc(1.12rem * var(--k, 1));color:var(--ink)}
 .fc{gap:calc(10px * var(--k, 1))}
@@ -832,7 +837,8 @@ function cardsHTML(b){
      speech bubble of her two figures; no Again / Got it: they talk, then Next */
   if(d.turn != null){ const c = d.cards[d.turn];
     return `${dots}<div class="fc turncard ${d.fresh ? "enter" : ""}"><span class="lbl">💬 Your turn</span><p class="tc-was">${mk(c.back)}</p>
-      <div class="scene tc"><img class="skimg fig" src="../sk-listen.png" alt=""><div class="bub said"><span>${mk(c.turn)}</span>${TAIL}</div><img class="skimg fig" src="../sk-talk.png" alt=""></div></div>
+      <div class="scene tc ${/\[/.test(c.turn) ? "solo" : ""}">${/\[/.test(c.turn) ? "" : `<img class="skimg fig" src="../sk-listen.png" alt="">`}<div class="bub said ${/\[/.test(c.turn) ? "frame" : ""}"><span>${turnMk(c.turn)}</span>${TAIL}</div><img class="skimg fig" src="../sk-talk.png" alt=""></div>
+      ${turnNote(c) ? `<p class="tc-note">${mk(turnNote(c))}</p>` : ""}</div>
       <div class="deck-act"><span class="tc-next">Talk about it, then Next →</span></div>`; }
   /* her 19:59 (as on the Jeopardy fields): no "Done! You got them all" screen — a finished deck shows its last card ("↩ Looking back"),
      and Next goes straight on to the speaking */
@@ -941,7 +947,7 @@ function gameMount(b, host){
   if(b.piece === "memo"){ st.memo = gMemo(host, b.items, {seconds: b.seconds || 30, groups: b.groups, state: st.memo || null,
     onChange: () => { keepPlace(); const sb = document.querySelector("[data-step]"); if(sb) sb.disabled = !canNext(); }}); return; }   /* tools 17 */
   if(st.ttt && st.ttt.cells && st.ttt.cells[0] && st.ttt.cells[0].i != null) st.ttt.cells = gameTasks(b, st.ttt.cells);   /* reopened on this device */
-  st.ttt = gTicTacToe(host, b.tasks, {size: b.size || 3, state: st.ttt || null, revealFirst: true, labels: {yes: "✓ Correct", no: "✗ Not quite"},
+  st.ttt = gTicTacToe(host, b.tasks, {size: b.size || 3, state: st.ttt || null, revealFirst: true, labels: {yes: "✓ Correct", no: "✗ Not quite"}, cellLabel: t => t.label ? esc(t.label) : "",
     prompt: t => `${t.ctx ? `<span class="lctx">${mk(t.ctx)}</span>` : ""}<span class="say">${mk(t.q)}</span>`,
     answer: t => `${b.check ? `<span class="chk">${esc(b.check)}</span>` : ""}<span class="say fixline">${mk(t.a)}</span>${t.why ? `<span class="note">${mk(t.why)}</span>` : ""}`,
     onResult: (t, ok) => { lwDeck(t._n, ok); if(!ok && !saved.again.includes(t._n)){ saved.again.push(t._n); save(); } },
@@ -1108,6 +1114,9 @@ function deckAnswer(b, ok){
   if(!d.queue.length && b._id !== "fastdeck" && !deckHasList(b) && !isLast()){ stepOn(); return; }   /* her 15:23: no "Done!" screen — the next cloud says it */
   render();
 }
+/* the C1 chat's handoff 31.10 21:00 (her 20:24): a frame with options — [a · b · c] in a quieter colour, the target phrase bold */
+const turnMk = t => mk(t).replace(/\[([^\[\]]+)\]/g, '<span class="opt">[$1]</span>');
+const turnNote = c => c.turnNote || (/\[/.test(c.turn || "") ? "Pick an option or use your own idea. Your partner asks one question." : "");
 function turnDone(b){ const d = deckOf(b); d.turn = null; d.fresh = true;
   if(!d.queue.length && b._id !== "fastdeck" && !deckHasList(b) && !isLast()){ stepOn(); return; } render(); }
 const deckHasList = b => (b.cards || []).some(c => c._b && c._b.style === "ours" && c._b.summary) || (b.style === "ours" && !!b.summary);
@@ -1210,6 +1219,7 @@ function fitCard(){
   const fc = document.querySelector("#main .deck .fc, #main .cn"), blk = document.querySelector("#main .blk"), bar = document.querySelector("#main .stepbar");
   if(!fc || !blk || !bar || innerWidth < 760) return;
   const over = () => blk.getBoundingClientRect().bottom + 2 > bar.getBoundingClientRect().top;
+  fc.querySelectorAll("img").forEach(im => { if(!im.complete) im.addEventListener("load", () => { if(!fc.isConnected) return; fc.style.removeProperty("--k"); fitCard(); }, {once: true}); });   /* a picture still loading changes the card's size */
   for(const k of [.92, .85, .78, .72]){ if(!over()) return; fc.style.setProperty("--k", k); }
 }
 addEventListener("resize", () => { clearTimeout(fitCard.t); fitCard.t = setTimeout(() => { const fc = document.querySelector("#main .deck .fc, #main .cn"); if(fc) fc.style.removeProperty("--k"); fitCard(); }, 150); });

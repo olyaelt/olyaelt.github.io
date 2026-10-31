@@ -264,7 +264,7 @@
      "img": "priya.jpg",
      "alt": "Priya, 35, works in logistics",
      "timer": 60,
-     "instr": "Retell Priya's answer from your homework. Tap the hourglass and remember all you can in one minute.",
+     "instr": "What did Priya say? Tap the hourglass and say everything you remember in one minute.",
      "lead": {
       "s": "Priya, 35, works in logistics",
       "p": "Honestly? It doesn't matter that much what they teach you. You'll end up learning something else at work anyway. What matters is …"
@@ -276,7 +276,7 @@
      "img": "sam.jpg",
      "alt": "Sam, 24, graduated last year",
      "timer": 60,
-     "instr": "Retell Sam's answer from your homework. Tap the hourglass and remember all you can in one minute.",
+     "instr": "What did Sam say? Tap the hourglass and say everything you remember in one minute.",
      "lead": {
       "s": "Sam, 24, graduated last year",
       "p": "I'm not sure anyone knows what to teach anymore. I studied translation, and half the agencies I applied to …"
@@ -288,7 +288,7 @@
      "img": "mark.jpg",
      "alt": "Mark, 26, in his first job as an engineer",
      "timer": 60,
-     "instr": "Retell Mark's answer from your homework. Tap the hourglass and remember all you can in one minute.",
+     "instr": "What did Mark say? Tap the hourglass and say everything you remember in one minute.",
      "lead": {
       "s": "Mark, 26, in his first job as an engineer",
       "p": "Yes, but practical shouldn't just mean cooking and managing money. When I started this job, it was …"
@@ -736,7 +736,7 @@
      "box": "BOX",
      "pic": "check",
      "summary": "Could be better → perfect: the full list",
-     "instr": "One more of our sentences. Green = good, grey = could be better. Say the grey part with a phrase from the box (the word in red).",
+     "instr": "Our sentences. Green = good, grey = could be better. Say the grey part with a phrase from the box (the word in red).",
      "cards": [
       {
        "ctx": "чешский похож на русский — казалось, будет легко",
@@ -744,7 +744,7 @@
        "key": "THINK",
        "back": "For me it was Czech. **It's really close to Russian, but it's a lot harder than you'd think.**",
        "why": "harder than you'd think = what anyone expects vs reality. About your own past expectation: I thought it would be easy. ((«сложнее, чем кажется»))",
-       "turn": "A language, a city or a job that was harder than you'd think. Why?"
+       "turn": "[Learning the local language · Moving to a new country · Getting used to retirement · Raising a teenager · Starting my own business] was / is **a lot harder than you'd think**. I thought it would be …, but …"
       },
       {
        "instr": "And this one? No red word this time.",
@@ -752,7 +752,7 @@
        "front": "<g>Communication with non-technical managers</g> — it's ~~harder than I was thinking~~.",
        "back": "Communication with non-technical managers — it's **a lot harder than you'd think**.",
        "why": "than I was thinking is a calque. Anyone would think so → than you'd think; only you → than I thought. ((калька с «чем я думала»))",
-       "turn": "One thing at work or at home that's a lot harder than you'd think."
+       "turn": "[Explaining my job to my parents · Switching off after work · Making friends as an adult · Getting a teenager to tell you about their day · Filling your days after you retire] is **a lot harder than you'd think** — especially when …"
       },
       {
        "instr": "Could be better English: how would you say the grey part?",
@@ -761,7 +761,7 @@
        "key": "FAR",
        "back": "I picked up how to manage staff on the job, from my general managers. **University only gets you so far.**",
        "why": "You can't learn it at university is correct. The box phrase says more: university gives you the basics, the rest comes on the job. ((вуз даёт базу — дальше на работе)) · staff ##/stɑːf/## (AmE ##/stæf/##) — персонал · stuff ##/stʌf/## — вещи",
-       "turn": "One thing you picked up on the job — not at university or school."
+       "turn": "[My degree · School · A course] **only got me so far** — I picked up [people skills · most of the software · the local language] **on the job**."
       },
       {
        "instr": "And this one? No red word this time.",
@@ -769,7 +769,7 @@
        "front": "~~I understood that just studying at university isn't enough for me~~, <g>so I found a full-time job</g>.",
        "back": "I **realised** that **university only gets you so far**, so I found a full-time job.",
        "why": "understood → realised (it became clear to you); isn't enough for me → only gets you so far. ((осознала · даёт базу — и не больше))",
-       "turn": "Your degree or your school — where did it only get you so far?"
+       "turn": "When I [became a parent · moved abroad · got my first job · started managing people · retired], I realised that [a degree · school English · reading parenting books · training] **only gets you so far**."
       },
       {
        "instr": "Could be better English: how would you say the grey part?",
@@ -778,7 +778,7 @@
        "key": "VALUE",
        "back": "AI helps me make suggestions, but **choosing the best one — that's where I really add value**.",
        "why": "finally in mid-sentence sounds like «наконец-то»; «в итоге» is in the end. add value = what you bring that AI can't. ((«вот где от меня польза»))",
-       "turn": "In your work or your life now, where do you really add value?"
+       "turn": "[AI writes the first draft · An app finds the cheapest flights · A junior analyst crunches the numbers], but [checking it · knowing which places my family will actually enjoy · explaining what the numbers mean to the client] — **that's where I really add value**."
       },
       {
        "instr": "And this one? No red word this time.",
@@ -786,7 +786,7 @@
        "front": "<g>Networking, department heads, motivation</g> — ~~in this kind of area, I believe AI is still helpless~~.",
        "back": "Networking, department heads, motivation — **that's where people still add value**.",
        "why": "helpless is usually about people. The box phrase talks about what people do well, not what AI can't do. ((helpless — «беспомощный», обычно о людях))",
-       "turn": "Two things where people still add value — and AI doesn't, yet."
+       "turn": "[Calming down an angry client · Breaking bad news to a client · Negotiating a good deal · Noticing when a colleague is struggling] — **that's where people still add value**. AI can …, but …"
       },
       {
        "instr": "Could be better English: how would you say the grey part?",
@@ -795,7 +795,7 @@
        "key": "HAND",
        "back": "Top managers still work with paper documents — they could go to jail. **That's why we don't hand anything serious over to AI.**",
        "why": "hand sth over to AI = give AI the whole job, not just use it. ((«передать ИИ целиком»))",
-       "turn": "One thing you'd never hand over to AI. Why not?"
+       "turn": "One thing you'd never **hand over to AI**. Why not?"
       },
       {
        "instr": "And this one? No red word this time.",
@@ -803,7 +803,7 @@
        "front": "Things that took me five hours <g>a couple of years ago</g>, ~~AI could do for five minutes~~.",
        "back": "Things that took me five hours a couple of years ago, **I now hand over to AI — it does them in five minutes**.",
        "why": "in five minutes = how long it takes to finish; for five minutes = how long it goes on. ((«за пять минут» — in five minutes))",
-       "turn": "One task you've handed over to AI — or would love to."
+       "turn": "One task you've **handed over to AI** — or would love to. ((emails? meeting notes? translations? planning a trip?))"
       },
       {
        "instr": "Could be better English: how would you say the grey part?",
@@ -812,7 +812,7 @@
        "key": "HANDY",
        "back": "This is touch typing. **It comes in really handy.**",
        "why": "very useful for typing repeats typing; it comes in handy = it turns out to be useful. Touch typing, not blind typing. ((«пригождается» · слепая печать — touch typing))",
-       "turn": "A skill that came in really handy. When?"
+       "turn": "[Touch typing · Knowing a bit of the local language · My first-aid course · Excel · Being able to drive] **came in really handy** when I …"
       },
       {
        "instr": "Could be better English: how would you say the grey part?",
@@ -821,7 +821,8 @@
        "key": "POINT",
        "back": "Children just go home, ask AI and write it down. **So what's the point of homework?**",
        "why": "at all goes with not and questions (not useful at all). What's the point of…? = «какой смысл в…?» ((«какой смысл в…?»))",
-       "turn": "Something where you thought: what's the point of this?"
+       "turn": "So **what's the point of** [team-building days · performance reviews · homework for young kids · learning poems by heart]?",
+       "turnNote": "Does your partner agree? Why (not)?"
       }
      ]
     },
@@ -1171,7 +1172,7 @@
      "kind": "cards",
      "style": "say",
      "box": "YOU",
-     "instr": "Take turns: read the line, your partner replies with the frame and the word in red. Then tap the card.",
+     "instr": "Take turns: read the line. Your partner replies with the frame, making the word in red a comparative (hard → harder). Then tap the card.",
      "cards": [
       {
        "front": "Yoga? Isn't that just stretching?",
@@ -1263,7 +1264,7 @@
       "**1**  A: Three days in Bratislava? Isn't it really small?",
       "B: There's **more to see than you'd think**.",
       "A: Really? Like what?",
-      "B: The old town is lovely, Vienna is an hour away by boat, and the wine is really cheap.",
+      "B: The old town is lovely, Vienna's only an hour away by train, and the wine is really cheap.",
       "**2**  A: Your town? What is there to do in the evenings?",
       "B: There's **a lot more going on than you'd think**.",
       "A: Really? Like what?",
@@ -1273,7 +1274,7 @@
     },
     {
      "kind": "postits",
-     "instr": "If you're done: read a sticker to your partner. They reply with the frame and the word in capitals, without looking. Then swap.",
+     "instr": "If you're done: read a sticker to your partner. They reply with the frame, making the word in capitals a comparative, without looking. Then swap.",
      "notes": [
       "Yoga? Isn't that just stretching? **HARD**",
       "The walk up to the castle? It can't be far, can it? **STEEP**",
@@ -1287,227 +1288,56 @@
    "label": "🔁 Catching up",
    "blocks": [
     {
-     "kind": "text",
-     "instr": "Catching up. Read the Russian and think. Take turns to say it in English; your partner agrees or not. Then tap the yellow to check.",
-     "lines": [
+     "kind": "game",
+     "piece": "tictactoe",
+     "size": 3,
+     "instr": "Tic-tac-toe in pairs: choose a square and say it in English. Then tap to check. Three in a row wins.",
+     "tip": "One of you is X, the other O; whoever shares the screen taps. A square opens its task: say it, Show the answer, then ✓ / ✗. A right answer takes the square. Three in a row wins, then a new board.",
+     "tasks": [
       {
-       "ctx": "Сто лет не виделись! Как ты?"
+       "label": "At a wedding",
+       "q": "You see an old friend at a wedding. «Сто лет не виделись! Как ты?»",
+       "a": "It's **been ages**! **How have you been?**"
       },
       {
-       "p": [
-        "→ ",
-        {
-         "f": "I",
-         "r": "t's"
-        },
-        " ",
-        {
-         "f": "b",
-         "r": "een"
-        },
-        " ",
-        {
-         "f": "a",
-         "r": "ges!"
-        },
-        " ",
-        {
-         "f": "H",
-         "r": "ow"
-        },
-        " ",
-        {
-         "f": "h",
-         "r": "ave"
-        },
-        " ",
-        {
-         "f": "y",
-         "r": "ou"
-        },
-        " ",
-        {
-         "f": "b",
-         "r": "een?"
-        }
-       ]
+       "label": "Montreal",
+       "q": "«Последнее, что я слышала, — ты переезжал в Монреаль!»",
+       "a": "**Last I heard**, you were moving to Montreal!"
       },
       {
-       "ctx": "Последнее, что я слышала, — ты переезжал в Монреаль!"
+       "label": "A new city",
+       "q": "They moved to a new city a month ago. «Ну и как тебе там?»",
+       "a": "So **how are you finding it** (so far)?"
       },
       {
-       "p": [
-        "→ ",
-        {
-         "f": "L",
-         "r": "ast"
-        },
-        " ",
-        {
-         "b": "I"
-        },
-        " ",
-        {
-         "f": "h",
-         "r": "eard,"
-        },
-        " ",
-        {
-         "f": "y",
-         "r": "ou"
-        },
-        " ",
-        {
-         "f": "w",
-         "r": "ere"
-        },
-        " ",
-        {
-         "f": "m",
-         "r": "oving"
-        },
-        " ",
-        {
-         "f": "t",
-         "r": "o"
-        },
-        " ",
-        {
-         "f": "M",
-         "r": "ontreal!"
-        }
-       ]
+       "label": "A message",
+       "q": "«Я сто лет собиралась тебе написать!»",
+       "a": "**I've been meaning to get in touch** for ages!"
       },
       {
-       "ctx": "Ну и как тебе там?"
+       "label": "Your news",
+       "q": "«Ну, рассказывай, чем занимался?»",
+       "a": "So, **what have you been up to?**"
       },
       {
-       "p": [
-        "→ ",
-        {
-         "f": "S",
-         "r": "o"
-        },
-        " ",
-        {
-         "f": "h",
-         "r": "ow"
-        },
-        " ",
-        {
-         "f": "a",
-         "r": "re"
-        },
-        " ",
-        {
-         "f": "y",
-         "r": "ou"
-        },
-        " ",
-        {
-         "f": "f",
-         "r": "inding"
-        },
-        " ",
-        {
-         "f": "i",
-         "r": "t?"
-        }
-       ]
+       "label": "Nothing special",
+       "q": "Your friend asks what you've been up to. «Да так, то одно, то другое…» + one real detail",
+       "a": "Oh, **this and that**. I've taken up climbing, actually!"
       },
       {
-       "ctx": "Я сто лет собиралась тебе написать!"
+       "label": "The bank",
+       "q": "You remember he worked at a bank. «Ты всё ещё в банке?» — «Всё там же!»",
+       "a": "**Still at** the bank? — **Still at** the bank!"
       },
       {
-       "p": [
-        "→ ",
-        {
-         "f": "I",
-         "r": "'ve"
-        },
-        " ",
-        {
-         "f": "b",
-         "r": "een"
-        },
-        " ",
-        {
-         "f": "m",
-         "r": "eaning"
-        },
-        " ",
-        {
-         "f": "t",
-         "r": "o"
-        },
-        " ",
-        {
-         "f": "g",
-         "r": "et"
-        },
-        " ",
-        {
-         "f": "i",
-         "r": "n"
-        },
-        " ",
-        {
-         "f": "t",
-         "r": "ouch"
-        },
-        " ",
-        {
-         "f": "f",
-         "r": "or"
-        },
-        " ",
-        {
-         "f": "a",
-         "r": "ges!"
-        }
-       ]
+       "label": "Three kids",
+       "q": "Your friend has three kids and a new job. «Скучать некогда!»",
+       "a": "**That must keep you busy!**"
       },
       {
-       "ctx": "Ну, рассказывай, чем занимался?"
-      },
-      {
-       "p": [
-        "→ ",
-        {
-         "f": "S",
-         "r": "o,"
-        },
-        " ",
-        {
-         "f": "w",
-         "r": "hat"
-        },
-        " ",
-        {
-         "f": "h",
-         "r": "ave"
-        },
-        " ",
-        {
-         "f": "y",
-         "r": "ou"
-        },
-        " ",
-        {
-         "f": "b",
-         "r": "een"
-        },
-        " ",
-        {
-         "f": "u",
-         "r": "p"
-        },
-        " ",
-        {
-         "f": "t",
-         "r": "o?"
-        }
-       ]
+       "label": "After the party",
+       "q": "The day after a reunion, a message to the group: «Было так здорово со всеми повидаться!»",
+       "a": "**It was lovely to catch up** with everyone!"
       }
      ]
     },

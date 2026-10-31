@@ -275,6 +275,7 @@ details.all[open] summary{color:var(--ink)}
 .gt-back,.gt-front{position:absolute;inset:0;border-radius:12px;border:3px solid #1D1D1B;display:grid;place-items:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 4px 0 #1D1D1B}
 .gt-back{background:#0693E3;color:#FFFFFF;font-weight:900;font-size:1.6rem;background-image:radial-gradient(circle,#FFFFFF44 1.6px,transparent 2px);background-size:12px 12px}
 .gt-cell:not(:disabled):hover .gt-back{filter:brightness(1.08)}
+.gt-back .gt-lbl{font-size:.95rem;line-height:1.12;padding:6px;text-align:center;font-weight:800}
 .gt-front{transform:rotateY(180deg);background:#FFFFFF;color:#1D1D1B;font-weight:900;font-size:2rem}
 .gt-cell.open .gt-front{background:#FFF8C4}
 .gt-cell.win .gt-front{background:#BFF2B8}
@@ -743,6 +744,11 @@ details.all[open] summary{color:var(--ink)}
 .rt-hg .ghg-svg{width:5.6rem}
 .rt-hg .ghg-num{display:none}   /* her 19:55: only the sand, no numbers to watch */
 @media (max-width:760px){ .retell{grid-template-columns:1fr} .rt-lead{font-size:1.25rem} }
+.bub.frame{text-align:left;place-items:center start}
+.scene.tc.solo{grid-template-columns:minmax(0,1fr) auto}   /* a frame needs the room: only the speaking figure */
+.scene.tc .bub.frame{font-size:calc(1.5rem * var(--k, 1));padding:14px 24px}
+.bub .opt{color:var(--muted);font-weight:600;font-size:.8em}
+.fc .tc-note{margin:-34px 0 0;text-align:center;color:var(--muted);font-size:calc(.98rem * var(--k, 1))}
 .tc-next{color:var(--muted);font-size:.95rem;padding:10px 0}
 .fc .turn{margin:4px 0 0;font-weight:800;font-size:calc(1.12rem * var(--k, 1));color:var(--ink)}
 .fc{gap:calc(10px * var(--k, 1))}
@@ -1483,7 +1489,8 @@ function gRoll(el, final, done){
 /* tools 16 (the B2 revision field f-late, its first use): state = a board to carry on with (the field redraws its screen often);
    revealFirst = ✓ / ✗ only after Show the answer ("we lead the students"); labels = the two answers' words; onResult(task, ok),
    onWin(el), onChange() for the page around it */
-function gTicTacToe(host, tasks, {size = 3, win = 3, marks = ["X", "O"], answer = t => t.a || "", prompt = t => gEsc(t.q || t), state = null, revealFirst = false, labels = null, onResult = null, onWin = null, onChange = null} = {}){
+function gTicTacToe(host, tasks, {size = 3, win = 3, marks = ["X", "O"], answer = t => t.a || "", prompt = t => gEsc(t.q || t), state = null, revealFirst = false, labels = null, cellLabel = null, onResult = null, onWin = null, onChange = null} = {}){
+  /* tools 18 (C1 04.11 Catching up): cellLabel(task) = a word or two on the square instead of its number ("At a wedding") */
   const T = state || {cells: gShuffle(tasks).slice(0, size * size).map(t => ({t, m: null})), turn: 0, open: -1, shown: false, over: null};
   const changed = () => { if(onChange) onChange(T); };
   const lines = (() => { const L = [], ok = (r, c) => r >= 0 && c >= 0 && r < size && c < size;
@@ -1494,7 +1501,7 @@ function gTicTacToe(host, tasks, {size = 3, win = 3, marks = ["X", "O"], answer 
     const winLine = T.over && T.over.line, cur = marks[T.turn], o = T.open > -1 ? T.cells[T.open] : null;
     host.innerHTML = `<div class="gttt">
       <div class="gt-board" style="--n:${size}">${T.cells.map((c, k) => `<button class="gt-cell ${c.m ? "taken m" + marks.indexOf(c.m) : ""} ${k === T.open ? "open" : ""} ${winLine && winLine.includes(k) ? "win" : ""} ${fresh === k ? "fresh" : ""}" data-gt="${k}" ${c.m || T.over || (T.open > -1 && k !== T.open) ? "disabled" : ""} aria-label="Square ${k + 1}${c.m ? ": " + c.m : ""}">
-        <span class="gt-in"><span class="gt-back">${k + 1}</span><span class="gt-front">${c.m ? markSVG(c.m) : "?"}</span></span></button>`).join("")}</div>
+        <span class="gt-in"><span class="gt-back">${cellLabel && cellLabel(c.t) ? `<span class="gt-lbl">${cellLabel(c.t)}</span>` : k + 1}</span><span class="gt-front">${c.m ? markSVG(c.m) : "?"}</span></span></button>`).join("")}</div>
       <div class="gt-side">${T.over ? `<p class="gt-turn big">${T.over.who ? `${markSVG(T.over.who)} wins! 🎉` : "It's a draw!"}</p><button class="btn primary" data-gt-again>Play again</button>`
         : `<p class="gt-turn">${markSVG(cur)} <b>${gEsc(cur)}'s turn</b>${o ? "" : " — choose a square"}</p>
         ${o ? `<div class="gt-task${T.shown ? " shown" : ""}"><p class="gt-q">${prompt(o.t)}</p>${T.shown && answer(o.t) ? `<p class="gt-a">${answer(o.t)}</p>` : ""}
@@ -2665,7 +2672,8 @@ function cardsHTML(b){
      speech bubble of her two figures; no Again / Got it: they talk, then Next */
   if(d.turn != null){ const c = d.cards[d.turn];
     return `${dots}<div class="fc turncard ${d.fresh ? "enter" : ""}"><span class="lbl">💬 Your turn</span><p class="tc-was">${mk(c.back)}</p>
-      <div class="scene tc"><img class="skimg fig" src="../sk-listen.png" alt=""><div class="bub said"><span>${mk(c.turn)}</span>${TAIL}</div><img class="skimg fig" src="../sk-talk.png" alt=""></div></div>
+      <div class="scene tc ${/\[/.test(c.turn) ? "solo" : ""}">${/\[/.test(c.turn) ? "" : `<img class="skimg fig" src="../sk-listen.png" alt="">`}<div class="bub said ${/\[/.test(c.turn) ? "frame" : ""}"><span>${turnMk(c.turn)}</span>${TAIL}</div><img class="skimg fig" src="../sk-talk.png" alt=""></div>
+      ${turnNote(c) ? `<p class="tc-note">${mk(turnNote(c))}</p>` : ""}</div>
       <div class="deck-act"><span class="tc-next">Talk about it, then Next →</span></div>`; }
   /* her 19:59 (as on the Jeopardy fields): no "Done! You got them all" screen — a finished deck shows its last card ("↩ Looking back"),
      and Next goes straight on to the speaking */
@@ -2774,7 +2782,7 @@ function gameMount(b, host){
   if(b.piece === "memo"){ st.memo = gMemo(host, b.items, {seconds: b.seconds || 30, groups: b.groups, state: st.memo || null,
     onChange: () => { keepPlace(); const sb = document.querySelector("[data-step]"); if(sb) sb.disabled = !canNext(); }}); return; }   /* tools 17 */
   if(st.ttt && st.ttt.cells && st.ttt.cells[0] && st.ttt.cells[0].i != null) st.ttt.cells = gameTasks(b, st.ttt.cells);   /* reopened on this device */
-  st.ttt = gTicTacToe(host, b.tasks, {size: b.size || 3, state: st.ttt || null, revealFirst: true, labels: {yes: "✓ Correct", no: "✗ Not quite"},
+  st.ttt = gTicTacToe(host, b.tasks, {size: b.size || 3, state: st.ttt || null, revealFirst: true, labels: {yes: "✓ Correct", no: "✗ Not quite"}, cellLabel: t => t.label ? esc(t.label) : "",
     prompt: t => `${t.ctx ? `<span class="lctx">${mk(t.ctx)}</span>` : ""}<span class="say">${mk(t.q)}</span>`,
     answer: t => `${b.check ? `<span class="chk">${esc(b.check)}</span>` : ""}<span class="say fixline">${mk(t.a)}</span>${t.why ? `<span class="note">${mk(t.why)}</span>` : ""}`,
     onResult: (t, ok) => { lwDeck(t._n, ok); if(!ok && !saved.again.includes(t._n)){ saved.again.push(t._n); save(); } },
@@ -2941,6 +2949,9 @@ function deckAnswer(b, ok){
   if(!d.queue.length && b._id !== "fastdeck" && !deckHasList(b) && !isLast()){ stepOn(); return; }   /* her 15:23: no "Done!" screen — the next cloud says it */
   render();
 }
+/* the C1 chat's handoff 31.10 21:00 (her 20:24): a frame with options — [a · b · c] in a quieter colour, the target phrase bold */
+const turnMk = t => mk(t).replace(/\[([^\[\]]+)\]/g, '<span class="opt">[$1]</span>');
+const turnNote = c => c.turnNote || (/\[/.test(c.turn || "") ? "Pick an option or use your own idea. Your partner asks one question." : "");
 function turnDone(b){ const d = deckOf(b); d.turn = null; d.fresh = true;
   if(!d.queue.length && b._id !== "fastdeck" && !deckHasList(b) && !isLast()){ stepOn(); return; } render(); }
 const deckHasList = b => (b.cards || []).some(c => c._b && c._b.style === "ours" && c._b.summary) || (b.style === "ours" && !!b.summary);
@@ -3043,6 +3054,7 @@ function fitCard(){
   const fc = document.querySelector("#main .deck .fc, #main .cn"), blk = document.querySelector("#main .blk"), bar = document.querySelector("#main .stepbar");
   if(!fc || !blk || !bar || innerWidth < 760) return;
   const over = () => blk.getBoundingClientRect().bottom + 2 > bar.getBoundingClientRect().top;
+  fc.querySelectorAll("img").forEach(im => { if(!im.complete) im.addEventListener("load", () => { if(!fc.isConnected) return; fc.style.removeProperty("--k"); fitCard(); }, {once: true}); });   /* a picture still loading changes the card's size */
   for(const k of [.92, .85, .78, .72]){ if(!over()) return; fc.style.setProperty("--k", k); }
 }
 addEventListener("resize", () => { clearTimeout(fitCard.t); fitCard.t = setTimeout(() => { const fc = document.querySelector("#main .deck .fc, #main .cn"); if(fc) fc.style.removeProperty("--k"); fitCard(); }, 150); });

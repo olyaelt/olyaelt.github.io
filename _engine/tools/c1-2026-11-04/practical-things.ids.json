@@ -17,7 +17,7 @@
   },
   {
    "pid": 3,
-   "sig": "cards one more of our sentences. green = good, grey = could be better. say the grey part with a phrase from the box (the word in red).",
+   "sig": "cards our sentences. green = good, grey = could be better. say the grey part with a phrase from the box (the word in red).",
    "gone": false
   },
   {
@@ -47,7 +47,7 @@
   },
   {
    "pid": 9,
-   "sig": "cards take turns: read the line, your partner replies with the frame and the word in red. then tap the card.",
+   "sig": "cards take turns: read the line. your partner replies with the frame, making the word in red a comparative (hard → harder). then tap the card.",
    "gone": false
   },
   {
@@ -63,7 +63,7 @@
   {
    "pid": 12,
    "sig": "text catching up. read the russian and think. take turns to say it in english; your partner agrees or not. then tap the yellow to check.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 13,
@@ -88,17 +88,17 @@
   {
    "pid": 17,
    "sig": "picture retell priya's answer from your homework. tap the hourglass and remember all you can in one minute. priya.jpg",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 18,
    "sig": "picture retell sam's answer from your homework. tap the hourglass and remember all you can in one minute. sam.jpg",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 19,
    "sig": "picture retell mark's answer from your homework. tap the hourglass and remember all you can in one minute. mark.jpg",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 20,
@@ -137,7 +137,27 @@
   },
   {
    "pid": 27,
-   "sig": "postits if you're done: read a sticker to your partner. they reply with the frame and the word in capitals, without looking. then swap.",
+   "sig": "postits if you're done: read a sticker to your partner. they reply with the frame, making the word in capitals a comparative, without looking. then swap.",
+   "gone": false
+  },
+  {
+   "pid": 28,
+   "sig": "picture what did priya say? tap the hourglass and say everything you remember in one minute. priya.jpg",
+   "gone": false
+  },
+  {
+   "pid": 29,
+   "sig": "picture what did sam say? tap the hourglass and say everything you remember in one minute. sam.jpg",
+   "gone": false
+  },
+  {
+   "pid": 30,
+   "sig": "picture what did mark say? tap the hourglass and say everything you remember in one minute. mark.jpg",
+   "gone": false
+  },
+  {
+   "pid": 31,
+   "sig": "game tic-tac-toe in pairs: choose a square and say it in english. then tap to check. three in a row wins.",
    "gone": false
   }
  ],
@@ -145,31 +165,31 @@
   {
    "pid": 0,
    "sig": "for me it was czech. it's really close to russian, but it's a lot harder than you'd think. чешский похож на русский — казалось, будет легко for me it was czech. i thought it's easy to learn a language which is similar. think a language, a city or a job that was harder than you'd think. why? harder than you'd think = what anyone expects vs reality. about your own past expectation: i thought it would be easy. «сложнее, чем кажется»",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 1,
    "sig": "communication with non-technical managers — it's a lot harder than you'd think. чему учишься на работе: говорить с менеджерами без технического бэкграунда communication with non-technical managers — it's harder than i was thinking. one thing at work or at home that's a lot harder than you'd think. than i was thinking is a calque. anyone would think so → than you'd think; only you → than i thought. калька с «чем я думала»",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 2,
-   "sig": "i picked up how to manage staff on the job, from my general managers. university only gets you so far. управлять людьми учишься у своих руководителей i picked up how to manage staff on the job, from my general managers. you can't learn it at uni. far one thing you picked up on the job — not at university or school. you can't learn it at university is correct. the box phrase says more: university gives you the basics, the rest comes on the job. вуз даёт базу — дальше на работе · staff /stɑːf/ (ame /stæf/) — персонал · stuff /stʌf/ — вещи",
+   "sig": "i picked up how to manage staff on the job, from my general managers. university only gets you so far. управлять людьми учишься у своих руководителей i picked up how to manage staff on the job, from my general managers. you can't learn it at uni. far [my degree · school · a course] only got me so far — i picked up [people skills · most of the software · the local language] on the job. you can't learn it at university is correct. the box phrase says more: university gives you the basics, the rest comes on the job. вуз даёт базу — дальше на работе · staff /stɑːf/ (ame /stæf/) — персонал · stuff /stʌf/ — вещи",
    "gone": false
   },
   {
    "pid": 3,
    "sig": "i realised that university only gets you so far, so i found a full-time job. зачем работать на полный день, ещё учась в вузе i understood that just studying at university isn't enough for me, so i found a full-time job. your degree or your school — where did it only get you so far? understood → realised (it became clear to you); isn't enough for me → only gets you so far. осознала · даёт базу — и не больше",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 4,
    "sig": "ai helps me make suggestions, but choosing the best one — that's where i really add value. когда пишешь код вместе с ии ai helps me make suggestions, but finally i choose the best one with my own experience. value in your work or your life now, where do you really add value? finally in mid-sentence sounds like «наконец-то»; «в итоге» is in the end. add value = what you bring that ai can't. «вот где от меня польза»",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 5,
-   "sig": "networking, department heads, motivation — that's where people still add value. что остаётся за топ-менеджерами, когда ии есть на всех уровнях networking, department heads, motivation — in this kind of area, i believe ai is still helpless. two things where people still add value — and ai doesn't, yet. helpless is usually about people. the box phrase talks about what people do well, not what ai can't do. helpless — «беспомощный», обычно о людях",
+   "sig": "networking, department heads, motivation — that's where people still add value. что остаётся за топ-менеджерами, когда ии есть на всех уровнях networking, department heads, motivation — in this kind of area, i believe ai is still helpless. [calming down an angry client · breaking bad news to a client · negotiating a good deal · noticing when a colleague is struggling] — that's where people still add value. ai can …, but … helpless is usually about people. the box phrase talks about what people do well, not what ai can't do. helpless — «беспомощный», обычно о людях",
    "gone": false
   },
   {
@@ -179,17 +199,17 @@
   },
   {
    "pid": 7,
-   "sig": "things that took me five hours a couple of years ago, i now hand over to ai — it does them in five minutes. что ии теперь делает за тебя на работе things that took me five hours a couple of years ago, ai could do for five minutes. one task you've handed over to ai — or would love to. in five minutes = how long it takes to finish; for five minutes = how long it goes on. «за пять минут» — in five minutes",
+   "sig": "things that took me five hours a couple of years ago, i now hand over to ai — it does them in five minutes. что ии теперь делает за тебя на работе things that took me five hours a couple of years ago, ai could do for five minutes. one task you've handed over to ai — or would love to. emails? meeting notes? translations? planning a trip? in five minutes = how long it takes to finish; for five minutes = how long it goes on. «за пять минут» — in five minutes",
    "gone": false
   },
   {
    "pid": 8,
-   "sig": "this is touch typing. it comes in really handy. что пригодилось из того, чему учились сами this is touch typing. and it's very useful for typing. handy a skill that came in really handy. when? very useful for typing repeats typing; it comes in handy = it turns out to be useful. touch typing, not blind typing. «пригождается» · слепая печать — touch typing",
+   "sig": "this is touch typing. it comes in really handy. что пригодилось из того, чему учились сами this is touch typing. and it's very useful for typing. handy [touch typing · knowing a bit of the local language · my first-aid course · excel · being able to drive] came in really handy when i … very useful for typing repeats typing; it comes in handy = it turns out to be useful. touch typing, not blind typing. «пригождается» · слепая печать — touch typing",
    "gone": false
   },
   {
    "pid": 9,
-   "sig": "children just go home, ask ai and write it down. so what's the point of homework? о домашке, когда есть ии children just go home, ask ai and write it down. it's useless at all. point something where you thought: what's the point of this? at all goes with not and questions (not useful at all). what's the point of…? = «какой смысл в…?» «какой смысл в…?»",
+   "sig": "children just go home, ask ai and write it down. so what's the point of homework? о домашке, когда есть ии children just go home, ask ai and write it down. it's useless at all. point so what's the point of [team-building days · performance reviews · homework for young kids · learning poems by heart]? does your partner agree? why (not)? at all goes with not and questions (not useful at all). what's the point of…? = «какой смысл в…?» «какой смысл в…?»",
    "gone": false
   },
   {
@@ -225,6 +245,71 @@
   {
    "pid": 16,
    "sig": "he's on it more often than you'd think — mostly sending me memes. your dad has a smartphone? does he ever actually use it? often",
+   "gone": false
+  },
+  {
+   "pid": 17,
+   "sig": "for me it was czech. it's really close to russian, but it's a lot harder than you'd think. чешский похож на русский — казалось, будет легко for me it was czech. i thought it's easy to learn a language which is similar. think [learning the local language · moving to a new country · getting used to retirement · raising a teenager · starting my own business] was / is a lot harder than you'd think. i thought it would be …, but … harder than you'd think = what anyone expects vs reality. about your own past expectation: i thought it would be easy. «сложнее, чем кажется»",
+   "gone": false
+  },
+  {
+   "pid": 18,
+   "sig": "communication with non-technical managers — it's a lot harder than you'd think. чему учишься на работе: говорить с менеджерами без технического бэкграунда communication with non-technical managers — it's harder than i was thinking. [explaining my job to my parents · switching off after work · making friends as an adult · getting a teenager to tell you about their day · filling your days after you retire] is a lot harder than you'd think — especially when … than i was thinking is a calque. anyone would think so → than you'd think; only you → than i thought. калька с «чем я думала»",
+   "gone": false
+  },
+  {
+   "pid": 19,
+   "sig": "i realised that university only gets you so far, so i found a full-time job. зачем работать на полный день, ещё учась в вузе i understood that just studying at university isn't enough for me, so i found a full-time job. when i [became a parent · moved abroad · got my first job · started managing people · retired], i realised that [a degree · school english · reading parenting books · training] only gets you so far. understood → realised (it became clear to you); isn't enough for me → only gets you so far. осознала · даёт базу — и не больше",
+   "gone": false
+  },
+  {
+   "pid": 20,
+   "sig": "ai helps me make suggestions, but choosing the best one — that's where i really add value. когда пишешь код вместе с ии ai helps me make suggestions, but finally i choose the best one with my own experience. value [ai writes the first draft · an app finds the cheapest flights · a junior analyst crunches the numbers], but [checking it · knowing which places my family will actually enjoy · explaining what the numbers mean to the client] — that's where i really add value. finally in mid-sentence sounds like «наконец-то»; «в итоге» is in the end. add value = what you bring that ai can't. «вот где от меня польза»",
+   "gone": false
+  },
+  {
+   "pid": 21,
+   "sig": "it's been ages! how have you been? at a wedding you see an old friend at a wedding. «сто лет не виделись! как ты?»",
+   "gone": false
+  },
+  {
+   "pid": 22,
+   "sig": "last i heard, you were moving to montreal! montreal «последнее, что я слышала, — ты переезжал в монреаль!»",
+   "gone": false
+  },
+  {
+   "pid": 23,
+   "sig": "so how are you finding it (so far)? a new city they moved to a new city a month ago. «ну и как тебе там?»",
+   "gone": false
+  },
+  {
+   "pid": 24,
+   "sig": "i've been meaning to get in touch for ages! a message «я сто лет собиралась тебе написать!»",
+   "gone": false
+  },
+  {
+   "pid": 25,
+   "sig": "so, what have you been up to? your news «ну, рассказывай, чем занимался?»",
+   "gone": false
+  },
+  {
+   "pid": 26,
+   "sig": "oh, this and that. i've taken up climbing, actually! nothing special your friend asks what you've been up to. «да так, то одно, то другое…» + one real detail",
+   "gone": false
+  },
+  {
+   "pid": 27,
+   "sig": "still at the bank? — still at the bank! the bank you remember he worked at a bank. «ты всё ещё в банке?» — «всё там же!»",
+   "gone": false
+  },
+  {
+   "pid": 28,
+   "sig": "that must keep you busy! three kids your friend has three kids and a new job. «скучать некогда!»",
+   "gone": false
+  },
+  {
+   "pid": 29,
+   "sig": "it was lovely to catch up with everyone! after the party the day after a reunion, a message to the group: «было так здорово со всеми повидаться!»",
    "gone": false
   }
  ],
