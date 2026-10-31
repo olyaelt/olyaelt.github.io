@@ -1,1 +1,1150 @@
-{"dan": {"intro": "", "lines": [{"s": "Sophie", "p": ["So, what do you do?"]}, {"s": "Dan", "p": ["Me? I'm in finance."]}, {"s": "Sophie", "p": ["Oh, right. ", {"f": "H", "r": "ow"}, " ", {"f": "d", "r": "id"}, " you ", {"f": "g", "r": "et"}, " ", {"f": "i", "r": "nto"}, " ", {"f": "t", "r": "hat"}, ", then?"]}, {"s": "Dan", "p": ["I went to uni because ", {"f": "t", "r": "hat's"}, " ", {"f": "j", "r": "ust"}, " ", {"f": "w", "r": "hat"}, " ", {"f": "e", "r": "veryone"}, " ", {"f": "d", "r": "id"}, ", and I ", {"f": "d", "r": "id"}, " ", {"f": "e", "r": "conomics"}, " because my dad said it was \"safe\". And to be fair, it ", {"f": "g", "r": "ave"}, " me a ", {"f": "g", "r": "ood"}, " ", {"f": "g", "r": "rounding"}, " ", {"f": "i", "r": "n"}, " statistics, which I still use. I started in audit, at one of the big firms — lots of travelling, lots of hotels, lots of spreadsheets at two in the morning."]}, {"s": "Sophie", "p": ["Two in the morning?!"]}, {"s": "Dan", "p": ["Oh yes, regularly. And on top of that, I spent my evenings studying for my accountancy exams, which was horrible, but in my field you can't really get anywhere without them. Then I moved into financial analysis, which is much more my thing. Three years ago a ", {"f": "j", "r": "ob"}, " ", {"f": "c", "r": "ame"}, " ", {"f": "u", "r": "p"}, " in Dublin, so we packed up and went. For the last couple of years I've been looking after the numbers for a few of our European offices."]}, {"s": "Sophie", "p": [{"f": "W", "r": "as"}, " it ", {"f": "w", "r": "orth"}, " it, though? All those evenings?"]}, {"s": "Dan", "p": ["For the job, definitely. For my marriage — you'd have to ask my wife."]}], "lines_g": [{"s": "Sophie", "p": ["So, what do you do?"]}, {"s": "Dan", "p": ["Me? I'm in finance."]}, {"s": "Sophie", "p": ["Oh, right. ", {"f": "H", "r": "ow"}, " ", {"f": "d", "r": "id"}, " you ", {"f": "g", "r": "et"}, " ", {"f": "i", "r": "nto"}, " ", {"f": "t", "r": "hat"}, ", then?"]}, {"s": "Dan", "p": ["I went to uni because ", {"f": "t", "r": "hat's"}, " ", {"f": "j", "r": "ust"}, " ", {"f": "w", "r": "hat"}, " ", {"f": "e", "r": "veryone"}, " ", {"f": "d", "r": "id"}, ", and I ", {"f": "d", "r": "id"}, " ", {"f": "e", "r": "conomics"}, " because my dad said it was \"safe\". And to be fair, it ", {"f": "g", "r": "ave"}, " me a ", {"f": "g", "r": "ood"}, " ", {"f": "g", "r": "rounding"}, " ", {"f": "i", "r": "n"}, " statistics, which I still use. I started in audit, at one of the big firms — lots of travelling, lots of hotels, lots of spreadsheets at two in the morning."]}, {"s": "Sophie", "p": ["Two in the morning?!"]}, {"s": "Dan", "p": ["Oh yes, regularly. And on top of that, I spent my evenings studying for my accountancy exams, which was horrible, but in my field you can't really get anywhere without them. Then I moved into financial analysis, which is much more my thing. Three years ago a ", {"f": "j", "r": "ob"}, " ", {"f": "c", "r": "ame"}, " ", {"f": "u", "r": "p"}, " in Dublin, so we packed up and went. For the last couple of years I've been looking after the numbers for a few of our European offices."]}, {"s": "Sophie", "p": [{"f": "W", "r": "as"}, " it ", {"f": "w", "r": "orth"}, " it, though? All those evenings?"]}, {"s": "Dan", "p": ["For the job, definitely. For my marriage — you'd have to ask my wife."]}], "gloss": [{"p": [{"f": "H", "r": "ow"}, " ", {"f": "d", "r": "id"}, " ", {"f": "y", "r": "ou"}, " ", {"f": "g", "r": "et"}, " ", {"f": "i", "r": "nto"}, " ", {"f": "t", "r": "hat"}, ", then?"], "m": "how did you start doing it? (then = so: shows interest)", "ru": "как ты к этому пришёл?"}, {"p": [{"f": "t", "r": "hat's"}, " ", {"f": "j", "r": "ust"}, " ", {"f": "w", "r": "hat"}, " ", {"f": "e", "r": "veryone"}, " ", {"f": "d", "r": "id"}], "m": "", "ru": "так было принято"}, {"p": [{"f": "d", "r": "id"}, " ", {"f": "e", "r": "conomics"}, " (at uni)"], "m": "studied it · AmE: majored in … in college", "ru": "учился на экономиста"}, {"p": [{"f": "g", "r": "ave"}, " ", {"f": "m", "r": "e"}, " ", {"f": "a", "r": ""}, " ", {"f": "g", "r": "ood"}, " ", {"f": "g", "r": "rounding"}, " ", {"f": "i", "r": "n"}, " ", {"f": "", "r": "/ˈɡraʊndɪŋ/", "o": 1}], "m": "a solid foundation in", "ru": "дал(а) хорошую базу по…"}, {"p": [{"f": "a", "r": ""}, " ", {"f": "j", "r": "ob"}, " ", {"f": "c", "r": "ame"}, " ", {"f": "u", "r": "p"}], "m": "became available", "ru": "подвернулась работа"}, {"p": [{"f": "W", "r": "as"}, " ", {"f": "i", "r": "t"}, " ", {"f": "w", "r": "orth"}, " ", {"f": "i", "r": "t"}, " ", {"f": "", "r": "/wɜːθ/", "o": 1}, ", though?"], "m": "about something that took time, money or effort", "ru": "и как, оно того стоило?"}]}, "ruth": {"intro": "", "lines": [{"s": "Sophie", "p": ["What about you, Ruth?"]}, {"s": "Ruth", "p": ["I teach chemistry at an international school — so, teenagers and small explosions, basically."]}, {"s": "Sophie", "p": ["Ha! Brave woman. ", {"f": "H", "r": "ave"}, " you ", {"f": "a", "r": "lways"}, " ", {"f": "b", "r": "een"}, " a ", {"f": "t", "r": "eacher"}, "?"]}, {"s": "Ruth", "p": ["Pretty much. I did chemistry at uni, and then I ", {"f": "t", "r": "rained"}, " ", {"f": "a", "r": "s"}, " a ", {"f": "t", "r": "eacher"}, ", which I'd always sort of known I'd do. My mum was a teacher too. The degree gave me a good grounding in the subject, but the actual teaching? I ", {"f": "l", "r": "earned"}, " ", {"f": "m", "r": "ost"}, " ", {"f": "o", "r": "f"}, " ", {"f": "t", "r": "hat"}, " ", {"f": "o", "r": "n"}, " the ", {"f": "j", "r": "ob"}, ", from the people in the classroom next door. About ten years ago I ", {"f": "d", "r": "id"}, " a ", {"f": "c", "r": "ourse"}, " ", {"f": "i", "r": "n"}, " teaching kids whose first language isn't English — online, a year of evenings, and it cost a fortune."]}, {"s": "Sophie", "p": ["Ouch!"]}, {"s": "Ruth", "p": ["I know. But it completely changed how I teach. Anyway, I've been teaching for twenty-two years now, and the ", {"f": "c", "r": "hemistry"}, " is the ", {"f": "e", "r": "asy"}, " ", {"f": "p", "r": "art"}, ". ", {"f": "I", "r": "t's"}, " the ", {"f": "p", "r": "arents'"}, " ", {"f": "e", "r": "venings"}, " I ", {"f": "f", "r": "ind"}, " ", {"f": "h", "r": "ard"}, "."]}, {"s": "Sophie", "p": ["Really? Why?"]}, {"s": "Ruth", "p": ["In the lab, at least I know what's going to explode."]}], "lines_g": [{"s": "Sophie", "p": ["What about you, Ruth?"]}, {"s": "Ruth", "p": ["I teach chemistry at an international school — so, teenagers and small explosions, basically."]}, {"s": "Sophie", "p": ["Ha! Brave woman. ", {"f": "H", "r": "ave"}, " you ", {"f": "a", "r": "lways"}, " ", {"f": "b", "r": "een"}, " a ", {"f": "t", "r": "eacher"}, "?"]}, {"s": "Ruth", "p": ["Pretty much. I did chemistry at uni, and then I ", {"f": "t", "r": "rained"}, " ", {"f": "a", "r": "s"}, " a ", {"f": "t", "r": "eacher"}, ", which I'd always sort of known I'd do. My mum was a teacher too. The degree gave me a good grounding in the subject, but the actual teaching? I ", {"f": "l", "r": "earned"}, " ", {"f": "m", "r": "ost"}, " ", {"f": "o", "r": "f"}, " ", {"f": "t", "r": "hat"}, " ", {"f": "o", "r": "n"}, " the ", {"f": "j", "r": "ob"}, ", from the people in the classroom next door. About ten years ago I ", {"f": "d", "r": "id"}, " a ", {"f": "c", "r": "ourse"}, " ", {"f": "i", "r": "n"}, " teaching kids whose first language isn't English — online, a year of evenings, and it cost a fortune."]}, {"s": "Sophie", "p": ["Ouch!"]}, {"s": "Ruth", "p": ["I know. But it completely changed how I teach. Anyway, I've been teaching for twenty-two years now, and the ", {"f": "c", "r": "hemistry"}, " is the ", {"f": "e", "r": "asy"}, " ", {"f": "p", "r": "art"}, ". ", {"f": "I", "r": "t's"}, " the ", {"f": "p", "r": "arents'"}, " ", {"f": "e", "r": "venings"}, " I ", {"f": "f", "r": "ind"}, " ", {"f": "h", "r": "ard"}, "."]}, {"s": "Sophie", "p": ["Really? Why?"]}, {"s": "Ruth", "p": ["In the lab, at least I know what's going to explode."]}], "gloss": [{"p": [{"f": "H", "r": "ave"}, " ", {"f": "y", "r": "ou"}, " ", {"f": "a", "r": "lways"}, " ", {"f": "b", "r": "een"}, " ", {"f": "a", "r": ""}, " ", {"f": "t", "r": "eacher"}, "?"], "m": "", "ru": "ты всегда была учителем?"}, {"p": [{"f": "t", "r": "rained"}, " ", {"f": "a", "r": "s"}, " ", {"f": "a", "r": ""}, " ", {"f": "t", "r": "eacher"}], "m": "did teacher training", "ru": "выучилась на учителя"}, {"p": [{"f": "l", "r": "earned"}, " ", {"f": "m", "r": "ost"}, " ", {"f": "o", "r": "f"}, " ", {"f": "t", "r": "hat"}, " ", {"f": "o", "r": "n"}, " ", {"f": "the", "r": ""}, " ", {"f": "j", "r": "ob"}], "m": "while working", "ru": "научилась уже на работе"}, {"p": [{"f": "d", "r": "id"}, " ", {"f": "a", "r": ""}, " ", {"f": "c", "r": "ourse"}, " ", {"f": "i", "r": "n"}, " …"], "m": "one programme = a course (not courses) · AmE also: took a course in…", "ru": "прошла курс по…"}, {"p": [{"f": "the", "r": ""}, " ", {"f": "c", "r": "hemistry"}, " ", {"f": "i", "r": "s"}, " ", {"f": "the", "r": ""}, " ", {"f": "e", "r": "asy"}, " ", {"f": "p", "r": "art"}, ". ", {"f": "I", "r": "t's"}, " ", {"f": "the", "r": ""}, " ", {"f": "p", "r": "arents'"}, " ", {"f": "e", "r": "venings"}, " ", {"f": "I", "r": ""}, " ", {"f": "f", "r": "ind"}, " ", {"f": "h", "r": "ard"}, "."], "m": "", "ru": "химия — это просто, а вот встречи с родителями мне даются тяжело"}]}}
+{
+ "dan": {
+  "intro": "",
+  "lines": [
+   {
+    "s": "Sophie",
+    "p": [
+     "So, what do you do?"
+    ]
+   },
+   {
+    "s": "Dan",
+    "p": [
+     "Me? I'm in finance."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Oh, right. ",
+     {
+      "f": "H",
+      "r": "ow"
+     },
+     " ",
+     {
+      "f": "d",
+      "r": "id"
+     },
+     " ",
+     {
+      "b": "you"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "et"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "hat"
+     },
+     ", then?"
+    ]
+   },
+   {
+    "s": "Dan",
+    "p": [
+     "I went to uni because ",
+     {
+      "f": "t",
+      "r": "hat's"
+     },
+     " ",
+     {
+      "f": "j",
+      "r": "ust"
+     },
+     " ",
+     {
+      "f": "w",
+      "r": "hat"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "veryone"
+     },
+     " ",
+     {
+      "f": "d",
+      "r": "id"
+     },
+     ", and I ",
+     {
+      "f": "d",
+      "r": "id"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "conomics"
+     },
+     " because my dad said it was \"safe\". And to be fair, it ",
+     {
+      "f": "g",
+      "r": "ave"
+     },
+     " ",
+     {
+      "b": "me a"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "ood"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "rounding"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "n"
+     },
+     " statistics, which I still use. I started in audit, at one of the big firms — lots of travelling, lots of hotels, lots of spreadsheets at two in the morning."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Two in the morning?!"
+    ]
+   },
+   {
+    "s": "Dan",
+    "p": [
+     "Oh yes, regularly. And on top of that, I spent my evenings studying for my accountancy exams, which was horrible, but in my field you can't really get anywhere without them. Then I moved into financial analysis, which is much more my thing. Three years ago ",
+     {
+      "b": "a"
+     },
+     " ",
+     {
+      "f": "j",
+      "r": "ob"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "ame"
+     },
+     " ",
+     {
+      "f": "u",
+      "r": "p"
+     },
+     " in Dublin, so we packed up and went. For the last couple of years I've been looking after the numbers for a few of our European offices."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     {
+      "f": "W",
+      "r": "as"
+     },
+     " ",
+     {
+      "b": "it"
+     },
+     " ",
+     {
+      "f": "w",
+      "r": "orth"
+     },
+     " ",
+     {
+      "b": "it"
+     },
+     ", though? All those evenings?"
+    ]
+   },
+   {
+    "s": "Dan",
+    "p": [
+     "For the job, definitely. For my marriage — you'd have to ask my wife."
+    ]
+   }
+  ],
+  "lines_g": [
+   {
+    "s": "Sophie",
+    "p": [
+     "So, what do you do?"
+    ]
+   },
+   {
+    "s": "Dan",
+    "p": [
+     "Me? I'm in finance."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Oh, right. ",
+     {
+      "f": "H",
+      "r": "ow"
+     },
+     " ",
+     {
+      "f": "d",
+      "r": "id"
+     },
+     " ",
+     {
+      "b": "you"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "et"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "hat"
+     },
+     ", then?"
+    ]
+   },
+   {
+    "s": "Dan",
+    "p": [
+     "I went to uni because ",
+     {
+      "f": "t",
+      "r": "hat's"
+     },
+     " ",
+     {
+      "f": "j",
+      "r": "ust"
+     },
+     " ",
+     {
+      "f": "w",
+      "r": "hat"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "veryone"
+     },
+     " ",
+     {
+      "f": "d",
+      "r": "id"
+     },
+     ", and I ",
+     {
+      "f": "d",
+      "r": "id"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "conomics"
+     },
+     " because my dad said it was \"safe\". And to be fair, it ",
+     {
+      "f": "g",
+      "r": "ave"
+     },
+     " ",
+     {
+      "b": "me a"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "ood"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "rounding"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "n"
+     },
+     " statistics, which I still use. I started in audit, at one of the big firms — lots of travelling, lots of hotels, lots of spreadsheets at two in the morning."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Two in the morning?!"
+    ]
+   },
+   {
+    "s": "Dan",
+    "p": [
+     "Oh yes, regularly. And on top of that, I spent my evenings studying for my accountancy exams, which was horrible, but in my field you can't really get anywhere without them. Then I moved into financial analysis, which is much more my thing. Three years ago ",
+     {
+      "b": "a"
+     },
+     " ",
+     {
+      "f": "j",
+      "r": "ob"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "ame"
+     },
+     " ",
+     {
+      "f": "u",
+      "r": "p"
+     },
+     " in Dublin, so we packed up and went. For the last couple of years I've been looking after the numbers for a few of our European offices."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     {
+      "f": "W",
+      "r": "as"
+     },
+     " ",
+     {
+      "b": "it"
+     },
+     " ",
+     {
+      "f": "w",
+      "r": "orth"
+     },
+     " ",
+     {
+      "b": "it"
+     },
+     ", though? All those evenings?"
+    ]
+   },
+   {
+    "s": "Dan",
+    "p": [
+     "For the job, definitely. For my marriage — you'd have to ask my wife."
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     {
+      "f": "H",
+      "r": "ow"
+     },
+     " ",
+     {
+      "f": "d",
+      "r": "id"
+     },
+     " ",
+     {
+      "f": "y",
+      "r": "ou"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "et"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "hat"
+     },
+     ", then?"
+    ],
+    "m": "how did you start doing it? (then = so: shows interest)",
+    "ru": "как ты к этому пришёл?"
+   },
+   {
+    "p": [
+     {
+      "f": "t",
+      "r": "hat's"
+     },
+     " ",
+     {
+      "f": "j",
+      "r": "ust"
+     },
+     " ",
+     {
+      "f": "w",
+      "r": "hat"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "veryone"
+     },
+     " ",
+     {
+      "f": "d",
+      "r": "id"
+     }
+    ],
+    "m": "",
+    "ru": "так было принято"
+   },
+   {
+    "p": [
+     {
+      "f": "d",
+      "r": "id"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "conomics"
+     },
+     " (at uni)"
+    ],
+    "m": "studied it · AmE: majored in … in college",
+    "ru": "учился на экономиста"
+   },
+   {
+    "p": [
+     {
+      "f": "g",
+      "r": "ave"
+     },
+     " ",
+     {
+      "f": "m",
+      "r": "e"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "ood"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "rounding"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "n"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˈɡraʊndɪŋ/",
+      "o": 1
+     }
+    ],
+    "m": "a solid foundation in",
+    "ru": "дал(а) хорошую базу по…"
+   },
+   {
+    "p": [
+     {
+      "f": "a",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "j",
+      "r": "ob"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "ame"
+     },
+     " ",
+     {
+      "f": "u",
+      "r": "p"
+     }
+    ],
+    "m": "became available",
+    "ru": "подвернулась работа"
+   },
+   {
+    "p": [
+     {
+      "f": "W",
+      "r": "as"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "t"
+     },
+     " ",
+     {
+      "f": "w",
+      "r": "orth"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "t"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/wɜːθ/",
+      "o": 1
+     },
+     ", though?"
+    ],
+    "m": "about something that took time, money or effort",
+    "ru": "и как, оно того стоило?"
+   }
+  ]
+ },
+ "ruth": {
+  "intro": "",
+  "lines": [
+   {
+    "s": "Sophie",
+    "p": [
+     "What about you, Ruth?"
+    ]
+   },
+   {
+    "s": "Ruth",
+    "p": [
+     "I teach chemistry at an international school — so, teenagers and small explosions, basically."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Ha! Brave woman. ",
+     {
+      "f": "H",
+      "r": "ave"
+     },
+     " ",
+     {
+      "b": "you"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "lways"
+     },
+     " ",
+     {
+      "f": "b",
+      "r": "een"
+     },
+     " ",
+     {
+      "b": "a"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "eacher"
+     },
+     "?"
+    ]
+   },
+   {
+    "s": "Ruth",
+    "p": [
+     "Pretty much. I did chemistry at uni, and then I ",
+     {
+      "f": "t",
+      "r": "rained"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "s"
+     },
+     " ",
+     {
+      "b": "a"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "eacher"
+     },
+     ", which I'd always sort of known I'd do. My mum was a teacher too. The degree gave me a good grounding in the subject, but the actual teaching? I ",
+     {
+      "f": "l",
+      "r": "earned"
+     },
+     " ",
+     {
+      "f": "m",
+      "r": "ost"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "f"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "hat"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "n"
+     },
+     " ",
+     {
+      "b": "the"
+     },
+     " ",
+     {
+      "f": "j",
+      "r": "ob"
+     },
+     ", from the people in the classroom next door. About ten years ago I ",
+     {
+      "f": "d",
+      "r": "id"
+     },
+     " ",
+     {
+      "b": "a"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "ourse"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "n"
+     },
+     " teaching kids whose first language isn't English — online, a year of evenings, and it cost a fortune."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Ouch!"
+    ]
+   },
+   {
+    "s": "Ruth",
+    "p": [
+     "I know. But it completely changed how I teach. Anyway, I've been teaching for twenty-two years now, and ",
+     {
+      "b": "the"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "hemistry"
+     },
+     " ",
+     {
+      "b": "is the"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "asy"
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "art"
+     },
+     ". ",
+     {
+      "f": "I",
+      "r": "t's"
+     },
+     " ",
+     {
+      "b": "the"
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "arents'"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "venings"
+     },
+     " ",
+     {
+      "b": "I"
+     },
+     " ",
+     {
+      "f": "f",
+      "r": "ind"
+     },
+     " ",
+     {
+      "f": "h",
+      "r": "ard"
+     },
+     "."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Really? Why?"
+    ]
+   },
+   {
+    "s": "Ruth",
+    "p": [
+     "In the lab, at least I know what's going to explode."
+    ]
+   }
+  ],
+  "lines_g": [
+   {
+    "s": "Sophie",
+    "p": [
+     "What about you, Ruth?"
+    ]
+   },
+   {
+    "s": "Ruth",
+    "p": [
+     "I teach chemistry at an international school — so, teenagers and small explosions, basically."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Ha! Brave woman. ",
+     {
+      "f": "H",
+      "r": "ave"
+     },
+     " ",
+     {
+      "b": "you"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "lways"
+     },
+     " ",
+     {
+      "f": "b",
+      "r": "een"
+     },
+     " ",
+     {
+      "b": "a"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "eacher"
+     },
+     "?"
+    ]
+   },
+   {
+    "s": "Ruth",
+    "p": [
+     "Pretty much. I did chemistry at uni, and then I ",
+     {
+      "f": "t",
+      "r": "rained"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "s"
+     },
+     " ",
+     {
+      "b": "a"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "eacher"
+     },
+     ", which I'd always sort of known I'd do. My mum was a teacher too. The degree gave me a good grounding in the subject, but the actual teaching? I ",
+     {
+      "f": "l",
+      "r": "earned"
+     },
+     " ",
+     {
+      "f": "m",
+      "r": "ost"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "f"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "hat"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "n"
+     },
+     " ",
+     {
+      "b": "the"
+     },
+     " ",
+     {
+      "f": "j",
+      "r": "ob"
+     },
+     ", from the people in the classroom next door. About ten years ago I ",
+     {
+      "f": "d",
+      "r": "id"
+     },
+     " ",
+     {
+      "b": "a"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "ourse"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "n"
+     },
+     " teaching kids whose first language isn't English — online, a year of evenings, and it cost a fortune."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Ouch!"
+    ]
+   },
+   {
+    "s": "Ruth",
+    "p": [
+     "I know. But it completely changed how I teach. Anyway, I've been teaching for twenty-two years now, and ",
+     {
+      "b": "the"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "hemistry"
+     },
+     " ",
+     {
+      "b": "is the"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "asy"
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "art"
+     },
+     ". ",
+     {
+      "f": "I",
+      "r": "t's"
+     },
+     " ",
+     {
+      "b": "the"
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "arents'"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "venings"
+     },
+     " ",
+     {
+      "b": "I"
+     },
+     " ",
+     {
+      "f": "f",
+      "r": "ind"
+     },
+     " ",
+     {
+      "f": "h",
+      "r": "ard"
+     },
+     "."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Really? Why?"
+    ]
+   },
+   {
+    "s": "Ruth",
+    "p": [
+     "In the lab, at least I know what's going to explode."
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     {
+      "f": "H",
+      "r": "ave"
+     },
+     " ",
+     {
+      "f": "y",
+      "r": "ou"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "lways"
+     },
+     " ",
+     {
+      "f": "b",
+      "r": "een"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "eacher"
+     },
+     "?"
+    ],
+    "m": "",
+    "ru": "ты всегда была учителем?"
+   },
+   {
+    "p": [
+     {
+      "f": "t",
+      "r": "rained"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "s"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "eacher"
+     }
+    ],
+    "m": "did teacher training",
+    "ru": "выучилась на учителя"
+   },
+   {
+    "p": [
+     {
+      "f": "l",
+      "r": "earned"
+     },
+     " ",
+     {
+      "f": "m",
+      "r": "ost"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "f"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "hat"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "n"
+     },
+     " ",
+     {
+      "f": "the",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "j",
+      "r": "ob"
+     }
+    ],
+    "m": "while working",
+    "ru": "научилась уже на работе"
+   },
+   {
+    "p": [
+     {
+      "f": "d",
+      "r": "id"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "ourse"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "n"
+     },
+     " …"
+    ],
+    "m": "one programme = a course (not courses) · AmE also: took a course in…",
+    "ru": "прошла курс по…"
+   },
+   {
+    "p": [
+     {
+      "f": "the",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "hemistry"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "s"
+     },
+     " ",
+     {
+      "f": "the",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "asy"
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "art"
+     },
+     ". ",
+     {
+      "f": "I",
+      "r": "t's"
+     },
+     " ",
+     {
+      "f": "the",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "arents'"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "venings"
+     },
+     " ",
+     {
+      "f": "I",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "f",
+      "r": "ind"
+     },
+     " ",
+     {
+      "f": "h",
+      "r": "ard"
+     },
+     "."
+    ],
+    "m": "",
+    "ru": "химия — это просто, а вот встречи с родителями мне даются тяжело"
+   }
+  ]
+ }
+}

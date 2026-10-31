@@ -12,7 +12,9 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
   const out = {};
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'unl-')); fs.mkdirSync(path.join(dir, g));
   const put = f => fs.writeFileSync(path.join(dir, f), fs.readFileSync(path.join(site, f), 'utf8').replace(/const SYNC_URL = "[^"]*";/, `const SYNC_URL = "${URL_}";`));
-  put(rel); put(g + '/index.html'); put('index.html');
+  // the test page is in no list on the site (her 31.10: "test": true) — the check builds its own lists around it, as if it were a real draft
+  fs.writeFileSync(path.join(dir, rel), fs.readFileSync(path.join(site, rel), 'utf8').replace(/const SYNC_URL = "[^"]*";/, `const SYNC_URL = "${URL_}";`).replace(/<meta name="hw-test"[^>]*>\n?/, ''));
+  require('child_process').execFileSync('python3', [path.join(__dirname, '..', 'build_index.py'), dir], {stdio: 'ignore'});
   const html = fs.readFileSync(path.join(site, rel), 'utf8');
   out.markedUnlisted = html.includes('<meta name="hw-unlisted"');
   const date = html.match(/const LESSON = \{ date:"([^"]+)"/)[1];

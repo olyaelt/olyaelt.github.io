@@ -1,1 +1,852 @@
-{"clocks": [{"s": "Fiona", "p": ["Oh, I almost forgot! ", {"f": "T", "r": "he"}, " ", {"f": "c", "r": "locks"}, " ", {"f": "g", "r": "o"}, " ", {"f": "b", "r": "ack"}, " on Sunday, so from next week our call will be an ", {"f": "h", "r": "our"}, " ", {"f": "l", "r": "ater"}, " ", {"f": "f", "r": "or"}, " ", {"f": "y", "r": "ou"}, "."]}, {"s": "Emre", "p": ["So one o'clock for me?"]}, {"s": "Fiona", "p": ["Yes — ten ", {"f": "m", "r": "y"}, " ", {"f": "t", "r": "ime"}, ", one ", {"f": "y", "r": "our"}, " ", {"f": "t", "r": "ime"}, ". ", {"f": "D", "r": "oes"}, " ", {"f": "t", "r": "hat"}, " ", {"f": "s", "r": "till"}, " ", {"f": "w", "r": "ork"}, " ", {"f": "f", "r": "or"}, " ", {"f": "y", "r": "ou"}, "?"]}, {"s": "Emre", "p": ["Hmm, that's my lunch break. Could we make it nine ", {"f": "y", "r": "our"}, " ", {"f": "t", "r": "ime"}, "?"]}, {"s": "Fiona", "p": ["Sure! My body will still think it's ten."]}, {"s": "Emre", "p": ["Ha! We don't change the clocks here, so I never remember: do you lose an hour or get an extra one?"]}, {"s": "Fiona", "p": ["We get one! An ", {"f": "e", "r": "xtra"}, " ", {"f": "h", "r": "our"}, " ", {"f": "o", "r": "f"}, " ", {"f": "s", "r": "leep"}, "."]}, {"s": "Emre", "p": ["Lucky you! See you next Friday, then — nine ", {"f": "y", "r": "our"}, " ", {"f": "t", "r": "ime"}, "."]}, {"s": "Fiona", "p": ["Nine ", {"f": "m", "r": "y"}, " ", {"f": "t", "r": "ime"}, ". Have a good weekend!"]}, {"s": "Emre", "p": ["You too. Enjoy ", {"f": "y", "r": "our"}, " ", {"f": "e", "r": "xtra"}, " ", {"f": "h", "r": "our"}, " ", {"f": "o", "r": "f"}, " ", {"f": "s", "r": "leep"}, "!"]}], "priya": [{"s": "Dan", "p": ["", {"f": "A", "r": "nyway"}, " — ", {"f": "w", "r": "hat"}, " ", {"f": "h", "r": "ave"}, " ", {"f": "y", "r": "ou"}, " ", {"f": "b", "r": "een"}, " ", {"f": "u", "r": "p"}, " ", {"f": "t", "r": "o"}, " while I was away?"]}, {"s": "Priya", "p": ["Oh, not much. Work, mostly. ", {"f": "A", "r": "re"}, " ", {"f": "y", "r": "ou"}, " ", {"f": "s", "r": "till"}, " ", {"f": "w", "r": "atching"}, " Crown Street? ", {"f": "H", "r": "ave"}, " ", {"f": "y", "r": "ou"}, " ", {"f": "s", "r": "een"}, " ", {"f": "t", "r": "he"}, " ", {"f": "n", "r": "ew"}, " ", {"f": "s", "r": "eason"}, " ", {"f": "y", "r": "et"}, "?"]}, {"s": "Dan", "p": ["Yes! ", {"b": "I"}, " ", {"f": "w", "r": "atched"}, " ", {"f": "t", "r": "he"}, " ", {"f": "w", "r": "hole"}, " ", {"f": "t", "r": "hing"}, " ", {"f": "i", "r": "n"}, " ", {"f": "o", "r": "ne"}, " ", {"f": "g", "r": "o"}, " the weekend before I left."]}, {"s": "Priya", "p": ["In one go? It's ten episodes! ", {"f": "I", "r": "t"}, " ", {"f": "t", "r": "ook"}, " ", {"f": "m", "r": "e"}, " ", {"f": "a", "r": "ll"}, " ", {"f": "w", "r": "eek"}, "."]}, {"s": "Dan", "p": ["I know, I know. I just couldn't stop. So ", {"f": "w", "r": "hat"}, " ", {"f": "d", "r": "id"}, " ", {"f": "y", "r": "ou"}, " ", {"f": "t", "r": "hink"}, " ", {"f": "o", "r": "f"}, " ", {"f": "t", "r": "he"}, " ", {"f": "e", "r": "nding"}, "?"]}, {"s": "Priya", "p": ["Honestly? I was so angry. Why would they do that to Jess?"]}, {"s": "Dan", "p": ["Seriously! ", {"b": "I'm"}, " ", {"f": "s", "r": "till"}, " ", {"f": "n", "r": "ot"}, " ", {"f": "o", "r": "ver"}, " ", {"f": "i", "r": "t"}, "."]}, {"s": "Priya", "p": ["Me neither. Right, ", {"b": "I'd"}, " ", {"f": "b", "r": "etter"}, " ", {"f": "g", "r": "et"}, " ", {"f": "b", "r": "ack"}, " ", {"f": "t", "r": "o"}, " ", {"f": "w", "r": "ork"}, ". See you at lunch?"]}, {"s": "Dan", "p": ["Yeah, see you then."]}], "priya1": [{"s": "Priya", "p": ["Dan! ", {"b": "It's"}, " ", {"f": "b", "r": "een"}, " ", {"f": "a", "r": "ges"}, "! ", {"f": "H", "r": "ow"}, " ", {"f": "h", "r": "ave"}, " ", {"f": "y", "r": "ou"}, " ", {"f": "b", "r": "een"}, "?"]}, {"s": "Dan", "p": ["Good, thanks. ", {"b": "I've"}, " ", {"f": "j", "r": "ust"}, " ", {"f": "g", "r": "ot"}, " ", {"f": "b", "r": "ack"}, " ", {"f": "f", "r": "rom"}, " ", {"f": "C", "r": "rete"}, ", actually. Two weeks of sun, sea and no emails."]}, {"s": "Priya", "p": [{"f": "L", "r": "ucky"}, " ", {"f": "y", "r": "ou"}, "! ", {"f": "W", "r": "hen"}, " ", {"f": "d", "r": "id"}, " ", {"f": "y", "r": "ou"}, " ", {"f": "g", "r": "et"}, " ", {"f": "b", "r": "ack"}, "?"]}, {"s": "Dan", "p": ["Last night. ", {"b": "I"}, " ", {"f": "w", "r": "as"}, " ", {"f": "u", "r": "p"}, " ", {"f": "t", "r": "ill"}, " ", {"f": "t", "r": "wo"}, " unpacking."]}, {"s": "Priya", "p": ["Oh no. So ", {"f": "d", "r": "id"}, " ", {"f": "y", "r": "ou"}, " ", {"f": "s", "r": "ee"}, " the Star Kitchen final ", {"f": "l", "r": "ast"}, " ", {"f": "n", "r": "ight"}, ", or were you too tired?"]}, {"s": "Dan", "p": ["Are you joking? I unpacked in front of the TV. ", {"b": "I"}, " ", {"f": "w", "r": "as"}, " ", {"f": "o", "r": "n"}, " ", {"f": "t", "r": "he"}, " ", {"f": "e", "r": "dge"}, " ", {"f": "o", "r": "f"}, " ", {"f": "m", "r": "y"}, " ", {"f": "s", "r": "eat"}, "!"]}, {"s": "Priya", "p": ["Me too! ", {"f": "W", "r": "hat"}, " ", {"f": "d", "r": "id"}, " ", {"f": "y", "r": "ou"}, " ", {"f": "t", "r": "hink"}, " ", {"f": "o", "r": "f"}, " ", {"f": "t", "r": "he"}, " ", {"f": "r", "r": "esult"}, "?"]}, {"s": "Dan", "p": [{"f": "H", "r": "onestly"}, "? ", {"b": "I"}, " ", {"f": "w", "r": "as"}, " ", {"b": "a"}, " ", {"f": "b", "r": "it"}, " ", {"f": "d", "r": "isappointed"}, ". Marco was much better."]}, {"s": "Priya", "p": ["Totally. ", {"b": "Everyone's"}, " ", {"f": "s", "r": "aying"}, " ", {"f": "t", "r": "hat"}, "."]}]}
+{
+ "clocks": [
+  {
+   "s": "Fiona",
+   "p": [
+    "Oh, I almost forgot! ",
+    {
+     "f": "T",
+     "r": "he"
+    },
+    " ",
+    {
+     "f": "c",
+     "r": "locks"
+    },
+    " ",
+    {
+     "f": "g",
+     "r": "o"
+    },
+    " ",
+    {
+     "f": "b",
+     "r": "ack"
+    },
+    " on Sunday, so from next week our call will be ",
+    {
+     "b": "an"
+    },
+    " ",
+    {
+     "f": "h",
+     "r": "our"
+    },
+    " ",
+    {
+     "f": "l",
+     "r": "ater"
+    },
+    " ",
+    {
+     "f": "f",
+     "r": "or"
+    },
+    " ",
+    {
+     "f": "y",
+     "r": "ou"
+    },
+    "."
+   ]
+  },
+  {
+   "s": "Emre",
+   "p": [
+    "So one o'clock for me?"
+   ]
+  },
+  {
+   "s": "Fiona",
+   "p": [
+    "Yes — ten ",
+    {
+     "f": "m",
+     "r": "y"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "ime"
+    },
+    ", one ",
+    {
+     "f": "y",
+     "r": "our"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "ime"
+    },
+    ". ",
+    {
+     "f": "D",
+     "r": "oes"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "hat"
+    },
+    " ",
+    {
+     "f": "s",
+     "r": "till"
+    },
+    " ",
+    {
+     "f": "w",
+     "r": "ork"
+    },
+    " ",
+    {
+     "f": "f",
+     "r": "or"
+    },
+    " ",
+    {
+     "f": "y",
+     "r": "ou"
+    },
+    "?"
+   ]
+  },
+  {
+   "s": "Emre",
+   "p": [
+    "Hmm, that's my lunch break. Could we make it nine ",
+    {
+     "f": "y",
+     "r": "our"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "ime"
+    },
+    "?"
+   ]
+  },
+  {
+   "s": "Fiona",
+   "p": [
+    "Sure! My body will still think it's ten."
+   ]
+  },
+  {
+   "s": "Emre",
+   "p": [
+    "Ha! We don't change the clocks here, so I never remember: do you lose an hour or get an extra one?"
+   ]
+  },
+  {
+   "s": "Fiona",
+   "p": [
+    "We get one! ",
+    {
+     "b": "An"
+    },
+    " ",
+    {
+     "f": "e",
+     "r": "xtra"
+    },
+    " ",
+    {
+     "f": "h",
+     "r": "our"
+    },
+    " ",
+    {
+     "f": "o",
+     "r": "f"
+    },
+    " ",
+    {
+     "f": "s",
+     "r": "leep"
+    },
+    "."
+   ]
+  },
+  {
+   "s": "Emre",
+   "p": [
+    "Lucky you! See you next Friday, then — nine ",
+    {
+     "f": "y",
+     "r": "our"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "ime"
+    },
+    "."
+   ]
+  },
+  {
+   "s": "Fiona",
+   "p": [
+    "Nine ",
+    {
+     "f": "m",
+     "r": "y"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "ime"
+    },
+    ". Have a good weekend!"
+   ]
+  },
+  {
+   "s": "Emre",
+   "p": [
+    "You too. Enjoy ",
+    {
+     "f": "y",
+     "r": "our"
+    },
+    " ",
+    {
+     "f": "e",
+     "r": "xtra"
+    },
+    " ",
+    {
+     "f": "h",
+     "r": "our"
+    },
+    " ",
+    {
+     "f": "o",
+     "r": "f"
+    },
+    " ",
+    {
+     "f": "s",
+     "r": "leep"
+    },
+    "!"
+   ]
+  }
+ ],
+ "priya": [
+  {
+   "s": "Dan",
+   "p": [
+    "",
+    {
+     "f": "A",
+     "r": "nyway"
+    },
+    " — ",
+    {
+     "f": "w",
+     "r": "hat"
+    },
+    " ",
+    {
+     "f": "h",
+     "r": "ave"
+    },
+    " ",
+    {
+     "f": "y",
+     "r": "ou"
+    },
+    " ",
+    {
+     "f": "b",
+     "r": "een"
+    },
+    " ",
+    {
+     "f": "u",
+     "r": "p"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "o"
+    },
+    " while I was away?"
+   ]
+  },
+  {
+   "s": "Priya",
+   "p": [
+    "Oh, not much. Work, mostly. ",
+    {
+     "f": "A",
+     "r": "re"
+    },
+    " ",
+    {
+     "f": "y",
+     "r": "ou"
+    },
+    " ",
+    {
+     "f": "s",
+     "r": "till"
+    },
+    " ",
+    {
+     "f": "w",
+     "r": "atching"
+    },
+    " Crown Street? ",
+    {
+     "f": "H",
+     "r": "ave"
+    },
+    " ",
+    {
+     "f": "y",
+     "r": "ou"
+    },
+    " ",
+    {
+     "f": "s",
+     "r": "een"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "he"
+    },
+    " ",
+    {
+     "f": "n",
+     "r": "ew"
+    },
+    " ",
+    {
+     "f": "s",
+     "r": "eason"
+    },
+    " ",
+    {
+     "f": "y",
+     "r": "et"
+    },
+    "?"
+   ]
+  },
+  {
+   "s": "Dan",
+   "p": [
+    "Yes! ",
+    {
+     "b": "I"
+    },
+    " ",
+    {
+     "f": "w",
+     "r": "atched"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "he"
+    },
+    " ",
+    {
+     "f": "w",
+     "r": "hole"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "hing"
+    },
+    " ",
+    {
+     "f": "i",
+     "r": "n"
+    },
+    " ",
+    {
+     "f": "o",
+     "r": "ne"
+    },
+    " ",
+    {
+     "f": "g",
+     "r": "o"
+    },
+    " the weekend before I left."
+   ]
+  },
+  {
+   "s": "Priya",
+   "p": [
+    "In one go? It's ten episodes! ",
+    {
+     "f": "I",
+     "r": "t"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "ook"
+    },
+    " ",
+    {
+     "f": "m",
+     "r": "e"
+    },
+    " ",
+    {
+     "f": "a",
+     "r": "ll"
+    },
+    " ",
+    {
+     "f": "w",
+     "r": "eek"
+    },
+    "."
+   ]
+  },
+  {
+   "s": "Dan",
+   "p": [
+    "I know, I know. I just couldn't stop. So ",
+    {
+     "f": "w",
+     "r": "hat"
+    },
+    " ",
+    {
+     "f": "d",
+     "r": "id"
+    },
+    " ",
+    {
+     "f": "y",
+     "r": "ou"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "hink"
+    },
+    " ",
+    {
+     "f": "o",
+     "r": "f"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "he"
+    },
+    " ",
+    {
+     "f": "e",
+     "r": "nding"
+    },
+    "?"
+   ]
+  },
+  {
+   "s": "Priya",
+   "p": [
+    "Honestly? I was so angry. Why would they do that to Jess?"
+   ]
+  },
+  {
+   "s": "Dan",
+   "p": [
+    "Seriously! ",
+    {
+     "b": "I'm"
+    },
+    " ",
+    {
+     "f": "s",
+     "r": "till"
+    },
+    " ",
+    {
+     "f": "n",
+     "r": "ot"
+    },
+    " ",
+    {
+     "f": "o",
+     "r": "ver"
+    },
+    " ",
+    {
+     "f": "i",
+     "r": "t"
+    },
+    "."
+   ]
+  },
+  {
+   "s": "Priya",
+   "p": [
+    "Me neither. Right, ",
+    {
+     "b": "I'd"
+    },
+    " ",
+    {
+     "f": "b",
+     "r": "etter"
+    },
+    " ",
+    {
+     "f": "g",
+     "r": "et"
+    },
+    " ",
+    {
+     "f": "b",
+     "r": "ack"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "o"
+    },
+    " ",
+    {
+     "f": "w",
+     "r": "ork"
+    },
+    ". See you at lunch?"
+   ]
+  },
+  {
+   "s": "Dan",
+   "p": [
+    "Yeah, see you then."
+   ]
+  }
+ ],
+ "priya1": [
+  {
+   "s": "Priya",
+   "p": [
+    "Dan! ",
+    {
+     "b": "It's"
+    },
+    " ",
+    {
+     "f": "b",
+     "r": "een"
+    },
+    " ",
+    {
+     "f": "a",
+     "r": "ges"
+    },
+    "! ",
+    {
+     "f": "H",
+     "r": "ow"
+    },
+    " ",
+    {
+     "f": "h",
+     "r": "ave"
+    },
+    " ",
+    {
+     "f": "y",
+     "r": "ou"
+    },
+    " ",
+    {
+     "f": "b",
+     "r": "een"
+    },
+    "?"
+   ]
+  },
+  {
+   "s": "Dan",
+   "p": [
+    "Good, thanks. ",
+    {
+     "b": "I've"
+    },
+    " ",
+    {
+     "f": "j",
+     "r": "ust"
+    },
+    " ",
+    {
+     "f": "g",
+     "r": "ot"
+    },
+    " ",
+    {
+     "f": "b",
+     "r": "ack"
+    },
+    " ",
+    {
+     "f": "f",
+     "r": "rom"
+    },
+    " ",
+    {
+     "f": "C",
+     "r": "rete"
+    },
+    ", actually. Two weeks of sun, sea and no emails."
+   ]
+  },
+  {
+   "s": "Priya",
+   "p": [
+    {
+     "f": "L",
+     "r": "ucky"
+    },
+    " ",
+    {
+     "f": "y",
+     "r": "ou"
+    },
+    "! ",
+    {
+     "f": "W",
+     "r": "hen"
+    },
+    " ",
+    {
+     "f": "d",
+     "r": "id"
+    },
+    " ",
+    {
+     "f": "y",
+     "r": "ou"
+    },
+    " ",
+    {
+     "f": "g",
+     "r": "et"
+    },
+    " ",
+    {
+     "f": "b",
+     "r": "ack"
+    },
+    "?"
+   ]
+  },
+  {
+   "s": "Dan",
+   "p": [
+    "Last night. ",
+    {
+     "b": "I"
+    },
+    " ",
+    {
+     "f": "w",
+     "r": "as"
+    },
+    " ",
+    {
+     "f": "u",
+     "r": "p"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "ill"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "wo"
+    },
+    " unpacking."
+   ]
+  },
+  {
+   "s": "Priya",
+   "p": [
+    "Oh no. So ",
+    {
+     "f": "d",
+     "r": "id"
+    },
+    " ",
+    {
+     "f": "y",
+     "r": "ou"
+    },
+    " ",
+    {
+     "f": "s",
+     "r": "ee"
+    },
+    " the Star Kitchen final ",
+    {
+     "f": "l",
+     "r": "ast"
+    },
+    " ",
+    {
+     "f": "n",
+     "r": "ight"
+    },
+    ", or were you too tired?"
+   ]
+  },
+  {
+   "s": "Dan",
+   "p": [
+    "Are you joking? I unpacked in front of the TV. ",
+    {
+     "b": "I"
+    },
+    " ",
+    {
+     "f": "w",
+     "r": "as"
+    },
+    " ",
+    {
+     "f": "o",
+     "r": "n"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "he"
+    },
+    " ",
+    {
+     "f": "e",
+     "r": "dge"
+    },
+    " ",
+    {
+     "f": "o",
+     "r": "f"
+    },
+    " ",
+    {
+     "f": "m",
+     "r": "y"
+    },
+    " ",
+    {
+     "f": "s",
+     "r": "eat"
+    },
+    "!"
+   ]
+  },
+  {
+   "s": "Priya",
+   "p": [
+    "Me too! ",
+    {
+     "f": "W",
+     "r": "hat"
+    },
+    " ",
+    {
+     "f": "d",
+     "r": "id"
+    },
+    " ",
+    {
+     "f": "y",
+     "r": "ou"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "hink"
+    },
+    " ",
+    {
+     "f": "o",
+     "r": "f"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "he"
+    },
+    " ",
+    {
+     "f": "r",
+     "r": "esult"
+    },
+    "?"
+   ]
+  },
+  {
+   "s": "Dan",
+   "p": [
+    {
+     "f": "H",
+     "r": "onestly"
+    },
+    "? ",
+    {
+     "b": "I"
+    },
+    " ",
+    {
+     "f": "w",
+     "r": "as"
+    },
+    " ",
+    {
+     "b": "a"
+    },
+    " ",
+    {
+     "f": "b",
+     "r": "it"
+    },
+    " ",
+    {
+     "f": "d",
+     "r": "isappointed"
+    },
+    ". Marco was much better."
+   ]
+  },
+  {
+   "s": "Priya",
+   "p": [
+    "Totally. ",
+    {
+     "b": "Everyone's"
+    },
+    " ",
+    {
+     "f": "s",
+     "r": "aying"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "hat"
+    },
+    "."
+   ]
+  }
+ ]
+}

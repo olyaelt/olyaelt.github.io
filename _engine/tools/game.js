@@ -278,22 +278,31 @@ function gHourglass(host, {seconds = 60, choices = [30, 60, 120], onEnd = null} 
 
 /* ---------- 🧠 Memo (Olga Akimkina; her 22:30: a warmer): look at the list for 30 seconds — it hides — say what you remember — Check:
    tap the ones you remembered ---------- */
-function gMemo(host, items, {seconds = 30, show = t => gEsc(t)} = {}){
-  const M = {phase: "ready", got: new Set()};
+function gMemo(host, items, {seconds = 30, show = t => gEsc(t), state = null, groups = null, onChange = null} = {}){
+  /* tools 16 (B2 revision f-seen, its first use): groups = [{h, items}] → the headings over the list and as labels over the covers (they help
+     recall); state = a memo to carry on with (the field redraws its screen); M.end = when the looking ends; onChange() for the page around it */
+  const M = state || {phase: "ready", got: new Set(), end: 0};
+  if(!(M.got instanceof Set)) M.got = new Set(M.got || []);
+  const changed = () => { if(onChange) onChange(M); };
+  const G = groups && groups.length ? groups.map(g => ({h: g.h, ks: g.items.map(t => items.indexOf(t)).filter(k => k > -1)})) : [{h: "", ks: items.map((_, k) => k)}];
+  const lists = cell => G.map(g => `<div class="gm-g">${g.h ? `<p class="gm-h">${gEsc(g.h)}</p>` : ""}<ul class="gm-list${cell.check ? " check" : ""}">${g.ks.map(k => cell(k)).join("")}</ul></div>`).join("");
+  const look = () => { M.phase = "look"; M.end = Date.now() + seconds * 1000; };
   function render(){
     if(M.phase === "ready") host.innerHTML = `<div class="gmemo"><p class="gm-big">${items.length} expressions · ${seconds} seconds to remember them</p><button class="btn primary" data-gm-go>▶ Show them</button></div>`;
-    else if(M.phase === "look") { host.innerHTML = `<div class="gmemo look"><div class="gm-timer"></div><ul class="gm-list">${items.map(t => `<li>${show(t)}</li>`).join("")}</ul><button class="btn" data-gm-hide>Hide them now</button></div>`;
-      gTimer(host.querySelector(".gm-timer"), {seconds, compact: true, autostart: true, onEnd: () => { M.phase = "recall"; render(); }}); }
-    else if(M.phase === "recall") host.innerHTML = `<div class="gmemo"><p class="gm-big">What do you remember? Take turns: one expression each.</p><div class="gm-cover">${items.map(() => `<span></span>`).join("")}</div><button class="btn primary" data-gm-check>Check</button></div>`;
-    else host.innerHTML = `<div class="gmemo"><p class="gm-big">Tap the ones you remembered — <b>${M.got.size} of ${items.length}</b></p><ul class="gm-list check">${items.map((t, k) => `<li><button class="${M.got.has(k) ? "on" : ""}" data-gm-k="${k}">${show(t)}</button></li>`).join("")}</ul><button class="btn" data-gm-again>↺ Again</button></div>`;
-    const on = (q, f) => host.querySelectorAll(q).forEach(b => b.addEventListener("click", () => f(b)));
-    on("[data-gm-go]", () => { M.phase = "look"; render(); });
+    else if(M.phase === "look"){ const left = Math.max(1, Math.ceil(((M.end || Date.now() + seconds * 1000) - Date.now()) / 1000));
+      host.innerHTML = `<div class="gmemo look"><div class="gm-timer"></div><div class="gm-lists">${lists(k => `<li>${show(items[k])}</li>`)}</div><button class="btn" data-gm-hide>Hide them now</button></div>`;
+      gTimer(host.querySelector(".gm-timer"), {seconds: left, compact: true, autostart: true, onEnd: () => { if(!host.isConnected || M.phase !== "look") return; M.phase = "recall"; render(); changed(); }}); }
+    else if(M.phase === "recall") host.innerHTML = `<div class="gmemo"><p class="gm-big">What do you remember? Take turns: one expression each.</p><div class="gm-lists">${G.map(g => `<div class="gm-g">${g.h ? `<p class="gm-h">${gEsc(g.h)}</p>` : ""}<div class="gm-cover">${g.ks.map(() => `<span></span>`).join("")}</div></div>`).join("")}</div><button class="btn primary" data-gm-check>Check</button></div>`;
+    else { const cell = k => `<li><button class="${M.got.has(k) ? "on" : ""}" data-gm-k="${k}">${show(items[k])}</button></li>`; cell.check = true;
+      host.innerHTML = `<div class="gmemo"><p class="gm-big">Tap the ones you remembered — <b>${M.got.size} of ${items.length}</b></p><div class="gm-lists">${lists(cell)}</div><button class="btn" data-gm-again>↺ Again</button></div>`; }
+    const on = (q, f) => host.querySelectorAll(q).forEach(b => b.addEventListener("click", () => { f(b); changed(); }));
+    on("[data-gm-go]", () => { look(); render(); });
     on("[data-gm-hide]", () => { M.phase = "recall"; render(); });
     on("[data-gm-check]", () => { M.phase = "check"; render(); });
     on("[data-gm-k]", b => { const k = +b.dataset.gmK; M.got.has(k) ? M.got.delete(k) : M.got.add(k); render(); });
     on("[data-gm-again]", () => { M.phase = "ready"; M.got.clear(); render(); });
   }
-  render(); return M;
+  M.look = look; render(); return M;
 }
 
 /* ---------- 🧠 Memory / Pelmanism (Olga Lifshits): the cards face down; turn two over — two halves of one expression stay up, and you

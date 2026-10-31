@@ -19,6 +19,7 @@ ALL = {}
 for group in ('b2', 'c1'):
     folder = os.path.join(site, group)
     pages = sorted([p for p in glob.glob(os.path.join(folder, '*.html')) if re.match(r'\d{4}-\d{2}-\d{2}\.html$', os.path.basename(p))], reverse=True)
+    pages = [p for p in pages if '<meta name="hw-test"' not in open(p, encoding='utf-8').read(3000)]   # test pages (page.json "test": true) are in no list (her 31.10)
     hidden = [p for p in pages if '<meta name="hw-unlisted"' in open(p, encoding='utf-8').read(3000)]   # unlisted: students don't see it; Olya's teacher view does (🔒)
     if hidden: print(group, 'unlisted (only in her teacher view):', ', '.join(os.path.basename(p) for p in hidden))
     if not pages: continue

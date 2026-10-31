@@ -34,7 +34,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
   // ---- the board: her ▶ Play reaches the groups' boards
   let OB = await open(L + 'jeopardy-live.html', 'teacher'); const GB = await open(L + 'jeopardy-live.html', '');
   out.boardLinks = await GB.evaluate(() => [...document.querySelectorAll('a.cell')].map(a => a.getAttribute('href')));
-  expect('board: the four fields link to their -live pages', out.boardLinks.length === 4 && out.boardLinks.every(h => /^f-[a-z]+-live\.html$/.test(h)), out.boardLinks);
+  expect('board: the five fields link to their -live pages (f-seen since tools 17)', out.boardLinks.length === 5 && out.boardLinks.includes('f-seen-live.html') && out.boardLinks.every(h => /^f-[a-z]+-live\.html$/.test(h)), out.boardLinks);
   out.today = await OB.locator('.cell.today').count(); expect('her board marks today\'s fields orange', out.today === 4, out.today);
   // her 13:24 (as on her slides): one click on a cell = ▶ Play — it lights up in every room and its page opens
   out.noActs = await OB.locator('[data-play], [data-cellwrap], [data-unplay]').count(); expect('no buttons on new cells, no Play / Now / Done bar', out.noActs === 0 && await OB.locator('[data-now], [data-done], .cellbar').count() === 0, out.noActs);

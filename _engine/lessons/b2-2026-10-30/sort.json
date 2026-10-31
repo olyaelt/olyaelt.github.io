@@ -93,6 +93,6 @@
  ],
  "end": {
   "q": "Look at all eight sentences. What never comes right after recommend?",
-  "a": "Never the person who gets the tip (recommend you, recommend me), and never to + a verb (recommend to see). Right after recommend comes WHAT you recommend: it, this series, Sherlock, anything, a good dentist. The person comes with to, at the end: …recommended it to me."
+  "a": "Never the person who gets the tip: ~~recommend you~~, ~~recommend me~~. And never to + a verb: ~~recommend to see~~. Right after recommend comes WHAT you recommend: it, this series, Sherlock, anything, a good dentist. The person comes with to, at the end: …recommended it to me."
  }
 }

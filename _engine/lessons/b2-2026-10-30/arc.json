@@ -12,7 +12,10 @@
     {
      "s": "Isla",
      "p": [
-      "Hi! Just ",
+      "Hi! ",
+      {
+       "b": "Just "
+      },
       {
        "f": "",
        "r": "a heads-up",
@@ -30,13 +33,22 @@
        "r": "an",
        "n": "an hour later — так обычно говорят; one hour — когда важно число (один, а не два)"
       },
-      " (one / an?) hour later for you — 3 pm your time. Does that still ",
+      {
+       "b": " hour later for you"
+      },
+      " (one / an?) — 3 pm your time. ",
+      {
+       "b": "Does that still "
+      },
       {
        "f": "w",
        "r": "ork",
        "n": "does + work — без -s: Does that still work?"
       },
-      " (work / works?) for you?"
+      {
+       "b": " for you?"
+      },
+      " (work / works?)"
      ]
     },
     {
@@ -48,19 +60,27 @@
     {
      "s": "Rob",
      "p": [
-      "But three's tricky — I already have something at ",
+      "But three's tricky — ",
+      {
+       "b": "I already have something at "
+      },
       {
        "f": "",
        "r": "that",
-       "n": "время, которое назвал другой: at that time (или then), не at this time"
+       "n": "время, которое назвал другой: at that time (или then), не ~~at this time~~"
       },
-      " (this / that?) time. ",
+      {
+       "b": " time"
+      },
+      " (this / that?). ",
       {
        "f": "C",
        "r": "ould",
        "n": "Could (или Can) we make it + время? — так переносят встречу"
       },
-      " we ",
+      {
+       "b": " we "
+      },
       {
        "f": "m",
        "r": "ake"
@@ -127,7 +147,10 @@
        "f": "",
        "r": "my"
       },
-      " (affect · I) sleep. I'll be a zombie all week."
+      {
+       "b": " sleep"
+      },
+      " (affect · I). I'll be a zombie all week."
      ]
     },
     {
@@ -223,19 +246,27 @@
        "r": "eeps",
        "n": "everyone keeps — с -s, как she keeps"
       },
-      " going ",
+      {
+       "b": " going "
+      },
       {
        "f": "",
        "r": "on",
        "n": "going ON about — без on не говорят; keeps going on about it = уже надоели этим (or: won't stop talking about it)"
       },
-      " (keep / keeps? + 1 small word) about it too. ",
+      {
+       "b": " about it"
+      },
+      " (keep / keeps? + 1 small word) too. ",
       {
        "f": "",
        "r": "Is",
-       "n": "any good — с be: Is it any good? (не Does it…)"
+       "n": "any good — с be: Is it any good? (не ~~Does it any good?~~)"
       },
-      " (Is / Does?) it any good, though? Isla, have you seen it?"
+      {
+       "b": " it any good"
+      },
+      " (Is / Does?), though? Isla, have you seen it?"
      ]
     },
     {
@@ -246,7 +277,9 @@
        "r": "I've",
        "n": "I've only seen — have не пропадает"
       },
-      " only ",
+      {
+       "b": " only "
+      },
       {
        "f": "s",
        "r": "een"
@@ -257,7 +290,10 @@
        "r": "its",
        "n": "bits = отдельные куски, сцены (не «две серии»)"
       },
-      " (I · see · bits) of it. Mum had it on when I was at her place. The acting's brilliant, I'll give it that. But it looked a bit slow."
+      {
+       "b": " of it"
+      },
+      " (I · see · bits). Mum had it on when I was at her place. The acting's brilliant, I'll give it that. But it looked a bit slow."
      ]
     }
    ]
@@ -273,9 +309,12 @@
       {
        "f": "",
        "r": "It's",
-       "n": "worth — с be: it's worth it (не it worth)"
+       "n": "worth — с be: it's worth it (не ~~it worth~~)"
       },
-      " (It / It's?) so worth it!"
+      {
+       "b": " so worth it!"
+      },
+      " (It / It's?)"
      ]
     },
     {
@@ -292,7 +331,9 @@
        "f": "g",
        "r": "ive"
       },
-      " it a ",
+      {
+       "b": " it a "
+      },
       {
        "f": "t",
        "r": "ry"
@@ -355,7 +396,10 @@
     {
      "s": "Mum",
      "p": [
-      "Just got a message from an unknown number: “Hi Mum, it's me, new number.” There's a ",
+      "Just got a message from an unknown number: “Hi Mum, it's me, new number.” ",
+      {
+       "b": "There's a "
+      },
       {
        "f": "s",
        "r": "cam",
@@ -425,7 +469,9 @@
        "f": "S",
        "r": "o"
       },
-      " you ",
+      {
+       "b": " you "
+      },
       {
        "f": "w",
        "r": "ouldn't"
@@ -434,7 +480,7 @@
       {
        "f": "r",
        "r": "ecommend",
-       "n": "recommend + что: recommend the series (не recommend me to watch)"
+       "n": "recommend + что: recommend the series (не ~~recommend me to watch~~)"
       },
       " ",
       {

@@ -17,7 +17,11 @@
    {
     "s": "Zoe",
     "p": [
-     "Have you seen The Long Winter? I'm obsessed. Everyone at work's ",
+     "Have you seen The Long Winter? I'm obsessed. ",
+     {
+      "b": "Everyone at work's"
+     },
+     " ",
      {
       "f": "t",
       "r": "alking"
@@ -27,7 +31,11 @@
       "f": "a",
       "r": "bout"
      },
-     " it too."
+     " ",
+     {
+      "b": "it"
+     },
+     " too."
     ]
    },
    {
@@ -63,7 +71,11 @@
       "f": "i",
       "r": "nto"
      },
-     " it."
+     " ",
+     {
+      "b": "it"
+     },
+     "."
     ]
    },
    {
@@ -95,7 +107,11 @@
       "f": "p",
       "r": "ut"
      },
-     " me ",
+     " ",
+     {
+      "b": "me"
+     },
+     " ",
      {
       "f": "o",
       "r": "ff"
@@ -120,17 +136,29 @@
       "f": "a",
       "r": "bout"
      },
-     " it. And it's ",
+     " ",
+     {
+      "b": "it"
+     },
+     ". And it's ",
      {
       "f": "n",
       "r": "ot"
      },
-     " as ",
+     " ",
+     {
+      "b": "as"
+     },
+     " ",
      {
       "f": "g",
       "r": "ood"
      },
-     " as ",
+     " ",
+     {
+      "b": "as"
+     },
+     " ",
      {
       "f": "e",
       "r": "veryone"
@@ -162,7 +190,11 @@
       "f": "g",
       "r": "ive"
      },
-     " it ",
+     " ",
+     {
+      "b": "it"
+     },
+     " ",
      {
       "f": "t",
       "r": "hat"
@@ -184,7 +216,11 @@
    {
     "s": "Marcus",
     "p": [
-     "Fair enough. But Dan, if you just want to relax, I ",
+     "Fair enough. But Dan, if you just want to relax, ",
+     {
+      "b": "I"
+     },
+     " ",
      {
       "f": "w",
       "r": "ouldn't"
@@ -201,7 +237,10 @@
   "gloss": [
    {
     "p": [
-     "everyone's ",
+     {
+      "b": "everyone's"
+     },
+     " ",
      {
       "f": "t",
       "r": "alking"
@@ -211,7 +250,10 @@
       "f": "a",
       "r": "bout"
      },
-     " it"
+     " ",
+     {
+      "b": "it"
+     }
     ],
     "m": "",
     "ru": "все о нём говорят ('s = is)"
@@ -237,7 +279,10 @@
       "f": "a",
       "r": "bout"
      },
-     " sth"
+     " ",
+     {
+      "b": "sth"
+     }
     ],
     "m": "",
     "ru": "без конца твердить о (часто надоело)"
@@ -279,7 +324,10 @@
       "f": "i",
       "r": "nto"
      },
-     " it"
+     " ",
+     {
+      "b": "it"
+     }
     ],
     "m": "",
     "ru": "не смог(ла) втянуться"
@@ -407,7 +455,10 @@
    },
    {
     "p": [
-     "I ",
+     {
+      "b": "I"
+     },
+     " ",
      {
       "f": "w",
       "r": "ouldn't"
@@ -435,12 +486,20 @@
    {
     "s": "Ruth",
     "p": [
-     "Well, if it's cosy you want, I've been rewatching Friends. It ",
+     "Well, if it's cosy you want, I've been rewatching Friends. ",
+     {
+      "b": "It"
+     },
+     " ",
      {
       "f": "t",
       "r": "akes"
      },
-     " me ",
+     " ",
+     {
+      "b": "me"
+     },
+     " ",
      {
       "f": "b",
       "r": "ack"
@@ -466,12 +525,20 @@
       "f": "b",
       "r": "its"
      },
-     " of it. ",
+     " ",
+     {
+      "b": "of it"
+     },
+     ". ",
      {
       "f": "I",
       "r": "s"
      },
-     " it ",
+     " ",
+     {
+      "b": "it"
+     },
+     " ",
      {
       "f": "a",
       "r": "ny"
@@ -507,7 +574,11 @@
       "f": "s",
       "r": "ee"
      },
-     " Ross in a ",
+     " Ross ",
+     {
+      "b": "in a"
+     },
+     " ",
      {
       "f": "c",
       "r": "ompletely"
@@ -539,7 +610,11 @@
       "f": "g",
       "r": "ive"
      },
-     " it a ",
+     " ",
+     {
+      "b": "it a"
+     },
+     " ",
      {
       "f": "t",
       "r": "ry"
@@ -569,7 +644,10 @@
   "gloss": [
    {
     "p": [
-     "it ",
+     {
+      "b": "it"
+     },
+     " ",
      {
       "f": "t",
       "r": "akes"
@@ -610,7 +688,10 @@
       "f": "o",
       "r": "f"
      },
-     " it"
+     " ",
+     {
+      "b": "it"
+     }
     ],
     "m": "",
     "ru": "видел(а) только отрывки"
@@ -673,12 +754,20 @@
       "f": "s",
       "r": "ee"
      },
-     " sb ",
+     " ",
+     {
+      "b": "sb"
+     },
+     " ",
      {
       "f": "i",
       "r": "n"
      },
-     " a ",
+     " ",
+     {
+      "b": "a"
+     },
+     " ",
      {
       "f": "d",
       "r": "ifferent"
@@ -703,7 +792,11 @@
       "f": "i",
       "r": "t"
      },
-     " a ",
+     " ",
+     {
+      "b": "a"
+     },
+     " ",
      {
       "f": "t",
       "r": "ry"

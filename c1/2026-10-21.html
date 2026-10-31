@@ -290,7 +290,7 @@ details.summary[open] summary::after{content:"Hide"}
 /* engine 48 (her read-through 30.10: blue on yellow was hard on the eyes): an opened gap is one chunk, the first letters and the rest
    black bold on the yellow, in dark mode too (engine 46 had made the rest blue) */
 .chunk.open .gap .f{color:var(--hl-ink);background:var(--hl);border-radius:2px 0 0 2px}
-.dlg b.given{color:var(--answer)}
+.dlg b.given{color:var(--ink)}   /* engine 54 (checklist 11.25, her catch 31.10): the given words of a chunk are black bold like the opened gap, so the chunk reads as one bold unit */
 /* engine 30: "!" after an opened gap = "I want to revise this" (kept on this device) */
 /* engine 32 (her decision 27.10): a green bookmark, not a second round sign next to "?" — "?" asks Olya, the bookmark is for me */
 .rev{display:inline-grid;place-items:center;width:1.25em;height:1.5em;margin:0 1px 0 2px;padding:0;border:0;border-radius:4px;background:none;color:var(--done);vertical-align:-.3em;cursor:pointer}
@@ -368,7 +368,7 @@ details.summary[open] summary::after{content:"Hide"}
 .reveal:not(.open) *{color:transparent !important}   /* marked answers stay hidden until tapped */
 .reveal.open .pp,.reveal.open .g{color:#0000FF}.reveal.open .ps{color:#C00000}   /* on yellow: the slide colours, in dark mode too */
 .small{font-size:.9rem;color:var(--muted)}
-s{color:var(--muted)}
+s{color:var(--strike);text-decoration:line-through;text-decoration-thickness:2px}   /* engine 52: every <s> = the grey strike (her rule 4.43) */
 
 /* share and ask */
 .convo{display:grid;gap:12px}
@@ -678,7 +678,1156 @@ audio{width:100%}
 const IMG_A = "data:image/png;base64,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";
 const IMG_B = "data:image/png;base64,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";
 const STICKER = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABeCAYAAABmZ1vAAAA8PklEQVR4nO29d5xcV3n//z7n3ultZ6u2r1a9F0ty7zZuGIeSEAIJNbSEHzUBvnyDQwoQyI+E0AIpEDoJJgYDBgzYuGFs2ZZVrN63953d6XPP8/3jzOxKsmStLcla2/q8XvPa3dk7956593zOefoD53AOZxu3bvVz6/7g2R7G8eCe7QGcw4sUn90V8Elokbi+q3H0zZSKPyzBZ8/2sI7FOYKcw3OHW/cHfdWBZaLlJaL19cAa7Q/E0C6eV+xnFhJEne0BnMMLHF/uDrt5bzmOe70yciOOuwJfIEypgKQGkL49EIzBnHmPeESv4d21qbM95CNxbgc5h9OPT2+KuL7kGvH5bsBzr1H+wAqlnZDkJpC+/Uj3dqRvF5IeQYXiSLGA3vCqdv+SKxoLcI4g5/ACxCf3JpxYeC1a3aBQ1ynUYoX4JdWP6d1lSTF4AEp5VFUjqnU5TvNSSDbhPfAtpHdH0mtf3wnsPNtf5UicI8g5PHv80/4qxx/eoDU3iXauVMYslHw6wNBBTNeTSM8OJNUPjh9V14Fe+RJ04yKI1aK0A8ZDtEZVzUEObfHJeNcK4M6z/bWOxDmCnMMzw6d76514YL2Gm8QUr6KQnS/pMUd6d2AOb4XB/UgujQonoHEheuW16PpOCCdRWltSiAHPAKBEoRJzMJP3oHt3LEVrMOYsf8lpnCPIOZwcX+yt9/silxhTvJFS8TJSvfPMSJ+mexvSsx0Z6wPjoRINMHcdunU5urYdgjGUwk548cDzgKMtQyJiPycG07NzMY95EVar9Fn5nsfBOYKcw/HxNWnWkr1UFbI3qOz4ZaZ/f4cMHUC6tiGD+yA9Dj4/qroNvfJ6VPNSVHUTyh9GwBLGlE5+HTEQjEK0Ggb2tvH93zQBu8/wt5sxzhHkHKbxHWnVufQVOjVyk3Q/fpEMH26Vwf1I705ktAeKeQjFULUdqBXXoZoXoxKNKF/ATnQxYErPyHegAPEFUVWNyNBDtTz+i07OEeQcZgWUJvBtb55JjV0uo903yqZfXCSjXY1muBtJDUB6DDIjqFAC1boC1bIc1bgQHasD1wfGs6Twiqc8DlXThux60MfA7g3Az0/H1zsdOEeQFxtElP825pf27ria8d4bSvd+8wIZ66tnchjyk0ipAF4J/CFU6zJU02J0w3yIJFGOU9YnTgMpjh4UKtkEvgBqYmi9gA84nRd41jhHkBcDRDSf71+me5+8knd+67rSeP/5ZMdrKBYQKUGpaCe8L2DNsY2LUfVzIVKFUg5iPJQxljhnAMoYiNag4vVINrWKQLyNfGrvGbnYM8Q5grxQ8VMJ8OD9i3X/7mt5zaevJ5tah5gErh+UsoTwctZHMWc+qnERqrYDQlEUylqdjAGM1SnOdFBSMAKxekiPzSEQXXeOIOdw+nHr/iB7frSa9PDV6gsfvBYxawnFYgTjqFgNkp2A3AS4PqtoNy1C1bRAIIoSKZPCOwsDF3B8UNWAKmT8Eq+9gFTP/wBn3SFyjiDPd5z3+wl8wdX43Jeo+z91jQrGVlA1J6QiSeuQSw3AWA/iD6LrOlFNi6Ai74tYQpxWfeLZQqHi9ZiRblT93OXStbkGGDzbozpHkOcjIvUNzJl3IbHaa1Ss6lJV3bhU1XW6hBNIbgJGupHubRCMouYsQC2/BpVoQLl+RAzKeGdMn3j2MHaMWiP1c9uAhZwjyDnMEAH8/k5qOi+mtv0aVd9xgWpY0K7mzIdABFKDSP9eOLwZFamBpsXoOfMhVgPatYQoW55mbX6DMRBJWs96bXtS3NByStkHzvawzhFk9qIWWEb9/MtU44LLVePiVap1Ra1q6ERQMHwIOfC4SHZCqUQDun01as58CFeVwzs8MAIyG8SnmUEFwihfEIIxP7Udi+nbHgUmz+aYzhFk9iAAtKD1eTQsuEy1LL9Qta5YpNpXR1R1M1LIQd8uzOafQ6mIqmlBL7xEqbp2VDCGgN0pjgzvmLXbxVOhAFEOKlKNGC+gWhbXS9/2NuDJszmucwQ5u0gCC3AD62lZepFqW32e7ljTodpWBojWwOQw0rMds+e3IFIOGb8OVdOGCoShrGSLV0Sp5xEbTgSloGoOdD3p0rE2zMb/nc85gryo4AeagKUEq9ar9pXrVeeG5apzbZNqWuLDH0SGD2P2P4aMdIE/hG6Yhz7v99DJRvAFEWNQcrTl6QVBDgAxqEQ9su9hVzUvcwXasPescLaGdI4gZx5RoANYSVXjOjVv3Wq14KIFun1NA3VzfYiBvr2YLb9AUv2oYAxTvxC16DJ0ogFPu/iU9VGIV7BOvBcolIhV1D0PHYxVEU5GyYzOAQ6drTGdI8jphwZqgAXACurnrVKLLlmuFl46V7evrFOJ+oDkJpDuHciD34HsOCpWZ2OeVt9AKVzNVa0h3rY8TMQRvrEjzfd3Z9FKvXB2ihNCbAxYOI7k03W0LM2x64F5nCPI8x4BrOi0APRSWpcvU8uvWaAXXjxXNy+tIxQLSWoQ6dqKeexHkM9AshHduR7V0Gmz71AUSx6XN7p89yVx6sL20VzdGqDoDfODPVn8rj6b3/G5gXZQiQZkfKBBr3pZzux6oB276JwVr/o5gjx7VGFFp4Vod4Gat75DrbqpQy26pEM1dDYoVExGuvB23gf9ewXxlKppQy+9AlXbjgpE7VmMDe8wAkFHeP/aGHVhl/Gch99VhFzNX6yNcXdXnlRBcPQLfRcBlWxGhn9XxcJL/VhyVAEjZ2Ms5wgyczhAA9bDuwBfqJ15F8zR593Sohde2KFq2xrxijEZPKDMoz+EwQPWSVffiVr7UqWqW6z4cERi0ZHwRFgUdzl/TgCAjz40TlPE4YPr46yu93NBg587D+Vxnutv/VzDGIjX28SrcKwV2IpV1p8LgtQD84EdleudI8jTIwi0AouB+fhC9WrJlTXq/Fc16gUXdRCvbSGbqqJ/L94D34bRbow/DA3zcc7/A3Sy0YZ3lHOy1dPEPInAkmoftSFNyQhPjpR4oKfAO1fFiPkVGxr93Hkw/1x977MIQYXj4AaQyeEFxBruZaJ/LrDpDF84CvwXcC1wD/AGoOscQZ6KBFZ0WgK0E0lWqeXXxtSGVzbruevmqVC8TdIjCendiWy8DUkNoSJVMGcRZsmVNDU2EPD56Z4o4BmDM9PwDoHWmINWiqJnEGD3eIn9qRIra/0sr/bhc7AOwTP21c8+FCBuAMIJZKx/PmtuGOPer63ALuZnMoDsHcBLgNuAm4EfAW86RxCLitVpGdBAJBlS578qrNf/frNqW7FQaT2P1EDcHNqE6doGmXFb26l5KXrtfFS0GqUd3rUixLtWhYn6FN/ekeYjD6bIlkDPULdO+KcPdBSkC4b945YgdWEHn4aCsf60FzS0RsXrkKFDTVz5Zod7v+bHht70naErLgE+CDwCvB54FfDvwI9ezASpAxZhb049VU2OuuiPAs6Gl3cwZ+EyZUrzZKQnKlvvwvTsREo5dLLZWp7qO23xAhQihmLR448W+/mHi2M45dn7rtUxuiYMn3p0Av8MFetAWcFwFAQdhedBf8bmZwQdZRX0s54hceahRKCqEXVoc0JFa+YYqw+0c2YIooEPYxfJtwFZ4BvYHesLLzaCNGD1iUVALbVtjrrsTUFn/cvbqZu7TGXHF8poT1gevQPTv9uWrqltQy+7ClXbhgpGQSinoNqJKwKJgOKdK6I4SrF1uEDEVcxN+HjD0jD/tSPNUNbMzPok9ofjKMI+DQLZkn1Tqen/v+BhDCpajRHRpAYXA78B5gG/OwNXuxZ4NfAL4MdHvP9VIPNCJ4gGGrGEWAgkaV6MuvSNEWftS+dR1bRSZcbnydCBgGz/DWb4sM22q+/EWfNSSDbZ6FLEWlfKORRHTvWSEZbV+Fld7weEf3psgoCj+OJVSeZVuayt83HngTzODMSsfHl3UCiaIxqUUOFV0QjygtdAKhBUMIYKRGDw4EppbP8uvQfXYP1Np9NSEcaKVgCfPs65v/dCJIjGOu2WA3OBOC0rjLrm7TFn5fULiVavVJOjnTK0LyCbf44Z6QJ/BDVnAc78C6BqDsr1gzFIJebp6YR+gTV1PiI+TckzdKc9+jIeqYIQ92uWVluCzAQTRUNFDW+Lu6CsHwRgsmgq1TpfHNAuKtGASQ3O4w/+OcdnX+5gzbCHT+NVfg+4EvgOcPfxDnihEKRCimVYO3ZEz7vQqKv/NK6WX7MIf2QtqYEO6drqStdWmByBSBW6cRF62dUQrQHn6MQiKK/VJ9GIFTA3bm9jyUDRg55Jj6GsR9yvifuVlcNmsPKP5MyUmaopovG5iuqgJchg1lB8MSjoFShsKaChA22+BeurijCMXfBOF0HiwHux7RY+Axw3Gf/5TBDF0aSIsfAyUVe/NeEsv3oRrn8VI91zZd8jjnRtg8wYxOpFty5Xqn4eRKtRarqYsioVnvHsE8B1oCVmteuSQM4TPFEUyqu9o3labghl/gD7UyVynhB0FXPjLi1Rh6aIPfe+cY+SAf/z+Yk9ExhjFXWvFDfDA+3APuxzvvc0XeHlwDrgc8DGEx30fLvdFVIsxuoUVXrF9Vpd+YYqtfDyhcAaxrqaZctdWvr3QDGHqmpEzzsfVdeBCsWUKFVOLPKoLBoz2SmOCwFXqynzrOtA2FWIyJRCnS1yQuW6ZAQNhH2KlIHBjGE8bwi6muaow4Iql9qQBoQDqdmWQ36mUXYYBmNaBnetwFqWLgRCWEvTqSAOvAtrFfvc0x34fCCIYlrRXoR2q9WKa/36ktfXqMUXLwS9VIYPN8rmOx3p32MtTzXtopdeoVRNGyoYsWcxnrU+ncaBCaAVhFx7VgdwNQQcRdhnjxnKWblIgKInKGVJZYwwP+HwNxckaIo6vOmuEXrTHj1pj4aIS8KvuaUzSE1QM1EQto8UXxz6eRm2Zm/Ahr8PH1zB5e8c5jdf1Fg95OApnv73gPOAj3KSOsCzmSBzqJhk/cFaVrwk4lz6hmrVuW4hpeIyGdpfZx67Q8nwYZR2pi1PVY3gDynEPKUa4BmbX+UTO1rhdzStMYfaoEO2ZNg+Wg4vEeH8Bh8KeGywhGeENy6N8upFEYwIC6tcfro/x67REmvqAwRcxc2dIeIBzfbhIgdSHvpFEKh4NGzvEBk6tJA/+4LDb744hPWHnApBYsC7scT4yskOnm0ESWJJsYxgtEmteElMX/TaOuauWaiMN0/699Wah3+gGe2GQMQWUu5cXy5p4yunoBqkVKRoxDrVNPidMzOxFPaS+bKvQiuIurAg4RL2aXaOFtg1WsLRcOv5cd6zJsa+8RJX/2CQwcz0zqMVtMRcMPBwf4FXLwqjgdaY3YYeGygwlPVwZuqSf6FAQFU1QCHdwrYHG4H92DCgU9FDbgDWYkNL+k928GwgSBSrT6wklFigll5Vqy5+Ta2ae16bKmTnSf/epPzuNmRiCBVOoJsWoZZfZZP7HdeKVPLUneLyZj+ravxsHCjwUH8B90ysvspG4WaK00rGvCqXtpi9rb/tKdCf9miNu7xucZiIT5PwK8IO1uF4xKlqQwoU/LY3TypviAe01WWA33TnKRmFX5f9IQI+54WcW2ihsDV7cYNJ9j3eCewCVvPs03CDwJ9hQ0q+NZMPnC2CBLArwRpCiZVq8aUdav0rG3T72hZR0kDf7oQ8+G0knUJV1aOal5TbeFWhtLKdikSOGx1bNFaU+eHNtSQCDvvGi1z7v4McSBnORL5RycBIftpBccEcPwuSPjxj+OmBrO0P4zDl8Au5mkRAA960+QpF0u+Agq3DJR4bKHBFawiloHuixP09BZSCQkm4ui3AsmqXf9+WoSgvcLVEBPxhVLTaUeM9a4z1qPuAap5d2MnNwMXA64CJmXzguSSIgw0dX0Mgsk4tumyJWnNTq+pY06CUqpaBfRHz2O1QyKKSTej5F9j6scFouWNRySYWlX0BJzI6iUB10CHmt9afzoTLdW1BvrR5cuZRgyeAJ+B50+u+bacndE3Y3UuAi5sCxAOabUMF7uvJoxzFZFHIlje4sIv1bZR3gQpqQhqtFRMFw73dea5oDQFCwFW0RDW7RoQ1DX6+dGUVrTGXB/sKbOwvnjHxcdbAcVHVzXg7DyxDJINSk0ALz5wgceAvgM3AT2b6oeeCIPVYUlyk5l2whhXXdOqONQ1KOXEzfNAvm35arqbXhl5yBaqmFQJhKzaV6zwZETzPyuxRv2K8YCh6R0+wIzGaM2SLQsSvAMV5Db5TWmorFqimiOa69hBLqn30pj1u25Pl0FjJWqpsOTcS5YjD/96dpS9tAMVozppvwe4gNUGNUlAfmiZsa8wh4IKI4rx6/9T7tSGHb1xXw+ODBVbX+WmOOkwWDC90XkxBBKpbwBSX8NfbItj89A6exndxArwaWA+8kxnuHnDmCBICluKPXKHmn38pCy9eqluWN+ALRGSs15GdDyBKo+rnota8FJVsRPmCR9SNnRadikaI+xR/tCzM780L0RZ32TFS5OMPp3hk4KkrqFbQky7Rn/XoLHvV2mMuAa0wctKokePyqOgZbuoI8alLq1ha7Zt6/w8Xhnn5HUPsHitR8KQ8FuFgqsQ3d2QIuool1T5eMT/EvCoXELRWtCdcgn5NZ2L69rdEHYKO4vLmAFe1hRARPLFm46aoS1O0cqzwvV1ZtgwV8b0orFoGnWjAuIE2uffzzcAB4BKeWZ56LfAerJL/v8/k6qebIHMJhi9j7rrr9NwN62lc2Kz8oRCpIeTwE1aebJiHmr8BFa9HOb5yyX05bt3YohHmxh2+eEWS6zpCU+8vTvpYlHS58fYhDk16RyngWimGcoa+tEdnwgcIbVGXmpCmPyvHTVktGcEY6/VWyp6jgoInXDTHz39cW01D2EFEKBnwObBhjp/XLY5w294MqYJYRVvgWzsyXN0a4G0roixM+oiXxb0K/VbV+FhZ49oQFbGKRGfC5StXV7O2zkfIVWzsy/OlLZO8d409BygGsx7f3pnhE49MkPeYUQDk8x1KBAnGUIk5VbLv0eXYmKmbsMad1AxP8yfAUuBveIai2ekgSDXh5IW0rbhZNS+7XNV3dhCKBslMwPAhCCZgznyc5VejojXglDsWnaSNl2cg6Vd85eokV7eGjvqfiLCk2s9rFoX5xMOpaQ0YO8GLBvozlcVFkQwqYn5Nb6Y0la9RQckIzRHNG5dGaY87fPS34/RlbHi6EQg58Jfr4jSEHXIlw4fvH2Mwa/ji1UnifoeLm/18fUea7kmP2pBTjriFvzgvXp7YFsYwFZ370s4Q6xr8VAU1hyZKtERd/FrxqgVhALIlwyc3prhtV5Y7D+RYlHDRCg6nPfaMe2jFi6J4wxQcF1XXodl5/1rsDlDEpi7MhCCNwNuxsVzffqaXfrYECZJsW0t950tVXesNqrplCaF4gFIesimU60e1rUDVzYVQ3NZzkkogoJmROuAZ4e0rYmVyCE8MFnior2DNpa5dka9s8fNPjyu8I0QnhQ0Y7JqsxJ4J8YCmJeKwc/TocA0RiLiKL19dzQ0dIcZzHp/dNElPxuBgTbgLqlwuarKFFDYPFfny1jTxgGYoa4j7HYwII1nD9pEiq+r8KAWXNwdskCLwaH+enx3IsW2kyMcvrqIj7lAdtC8R4evbM9w4N8jaenuN4azHXz+U4of7cvh8moGs0JexFk2lTqx3vbAhqLp28AfXYB/xILaQw0y64b4Zmy36FayZ+Blh5gS5VTQ/vGUxXv4mFYq/jEhyjQonIjguuH6IJNFzFti6scEo5cyiMjGe2aBKRmiJObxxmQ0T2TJY5FU/GWbfuEd7zOX6DkuahUkfDSFNV8bgHEE7EegrZ+IhNvSjPe48ZRyeCLUhh9V1dqUfyRlG89PhKCLQHnOmYq260yWyBeH1S4O0xqxOcXdXgULRsHGgwB8usuONBxS/6ytwyzyXwxMeH3tonKKBlXU+PrQuQWUgIznD93Zn+O/dWV6/JEKmZPjRviwbB6x+oZTNLnRe2Mbck0KJgUQDKlqzWMLhejKZA1iCnAytWIJksAUZnnHK2dMTRETx599dwN5HrlY/e80taDbghJLE66wOUd+Balhgw5L9wemORTNpIP80MAYubfIzr8ql6Al/+0iKPaMlUIqN/YUyQay5tCnqcHDS4ByjXGRKR94LRXPkqQQxAo0RTcRnd6RkUDM/4ePweA4pizCViQowJ+zyjtVR/ubCBD6t+E1Xju/syICj6IxP38rmqMuXt2TYMMfPjXODXD83xB17s3zmsUlaow4v6wxTMMLHH0mxfaSEAT5w35gd6Rn0/D9vIWLbxNV2NIqKLoPMfqw3/GTdcF+PtXjdgXUOPmM8lSAi2v/P3QtKe+65Rm75P9cz3HU+xWydCkaheRGqaYlVtOP15TZe5qhsu9MDYXG1i0KxcSDHzw7kcF1NyRMOT06H7YdcTV3IOW4PjFypknxksTDp4hynKkhD2CHis+9UBTVfuqqKD9w7zo8P5KC8E2WKhkTAYV29nw0NfhwNv+nK8pZfjjE4WeKNKyO8YWmEinu8OmjzQL6zM8P71sZ587Iwdx3KMZQ1vOWXY6yonSRbEraPlNBKWZPti0DhPiVoB9W8OEi8ej3pgY1YZ3MCGDrBJ1qBN2JDtr/Os2wrbQki4vN9i8Xewc1X8bavXlfq2na+pAarcQOopsWolqXoBptDgXanGsg/XZ2nU4FSit/2Ftg7XuSr29JMFAS/a0MxDk/aQD9HWxNozK+Ou3F6xvpAUPafbTGXoIbCkQwRaAw7ZZ+CfXNR0s/3bqzhHzam+NSjE+wZK7FztMSGOQ4+xxoPvvTEBB95MEXeE963Ps7HLoiXc8grSbGKq1oD3PpQitcvjXBVa5A1dT5+21fEAx7pt+0KXH12w0UqjvznRRKWGHTDPLxk8zp6dxgghzXfnoggfwR0Ag9j882fFVwA/b4fvsYb7f4cvbviiIGaVpylV9le2eEEyrqMz0AD+ePD5yh+eTjP5f8zyHDe4HOnn+BEwZp/rRVHURs8/tIbnNob7WeboppkUNObEZwKp5SwvNaaUIezJXxaEw8owj7Fxy5MEHIVt/52nMHsdIEGQVhU7edfrkiyuNplXYMfUIzkPL6/K8PrlkQI+2B9gx8R+PG+LK9fGuXl80I81Gurs59tEapoxIbAuFbMLHhHi5KzEmIrLqrGBYvkyV9VY61SjdgqiMeiHitegc0jmak5+ClwAW2+88Gl+vI3xvXam1G1bRCM2Wl1hOXpuYZWit6Msb6JypsK0kUzlXUHYh1oxz5YgfBRgVdCQ9ilOerQlS7iYE24VX7NurLX+vu7M/xwX44vXllNR8IqNG9aGiHnCZc2Be3llcJViqtag0dd7kCqyAfuHePurjwXNPpZWRcgEdBc0xbgtt1ZXrckykvag3zq0UlGC3LWvOCViIBl1S6vWxxhTZ2PvIH/2ZXmv/dkEZm9JFHYgnK6eVmjh7MYvF4sQY6HV2DLOe0Dbj+V61pTzNDeHpVsyqqONSFVyJ6ykn26cGxwocbGKk0WhKqAfZLVQV0Wo47whWimUlVFbJJSxGfTWH/XZ3dAzxPWNwdYWetHRLi/p8CdOzO811F847pqon5NXdjhIxusQr53rMBPD+S4ujVIY8Sh4AkHJjzuOpTj69vT7B71QAl37M+xsi4AKG7pDHHbnix7RgssSvpZWu1yb08B5ywwxJLDcEtniM9fmaQlOq1+Xt8eRKlhvrEjg38Wex+VGGhaHKF6zhpGun+GTaI71qMex+oeAN8Duk7lmpYgpdK9ZtuvBvXSK9pEzd4waq1gOGcYzRtaYva9hN/2zahQxAj4HVhS7ZIrGTJFoTqk0QrWNvj57s4MRuzu85pFYQKuFa/2pzz+76VVXNMWnPKkKwU+pRjMlPjL+8f5wa4sdVGHxrAm78HhSY9MUVBa4XcVRc/uRG9fEaEm5LCi1s/CKpf7evIsqvazMOlyb/eZa5ZUMjZ48kgdy3UUWkHJE9bU+fjCFUmaoy7pomEw69EadfE7itcviXDbnhwFc5TfdVZBjIeubXVN09IVMtJ9F1ZRD2LNuBXchM01H8JWKzklVJaL7XJo8+Omfy+ocrLCLEXeMBX4BxDz66MMQEaEhrDDwqQNKNwzXqIyY27sCNKecDGecMu8EK+cb83F93bnubYtwN9eVMXlLUGrcAPZovD93Wlu/tEQP9hrHXcjeWHLSInd4x4FA35XUT4cVyu2jZT48f4cYIn6xqURCmXDW8g9MzNPsCExLVHNu9dEef2SMOc3+HjlghDJgMIrT/o/XRahOebiGeGvHhzn0u8N8MiAJWxnwmVO2MHM3kcPCATjmrZV9VjxSrCtESoIYncPjS0Ct/VUr1jZZ/OM998lOx+4hcaFs1YWVVgPe6owbcKtCyliPs1kyYpSxggXN/ppizn88lCOHaNFNszxg8CyGj+331zLoVSJy1uDxP2KXMnw+Scmy8r2NMbyhvfcM8Y3dqQxRyjWDjwlXGVqfMoqvJ97YpIbOoLUhx1unBsiWzIgwkjuzMy+oifcPDfIpy+pYlG1j5IR8p4Q8WnefNcw/7klTW3E4cKyLtWT9vjfvVn6coZ00S42qYJhrGAwniBqlj5/AXEdpTvXRb1pR2EV0FP+/QJsIGMWa9o95Rs+LYgWs/fI4S0jMjlSraLVVjmfbSjHWdnwcism1Ydd4gHFeFHwRIj5NW9dEUUpxRNDRX5xMMvbV0Zt5KsIq+v8rK6rkEH4zGMT3N2VZ/NQkYirWVPv42CqxPd2Z7m/p4BPa57Jwu9zFI8OFPn4wxP842UJXK2J+R22DRW4tzv/rPLKKyko5a9wlAhU8IQrmv38xzVJ6sIuJU8YLxhqyqH0y2tsqH9N0IbZg3WipgqG1ywIceGcACD85ECOoAMvmxfkV1158t4sFLUU9gY0L/URiNSRTxeZ3kEUNhEqBPwUePB0XHKaIOnRPTLet5X+PZcRv+CsWK5OBoW1Nu8dmzYizAk7bGjwcWgkSyiouPWCOJc3BygZ4d7uPL8+XODft6Z5x8roUQb/8bzH55+Y4O8fnsTRirEC3PpQCteBkmcv9mzMsQoran1hyySpouFV80OMFYTPb5qgK+09oxB1TwTP2CJynoGhvCHkKgolG3xmxOpgHz0/Tl3YwYjh4xutf+bvL6oCoDnqoJT1lpmy46M6oPno+XFeuzhM2Ke5rzvHPz8+wXtXx/iLdTFu+dEQPz2YP+vm6OPCeKh4bZKGeR6HNldji06DrWVwM/arfo3TVKL0SE96Hs/cYw5tvszpXC8nSZ04q9g5WrTWKeyK/elLqrhgToAVtT6ubQuiFDzSm+e+njwCfOC+cR7qLXBjRxC/hs0jJX66P8cj/QW0nhaZ/K5V9k+1OJtWNn3qq09m+PqTGWtiUTwjchSNUB1QvHt1jNcuDjOUNRye9JiXcPjwA+P8/KD9bpc3B7ikyVrNNg0W+MfHJrmpPYgp7zTtMYdEQNOf8ehJG9rjUBvSvHtNHBDu2Jfhz389SsBRvHphGFdrOhIuyOxs1qMwoPxJveqmjDm0uYVpgvw+1v/xO+Bnp+t6R08Fre+W3t3/RyaHHRWrnZViltbwu74CB1MeHQkbEduR8PH+8yqh5baIwic2TjCWsx74goGvb8/wrZ0ZNFZMQx2/8MHpWhQUdgcSeNq2aRXLk9ZqyqztGaE6oPm3q6t4+XwbANmZgA3lz1zRHOBnB/IoBVe2BPGVTbO/PpxnImPrA2dLQsQHdWGHmF8xkjN4RpgWy4VvPJnmffeNUeXX/MOlCTqrfGRKhh2zuQaXAOJVse4Vwh2fGMVWwqnB9vQAu3vMOGPwZDja6J2cv1myqYPSu0uhZqc93NWKgxMen3tiwuYaHbPPjeUNf3n/GD85kJsKDdfK7g5aKyibZP3PUVWQ4/gwp1AyQltM84eLQixJOngiU+EfHzwvysvnhwFhY1+e/3pycirXZG7cxXWsn6izanphqFRfHM0b0kVr+K4KWN3jXauiXNBod5rKPbuqLcjtN9dx36sbeEWZiD/Yk+XB3gLubBSvKN8/7aDq2pqBJ7F+jxuwCVG7OUXH4LE4mgUP/ccIbvBh6dpWLs05O+FozRc3T/Lee8fYOlxgOOexe7TI156c5Mbbh/jC5jTOcSwx5eisswIb0iF4RjAiZXI43HZTDd+5oZY/WRLG8yrtFFxev9RO2OGs4Z13j3LH/mwlrIzakLahIUybmEFN1QFOF2XKOhV0FG9dEeX958VxNewYKTCet0pWc9Tl4qYAc8qZkt/fneZDD4xbX8hzfYNOBjli91MOyudfQqJpC1ZJfzN2o/46p7nJzlOkbe0P/0aGD72G9KgNTpyNYpYCTxSf3TTJN3dkqA1pxnKGsE/hyXSs1WxZA41A3A9vWRblosYAf/1Qik39BTriDstq7A7QHnfxOdZk+5K2IPXlPum/Opzlkb4C9eGg9bs4UBfWxHyK4ZxhojD9fJaWMxgdpQiU8+ODruJNSyMEXM2OkQKv/PEwLTGHd6yMsLzGT9EIW4aK/GBPljv2Z8l5nJkaYs8WSiFolFaI8SA3ifTvw3RtW4WUbgIi2Jq9PTyLjMGT4SkEMf7QRjU5MCGD+2PEa1Gz0JoF1oLgdxQjeUPRCP9wSYKXd4YxwL9unuQTG1PPuT+nZKylyNWWqJVQ9pIR/nRZlE9ekgSE2/Zk2NRXABSe2AE2hDQBxzr1KglcNpOyCEboz1qfhd9xaAg5NIQ1A2mv7BOyx17XEeTK9iAXN/qZU85/USgCLozmPN537xhPjpR4cqTEPV15qv0aT2CkYHuPuI46I7XDZoTy5mB9MAqULhMijYz1YQb3I4MHYHIYXB8kGms57+WHuPvL1ViP+vewsVenFU+11zRdtJtdtx8wPTtWOJ3rmF1r8dGwIxP+akOCt6+ITb3/0fPj7B0v8q0dGfzPwRP3xBJjSdKlI+7y6ECBuqDDSN7Qn7ElepYcUQ0l7n/qmBIBjc8BvyjqQ9Nqfbpo7YlDWcNEUUgGIRnUNEUchnOGS5rLHbBQdMR93PGyWtvf0AgeVk/JecLHHkpx54E8PleVPUgwVLCz0tHqLBaAUKC1LZpkPCQ3iaT6kQFLCEkNoBCIN6Aa5qNX3wDJJgjG/PTuSZq7v3wJNlr3v87E6J5KkG/9cYqL//hRGdi3gtwE4o/YAc5CeEbojLu8drFVZu/tyrMo6dIQcXnbiig/2pcje4YdXp6xxeDevzbOO1ZGSQQ0u0aLtMVcbt+b4c2/HEWYdvaBTdKamqVlxPyKgFZMGkNhKt5DMSdssx2Lxu5EIPgczXvXxigZW+HFGFMupqdsdqQIv+nOs7rOT3VQs3WwwH9uT6Od6aVOcbbs+MqKTeXeLOQmkfE+S4aBvcj4IMqUbBfhhnmoZVeia1ohVOUBBfGKo6pU2Gc884j8/J/rsFXav4ktCHfacVyLv7j+e9XE0Btk6DCqZdmsie49FsbA+oYAjRGHTFH40APjvGxukA9tSLCmzsfyGpeH+oroU7TIVMLEjwz+A6tbuFr4xMUJ/mxVDLAr94pau1usa/BTG9L0T3r0pytGj8qkh5APAtpeIe53qAtp+iY8Dk6Upq58YWOQoH+ChVWOJVZ5il/XHpo65qtPZnior8DLOoMo4MHePJc0BUiWi9iFfYqIq0iXzsJCp3RZj1A26zQ/gYz3TxNitNeWfIokUfXz0IsuRdV1QDAK2p0UOGgOPqFk/8as5DK/ltVXfYW/v34PpTzAf2Jr9P4rZyiA8PguMZFNlIpp6d8dUa3LzsR1TxOEBVV20kwUPA5PevzicI73nRcj6tesrffz295TS/CqeJ/XN/hojjjc35NnrGD1i5JneOXCMG8ti3d7x4p8dtMEH1mfoCFiJ3zCr+gXGM1PP7/GiAPammtt4pcQ9ysawg5bKJartgACFzf5+e6NNcyNuUR8ip/uz7Cy1m+rwSP8/GCWjz40Ts+Ex39tS1PyhD9eFuba9hCqbPZK+BXJgKY/a868tFzZHVB2YU2PWZFpcL8Vm0Z7oJhHhRNQPxdn3gZUbTuE4p74ggMKvQ8xmxDZWNz38EG+8pY/Zbz/KpAksIgf/u184MtYT/mNWKfgs8o3nwmOT5DdT+ykfs4hM7B/iS4WTrmm7ZmAYIfVXi6W4IkVQXaNluhNe7THfXTEn85Fd3xUsu2UthVF/FrxVxtivHNVjJhf8S+PT/D++8bwRBH1a962wsZ5eUb45CMpbt+X5c9XxWiI2PrALVGXXcMl9owXKRmDqxUdcZdkQLMoOX37g67i4iY/iYDilnm2agtK4TqKWzptvax9Y0Xee+8YQUdx09wQAxmP2/flGMkb/D5N0QjtSZcPr4/jU5SrxDsEXEXQVdO1sk8VU3EWqlxpr1yJvlRAsim7KwwdQAb22d+LOVQoDnUd6FXX25rL0WRGgtEuHGerFM0mMcXHvOzETlL5Q3xseSUnYAXwMqwJt4Cdr7dg26dVVr7PA2dMxDk+QXofzVB3w2OM9S2RzCjE6myyymyCgKv1VMqtoyDk2KqKg1kbUtEUcY5bqOFEKBlhXb2P1y+JsLE/z9e2ZXjHmigfXB+f+vzVrUGSAYehrGFx0seassXp8ESJXxzKkS4JAxmPhUkfQUfRFnNsOo+oqVDy9rjDm5dFuLYtRMEzOGVr1wfXxRGBsE9zYLxI96RhTb0PrWD3WIkP3j/GrjEPpWDzUApQOI7Cp8taoghvXhphcbWfR/ryHJoo8coFEVxtWyecOsr6g9bW/F/MI+lRZKwHBvbD0AHMWB8U87Z/S227bZJa2+apqsYhCSX24Pi2KDGPiFabS6pwgLc1niinHKzynQY2AR/Bumc0due4Fptrfv/p+GYnwgmjjqSYfUTlUq+V4cOoeMOs9Yf4y6G2QVdRHdJ0pT3GyvkixyuKIFgiKKVwKPfYURWF3+Hb19UwP+njzgMOvzqc550rI0edY07E9g8cSnssrHLLrQzg0KTHUFYoGNuRFqzSPCfs0Jxw+KvzY1PBfzG/w6curUIp2DJURCsbil/JF0nlPT54/zg/O5BjRZ0PR8HO0RL9OTMdQHiM5cEzwty4y2sXhRER/m3bJPPLtX8VT404eDrYLMzy7lAWl8R4SD4Nk8PISBcydBAGD4qkBhXFHAQjqOpm1MJLoLY9q5LN3SpWuw1/+HHRzqMlj530jRzmY425Z+CCngAGgIuw/o7flN9/CNvX/LSFlJwIJw7LS09sxBfK078vQOe6Mz2OZweZDjoOOIqqsl2/WF6qK700K1OjZKwTcWnSJecJAxlDzK8ZyXkUBeZXuVNimaMUV7cGWZj02XoV2Fq4UZ8mGbCeyKA7HbZRuZYHDGSnp8DyGpe/uzjBmvoAlTq8TCX9KR7pL/D93Rk+d2WSZLnd2ic3TvCTgzkcpXig10obdhc48SQ3Bq5pCzC3ysfe8SI/2Z/j/edZ3ahohII3E/lKlcVphXhFyExYC9PwIWToAIz0IJPDtnCHP4RKNCg1d62o+s5Bks37qW58QgXjjxEIPl7yvP28KTY0pQg9O4wBj2J73n8SG61b2XHOODng6QgyfHiPxJOHzdDB+bqQ5ymV2c42FJREpjzJAUdRE9RokamJlPdkqkV50RPaYw63nh/npZ0hBrKG0ZxHS8zhz349yk/25sh51pzqOhD1Ka5oCaCV4nu70jRFHS5tDuLT2EqLYrMbKwRsimiqAorspJkO0xDhhrkhYj7Lin/bOsm8KperWkOAYrJg+P7uLHfuz3HlyCAJv+JwymO8KFOBlDMJORfsmC8tl0h9fKBAz6RHoHwfsiUhXZSyWVemY9iULu8QgpQKVqEe70eGDiJDB4XRHiWZ8WlCRKpQLUtzVLd167q2HVLTtpFk8yYnFNtWaKKXK9XkUQN786k8YMBu8N8HXoNNhvprbH/B5yoO6uKn2UEGBvHMTjKp+ZIetqUfT5uWd3pQMtBbNp8qZXMfXEdNFYLry3jl1d+S4zs31JQD9mzfDbs+KC5qDPCTvTnGcrZiSshnLU2RcujK17anuakjxKXNQRxte3mgoGfSI1c0hHyKtrjLNW0B7u3Ol69hM/OqyzrSHfuyvP++cZJBzf+3usDcuI/v7srwi0M2lbcnbeiaFBz1zMsCiViHYGPULmL9GWutain/PZAxDOYNWjt2hxCDFHJIegRGe6zINNYHuQlk+JA1xzo+pYIRVE37INWNByTZ+gR1HY/rxoWPl9qq95gbGEYpA2d8tt4F3IlVzt8KPIY1755pXAZ87ekyHwzZ0c0Ewjcx0gNVTSCzxx+iAI4gCMCCpEvUVVSV7f89kzbV1VU2kaoycX9+IEdvxitXQ7R6BQoGsoaRnCEZtD6H2pBmOGvYPlLiosbpavGtUVtQanmNS6CsNwQcxWcuSzKcMyxKulPiHAq2DBX4i/vGmCgK6ZLhA/el8GlF0UzvFI46cSrvTO+HLgtuHXGHy5sCU2nE20ZKpFKTMDGEN9KFjHbDxDDk04hWKM8TlDYCaeINvYTj21WydZNqXLTRW3/Ndl7JYRynKMbMuCHHaUQeu3Ocj+18/A/YHiG/PoPXXA38BzD36VODxvs3oTBmpEs7s1EP0dCXqeSn27I+DSGHZEBjRDg8WQJj+wa+ar41lR5Mlfizu0e5uDkwVS60LeYS9GnG8oZ940XmVbmEfXZ2H54okioYDqWmF4fLWvy8dkWE96+NHdVLpDbkUBty6JksMZ43LKnxUzKGv/vdBDtHSvinQm/LiVmnKaRcKSiKpjdrz3dtW5ALGwNUBx3yhQLfv+02Sg9utiKWdlGOz+oYXgFGBpBsalJy6ScR73HSY5uYHOqTyeEJrCm1CTsxDdacWiz/PPZ15PuVVavycCqvY/+eqUiyCXgv8CVsNcUvY029p1yU4ThYiQ16nA/c+fQEGe3ZSy4zSHq0gdLs9IfsGy+SKQphH3QmHDY0+qkKaMbzhj1jJVB2wkTLds6fH8yxd6Q4pXxrragPayKuYjhr2DRU5Nr28JSpfzxvyJaEnWMlciVD0FVc0Bjg/MYACsVQtsSXt6S5siVIS9Rh93iRxweK/MkSSz6FolhprHgEToUaAqiy/mD9D3lKqRG++st9XN+wSqoTcVVdti5/6Z4d/HxLF/gCMDEAY/2YkS5Ij0B6DEo5oVSIILIKWIX1ORw7PIOd9KUT/Dz2PXPM/yqv4hGv0tP8XTrm7wJ2J9mHLVo9H/gq8Fmssl45pnDE78XjjO3Y348d9zys+LYE+DfggydLLj3M5FAX8boGyYxBrGZW6SFa2T4gQ1mPNp+PhrDD9e1BAi7sGC3Rnfbw+RRr66Yrljw2UARRpAqGjCdEtaIu5FAVVAxnIVr2Ylfm80TRdpTaOlzksYECF1WqLGIb3XzsoRSf3zRJNDBBwqcpieE7N9RQH3ZApKyzuNhSss+EFhUDg837mArZEIMUssjkEDLSLQx3IRODShfz/MoX5A8nR9QrltSg0yPc/fBjcvsv7pXCUJdmYggpZCiHaByJSppM8ClDmN1Yhy0rWsGRu1TlVZn8x5LueDtgAdsctB1LxgXAV09GkDFJ9e9ULcvPk7FeVLwOZPYkUmmt6M8IO0c92uI+Yj7NdR1BQLF5sMhITgi5inhgeufLlqyNNZU3pAtC1GcrfsxLuAQcxe/NL3uxy5O5KqCJ+jWjecOHHhjnU5dY59/jg0X+dcskPz2Qw+dqsh5M5kt8YF2MK1tDlDyDVjZuK/GMvXRlQmgNpoTkJ5HUIDJ8GBk+DOlRO8ZAVBGKQ7wesqm8jPUN3PXNf9t5V9+BJxjsehLGh7ETxVd+uUf8fuSrYrFwjnm5J/jpHOd87gmOqxyry+9XnH3OEb8f+3dlF9PH/Ky8wFYvmbLgl1+VENAAp7ZJB4Ar4OQNdAoMd+8Ur1BQI91+2ledwjVPPzSQKwkP9+e5tj2I1qrsuBMe6C0gxk70oplWLTvLdXcLAqa86PgdxUc2xPFrRWPELeeIlz8gUs7xgPt7Ctzww0ESfk1vxrNFn8tKthhhQbXLn6+KUTK2BGlFtAv5jnyu0+cVsDvEUQ65EpIdh7F+ZOigyEiXIpsCx4eKVkO0BhWrN5IdSzN8uF8OPLpLBvZtYvDg42THn8AmDqXP5H0/CRTTk/3In8cSQp3k9+O9xxE/VwIfw1ZwH8R62i/GEue/mSZs5aWP+L1CarDlS9+C9dp/C5gs/88P+E5ev2OsdzdecVzG++vwvNmXHqLgnq4c718bI+goUDCYMTzYl0dpRa4k7BkrcVWrPfyKlgDRoGJ1rY+aoDN1ksuaKxKG8LknJqgLOayf4+er29NMFg2u1mgHJou2yJqjFf4jXEPGwOsWR2iPuzzUm+fr29Nc02bPqY+5YYJCOeVFslTA5FIw2msdcsPdUJgENwixWkVth1GuLy+Z1IQM7u+XXQ/sNd1PbmFg/xN4hSeBw9iHOlsgnMHYqCOwGetErDgQ3wk0Yyf5D2d4jlZsedIhrAn59mMPODlBTPEg6dFecQN15CeRQGRW8cPVtlDb1qEi6+bYVgQ7x4rsHi0hIrhlB6KFcElTkB/fUkdnwjbO/PaONOsabN3coid8fUeajzyYwhObozGSt+SooFz34Sh4Ag0RzSvK4tn3dmXoy3hls62QF8BxEQ0UC0h6FDPWiwwfhLF+KGTAH4ZIUlTD/II4ziSTo+MMH+qXLXcdND07djCwZyu2KMEBTqGc/wsM27Hlft6DNf8a4J4ZfnY11pRbhfWx/PZ4B82kAlQvI92HiNSskLF+pRoXzKqCDlrBaM5ObEsQYXGVjxs7gmwZLPLWlVFeNs8mVFUKG1zeYlf2R/vzvO++MSI+xZUtQXrTHnd35Sh4tv3CSF5m5JvwjLCy1s+iKh8TecPd3UWifqes6CtSoyOw9wnMWBeSGrCKsj8kKlZXlKZFKaXUhIz1j0rf7kE5/L890vPkXlIDO4A92B1ijJn3BH+xoYDVGQrAKNb69A6efhdxgL/CWsR+VP7ccTETggzKwN79qmX5uIz3V6nGRTx3nv6ZwXEU39qR4Q8WhLmkOUht2OGb19UwURRrTQK2jxTYO1biosYASllyfPjBFAMZg1KK/9hqxXbXmU4/PXFwTSXIqxxFqxzaEn58jqJrskTv4YNc0ugScuvEiKiDjz8I+3d5UjNngqYlo4gZYbR7xOx/bEwOPDJA/75ucpN7gb1YQgwz227y7MUtwP/Fikcfx3az/TY2JOXfT/AZD3ufwYbTbwD+HLjt2ANnQpAsY4MHKRWGSfVXPZORP1dwFIzkhfffN8Z3b6hhbsJHyKcJldWwA6kib/vVKL/tLbCwnINxIGWLq/lOEB37dBBd1jeNZ8Wj4T58jXGgirAp0Lj3l3Lp/A0KUOl8Kd+vk/ch0iNP/CwjhzZPMnRwEEw3VmQ6jJWBz3zrrhceFgCfwYqcf4/VS24B/hn4Itav8SmOv0P8HbbB59VAL/BPwDaO6Vg1E4J4FCYOkhk9LOnReZjZ+Rz9juLh/iKvvnOYj2yIs7rWT7ZkuL+nwL9smmDLcAlXw/Zyr3RHqafvOV72FFZ2CFX2QZBPi6QGlQwfRka6bZWNXM5MNFyegVXh+qqo/s7fvcs0xsMK0Ht3bDv4+Mde8UsyucMCB4FD2BDu2Vnb8/mDGHZSdwIfZDonvQ94A/ZefwgbU/URnqqbDGF3nvOxha5fDryUZ0EQgB4ZPtxLYk5G8pmwCkY4felppw9+R7FxoMjv/2SY+pBD3hOGc2bqfzCzjUKURuly2Zl8BpkYwIx0IcNdMDmixCvmVTDeT1Xtbqlt3cvE+KFdmzf6Dh1a+662tpbqJfXRinTW7/f73zOZyf0KKyOfw+nDh7HNcu7Fhp4ciVz5/2PYneUOrOj1OayRo4LtwBZs4QewpDsKMyVINwP7+2lZNko2FZZgdNZWOqlk1/VlDQpOsktQzqFWNnTDeCL5tJLUoCXEaDekBhDjpfCHDxCr20njkidVfryX3Q9kzT0Phhk+GAZ4BA794oK2d7/lLW95BXZrfxL4wrJly85oxtuLFK/CxmZNYn0h48c5xgCfwIpX/z/wPuCVwBewHvg+rC7SBfwxdkd/SgDkTAXvKK7/3WrNzTc4V7z5YtWxxpZmeV7CpoyqcpYc+TQyMYgMdyEjh2F8wGCKPRII7yGcfEJFkrvMUHcv23+lOPB4jNxEAnvfRrD6wz6soyoLICIaiCilnpOEnhchlmL7f7RjRaz3zeAzrwb+BVv9HWAXttDc7Vjx7A+wCv07OMaHM9MdJE2pMCSpwS4Z75tVfpCnRVkMFBvHJLYO04SSiSHMcBcycghSQykp5bpE+7YSjm8hVrPDGdg/brb8WtO1tVowVdh2XyNMK9WD2G38KVA2R+IcOc4MktgAxXasaPSPM/zc97ARBp/HeuDrsFau92A95k8CH+U4Ds6ZEkSAAQb3dzHaW0SM76SfOFuokAIAJZTyyOQwMnjQ1mEa68uST+9H6c3iCzxIdM5W9m0cYc/9USYH24GWcnuvfqyidw/nrEyzAQ7wAeAa7OL0caZbr80E92FFrM9gLVfj2IXvEFZc6z3eh/4fYrf9mO1Q5FcAAAAASUVORK5CYII=";
-const GAPS = {"dan": {"intro": "", "lines": [{"s": "Sophie", "p": ["So, what do you do?"]}, {"s": "Dan", "p": ["Me? I'm in finance."]}, {"s": "Sophie", "p": ["Oh, right. ", {"f": "H", "r": "ow"}, " ", {"f": "d", "r": "id"}, " you ", {"f": "g", "r": "et"}, " ", {"f": "i", "r": "nto"}, " ", {"f": "t", "r": "hat"}, ", then?"]}, {"s": "Dan", "p": ["I went to uni because ", {"f": "t", "r": "hat's"}, " ", {"f": "j", "r": "ust"}, " ", {"f": "w", "r": "hat"}, " ", {"f": "e", "r": "veryone"}, " ", {"f": "d", "r": "id"}, ", and I ", {"f": "d", "r": "id"}, " ", {"f": "e", "r": "conomics"}, " because my dad said it was \"safe\". And to be fair, it ", {"f": "g", "r": "ave"}, " me a ", {"f": "g", "r": "ood"}, " ", {"f": "g", "r": "rounding"}, " ", {"f": "i", "r": "n"}, " statistics, which I still use. I started in audit, at one of the big firms — lots of travelling, lots of hotels, lots of spreadsheets at two in the morning."]}, {"s": "Sophie", "p": ["Two in the morning?!"]}, {"s": "Dan", "p": ["Oh yes, regularly. And on top of that, I spent my evenings studying for my accountancy exams, which was horrible, but in my field you can't really get anywhere without them. Then I moved into financial analysis, which is much more my thing. Three years ago a ", {"f": "j", "r": "ob"}, " ", {"f": "c", "r": "ame"}, " ", {"f": "u", "r": "p"}, " in Dublin, so we packed up and went. For the last couple of years I've been looking after the numbers for a few of our European offices."]}, {"s": "Sophie", "p": [{"f": "W", "r": "as"}, " it ", {"f": "w", "r": "orth"}, " it, though? All those evenings?"]}, {"s": "Dan", "p": ["For the job, definitely. For my marriage — you'd have to ask my wife."]}], "lines_g": [{"s": "Sophie", "p": ["So, what do you do?"]}, {"s": "Dan", "p": ["Me? I'm in finance."]}, {"s": "Sophie", "p": ["Oh, right. ", {"f": "H", "r": "ow"}, " ", {"f": "d", "r": "id"}, " you ", {"f": "g", "r": "et"}, " ", {"f": "i", "r": "nto"}, " ", {"f": "t", "r": "hat"}, ", then?"]}, {"s": "Dan", "p": ["I went to uni because ", {"f": "t", "r": "hat's"}, " ", {"f": "j", "r": "ust"}, " ", {"f": "w", "r": "hat"}, " ", {"f": "e", "r": "veryone"}, " ", {"f": "d", "r": "id"}, ", and I ", {"f": "d", "r": "id"}, " ", {"f": "e", "r": "conomics"}, " because my dad said it was \"safe\". And to be fair, it ", {"f": "g", "r": "ave"}, " me a ", {"f": "g", "r": "ood"}, " ", {"f": "g", "r": "rounding"}, " ", {"f": "i", "r": "n"}, " statistics, which I still use. I started in audit, at one of the big firms — lots of travelling, lots of hotels, lots of spreadsheets at two in the morning."]}, {"s": "Sophie", "p": ["Two in the morning?!"]}, {"s": "Dan", "p": ["Oh yes, regularly. And on top of that, I spent my evenings studying for my accountancy exams, which was horrible, but in my field you can't really get anywhere without them. Then I moved into financial analysis, which is much more my thing. Three years ago a ", {"f": "j", "r": "ob"}, " ", {"f": "c", "r": "ame"}, " ", {"f": "u", "r": "p"}, " in Dublin, so we packed up and went. For the last couple of years I've been looking after the numbers for a few of our European offices."]}, {"s": "Sophie", "p": [{"f": "W", "r": "as"}, " it ", {"f": "w", "r": "orth"}, " it, though? All those evenings?"]}, {"s": "Dan", "p": ["For the job, definitely. For my marriage — you'd have to ask my wife."]}], "gloss": [{"p": [{"f": "H", "r": "ow"}, " ", {"f": "d", "r": "id"}, " ", {"f": "y", "r": "ou"}, " ", {"f": "g", "r": "et"}, " ", {"f": "i", "r": "nto"}, " ", {"f": "t", "r": "hat"}, ", then?"], "m": "how did you start doing it? (then = so: shows interest)", "ru": "как ты к этому пришёл?"}, {"p": [{"f": "t", "r": "hat's"}, " ", {"f": "j", "r": "ust"}, " ", {"f": "w", "r": "hat"}, " ", {"f": "e", "r": "veryone"}, " ", {"f": "d", "r": "id"}], "m": "", "ru": "так было принято"}, {"p": [{"f": "d", "r": "id"}, " ", {"f": "e", "r": "conomics"}, " (at uni)"], "m": "studied it · AmE: majored in … in college", "ru": "учился на экономиста"}, {"p": [{"f": "g", "r": "ave"}, " ", {"f": "m", "r": "e"}, " ", {"f": "a", "r": ""}, " ", {"f": "g", "r": "ood"}, " ", {"f": "g", "r": "rounding"}, " ", {"f": "i", "r": "n"}, " ", {"f": "", "r": "/ˈɡraʊndɪŋ/", "o": 1}], "m": "a solid foundation in", "ru": "дал(а) хорошую базу по…"}, {"p": [{"f": "a", "r": ""}, " ", {"f": "j", "r": "ob"}, " ", {"f": "c", "r": "ame"}, " ", {"f": "u", "r": "p"}], "m": "became available", "ru": "подвернулась работа"}, {"p": [{"f": "W", "r": "as"}, " ", {"f": "i", "r": "t"}, " ", {"f": "w", "r": "orth"}, " ", {"f": "i", "r": "t"}, " ", {"f": "", "r": "/wɜːθ/", "o": 1}, ", though?"], "m": "about something that took time, money or effort", "ru": "и как, оно того стоило?"}]}, "ruth": {"intro": "", "lines": [{"s": "Sophie", "p": ["What about you, Ruth?"]}, {"s": "Ruth", "p": ["I teach chemistry at an international school — so, teenagers and small explosions, basically."]}, {"s": "Sophie", "p": ["Ha! Brave woman. ", {"f": "H", "r": "ave"}, " you ", {"f": "a", "r": "lways"}, " ", {"f": "b", "r": "een"}, " a ", {"f": "t", "r": "eacher"}, "?"]}, {"s": "Ruth", "p": ["Pretty much. I did chemistry at uni, and then I ", {"f": "t", "r": "rained"}, " ", {"f": "a", "r": "s"}, " a ", {"f": "t", "r": "eacher"}, ", which I'd always sort of known I'd do. My mum was a teacher too. The degree gave me a good grounding in the subject, but the actual teaching? I ", {"f": "l", "r": "earned"}, " ", {"f": "m", "r": "ost"}, " ", {"f": "o", "r": "f"}, " ", {"f": "t", "r": "hat"}, " ", {"f": "o", "r": "n"}, " the ", {"f": "j", "r": "ob"}, ", from the people in the classroom next door. About ten years ago I ", {"f": "d", "r": "id"}, " a ", {"f": "c", "r": "ourse"}, " ", {"f": "i", "r": "n"}, " teaching kids whose first language isn't English — online, a year of evenings, and it cost a fortune."]}, {"s": "Sophie", "p": ["Ouch!"]}, {"s": "Ruth", "p": ["I know. But it completely changed how I teach. Anyway, I've been teaching for twenty-two years now, and the ", {"f": "c", "r": "hemistry"}, " is the ", {"f": "e", "r": "asy"}, " ", {"f": "p", "r": "art"}, ". ", {"f": "I", "r": "t's"}, " the ", {"f": "p", "r": "arents'"}, " ", {"f": "e", "r": "venings"}, " I ", {"f": "f", "r": "ind"}, " ", {"f": "h", "r": "ard"}, "."]}, {"s": "Sophie", "p": ["Really? Why?"]}, {"s": "Ruth", "p": ["In the lab, at least I know what's going to explode."]}], "lines_g": [{"s": "Sophie", "p": ["What about you, Ruth?"]}, {"s": "Ruth", "p": ["I teach chemistry at an international school — so, teenagers and small explosions, basically."]}, {"s": "Sophie", "p": ["Ha! Brave woman. ", {"f": "H", "r": "ave"}, " you ", {"f": "a", "r": "lways"}, " ", {"f": "b", "r": "een"}, " a ", {"f": "t", "r": "eacher"}, "?"]}, {"s": "Ruth", "p": ["Pretty much. I did chemistry at uni, and then I ", {"f": "t", "r": "rained"}, " ", {"f": "a", "r": "s"}, " a ", {"f": "t", "r": "eacher"}, ", which I'd always sort of known I'd do. My mum was a teacher too. The degree gave me a good grounding in the subject, but the actual teaching? I ", {"f": "l", "r": "earned"}, " ", {"f": "m", "r": "ost"}, " ", {"f": "o", "r": "f"}, " ", {"f": "t", "r": "hat"}, " ", {"f": "o", "r": "n"}, " the ", {"f": "j", "r": "ob"}, ", from the people in the classroom next door. About ten years ago I ", {"f": "d", "r": "id"}, " a ", {"f": "c", "r": "ourse"}, " ", {"f": "i", "r": "n"}, " teaching kids whose first language isn't English — online, a year of evenings, and it cost a fortune."]}, {"s": "Sophie", "p": ["Ouch!"]}, {"s": "Ruth", "p": ["I know. But it completely changed how I teach. Anyway, I've been teaching for twenty-two years now, and the ", {"f": "c", "r": "hemistry"}, " is the ", {"f": "e", "r": "asy"}, " ", {"f": "p", "r": "art"}, ". ", {"f": "I", "r": "t's"}, " the ", {"f": "p", "r": "arents'"}, " ", {"f": "e", "r": "venings"}, " I ", {"f": "f", "r": "ind"}, " ", {"f": "h", "r": "ard"}, "."]}, {"s": "Sophie", "p": ["Really? Why?"]}, {"s": "Ruth", "p": ["In the lab, at least I know what's going to explode."]}], "gloss": [{"p": [{"f": "H", "r": "ave"}, " ", {"f": "y", "r": "ou"}, " ", {"f": "a", "r": "lways"}, " ", {"f": "b", "r": "een"}, " ", {"f": "a", "r": ""}, " ", {"f": "t", "r": "eacher"}, "?"], "m": "", "ru": "ты всегда была учителем?"}, {"p": [{"f": "t", "r": "rained"}, " ", {"f": "a", "r": "s"}, " ", {"f": "a", "r": ""}, " ", {"f": "t", "r": "eacher"}], "m": "did teacher training", "ru": "выучилась на учителя"}, {"p": [{"f": "l", "r": "earned"}, " ", {"f": "m", "r": "ost"}, " ", {"f": "o", "r": "f"}, " ", {"f": "t", "r": "hat"}, " ", {"f": "o", "r": "n"}, " ", {"f": "the", "r": ""}, " ", {"f": "j", "r": "ob"}], "m": "while working", "ru": "научилась уже на работе"}, {"p": [{"f": "d", "r": "id"}, " ", {"f": "a", "r": ""}, " ", {"f": "c", "r": "ourse"}, " ", {"f": "i", "r": "n"}, " …"], "m": "one programme = a course (not courses) · AmE also: took a course in…", "ru": "прошла курс по…"}, {"p": [{"f": "the", "r": ""}, " ", {"f": "c", "r": "hemistry"}, " ", {"f": "i", "r": "s"}, " ", {"f": "the", "r": ""}, " ", {"f": "e", "r": "asy"}, " ", {"f": "p", "r": "art"}, ". ", {"f": "I", "r": "t's"}, " ", {"f": "the", "r": ""}, " ", {"f": "p", "r": "arents'"}, " ", {"f": "e", "r": "venings"}, " ", {"f": "I", "r": ""}, " ", {"f": "f", "r": "ind"}, " ", {"f": "h", "r": "ard"}, "."], "m": "", "ru": "химия — это просто, а вот встречи с родителями мне даются тяжело"}]}};
+const GAPS = {
+ "dan": {
+  "intro": "",
+  "lines": [
+   {
+    "s": "Sophie",
+    "p": [
+     "So, what do you do?"
+    ]
+   },
+   {
+    "s": "Dan",
+    "p": [
+     "Me? I'm in finance."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Oh, right. ",
+     {
+      "f": "H",
+      "r": "ow"
+     },
+     " ",
+     {
+      "f": "d",
+      "r": "id"
+     },
+     " ",
+     {
+      "b": "you"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "et"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "hat"
+     },
+     ", then?"
+    ]
+   },
+   {
+    "s": "Dan",
+    "p": [
+     "I went to uni because ",
+     {
+      "f": "t",
+      "r": "hat's"
+     },
+     " ",
+     {
+      "f": "j",
+      "r": "ust"
+     },
+     " ",
+     {
+      "f": "w",
+      "r": "hat"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "veryone"
+     },
+     " ",
+     {
+      "f": "d",
+      "r": "id"
+     },
+     ", and I ",
+     {
+      "f": "d",
+      "r": "id"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "conomics"
+     },
+     " because my dad said it was \"safe\". And to be fair, it ",
+     {
+      "f": "g",
+      "r": "ave"
+     },
+     " ",
+     {
+      "b": "me a"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "ood"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "rounding"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "n"
+     },
+     " statistics, which I still use. I started in audit, at one of the big firms — lots of travelling, lots of hotels, lots of spreadsheets at two in the morning."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Two in the morning?!"
+    ]
+   },
+   {
+    "s": "Dan",
+    "p": [
+     "Oh yes, regularly. And on top of that, I spent my evenings studying for my accountancy exams, which was horrible, but in my field you can't really get anywhere without them. Then I moved into financial analysis, which is much more my thing. Three years ago ",
+     {
+      "b": "a"
+     },
+     " ",
+     {
+      "f": "j",
+      "r": "ob"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "ame"
+     },
+     " ",
+     {
+      "f": "u",
+      "r": "p"
+     },
+     " in Dublin, so we packed up and went. For the last couple of years I've been looking after the numbers for a few of our European offices."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     {
+      "f": "W",
+      "r": "as"
+     },
+     " ",
+     {
+      "b": "it"
+     },
+     " ",
+     {
+      "f": "w",
+      "r": "orth"
+     },
+     " ",
+     {
+      "b": "it"
+     },
+     ", though? All those evenings?"
+    ]
+   },
+   {
+    "s": "Dan",
+    "p": [
+     "For the job, definitely. For my marriage — you'd have to ask my wife."
+    ]
+   }
+  ],
+  "lines_g": [
+   {
+    "s": "Sophie",
+    "p": [
+     "So, what do you do?"
+    ]
+   },
+   {
+    "s": "Dan",
+    "p": [
+     "Me? I'm in finance."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Oh, right. ",
+     {
+      "f": "H",
+      "r": "ow"
+     },
+     " ",
+     {
+      "f": "d",
+      "r": "id"
+     },
+     " ",
+     {
+      "b": "you"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "et"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "hat"
+     },
+     ", then?"
+    ]
+   },
+   {
+    "s": "Dan",
+    "p": [
+     "I went to uni because ",
+     {
+      "f": "t",
+      "r": "hat's"
+     },
+     " ",
+     {
+      "f": "j",
+      "r": "ust"
+     },
+     " ",
+     {
+      "f": "w",
+      "r": "hat"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "veryone"
+     },
+     " ",
+     {
+      "f": "d",
+      "r": "id"
+     },
+     ", and I ",
+     {
+      "f": "d",
+      "r": "id"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "conomics"
+     },
+     " because my dad said it was \"safe\". And to be fair, it ",
+     {
+      "f": "g",
+      "r": "ave"
+     },
+     " ",
+     {
+      "b": "me a"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "ood"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "rounding"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "n"
+     },
+     " statistics, which I still use. I started in audit, at one of the big firms — lots of travelling, lots of hotels, lots of spreadsheets at two in the morning."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Two in the morning?!"
+    ]
+   },
+   {
+    "s": "Dan",
+    "p": [
+     "Oh yes, regularly. And on top of that, I spent my evenings studying for my accountancy exams, which was horrible, but in my field you can't really get anywhere without them. Then I moved into financial analysis, which is much more my thing. Three years ago ",
+     {
+      "b": "a"
+     },
+     " ",
+     {
+      "f": "j",
+      "r": "ob"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "ame"
+     },
+     " ",
+     {
+      "f": "u",
+      "r": "p"
+     },
+     " in Dublin, so we packed up and went. For the last couple of years I've been looking after the numbers for a few of our European offices."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     {
+      "f": "W",
+      "r": "as"
+     },
+     " ",
+     {
+      "b": "it"
+     },
+     " ",
+     {
+      "f": "w",
+      "r": "orth"
+     },
+     " ",
+     {
+      "b": "it"
+     },
+     ", though? All those evenings?"
+    ]
+   },
+   {
+    "s": "Dan",
+    "p": [
+     "For the job, definitely. For my marriage — you'd have to ask my wife."
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     {
+      "f": "H",
+      "r": "ow"
+     },
+     " ",
+     {
+      "f": "d",
+      "r": "id"
+     },
+     " ",
+     {
+      "f": "y",
+      "r": "ou"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "et"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "hat"
+     },
+     ", then?"
+    ],
+    "m": "how did you start doing it? (then = so: shows interest)",
+    "ru": "как ты к этому пришёл?"
+   },
+   {
+    "p": [
+     {
+      "f": "t",
+      "r": "hat's"
+     },
+     " ",
+     {
+      "f": "j",
+      "r": "ust"
+     },
+     " ",
+     {
+      "f": "w",
+      "r": "hat"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "veryone"
+     },
+     " ",
+     {
+      "f": "d",
+      "r": "id"
+     }
+    ],
+    "m": "",
+    "ru": "так было принято"
+   },
+   {
+    "p": [
+     {
+      "f": "d",
+      "r": "id"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "conomics"
+     },
+     " (at uni)"
+    ],
+    "m": "studied it · AmE: majored in … in college",
+    "ru": "учился на экономиста"
+   },
+   {
+    "p": [
+     {
+      "f": "g",
+      "r": "ave"
+     },
+     " ",
+     {
+      "f": "m",
+      "r": "e"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "ood"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "rounding"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "n"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˈɡraʊndɪŋ/",
+      "o": 1
+     }
+    ],
+    "m": "a solid foundation in",
+    "ru": "дал(а) хорошую базу по…"
+   },
+   {
+    "p": [
+     {
+      "f": "a",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "j",
+      "r": "ob"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "ame"
+     },
+     " ",
+     {
+      "f": "u",
+      "r": "p"
+     }
+    ],
+    "m": "became available",
+    "ru": "подвернулась работа"
+   },
+   {
+    "p": [
+     {
+      "f": "W",
+      "r": "as"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "t"
+     },
+     " ",
+     {
+      "f": "w",
+      "r": "orth"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "t"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/wɜːθ/",
+      "o": 1
+     },
+     ", though?"
+    ],
+    "m": "about something that took time, money or effort",
+    "ru": "и как, оно того стоило?"
+   }
+  ]
+ },
+ "ruth": {
+  "intro": "",
+  "lines": [
+   {
+    "s": "Sophie",
+    "p": [
+     "What about you, Ruth?"
+    ]
+   },
+   {
+    "s": "Ruth",
+    "p": [
+     "I teach chemistry at an international school — so, teenagers and small explosions, basically."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Ha! Brave woman. ",
+     {
+      "f": "H",
+      "r": "ave"
+     },
+     " ",
+     {
+      "b": "you"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "lways"
+     },
+     " ",
+     {
+      "f": "b",
+      "r": "een"
+     },
+     " ",
+     {
+      "b": "a"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "eacher"
+     },
+     "?"
+    ]
+   },
+   {
+    "s": "Ruth",
+    "p": [
+     "Pretty much. I did chemistry at uni, and then I ",
+     {
+      "f": "t",
+      "r": "rained"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "s"
+     },
+     " ",
+     {
+      "b": "a"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "eacher"
+     },
+     ", which I'd always sort of known I'd do. My mum was a teacher too. The degree gave me a good grounding in the subject, but the actual teaching? I ",
+     {
+      "f": "l",
+      "r": "earned"
+     },
+     " ",
+     {
+      "f": "m",
+      "r": "ost"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "f"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "hat"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "n"
+     },
+     " ",
+     {
+      "b": "the"
+     },
+     " ",
+     {
+      "f": "j",
+      "r": "ob"
+     },
+     ", from the people in the classroom next door. About ten years ago I ",
+     {
+      "f": "d",
+      "r": "id"
+     },
+     " ",
+     {
+      "b": "a"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "ourse"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "n"
+     },
+     " teaching kids whose first language isn't English — online, a year of evenings, and it cost a fortune."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Ouch!"
+    ]
+   },
+   {
+    "s": "Ruth",
+    "p": [
+     "I know. But it completely changed how I teach. Anyway, I've been teaching for twenty-two years now, and ",
+     {
+      "b": "the"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "hemistry"
+     },
+     " ",
+     {
+      "b": "is the"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "asy"
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "art"
+     },
+     ". ",
+     {
+      "f": "I",
+      "r": "t's"
+     },
+     " ",
+     {
+      "b": "the"
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "arents'"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "venings"
+     },
+     " ",
+     {
+      "b": "I"
+     },
+     " ",
+     {
+      "f": "f",
+      "r": "ind"
+     },
+     " ",
+     {
+      "f": "h",
+      "r": "ard"
+     },
+     "."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Really? Why?"
+    ]
+   },
+   {
+    "s": "Ruth",
+    "p": [
+     "In the lab, at least I know what's going to explode."
+    ]
+   }
+  ],
+  "lines_g": [
+   {
+    "s": "Sophie",
+    "p": [
+     "What about you, Ruth?"
+    ]
+   },
+   {
+    "s": "Ruth",
+    "p": [
+     "I teach chemistry at an international school — so, teenagers and small explosions, basically."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Ha! Brave woman. ",
+     {
+      "f": "H",
+      "r": "ave"
+     },
+     " ",
+     {
+      "b": "you"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "lways"
+     },
+     " ",
+     {
+      "f": "b",
+      "r": "een"
+     },
+     " ",
+     {
+      "b": "a"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "eacher"
+     },
+     "?"
+    ]
+   },
+   {
+    "s": "Ruth",
+    "p": [
+     "Pretty much. I did chemistry at uni, and then I ",
+     {
+      "f": "t",
+      "r": "rained"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "s"
+     },
+     " ",
+     {
+      "b": "a"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "eacher"
+     },
+     ", which I'd always sort of known I'd do. My mum was a teacher too. The degree gave me a good grounding in the subject, but the actual teaching? I ",
+     {
+      "f": "l",
+      "r": "earned"
+     },
+     " ",
+     {
+      "f": "m",
+      "r": "ost"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "f"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "hat"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "n"
+     },
+     " ",
+     {
+      "b": "the"
+     },
+     " ",
+     {
+      "f": "j",
+      "r": "ob"
+     },
+     ", from the people in the classroom next door. About ten years ago I ",
+     {
+      "f": "d",
+      "r": "id"
+     },
+     " ",
+     {
+      "b": "a"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "ourse"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "n"
+     },
+     " teaching kids whose first language isn't English — online, a year of evenings, and it cost a fortune."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Ouch!"
+    ]
+   },
+   {
+    "s": "Ruth",
+    "p": [
+     "I know. But it completely changed how I teach. Anyway, I've been teaching for twenty-two years now, and ",
+     {
+      "b": "the"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "hemistry"
+     },
+     " ",
+     {
+      "b": "is the"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "asy"
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "art"
+     },
+     ". ",
+     {
+      "f": "I",
+      "r": "t's"
+     },
+     " ",
+     {
+      "b": "the"
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "arents'"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "venings"
+     },
+     " ",
+     {
+      "b": "I"
+     },
+     " ",
+     {
+      "f": "f",
+      "r": "ind"
+     },
+     " ",
+     {
+      "f": "h",
+      "r": "ard"
+     },
+     "."
+    ]
+   },
+   {
+    "s": "Sophie",
+    "p": [
+     "Really? Why?"
+    ]
+   },
+   {
+    "s": "Ruth",
+    "p": [
+     "In the lab, at least I know what's going to explode."
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     {
+      "f": "H",
+      "r": "ave"
+     },
+     " ",
+     {
+      "f": "y",
+      "r": "ou"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "lways"
+     },
+     " ",
+     {
+      "f": "b",
+      "r": "een"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "eacher"
+     },
+     "?"
+    ],
+    "m": "",
+    "ru": "ты всегда была учителем?"
+   },
+   {
+    "p": [
+     {
+      "f": "t",
+      "r": "rained"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "s"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "eacher"
+     }
+    ],
+    "m": "did teacher training",
+    "ru": "выучилась на учителя"
+   },
+   {
+    "p": [
+     {
+      "f": "l",
+      "r": "earned"
+     },
+     " ",
+     {
+      "f": "m",
+      "r": "ost"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "f"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "hat"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "n"
+     },
+     " ",
+     {
+      "f": "the",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "j",
+      "r": "ob"
+     }
+    ],
+    "m": "while working",
+    "ru": "научилась уже на работе"
+   },
+   {
+    "p": [
+     {
+      "f": "d",
+      "r": "id"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "ourse"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "n"
+     },
+     " …"
+    ],
+    "m": "one programme = a course (not courses) · AmE also: took a course in…",
+    "ru": "прошла курс по…"
+   },
+   {
+    "p": [
+     {
+      "f": "the",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "hemistry"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "s"
+     },
+     " ",
+     {
+      "f": "the",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "asy"
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "art"
+     },
+     ". ",
+     {
+      "f": "I",
+      "r": "t's"
+     },
+     " ",
+     {
+      "f": "the",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "arents'"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "venings"
+     },
+     " ",
+     {
+      "f": "I",
+      "r": ""
+     },
+     " ",
+     {
+      "f": "f",
+      "r": "ind"
+     },
+     " ",
+     {
+      "f": "h",
+      "r": "ard"
+     },
+     "."
+    ],
+    "m": "",
+    "ru": "химия — это просто, а вот встречи с родителями мне даются тяжело"
+   }
+  ]
+ }
+};
 const TQ = {};
 /* Link to the group's homework spreadsheet. Leave empty and the page simply says where to write. */
 const SHEET_URL = "";
@@ -779,7 +1928,7 @@ const TASKS = [
    url:"https://youglish.com/pronounce/%22by_training%22/english", cta:"Open YouGlish", body:YG("by training", false), after:YG_AFTER}
 ];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "52";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "54";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -1612,6 +2761,10 @@ function wireNav(onCheck){
 let lastDone = null;
 function finish(t){ setMark(t.id, true); lastDone = t; lastFlagged = Object.values(flags[t.id]||{}); flushFlags(); }
 
+/* engine 52 (B2 fixes 31.10 13:50, her rule 4.43: «обязательно серым и зачёркнутым»): in a note or a why line, ~~a wrong form~~ is the light
+   grey strike (as in the feedback), **bold** stays bold; strikeMd does the same to a note that is already HTML */
+const strikeMd = h => String(h == null ? "" : h).replace(/~~(.+?)~~/g, '<s class="fb-del">$1</s>');
+const noteMd = t => strikeMd(esc(t).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>"));
 /* ---------- gapped dialogue ---------- */
 let GNK = 0;   /* engine 43: ids that tie a gap to its red note */
 function gapLineHTML(line){
@@ -1629,7 +2782,7 @@ function gapLineHTML(line){
       }
       const nk = ns.length ? ++GNK : 0;
       html += `<span class="chunk" role="button" tabindex="0" aria-label="Show the missing words"${nk?` data-nk="${nk}"`:""}>${chunk}</span>`;
-      if(nk) notes += `<span class="gap-n" data-nk="${nk}" hidden>${esc(ns.join(" · ")).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>")}</span>`;   /* **key word** bold (engine 46) */
+      if(nk) notes += `<span class="gap-n" data-nk="${nk}" hidden>${noteMd(ns.join(" · "))}</span>`;   /* **key word** bold (engine 46), ~~wrong form~~ grey struck (engine 52) */
     } else if(typeof x === "object" && "b" in x){ html += `<b class="given">${esc(x.b)}</b>`; i++; }   /* given words: blue bold, as the TZ data says (engine 46) */
     else if(typeof x === "object" && "ipa" in x){ html += `<span class="ipa${x.o?" o":""}">${esc(x.ipa)}</span>`; i++; }   /* engine 44: shown IPA (a glossary that helps) */
     else { html += esc(x); i++; }
@@ -1909,7 +3062,7 @@ function renderRewrite(st, count, pct){
         `<input id="rw" class="gap-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="Type the missing part" placeholder="type or say it" value="${esc(typed[key]||"")}">`}${hint}${br(r.post)}${checked?markBtn(String(stepIdx), plainText(r.pre + r.a + r.post))+bmBtn(curS(), 0):""}</p>
       ${checked?markHint()+revHint():""}
       ${yours}
-      ${checked?`<p class="note">${r.n}</p>`:""}
+      ${checked?`<p class="note">${strikeMd(r.n)}</p>`:""}
     </div>${(checked||st.boxAlways)&&st.box?box(st.box):""}`;   /* boxAlways (engine 49): the box beside it from the start, when the instruction says "use the box" */
   const instr = st.first ? (st.instrFirst || "Rewrite the sentence. Use the word in capitals. Type the missing part or say it aloud, then tap Check.") : (st.instr || "Rewrite the sentence.");
   shell({count, pct, instr, stageHTML: body, withBox: (checked||st.boxAlways) && !!st.box, actionsHTML: navButtons()});
@@ -1964,7 +3117,7 @@ function renderFix(st, count, pct){
   }
   const dflt = it.kind === "place" ? "Put the word in the right place: tap a ▢, then the word — or drag the word." : "Tap every possible option. Then tap Check.";
   shell({count, pct, instr: st.instr || dflt,
-    stageHTML: `<div class="panel fx ${checked ? "checked" : ""}">${st.card ? fixCardHTML(st.card, st.cardFirst !== false) : ""}${inner}${checked ? markHint() + revHint() : ""}${checked && it.n ? `<p class="note">${esc(it.n)}</p>` : ""}</div>`,
+    stageHTML: `<div class="panel fx ${checked ? "checked" : ""}">${st.card ? fixCardHTML(st.card, st.cardFirst !== false) : ""}${inner}${checked ? markHint() + revHint() : ""}${checked && it.n ? `<p class="note">${noteMd(it.n)}</p>` : ""}</div>`,
     actionsHTML: navButtons(it.kind === "place" ? "Show the answer" : "Check")});
   wireNav(() => renderTaskKeep());
   if(checked) return;
@@ -2022,7 +3175,7 @@ function renderSayit(st, count, pct){
       <div class="panel">
         <div class="say">
           ${s.rows.map((row,i)=> st._rows && !st._rows.has(i) ? "" : `<div class="say-row"><span class="q">${row[0]}</span>
-            <span class="say-a"><button class="reveal ${checked?"open":""}" data-r="${i}" aria-label="Show the English">${s.html ? row[1] : esc(row[1])}</button>${markBtn(stepIdx+"-"+i, s.html ? plainText(row[1]) : row[1])}${bmBtn(curS(), i)}</span>${checked&&row[2]?`<p class="small say-note">${row[2]}</p>`:""}</div>`).join("")}
+            <span class="say-a"><button class="reveal ${checked?"open":""}" data-r="${i}" aria-label="Show the English">${s.html ? row[1] : esc(row[1])}</button>${markBtn(stepIdx+"-"+i, s.html ? plainText(row[1]) : row[1])}${bmBtn(curS(), i)}</span>${checked&&row[2]?`<p class="small say-note">${strikeMd(row[2])}</p>`:""}</div>`).join("")}
         </div>
         ${checked?markHint()+revHint():""}
         ${checked&&s.note?`<p class="small">${s.note}</p>`:""}
@@ -2061,7 +3214,7 @@ function renderSort(st, count, pct){
       stageHTML: `<div class="panel sort done"><div class="sort-pats sum">${pats.map(p => `<div class="sp"><span class="sp-en">${esc(p.en)}</span><span class="sp-ru">${esc(p.ru)}</span>
         <ul class="sp-list">${inPat(p.id).map(x => `<li>${sortBold(x.en, p.id)} ${markBtn(stepIdx + "-" + x.i, x.en)}${bmBtn(curS(), x.i)}</li>`).join("")}</ul></div>`).join("")}</div>
         ${markHint()}${revHint()}
-        ${D.end && !current._once ? `<div class="sort-end"><p class="se-q">${esc(D.end.q)}</p><details class="se-a"><summary>Tap to see</summary><p>${esc(D.end.a)}</p></details></div>` : ""}
+        ${D.end && !current._once ? `<div class="sort-end"><p class="se-q">${esc(D.end.q)}</p><details class="se-a"><summary>Tap to see</summary><p>${noteMd(D.end.a)}</p></details></div>` : ""}
         <p class="sort-again"><button class="linklike" data-sort-again>↺ Do it again</button></p></div>`,
       withBox: false, actionsHTML: `<button class="btn" id="prev">Back</button><button class="btn primary grow" id="go">${stepIdx === current.steps.length - 1 ? "Finish" : "Next"}</button>`});
     /* Back = the last card again (her 31.10: "why is Back grey?"); Do it again = from the first card */
@@ -2079,14 +3232,14 @@ function renderSort(st, count, pct){
   shell({count, pct, instr: D.intro || st.instr || "Say each sentence in English, then sort it into its pattern.",   /* engine 52: the data's intro on top */
     stageHTML: `<div class="panel sort"><div class="sort-pats">${pats.map(p => { const xs = inPat(p.id);
         return `<button class="sp${S.open && !S.landed && it.mode === "hint" && p.id === it.p ? " glow" : ""}" data-sp="${p.id}" aria-label="${esc(p.en)} — ${esc(p.ru)}"><span class="sp-en">${esc(p.en)}</span><span class="sp-ru">${esc(p.ru)}</span>
-          ${xs.length ? `<span class="sp-c">${xs.length}</span>` : ""}<span class="sp-list">${xs.map(x => `<span>${esc(x.en)}</span>`).join("")}</span>${S.why && S.why.p === p.id ? `<span class="sp-why">${esc(S.why.t)}</span>` : ""}</button>`; }).join("")}</div>
+          ${xs.length ? `<span class="sp-c">${xs.length}</span>` : ""}<span class="sp-list">${xs.map(x => `<span>${esc(x.en)}</span>`).join("")}</span>${S.why && S.why.p === p.id ? `<span class="sp-why">${noteMd(S.why.t)}</span>` : ""}</button>`; }).join("")}</div>
       <div class="sort-card${S.open ? " open" : ""}${S.landed ? " landed" : ""}${S.fresh ? " in" : ""}" data-scard>
         <span class="sc-n">${S.at + 1} of ${items.length}</span>
         <p class="sc-ru">${esc(it.ru)}</p>
         <p class="sc-en-row"><button class="reveal ${S.open ? "open" : ""}" data-sen aria-label="${S.open ? "The English" : "Show the English"}" ${S.landed ? `style="visibility:hidden"` : ""}>${esc(it.en)}</button>${S.open ? markBtn(stepIdx + "-" + it.i, it.en) + bmBtn(curS(), it.i) : ""}</p>
-        ${S.open && it.or ? `<p class="sc-or">or: ${esc(it.or)}</p>` : ""}
+        ${S.open && it.or ? `<p class="sc-or">or: ${noteMd(it.or)}</p>` : ""}
         <p class="sc-ask">${ask}</p>
-        ${S.wrong ? `<p class="sc-why">${esc(S.wrong)}</p>` : ""}
+        ${S.wrong ? `<p class="sc-why">${noteMd(S.wrong)}</p>` : ""}
       </div>${S.open ? markHint() + revHint() : ""}</div>`,
     withBox: false, actionsHTML: `<button class="btn" id="prev">Back</button>
           <button class="btn primary grow" id="go" ${S.open && !S.landed ? "disabled" : ""}>${goLabel}</button>`});

@@ -365,6 +365,9 @@ details.all[open] summary{color:var(--ink)}
 .gm-list.check button.on{background:#BFF2B8}
 .gm-cover{display:flex;flex-wrap:wrap;gap:8px}
 .gm-cover span{width:6.5rem;height:2.2rem;border-radius:10px;border:3px solid #1D1D1B;background:#8BE2FF;box-shadow:0 3px 0 #1D1D1B}
+.gm-lists{display:grid;gap:8px}
+.gm-g{display:grid;gap:4px}
+.gm-h{margin:0;font-size:.8rem;font-weight:900;letter-spacing:.06em;color:#E8493F;text-transform:uppercase}
 
 /* 🧠 memory */
 .gmem{display:grid;grid-template-columns:auto minmax(13rem,1fr);gap:20px;align-items:start}
@@ -826,6 +829,93 @@ details.all[open] summary{color:var(--ink)}
 .fgame .gt-a .chk{justify-self:start;background:#7BC043;color:#FFFFFF;border-radius:6px;padding:1px 8px;font-size:.8rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase}
 .fgame .gt-a .bx{color:#0679BD;background:#D6E6FF;border-radius:4px;padding:0 4px}
 .fgame .gt-a .note{color:#5F6368;font-size:.95rem;font-weight:600}
+/* tools 17: Fix it with several ▢ */
+.fx-slotb{all:unset;box-sizing:border-box;cursor:pointer;display:inline-grid;place-items:center;min-width:1.6em;margin:0 .15em;padding:0 .2em;border:2px dashed var(--instr);border-radius:8px;color:var(--instr-text);font-weight:900;vertical-align:.05em;line-height:1.2}
+.fx-slotb:focus-visible{outline:3px solid var(--instr);outline-offset:2px}
+.fx-slotb.no{border-color:var(--again);color:var(--again)}
+.fx-slotb.shake{animation:fxshake .4s}
+.fx-chip.sel{background:var(--instr);color:#FFFFFF}
+.fx-how{align-self:center;color:var(--muted);font-size:1rem}
+.fx-try{margin:0;color:var(--again);font-weight:800}
+/* tools 17: 🗂 the sort in a field */
+.fsort{display:grid;gap:12px}
+.fs-pats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fs-pat{all:unset;box-sizing:border-box;cursor:pointer;display:grid;align-content:start;gap:2px;border:2px solid var(--line);border-radius:12px;background:var(--card);padding:8px 12px;min-height:3.9rem;position:relative;transition:border-color .3s,box-shadow .3s}
+.fs-pat:focus-visible{outline:3px solid var(--instr);outline-offset:2px}
+.fs-pat.glow,.fs-pat.over{border-color:var(--instr);box-shadow:0 0 0 4px rgba(6,147,227,.25)}
+.fs-pat.shake{animation:fxshake .4s;border-color:var(--again)}
+.fs-pat.pop{animation:pop .35s}
+.fs-en{font-weight:900;font-size:1.12rem;line-height:1.2}
+.fs-ru{font-size:.9rem;color:var(--muted);font-style:italic}
+.fs-c{position:absolute;top:6px;right:8px;min-width:1.4rem;height:1.4rem;border-radius:999px;background:var(--ok);color:var(--on-ok);font-size:.8rem;font-weight:900;display:grid;place-items:center}
+.fs-why{color:var(--ok);font-weight:700;font-size:.95rem;margin-top:2px}
+.fs-card{border:2px solid var(--line);border-radius:14px;background:var(--card);padding:12px 16px;display:grid;gap:6px;position:relative;touch-action:none}
+.fs-card.grab{cursor:grab;border-color:var(--instr)}
+.fs-card.landed{border-color:var(--ok)}
+.fs-n{position:absolute;top:8px;right:12px;color:var(--muted);font-size:.85rem;font-weight:700}
+.fs-ctx{margin:0;color:var(--muted);font-size:1rem;padding-right:3.5rem}
+.fs-ruline{margin:0;font-size:1.25rem;font-weight:800}
+.fs-enline{margin:0;font-size:1.25rem;font-weight:800;color:var(--flip-ink)}
+.fs-reveal{all:unset;box-sizing:border-box;cursor:pointer;justify-self:start;background:var(--hl);color:var(--hl-ink);border-radius:6px;padding:4px 14px;font-weight:700}
+.fs-ask{margin:0;color:var(--instr-text);font-weight:700}
+.fs-wrong{margin:0;color:var(--again);font-weight:700}
+.fs-ghost{font-size:1.25rem;font-weight:800;color:var(--flip-ink);background:var(--card);border-radius:8px}
+.fs-drag{box-shadow:0 10px 24px rgba(0,0,0,.25)}
+.fs-pats.sum .fs-pat{cursor:default}
+.fs-pats.sum ul{margin:6px 0 0;padding-left:1.1em}
+.fs-pats.sum li{font-size:1rem}
+.fs-end{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px 14px}
+.fs-q{margin:0 0 6px;font-weight:800}
+.fs-end summary{cursor:pointer;font-weight:800;color:var(--instr-text)}
+.fs-end details p{margin:6px 0 0}
+.fs-again{margin:0}
+.fsort .linklike,.sec-card .linklike{all:unset;box-sizing:border-box;cursor:pointer;color:var(--instr-text);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.sec-card .linklike{color:#0679BD}
+@media (max-width:560px){ .fs-pats{grid-template-columns:1fr 1fr} .fs-en{font-size:1rem} }
+@media (prefers-reduced-motion: reduce){ .fs-pat.shake,.fs-pat.pop,.fx-slotb.shake{animation:none} }
+/* tools 17: 🤫 the secret-card game */
+.sec-intro,.sec-play,.sec-howbox{display:grid;gap:12px}
+.sec-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:12px;align-items:stretch}
+.sec-poster{display:grid;place-items:center;align-content:center;gap:2px;text-align:center;border:3px solid #1D1D1B;border-radius:14px;background:#FFF3C4;color:#1D1D1B;box-shadow:0 4px 0 #1D1D1B;padding:10px}
+.sec-poster .sec-ic{font-size:2.2rem;line-height:1}
+.sec-poster b{font-size:1.25rem}
+.sec-card{border:3px solid #1D1D1B;border-radius:14px;background:#FFFFFF;color:#1D1D1B;box-shadow:0 4px 0 #1D1D1B;padding:10px 14px;display:grid;gap:4px;align-content:start}
+.sec-card p{margin:0;font-size:1.08rem;font-weight:700}
+.sec-lbl{font-size:.75rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#E8493F}
+.sec-chat p{margin:0 0 6px}
+.sec-how{margin:0;padding-left:1.4em;display:grid;gap:6px;font-size:1.08rem}
+.sec-go{margin:0;color:var(--instr-text);font-weight:700}
+.sec-phone{display:flex;gap:14px;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:8px 12px}
+.sec-phone svg{width:112px;height:112px;flex:none;background:#FFFFFF;border-radius:6px}
+.sec-open .sec-phone{align-items:flex-start}
+.btn.slim.on{background:var(--instr);color:#FFFFFF}
+.sec-ph-t{margin:0 0 4px;font-weight:700}
+.sec-ph-l{margin:0;font-weight:800;color:var(--instr-text);word-break:break-all;font-size:.95rem}
+.sec-turn{margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:1.05rem}
+.sec-sw{color:var(--muted);font-size:.9rem}
+.sec-shows{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.sec-show{display:grid;grid-template-columns:auto 1fr;column-gap:8px;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:10px;padding:2px 10px;line-height:1.12}
+.sec-show .sec-ic{grid-row:span 2;font-size:1.35rem}
+.sec-show b{font-size:.95rem}
+.sec-show i{font-size:.8rem;color:var(--muted)}
+.sec-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sec-nl{font-weight:800}
+.sec-area{min-height:12.4rem}
+.sec-back{justify-self:start;margin-top:2px}
+.sec-nums{display:grid;grid-template-columns:repeat(6,3.2rem);gap:8px}
+.sec-num{all:unset;box-sizing:border-box;cursor:pointer;height:3.7rem;border:3px solid #1D1D1B;border-radius:10px;background:#0693E3;color:#FFFFFF;font-weight:900;font-size:1.45rem;display:grid;place-items:center;box-shadow:0 3px 0 #1D1D1B;background-image:radial-gradient(circle,#FFFFFF44 1.6px,transparent 2px);background-size:12px 12px}
+.sec-num:focus-visible{outline:3px solid var(--instr);outline-offset:3px}
+.sec-num.seen{background-color:#7FB8E0}
+.sec-num.on{background:#FFF8C4;color:#1D1D1B}
+.sec-open .sec-card{animation:ansIn .3s ease-out}
+.sec-guess{margin:4px 0 0;color:#0679BD;font-weight:900}
+.sec-reply{margin:0;font-weight:700}
+.sec-wait{margin:0;color:var(--muted);font-size:1.05rem;padding-top:6px}
+.sec-phline{margin:0}
+.sec-all{margin-top:10px;border-top:2px dashed var(--line);padding-top:8px;color:var(--muted)}
+.sec-all summary{cursor:pointer;font-weight:700}
+.sec-allc{color:var(--ink);font-size:.95rem;margin:6px 0}
+@media (max-width:640px){ .sec-pair,.sec-shows{grid-template-columns:1fr} .sec-nums{grid-template-columns:repeat(3,3.2rem)} }
 </style>
 </head>
 <body>
@@ -834,7 +924,7 @@ details.all[open] summary{color:var(--ink)}
 <script>
 const D = {"type": "revision-field", "board": {"col": "Grammar", "value": 200}, "title": "Tags: sharing a feeling", "boxes": {"BOX": [{"h": "SHORT REPLIES", "items": ["**Yes, I did!** / **No, what happened?**", "**I have!** / **No, I haven't.**"]}, {"h": "SHARE A FEELING ↘", "items": ["It's so annoying, **isn't it?**", "— It **really is**!", "It was amazing, **wasn't it?**", "— It **really was**!"]}, {"h": "REACT AND ASK", "items": ["Oh no! **What happened?**", "That's great! **When…?**"]}], "STRIP": [{"h": "HOW DOES IT FEEL?", "items": ["awful · scary · crazy", "annoying · stressful", "exhausting · weird", "a shame · a nightmare", "a relief · lovely · amazing"]}]}, "stages": [{"label": "📝 Test yourself", "blocks": [{"kind": "say", "instr": "Share a feeling, or react and ask? What would you say? Then tap “Show the answer”.", "task": ["**1**  (([You and your colleague Dan have had five video calls today, one after another.]))", "((Dan:)) Five calls in a row! My brain's stopped working.", "((You:)) • • •", "**2**  (([You and Anna both love the same little café. You haven't heard this news.]))", "((Anna:)) Bad news! Our café's closing next month.", "((You:)) • • •"], "answer": ["**1**  (([You and your colleague Dan have had five video calls today, one after another.]))", "((Dan:)) Five calls in a row! My brain's stopped working.", "((You:)) I know! It's **exhausting, isn't it?** ↘", "((Вы оба это знаете → делишься впечатлением: тег, интонация вниз ↘))", "**2**  (([You and Anna both love the same little café. You haven't heard this news.]))", "((Anna:)) Bad news! Our café's closing next month.", "((You:)) Oh no, that's a shame! **Do you know why?**", "((Для тебя это новость → реагируешь и спрашиваешь))"], "tip": "Say it aloud first, then tap “Show the answer”."}]}, {"label": "🔁 Recall", "blocks": [{"kind": "text", "instr": "Remember Linden Street? Complete the replies. Then tap the yellow to check.", "lines": [{"ctx": "A · Lucy and Ben have both read the chat."}, {"s": "Lucy", "p": ["Did you see Anna's message? Two cars in one night!"]}, {"s": "Ben", "p": ["I ", {"f": "d", "r": "id"}, ". It's awful, ", {"f": "i", "r": "sn't it"}, "?"]}, {"s": "Lucy", "p": ["It ", {"f": "r", "r": "eally is"}, ". I'm parking in the garage from now on."]}, {"ctx": "B · Tom hasn't read the chat."}, {"s": "Anna", "p": ["You won't believe what happened! Someone broke into my car last night!"]}, {"s": "Tom", "p": ["Oh no! That's awful! ", {"f": "D", "r": "id they take anything"}, "?"]}, {"s": "Anna", "p": ["My laptop and a bag."]}], "tip": "The first letters are given. Tap the yellow to check."}]}, {"label": "🃏 Practice", "blocks": [{"kind": "cards", "style": "ours", "instr": "Our sentences. Green = good, grey = could be better. How would you make it perfect English?", "instr_next": "One more of our sentences. How would you make it perfect English?", "check": "Perfect English", "summary": "Could be better → perfect: the full list", "box": "BOX", "cards": [{"ctx": "о сериале, который вы оба смотрели", "front": "<g>It was far too long<\/g>, ~~isn't~~ it?", "back": "It was far too long, **wasn't** it?", "why": "Was → wasn't: тег повторяет тот же глагол в том же времени. Far too long — отлично."}, {"ctx": "вы вместе отдыхаете в одном отеле", "front": "<g>There are lots of pools<\/g>, aren't ~~they~~?", "back": "There are lots of pools, aren't **there**?", "why": "There are → aren't there. И ответ: There really are!"}, {"ctx": "вы вместе на террасе нового кафе", "front": "<g>This place has a great view<\/g>, ~~isn't~~ it?", "back": "This place has a great view, **doesn't** it?", "why": "Has здесь — обычный глагол (иметь), вспомогательного нет → does: doesn't it? Сравни: It's great, isn't it?"}, {"ctx": "коллега: «Did you hear about the fire?»", "front": "Yes, I ~~have~~. <g>It's scary, isn't it?<\/g>", "back": "Yes, I **did**. It's scary, isn't it?", "why": "Did you…? → I did. Тег — отлично."}], "tip": "Green = good, grey = could be better. Say the perfect version, then tap the card. ↺ Again later = we weren't sure: the card comes back two or three cards later."}, {"kind": "cards", "style": "share", "instr": "Share a feeling, or react and ask? Use the box.", "instr_next": "Share a feeling, or react and ask?", "box_rule": "card 1: the box beside · cards 2–3: only the strip of feeling words (STRIP) · card 4: nothing (\"Now without the box\")", "cards": [{"ctx": "You and your colleague Sam share an office printer. It keeps breaking down. You both saw it this morning.", "a": "Have you seen the printer? It's broken again!", "hint": "[short reply] [share a feeling]", "back": "I have! It's so annoying, **isn't it?**", "next": "It really is. I've started printing everything at home!", "note": "Вы оба это знаете → делишься впечатлением: тег, интонация вниз ↘ · или: I know! It's a nightmare, isn't it?", "support": "box"}, {"ctx": "Yesterday your friend Lucy's flight home was cancelled. You haven't heard anything since then.", "a": "Guess what? They've found me a seat on a flight tonight!", "hint": null, "back": "Oh, that's a relief! **What time do you leave?**", "next": "At eight. I'll be home by midnight.", "note": "Для тебя это новость → реагируешь и спрашиваешь · или: Phew, that's great news!", "support": "strip"}, {"ctx": "You and Ben support the same team. You both watched the final last night — your team won in the last minute.", "a": "Did you see the match last night?", "hint": null, "back": "I did! It was amazing, **wasn't it?**", "next": "It really was! I was shouting so loud I woke up the neighbours.", "note": "Вы оба это знаете → делишься впечатлением: тег, интонация вниз ↘ · всё уже закончилось → was … wasn't it?", "support": "strip"}, {"ctx": "It's the first sunny day after two weeks of rain. You meet a neighbour outside.", "a": "Finally, some sun!", "hint": null, "back": "I know! It's lovely, **isn't it?**", "next": "It's gorgeous! I'm not going back inside today.", "note": "Вы оба это знаете → делишься впечатлением: тег, интонация вниз ↘ · или: It's amazing, isn't it?", "support": "none", "instr": "Now without the box: share a feeling, or react and ask?"}]}]}, {"label": "💬 Use it", "blocks": [{"kind": "tool", "page": "tags", "instr": "Take a news card and flip a coin: do you both know it, or is it news to B? A starts, B replies. Swap.", "plain": "slide 51 (the same 6 news, a die + a coin)", "tip": "Take a news card, then flip the coin: heads = you both know it, tails = it's news to B."}, {"kind": "questions", "instr": "Round 2: your real news. Then one more round with the cards.", "items": ["**1**  Something you BOTH know: our lessons, a series you've both seen, something in the news. Share a feeling with a tag — your partner agrees!", "**2**  Tell your partner something from your week they don't know — good or bad. They react and ask **two** questions."], "box": "BOX", "fast": "If you're done: go back to Linden Street in 🔁 Recall and say the replies from memory. Then tell one piece of news twice: your partner replies both ways."}]}], "_pids": {"blocks": [0, 1, 2, 3, 5, 6], "cards": [0, 1, 2, 3, 4, 5, 6, 7], "write": [], "questions.6": [0, 1]}, "boardPage": "jeopardy", "cell": "c2v200", "embeds": {}};
 const STICKER = "data:image/png;base64,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";
-const TOOLS_VERSION = "16";
+const TOOLS_VERSION = "17";
 const PAGE_ID = "b2-2026-10-30/f-tags";
 const LIVE_ON = false, LIVE_URL = "";
 /* shared by the lesson tools: the Useful language box, shuffling, small helpers */
@@ -1415,22 +1505,31 @@ function gHourglass(host, {seconds = 60, choices = [30, 60, 120], onEnd = null} 
 
 /* ---------- 🧠 Memo (Olga Akimkina; her 22:30: a warmer): look at the list for 30 seconds — it hides — say what you remember — Check:
    tap the ones you remembered ---------- */
-function gMemo(host, items, {seconds = 30, show = t => gEsc(t)} = {}){
-  const M = {phase: "ready", got: new Set()};
+function gMemo(host, items, {seconds = 30, show = t => gEsc(t), state = null, groups = null, onChange = null} = {}){
+  /* tools 16 (B2 revision f-seen, its first use): groups = [{h, items}] → the headings over the list and as labels over the covers (they help
+     recall); state = a memo to carry on with (the field redraws its screen); M.end = when the looking ends; onChange() for the page around it */
+  const M = state || {phase: "ready", got: new Set(), end: 0};
+  if(!(M.got instanceof Set)) M.got = new Set(M.got || []);
+  const changed = () => { if(onChange) onChange(M); };
+  const G = groups && groups.length ? groups.map(g => ({h: g.h, ks: g.items.map(t => items.indexOf(t)).filter(k => k > -1)})) : [{h: "", ks: items.map((_, k) => k)}];
+  const lists = cell => G.map(g => `<div class="gm-g">${g.h ? `<p class="gm-h">${gEsc(g.h)}</p>` : ""}<ul class="gm-list${cell.check ? " check" : ""}">${g.ks.map(k => cell(k)).join("")}</ul></div>`).join("");
+  const look = () => { M.phase = "look"; M.end = Date.now() + seconds * 1000; };
   function render(){
     if(M.phase === "ready") host.innerHTML = `<div class="gmemo"><p class="gm-big">${items.length} expressions · ${seconds} seconds to remember them</p><button class="btn primary" data-gm-go>▶ Show them</button></div>`;
-    else if(M.phase === "look") { host.innerHTML = `<div class="gmemo look"><div class="gm-timer"></div><ul class="gm-list">${items.map(t => `<li>${show(t)}</li>`).join("")}</ul><button class="btn" data-gm-hide>Hide them now</button></div>`;
-      gTimer(host.querySelector(".gm-timer"), {seconds, compact: true, autostart: true, onEnd: () => { M.phase = "recall"; render(); }}); }
-    else if(M.phase === "recall") host.innerHTML = `<div class="gmemo"><p class="gm-big">What do you remember? Take turns: one expression each.</p><div class="gm-cover">${items.map(() => `<span></span>`).join("")}</div><button class="btn primary" data-gm-check>Check</button></div>`;
-    else host.innerHTML = `<div class="gmemo"><p class="gm-big">Tap the ones you remembered — <b>${M.got.size} of ${items.length}</b></p><ul class="gm-list check">${items.map((t, k) => `<li><button class="${M.got.has(k) ? "on" : ""}" data-gm-k="${k}">${show(t)}</button></li>`).join("")}</ul><button class="btn" data-gm-again>↺ Again</button></div>`;
-    const on = (q, f) => host.querySelectorAll(q).forEach(b => b.addEventListener("click", () => f(b)));
-    on("[data-gm-go]", () => { M.phase = "look"; render(); });
+    else if(M.phase === "look"){ const left = Math.max(1, Math.ceil(((M.end || Date.now() + seconds * 1000) - Date.now()) / 1000));
+      host.innerHTML = `<div class="gmemo look"><div class="gm-timer"></div><div class="gm-lists">${lists(k => `<li>${show(items[k])}</li>`)}</div><button class="btn" data-gm-hide>Hide them now</button></div>`;
+      gTimer(host.querySelector(".gm-timer"), {seconds: left, compact: true, autostart: true, onEnd: () => { if(!host.isConnected || M.phase !== "look") return; M.phase = "recall"; render(); changed(); }}); }
+    else if(M.phase === "recall") host.innerHTML = `<div class="gmemo"><p class="gm-big">What do you remember? Take turns: one expression each.</p><div class="gm-lists">${G.map(g => `<div class="gm-g">${g.h ? `<p class="gm-h">${gEsc(g.h)}</p>` : ""}<div class="gm-cover">${g.ks.map(() => `<span></span>`).join("")}</div></div>`).join("")}</div><button class="btn primary" data-gm-check>Check</button></div>`;
+    else { const cell = k => `<li><button class="${M.got.has(k) ? "on" : ""}" data-gm-k="${k}">${show(items[k])}</button></li>`; cell.check = true;
+      host.innerHTML = `<div class="gmemo"><p class="gm-big">Tap the ones you remembered — <b>${M.got.size} of ${items.length}</b></p><div class="gm-lists">${lists(cell)}</div><button class="btn" data-gm-again>↺ Again</button></div>`; }
+    const on = (q, f) => host.querySelectorAll(q).forEach(b => b.addEventListener("click", () => { f(b); changed(); }));
+    on("[data-gm-go]", () => { look(); render(); });
     on("[data-gm-hide]", () => { M.phase = "recall"; render(); });
     on("[data-gm-check]", () => { M.phase = "check"; render(); });
     on("[data-gm-k]", b => { const k = +b.dataset.gmK; M.got.has(k) ? M.got.delete(k) : M.got.add(k); render(); });
     on("[data-gm-again]", () => { M.phase = "ready"; M.got.clear(); render(); });
   }
-  render(); return M;
+  M.look = look; render(); return M;
 }
 
 /* ---------- 🧠 Memory / Pelmanism (Olga Lifshits): the cards face down; turn two over — two halves of one expression stay up, and you
@@ -2100,7 +2199,8 @@ const mk = s => esc(s == null ? "" : s)
   .replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>')
   .replace(/\(\((.+?)\)\)/g, '<span class="ctx">$1</span>')
   .replace(/&lt;g&gt;(.+?)&lt;\/g&gt;/g, '<span class="m-good">$1</span>')
-  .replace(/~~(.+?)~~/g, '<span class="m-del">$1</span>');
+  .replace(/~~(.+?)~~/g, '<span class="m-del">$1</span>')
+  .replace(/\n/g, "<br>");   /* tools 17: a line break in the data (a / b options on a card) */
 const KEY = "tool-field-" + PAGE_ID;
 let saved = store.get(KEY) || {w: {}, again: []};      /* this device: what they wrote ({chat: {text, sent}}), the cards they sent back */
 if(!saved.w) saved.w = {}; if(!Array.isArray(saved.again)) saved.again = [];
@@ -2143,7 +2243,7 @@ function keepPlace(){
   if(S.view !== "field" || S.fast) return;
   const bsOut = Object.assign({}, S._restore || {}); Object.entries(S.bs).forEach(([id, st]) => { if(id === "fastdeck") return; const d = st.deck;
     bsOut[id] = {open: [...st.open], shown: !!st.shown, check: st.check || "", done: !!st.done, bm: [...(st.bm || [])], spk: st.spk ? st.spk.key : null,
-      sc: st.sc || null, fx: st.fx || null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, flipped: !!d.flipped} : (st._deck || null)}; });
+      sc: st.sc || null, fx: st.fx || null, so: st.so || null, sec: st.sec || null, memo: st.memo ? {phase: st.memo.phase, got: [...st.memo.got], end: st.memo.end || 0} : null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, flipped: !!d.flipped} : (st._deck || null)}; });
   store.set(PLACE_KEY, {stage: S.stage, at: S.at, far: S.far, intro: S.intro, bs: bsOut, t: Date.now()});
   store.set(LEFT_KEY, {page: PAGE_ID, href: location.pathname.split("/").pop(), cell: cellName(), title: D.title, stage: String(D.stages[S.stage].label || ""), t: Date.now()});
 }
@@ -2155,6 +2255,7 @@ function restoreBs(id){ const r = S._restore && S._restore[id]; if(!r) return nu
   const st = {open: new Set(r.open || []), shown: !!r.shown, check: r.check || "", deck: null, look: null, done: !!r.done, bm: new Set(r.bm || []), _deck: r.deck || null};
   if(r.spk != null) st.spk = Object.assign(newCursor(), {key: r.spk}); if(r.sc && Array.isArray(r.sc.order)) st.sc = r.sc;
   if(r.fx) st.fx = r.fx; if(r.ttt && Array.isArray(r.ttt.cells)) st.ttt = r.ttt;   /* tools 16 */
+  if(r.so) st.so = r.so; if(r.sec) st.sec = r.sec; if(r.memo) st.memo = r.memo;   /* tools 17 */
   return st; }
 const curBlocks = () => D.stages[S.stage].blocks;
 const bIdx = () => Math.min(S.at[S.stage] || 0, curBlocks().length - 1);
@@ -2186,6 +2287,7 @@ function allGaps(b){
   if(b.kind === "text") return gapIds(b.lines, "t").concat(gapIds((b.gloss || []).map(g => ({p: g.p})), "x"));
   if(b.kind === "model") return b.parts.flatMap((p, pi) => gapIds(p.lines, `m${pi}`));
   if(b.kind === "calendars") return gapIds(b.lines, "c");
+  if(b.kind === "game" && b.piece === "secret") return secGaps(b);   /* tools 17 */
   return [];
 }
 function textHTML(b){
@@ -2406,12 +2508,29 @@ function fixHTML(b){
   const F = fixPh(b), say = b.say || [], pl = b.place || null, note = b.note ? `<p class="fx-note">${mk(b.note)}</p>` : "";
   const big = (small) => `<div class="fx-big${small ? " small" : ""}"><p class="fx-line">${fixWord(b.big, b.red, "fx-red")}</p>${note}</div>`;
   if(F.ph === 0 || !pl && F.ph === 1) return big(false);
+  if(F.ph === 1 && fixSlots(pl) > 1) return fixPlacesHTML(b, F, note);   /* tools 16 (f-seen): several ▢, put the word in the right one */
   if(F.ph === 1){ const [pre, post] = String(pl.tokens).split("▢");
     return `<div class="fx-place"><p class="fx-line">${esc(pre)}${F.solved ? `<b class="fx-red fx-in">${esc(pl.answer)}</b>` : `<span class="fx-slot" aria-label="the gap"></span>`}${esc(post || "")}</p>
       ${F.solved ? `<p class="fx-msg">✓ That's it.</p>${note}` : `<div class="fx-chips">${pl.chips.map(c => `<button class="fx-chip${F.wrong === c ? " no" : ""}" data-fxchip="${esc(c)}">${esc(c)}</button>`).join("")}</div>${F.wrong ? note : ""}`}</div>`; }
   const upto = Math.min(say.length - 1, Math.floor((F.ph - 2) / 2));
   return big(true) + `<div class="fx-says">${say.slice(0, upto + 1).map((x, k) => { const open = k < upto || F.ph >= 3 + 2 * k;
     return `<div class="fx-say"><p class="fx-q">${esc(x.q)}</p>${open ? `<p class="fx-a">${fixWord(x.a, b.red, "bx")}</p>` : `<button class="fx-a shut" data-fxa="${k}">say it — then tap to check</button>`}</div>`; }).join("")}</div>`;
+}
+const fixSlots = pl => String((pl || {}).tokens || "").split("▢").length - 1;
+/* the line with the word in its ▢ (red) and the other ▢ gone; 've / 's join the word before */
+function fixPlacedHTML(pl){
+  const parts = String(pl.tokens).split("▢"), slot = pl.slot || 0, w = pl.answer, glue = /^['’]/.test(w);
+  let h = ""; parts.forEach((t, k) => { let tx = t; if(k === slot && glue) tx = tx.replace(/\s+$/, "");
+    h += esc(tx); if(k === slot) h += `<b class="fx-red fx-in">${esc(w)}</b>`; });
+  return h.replace(/ {2,}/g, " ");
+}
+function fixPlacesHTML(b, F, note){
+  const pl = b.place, parts = String(pl.tokens).split("▢"), one = pl.chips.length === 1, sel = one ? pl.chips[0] : F.sel;
+  if(F.solved) return `<div class="fx-place"><p class="fx-line">${fixPlacedHTML(pl)}</p><p class="fx-msg">✓ That's it.</p>${note}</div>`;
+  const line = parts.map((t, k) => esc(t) + (k < parts.length - 1 ? `<button class="fx-slotb${F.wrongSlot === k ? " no" : ""}" data-fxslot="${k}" aria-label="Place ${k + 1}">▢</button>` : "")).join("");
+  return `<div class="fx-place"><p class="fx-line">${line}</p>
+    <div class="fx-chips">${pl.chips.map(c => `<button class="fx-chip${sel === c ? " sel" : ""}${F.wrong === c ? " no" : ""}" data-fxpick="${esc(c)}">${esc(c)}</button>`).join("")}<span class="fx-how">${one ? "Tap the ▢ where it goes." : "Tap a word, then its ▢."}</span></div>
+    ${F.wrongSlot != null ? `<p class="fx-try">Not quite — try another place.</p>` : ""}${F.wrong ? note : ""}</div>`;
 }
 const fixPending = b => { const F = fixPh(b); return F.ph < fixLast(b) || (F.ph === 1 && !F.solved && !!b.place); };
 function fixNext(b){ const F = fixPh(b); if(F.ph === 1 && b.place && !F.solved){ F.solved = true; F.wrong = null; } else F.ph++; render(); }
@@ -2421,6 +2540,8 @@ function fixNext(b){ const F = fixPh(b); if(F.ph === 1 && b.place && !F.solved){
 const gameTasks = (b, cells) => (cells || []).map(c => ({t: b.tasks[c.i] || b.tasks[0], m: c.m || null}));
 function gameMount(b, host){
   if(!host) return; const st = bs(b);
+  if(b.piece === "memo"){ st.memo = gMemo(host, b.items, {seconds: b.seconds || 30, groups: b.groups, state: st.memo || null,
+    onChange: () => { keepPlace(); const sb = document.querySelector("[data-step]"); if(sb) sb.disabled = !canNext(); }}); return; }   /* tools 17 */
   if(st.ttt && st.ttt.cells && st.ttt.cells[0] && st.ttt.cells[0].i != null) st.ttt.cells = gameTasks(b, st.ttt.cells);   /* reopened on this device */
   st.ttt = gTicTacToe(host, b.tasks, {size: b.size || 3, state: st.ttt || null, revealFirst: true, labels: {yes: "✓ Correct", no: "✗ Not quite"},
     prompt: t => `${t.ctx ? `<span class="lctx">${mk(t.ctx)}</span>` : ""}<span class="say">${mk(t.q)}</span>`,
@@ -2429,17 +2550,119 @@ function gameMount(b, host){
     onWin: el => { if(typeof confetti === "function") confetti(el); },
     onChange: () => { keepPlace(); const sb = document.querySelector("[data-step]"); if(sb) sb.disabled = !canNext(); }});
 }
-const gamePending = b => { const T = bs(b).ttt; return !!(T && T.open > -1 && !T.shown && !T.over); };
+const memoPending = b => { const M = bs(b).memo; return !M || M.phase !== "check"; };
+function memoNext(b){ const M = bs(b).memo; if(!M) return; if(M.phase === "ready") M.look(); else if(M.phase === "look") M.phase = "recall"; else if(M.phase === "recall") M.phase = "check"; render(); }
+const gamePending = b => { if(b.piece === "memo") return memoPending(b); if(b.piece === "secret") return secPending(b); const T = bs(b).ttt; return !!(T && T.open > -1 && !T.shown && !T.over); };
 function gameOpenTask(b, t){ const T = bs(b).ttt; if(!T || T.over) return; const k = T.cells.findIndex(c => c.t === t && !c.m); if(k < 0 || (T.open > -1 && T.open !== k)) return;
   T.open = k; T.shown = false; render(); }
+
+/* ---------- tools 17 (B2 revision f-seen, handoff 31.10 13:15): 🗂 the homework sort as a field block — four boxes, the lines one by one:
+   the English context (grey) and the Russian, say it, tap (or Next) → the English, then tap its box or drag the card onto it. mode auto =
+   it goes into its box by itself (its why in green), hint = the right box glows, free = no help; a wrong box shakes and shows the why.
+   Next never skips: on an open card it puts it in its box (the answer); after the last one, the four boxes with their lines and the end
+   question. Back = the card before, as it was left. ---------- */
+const soSt = b => { const st = bs(b); return st.so = st.so || {at: 0, open: false, landed: false, placed: {}, done: false, why: null, wrong: null}; };
+function soShow(b){ const Q = soSt(b), x = b.items[Q.at], p = Q.placed[Q.at]; Q.wrong = null;
+  if(p){ Q.open = true; Q.landed = true; Q.why = x.mode !== "free" ? {p, t: x.why} : null; } else { Q.open = false; Q.landed = false; Q.why = null; } }
+function sortHTML(b){
+  const Q = soSt(b), items = b.items, inPat = id => items.map((x, i) => Object.assign({i}, x)).filter(x => Q.placed[x.i] === id);
+  if(Q.done) return `<div class="fsort done"><div class="fs-pats sum">${b.patterns.map(p => `<div class="fs-pat"><span class="fs-en">${mk(p.en)}</span><span class="fs-ru">${esc(p.ru)}</span>
+      <ul>${inPat(p.id).map(x => `<li>${esc(x.en)}</li>`).join("")}</ul></div>`).join("")}</div>
+    ${b.end ? `<div class="fs-end"><p class="fs-q">${mk(b.end.q)}</p><details><summary>Tap to see</summary><p>${mk(b.end.a)}</p></details></div>` : ""}
+    <p class="fs-again"><button class="linklike" data-fsagain>↺ Do it again</button></p></div>`;
+  const it = items[Q.at];
+  const ask = !Q.open ? `Say it in English — aloud. Then tap to check.${it.mode === "auto" ? " Watch the first one." : ""}` : Q.landed ? "✓ That's its box." : it.mode === "auto" ? "Watch: it goes into its box." : "Now put it in its box: tap the box (or drag the card).";
+  return `<div class="fsort"><div class="fs-pats">${b.patterns.map(p => { const n = inPat(p.id).length;
+      return `<button class="fs-pat${Q.open && !Q.landed && it.mode === "hint" && p.id === it.p ? " glow" : ""}" data-fsp="${esc(p.id)}"><span class="fs-en">${mk(p.en)}</span><span class="fs-ru">${esc(p.ru)}</span>${n ? `<span class="fs-c">${n}</span>` : ""}${Q.why && Q.why.p === p.id ? `<span class="fs-why">${mk(Q.why.t)}</span>` : ""}</button>`; }).join("")}</div>
+    <div class="fs-card${Q.open ? " open" : ""}${Q.landed ? " landed" : ""}${Q.open && !Q.landed && it.mode !== "auto" ? " grab" : ""}" data-fscard><span class="fs-n">${Q.at + 1} of ${items.length}</span>
+      ${it.ctx ? `<p class="fs-ctx">${esc(it.ctx)}</p>` : ""}<p class="fs-ruline">${esc(it.ru)}</p>
+      ${Q.open ? `<p class="fs-enline">${esc(it.en)}</p>` : `<button class="fs-reveal" data-fsopen>tap to check</button>`}
+      <p class="fs-ask">${ask}</p>${Q.wrong ? `<p class="fs-wrong">${mk(Q.wrong)}</p>` : ""}</div></div>`;
+}
+function soLand(b, p){ const Q = soSt(b); if(!Q.open || Q.landed) return; const x = b.items[Q.at];
+  const card = document.querySelector("[data-fscard] .fs-enline"), box = document.querySelector(`[data-fsp="${CSS.escape(p)}"]`);
+  const done = () => { Q.placed[Q.at] = p; Q.landed = true; Q.wrong = null; Q.why = x.mode !== "free" ? {p, t: x.why} : null; render();
+    const nb = document.querySelector(`[data-fsp="${CSS.escape(p)}"]`); if(nb) pop(nb); };
+  if(!card || !box || calm() || !card.animate) return done();
+  const a = card.getBoundingClientRect(), z = box.getBoundingClientRect(), g = card.cloneNode(true);
+  g.className = "fs-ghost"; g.style.cssText = `position:fixed;left:${a.left}px;top:${a.top}px;width:${a.width}px;margin:0;z-index:40;pointer-events:none`; document.body.appendChild(g);
+  g.animate([{transform: "none", opacity: 1}, {transform: `translate(${z.left + z.width / 2 - a.left - a.width / 2}px, ${z.top + z.height / 2 - a.top - a.height / 2}px) scale(.35)`, opacity: .2}], {duration: 650, easing: "cubic-bezier(.3,.7,.3,1)"}).onfinish = () => { g.remove(); done(); };
+}
+function soOpen(b){ const Q = soSt(b); if(Q.open) return; Q.open = true; render(); const it = b.items[Q.at];
+  if(it.mode === "auto"){ Q.busy = true; setTimeout(() => { Q.busy = false; if(curBlock() === b && soSt(b).open && !soSt(b).landed) soLand(b, it.p); }, calm() ? 50 : 900); } }
+function soPick(b, p){ const Q = soSt(b), it = b.items[Q.at]; if(!Q.open || Q.landed || it.mode === "auto") return;
+  if(p === it.p){ soLand(b, p); return; }
+  Q.wrong = it.why; render(); const bx = document.querySelector(`[data-fsp="${CSS.escape(p)}"]`); if(bx){ bx.classList.remove("shake"); void bx.offsetWidth; bx.classList.add("shake"); } }
+const sortPending = b => !soSt(b).done;
+function sortNext(b){ const Q = soSt(b), it = b.items[Q.at];
+  if(!Q.open){ soOpen(b); return; }
+  if(!Q.landed){ if(!Q.busy) soLand(b, it.p); return; }
+  if(Q.at < b.items.length - 1){ Q.at++; soShow(b); render(); return; }
+  Q.done = true; render(); }
+function sortBack(b){ const Q = soSt(b);
+  if(Q.done){ Q.done = false; Q.at = b.items.length - 1; soShow(b); render(); return true; }
+  if(Q.at > 0){ Q.at--; soShow(b); render(); return true; }
+  return false; }
+function wireSort(b, root){
+  root.querySelectorAll("[data-fsopen]").forEach(x => x.addEventListener("click", e => { e.stopPropagation(); soOpen(b); }));
+  root.querySelectorAll("[data-fsp]").forEach(x => x.addEventListener("click", () => soPick(b, x.dataset.fsp)));
+  const ag = root.querySelector("[data-fsagain]"); if(ag) ag.addEventListener("click", () => { bs(b).so = null; render(); });
+  /* drag the open card onto a box */
+  const card = root.querySelector("[data-fscard].grab"); if(!card) return;
+  card.addEventListener("pointerdown", e => { if(e.button) return; const r = card.getBoundingClientRect(), g = card.cloneNode(true), dx = e.clientX - r.left, dy = e.clientY - r.top; let moved = false;
+    g.classList.add("fs-drag"); g.style.cssText = `position:fixed;left:${r.left}px;top:${r.top}px;width:${r.width}px;z-index:40;pointer-events:none;opacity:.92`;
+    const mv = ev => { if(!moved && Math.hypot(ev.clientX - e.clientX, ev.clientY - e.clientY) < 6) return; if(!moved){ moved = true; document.body.appendChild(g); card.style.visibility = "hidden"; }
+      g.style.left = (ev.clientX - dx) + "px"; g.style.top = (ev.clientY - dy) + "px";
+      root.querySelectorAll("[data-fsp]").forEach(x => { const q = x.getBoundingClientRect(); x.classList.toggle("over", ev.clientX >= q.left && ev.clientX <= q.right && ev.clientY >= q.top && ev.clientY <= q.bottom); }); };
+    const up = ev => { removeEventListener("pointermove", mv); removeEventListener("pointerup", up); g.remove(); card.style.visibility = "";
+      const over = [...root.querySelectorAll("[data-fsp]")].find(x => { const q = x.getBoundingClientRect(); return ev.clientX >= q.left && ev.clientX <= q.right && ev.clientY >= q.top && ev.clientY <= q.bottom; });
+      root.querySelectorAll("[data-fsp].over").forEach(x => x.classList.remove("over")); if(moved && over) soPick(b, over.dataset.fsp); };
+    addEventListener("pointermove", mv); addEventListener("pointerup", up); });
+}
+
+/* ---------- tools 17 (f-seen): 🤫 the secret-card game — a guided start (the show poster, B's card open, the A/B chat with gaps), How it
+   works (with the phone card: a QR and the link), then the game: the shows, the box, six cards face down by number; B says the number,
+   a tap turns it over (what happened + the guess + B's reply). No phones: 📋 All the cards under the box, face up ---------- */
+const secSt = b => { const st = bs(b); return st.sec = st.sec || {ph: b.intro ? 0 : 1, open: null, seen: [], swaps: 0, phone: false}; };
+const secInstr = b => { const X = secSt(b); return X.ph === 0 ? (b.intro || {}).instr : X.ph === 1 ? b.instr : b.check; };
+const secGaps = b => secSt(b).ph === 0 && b.intro ? gapIds(b.intro.lines, "i") : [];
+const phoneHTML = b => b._cardUrl ? `<div class="sec-phone">${b._qr || ""}<div><p class="sec-ph-t">📱 <b>B:</b> open your secret card on your phone</p><p class="sec-ph-l">${esc(b._cardUrl.replace(/^https:\/\//, ""))}</p></div></div>` : "";
+function secretHTML(b){
+  const X = secSt(b);
+  if(X.ph === 0 && b.intro){ const I = b.intro;
+    return `<div class="sec-intro"><div class="sec-pair"><div class="sec-poster"><span class="sec-ic">${esc(I.show.icon)}</span><b>${esc(I.show.title)}</b><span>${esc(I.show.genre)}</span></div>
+      <div class="sec-card open"><span class="sec-lbl">B's secret card</span>${I.card.map(l => `<p>${esc(l)}</p>`).join("")}</div></div>
+      <div class="dlg sec-chat">${linesHTML(I.lines, b, "i")}</div></div>`; }
+  if(X.ph === 1) return `<div class="sec-howbox"><ol class="sec-how">${b.how.map(h => `<li>${mk(h)}</li>`).join("")}</ol>${phoneHTML(b)}<p class="sec-go">Ready? Tap <b>Next</b> to play.</p></div>`;
+  const c = X.open != null ? b.cards[X.open] : null;
+  /* one area: the shows (A chooses) — or the card just turned (the check) — or the phone card; the numbers stay under it */
+  const area = X.phone ? phoneHTML(b) : c ? `<div class="sec-card turned"><span class="sec-lbl">Card ${X.open + 1}</span>${c.front.map(l => `<p>${esc(l)}</p>`).join("")}<p class="sec-guess">${esc(c.guess)}</p><p class="sec-reply"><b>B:</b> ${esc(c.reply)}</p><button class="linklike sec-back" data-secclose>← The shows</button></div>`
+    : `<div class="sec-shows">${b.shows.map(sh => `<span class="sec-show"><span class="sec-ic">${esc(sh.icon)}</span><b>${esc(sh.title)}</b><i>${esc(sh.genre)}</i></span>`).join("")}</div>`;
+  return `<div class="sec-play"><p class="sec-turn"><b>A</b> asks and guesses · <b>B</b> has the secret card <button class="btn slim" data-secswap>↺ Swap</button><button class="btn slim${X.phone ? " on" : ""}" data-secphone aria-pressed="${!!X.phone}">📱 Phone card</button>${X.swaps ? `<span class="sec-sw">Swapped ${X.swaps}×</span>` : ""}</p>
+    <div class="sec-area">${area}</div>
+    <div class="sec-row"><span class="sec-nl">B's card:</span><div class="sec-nums" role="group" aria-label="The secret cards">${b.cards.map((_, i) => `<button class="sec-num${X.open === i ? " on" : ""}${X.seen.includes(i) ? " seen" : ""}" data-secn="${i}" aria-label="Card ${i + 1}">${i + 1}</button>`).join("")}</div></div></div>`;
+}
+const secAllHTML = b => `<details class="sec-all"><summary>📋 All the cards</summary><p class="small">No phones? B secretly chooses a number 1–${b.cards.length}.</p>${b.cards.map((c, i) => `<div class="sec-allc"><b>${i + 1}</b> ${c.front.map(esc).join(" ")}<br><span class="sec-guess">${esc(c.guess)}</span> — ${esc(c.reply)}</div>`).join("")}</details>`;
+const secPending = b => { const X = secSt(b); return X.ph < 2; };
+function secNext(b){ const X = secSt(b), st = bs(b);
+  if(X.ph === 0){ const ids = secGaps(b); if(ids.length && !ids.every(id => st.open.has(id))){ ids.forEach(id => st.open.add(id)); render(); return; } }
+  X.ph++; render(); scrollTo(0, 0); }
+function wireSecret(b, root){ const X = secSt(b);
+  root.querySelectorAll("[data-secn]").forEach(x => x.addEventListener("click", () => { const i = +x.dataset.secn; X.phone = false; X.open = X.open === i ? null : i; if(!X.seen.includes(i)) X.seen.push(i); render(); }));
+  const cl = root.querySelector("[data-secclose]"); if(cl) cl.addEventListener("click", () => { X.open = null; render(); });
+  const sw = root.querySelector("[data-secswap]"); if(sw) sw.addEventListener("click", () => { X.swaps++; X.open = null; render(); });
+  const ph = root.querySelector("[data-secphone]"); if(ph) ph.addEventListener("click", () => { X.phone = !X.phone; render(); });
+}
 
 /* ---------- the page ---------- */
 function blockHTML(b){
   const body = b.kind === "text" ? textHTML(b) : b.kind === "model" ? modelHTML(b) : b.kind === "write" ? writeHTML(b) : b.kind === "say" ? sayHTML(b)
     : b.kind === "picture" ? pictureHTML(b) : b.kind === "calendars" ? calendarsHTML(b) : b.kind === "tool" ? toolHTML(b)
     : b.kind === "questions" ? questionsHTML(b) : b.kind === "cards" ? groupDotsHTML(b) + `<div class="deck">${cardsHTML(b)}</div>` : b.kind === "scenes" ? scenesHTML(b)
-    : b.kind === "fix" ? fixHTML(b) : b.kind === "game" ? groupDotsHTML(b) + `<div class="fgame" data-game="${b._id}"></div>` : "";
-  const instr = b.kind === "cards" || b.kind === "questions" ? (b.kind === "questions" ? b.instr : "") : b.kind === "scenes" && sceneAt(b) >= 0 ? (b.street_first === false ? [b.instr, b.task].filter(Boolean).join(" ") : b.task) : b.instr;
+    : b.kind === "fix" ? fixHTML(b) : b.kind === "sort" ? sortHTML(b) : b.kind === "game" && b.piece === "secret" ? secretHTML(b)
+    : b.kind === "game" ? (b.piece === "memo" ? "" : groupDotsHTML(b)) + `<div class="fgame${b.piece === "memo" ? " fmemo" : ""}" data-game="${b._id}"></div>` : "";
+  const instr = b.kind === "cards" || b.kind === "questions" ? (b.kind === "questions" ? b.instr : "") : b.kind === "scenes" && sceneAt(b) >= 0 ? (b.street_first === false ? [b.instr, b.task].filter(Boolean).join(" ") : b.task)
+    : b.kind === "game" && b.piece === "secret" ? secInstr(b) : b.instr;
   const tip = S.howto && b.tip ? `<p class="tip">🎓 How it works: ${mk(b.tip)}</p>` : "";
   return `${tip}${instr ? `<p class="finstr">${mk(instr)}</p>` : ""}<section class="blk ${S.enter ? "enter" : ""}" data-blk="${b._id}">${body}</section>`;
 }
@@ -2494,6 +2717,9 @@ function stepNext(){
   if(b.kind === "tool"){ const f = document.querySelector(".tool-frame"); if(f && f.contentWindow){ f.contentWindow.postMessage({lwStep: "next"}, "*"); return; } }
   if(b.kind === "say" && !st.shown){ st.shown = true; render(); return; }
   if(b.kind === "fix" && fixPending(b)){ fixNext(b); return; }   /* tools 16: the gap's answer, then message by message */
+  if(b.kind === "game" && b.piece === "memo" && memoPending(b)){ memoNext(b); return; }   /* tools 17: ▶ → hide → check */
+  if(b.kind === "game" && b.piece === "secret" && secPending(b)){ secNext(b); return; }   /* the chat's answers → How it works → the game */
+  if(b.kind === "sort" && sortPending(b)){ sortNext(b); return; }
   if(b.kind === "game" && gamePending(b)){ st.ttt.shown = true; render(); return; }   /* an open square: Next shows its answer */
   if(b.kind === "cards"){ const d = deckOf(b);
     if(st.look != null && !st.lookBack && !st.lookOpen){ st.lookOpen = true; render(); return; }   /* her 👥 dot: the front first, Next shows the answer */
@@ -2525,6 +2751,9 @@ function stepBack(){
   if(S.fast){ S.fast = null; render(); return; }
   if(b && b.kind === "say" && bs(b).shown){ bs(b).shown = false; render(); return; }   /* the answer → the question, like the slide before */
   if(b && b.kind === "fix" && fixPh(b).ph > 0){ fixPh(b).ph--; render(); return; }   /* tools 16: the screen before */
+  if(b && b.kind === "sort" && sortBack(b)) return;   /* tools 17: the card before, as it was left */
+  if(b && b.kind === "game" && b.piece === "secret" && secSt(b).ph > (b.intro ? 0 : 1)){ secSt(b).ph--; render(); return; }
+  if(b && b.kind === "game" && b.piece === "memo" && bs(b).memo && bs(b).memo.phase !== "ready"){ const M = bs(b).memo; M.phase = M.phase === "check" ? "recall" : "ready"; render(); return; }
   if(b && b.kind === "questions"){ const pv = document.querySelector(".speak [data-speak-prev]"); if(pv){ pv.click(); return; } }
   if(b && b.kind === "scenes"){ const st = bs(b), sc = sceneState(b); if(st.peek){ st.peek = false; render(); return; } if(sc.at > (b.street_first === false ? 0 : -1)){ sc.at--; render(); return; } }
   if(b && b.kind === "tool"){ const f = document.querySelector(".tool-frame"); if(f && f.contentWindow){ f.contentWindow.postMessage({lwStep: "back"}, "*"); return; } }
@@ -2558,7 +2787,7 @@ function render(){
   else main.innerHTML = bar + headHTML() + blockHTML(b) + fastHTML() + back + stepbarHTML();
   if(keepGrid){ const g = document.getElementById("gw-grid"); if(g) g.replaceWith(keepGrid); }
   pcRestore(pcs);
-  const st = side.scrollTop; side.innerHTML = box && D.boxes[box] ? fieldBoxHTML(D.boxes[box]) + sidePicHTML(b) : ""; side.scrollTop = st;
+  const st = side.scrollTop; side.innerHTML = box && D.boxes[box] ? fieldBoxHTML(D.boxes[box]) + sidePicHTML(b) + (b && b.kind === "game" && b.piece === "secret" && secSt(b).ph === 2 ? secAllHTML(b) : "") : ""; side.scrollTop = st;
   wireBox(side); wireBoxHidden(side);
   S.enter = false; if(b && b.kind === "cards") deckOf(b).fresh = false;
   wire(main); wireLive(main, p => { const m = String(p).match(/^questions\.(\d+)\.(\d+)$/); if(!m) return ""; const bl = BLOCKS.find(x => x._pid === +m[1]); return bl ? bl.items[+m[2]] || "" : ""; });
@@ -2616,8 +2845,15 @@ function wire(root){
   /* tools 16: Fix it and the game */
   on("[data-fxchip]", x => { const F = fixPh(b); if(x.dataset.fxchip === b.place.answer){ F.solved = true; F.wrong = null; render(); }
     else { F.wrong = x.dataset.fxchip; render(); const c = root.querySelector(`[data-fxchip="${CSS.escape(F.wrong)}"]`); if(c){ c.classList.remove("shake"); void c.offsetWidth; c.classList.add("shake"); } } });
+  on("[data-fxpick]", x => { const F = fixPh(b); F.sel = x.dataset.fxpick; F.wrong = null; render(); });
+  on("[data-fxslot]", x => { const F = fixPh(b), pl = b.place, sel = pl.chips.length === 1 ? pl.chips[0] : F.sel, k = +x.dataset.fxslot; if(!sel) return;
+    if(sel === pl.answer && k === (pl.slot || 0)){ F.solved = true; F.wrong = null; F.wrongSlot = null; render(); return; }
+    if(sel !== pl.answer){ F.wrong = sel; F.wrongSlot = null; } else F.wrongSlot = k;
+    render(); const el = root.querySelector(`[data-fxslot="${k}"]`); if(el){ el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); } });
   on("[data-fxa]", x => { const F = fixPh(b), k = +x.dataset.fxa; if(F.ph === 2 + 2 * k) F.ph++; render(); });
-  if(b.kind === "game") gameMount(b, root.querySelector(`[data-game="${b._id}"]`));
+  if(b.kind === "game" && b.piece !== "secret") gameMount(b, root.querySelector(`[data-game="${b._id}"]`));
+  if(b.kind === "sort") wireSort(b, root);   /* tools 17 */
+  if(b.kind === "game" && b.piece === "secret") wireSecret(b, root);
   on("[data-lookflip]", () => { bs(b).lookOpen = true; render(); });
   wireGroupDots();
   /* questions */

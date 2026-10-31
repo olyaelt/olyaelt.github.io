@@ -168,6 +168,9 @@
 .gm-list.check button.on{background:#BFF2B8}
 .gm-cover{display:flex;flex-wrap:wrap;gap:8px}
 .gm-cover span{width:6.5rem;height:2.2rem;border-radius:10px;border:3px solid #1D1D1B;background:#8BE2FF;box-shadow:0 3px 0 #1D1D1B}
+.gm-lists{display:grid;gap:8px}
+.gm-g{display:grid;gap:4px}
+.gm-h{margin:0;font-size:.8rem;font-weight:900;letter-spacing:.06em;color:#E8493F;text-transform:uppercase}
 
 /* 🧠 memory */
 .gmem{display:grid;grid-template-columns:auto minmax(13rem,1fr);gap:20px;align-items:start}

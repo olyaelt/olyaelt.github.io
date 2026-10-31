@@ -10,5 +10,6 @@
   "TQ": "tq.json"
  },
  "earlier": false,
- "listed": false
+ "listed": false,
+ "test": true
 }

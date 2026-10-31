@@ -1,0 +1,224 @@
+{
+ "blocks": [
+  {
+   "pid": 0,
+   "sig": "say how would you say these in english? take turns. then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "say three more. take turns, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "text part 1. dan is ill and has run out of things to watch. remember the missing words and say them. tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "text part 2. what does dan decide to watch? remember the missing words. tap the yellow and orange to check.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "cards which situation fits the phrase, a or b? why not the other one? then tap the card.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "cards say it another way with a phrase from the box. then tap the card.",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "cards our sentences. green = good, grey = could be better. how would you make it perfect english?",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "cards recommending: what we often say → what people usually say. how would you say it?",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "questions what have you been watching or reading? recommend or warn your partner off. use the box.",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "text part 1, the rest. what do zoe and marcus think of the long winter? remember the missing words. tap the yellow and orange to check.",
+   "gone": false
+  }
+ ],
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "a — it gets better and more interesting it really picks up. a) the first episodes are slow, but then it gets exciting. b) it starts brilliantly, but then it gets boring.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "b — it didn't interest me, so i stopped i just couldn't get into it. a) the cinema was full, so we couldn't get in. b) i watched two episodes, but it didn't grab me.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "a — all the excitement made me not want to watch it all the hype put me off. a) everyone said it was a masterpiece, so i didn't want to watch it. b) the music was so loud that i switched it off.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "b — about how something feels now, not how people look some of the jokes haven't aged well. a) the actors look much older now. b) an old comedy has jokes that feel wrong or awkward today.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "a — it brings back memories it takes me back. a) a film from your childhood reminds you of sunday evenings with your family. b) you take a dvd back to the library.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "b — you admit one good thing …, i'll give it that. a) you give your friend a dvd as a present. b) you didn't like the film, but you admit the music was great.",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "b — you understand it differently now i see it in a different light now. a) you watched it again on a bigger, brighter tv. b) you rewatched it as an adult and now you understand the parents.",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "a — a question about quality is it any good? a) you want a friend's opinion of a series before you watch it. b) you want to know if the series is suitable for children.",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "b — it's not worth your time honestly? i wouldn't bother. a) a noise outside doesn't disturb you. b) a friend asks if a film is worth watching, and you found it boring.",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "everyone at work keeps going on about it. everyone at work talks about it all the time. it's getting a bit much.",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "i gave up after episode three. i stopped watching after the third episode.",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "it really picks up in episode four. it was slow at first, but from episode four it's much better.",
+   "gone": false
+  },
+  {
+   "pid": 12,
+   "sig": "it's not as good as everyone says. people say it's brilliant, but i don't think so.",
+   "gone": false
+  },
+  {
+   "pid": 13,
+   "sig": "i've only seen bits of it. i've watched a few short clips, not the whole thing.",
+   "gone": false
+  },
+  {
+   "pid": 14,
+   "sig": "some of the jokes haven't aged well. some of the jokes feel wrong today.",
+   "gone": false
+  },
+  {
+   "pid": 15,
+   "sig": "it takes me back. it reminds me of when i was young.",
+   "gone": false
+  },
+  {
+   "pid": 16,
+   "sig": "honestly? i wouldn't bother. don't waste your time on it.",
+   "gone": false
+  },
+  {
+   "pid": 17,
+   "sig": "give it a try. watch an episode or two and see if you like it.",
+   "gone": false
+  },
+  {
+   "pid": 18,
+   "sig": "the music's good, i'll give it that. ok, the music is good. i admit that.",
+   "gone": false
+  },
+  {
+   "pid": 19,
+   "sig": "maybe all the hype spoiled it for me. весь этот хайп испортил впечатление do you think so? i found it a bit boring. maybe all the hype affect me negatively. hype — отличное слово! spoiled it for me — испортило удовольствие. put me off — оттолкнуло, отбило желание смотреть.",
+   "gone": false
+  },
+  {
+   "pid": 20,
+   "sig": "so now i see this film in a different light. пересмотрела — и теперь вижу фильм по-другому so now i watch this film with another eyes. with another eyes здесь не подходит. наш вариант: i see it in a different light now.",
+   "gone": false
+  },
+  {
+   "pid": 21,
+   "sig": "you can just enjoy it because it takes you back to your childhood. фильм из детства — пересматриваешь, и как будто снова там you can just enjoy it because you can get back to your childhood. it takes me back (to…) — возвращает в прошлое.",
+   "gone": false
+  },
+  {
+   "pid": 22,
+   "sig": "i haven't, actually. should i watch it? / is it any good? не смотрела — спрашиваешь, смотреть или нет i haven't, actually. maybe should i see that or no? i haven't, actually — отлично! в вопросе should — на первом месте, а or no не нужно. «стоит смотреть?» обычно спрашивают так: is it any good?",
+   "gone": false
+  },
+  {
+   "pid": 23,
+   "sig": "i recommend watching it with subtitles. советуешь смотреть с субтитрами i recommend to watch it with subtitles. recommend + -ing, не to.",
+   "gone": false
+  },
+  {
+   "pid": 24,
+   "sig": "i strongly recommend it. очень советуешь i strongly recommend to see. or: i highly recommend it.",
+   "gone": false
+  },
+  {
+   "pid": 25,
+   "sig": "i definitely recommend it. точно советуешь i definitely recommend this for you. без for you.",
+   "gone": false
+  },
+  {
+   "pid": 26,
+   "sig": "i honestly think you should give this series a try. советуешь другу попробовать сериал i honestly suggest you to give this series a try. suggest you to — так не говорят.",
+   "gone": false
+  },
+  {
+   "pid": 27,
+   "sig": "so you wouldn't recommend it? переспрашиваешь: значит, не советуешь? so you don't recommend to read it?",
+   "gone": false
+  },
+  {
+   "pid": 28,
+   "sig": "it's not really my thing. i would not recommend it. / honestly? i wouldn't bother. не советуешь — это не твоё it's not really my thing. i would not recommend you to watch it. recommend sb to do — редко и звучит официально.",
+   "gone": false
+  }
+ ],
+ "write": [],
+ "questions.8": [
+  {
+   "pid": 0,
+   "sig": "1 get ready (1 min): think of something you'd recommend, something you gave up on or wouldn't bother with, and an old favourite — has it aged well?",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 in pairs: have you seen / read …? is it any good? recommend it or warn your partner off. follow up on what your partner says.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "3 which is the worst: a slow start, a disappointing ending, or jokes that haven't aged well? give a reason for each.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "4 think of a series you gave up on — or a popular one lots of people give up on. give two reasons why it's hard to get into. is it worth a second try?",
+   "gone": false
+  }
+ ]
+}

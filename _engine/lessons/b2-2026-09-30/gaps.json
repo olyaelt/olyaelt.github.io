@@ -3,7 +3,11 @@
   {
    "s": "A",
    "p": [
-    "Hi Anna! It's been ages! How (1) ",
+    "Hi Anna! It's been ages! ",
+    {
+     "b": "How"
+    },
+    " (1) ",
     {
      "f": "",
      "r": "have you been"
@@ -85,12 +89,20 @@
   {
    "s": "B",
    "p": [
-    "Oh, you should go! And what (9) ",
+    "Oh, you should go! And ",
+    {
+     "b": "what"
+    },
+    " (9) ",
     {
      "f": "",
      "r": "have you been"
     },
-    " (you / be) up to?"
+    " (you / be) ",
+    {
+     "b": "up to"
+    },
+    "?"
    ]
   },
   {
@@ -114,7 +126,11 @@
      "f": "",
      "r": "haven't seen"
     },
-    " (not / see) you for ages! How are things?"
+    " (not / see) ",
+    {
+     "b": "you for ages"
+    },
+    "! How are things?"
    ]
   },
   {

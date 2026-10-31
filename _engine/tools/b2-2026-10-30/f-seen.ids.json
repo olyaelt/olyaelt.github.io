@@ -1,0 +1,58 @@
+{
+ "blocks": [
+  {
+   "pid": 0,
+   "sig": "say what would you say? take turns to say your answer. then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "game memo: look at the phrases for 40 seconds and try to remember them. then they disappear: take turns and say one each.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "sort sort it: say each line in english, then tap to check and put it in its box.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "fix fix it: say it right. then say the two lines with “only seen”.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "fix fix it: say it right. then ask the two questions with “any good”.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "game how to play: b has a secret card, and a guesses what's on it. then swap.",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "questions round 2: your own series and films. play the same game.",
+   "gone": false
+  }
+ ],
+ "cards": [],
+ "write": [],
+ "questions.6": [
+  {
+   "pid": 0,
+   "sig": "1 think of a series or film you loved — and one you gave up on or couldn't get into.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 your partner asks: have you seen…? is it any good? tell your partner about it, but don't use the box phrase — let them guess it.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "3 at the end, tell each other what you'll give a try — and what you won't bother with.",
+   "gone": false
+  }
+ ]
+}

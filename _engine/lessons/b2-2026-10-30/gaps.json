@@ -12,7 +12,10 @@
    {
     "s": "A",
     "p": [
-     "Have you seen the new Marvel series about Vision? Everyone's ",
+     "Have you seen the new Marvel series about Vision? ",
+     {
+      "b": "Everyone's "
+     },
      {
       "f": "t",
       "r": "alking"
@@ -22,7 +25,13 @@
       "f": "a",
       "r": "bout"
      },
-     " it. I'd ",
+     {
+      "b": " it"
+     },
+     ". ",
+     {
+      "b": "I'd "
+     },
      {
       "f": "r",
       "r": "eally"
@@ -54,7 +63,9 @@
       "f": "c",
       "r": "an"
      },
-     " you ",
+     {
+      "b": " you "
+     },
      {
       "f": "r",
       "r": "ecommend"
@@ -87,7 +98,9 @@
       "f": "S",
       "r": "o"
      },
-     " you ",
+     {
+      "b": " you "
+     },
      {
       "f": "w",
       "r": "ouldn't"
@@ -108,12 +121,17 @@
    {
     "s": "A",
     "p": [
-     "Well… I'd ",
+     "Well… ",
+     {
+      "b": "I'd "
+     },
      {
       "f": "r",
       "r": "ecommend"
      },
-     " the ",
+     {
+      "b": " the "
+     },
      {
       "f": "f",
       "r": "irst"
@@ -123,7 +141,10 @@
       "f": "f",
       "r": "ew"
      },
-     " seasons!"
+     {
+      "b": " seasons"
+     },
+     "!"
     ]
    },
    {
@@ -184,7 +205,9 @@
   "gloss": [
    {
     "p": [
-     "everyone's ",
+     {
+      "b": "everyone's "
+     },
      {
       "f": "t",
       "r": "alking"
@@ -194,14 +217,18 @@
       "f": "a",
       "r": "bout"
      },
-     " it"
+     {
+      "b": " it"
+     }
     ],
     "m": "",
     "ru": "все о нём говорят ('s = is)"
    },
    {
     "p": [
-     "I'd ",
+     {
+      "b": "I'd "
+     },
      {
       "f": "r",
       "r": "ecommend"
@@ -214,8 +241,7 @@
      " ",
      {
       "f": "",
-      "r": "/ˌrekəˈmend/",
-      "o": 1
+      "r": "/ˌrekəˈmend/"
      }
     ],
     "m": "",
@@ -227,7 +253,9 @@
       "f": "C",
       "r": "an"
      },
-     " you ",
+     {
+      "b": " you "
+     },
      {
       "f": "r",
       "r": "ecommend"
@@ -248,7 +276,9 @@
       "f": "S",
       "r": "o"
      },
-     " you ",
+     {
+      "b": " you "
+     },
      {
       "f": "w",
       "r": "ouldn't"
@@ -270,7 +300,9 @@
    },
    {
     "p": [
-     "the ",
+     {
+      "b": "the "
+     },
      {
       "f": "f",
       "r": "irst"
@@ -280,7 +312,9 @@
       "f": "f",
       "r": "ew"
      },
-     " seasons"
+     {
+      "b": " seasons"
+     }
     ],
     "m": "",
     "ru": "первые несколько сезонов"
@@ -291,7 +325,9 @@
       "f": "g",
       "r": "ive"
      },
-     " sth ",
+     {
+      "b": " sth "
+     },
      {
       "f": "",
       "r": "a"
@@ -312,7 +348,9 @@
       "f": "r",
       "r": "ecommended"
      },
-     " it ",
+     {
+      "b": " it "
+     },
      {
       "f": "",
       "r": "to"

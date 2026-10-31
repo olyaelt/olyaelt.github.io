@@ -1,0 +1,24 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex">
+<title>Your secret card</title><style>
+:root{--ground:#F7F1E1;--card:#FFFFFF;--ink:#1D1D1B;--muted:#6B6B6B;--blue:#0693E3}
+@media (prefers-color-scheme: dark){:root{--ground:#121416;--card:#1C1F23;--ink:#ECECEA;--muted:#A4A7AB;--blue:#1578C0}}
+*{box-sizing:border-box}body{margin:0;background:var(--ground);color:var(--ink);font:18px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh;display:grid;place-items:start center;padding:24px 16px}
+main{width:100%;max-width:440px;display:grid;gap:16px;text-align:center}h1{margin:0;font-size:1.5rem}
+button{font:inherit;font-weight:800;font-size:1.25rem;border:0;border-radius:14px;padding:16px 20px;background:var(--blue);color:#FFFFFF;cursor:pointer;width:100%}
+button.again{background:none;color:var(--blue);border:2px solid var(--blue);font-size:1.05rem;padding:12px}
+.card{background:#FFFFFF;color:#1D1D1B;border:3px solid #1D1D1B;border-radius:16px;box-shadow:0 5px 0 #1D1D1B;padding:18px;display:grid;gap:8px;text-align:left}
+.n{font-size:3rem;font-weight:900;line-height:1;color:#0693E3;text-align:center}.card p{margin:0;font-size:1.2rem;font-weight:700}
+.hint{margin:0;color:var(--muted)}.legal{font-size:.8rem;color:var(--muted)}.legal a{color:inherit}
+</style></head><body><main id="m"></main><script>
+const D = {"page": "b2-2026-10-30/f-seen", "phone": {"title": "Your secret card", "draw": "Draw a card", "hint": "Don't show it! Tell your partner what happened, in your own words.", "again": "Draw a new card"}, "cards": [["✈️ On a plane:", "📺 the man next to you was watching it.", "🔇 No sound. You saw a few scenes."], ["Episode 1 ✅", "Episode 2 ✅", "Episode 3? ❌ You stopped there. ⏹️"], ["😐 You tried and tried, but it never grabbed you.", "🎭 The actors were brilliant, though!"], ["Episodes 1–3: 😴 slow.", "Episode 4: 🤩 wow!", "Now you love it."], ["📣 Everyone loves it.", "You watched it all: 😑 meh."], ["📣📣📣 Everyone keeps talking about it.", "🙄 So you still haven't watched it."]]}, KEY = "secret-card-" + D.page;
+const get = () => { try{ return JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ return null; } }, put = v => { try{ localStorage.setItem(KEY, JSON.stringify(v)); }catch(e){} };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let st = get() || {left: [], cur: null};
+function draw(){ if(!st.left.length){ st.left = D.cards.map((_, i) => i).filter(i => i !== st.cur); for(let i = st.left.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [st.left[i], st.left[j]] = [st.left[j], st.left[i]]; } }
+  st.cur = st.left.shift(); put(st); render(); }
+function render(){ const c = st.cur != null ? D.cards[st.cur] : null;
+  document.getElementById("m").innerHTML = `<h1>${esc(D.phone.title)}</h1>` + (c ? `<div class="card"><div class="n">${st.cur + 1}</div>${c.map(l => `<p>${esc(l)}</p>`).join("")}</div><p class="hint">${esc(D.phone.hint)}</p><button class="again" id="b">${esc(D.phone.again)}</button>`
+    : `<button id="b">${esc(D.phone.draw)}</button><p class="hint">${esc(D.phone.hint)}</p>`) + `<p class="legal"><a href="../../impressum.html">Impressum</a> · <a href="../../datenschutz.html">Datenschutz</a></p>`;
+  document.getElementById("b").addEventListener("click", draw); }
+render();
+</script></body></html>

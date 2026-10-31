@@ -17,6 +17,42 @@ lw_css = open(os.path.join(T, 'lesson_work.css'), encoding='utf-8').read()
 lw_js = open(os.path.join(T, 'lesson_work.js'), encoding='utf-8').read()
 sticker = 'data:image/png;base64,' + base64.b64encode(open(os.path.join(T, 'sticker.png'), 'rb').read()).decode()
 js = lambda o: json.dumps(o, ensure_ascii=False).replace('</', '<\\/')
+# tools 17 (f-seen, the secret-card game): a QR code for the phone card, drawn here (OpenCV's encoder) as an inline SVG — the page makes no
+# outside requests. Without OpenCV the page just shows the link.
+def qr_svg(text):
+    try:
+        import cv2
+    except ImportError:
+        return ''
+    m = cv2.QRCodeEncoder.create().encode(text)
+    n = m.shape[0]
+    path = ''.join('M%d %dh1v1h-1z' % (x, y) for y in range(n) for x in range(n) if m[y][x] == 0)
+    return '<svg viewBox="-2 -2 %d %d" role="img" aria-label="QR code: the secret card on a phone"><rect x="-2" y="-2" width="%d" height="%d" fill="#FFFFFF"/><path d="%s" fill="#000000"/></svg>' % (n + 4, n + 4, n + 4, n + 4, path)
+# the phone page: one big button, a random card (no repeat until all were drawn, kept on the phone), only its front
+CARD_PAGE = """<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex">
+<title>__T__</title><style>
+:root{--ground:#F7F1E1;--card:#FFFFFF;--ink:#1D1D1B;--muted:#6B6B6B;--blue:#0693E3}
+@media (prefers-color-scheme: dark){:root{--ground:#121416;--card:#1C1F23;--ink:#ECECEA;--muted:#A4A7AB;--blue:#1578C0}}
+*{box-sizing:border-box}body{margin:0;background:var(--ground);color:var(--ink);font:18px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh;display:grid;place-items:start center;padding:24px 16px}
+main{width:100%;max-width:440px;display:grid;gap:16px;text-align:center}h1{margin:0;font-size:1.5rem}
+button{font:inherit;font-weight:800;font-size:1.25rem;border:0;border-radius:14px;padding:16px 20px;background:var(--blue);color:#FFFFFF;cursor:pointer;width:100%}
+button.again{background:none;color:var(--blue);border:2px solid var(--blue);font-size:1.05rem;padding:12px}
+.card{background:#FFFFFF;color:#1D1D1B;border:3px solid #1D1D1B;border-radius:16px;box-shadow:0 5px 0 #1D1D1B;padding:18px;display:grid;gap:8px;text-align:left}
+.n{font-size:3rem;font-weight:900;line-height:1;color:#0693E3;text-align:center}.card p{margin:0;font-size:1.2rem;font-weight:700}
+.hint{margin:0;color:var(--muted)}.legal{font-size:.8rem;color:var(--muted)}.legal a{color:inherit}
+</style></head><body><main id="m"></main><script>
+const D = __D__, KEY = "secret-card-" + D.page;
+const get = () => { try{ return JSON.parse(localStorage.getItem(KEY) || "null"); }catch(e){ return null; } }, put = v => { try{ localStorage.setItem(KEY, JSON.stringify(v)); }catch(e){} };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let st = get() || {left: [], cur: null};
+function draw(){ if(!st.left.length){ st.left = D.cards.map((_, i) => i).filter(i => i !== st.cur); for(let i = st.left.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [st.left[i], st.left[j]] = [st.left[j], st.left[i]]; } }
+  st.cur = st.left.shift(); put(st); render(); }
+function render(){ const c = st.cur != null ? D.cards[st.cur] : null;
+  document.getElementById("m").innerHTML = `<h1>${esc(D.phone.title)}</h1>` + (c ? `<div class="card"><div class="n">${st.cur + 1}</div>${c.map(l => `<p>${esc(l)}</p>`).join("")}</div><p class="hint">${esc(D.phone.hint)}</p><button class="again" id="b">${esc(D.phone.again)}</button>`
+    : `<button id="b">${esc(D.phone.draw)}</button><p class="hint">${esc(D.phone.hint)}</p>`) + `<p class="legal"><a href="../../impressum.html">Impressum</a> · <a href="../../datenschutz.html">Datenschutz</a></p>`;
+  document.getElementById("b").addEventListener("click", draw); }
+render();
+</script></body></html>"""
 # each task type has its own mechanic (template); the lesson chat names the type in its handoff, and each new type is built and reviewed with Olya on its own
 TYPES = {'dice-council': 'council_template.html', 'say-it-another-way': 'cards_template.html', 'dice-situations': 'situations_template.html',
          'situation-cards': 'situation_cards_template.html',   # tools 12
@@ -143,6 +179,12 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
                         d['embeds'][b['page']] = {'title': ed['title'], 'chats': {str(pid): x.get('contact', '') for pid, x in zip(ep, ed['scenes'])}}
                 if b.get('kind') == 'picture' and b.get('img'):
                     shutil.copyfile(os.path.join(T, lesson, b['img']), os.path.join(out_dir, b['img']))
+                if b.get('kind') == 'game' and b.get('piece') == 'secret' and b.get('phone'):   # tools 17: the phone card
+                    b['_cardUrl'] = 'https://olyaelt.github.io/tools/%s/%s-card.html' % (lesson, name)
+                    b['_qr'] = qr_svg(b['_cardUrl'])
+                    open(os.path.join(out_dir, name + '-card.html'), 'w', encoding='utf-8').write(
+                        CARD_PAGE.replace('__T__', b['phone']['title']).replace('__D__', js({'page': lesson + '/' + name, 'phone': b['phone'], 'cards': [c['front'] for c in b['cards']]})))
+                    built.append('tools/%s/%s-card.html' % (lesson, name))
                 if b.get('kind') == 'scenes':   # Maple Road scene by scene (handoff 30.10 15:15): the street and each close-up
                     for im in [b.get('street')] + [x.get('img') for x in b.get('scenes', [])]:
                         if im: shutil.copyfile(os.path.join(T, lesson, im), os.path.join(out_dir, im))

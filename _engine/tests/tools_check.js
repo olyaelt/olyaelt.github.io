@@ -109,10 +109,12 @@ const {chromium} = require('playwright'); const path = require('path');
   { const p = await page('tools/c1-schools/council-1.html', {scheme: 'dark'}); await p.click('[data-roll="0"]'); await p.waitForTimeout(100); await p.locator('.dot').first().click(); await shot(p, 'council-dark'); }
   // ---- council, Part 2: situation, box hidden until Peek, play every subject
   { const p = await page('tools/c1-schools/council-2.html');
-    out.p2 = {situation: (await p.locator('.situation').innerText()).slice(0, 40), boxBefore: await p.locator('.box').count(), extra: await p.locator('.extra').innerText()};
-    await p.click('[data-peek]'); out.p2.boxAfterPeek = await p.locator('.box').count(); await shot(p, 'council2-peek');
-    await p.click('[data-box-toggle]'); out.p2.hiddenAgain = await p.locator('.box').count() === 0;
-    expect('part 2 peek', out.p2.boxBefore === 0 && out.p2.boxAfterPeek === 1 && out.p2.hiddenAgain);
+    // her 31.10 (council-2 is the first council the group plays, council-1 was never done in class): the box is on screen from the start,
+    // no "Use two phrases you didn't use last time", no 👀 Peek; the situation is the 📍 chip on the title line, and it opens
+    out.p2 = {box: await p.locator('.box').count(), extra: await p.locator('.extra').count(), peek: await p.locator('[data-peek]').count(), chip: await p.locator('.sit-fold summary').innerText().catch(() => '')};
+    await p.click('.sit-fold summary'); out.p2.situation = (await p.locator('.sit-fold p').innerText()).slice(0, 40); await shot(p, 'council2-box');
+    expect('part 2: the box from the start, no extra line, no peek; the situation in its chip', out.p2.box === 1 && out.p2.extra === 0 && out.p2.peek === 0 && /The situation/.test(out.p2.chip) && /^An international school/.test(out.p2.situation));
+    await p.click('.sit-fold summary');
     let guard = 0;
     // tools 6: every subject, with either example open, fits on a 1280×720 Zoom screen (Next subject included), so nobody has to scroll
     const fits = [];

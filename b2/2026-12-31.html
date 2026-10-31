@@ -6,6 +6,7 @@
 <style>body{margin:0}img{max-width:100%}</style>
 <meta name="hw-unlisted" content="1">
 <meta name="robots" content="noindex">
+<meta name="hw-test" content="1">
 <title>Test page (please ignore)</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="../fonts/homework-sans.css">
@@ -292,7 +293,7 @@ details.summary[open] summary::after{content:"Hide"}
 /* engine 48 (her read-through 30.10: blue on yellow was hard on the eyes): an opened gap is one chunk, the first letters and the rest
    black bold on the yellow, in dark mode too (engine 46 had made the rest blue) */
 .chunk.open .gap .f{color:var(--hl-ink);background:var(--hl);border-radius:2px 0 0 2px}
-.dlg b.given{color:var(--answer)}
+.dlg b.given{color:var(--ink)}   /* engine 54 (checklist 11.25, her catch 31.10): the given words of a chunk are black bold like the opened gap, so the chunk reads as one bold unit */
 /* engine 30: "!" after an opened gap = "I want to revise this" (kept on this device) */
 /* engine 32 (her decision 27.10): a green bookmark, not a second round sign next to "?" — "?" asks Olya, the bookmark is for me */
 .rev{display:inline-grid;place-items:center;width:1.25em;height:1.5em;margin:0 1px 0 2px;padding:0;border:0;border-radius:4px;background:none;color:var(--done);vertical-align:-.3em;cursor:pointer}
@@ -370,7 +371,7 @@ details.summary[open] summary::after{content:"Hide"}
 .reveal:not(.open) *{color:transparent !important}   /* marked answers stay hidden until tapped */
 .reveal.open .pp,.reveal.open .g{color:#0000FF}.reveal.open .ps{color:#C00000}   /* on yellow: the slide colours, in dark mode too */
 .small{font-size:.9rem;color:var(--muted)}
-s{color:var(--muted)}
+s{color:var(--strike);text-decoration:line-through;text-decoration-thickness:2px}   /* engine 52: every <s> = the grey strike (her rule 4.43) */
 
 /* share and ask */
 .convo{display:grid;gap:12px}
@@ -900,7 +901,7 @@ const TASKS = [
 ];
 
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "52";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "54";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -1733,6 +1734,10 @@ function wireNav(onCheck){
 let lastDone = null;
 function finish(t){ setMark(t.id, true); lastDone = t; lastFlagged = Object.values(flags[t.id]||{}); flushFlags(); }
 
+/* engine 52 (B2 fixes 31.10 13:50, her rule 4.43: «обязательно серым и зачёркнутым»): in a note or a why line, ~~a wrong form~~ is the light
+   grey strike (as in the feedback), **bold** stays bold; strikeMd does the same to a note that is already HTML */
+const strikeMd = h => String(h == null ? "" : h).replace(/~~(.+?)~~/g, '<s class="fb-del">$1</s>');
+const noteMd = t => strikeMd(esc(t).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>"));
 /* ---------- gapped dialogue ---------- */
 let GNK = 0;   /* engine 43: ids that tie a gap to its red note */
 function gapLineHTML(line){
@@ -1750,7 +1755,7 @@ function gapLineHTML(line){
       }
       const nk = ns.length ? ++GNK : 0;
       html += `<span class="chunk" role="button" tabindex="0" aria-label="Show the missing words"${nk?` data-nk="${nk}"`:""}>${chunk}</span>`;
-      if(nk) notes += `<span class="gap-n" data-nk="${nk}" hidden>${esc(ns.join(" · ")).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>")}</span>`;   /* **key word** bold (engine 46) */
+      if(nk) notes += `<span class="gap-n" data-nk="${nk}" hidden>${noteMd(ns.join(" · "))}</span>`;   /* **key word** bold (engine 46), ~~wrong form~~ grey struck (engine 52) */
     } else if(typeof x === "object" && "b" in x){ html += `<b class="given">${esc(x.b)}</b>`; i++; }   /* given words: blue bold, as the TZ data says (engine 46) */
     else if(typeof x === "object" && "ipa" in x){ html += `<span class="ipa${x.o?" o":""}">${esc(x.ipa)}</span>`; i++; }   /* engine 44: shown IPA (a glossary that helps) */
     else { html += esc(x); i++; }
@@ -2030,7 +2035,7 @@ function renderRewrite(st, count, pct){
         `<input id="rw" class="gap-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="Type the missing part" placeholder="type or say it" value="${esc(typed[key]||"")}">`}${hint}${br(r.post)}${checked?markBtn(String(stepIdx), plainText(r.pre + r.a + r.post))+bmBtn(curS(), 0):""}</p>
       ${checked?markHint()+revHint():""}
       ${yours}
-      ${checked?`<p class="note">${r.n}</p>`:""}
+      ${checked?`<p class="note">${strikeMd(r.n)}</p>`:""}
     </div>${(checked||st.boxAlways)&&st.box?box(st.box):""}`;   /* boxAlways (engine 49): the box beside it from the start, when the instruction says "use the box" */
   const instr = st.first ? (st.instrFirst || "Rewrite the sentence. Use the word in capitals. Type the missing part or say it aloud, then tap Check.") : (st.instr || "Rewrite the sentence.");
   shell({count, pct, instr, stageHTML: body, withBox: (checked||st.boxAlways) && !!st.box, actionsHTML: navButtons()});
@@ -2085,7 +2090,7 @@ function renderFix(st, count, pct){
   }
   const dflt = it.kind === "place" ? "Put the word in the right place: tap a ▢, then the word — or drag the word." : "Tap every possible option. Then tap Check.";
   shell({count, pct, instr: st.instr || dflt,
-    stageHTML: `<div class="panel fx ${checked ? "checked" : ""}">${st.card ? fixCardHTML(st.card, st.cardFirst !== false) : ""}${inner}${checked ? markHint() + revHint() : ""}${checked && it.n ? `<p class="note">${esc(it.n)}</p>` : ""}</div>`,
+    stageHTML: `<div class="panel fx ${checked ? "checked" : ""}">${st.card ? fixCardHTML(st.card, st.cardFirst !== false) : ""}${inner}${checked ? markHint() + revHint() : ""}${checked && it.n ? `<p class="note">${noteMd(it.n)}</p>` : ""}</div>`,
     actionsHTML: navButtons(it.kind === "place" ? "Show the answer" : "Check")});
   wireNav(() => renderTaskKeep());
   if(checked) return;
@@ -2143,7 +2148,7 @@ function renderSayit(st, count, pct){
       <div class="panel">
         <div class="say">
           ${s.rows.map((row,i)=> st._rows && !st._rows.has(i) ? "" : `<div class="say-row"><span class="q">${row[0]}</span>
-            <span class="say-a"><button class="reveal ${checked?"open":""}" data-r="${i}" aria-label="Show the English">${s.html ? row[1] : esc(row[1])}</button>${markBtn(stepIdx+"-"+i, s.html ? plainText(row[1]) : row[1])}${bmBtn(curS(), i)}</span>${checked&&row[2]?`<p class="small say-note">${row[2]}</p>`:""}</div>`).join("")}
+            <span class="say-a"><button class="reveal ${checked?"open":""}" data-r="${i}" aria-label="Show the English">${s.html ? row[1] : esc(row[1])}</button>${markBtn(stepIdx+"-"+i, s.html ? plainText(row[1]) : row[1])}${bmBtn(curS(), i)}</span>${checked&&row[2]?`<p class="small say-note">${strikeMd(row[2])}</p>`:""}</div>`).join("")}
         </div>
         ${checked?markHint()+revHint():""}
         ${checked&&s.note?`<p class="small">${s.note}</p>`:""}
@@ -2182,7 +2187,7 @@ function renderSort(st, count, pct){
       stageHTML: `<div class="panel sort done"><div class="sort-pats sum">${pats.map(p => `<div class="sp"><span class="sp-en">${esc(p.en)}</span><span class="sp-ru">${esc(p.ru)}</span>
         <ul class="sp-list">${inPat(p.id).map(x => `<li>${sortBold(x.en, p.id)} ${markBtn(stepIdx + "-" + x.i, x.en)}${bmBtn(curS(), x.i)}</li>`).join("")}</ul></div>`).join("")}</div>
         ${markHint()}${revHint()}
-        ${D.end && !current._once ? `<div class="sort-end"><p class="se-q">${esc(D.end.q)}</p><details class="se-a"><summary>Tap to see</summary><p>${esc(D.end.a)}</p></details></div>` : ""}
+        ${D.end && !current._once ? `<div class="sort-end"><p class="se-q">${esc(D.end.q)}</p><details class="se-a"><summary>Tap to see</summary><p>${noteMd(D.end.a)}</p></details></div>` : ""}
         <p class="sort-again"><button class="linklike" data-sort-again>↺ Do it again</button></p></div>`,
       withBox: false, actionsHTML: `<button class="btn" id="prev">Back</button><button class="btn primary grow" id="go">${stepIdx === current.steps.length - 1 ? "Finish" : "Next"}</button>`});
     /* Back = the last card again (her 31.10: "why is Back grey?"); Do it again = from the first card */
@@ -2200,14 +2205,14 @@ function renderSort(st, count, pct){
   shell({count, pct, instr: D.intro || st.instr || "Say each sentence in English, then sort it into its pattern.",   /* engine 52: the data's intro on top */
     stageHTML: `<div class="panel sort"><div class="sort-pats">${pats.map(p => { const xs = inPat(p.id);
         return `<button class="sp${S.open && !S.landed && it.mode === "hint" && p.id === it.p ? " glow" : ""}" data-sp="${p.id}" aria-label="${esc(p.en)} — ${esc(p.ru)}"><span class="sp-en">${esc(p.en)}</span><span class="sp-ru">${esc(p.ru)}</span>
-          ${xs.length ? `<span class="sp-c">${xs.length}</span>` : ""}<span class="sp-list">${xs.map(x => `<span>${esc(x.en)}</span>`).join("")}</span>${S.why && S.why.p === p.id ? `<span class="sp-why">${esc(S.why.t)}</span>` : ""}</button>`; }).join("")}</div>
+          ${xs.length ? `<span class="sp-c">${xs.length}</span>` : ""}<span class="sp-list">${xs.map(x => `<span>${esc(x.en)}</span>`).join("")}</span>${S.why && S.why.p === p.id ? `<span class="sp-why">${noteMd(S.why.t)}</span>` : ""}</button>`; }).join("")}</div>
       <div class="sort-card${S.open ? " open" : ""}${S.landed ? " landed" : ""}${S.fresh ? " in" : ""}" data-scard>
         <span class="sc-n">${S.at + 1} of ${items.length}</span>
         <p class="sc-ru">${esc(it.ru)}</p>
         <p class="sc-en-row"><button class="reveal ${S.open ? "open" : ""}" data-sen aria-label="${S.open ? "The English" : "Show the English"}" ${S.landed ? `style="visibility:hidden"` : ""}>${esc(it.en)}</button>${S.open ? markBtn(stepIdx + "-" + it.i, it.en) + bmBtn(curS(), it.i) : ""}</p>
-        ${S.open && it.or ? `<p class="sc-or">or: ${esc(it.or)}</p>` : ""}
+        ${S.open && it.or ? `<p class="sc-or">or: ${noteMd(it.or)}</p>` : ""}
         <p class="sc-ask">${ask}</p>
-        ${S.wrong ? `<p class="sc-why">${esc(S.wrong)}</p>` : ""}
+        ${S.wrong ? `<p class="sc-why">${noteMd(S.wrong)}</p>` : ""}
       </div>${S.open ? markHint() + revHint() : ""}</div>`,
     withBox: false, actionsHTML: `<button class="btn" id="prev">Back</button>
           <button class="btn primary grow" id="go" ${S.open && !S.landed ? "disabled" : ""}>${goLabel}</button>`});

@@ -9,7 +9,10 @@
   {
    "s": "Tom",
    "p": [
-    "Just (1) ",
+    {
+     "b": "Just"
+    },
+    " (1) ",
     {
      "f": "",
      "r": "a heads-up"
@@ -24,7 +27,11 @@
      "f": "",
      "r": "Stuck in"
     },
-    " (stuck) traffic again 🙄"
+    " (stuck) ",
+    {
+     "b": "traffic"
+    },
+    " again 🙄"
    ]
   },
   {
@@ -46,12 +53,24 @@
      "f": "",
      "r": "has been delayed by"
     },
-    " (delay) 20 minutes, so I'm (6) ",
+    " (delay) ",
+    {
+     "b": "20 minutes"
+    },
+    ", so ",
+    {
+     "b": "I'm"
+    },
+    " (6) ",
     {
      "f": "",
      "r": "running"
     },
-    " (run) about half an hour late. Sorry, guys! 😩"
+    " (run) about ",
+    {
+     "b": "half an hour late"
+    },
+    ". Sorry, guys! 😩"
    ]
   },
   {
@@ -68,7 +87,11 @@
      "f": "",
      "r": "might be a bit late"
     },
-    " (might / a bit) too — my meeting is (8) ",
+    " (might / a bit) too — ",
+    {
+     "b": "my meeting is"
+    },
+    " (8) ",
     {
      "f": "",
      "r": "running over"
@@ -84,7 +107,11 @@
      "f": "",
      "r": "Me too"
     },
-    " (too), probably. Still at work — my boss wants \"a quick chat\" 🙄"
+    " (too), ",
+    {
+     "b": "probably"
+    },
+    ". Still at work — my boss wants \"a quick chat\" 🙄"
    ]
   },
   {
@@ -107,12 +134,20 @@
   {
    "s": "Lena",
    "p": [
-    "That's so unfair 😅 I'll (11) ",
+    "That's so unfair 😅 ",
+    {
+     "b": "I'll"
+    },
+    " (11) ",
     {
      "f": "",
      "r": "be there in"
     },
-    " (there) ten — save me some bread!"
+    " (there) ",
+    {
+     "b": "ten"
+    },
+    " — save me some bread!"
    ]
   },
   {
@@ -142,7 +177,11 @@
      "f": "",
      "r": "for the last"
     },
-    " two weeks!"
+    " ",
+    {
+     "b": "two weeks"
+    },
+    "!"
    ]
   },
   {
@@ -158,7 +197,11 @@
      "f": "",
      "r": "in / for the last"
     },
-    " month."
+    " ",
+    {
+     "b": "month"
+    },
+    "."
    ]
   },
   {
@@ -180,7 +223,11 @@
      "f": "",
      "r": "over / in the last"
     },
-    " few weeks."
+    " ",
+    {
+     "b": "few weeks"
+    },
+    "."
    ]
   },
   {
@@ -196,7 +243,11 @@
      "f": "",
      "r": "over / in the last"
     },
-    " few months — they're building a new bridge."
+    " ",
+    {
+     "b": "few months"
+    },
+    " — they're building a new bridge."
    ]
   },
   {
@@ -207,7 +258,11 @@
      "f": "",
      "r": "Last"
     },
-    " week I (10) ",
+    " ",
+    {
+     "b": "week"
+    },
+    " I (10) ",
     {
      "f": "",
      "r": "was"
@@ -228,7 +283,11 @@
      "f": "",
      "r": "the last"
     },
-    " few weeks (13) ",
+    " ",
+    {
+     "b": "few weeks"
+    },
+    " (13) ",
     {
      "f": "",
      "r": "have been"

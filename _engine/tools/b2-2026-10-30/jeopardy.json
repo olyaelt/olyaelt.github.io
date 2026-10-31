@@ -49,9 +49,8 @@
   {
    "col": "Vocabulary",
    "value": 300,
-   "page": null,
-   "title": "Have you seen it?",
-   "later": true
+   "page": "f-seen",
+   "title": "Have you seen it?"
   },
   {
    "col": "Grammar",

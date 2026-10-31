@@ -1,0 +1,478 @@
+{
+ "type": "revision-field",
+ "file": "f-seen",
+ "board": {
+  "col": "Vocabulary",
+  "value": 300
+ },
+ "title": "Have you seen it?",
+ "boxes": {
+  "BOX": [
+   {
+    "h": "HAVE YOU SEEN IT?",
+    "items": [
+     "Everyone **keeps going on about** it.",
+     "I've **only seen bits of** it.",
+     "I **gave up after** episode 3.",
+     "I **couldn't get into** it."
+    ]
+   },
+   {
+    "h": "WHAT'S IT LIKE?",
+    "items": [
+     "It **really picks up** in episode 4.",
+     "It's **not as good as everyone says**.",
+     "**All the hype put me off.**",
+     "The acting's great, **I'll give it that**."
+    ]
+   },
+   {
+    "h": "SHOULD I WATCH IT?",
+    "items": [
+     "**Is it any good?** · **Fair enough.**",
+     "**Give it a try.** · **I wouldn't bother.**"
+    ]
+   }
+  ]
+ },
+ "stages": [
+  {
+   "label": "📝 Test yourself",
+   "blocks": [
+    {
+     "kind": "say",
+     "instr": "What would you say? Take turns to say your answer. Then tap “Show the answer”.",
+     "task": [
+      "**1**  (([A colleague: “Have you seen The Last Lighthouse? Everyone's talking about it!” Your sister had it on a few times, so you saw a few scenes. You weren't impressed.]))",
+      "((You:)) • • •",
+      "**2**  (([A friend: “I tried Mars Base Seven, but the first episode was so slow!” You love it: the first three episodes are slow, then it gets really exciting.]))",
+      "((You:)) • • •"
+     ],
+     "answer": [
+      "**1**  (([A colleague: “Have you seen The Last Lighthouse? Everyone's talking about it!” Your sister had it on a few times, so you saw a few scenes. You weren't impressed.]))",
+      "((You:)) Honestly, I**'ve only seen bits of it**. But from what I've seen, it's **not as good as everyone says**.",
+      "((Только кусочки, не всё → bits of it. Или: I couldn't get into it. / I wouldn't bother.))",
+      "**2**  (([A friend: “I tried Mars Base Seven, but the first episode was so slow!” You love it: the first three episodes are slow, then it gets really exciting.]))",
+      "((You:)) Oh, stick with it! It **really picks up in episode four**.",
+      "((Становится интереснее → it picks up. Или: Give it another try!))"
+     ],
+     "answer_title": "Suggested answer",
+     "tip": "Say it aloud first, then tap “Show the answer”."
+    }
+   ]
+  },
+  {
+   "label": "🔁 Recall",
+   "blocks": [
+    {
+     "kind": "game",
+     "piece": "memo",
+     "seconds": 40,
+     "instr": "Memo: look at the phrases for 40 seconds and try to remember them. Then they disappear: take turns and say one each.",
+     "groups": [
+      {
+       "h": "HAVE YOU SEEN IT?",
+       "items": [
+        "Everyone keeps going on about it.",
+        "I've only seen bits of it.",
+        "I gave up after episode 3.",
+        "I couldn't get into it."
+       ]
+      },
+      {
+       "h": "WHAT'S IT LIKE?",
+       "items": [
+        "It really picks up in episode 4.",
+        "It's not as good as everyone says.",
+        "All the hype put me off.",
+        "The acting's great, I'll give it that."
+       ]
+      },
+      {
+       "h": "SHOULD I WATCH IT?",
+       "items": [
+        "Is it any good?",
+        "Fair enough.",
+        "Give it a try.",
+        "I wouldn't bother."
+       ]
+      }
+     ],
+     "items": [
+      "Everyone keeps going on about it.",
+      "I've only seen bits of it.",
+      "I gave up after episode 3.",
+      "I couldn't get into it.",
+      "It really picks up in episode 4.",
+      "It's not as good as everyone says.",
+      "All the hype put me off.",
+      "The acting's great, I'll give it that.",
+      "Is it any good?",
+      "Fair enough.",
+      "Give it a try.",
+      "I wouldn't bother."
+     ],
+     "tip": "Tap ▶ and look for 40 seconds. Then the phrases hide: take turns and say one each. At the end, tap the ones you remembered."
+    }
+   ]
+  },
+  {
+   "label": "🃏 Practice",
+   "blocks": [
+    {
+     "kind": "sort",
+     "instr": "Sort it: say each line in English, then tap to check and put it in its box.",
+     "summary": "Sort it: the four phrases",
+     "patterns": [
+      {
+       "id": "A",
+       "en": "I've only seen bits of it.",
+       "ru": "видел(а) только кусочки"
+      },
+      {
+       "id": "B",
+       "en": "I gave up after…",
+       "ru": "бросил(а) после…"
+      },
+      {
+       "id": "C",
+       "en": "…, I'll give it that.",
+       "ru": "это надо признать"
+      },
+      {
+       "id": "D",
+       "en": "I'll give it a try.",
+       "ru": "попробую"
+      }
+     ],
+     "items": [
+      {
+       "ctx": "Your friend says she's seen the horror film. You were there: she had her eyes closed half the time.",
+       "ru": "Да ты видела только кусочки — ты же полфильма сидела с закрытыми глазами!",
+       "en": "You've only seen bits of it! You had your eyes closed half the time!",
+       "p": "A",
+       "mode": "auto",
+       "why": "Some scenes here and there, not the whole film → bits of it."
+      },
+      {
+       "ctx": "A friend: “You have to watch The Last Lighthouse! It's slow at first, but it really picks up in episode four.”",
+       "ru": "Ладно, попробую!",
+       "en": "OK, I'll give it a try!",
+       "p": "D",
+       "mode": "hint",
+       "why": "You'll try it → give it a try."
+      },
+      {
+       "ctx": "A friend: “Did you finish the book I lent you?”",
+       "ru": "Честно? Я бросила после пятой главы.",
+       "en": "Honestly? I gave up after chapter five.",
+       "p": "B",
+       "mode": "free",
+       "why": "You started it and stopped → gave up after."
+      },
+      {
+       "ctx": "You don't like the new café near work: it's expensive. But the coffee there is really good.",
+       "ru": "Там дорого, но кофе отличный, это надо признать.",
+       "en": "It's expensive, but the coffee's great, I'll give it that.",
+       "p": "C",
+       "mode": "free",
+       "why": "You admit one good thing → I'll give it that."
+      },
+      {
+       "ctx": "A colleague: “Do you like Burnt Toast?” You watched episodes one and two, then stopped.",
+       "ru": "Я бросил после второй серии. Так и не смог втянуться.",
+       "en": "I gave up after episode two. I just couldn't get into it.",
+       "p": "B",
+       "mode": "free",
+       "why": "Two whole episodes, then you stopped → gave up after. Bits of it = only some scenes, here and there."
+      },
+      {
+       "ctx": "A colleague: “Have you seen Glass Island?” It was on TV at the gym while you were running.",
+       "ru": "Видела только кусочки — в спортзале, на беговой дорожке.",
+       "en": "I've only seen bits of it — at the gym, on the treadmill.",
+       "p": "A",
+       "mode": "free",
+       "why": "A few scenes on the gym TV → bits of it."
+      },
+      {
+       "ctx": "A colleague: “Come to the new yoga class on Tuesday. It's really fun!”",
+       "ru": "Звучит здорово. Попробую!",
+       "en": "Sounds great. I'll give it a try!",
+       "p": "D",
+       "mode": "free",
+       "why": "You'll try it → give it a try. Not only for series!"
+      },
+      {
+       "ctx": "Your friend loved a three-hour film. You found it far too long, but the music was beautiful.",
+       "ru": "Слишком длинный. Но музыка красивая, это надо признать.",
+       "en": "It was far too long. But the music was beautiful, I'll give it that.",
+       "p": "C",
+       "mode": "free",
+       "why": "You didn't like it, but you admit one good thing → I'll give it that."
+      }
+     ],
+     "end": {
+      "q": "Two whole episodes, then you stopped: bits of it or gave up after? And the coffee's great: I'll give it that or I'll give it a try?",
+      "a": "Gave up after (bits of it = only some scenes). I'll give it that = I admit one good thing; I'll give it a try = I'll try it."
+     },
+     "tip": "Say the line in English and tap to check. Then put it in its box: tap the box, or drag the card onto it."
+    },
+    {
+     "kind": "fix",
+     "instr": "Fix it: say it right. Then say the two lines with “only seen”.",
+     "big": "I've only seen bits of it.",
+     "red": "'ve",
+     "note": "Have не пропадает: I've seen, she's seen (she's = she has).",
+     "place": {
+      "tokens": "I ▢ only ▢ seen ▢ bits of it.",
+      "chips": [
+       "'ve"
+      ],
+      "answer": "'ve",
+      "slot": 0
+     },
+     "say": [
+      {
+       "q": "I haven't watched all of it — just a few scenes.",
+       "a": "I've only seen bits of it."
+      },
+      {
+       "q": "My sister hasn't watched the whole thing — just a few scenes.",
+       "a": "My sister's only seen bits of it."
+      }
+     ],
+     "tip": "Fix it: put the word in the right place. Then say the two lines and tap to check."
+    },
+    {
+     "kind": "fix",
+     "instr": "Fix it: say it right. Then ask the two questions with “any good”.",
+     "big": "Is it any good?",
+     "red": "Is",
+     "note": "Any good — как good, поэтому be: Is it any good? Was it any good?",
+     "place": {
+      "tokens": "▢ it any good?",
+      "chips": [
+       "Is",
+       "Does"
+      ],
+      "answer": "Is"
+     },
+     "say": [
+      {
+       "q": "Do you think the new season is good?",
+       "a": "Is the new season any good?"
+      },
+      {
+       "q": "Did you like the film you saw last night?",
+       "a": "Was the film any good?"
+      }
+     ],
+     "tip": "Fix it: choose the right word. Then ask the two questions and tap to check."
+    }
+   ]
+  },
+  {
+   "label": "💬 Use it",
+   "blocks": [
+    {
+     "kind": "game",
+     "piece": "secret",
+     "box": "BOX",
+     "instr": "How to play: B has a secret card, and A guesses what's on it. Then swap.",
+     "how": [
+      "**B:** draw a secret card on your phone. Don't show it!",
+      "**A:** choose a show — from the list or any you know — and ask: Have you seen…? Is it any good?",
+      "**B:** answer from your card, in your own words. Don't use the box phrase!",
+      "**A:** guess with a phrase from the box: So you've only seen bits of it?",
+      "**B:** Exactly! or Not exactly… Then **A** decides: I'll give it a try, or Fair enough, I won't bother. Swap!"
+     ],
+     "intro": {
+      "instr": "Here's how the game works. B has a secret card (this time you can see it). Complete the conversation. Then tap the yellow to check.",
+      "show": {
+       "icon": "🍳",
+       "title": "Burnt Toast",
+       "genre": "a cooking show"
+      },
+      "card": [
+       "🍳 You were cooking.",
+       "📺 Your sister was watching it.",
+       "👀 You looked up now and then."
+      ],
+      "lines": [
+       {
+        "s": "A",
+        "p": [
+         "Have you seen Burnt Toast? Everyone's ",
+         {
+          "f": "t",
+          "r": "alking about it"
+         },
+         ". ",
+         {
+          "f": "I",
+          "r": "s it any good"
+         },
+         "?"
+        ]
+       },
+       {
+        "s": "B",
+        "p": [
+         "Well, my sister watches it while I'm cooking dinner. I just look up now and then."
+        ]
+       },
+       {
+        "s": "A",
+        "p": [
+         "Ah, so you've ",
+         {
+          "f": "o",
+          "r": "nly seen bits of it"
+         },
+         "!"
+        ]
+       },
+       {
+        "s": "B",
+        "p": [
+         "Exactly. It's a bit silly, but it's really funny, I'll ",
+         {
+          "f": "g",
+          "r": "ive it that"
+         },
+         "."
+        ]
+       },
+       {
+        "s": "A",
+        "p": [
+         "OK, I'll ",
+         {
+          "f": "g",
+          "r": "ive it a try"
+         },
+         "!"
+        ]
+       }
+      ]
+     },
+     "shows": [
+      {
+       "icon": "🔦",
+       "title": "The Last Lighthouse",
+       "genre": "a crime drama"
+      },
+      {
+       "icon": "🚀",
+       "title": "Mars Base Seven",
+       "genre": "a sci-fi series"
+      },
+      {
+       "icon": "👑",
+       "title": "Lady Ashford's Secret",
+       "genre": "a costume drama"
+      },
+      {
+       "icon": "🐢",
+       "title": "Who Took the Tortoise?",
+       "genre": "a true crime documentary"
+      },
+      {
+       "icon": "😂",
+       "title": "Office Hours",
+       "genre": "a comedy"
+      },
+      {
+       "icon": "🌊",
+       "title": "Glass Island",
+       "genre": "a thriller"
+      },
+      {
+       "icon": "🏔️",
+       "title": "The Long Road North",
+       "genre": "a travel show"
+      },
+      {
+       "icon": "💘",
+       "title": "Second Date",
+       "genre": "a romantic comedy"
+      }
+     ],
+     "cards": [
+      {
+       "front": [
+        "✈️ On a plane:",
+        "📺 the man next to you was watching it.",
+        "🔇 No sound. You saw a few scenes."
+       ],
+       "guess": "So you've only seen bits of it?",
+       "reply": "Exactly."
+      },
+      {
+       "front": [
+        "Episode 1 ✅",
+        "Episode 2 ✅",
+        "Episode 3? ❌ You stopped there. ⏹️"
+       ],
+       "guess": "So you gave up after episode two?",
+       "reply": "Yes. Two was enough for me."
+      },
+      {
+       "front": [
+        "😐 You tried and tried, but it never grabbed you.",
+        "🎭 The actors were brilliant, though!"
+       ],
+       "guess": "So you couldn't get into it?",
+       "reply": "No, I couldn't. But the acting's great, I'll give it that."
+      },
+      {
+       "front": [
+        "Episodes 1–3: 😴 slow.",
+        "Episode 4: 🤩 wow!",
+        "Now you love it."
+       ],
+       "guess": "So it really picks up in episode four?",
+       "reply": "It does! Give it a try."
+      },
+      {
+       "front": [
+        "📣 Everyone loves it.",
+        "You watched it all: 😑 meh."
+       ],
+       "guess": "So it's not as good as everyone says?",
+       "reply": "No, it isn't. I wouldn't bother."
+      },
+      {
+       "front": [
+        "📣📣📣 Everyone keeps talking about it.",
+        "🙄 So you still haven't watched it."
+       ],
+       "guess": "So all the hype put you off?",
+       "reply": "It did! So… is it any good?"
+      }
+     ],
+     "check": "Guess B's secret card with a phrase from the box. Then tap its number to check.",
+     "phone": {
+      "title": "Your secret card",
+      "draw": "Draw a card",
+      "hint": "Don't show it! Tell your partner what happened, in your own words.",
+      "again": "Draw a new card"
+     },
+     "plain": "the slides: B secretly chooses a card 1–6; all six lie face up, each answer under a blue box",
+     "tip": "B draws a secret card on their phone. A asks about a show and guesses with the box. Tap the card's number to check. Then swap."
+    },
+    {
+     "kind": "questions",
+     "instr": "Round 2: your own series and films. Play the same game.",
+     "items": [
+      "**1**  Think of a series or film you loved — and one you gave up on or couldn't get into.",
+      "**2**  Your partner asks: Have you seen…? Is it any good? Tell your partner about it, but don't use the box phrase — let them guess it.",
+      "**3**  At the end, tell each other what you'll give a try — and what you won't bother with."
+     ],
+     "box": "BOX",
+     "fast": "If you're done: go back to the Memo in 🔁 Recall and say all twelve phrases. Then: what's everyone talking about this year? Have you seen it?"
+    }
+   ]
+  }
+ ]
+}

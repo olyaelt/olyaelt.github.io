@@ -1,1 +1,237 @@
-{"clocks": [{"s": "Fiona", "p": ["Oh, I almost forgot! ", {"f": "T", "r": "he"}, " ", {"f": "c", "r": "locks"}, " ", {"f": "g", "r": "o"}, " ", {"f": "b", "r": "ack"}, " on Sunday, so from next week our call will be an ", {"f": "h", "r": "our"}, " ", {"f": "l", "r": "ater"}, " ", {"f": "f", "r": "or"}, " ", {"f": "y", "r": "ou"}, "."]}, {"s": "Emre", "p": ["So one o'clock for me?"]}, {"s": "Fiona", "p": ["Yes — ten ", {"f": "m", "r": "y"}, " ", {"f": "t", "r": "ime"}, ", one ", {"f": "y", "r": "our"}, " ", {"f": "t", "r": "ime"}, ". ", {"f": "D", "r": "oes"}, " ", {"f": "t", "r": "hat"}, " ", {"f": "s", "r": "till"}, " ", {"f": "w", "r": "ork"}, " ", {"f": "f", "r": "or"}, " ", {"f": "y", "r": "ou"}, "?"]}, {"s": "Emre", "p": ["Hmm, that's my lunch break. Could we make it nine ", {"f": "y", "r": "our"}, " ", {"f": "t", "r": "ime"}, "?"]}, {"s": "Fiona", "p": ["Sure! My body will still think it's ten."]}, {"s": "Emre", "p": ["Ha! We don't change the clocks here, so I never remember: do you lose an hour or get an extra one?"]}, {"s": "Fiona", "p": ["We get one! An ", {"f": "e", "r": "xtra"}, " ", {"f": "h", "r": "our"}, " ", {"f": "o", "r": "f"}, " ", {"f": "s", "r": "leep"}, "."]}, {"s": "Emre", "p": ["Lucky you! See you next Friday, then — nine ", {"f": "y", "r": "our"}, " ", {"f": "t", "r": "ime"}, "."]}, {"s": "Fiona", "p": ["Nine ", {"f": "m", "r": "y"}, " ", {"f": "t", "r": "ime"}, ". Have a good weekend!"]}, {"s": "Emre", "p": ["You too. Enjoy ", {"f": "y", "r": "our"}, " ", {"f": "e", "r": "xtra"}, " ", {"f": "h", "r": "our"}, " ", {"f": "o", "r": "f"}, " ", {"f": "s", "r": "leep"}, "!"]}]}
+{
+ "clocks": [
+  {
+   "s": "Fiona",
+   "p": [
+    "Oh, I almost forgot! ",
+    {
+     "f": "T",
+     "r": "he"
+    },
+    " ",
+    {
+     "f": "c",
+     "r": "locks"
+    },
+    " ",
+    {
+     "f": "g",
+     "r": "o"
+    },
+    " ",
+    {
+     "f": "b",
+     "r": "ack"
+    },
+    " on Sunday, so from next week our call will be ",
+    {
+     "b": "an"
+    },
+    " ",
+    {
+     "f": "h",
+     "r": "our"
+    },
+    " ",
+    {
+     "f": "l",
+     "r": "ater"
+    },
+    " ",
+    {
+     "f": "f",
+     "r": "or"
+    },
+    " ",
+    {
+     "f": "y",
+     "r": "ou"
+    },
+    "."
+   ]
+  },
+  {
+   "s": "Emre",
+   "p": [
+    "So one o'clock for me?"
+   ]
+  },
+  {
+   "s": "Fiona",
+   "p": [
+    "Yes — ten ",
+    {
+     "f": "m",
+     "r": "y"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "ime"
+    },
+    ", one ",
+    {
+     "f": "y",
+     "r": "our"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "ime"
+    },
+    ". ",
+    {
+     "f": "D",
+     "r": "oes"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "hat"
+    },
+    " ",
+    {
+     "f": "s",
+     "r": "till"
+    },
+    " ",
+    {
+     "f": "w",
+     "r": "ork"
+    },
+    " ",
+    {
+     "f": "f",
+     "r": "or"
+    },
+    " ",
+    {
+     "f": "y",
+     "r": "ou"
+    },
+    "?"
+   ]
+  },
+  {
+   "s": "Emre",
+   "p": [
+    "Hmm, that's my lunch break. Could we make it nine ",
+    {
+     "f": "y",
+     "r": "our"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "ime"
+    },
+    "?"
+   ]
+  },
+  {
+   "s": "Fiona",
+   "p": [
+    "Sure! My body will still think it's ten."
+   ]
+  },
+  {
+   "s": "Emre",
+   "p": [
+    "Ha! We don't change the clocks here, so I never remember: do you lose an hour or get an extra one?"
+   ]
+  },
+  {
+   "s": "Fiona",
+   "p": [
+    "We get one! ",
+    {
+     "b": "An"
+    },
+    " ",
+    {
+     "f": "e",
+     "r": "xtra"
+    },
+    " ",
+    {
+     "f": "h",
+     "r": "our"
+    },
+    " ",
+    {
+     "f": "o",
+     "r": "f"
+    },
+    " ",
+    {
+     "f": "s",
+     "r": "leep"
+    },
+    "."
+   ]
+  },
+  {
+   "s": "Emre",
+   "p": [
+    "Lucky you! See you next Friday, then — nine ",
+    {
+     "f": "y",
+     "r": "our"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "ime"
+    },
+    "."
+   ]
+  },
+  {
+   "s": "Fiona",
+   "p": [
+    "Nine ",
+    {
+     "f": "m",
+     "r": "y"
+    },
+    " ",
+    {
+     "f": "t",
+     "r": "ime"
+    },
+    ". Have a good weekend!"
+   ]
+  },
+  {
+   "s": "Emre",
+   "p": [
+    "You too. Enjoy ",
+    {
+     "f": "y",
+     "r": "our"
+    },
+    " ",
+    {
+     "f": "e",
+     "r": "xtra"
+    },
+    " ",
+    {
+     "f": "h",
+     "r": "our"
+    },
+    " ",
+    {
+     "f": "o",
+     "r": "f"
+    },
+    " ",
+    {
+     "f": "s",
+     "r": "leep"
+    },
+    "!"
+   ]
+  }
+ ]
+}

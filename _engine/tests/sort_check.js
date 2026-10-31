@@ -32,7 +32,7 @@ const PAGE = 'b2/2026-10-30.html';
     for (let k = 0; k < 4; k++) { const want = await right(p); if (k) await p.click('[data-sen]'); await p.click(`[data-sp="${want}"]`); await p.waitForTimeout(400);
       if (k === 3) log.push({go: await goTxt(p)}); await p.click('#go'); await p.waitForTimeout(150); }
     log.push(await S(p));                                                                                   // 6: last go label, 7: done
-    out[tag] = {log, glow5, sum: await p.evaluate(() => ({boxes: document.querySelectorAll('.sort-pats.sum .sp').length, lines: [...document.querySelectorAll('.sort-pats.sum .sp')].map(x => x.querySelectorAll('li').length).join(), bold: !!document.querySelector('.sort-pats.sum li b'), q: (document.querySelector('.se-q') || {}).textContent || '', go: document.getElementById('go').textContent, w: document.documentElement.scrollWidth, vw: innerWidth, skip: /Show all the answers/.test(document.body.innerText)}))};
+    out[tag] = {log, glow5, sum: await p.evaluate(() => ({boxes: document.querySelectorAll('.sort-pats.sum .sp').length, lines: [...document.querySelectorAll('.sort-pats.sum .sp')].map(x => x.querySelectorAll('li').length).join(), bold: !!document.querySelector('.sort-pats.sum li b'), q: (document.querySelector('.se-q') || {}).textContent || '', struck: [...document.querySelectorAll('.se-a s.fb-del')].map(x => x.textContent).join('|'), go: document.getElementById('go').textContent, w: document.documentElement.scrollWidth, vw: innerWidth, skip: /Show all the answers/.test(document.body.innerText)}))};
     const L = log, M = out[tag].sum;
     expect(tag + ': the main button starts as Check', L[0].go === 'Check', L[0]);
     expect(tag + ': item 1 flies by itself and then WAITS (her 31.10: nothing moves on by itself)', L[1].n === 1 && L[1].at === 0 && L[1].go === 'Next card →', L[1]);
@@ -41,7 +41,7 @@ const PAGE = 'b2/2026-10-30.html';
     expect(tag + ': right box → it lands, the why line stays, Next card', L[4].at === 1 && L[4].n === 2 && L[4].why === 1 && L[4].go === 'Next card →', L[4]);
     expect(tag + ': item 5 (free): no glow; «Советую» brings the why line', glow5 === '' && L[5].at === 4 && /A colleague recommended it to you/.test(L[5].wrong), [glow5, L[5]]);
     expect(tag + ': the last card: "See all four patterns →", then the summary', L[6].go === 'See all four patterns →' && L[7].done, [L[6], L[7]]);
-    expect(tag + ': the summary: 4 boxes × 2 lines, the question, Finish; no "Show all the answers" anywhere', M.boxes === 4 && M.lines === '2,2,2,2' && M.bold && /never comes right after recommend/.test(M.q) && /Finish/.test(M.go) && !M.skip, M);
+    expect(tag + ': the summary: 4 boxes × 2 lines, the question, Finish; no "Show all the answers" anywhere', M.boxes === 4 && M.lines === '2,2,2,2' && M.bold && /never comes right after recommend/.test(M.q) && M.struck === 'recommend you|recommend me|recommend to see' && /Finish/.test(M.go) && !M.skip, M);
     expect(tag + ': no sideways scroll', M.w <= M.vw, M);
     if (shots) await p.screenshot({path: path.join(shots, `sort-${tag}-summary.png`)});
   }

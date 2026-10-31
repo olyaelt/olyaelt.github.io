@@ -184,8 +184,7 @@
    ]
   }
  ],
- "boxHidden": true,
- "extra": "Use two phrases you didn't use last time.",
+ "boxHidden": false,
  "report": "We've decided to cut … and … and add … and … . We'd rather keep … because …",
  "followUp": [
   "What did you decide about coding and essay writing? Give the head teacher (AmE: principal) two reasons.",

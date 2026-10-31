@@ -255,6 +255,93 @@ __LW_CSS__
 .fgame .gt-a .chk{justify-self:start;background:#7BC043;color:#FFFFFF;border-radius:6px;padding:1px 8px;font-size:.8rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase}
 .fgame .gt-a .bx{color:#0679BD;background:#D6E6FF;border-radius:4px;padding:0 4px}
 .fgame .gt-a .note{color:#5F6368;font-size:.95rem;font-weight:600}
+/* tools 17: Fix it with several ▢ */
+.fx-slotb{all:unset;box-sizing:border-box;cursor:pointer;display:inline-grid;place-items:center;min-width:1.6em;margin:0 .15em;padding:0 .2em;border:2px dashed var(--instr);border-radius:8px;color:var(--instr-text);font-weight:900;vertical-align:.05em;line-height:1.2}
+.fx-slotb:focus-visible{outline:3px solid var(--instr);outline-offset:2px}
+.fx-slotb.no{border-color:var(--again);color:var(--again)}
+.fx-slotb.shake{animation:fxshake .4s}
+.fx-chip.sel{background:var(--instr);color:#FFFFFF}
+.fx-how{align-self:center;color:var(--muted);font-size:1rem}
+.fx-try{margin:0;color:var(--again);font-weight:800}
+/* tools 17: 🗂 the sort in a field */
+.fsort{display:grid;gap:12px}
+.fs-pats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fs-pat{all:unset;box-sizing:border-box;cursor:pointer;display:grid;align-content:start;gap:2px;border:2px solid var(--line);border-radius:12px;background:var(--card);padding:8px 12px;min-height:3.9rem;position:relative;transition:border-color .3s,box-shadow .3s}
+.fs-pat:focus-visible{outline:3px solid var(--instr);outline-offset:2px}
+.fs-pat.glow,.fs-pat.over{border-color:var(--instr);box-shadow:0 0 0 4px rgba(6,147,227,.25)}
+.fs-pat.shake{animation:fxshake .4s;border-color:var(--again)}
+.fs-pat.pop{animation:pop .35s}
+.fs-en{font-weight:900;font-size:1.12rem;line-height:1.2}
+.fs-ru{font-size:.9rem;color:var(--muted);font-style:italic}
+.fs-c{position:absolute;top:6px;right:8px;min-width:1.4rem;height:1.4rem;border-radius:999px;background:var(--ok);color:var(--on-ok);font-size:.8rem;font-weight:900;display:grid;place-items:center}
+.fs-why{color:var(--ok);font-weight:700;font-size:.95rem;margin-top:2px}
+.fs-card{border:2px solid var(--line);border-radius:14px;background:var(--card);padding:12px 16px;display:grid;gap:6px;position:relative;touch-action:none}
+.fs-card.grab{cursor:grab;border-color:var(--instr)}
+.fs-card.landed{border-color:var(--ok)}
+.fs-n{position:absolute;top:8px;right:12px;color:var(--muted);font-size:.85rem;font-weight:700}
+.fs-ctx{margin:0;color:var(--muted);font-size:1rem;padding-right:3.5rem}
+.fs-ruline{margin:0;font-size:1.25rem;font-weight:800}
+.fs-enline{margin:0;font-size:1.25rem;font-weight:800;color:var(--flip-ink)}
+.fs-reveal{all:unset;box-sizing:border-box;cursor:pointer;justify-self:start;background:var(--hl);color:var(--hl-ink);border-radius:6px;padding:4px 14px;font-weight:700}
+.fs-ask{margin:0;color:var(--instr-text);font-weight:700}
+.fs-wrong{margin:0;color:var(--again);font-weight:700}
+.fs-ghost{font-size:1.25rem;font-weight:800;color:var(--flip-ink);background:var(--card);border-radius:8px}
+.fs-drag{box-shadow:0 10px 24px rgba(0,0,0,.25)}
+.fs-pats.sum .fs-pat{cursor:default}
+.fs-pats.sum ul{margin:6px 0 0;padding-left:1.1em}
+.fs-pats.sum li{font-size:1rem}
+.fs-end{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px 14px}
+.fs-q{margin:0 0 6px;font-weight:800}
+.fs-end summary{cursor:pointer;font-weight:800;color:var(--instr-text)}
+.fs-end details p{margin:6px 0 0}
+.fs-again{margin:0}
+.fsort .linklike,.sec-card .linklike{all:unset;box-sizing:border-box;cursor:pointer;color:var(--instr-text);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.sec-card .linklike{color:#0679BD}
+@media (max-width:560px){ .fs-pats{grid-template-columns:1fr 1fr} .fs-en{font-size:1rem} }
+@media (prefers-reduced-motion: reduce){ .fs-pat.shake,.fs-pat.pop,.fx-slotb.shake{animation:none} }
+/* tools 17: 🤫 the secret-card game */
+.sec-intro,.sec-play,.sec-howbox{display:grid;gap:12px}
+.sec-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:12px;align-items:stretch}
+.sec-poster{display:grid;place-items:center;align-content:center;gap:2px;text-align:center;border:3px solid #1D1D1B;border-radius:14px;background:#FFF3C4;color:#1D1D1B;box-shadow:0 4px 0 #1D1D1B;padding:10px}
+.sec-poster .sec-ic{font-size:2.2rem;line-height:1}
+.sec-poster b{font-size:1.25rem}
+.sec-card{border:3px solid #1D1D1B;border-radius:14px;background:#FFFFFF;color:#1D1D1B;box-shadow:0 4px 0 #1D1D1B;padding:10px 14px;display:grid;gap:4px;align-content:start}
+.sec-card p{margin:0;font-size:1.08rem;font-weight:700}
+.sec-lbl{font-size:.75rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#E8493F}
+.sec-chat p{margin:0 0 6px}
+.sec-how{margin:0;padding-left:1.4em;display:grid;gap:6px;font-size:1.08rem}
+.sec-go{margin:0;color:var(--instr-text);font-weight:700}
+.sec-phone{display:flex;gap:14px;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:8px 12px}
+.sec-phone svg{width:112px;height:112px;flex:none;background:#FFFFFF;border-radius:6px}
+.sec-open .sec-phone{align-items:flex-start}
+.btn.slim.on{background:var(--instr);color:#FFFFFF}
+.sec-ph-t{margin:0 0 4px;font-weight:700}
+.sec-ph-l{margin:0;font-weight:800;color:var(--instr-text);word-break:break-all;font-size:.95rem}
+.sec-turn{margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:1.05rem}
+.sec-sw{color:var(--muted);font-size:.9rem}
+.sec-shows{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.sec-show{display:grid;grid-template-columns:auto 1fr;column-gap:8px;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:10px;padding:2px 10px;line-height:1.12}
+.sec-show .sec-ic{grid-row:span 2;font-size:1.35rem}
+.sec-show b{font-size:.95rem}
+.sec-show i{font-size:.8rem;color:var(--muted)}
+.sec-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sec-nl{font-weight:800}
+.sec-area{min-height:12.4rem}
+.sec-back{justify-self:start;margin-top:2px}
+.sec-nums{display:grid;grid-template-columns:repeat(6,3.2rem);gap:8px}
+.sec-num{all:unset;box-sizing:border-box;cursor:pointer;height:3.7rem;border:3px solid #1D1D1B;border-radius:10px;background:#0693E3;color:#FFFFFF;font-weight:900;font-size:1.45rem;display:grid;place-items:center;box-shadow:0 3px 0 #1D1D1B;background-image:radial-gradient(circle,#FFFFFF44 1.6px,transparent 2px);background-size:12px 12px}
+.sec-num:focus-visible{outline:3px solid var(--instr);outline-offset:3px}
+.sec-num.seen{background-color:#7FB8E0}
+.sec-num.on{background:#FFF8C4;color:#1D1D1B}
+.sec-open .sec-card{animation:ansIn .3s ease-out}
+.sec-guess{margin:4px 0 0;color:#0679BD;font-weight:900}
+.sec-reply{margin:0;font-weight:700}
+.sec-wait{margin:0;color:var(--muted);font-size:1.05rem;padding-top:6px}
+.sec-phline{margin:0}
+.sec-all{margin-top:10px;border-top:2px dashed var(--line);padding-top:8px;color:var(--muted)}
+.sec-all summary{cursor:pointer;font-weight:700}
+.sec-allc{color:var(--ink);font-size:.95rem;margin:6px 0}
+@media (max-width:640px){ .sec-pair,.sec-shows{grid-template-columns:1fr} .sec-nums{grid-template-columns:repeat(3,3.2rem)} }
 </style>
 </head>
 <body>
@@ -279,7 +366,8 @@ const mk = s => esc(s == null ? "" : s)
   .replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>')
   .replace(/\(\((.+?)\)\)/g, '<span class="ctx">$1</span>')
   .replace(/&lt;g&gt;(.+?)&lt;\/g&gt;/g, '<span class="m-good">$1</span>')
-  .replace(/~~(.+?)~~/g, '<span class="m-del">$1</span>');
+  .replace(/~~(.+?)~~/g, '<span class="m-del">$1</span>')
+  .replace(/\n/g, "<br>");   /* tools 17: a line break in the data (a / b options on a card) */
 const KEY = "tool-field-" + PAGE_ID;
 let saved = store.get(KEY) || {w: {}, again: []};      /* this device: what they wrote ({chat: {text, sent}}), the cards they sent back */
 if(!saved.w) saved.w = {}; if(!Array.isArray(saved.again)) saved.again = [];
@@ -322,7 +410,7 @@ function keepPlace(){
   if(S.view !== "field" || S.fast) return;
   const bsOut = Object.assign({}, S._restore || {}); Object.entries(S.bs).forEach(([id, st]) => { if(id === "fastdeck") return; const d = st.deck;
     bsOut[id] = {open: [...st.open], shown: !!st.shown, check: st.check || "", done: !!st.done, bm: [...(st.bm || [])], spk: st.spk ? st.spk.key : null,
-      sc: st.sc || null, fx: st.fx || null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, flipped: !!d.flipped} : (st._deck || null)}; });
+      sc: st.sc || null, fx: st.fx || null, so: st.so || null, sec: st.sec || null, memo: st.memo ? {phase: st.memo.phase, got: [...st.memo.got], end: st.memo.end || 0} : null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, flipped: !!d.flipped} : (st._deck || null)}; });
   store.set(PLACE_KEY, {stage: S.stage, at: S.at, far: S.far, intro: S.intro, bs: bsOut, t: Date.now()});
   store.set(LEFT_KEY, {page: PAGE_ID, href: location.pathname.split("/").pop(), cell: cellName(), title: D.title, stage: String(D.stages[S.stage].label || ""), t: Date.now()});
 }
@@ -334,6 +422,7 @@ function restoreBs(id){ const r = S._restore && S._restore[id]; if(!r) return nu
   const st = {open: new Set(r.open || []), shown: !!r.shown, check: r.check || "", deck: null, look: null, done: !!r.done, bm: new Set(r.bm || []), _deck: r.deck || null};
   if(r.spk != null) st.spk = Object.assign(newCursor(), {key: r.spk}); if(r.sc && Array.isArray(r.sc.order)) st.sc = r.sc;
   if(r.fx) st.fx = r.fx; if(r.ttt && Array.isArray(r.ttt.cells)) st.ttt = r.ttt;   /* tools 16 */
+  if(r.so) st.so = r.so; if(r.sec) st.sec = r.sec; if(r.memo) st.memo = r.memo;   /* tools 17 */
   return st; }
 const curBlocks = () => D.stages[S.stage].blocks;
 const bIdx = () => Math.min(S.at[S.stage] || 0, curBlocks().length - 1);
@@ -365,6 +454,7 @@ function allGaps(b){
   if(b.kind === "text") return gapIds(b.lines, "t").concat(gapIds((b.gloss || []).map(g => ({p: g.p})), "x"));
   if(b.kind === "model") return b.parts.flatMap((p, pi) => gapIds(p.lines, `m${pi}`));
   if(b.kind === "calendars") return gapIds(b.lines, "c");
+  if(b.kind === "game" && b.piece === "secret") return secGaps(b);   /* tools 17 */
   return [];
 }
 function textHTML(b){
@@ -585,12 +675,29 @@ function fixHTML(b){
   const F = fixPh(b), say = b.say || [], pl = b.place || null, note = b.note ? `<p class="fx-note">${mk(b.note)}</p>` : "";
   const big = (small) => `<div class="fx-big${small ? " small" : ""}"><p class="fx-line">${fixWord(b.big, b.red, "fx-red")}</p>${note}</div>`;
   if(F.ph === 0 || !pl && F.ph === 1) return big(false);
+  if(F.ph === 1 && fixSlots(pl) > 1) return fixPlacesHTML(b, F, note);   /* tools 16 (f-seen): several ▢, put the word in the right one */
   if(F.ph === 1){ const [pre, post] = String(pl.tokens).split("▢");
     return `<div class="fx-place"><p class="fx-line">${esc(pre)}${F.solved ? `<b class="fx-red fx-in">${esc(pl.answer)}</b>` : `<span class="fx-slot" aria-label="the gap"></span>`}${esc(post || "")}</p>
       ${F.solved ? `<p class="fx-msg">✓ That's it.</p>${note}` : `<div class="fx-chips">${pl.chips.map(c => `<button class="fx-chip${F.wrong === c ? " no" : ""}" data-fxchip="${esc(c)}">${esc(c)}</button>`).join("")}</div>${F.wrong ? note : ""}`}</div>`; }
   const upto = Math.min(say.length - 1, Math.floor((F.ph - 2) / 2));
   return big(true) + `<div class="fx-says">${say.slice(0, upto + 1).map((x, k) => { const open = k < upto || F.ph >= 3 + 2 * k;
     return `<div class="fx-say"><p class="fx-q">${esc(x.q)}</p>${open ? `<p class="fx-a">${fixWord(x.a, b.red, "bx")}</p>` : `<button class="fx-a shut" data-fxa="${k}">say it — then tap to check</button>`}</div>`; }).join("")}</div>`;
+}
+const fixSlots = pl => String((pl || {}).tokens || "").split("▢").length - 1;
+/* the line with the word in its ▢ (red) and the other ▢ gone; 've / 's join the word before */
+function fixPlacedHTML(pl){
+  const parts = String(pl.tokens).split("▢"), slot = pl.slot || 0, w = pl.answer, glue = /^['’]/.test(w);
+  let h = ""; parts.forEach((t, k) => { let tx = t; if(k === slot && glue) tx = tx.replace(/\s+$/, "");
+    h += esc(tx); if(k === slot) h += `<b class="fx-red fx-in">${esc(w)}</b>`; });
+  return h.replace(/ {2,}/g, " ");
+}
+function fixPlacesHTML(b, F, note){
+  const pl = b.place, parts = String(pl.tokens).split("▢"), one = pl.chips.length === 1, sel = one ? pl.chips[0] : F.sel;
+  if(F.solved) return `<div class="fx-place"><p class="fx-line">${fixPlacedHTML(pl)}</p><p class="fx-msg">✓ That's it.</p>${note}</div>`;
+  const line = parts.map((t, k) => esc(t) + (k < parts.length - 1 ? `<button class="fx-slotb${F.wrongSlot === k ? " no" : ""}" data-fxslot="${k}" aria-label="Place ${k + 1}">▢</button>` : "")).join("");
+  return `<div class="fx-place"><p class="fx-line">${line}</p>
+    <div class="fx-chips">${pl.chips.map(c => `<button class="fx-chip${sel === c ? " sel" : ""}${F.wrong === c ? " no" : ""}" data-fxpick="${esc(c)}">${esc(c)}</button>`).join("")}<span class="fx-how">${one ? "Tap the ▢ where it goes." : "Tap a word, then its ▢."}</span></div>
+    ${F.wrongSlot != null ? `<p class="fx-try">Not quite — try another place.</p>` : ""}${F.wrong ? note : ""}</div>`;
 }
 const fixPending = b => { const F = fixPh(b); return F.ph < fixLast(b) || (F.ph === 1 && !F.solved && !!b.place); };
 function fixNext(b){ const F = fixPh(b); if(F.ph === 1 && b.place && !F.solved){ F.solved = true; F.wrong = null; } else F.ph++; render(); }
@@ -600,6 +707,8 @@ function fixNext(b){ const F = fixPh(b); if(F.ph === 1 && b.place && !F.solved){
 const gameTasks = (b, cells) => (cells || []).map(c => ({t: b.tasks[c.i] || b.tasks[0], m: c.m || null}));
 function gameMount(b, host){
   if(!host) return; const st = bs(b);
+  if(b.piece === "memo"){ st.memo = gMemo(host, b.items, {seconds: b.seconds || 30, groups: b.groups, state: st.memo || null,
+    onChange: () => { keepPlace(); const sb = document.querySelector("[data-step]"); if(sb) sb.disabled = !canNext(); }}); return; }   /* tools 17 */
   if(st.ttt && st.ttt.cells && st.ttt.cells[0] && st.ttt.cells[0].i != null) st.ttt.cells = gameTasks(b, st.ttt.cells);   /* reopened on this device */
   st.ttt = gTicTacToe(host, b.tasks, {size: b.size || 3, state: st.ttt || null, revealFirst: true, labels: {yes: "✓ Correct", no: "✗ Not quite"},
     prompt: t => `${t.ctx ? `<span class="lctx">${mk(t.ctx)}</span>` : ""}<span class="say">${mk(t.q)}</span>`,
@@ -608,17 +717,119 @@ function gameMount(b, host){
     onWin: el => { if(typeof confetti === "function") confetti(el); },
     onChange: () => { keepPlace(); const sb = document.querySelector("[data-step]"); if(sb) sb.disabled = !canNext(); }});
 }
-const gamePending = b => { const T = bs(b).ttt; return !!(T && T.open > -1 && !T.shown && !T.over); };
+const memoPending = b => { const M = bs(b).memo; return !M || M.phase !== "check"; };
+function memoNext(b){ const M = bs(b).memo; if(!M) return; if(M.phase === "ready") M.look(); else if(M.phase === "look") M.phase = "recall"; else if(M.phase === "recall") M.phase = "check"; render(); }
+const gamePending = b => { if(b.piece === "memo") return memoPending(b); if(b.piece === "secret") return secPending(b); const T = bs(b).ttt; return !!(T && T.open > -1 && !T.shown && !T.over); };
 function gameOpenTask(b, t){ const T = bs(b).ttt; if(!T || T.over) return; const k = T.cells.findIndex(c => c.t === t && !c.m); if(k < 0 || (T.open > -1 && T.open !== k)) return;
   T.open = k; T.shown = false; render(); }
+
+/* ---------- tools 17 (B2 revision f-seen, handoff 31.10 13:15): 🗂 the homework sort as a field block — four boxes, the lines one by one:
+   the English context (grey) and the Russian, say it, tap (or Next) → the English, then tap its box or drag the card onto it. mode auto =
+   it goes into its box by itself (its why in green), hint = the right box glows, free = no help; a wrong box shakes and shows the why.
+   Next never skips: on an open card it puts it in its box (the answer); after the last one, the four boxes with their lines and the end
+   question. Back = the card before, as it was left. ---------- */
+const soSt = b => { const st = bs(b); return st.so = st.so || {at: 0, open: false, landed: false, placed: {}, done: false, why: null, wrong: null}; };
+function soShow(b){ const Q = soSt(b), x = b.items[Q.at], p = Q.placed[Q.at]; Q.wrong = null;
+  if(p){ Q.open = true; Q.landed = true; Q.why = x.mode !== "free" ? {p, t: x.why} : null; } else { Q.open = false; Q.landed = false; Q.why = null; } }
+function sortHTML(b){
+  const Q = soSt(b), items = b.items, inPat = id => items.map((x, i) => Object.assign({i}, x)).filter(x => Q.placed[x.i] === id);
+  if(Q.done) return `<div class="fsort done"><div class="fs-pats sum">${b.patterns.map(p => `<div class="fs-pat"><span class="fs-en">${mk(p.en)}</span><span class="fs-ru">${esc(p.ru)}</span>
+      <ul>${inPat(p.id).map(x => `<li>${esc(x.en)}</li>`).join("")}</ul></div>`).join("")}</div>
+    ${b.end ? `<div class="fs-end"><p class="fs-q">${mk(b.end.q)}</p><details><summary>Tap to see</summary><p>${mk(b.end.a)}</p></details></div>` : ""}
+    <p class="fs-again"><button class="linklike" data-fsagain>↺ Do it again</button></p></div>`;
+  const it = items[Q.at];
+  const ask = !Q.open ? `Say it in English — aloud. Then tap to check.${it.mode === "auto" ? " Watch the first one." : ""}` : Q.landed ? "✓ That's its box." : it.mode === "auto" ? "Watch: it goes into its box." : "Now put it in its box: tap the box (or drag the card).";
+  return `<div class="fsort"><div class="fs-pats">${b.patterns.map(p => { const n = inPat(p.id).length;
+      return `<button class="fs-pat${Q.open && !Q.landed && it.mode === "hint" && p.id === it.p ? " glow" : ""}" data-fsp="${esc(p.id)}"><span class="fs-en">${mk(p.en)}</span><span class="fs-ru">${esc(p.ru)}</span>${n ? `<span class="fs-c">${n}</span>` : ""}${Q.why && Q.why.p === p.id ? `<span class="fs-why">${mk(Q.why.t)}</span>` : ""}</button>`; }).join("")}</div>
+    <div class="fs-card${Q.open ? " open" : ""}${Q.landed ? " landed" : ""}${Q.open && !Q.landed && it.mode !== "auto" ? " grab" : ""}" data-fscard><span class="fs-n">${Q.at + 1} of ${items.length}</span>
+      ${it.ctx ? `<p class="fs-ctx">${esc(it.ctx)}</p>` : ""}<p class="fs-ruline">${esc(it.ru)}</p>
+      ${Q.open ? `<p class="fs-enline">${esc(it.en)}</p>` : `<button class="fs-reveal" data-fsopen>tap to check</button>`}
+      <p class="fs-ask">${ask}</p>${Q.wrong ? `<p class="fs-wrong">${mk(Q.wrong)}</p>` : ""}</div></div>`;
+}
+function soLand(b, p){ const Q = soSt(b); if(!Q.open || Q.landed) return; const x = b.items[Q.at];
+  const card = document.querySelector("[data-fscard] .fs-enline"), box = document.querySelector(`[data-fsp="${CSS.escape(p)}"]`);
+  const done = () => { Q.placed[Q.at] = p; Q.landed = true; Q.wrong = null; Q.why = x.mode !== "free" ? {p, t: x.why} : null; render();
+    const nb = document.querySelector(`[data-fsp="${CSS.escape(p)}"]`); if(nb) pop(nb); };
+  if(!card || !box || calm() || !card.animate) return done();
+  const a = card.getBoundingClientRect(), z = box.getBoundingClientRect(), g = card.cloneNode(true);
+  g.className = "fs-ghost"; g.style.cssText = `position:fixed;left:${a.left}px;top:${a.top}px;width:${a.width}px;margin:0;z-index:40;pointer-events:none`; document.body.appendChild(g);
+  g.animate([{transform: "none", opacity: 1}, {transform: `translate(${z.left + z.width / 2 - a.left - a.width / 2}px, ${z.top + z.height / 2 - a.top - a.height / 2}px) scale(.35)`, opacity: .2}], {duration: 650, easing: "cubic-bezier(.3,.7,.3,1)"}).onfinish = () => { g.remove(); done(); };
+}
+function soOpen(b){ const Q = soSt(b); if(Q.open) return; Q.open = true; render(); const it = b.items[Q.at];
+  if(it.mode === "auto"){ Q.busy = true; setTimeout(() => { Q.busy = false; if(curBlock() === b && soSt(b).open && !soSt(b).landed) soLand(b, it.p); }, calm() ? 50 : 900); } }
+function soPick(b, p){ const Q = soSt(b), it = b.items[Q.at]; if(!Q.open || Q.landed || it.mode === "auto") return;
+  if(p === it.p){ soLand(b, p); return; }
+  Q.wrong = it.why; render(); const bx = document.querySelector(`[data-fsp="${CSS.escape(p)}"]`); if(bx){ bx.classList.remove("shake"); void bx.offsetWidth; bx.classList.add("shake"); } }
+const sortPending = b => !soSt(b).done;
+function sortNext(b){ const Q = soSt(b), it = b.items[Q.at];
+  if(!Q.open){ soOpen(b); return; }
+  if(!Q.landed){ if(!Q.busy) soLand(b, it.p); return; }
+  if(Q.at < b.items.length - 1){ Q.at++; soShow(b); render(); return; }
+  Q.done = true; render(); }
+function sortBack(b){ const Q = soSt(b);
+  if(Q.done){ Q.done = false; Q.at = b.items.length - 1; soShow(b); render(); return true; }
+  if(Q.at > 0){ Q.at--; soShow(b); render(); return true; }
+  return false; }
+function wireSort(b, root){
+  root.querySelectorAll("[data-fsopen]").forEach(x => x.addEventListener("click", e => { e.stopPropagation(); soOpen(b); }));
+  root.querySelectorAll("[data-fsp]").forEach(x => x.addEventListener("click", () => soPick(b, x.dataset.fsp)));
+  const ag = root.querySelector("[data-fsagain]"); if(ag) ag.addEventListener("click", () => { bs(b).so = null; render(); });
+  /* drag the open card onto a box */
+  const card = root.querySelector("[data-fscard].grab"); if(!card) return;
+  card.addEventListener("pointerdown", e => { if(e.button) return; const r = card.getBoundingClientRect(), g = card.cloneNode(true), dx = e.clientX - r.left, dy = e.clientY - r.top; let moved = false;
+    g.classList.add("fs-drag"); g.style.cssText = `position:fixed;left:${r.left}px;top:${r.top}px;width:${r.width}px;z-index:40;pointer-events:none;opacity:.92`;
+    const mv = ev => { if(!moved && Math.hypot(ev.clientX - e.clientX, ev.clientY - e.clientY) < 6) return; if(!moved){ moved = true; document.body.appendChild(g); card.style.visibility = "hidden"; }
+      g.style.left = (ev.clientX - dx) + "px"; g.style.top = (ev.clientY - dy) + "px";
+      root.querySelectorAll("[data-fsp]").forEach(x => { const q = x.getBoundingClientRect(); x.classList.toggle("over", ev.clientX >= q.left && ev.clientX <= q.right && ev.clientY >= q.top && ev.clientY <= q.bottom); }); };
+    const up = ev => { removeEventListener("pointermove", mv); removeEventListener("pointerup", up); g.remove(); card.style.visibility = "";
+      const over = [...root.querySelectorAll("[data-fsp]")].find(x => { const q = x.getBoundingClientRect(); return ev.clientX >= q.left && ev.clientX <= q.right && ev.clientY >= q.top && ev.clientY <= q.bottom; });
+      root.querySelectorAll("[data-fsp].over").forEach(x => x.classList.remove("over")); if(moved && over) soPick(b, over.dataset.fsp); };
+    addEventListener("pointermove", mv); addEventListener("pointerup", up); });
+}
+
+/* ---------- tools 17 (f-seen): 🤫 the secret-card game — a guided start (the show poster, B's card open, the A/B chat with gaps), How it
+   works (with the phone card: a QR and the link), then the game: the shows, the box, six cards face down by number; B says the number,
+   a tap turns it over (what happened + the guess + B's reply). No phones: 📋 All the cards under the box, face up ---------- */
+const secSt = b => { const st = bs(b); return st.sec = st.sec || {ph: b.intro ? 0 : 1, open: null, seen: [], swaps: 0, phone: false}; };
+const secInstr = b => { const X = secSt(b); return X.ph === 0 ? (b.intro || {}).instr : X.ph === 1 ? b.instr : b.check; };
+const secGaps = b => secSt(b).ph === 0 && b.intro ? gapIds(b.intro.lines, "i") : [];
+const phoneHTML = b => b._cardUrl ? `<div class="sec-phone">${b._qr || ""}<div><p class="sec-ph-t">📱 <b>B:</b> open your secret card on your phone</p><p class="sec-ph-l">${esc(b._cardUrl.replace(/^https:\/\//, ""))}</p></div></div>` : "";
+function secretHTML(b){
+  const X = secSt(b);
+  if(X.ph === 0 && b.intro){ const I = b.intro;
+    return `<div class="sec-intro"><div class="sec-pair"><div class="sec-poster"><span class="sec-ic">${esc(I.show.icon)}</span><b>${esc(I.show.title)}</b><span>${esc(I.show.genre)}</span></div>
+      <div class="sec-card open"><span class="sec-lbl">B's secret card</span>${I.card.map(l => `<p>${esc(l)}</p>`).join("")}</div></div>
+      <div class="dlg sec-chat">${linesHTML(I.lines, b, "i")}</div></div>`; }
+  if(X.ph === 1) return `<div class="sec-howbox"><ol class="sec-how">${b.how.map(h => `<li>${mk(h)}</li>`).join("")}</ol>${phoneHTML(b)}<p class="sec-go">Ready? Tap <b>Next</b> to play.</p></div>`;
+  const c = X.open != null ? b.cards[X.open] : null;
+  /* one area: the shows (A chooses) — or the card just turned (the check) — or the phone card; the numbers stay under it */
+  const area = X.phone ? phoneHTML(b) : c ? `<div class="sec-card turned"><span class="sec-lbl">Card ${X.open + 1}</span>${c.front.map(l => `<p>${esc(l)}</p>`).join("")}<p class="sec-guess">${esc(c.guess)}</p><p class="sec-reply"><b>B:</b> ${esc(c.reply)}</p><button class="linklike sec-back" data-secclose>← The shows</button></div>`
+    : `<div class="sec-shows">${b.shows.map(sh => `<span class="sec-show"><span class="sec-ic">${esc(sh.icon)}</span><b>${esc(sh.title)}</b><i>${esc(sh.genre)}</i></span>`).join("")}</div>`;
+  return `<div class="sec-play"><p class="sec-turn"><b>A</b> asks and guesses · <b>B</b> has the secret card <button class="btn slim" data-secswap>↺ Swap</button><button class="btn slim${X.phone ? " on" : ""}" data-secphone aria-pressed="${!!X.phone}">📱 Phone card</button>${X.swaps ? `<span class="sec-sw">Swapped ${X.swaps}×</span>` : ""}</p>
+    <div class="sec-area">${area}</div>
+    <div class="sec-row"><span class="sec-nl">B's card:</span><div class="sec-nums" role="group" aria-label="The secret cards">${b.cards.map((_, i) => `<button class="sec-num${X.open === i ? " on" : ""}${X.seen.includes(i) ? " seen" : ""}" data-secn="${i}" aria-label="Card ${i + 1}">${i + 1}</button>`).join("")}</div></div></div>`;
+}
+const secAllHTML = b => `<details class="sec-all"><summary>📋 All the cards</summary><p class="small">No phones? B secretly chooses a number 1–${b.cards.length}.</p>${b.cards.map((c, i) => `<div class="sec-allc"><b>${i + 1}</b> ${c.front.map(esc).join(" ")}<br><span class="sec-guess">${esc(c.guess)}</span> — ${esc(c.reply)}</div>`).join("")}</details>`;
+const secPending = b => { const X = secSt(b); return X.ph < 2; };
+function secNext(b){ const X = secSt(b), st = bs(b);
+  if(X.ph === 0){ const ids = secGaps(b); if(ids.length && !ids.every(id => st.open.has(id))){ ids.forEach(id => st.open.add(id)); render(); return; } }
+  X.ph++; render(); scrollTo(0, 0); }
+function wireSecret(b, root){ const X = secSt(b);
+  root.querySelectorAll("[data-secn]").forEach(x => x.addEventListener("click", () => { const i = +x.dataset.secn; X.phone = false; X.open = X.open === i ? null : i; if(!X.seen.includes(i)) X.seen.push(i); render(); }));
+  const cl = root.querySelector("[data-secclose]"); if(cl) cl.addEventListener("click", () => { X.open = null; render(); });
+  const sw = root.querySelector("[data-secswap]"); if(sw) sw.addEventListener("click", () => { X.swaps++; X.open = null; render(); });
+  const ph = root.querySelector("[data-secphone]"); if(ph) ph.addEventListener("click", () => { X.phone = !X.phone; render(); });
+}
 
 /* ---------- the page ---------- */
 function blockHTML(b){
   const body = b.kind === "text" ? textHTML(b) : b.kind === "model" ? modelHTML(b) : b.kind === "write" ? writeHTML(b) : b.kind === "say" ? sayHTML(b)
     : b.kind === "picture" ? pictureHTML(b) : b.kind === "calendars" ? calendarsHTML(b) : b.kind === "tool" ? toolHTML(b)
     : b.kind === "questions" ? questionsHTML(b) : b.kind === "cards" ? groupDotsHTML(b) + `<div class="deck">${cardsHTML(b)}</div>` : b.kind === "scenes" ? scenesHTML(b)
-    : b.kind === "fix" ? fixHTML(b) : b.kind === "game" ? groupDotsHTML(b) + `<div class="fgame" data-game="${b._id}"></div>` : "";
-  const instr = b.kind === "cards" || b.kind === "questions" ? (b.kind === "questions" ? b.instr : "") : b.kind === "scenes" && sceneAt(b) >= 0 ? (b.street_first === false ? [b.instr, b.task].filter(Boolean).join(" ") : b.task) : b.instr;
+    : b.kind === "fix" ? fixHTML(b) : b.kind === "sort" ? sortHTML(b) : b.kind === "game" && b.piece === "secret" ? secretHTML(b)
+    : b.kind === "game" ? (b.piece === "memo" ? "" : groupDotsHTML(b)) + `<div class="fgame${b.piece === "memo" ? " fmemo" : ""}" data-game="${b._id}"></div>` : "";
+  const instr = b.kind === "cards" || b.kind === "questions" ? (b.kind === "questions" ? b.instr : "") : b.kind === "scenes" && sceneAt(b) >= 0 ? (b.street_first === false ? [b.instr, b.task].filter(Boolean).join(" ") : b.task)
+    : b.kind === "game" && b.piece === "secret" ? secInstr(b) : b.instr;
   const tip = S.howto && b.tip ? `<p class="tip">🎓 How it works: ${mk(b.tip)}</p>` : "";
   return `${tip}${instr ? `<p class="finstr">${mk(instr)}</p>` : ""}<section class="blk ${S.enter ? "enter" : ""}" data-blk="${b._id}">${body}</section>`;
 }
@@ -673,6 +884,9 @@ function stepNext(){
   if(b.kind === "tool"){ const f = document.querySelector(".tool-frame"); if(f && f.contentWindow){ f.contentWindow.postMessage({lwStep: "next"}, "*"); return; } }
   if(b.kind === "say" && !st.shown){ st.shown = true; render(); return; }
   if(b.kind === "fix" && fixPending(b)){ fixNext(b); return; }   /* tools 16: the gap's answer, then message by message */
+  if(b.kind === "game" && b.piece === "memo" && memoPending(b)){ memoNext(b); return; }   /* tools 17: ▶ → hide → check */
+  if(b.kind === "game" && b.piece === "secret" && secPending(b)){ secNext(b); return; }   /* the chat's answers → How it works → the game */
+  if(b.kind === "sort" && sortPending(b)){ sortNext(b); return; }
   if(b.kind === "game" && gamePending(b)){ st.ttt.shown = true; render(); return; }   /* an open square: Next shows its answer */
   if(b.kind === "cards"){ const d = deckOf(b);
     if(st.look != null && !st.lookBack && !st.lookOpen){ st.lookOpen = true; render(); return; }   /* her 👥 dot: the front first, Next shows the answer */
@@ -704,6 +918,9 @@ function stepBack(){
   if(S.fast){ S.fast = null; render(); return; }
   if(b && b.kind === "say" && bs(b).shown){ bs(b).shown = false; render(); return; }   /* the answer → the question, like the slide before */
   if(b && b.kind === "fix" && fixPh(b).ph > 0){ fixPh(b).ph--; render(); return; }   /* tools 16: the screen before */
+  if(b && b.kind === "sort" && sortBack(b)) return;   /* tools 17: the card before, as it was left */
+  if(b && b.kind === "game" && b.piece === "secret" && secSt(b).ph > (b.intro ? 0 : 1)){ secSt(b).ph--; render(); return; }
+  if(b && b.kind === "game" && b.piece === "memo" && bs(b).memo && bs(b).memo.phase !== "ready"){ const M = bs(b).memo; M.phase = M.phase === "check" ? "recall" : "ready"; render(); return; }
   if(b && b.kind === "questions"){ const pv = document.querySelector(".speak [data-speak-prev]"); if(pv){ pv.click(); return; } }
   if(b && b.kind === "scenes"){ const st = bs(b), sc = sceneState(b); if(st.peek){ st.peek = false; render(); return; } if(sc.at > (b.street_first === false ? 0 : -1)){ sc.at--; render(); return; } }
   if(b && b.kind === "tool"){ const f = document.querySelector(".tool-frame"); if(f && f.contentWindow){ f.contentWindow.postMessage({lwStep: "back"}, "*"); return; } }
@@ -737,7 +954,7 @@ function render(){
   else main.innerHTML = bar + headHTML() + blockHTML(b) + fastHTML() + back + stepbarHTML();
   if(keepGrid){ const g = document.getElementById("gw-grid"); if(g) g.replaceWith(keepGrid); }
   pcRestore(pcs);
-  const st = side.scrollTop; side.innerHTML = box && D.boxes[box] ? fieldBoxHTML(D.boxes[box]) + sidePicHTML(b) : ""; side.scrollTop = st;
+  const st = side.scrollTop; side.innerHTML = box && D.boxes[box] ? fieldBoxHTML(D.boxes[box]) + sidePicHTML(b) + (b && b.kind === "game" && b.piece === "secret" && secSt(b).ph === 2 ? secAllHTML(b) : "") : ""; side.scrollTop = st;
   wireBox(side); wireBoxHidden(side);
   S.enter = false; if(b && b.kind === "cards") deckOf(b).fresh = false;
   wire(main); wireLive(main, p => { const m = String(p).match(/^questions\.(\d+)\.(\d+)$/); if(!m) return ""; const bl = BLOCKS.find(x => x._pid === +m[1]); return bl ? bl.items[+m[2]] || "" : ""; });
@@ -795,8 +1012,15 @@ function wire(root){
   /* tools 16: Fix it and the game */
   on("[data-fxchip]", x => { const F = fixPh(b); if(x.dataset.fxchip === b.place.answer){ F.solved = true; F.wrong = null; render(); }
     else { F.wrong = x.dataset.fxchip; render(); const c = root.querySelector(`[data-fxchip="${CSS.escape(F.wrong)}"]`); if(c){ c.classList.remove("shake"); void c.offsetWidth; c.classList.add("shake"); } } });
+  on("[data-fxpick]", x => { const F = fixPh(b); F.sel = x.dataset.fxpick; F.wrong = null; render(); });
+  on("[data-fxslot]", x => { const F = fixPh(b), pl = b.place, sel = pl.chips.length === 1 ? pl.chips[0] : F.sel, k = +x.dataset.fxslot; if(!sel) return;
+    if(sel === pl.answer && k === (pl.slot || 0)){ F.solved = true; F.wrong = null; F.wrongSlot = null; render(); return; }
+    if(sel !== pl.answer){ F.wrong = sel; F.wrongSlot = null; } else F.wrongSlot = k;
+    render(); const el = root.querySelector(`[data-fxslot="${k}"]`); if(el){ el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); } });
   on("[data-fxa]", x => { const F = fixPh(b), k = +x.dataset.fxa; if(F.ph === 2 + 2 * k) F.ph++; render(); });
-  if(b.kind === "game") gameMount(b, root.querySelector(`[data-game="${b._id}"]`));
+  if(b.kind === "game" && b.piece !== "secret") gameMount(b, root.querySelector(`[data-game="${b._id}"]`));
+  if(b.kind === "sort") wireSort(b, root);   /* tools 17 */
+  if(b.kind === "game" && b.piece === "secret") wireSecret(b, root);
   on("[data-lookflip]", () => { bs(b).lookOpen = true; render(); });
   wireGroupDots();
   /* questions */
