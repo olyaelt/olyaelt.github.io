@@ -56,7 +56,7 @@
  "followUp": [
   {
    "pid": 0,
-   "sig": "what did you decide about coding and essay writing? give the head teacher two reasons, a phrase from the box for each.",
+   "sig": "what did you decide about coding and essay writing? give the head teacher (ame: principal) two reasons.",
    "gone": false
   },
   {
@@ -66,14 +66,14 @@
   },
   {
    "pid": 2,
-   "sig": "rank your four changes: which one will make the biggest difference in ten years' time? agree on your top one, with two reasons.",
+   "sig": "which of your four changes would make the biggest difference for a 12-year-old today? two reasons.",
    "gone": false
   }
  ],
  "speaking": [
   {
    "pid": 0,
-   "sig": "a 20-year-old relative asks: \"what should i study, now that ai can do half the jobs out there?\" agree on three pieces of advice, a phrase from the box for each.",
+   "sig": "a friend's son wants to drop maths: \"i've got a calculator.\" what do you tell him? two reasons.",
    "gone": false
   },
   {
@@ -83,17 +83,17 @@
   },
   {
    "pid": 2,
-   "sig": "rank from most to least useful in ten years: coding · essay writing · foreign languages · mental maths · working in a team. agree on your top two.",
+   "sig": "which subject would have helped you most at 17 — and which would have been a complete waste of time for you?",
    "gone": false
   },
   {
    "pid": 3,
-   "sig": "each of you: something you picked up the hard way — at work or anywhere else. three sentences, two phrases from the box. your partner asks one question.",
+   "sig": "each of you: something you learned the hard way — at work or anywhere else. your partner asks one question.",
    "gone": false
   },
   {
    "pid": 4,
-   "sig": "they've stopped hiring juniors. agree on three ways a young person can still get experience, a phrase from the box for each.",
+   "sig": "they've stopped hiring juniors. agree on three ways a young person can still get experience.",
    "gone": false
   }
  ]

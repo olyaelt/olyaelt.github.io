@@ -2,7 +2,7 @@
  "type": "dice-council",
  "title": "School council",
  "part": "Part 2",
- "situation": "A year later, at the same school. The head wants to cut coding and essay writing: “AI can do all that now.”",
+ "situation": "An international school is changing its curriculum. The head (AmE: principal) wants to cut coding and essay writing: “AI can do all that now.”",
  "lists": [
   {
    "kind": "cut",
@@ -67,7 +67,7 @@
      "ex": {
       "for": [
        "It's **more useful than you'd think** — in shops, with discounts, when you split a bill.",
-       "**It was hard, but it paid off** — I notice at once when a bill doesn't look right."
+       "It was hard, but it paid off — I notice at once when a bill doesn't look right."
       ],
       "against": [
        "**What's the point of** mental maths when everyone has a phone?",
@@ -86,7 +86,7 @@
      "ex": {
       "for": [
        "**They're handing** more and more work **over to AI**, so someone has to check it.",
-       "**I taught myself, the hard way** — kids shouldn't have to."
+       "**I learned that the hard way** — kids shouldn't have to."
       ],
       "against": [
        "The tools change every month, so what they learn will be **out of date** by the time they leave school.",
@@ -125,8 +125,8 @@
      "t": "dealing with difficult people",
      "ex": {
       "for": [
-       "My first year as a manager **was a steep learning curve** — nobody had taught me any of it.",
-       "**I picked it up on the job, the hard way**, and I'd love my kids to have it easier."
+       "My first year as a manager **was a steep learning curve** — nobody had ever taught me how to deal with people.",
+       "**I had to learn the hard way**, and I'd love my kids to have it easier."
       ],
       "against": [
        "**School only gets you so far** — you learn it from real people, not from role-plays.",
@@ -138,8 +138,8 @@
      "t": "working in a team",
      "ex": {
       "for": [
-       "A lot of companies **have stopped hiring juniors**, so school is even more important as a place to learn teamwork.",
-       "It's **more important than you'd think** — even strong teams struggle when people can't work together."
+       "A lot of companies **have stopped hiring juniors**, so young people get fewer chances to learn teamwork at work — school has to do it.",
+       "It's **more important than you'd think** — even a team of clever people gets nowhere if they can't work together."
       ],
       "against": [
        "They already do group projects all the time — **what's the point of** a whole subject?",
@@ -169,7 +169,8 @@
    "h": "Learning",
    "items": [
     "It was a steep learning curve.",
-    "I picked it up on the job, the hard way.",
+    "I picked it up on the job.",
+    "I learned it the hard way.",
     "I read up on it. I did my homework.",
     "I taught myself."
    ]
@@ -187,16 +188,16 @@
  "extra": "Use two phrases you didn't use last time.",
  "report": "We've decided to cut … and … and add … and … . We'd rather keep … because …",
  "followUp": [
-  "What did you decide about coding and essay writing? Give the head teacher two reasons, a phrase from the box for each.",
+  "What did you decide about coding and essay writing? Give the head teacher (AmE: principal) two reasons.",
   "A student says: \"Why learn to write essays if AI does it better?\" Do you agree? Agree on two things you'd say to this student.",
-  "Rank your four changes: which one will make the biggest difference in ten years' time? Agree on your top one, with two reasons."
+  "Which of your four changes would make the biggest difference for a 12-year-old today? Two reasons."
  ],
  "speaking": [
-  "A 20-year-old relative asks: \"What should I study, now that AI can do half the jobs out there?\" Agree on three pieces of advice, a phrase from the box for each.",
+  "A friend's son wants to drop maths: \"I've got a calculator.\" What do you tell him? Two reasons.",
   "Each of you: two skills you think will stay valuable as AI develops, and one that's already **out of date**. Then agree on the one you'd most recommend learning, and why.",
-  "Rank from most to least useful in ten years: coding · essay writing · foreign languages · mental maths · working in a team. Agree on your top two.",
-  "Each of you: something you **picked up the hard way** — at work or anywhere else. Three sentences, two phrases from the box. Your partner asks one question.",
-  "**They've stopped hiring juniors.** Agree on three ways a young person can still get experience, a phrase from the box for each."
+  "Which subject would have helped you most at 17 — and which would have been a complete waste of time for you?",
+  "Each of you: something you **learned the hard way** — at work or anywhere else. Your partner asks one question.",
+  "**They've stopped hiring juniors.** Agree on three ways a young person can still get experience."
  ],
- "hint": "The dice tells you how many reasons to give, for and against — a phrase from the box for each, changed to fit."
+ "hint": "The dice tells you how many reasons to give, for and against. Use the box."
 }

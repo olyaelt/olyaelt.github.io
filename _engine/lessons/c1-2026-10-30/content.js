@@ -3,7 +3,7 @@ const GAPS = __GAPS__;
 const BETTER_ROWS = __BETTER__;   /* r2: the group's sentences from the lesson (slide 55) */
 const FIX = __FIX__;              /* e1: Fix it, five blocks */
 const SAYIT = __SAYIT__;          /* e2: say it another way, rewrite format; <b class="hl"> = the part to rephrase (fixes 31.10 12:25) */
-const TQ = __TQ__;                /* e3: TubeQuizard, 15 clips [videoId, start, duration, parts] (fixes 31.10 12:55) */
+const TQ = __TQ__;                /* e3: TubeQuizard, 14 clips mixed, McGowan with two gaps [videoId, start, duration, parts] (fixes 31.10 12:55, 13:40) */
 /* Link to the group's homework spreadsheet. Leave empty and the page simply says where to write. */
 const SHEET_URL = "";
 const PAGE_KEY = "hw-ge-c1-2026-10-30";
@@ -91,7 +91,7 @@ const TASKS = [
   {id:"e1", topic:"school2", sec:"Extension", title:"Fix it: one small thing", meta:"5 blocks · 11 items", kind:"steps", min:8, steps:FIX_STEPS},
   {id:"e2", topic:"school2", sec:"Extension", title:"Say it another way: new situations", meta:"6 sentences", kind:"steps", min:4,
    steps:SAYIT.map((r, i) => ({type:"rewrite", r, first:i === 0, instrFirst:E2_INSTR, instr:"Say it another way. Use the word in red.", box:BOX_SCHOOL2, boxAlways:true}))},
-  {id:"e3", topic:"school2", sec:"Extension", title:"Hear it: the phrases in real videos", meta:"15 clips, 15 gaps", kind:"steps", min:10,
+  {id:"e3", topic:"school2", sec:"Extension", title:"Hear it: the phrases in real videos", meta:"14 clips, 15 gaps", kind:"steps", min:12,
    takeaway:TQ.takeaway, tqLink:TQ.quiz_link, tq:TQ.quiz_link, steps:TQ.e3.map((clip,i)=>({type:"listen",clip,first:i===0}))},
   {id:"write", topic:"school2", sec:"Over to you!", title:"A message for the radio show", meta:"Your task · plan · write or record and send", kind:"steps", min:12,
    steps:[{type:"task"},{type:"plan"},{type:"produce"}]}
