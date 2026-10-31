@@ -1474,97 +1474,10 @@
      "tip": "This is how the lesson started: the same six sentences. Say them aloud first, then check."
     }
    ]
-  },
-  {
-   "label": "🃏 Extra practice",
-   "blocks": [
-    {
-     "kind": "cards",
-     "style": "say",
-     "instr": "Not done in class yet. Say it another way with a phrase from the box. Then tap the card.",
-     "box": "BOX",
-     "cards": [
-      {
-       "front": "Everyone at work talks about it all the time. It's getting a bit much.",
-       "back": "Everyone at work **keeps going on about it**."
-      },
-      {
-       "front": "I stopped watching after the third episode.",
-       "back": "I **gave up after** episode three."
-      },
-      {
-       "front": "It was slow at first, but from episode four it's much better.",
-       "back": "It **really picks up** in episode four."
-      },
-      {
-       "front": "People say it's brilliant, but I don't think so.",
-       "back": "It's **not as good as everyone says**."
-      },
-      {
-       "front": "I've watched a few short clips, not the whole thing.",
-       "back": "I've **only seen bits of** it."
-      },
-      {
-       "front": "Some of the jokes feel wrong today.",
-       "back": "Some of the jokes **haven't aged well**."
-      },
-      {
-       "front": "It reminds me of when I was young.",
-       "back": "It **takes me back**."
-      },
-      {
-       "front": "Don't waste your time on it.",
-       "back": "Honestly? **I wouldn't bother.**"
-      },
-      {
-       "front": "Watch an episode or two and see if you like it.",
-       "back": "**Give it a try.**"
-      },
-      {
-       "front": "OK, the music is good. I admit that.",
-       "back": "The music's good, **I'll give it that**."
-      }
-     ]
-    },
-    {
-     "kind": "cards",
-     "style": "bubble",
-     "instr": "What might they say? Use the box. Then tap the card.",
-     "box": "BOX",
-     "tip": "Everyone thinks, then you take turns to say it. Tap the card: the bubble shows one possible answer.",
-     "cards": [
-      {
-       "instr": "What might Sam say? Use the box. Then tap the card.",
-       "ctx": "Sam loves a series. His friend watched one episode and says it was slow.",
-       "back": "Stick with it! It really **picks up** in episode three."
-      },
-      {
-       "ctx": "Everyone calls a new film ‘the best film of the year’. Tom is so tired of hearing about it that he doesn't feel like watching it.",
-       "back": "Everyone **keeps going on about it**, but to be honest, all the **hype put me off**."
-      },
-      {
-       "ctx": "Rosa's husband says the horror film they watched was ‘far too scary’. Rosa teases him.",
-       "back": "Well, it **is** a horror film!"
-      },
-      {
-       "ctx": "Kate, 58, rewatched a 90s sitcom with her teenage son. Some jokes made her cringe.",
-       "back": "It still **takes me back**. But some of the jokes **haven't aged well**."
-      },
-      {
-       "ctx": "Mark, 45, watched a cartoon from his childhood with his kids. Now he understands the father.",
-       "back": "I **see** the dad **in a completely different light** now."
-      },
-      {
-       "ctx": "A colleague asks Paul if he's seen a new quiz show. He's only watched a few clips online.",
-       "back": "I've **only seen bits of** it. **Is it any good?**"
-      }
-     ]
-    }
-   ]
   }
  ],
  "parked": {
-  "why": "Recommending (slide 56): recommend + -ing is on hold in the grammar strand (lesson chat 31.10 18:20) — back on the page only when Olya says so.",
+  "why": "Not taught on 28.10 (slides 45–64; the tracker's lesson b2-l10 says what was reached: 1–44). Her rule 31.10 18:34: a lesson page holds only what was done in class; these come back at the revision (~3 weeks). Recommending (slide 56) is also on hold in the grammar strand.",
   "blocks": [
    {
     "kind": "cards",
@@ -1610,6 +1523,88 @@
      }
     ],
     "pic": "check"
+   },
+   {
+    "kind": "cards",
+    "style": "say",
+    "instr": "Say it another way with a phrase from the box. Then tap the card.",
+    "box": "BOX",
+    "cards": [
+     {
+      "front": "Everyone at work talks about it all the time. It's getting a bit much.",
+      "back": "Everyone at work **keeps going on about it**."
+     },
+     {
+      "front": "I stopped watching after the third episode.",
+      "back": "I **gave up after** episode three."
+     },
+     {
+      "front": "It was slow at first, but from episode four it's much better.",
+      "back": "It **really picks up** in episode four."
+     },
+     {
+      "front": "People say it's brilliant, but I don't think so.",
+      "back": "It's **not as good as everyone says**."
+     },
+     {
+      "front": "I've watched a few short clips, not the whole thing.",
+      "back": "I've **only seen bits of** it."
+     },
+     {
+      "front": "Some of the jokes feel wrong today.",
+      "back": "Some of the jokes **haven't aged well**."
+     },
+     {
+      "front": "It reminds me of when I was young.",
+      "back": "It **takes me back**."
+     },
+     {
+      "front": "Don't waste your time on it.",
+      "back": "Honestly? **I wouldn't bother.**"
+     },
+     {
+      "front": "Watch an episode or two and see if you like it.",
+      "back": "**Give it a try.**"
+     },
+     {
+      "front": "OK, the music is good. I admit that.",
+      "back": "The music's good, **I'll give it that**."
+     }
+    ]
+   },
+   {
+    "kind": "cards",
+    "style": "bubble",
+    "instr": "What might they say? Use the box. Then tap the card.",
+    "box": "BOX",
+    "tip": "Everyone thinks, then you take turns to say it. Tap the card: the bubble shows one possible answer.",
+    "cards": [
+     {
+      "instr": "What might Sam say? Use the box. Then tap the card.",
+      "ctx": "Sam loves a series. His friend watched one episode and says it was slow.",
+      "back": "Stick with it! It really **picks up** in episode three."
+     },
+     {
+      "ctx": "Everyone calls a new film ‘the best film of the year’. Tom is so tired of hearing about it that he doesn't feel like watching it.",
+      "back": "Everyone **keeps going on about it**, but to be honest, all the **hype put me off**."
+     },
+     {
+      "ctx": "Rosa's husband says the horror film they watched was ‘far too scary’. Rosa teases him.",
+      "back": "Well, it **is** a horror film!"
+     },
+     {
+      "ctx": "Kate, 58, rewatched a 90s sitcom with her teenage son. Some jokes made her cringe.",
+      "back": "It still **takes me back**. But some of the jokes **haven't aged well**."
+     },
+     {
+      "ctx": "Mark, 45, watched a cartoon from his childhood with his kids. Now he understands the father.",
+      "back": "I **see** the dad **in a completely different light** now."
+     },
+     {
+      "ctx": "A colleague asks Paul if he's seen a new quiz show. He's only watched a few clips online.",
+      "back": "I've **only seen bits of** it. **Is it any good?**"
+     }
+    ]
    }
   ]
  }

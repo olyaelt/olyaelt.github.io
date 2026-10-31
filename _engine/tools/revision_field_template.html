@@ -448,17 +448,20 @@ newState();
 /* her 15:17 + handoff 15:15: the page reopens where this device left it (stage, screen, card, opened gaps), also after a reload or a tap
    on ⬅ Board by mistake; the board offers "↩ Back to … · stage" (the last field this device had open). Kept 3 hours; her 🧹 Start fresh clears it */
 const PLACE_KEY = "tool-place-" + PAGE_ID, LEFT_KEY = "tool-place-" + PAGE_ID.split("/")[0] + "/_left";
+/* tools 18 (her 18:58, the L9 page rebuilt in lesson order): a place saved on the page's old build must not reopen on the new one — a
+   stage's screen 2 is now another task, and Test yourself or the text look gone. The place keeps the page's shape and is used only on the same shape. */
+const SHAPE = D.stages.map(st => st.label + ":" + st.blocks.map(b => b.kind + (b.cards ? b.cards.length : "")).join(",")).join("|");
 function keepPlace(){
   if(S.view !== "field" || S.fast) return;
   const bsOut = Object.assign({}, S._restore || {}); Object.entries(S.bs).forEach(([id, st]) => { if(id === "fastdeck") return; const d = st.deck;
     bsOut[id] = {open: [...st.open], shown: !!st.shown, check: st.check || "", done: !!st.done, bm: [...(st.bm || [])], spk: st.spk ? st.spk.key : null,
       sc: st.sc || null, fx: st.fx || null, so: st.so || null, sec: st.sec || null, memo: st.memo ? {phase: st.memo.phase, got: [...st.memo.got], end: st.memo.end || 0} : null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, flipped: !!d.flipped} : (st._deck || null)}; });
-  store.set(PLACE_KEY, {stage: S.stage, at: S.at, far: S.far, intro: S.intro, bs: bsOut, t: Date.now()});
+  store.set(PLACE_KEY, {stage: S.stage, at: S.at, far: S.far, intro: S.intro, bs: bsOut, t: Date.now(), shape: SHAPE});
   store.set(LEFT_KEY, {page: PAGE_ID, href: location.pathname.split("/").pop(), cell: cellName(), title: D.title, stage: String(D.stages[S.stage].label || ""), t: Date.now()});
 }
 function leftForBoard(){ keepPlace(); }
 (() => { const p = store.get(PLACE_KEY);
-  if(p && Date.now() - p.t < 3 * 3600e3 && D.stages[p.stage]) Object.assign(S, {stage: p.stage, at: p.at || {}, far: p.far || {}, intro: !!p.intro, _restore: p.bs || {}});
+  if(p && Date.now() - p.t < 3 * 3600e3 && D.stages[p.stage] && p.shape === SHAPE) Object.assign(S, {stage: p.stage, at: p.at || {}, far: p.far || {}, intro: !!p.intro, _restore: p.bs || {}});
   if(location.hash) try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){} })();
 function restoreBs(id){ const r = S._restore && S._restore[id]; if(!r) return null; delete S._restore[id];
   const st = {open: new Set(r.open || []), shown: !!r.shown, check: r.check || "", deck: null, look: null, done: !!r.done, bm: new Set(r.bm || []), _deck: r.deck || null};

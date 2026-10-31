@@ -200,7 +200,7 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
         src = json.load(open(os.path.join(T, lesson, d['review']['from'] + '.json'), encoding='utf-8'))
         review = {'page': lesson + '/' + d['review']['from'], 'part': src.get('part', 'last time'), 'n': d['review'].get('n', 4), 'cards': src['cards']}
     for k, v in [('__BASE_CSS__', base_css), ('__BASE_JS__', base_js), ('__LW_CSS__', lw_css), ('__LW_JS__', lw_js), ('__TITLE__', d['title'] + (' · ' + d['part'] if d.get('part') else '')),
-                 ('__DATA__', js(d)), ('__REVIEW__', js(review)), ('__STICKER__', sticker), ('__TOOLS_VERSION__', VERSION),
+                 ('__DATA__', js({k: v for k, v in d.items() if k != 'parked'})), ('__REVIEW__', js(review)), ('__STICKER__', sticker), ('__TOOLS_VERSION__', VERSION),
                  ('__PAGE_ID__', lesson + '/' + name)]:
         html = html.replace(k, v)
     pages.append({'lesson': lesson, 'name': name, 'title': d['title'], 'part': d.get('part', ''), 'type': d['type']})

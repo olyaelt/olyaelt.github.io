@@ -28,7 +28,7 @@
   {
    "pid": 5,
    "sig": "cards not done in class yet. say it another way with a phrase from the box. then tap the card.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 6,
@@ -53,7 +53,7 @@
   {
    "pid": 10,
    "sig": "cards what might they say? use the box. then tap the card.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 11,
@@ -145,52 +145,52 @@
   {
    "pid": 9,
    "sig": "everyone at work keeps going on about it. everyone at work talks about it all the time. it's getting a bit much.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 10,
    "sig": "i gave up after episode three. i stopped watching after the third episode.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 11,
    "sig": "it really picks up in episode four. it was slow at first, but from episode four it's much better.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 12,
    "sig": "it's not as good as everyone says. people say it's brilliant, but i don't think so.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 13,
    "sig": "i've only seen bits of it. i've watched a few short clips, not the whole thing.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 14,
    "sig": "some of the jokes haven't aged well. some of the jokes feel wrong today.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 15,
    "sig": "it takes me back. it reminds me of when i was young.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 16,
    "sig": "honestly? i wouldn't bother. don't waste your time on it.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 17,
    "sig": "give it a try. watch an episode or two and see if you like it.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 18,
    "sig": "the music's good, i'll give it that. ok, the music is good. i admit that.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 19,
@@ -245,32 +245,32 @@
   {
    "pid": 29,
    "sig": "stick with it! it really picks up in episode three. sam loves a series. his friend watched one episode and says it was slow.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 30,
    "sig": "everyone keeps going on about it, but to be honest, all the hype put me off. everyone calls a new film ‘the best film of the year’. tom is so tired of hearing about it that he doesn't feel like watching it.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 31,
    "sig": "well, it is a horror film! rosa's husband says the horror film they watched was ‘far too scary’. rosa teases him.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 32,
    "sig": "it still takes me back. but some of the jokes haven't aged well. kate, 58, rewatched a 90s sitcom with her teenage son. some jokes made her cringe.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 33,
    "sig": "i see the dad in a completely different light now. mark, 45, watched a cartoon from his childhood with his kids. now he understands the father.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 34,
    "sig": "i've only seen bits of it. is it any good? a colleague asks paul if he's seen a new quiz show. he's only watched a few clips online.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 35,
