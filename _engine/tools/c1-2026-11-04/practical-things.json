@@ -73,53 +73,15 @@
  },
  "stages": [
   {
-   "label": "❤️ From Friday",
+   "label": "🧠 Revision",
    "blocks": [
     {
-     "kind": "say",
-     "instr": "Good lines from Friday. Which two could you say too — and why?",
-     "task": [
-      "❤️  Most of what I know, I **picked up on the job** — but I wouldn't say it was the hard way: I learned a lot from my colleagues.",
-      "❤️  **You never know when it might come in handy.** ((two of you built this one together))",
-      "❤️  I find teaching myself works better: I can **read up on** the subject as much as I want.",
-      "❤️  Learning English without dancing was **a steep learning curve** :-)",
-      "❤️  **Back in my day**, everyone was expected to get a solid education — and it really mattered.",
-      "❤️  At the end of the day, what we learned meant nothing. It was **out of touch with real life**.",
-      "❤️  Maybe it would be more useful to learn some **hands-on** skills, like how to cook, sew on a button or hammer in a nail.",
-      "❤️  Schools should probably also teach children how to **adapt** — no one actually knows what the future holds."
-     ]
-    },
-    {
      "kind": "text",
-     "instr": "Can you remember the phrases? Say the whole line, then tap the yellow to check.",
+     "instr": "Good lines from Friday. Say each whole line, then tap the yellow to check. Which two could you say too — and why?",
      "lines": [
       {
        "p": [
-        {
-         "f": "B",
-         "r": "ack"
-        },
-        " ",
-        {
-         "f": "i",
-         "r": "n"
-        },
-        " ",
-        {
-         "f": "m",
-         "r": "y"
-        },
-        " ",
-        {
-         "f": "d",
-         "r": "ay"
-        },
-        ", everyone was expected to get a solid education — and it really mattered."
-       ]
-      },
-      {
-       "p": [
-        "Most of what I know, I ",
+        "❤️  Most of what I know, I ",
         {
          "f": "p",
          "r": "icked"
@@ -149,17 +111,51 @@
       },
       {
        "p": [
-        "Maybe it would be more useful to learn some ",
+        "❤️  ",
+        {
+         "b": "You never know when it might"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "ome"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "n"
+        },
+        " ",
         {
          "f": "h",
-         "r": "ands-on"
+         "r": "andy"
         },
-        " skills, like how to cook, sew on a button or hammer in a nail."
+        ". ((two of you built this one together))"
        ]
       },
       {
        "p": [
-        "Learning English without dancing was ",
+        "❤️  I find teaching myself works better: I can ",
+        {
+         "f": "r",
+         "r": "ead"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "p"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "n"
+        },
+        " the subject as much as I want."
+       ]
+      },
+      {
+       "p": [
+        "❤️  Learning English without dancing was ",
         {
          "b": "a"
         },
@@ -183,13 +179,10 @@
       },
       {
        "p": [
+        "❤️  ",
         {
-         "b": "You never know when it might"
-        },
-        " ",
-        {
-         "f": "c",
-         "r": "ome"
+         "f": "B",
+         "r": "ack"
         },
         " ",
         {
@@ -198,25 +191,20 @@
         },
         " ",
         {
-         "f": "h",
-         "r": "andy"
+         "f": "m",
+         "r": "y"
         },
-        "."
-       ]
-      },
-      {
-       "p": [
-        "Schools should probably also teach children how to ",
+        " ",
         {
-         "f": "a",
-         "r": "dapt"
+         "f": "d",
+         "r": "ay"
         },
-        " — no one actually knows what the future holds."
+        ", everyone was expected to get a solid education — and it really mattered."
        ]
       },
       {
        "p": [
-        "At the end of the day, what we learned meant nothing. It was ",
+        "❤️  At the end of the day, what we learned meant nothing. It was ",
         {
          "f": "o",
          "r": "ut"
@@ -251,30 +239,66 @@
       },
       {
        "p": [
-        "I find teaching myself works better: I can ",
+        "❤️  Maybe it would be more useful to learn some ",
         {
-         "f": "r",
-         "r": "ead"
+         "f": "h",
+         "r": "ands-on"
         },
-        " ",
+        " skills, like how to cook, sew on a button or hammer in a nail."
+       ]
+      },
+      {
+       "p": [
+        "❤️  Schools should probably also teach children how to ",
         {
-         "f": "u",
-         "r": "p"
+         "f": "a",
+         "r": "dapt"
         },
-        " ",
-        {
-         "f": "o",
-         "r": "n"
-        },
-        " the subject as much as I want."
+        " — no one actually knows what the future holds."
        ]
       }
      ]
+    },
+    {
+     "kind": "picture",
+     "img": "priya.jpg",
+     "alt": "Priya, 35, works in logistics",
+     "timer": 60,
+     "instr": "Retell Priya's answer from your homework. Tap the hourglass and remember all you can in one minute.",
+     "lead": {
+      "s": "Priya, 35, works in logistics",
+      "p": "Honestly? It doesn't matter that much what they teach you. You'll end up learning something else at work anyway. What matters is …"
+     },
+     "answer": "Honestly? It doesn't matter that much what they teach you. You'll end up learning something else at work anyway. What matters is **being able to adapt**. In my job there's something new to learn every few months, and there's no training for it. Last year it was a whole new customs system. You **read up on** it, you **do your homework** before you talk to clients so you don't **look clueless**, and you basically **teach yourself**. If schools taught kids how to learn, that'd be the most useful thing of all."
+    },
+    {
+     "kind": "picture",
+     "img": "sam.jpg",
+     "alt": "Sam, 24, graduated last year",
+     "timer": 60,
+     "instr": "Retell Sam's answer from your homework. Tap the hourglass and remember all you can in one minute.",
+     "lead": {
+      "s": "Sam, 24, graduated last year",
+      "p": "I'm not sure anyone knows what to teach anymore. I studied translation, and half the agencies I applied to …"
+     },
+     "answer": "I'm not sure anyone knows what to teach anymore. I studied translation, and half the agencies I applied to **have stopped hiring juniors**. Juniors used to do the simple stuff, like manuals and product descriptions. Now they're **handing** a lot of that work **over to AI**. So **what's the point of** learning skills that could be **out of date by the time you graduate**? **What worries me is** that all that boring, basic work is exactly how people used to learn the job. So who's going to teach us now?"
+    },
+    {
+     "kind": "picture",
+     "img": "mark.jpg",
+     "alt": "Mark, 26, in his first job as an engineer",
+     "timer": 60,
+     "instr": "Retell Mark's answer from your homework. Tap the hourglass and remember all you can in one minute.",
+     "lead": {
+      "s": "Mark, 26, in his first job as an engineer",
+      "p": "Yes, but practical shouldn't just mean cooking and managing money. When I started this job, it was …"
+     },
+     "answer": "Yes, but practical shouldn't just mean cooking and managing money. When I started this job, it was **a really steep learning curve**. I had good grades, but nobody had taught me any of the **soft skills**: how to manage my time, ask for help, or cope when things went wrong. You **pick** most of that **up on the job**, usually **the hard way**. It took me months to realise that asking for help isn't a sign of weakness. **I really wish someone had told me** that in school."
     }
    ]
   },
   {
-   "label": "✏️ Your sentences",
+   "label": "✏️ Make it perfect",
    "blocks": [
     {
      "kind": "text",
@@ -720,7 +744,7 @@
        "key": "THINK",
        "back": "For me it was Czech. **It's really close to Russian, but it's a lot harder than you'd think.**",
        "why": "harder than you'd think = what anyone expects vs reality. About your own past expectation: I thought it would be easy. ((«сложнее, чем кажется»))",
-       "turn": "Your turn: a language, a city or a job that was harder than you'd think. Why?"
+       "turn": "A language, a city or a job that was harder than you'd think. Why?"
       },
       {
        "instr": "And this one? No red word this time.",
@@ -728,7 +752,7 @@
        "front": "<g>Communication with non-technical managers</g> — it's ~~harder than I was thinking~~.",
        "back": "Communication with non-technical managers — it's **a lot harder than you'd think**.",
        "why": "than I was thinking is a calque. Anyone would think so → than you'd think; only you → than I thought. ((калька с «чем я думала»))",
-       "turn": "Your turn: one thing at work or at home that's a lot harder than you'd think."
+       "turn": "One thing at work or at home that's a lot harder than you'd think."
       },
       {
        "instr": "Could be better English: how would you say the grey part?",
@@ -737,7 +761,7 @@
        "key": "FAR",
        "back": "I picked up how to manage staff on the job, from my general managers. **University only gets you so far.**",
        "why": "You can't learn it at university is correct. The box phrase says more: university gives you the basics, the rest comes on the job. ((вуз даёт базу — дальше на работе)) · staff ##/stɑːf/## (AmE ##/stæf/##) — персонал · stuff ##/stʌf/## — вещи",
-       "turn": "Your turn: one thing you picked up on the job — not at university or school."
+       "turn": "One thing you picked up on the job — not at university or school."
       },
       {
        "instr": "And this one? No red word this time.",
@@ -745,7 +769,7 @@
        "front": "~~I understood that just studying at university isn't enough for me~~, <g>so I found a full-time job</g>.",
        "back": "I **realised** that **university only gets you so far**, so I found a full-time job.",
        "why": "understood → realised (it became clear to you); isn't enough for me → only gets you so far. ((осознала · даёт базу — и не больше))",
-       "turn": "Your turn: your degree or your school — where did it only get you so far?"
+       "turn": "Your degree or your school — where did it only get you so far?"
       },
       {
        "instr": "Could be better English: how would you say the grey part?",
@@ -754,7 +778,7 @@
        "key": "VALUE",
        "back": "AI helps me make suggestions, but **choosing the best one — that's where I really add value**.",
        "why": "finally in mid-sentence sounds like «наконец-то»; «в итоге» is in the end. add value = what you bring that AI can't. ((«вот где от меня польза»))",
-       "turn": "Your turn: in your work or your life now, where do you really add value?"
+       "turn": "In your work or your life now, where do you really add value?"
       },
       {
        "instr": "And this one? No red word this time.",
@@ -762,7 +786,7 @@
        "front": "<g>Networking, department heads, motivation</g> — ~~in this kind of area, I believe AI is still helpless~~.",
        "back": "Networking, department heads, motivation — **that's where people still add value**.",
        "why": "helpless is usually about people. The box phrase talks about what people do well, not what AI can't do. ((helpless — «беспомощный», обычно о людях))",
-       "turn": "Your turn: two things where people still add value — and AI doesn't, yet."
+       "turn": "Two things where people still add value — and AI doesn't, yet."
       },
       {
        "instr": "Could be better English: how would you say the grey part?",
@@ -771,7 +795,7 @@
        "key": "HAND",
        "back": "Top managers still work with paper documents — they could go to jail. **That's why we don't hand anything serious over to AI.**",
        "why": "hand sth over to AI = give AI the whole job, not just use it. ((«передать ИИ целиком»))",
-       "turn": "Your turn: one thing you'd never hand over to AI. Why not?"
+       "turn": "One thing you'd never hand over to AI. Why not?"
       },
       {
        "instr": "And this one? No red word this time.",
@@ -779,7 +803,7 @@
        "front": "Things that took me five hours <g>a couple of years ago</g>, ~~AI could do for five minutes~~.",
        "back": "Things that took me five hours a couple of years ago, **I now hand over to AI — it does them in five minutes**.",
        "why": "in five minutes = how long it takes to finish; for five minutes = how long it goes on. ((«за пять минут» — in five minutes))",
-       "turn": "Your turn: one task you've handed over to AI — or would love to."
+       "turn": "One task you've handed over to AI — or would love to."
       },
       {
        "instr": "Could be better English: how would you say the grey part?",
@@ -788,7 +812,7 @@
        "key": "HANDY",
        "back": "This is touch typing. **It comes in really handy.**",
        "why": "very useful for typing repeats typing; it comes in handy = it turns out to be useful. Touch typing, not blind typing. ((«пригождается» · слепая печать — touch typing))",
-       "turn": "Your turn: a skill that came in really handy. When?"
+       "turn": "A skill that came in really handy. When?"
       },
       {
        "instr": "Could be better English: how would you say the grey part?",
@@ -797,7 +821,7 @@
        "key": "POINT",
        "back": "Children just go home, ask AI and write it down. **So what's the point of homework?**",
        "why": "at all goes with not and questions (not useful at all). What's the point of…? = «какой смысл в…?» ((«какой смысл в…?»))",
-       "turn": "Your turn: something where you thought: what's the point of this?"
+       "turn": "Something where you thought: what's the point of this?"
       }
      ]
     },
@@ -806,9 +830,7 @@
      "instr": "If you're done: in pairs. Use the box.",
      "box": "BOX",
      "items": [
-      "**1**  Go back through the ten sentences: say each upgrade without looking.",
-      "**2**  Which of the ten sentences is closest to your own story — and which is furthest from it? Why?",
-      "**3**  Something you learned recently that has already **come in handy** — and something where you thought: **what's the point of** this?"
+      "Something you learned recently that has already **come in handy** — and something where you thought: **what's the point of** this?"
      ]
     }
    ]
@@ -908,10 +930,181 @@
      ]
     },
     {
-     "kind": "tool",
-     "page": "../c1-schools/council-2",
-     "instr": "In pairs, on the page: the dice tells you how many reasons to give, for and against. Use the box. Then agree on two to cut and two to add.",
-     "plain": "slides 37–43: the lists, example reasons, follow-up questions and extra speaking are on the council page"
+     "kind": "council",
+     "box": "BOX",
+     "instr": "In pairs: the dice tells you how many reasons to give, for and against. Use the box. Then decide together.",
+     "lists": [
+      {
+       "kind": "cut",
+       "label": "Could be cut",
+       "items": [
+        {
+         "t": "coding",
+         "ex": {
+          "for": [
+           "You need to understand code to check what AI writes — **that's where you really add value**.",
+           "**It was a steep learning curve**, but it taught me to think step by step."
+          ],
+          "against": [
+           "**They're handing it over to AI** — why spend years on it at school?",
+           "Lots of tech companies **have stopped hiring juniors**, so why train kids for jobs that may not be there?"
+          ]
+         }
+        },
+        {
+         "t": "essay writing",
+         "ex": {
+          "for": [
+           "It's **more important than you'd think** — writing helps you sort out your thoughts.",
+           "When AI writes the first draft, I edit it — **that's where I really add value**."
+          ],
+          "against": [
+           "**They're handing it over to AI** — nobody writes reports from scratch any more.",
+           "We did essay writing every week, and **I've never used it since**."
+          ]
+         }
+        },
+        {
+         "t": "foreign languages",
+         "ex": {
+          "for": [
+           "**You never know when it might come in handy** — I never thought I'd live abroad.",
+           "Translation apps **only get you so far** — try making friends through one."
+          ],
+          "against": [
+           "AI translates everything now — **what's the point of** six years of French?",
+           "I did French at school, but when I moved to France, **I had to start from scratch**."
+          ]
+         }
+        },
+        {
+         "t": "spelling and handwriting",
+         "ex": {
+          "for": [
+           "It's **more important than you'd think** — people judge you by your spelling.",
+           "**You never know when it might come in handy** — when your battery dies, for example."
+          ],
+          "against": [
+           "It's **a complete waste of time** — spellcheck does it for us.",
+           "**It's out of date.** Nobody writes by hand any more."
+          ]
+         }
+        },
+        {
+         "t": "mental maths",
+         "note": "AmE: math",
+         "ru": "устный счёт",
+         "ex": {
+          "for": [
+           "It's **more useful than you'd think** — in shops, with discounts, when you split a bill.",
+           "It was hard, but it paid off — I notice at once when a bill doesn't look right."
+          ],
+          "against": [
+           "**What's the point of** mental maths when everyone has a phone?",
+           "We spent hours on it, and **I've never used it since**."
+          ]
+         }
+        }
+       ]
+      },
+      {
+       "kind": "add",
+       "label": "Could be added",
+       "items": [
+        {
+         "t": "using AI well (and checking it)",
+         "ex": {
+          "for": [
+           "**They're handing** more and more work **over to AI**, so someone has to check it.",
+           "**I learned that the hard way** — kids shouldn't have to."
+          ],
+          "against": [
+           "The tools change every month, so what they learn will be **out of date** by the time they leave school.",
+           "Kids **pick it up** on their own — and very fast."
+          ]
+         }
+        },
+        {
+         "t": "how to learn",
+         "ex": {
+          "for": [
+           "Everything goes **out of date**, so **you need to adapt** — and that means knowing how to learn.",
+           "When I changed careers, **I had to start from scratch**, and nobody had ever shown me how to learn."
+          ],
+          "against": [
+           "**I picked it up on the job** — you learn how to learn by doing it, not in a lesson.",
+           "**School only gets you so far** — everyone learns differently, so you have to find your own way."
+          ]
+         }
+        },
+        {
+         "t": "fact-checking",
+         "ru": "проверка фактов",
+         "ex": {
+          "for": [
+           "AI makes things up, so checking the facts — **that's where you really add value**.",
+           "Before I believe a big news story, **I read up on it** — kids should learn to do that too."
+          ],
+          "against": [
+           "**What's the point of** a separate subject? Every teacher can do it in their lessons.",
+           "You just **do your homework** before you share something — that's a habit, not a subject."
+          ]
+         }
+        },
+        {
+         "t": "dealing with difficult people",
+         "ex": {
+          "for": [
+           "My first year as a manager **was a steep learning curve** — nobody had ever taught me how to deal with people.",
+           "**I had to learn the hard way**, and I'd love my kids to have it easier."
+          ],
+          "against": [
+           "**School only gets you so far** — you learn it from real people, not from role-plays.",
+           "It's **more complicated than you'd think** — every difficult person is different, so a school course can't really prepare you."
+          ]
+         }
+        },
+        {
+         "t": "working in a team",
+         "ex": {
+          "for": [
+           "A lot of companies **have stopped hiring juniors**, so young people get fewer chances to learn teamwork at work — school has to do it.",
+           "It's **more important than you'd think** — even a team of clever people gets nowhere if they can't work together."
+          ],
+          "against": [
+           "They already do group projects all the time — **what's the point of** a whole subject?",
+           "**I picked it up on the job** — you can't learn it from a textbook."
+          ]
+         }
+        }
+       ]
+      }
+     ],
+     "report": "We've decided to cut … and … and add … and … . We'd rather keep … because …",
+     "decideLead": "Agree on two to cut and two to add. Tap them."
+    },
+    {
+     "kind": "questions",
+     "box": "BOX",
+     "instr": "After you decide: follow-up questions. Use the box.",
+     "items": [
+      "**1**  What did you decide about coding and essay writing? Give the head teacher (AmE: principal) two reasons.",
+      "**2**  A student says: \"Why learn to write essays if AI does it better?\" Do you agree? Agree on two things you'd say to this student.",
+      "**3**  Which of your four changes would make the biggest difference for a 12-year-old today? Two reasons."
+     ]
+    },
+    {
+     "kind": "questions",
+     "box": "BOX",
+     "instr": "Extra speaking. Use the box.",
+     "items": [
+      "**1**  A friend's son wants to drop maths: \"I've got a calculator.\" What do you tell him? Two reasons.",
+      "**2**  Each of you: two skills you think will stay valuable as AI develops, and one that's already **out of date**. Then agree on the one you'd most recommend learning, and why.",
+      "**3**  Which subject would have helped you most at 17 — and which would have been a complete waste of time for you?",
+      "**4**  Each of you: something you **learned the hard way** — at work or anywhere else. Your partner asks one question.",
+      "**5**  **They've stopped hiring juniors.** Agree on three ways a young person can still get experience.",
+      "**6**  A 20-year-old relative asks: “What should I study, now that AI can do half the jobs out there?” Agree on three pieces of advice."
+     ]
     }
    ]
   },
@@ -919,92 +1112,173 @@
    "label": "🗣 Say it naturally",
    "blocks": [
     {
-     "kind": "say",
+     "kind": "text",
+     "instr": "What's under the yellow? It's the same in both lines. Then tap to check.",
+     "lines": [
+      {
+       "p": [
+        "One thing I learned at school that's come in handy… I use it more ",
+        {
+         "f": "",
+         "r": "than you'd think"
+        },
+        "."
+       ]
+      },
+      {
+       "p": [
+        "((Your homework:)) Cooking dinner for twelve? It was a lot harder ",
+        {
+         "f": "",
+         "r": "than you'd think"
+        },
+        "."
+       ]
+      }
+     ]
+    },
+    {
+     "kind": "text",
      "box": "YOU",
-     "instr": "You can say. What comes before than you'd think? Then tap “Show the answer”.",
-     "task": [
-      "((Friday, in a room:)) One thing I learned at school that's come in handy… I use it **more than you'd think**.",
-      "((Your homework:)) Cooking dinner for twelve? It was **a lot harder than you'd think**."
-     ],
-     "answer": [
-      "((Friday, in a room:)) One thing I learned at school that's come in handy… I use it **more than you'd think**.",
-      "((Your homework:)) Cooking dinner for twelve? It was **a lot harder than you'd think**.",
-      "**A comparative:** more, harder, longer."
-     ],
-     "answer_title": "Check"
+     "instr": "And what comes before than you'd think?",
+     "lines": [
+      {
+       "p": [
+        "One thing I learned at school that's come in handy… I use it ^^more^^ ",
+        {
+         "b": "than you'd think"
+        },
+        "."
+       ]
+      },
+      {
+       "p": [
+        "((Your homework:)) Cooking dinner for twelve? It was ^^a lot harder^^ ",
+        {
+         "b": "than you'd think"
+        },
+        "."
+       ]
+      },
+      {
+       "p": [
+        "→ ^^a comparative^^: more, harder, longer · stronger: a lot harder, a lot more"
+       ]
+      }
+     ]
     },
     {
      "kind": "cards",
      "style": "say",
      "box": "YOU",
-     "instr": "You can also say. Take turns: read the line, your partner replies with the frame. Then tap the card.",
+     "instr": "Take turns: read the line, your partner replies with the frame and the word in red. Then tap the card.",
      "cards": [
       {
        "front": "Yoga? Isn't that just stretching?",
-       "back": "It's **a lot harder than you'd think** — I couldn't walk the next day."
+       "back": "It's **a lot harder than you'd think** — I couldn't walk the next day.",
+       "key": "HARD"
       },
       {
        "front": "The walk up to the castle? It can't be far, can it?",
-       "back": "It's **a lot steeper than you'd think** — take water."
+       "back": "It's **a lot steeper than you'd think** — take water.",
+       "key": "STEEP"
       },
       {
        "front": "Your neighbours? They look a bit grumpy.",
-       "back": "They're **a lot friendlier than you'd think** — they fed our cat all summer."
+       "back": "They're **a lot friendlier than you'd think** — they fed our cat all summer.",
+       "key": "FRIENDLY"
       },
       {
        "front": "Your dad has a smartphone? Does he ever actually use it?",
-       "back": "He's on it **more than you'd think** — mostly sending me memes."
+       "back": "He's on it **more often than you'd think** — mostly sending me memes.",
+       "key": "OFTEN"
       }
      ]
     },
     {
      "kind": "say",
      "box": "YOU",
-     "instr": "Can I say…? Something that's harder, easier or more fun than people expect. Say it with the frame.",
+     "instr": "Something that's harder, easier or more fun than people expect: say it with the frame.",
      "task": [
       "Your partner reacts: **Really? How so?** Then you give one example.",
       "((Ideas: a dish · a place you've been to · a sport · your city · someone in your family · an app))"
      ]
     },
     {
-     "kind": "text",
-     "box": "YOU",
-     "instr": "Act out the exchange. Then do it again with another place, without looking.",
-     "lines": [
+     "kind": "model",
+     "img": "ljubljana.jpg",
+     "alt": "Ljubljana",
+     "side": true,
+     "instr": "Read the dialogue. What's under the yellow? Then tap to check.",
+     "parts": [
       {
-       "s": "A",
-       "p": [
-        "A week in Ljubljana? What are you going to do there for a whole week?"
-       ]
-      },
-      {
-       "s": "B",
-       "p": [
-        "There's ",
+       "lines": [
         {
-         "b": "more to do than you'd think"
+         "s": "A",
+         "p": [
+          "A week in Ljubljana? What are you going to do there for a whole week?"
+         ]
         },
-        "."
+        {
+         "s": "B",
+         "p": [
+          "There's ",
+          {
+           "f": "",
+           "r": "more to do than you'd think"
+          },
+          "."
+         ]
+        },
+        {
+         "s": "A",
+         "p": [
+          "Really? Like what?"
+         ]
+        },
+        {
+         "s": "B",
+         "p": [
+          "The lakes and the mountains are an hour away, and the food alone is worth the trip."
+         ]
+        }
        ]
-      },
-      {
-       "s": "A",
-       "p": [
-        "Really? Like what?"
-       ]
-      },
-      {
-       "s": "B",
-       "p": [
-        "The lakes and the mountains are an hour away, and the food alone is worth the trip."
-       ]
-      },
-      {
-       "ctx": "Round 2: your city? a place you've been to? your own idea"
-      },
-      {
-       "ctx": "If you're done: say the four replies from “You can also say” without looking, then swap."
       }
+     ]
+    },
+    {
+     "kind": "say",
+     "instr": "Now your own dialogue: change the grey parts. Your city? A place you've been to? Your own idea. Take turns, then tap “Show the answer” for two examples.",
+     "task": [
+      "A: A week in [[Ljubljana]]? What are you going to do there for a whole week?",
+      "B: There's **more to do than you'd think**.",
+      "A: Really? Like what?",
+      "B: [[The lakes and the mountains are an hour away, and the food alone is worth the trip.]]"
+     ],
+     "answer": [
+      "A: A week in [[Ljubljana]]? What are you going to do there for a whole week?",
+      "B: There's **more to do than you'd think**.",
+      "A: Really? Like what?",
+      "B: [[The lakes and the mountains are an hour away, and the food alone is worth the trip.]]",
+      "**1**  A: Three days in Bratislava? Isn't it really small?",
+      "B: There's **more to see than you'd think**.",
+      "A: Really? Like what?",
+      "B: The old town is lovely, Vienna is an hour away by boat, and the wine is really cheap.",
+      "**2**  A: Your town? What is there to do in the evenings?",
+      "B: There's **a lot more going on than you'd think**.",
+      "A: Really? Like what?",
+      "B: There's a jazz bar round the corner, and in summer there are free concerts by the river."
+     ],
+     "answer_title": "Sample answers"
+    },
+    {
+     "kind": "postits",
+     "instr": "If you're done: read a sticker to your partner. They reply with the frame and the word in capitals, without looking. Then swap.",
+     "notes": [
+      "Yoga? Isn't that just stretching? **HARD**",
+      "The walk up to the castle? It can't be far, can it? **STEEP**",
+      "Your neighbours? They look a bit grumpy. **FRIENDLY**",
+      "Your dad has a smartphone? Does he ever actually use it? **OFTEN**"
      ]
     }
    ]
@@ -1236,16 +1510,11 @@
        ]
       }
      ]
-    }
-   ]
-  },
-  {
-   "label": "💬 Who does what at home?",
-   "blocks": [
+    },
     {
      "kind": "say",
      "box": "CATCH",
-     "instr": "In rooms, part 1 (3 min): you bump into each other for the first time in years. Catch up. Then part 2 — the next screen.",
+     "instr": "In rooms (3 min): you bump into each other for the first time in years. Catch up.",
      "task": [
       "What you've been up to, how you're finding your new job or city. Then pick another place.",
       "**Where?**",
@@ -1253,22 +1522,28 @@
       "• at an airport gate",
       "• in a supermarket queue ((AmE: line)), in a city neither of you lives in"
      ]
-    },
+    }
+   ]
+  },
+  {
+   "label": "💬 New topic",
+   "blocks": [
     {
-     "kind": "questions",
+     "kind": "postits",
      "instr": "Same rooms, part 2 (about 10 min). We'll record it so we can see what you want to say but can't yet. No box — just talk.",
-     "items": [
-      "**1**  Who's the cook in your house — and who did the cooking in your family when you were growing up? What's changed since then?",
-      "**2**  Who does the paperwork and the tech stuff? How did it end up like that? And two jobs nobody in your house wants to do. ((Live alone? What do you do yourself, and what do you get someone else to do?))",
-      "**3**  Which job around the house would you happily hand over to someone else — and which would you never give up?"
+     "notes": [
+      "Who's the cook in your house — and who did the cooking in your family when you were growing up? What's changed since then?",
+      "Who does the paperwork and the tech stuff? How did it end up like that? And two jobs nobody in your house wants to do.",
+      "Which job around the house would you happily hand over to someone else — and which would you never give up?",
+      "Live alone? What do you do yourself, and what do you get someone else to do?"
      ]
     },
     {
-     "kind": "say",
+     "kind": "postits",
      "instr": "Back in the main room",
-     "task": [
-      "**1**  What did you want to say but couldn't? Type it in Russian in the chat.",
-      "**2**  One thing that surprised you about how things work in your partner's home."
+     "notes": [
+      "What did you want to say but couldn't? Type it in Russian in the chat.",
+      "One thing that surprised you about how things work in your partner's home."
      ]
     }
    ]

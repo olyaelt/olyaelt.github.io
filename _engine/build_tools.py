@@ -177,7 +177,7 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
                     if ed.get('type') == 'chat-scenes':   # her 📥 Groups names its chats; their texts are kept by the chats' permanent numbers
                         ep = page_ids(lesson, b['page'], ed, save=False).get('scenes', [])
                         d['embeds'][b['page']] = {'title': ed['title'], 'chats': {str(pid): x.get('contact', '') for pid, x in zip(ep, ed['scenes'])}}
-                if b.get('kind') == 'picture' and b.get('img'):
+                if b.get('kind') in ('picture', 'model') and b.get('img'):   # tools 18: a model with its picture (Ljubljana) too
                     shutil.copyfile(os.path.join(T, lesson, b['img']), os.path.join(out_dir, b['img']))
                 if b.get('kind') == 'game' and b.get('piece') == 'secret' and b.get('phone'):   # tools 17: the phone card
                     b['_cardUrl'] = 'https://olyaelt.github.io/tools/%s/%s-card.html' % (lesson, name)
