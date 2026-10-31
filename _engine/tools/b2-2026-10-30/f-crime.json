@@ -677,8 +677,17 @@
    "label": "💬 Use it",
    "blocks": [
     {
+     "kind": "picture",
+     "instr": "This is Maple Road. Look at it for one minute and think quietly: what's been going on here? Don't talk yet.",
+     "img": "maple-scene.jpg",
+     "timer": 60,
+     "box": "NEWS",
+     "tip": "Tap ⏱ to start, then look at the street for one minute. Think about what you'll say. No talking yet."
+    },
+    {
      "kind": "model",
-     "instr": "Two neighbours on Maple Road. Complete their chat. Then tap the yellow to check.",
+     "instr": "Here's how two neighbours might talk about it. Complete their chat. Then tap the yellow to check.",
+     "img": "maple-4-bakery.jpg",
      "box": "ASK",
      "parts": [
       {
@@ -755,14 +764,16 @@
         }
        ]
       }
-     ]
+     ],
+     "tip": "Next, you'll talk like these two neighbours. First, complete their chat."
     },
     {
      "kind": "scenes",
-     "instr": "This is Maple Road. Look at the scene: what's been going on here? Get ready to share the news like neighbours.",
+     "instr": "Take turns: one scene each. Tell your partner the news.",
      "street": "maple-scene.jpg",
+     "street_first": false,
      "box": "NEWS",
-     "task": "Tell your partner the news. Your partner reacts and asks **two** questions. Then you end with a tip: **Watch out for** …",
+     "task": "Your partner reacts and asks **two** questions. Then you end with a tip: **Watch out for** …",
      "scenes": [
       {
        "img": "maple-1-window.jpg",
@@ -775,10 +786,6 @@
       {
        "img": "maple-3-bike.jpg",
        "alt": "a bike stolen"
-      },
-      {
-       "img": "maple-4-bakery.jpg",
-       "alt": "the bakery robbed (the baguette)"
       },
       {
        "img": "maple-5-shoplifter.jpg",
@@ -797,7 +804,7 @@
        "alt": "reporting it to the police"
       }
      ],
-     "tip": "First look at the whole street. Then Next deals a scene: one each. Tap a phrase in the box when you say it — it turns green."
+     "tip": "Tap Next for a scene. Take turns, one each. When you use a phrase from the box, tap it and it turns green."
     },
     {
      "kind": "questions",

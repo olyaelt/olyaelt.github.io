@@ -1,0 +1,249 @@
+[
+ {
+  "id": "f1",
+  "title": "pick it up · hand it over: it goes in the middle",
+  "card": [
+   {
+    "wrong": "You ~~pick up it~~ along the way.",
+    "right": "You **pick it up** along the way.",
+    "good": "along the way"
+   }
+  ],
+  "why_en": "pick up, hand over: it / them go between the verb and up / over (pick it up, hand them over).",
+  "why_ru": "it — между глаголом и up / over",
+  "items": [
+   {
+    "kind": "place",
+    "word": "it",
+    "tokens": [
+     "Nobody taught me to swim. I",
+     "▢",
+     "picked",
+     "▢",
+     "up",
+     "▢",
+     "at the lake",
+     "▢",
+     "as a kid."
+    ],
+    "slot": 3,
+    "answer": "Nobody taught me to swim. I picked it up at the lake as a kid."
+   },
+   {
+    "kind": "write",
+    "o": "My neighbour fills in my tax forms now.",
+    "hint": "hand over",
+    "pre": "Every March I ",
+    "post": " to her and bake her a cake.",
+    "a": "hand them over",
+    "acc": [
+     "hand them over",
+     "just hand them over",
+     "hand them all over"
+    ],
+    "n": "them — between hand and over."
+   },
+   {
+    "kind": "which",
+    "q": "Which are possible?",
+    "opts": [
+     "I picked up Italian on holiday.",
+     "I picked Italian up on holiday.",
+     "I picked up it on holiday."
+    ],
+    "ok": [
+     0,
+     1
+    ],
+    "n": "With a noun, both: picked up Italian / picked Italian up. With it, only: picked it up."
+   }
+  ]
+ },
+ {
+  "id": "f2",
+  "title": "handing over, not handling",
+  "card": [
+   {
+    "wrong": "Companies are ~~handling~~ that work over to AI.",
+    "right": "Companies are **handing** that work over to AI.",
+    "good": "over to AI"
+   }
+  ],
+  "why_en": "hand sth over = give it to someone else to do · handle sth = deal with it yourself.",
+  "why_ru": "hand over — передать; handle — справиться самому",
+  "items": [
+   {
+    "kind": "write",
+    "o": "Angry customers? I'm useless with them.",
+    "hint": "hand over",
+    "pre": "So I've started ",
+    "post": " to my colleague.",
+    "a": "handing them over",
+    "acc": [
+     "handing them over",
+     "just handing them over"
+    ],
+    "n": "handing (hand over), not handling · them in the middle."
+   },
+   {
+    "kind": "write",
+    "o": "My colleague is brilliant with angry customers.",
+    "hint": "handle",
+    "pre": "She ",
+    "post": " really calmly.",
+    "a": "handles them",
+    "acc": [
+     "handles them",
+     "always handles them"
+    ],
+    "n": "handle = deal with it yourself · she handles (-s)."
+   }
+  ]
+ },
+ {
+  "id": "f3",
+  "title": "I've never used it since",
+  "card": [
+   {
+    "wrong": "I ~~never used~~ it since.",
+    "right": "I**'ve never used** it since.",
+    "good": "since"
+   }
+  ],
+  "why_en": "I've never used it since / I haven't used it since: have + used.",
+  "why_ru": "с тех пор ни разу: I've never used it since",
+  "items": [
+   {
+    "kind": "write",
+    "o": "",
+    "hint": "never / touch",
+    "pre": "I did a pottery course in 2019, and ",
+    "post": " clay since.",
+    "a": "I've never touched",
+    "acc": [
+     "I've never touched",
+     "I have never touched",
+     "I haven't touched",
+     "I have not touched",
+     "I've not touched"
+    ],
+    "n": "or: haven't touched · touched /tʌtʃt/"
+   },
+   {
+    "kind": "write",
+    "o": "",
+    "hint": "not / play",
+    "pre": "My husband bought an electric guitar for his 40th. ",
+    "post": " it since.",
+    "a": "He hasn't played",
+    "acc": [
+     "He hasn't played",
+     "He has not played",
+     "He's never played",
+     "He has never played",
+     "He's not played",
+     "He hasn't really played"
+    ],
+    "n": "or: he's never played it since"
+   }
+  ]
+ },
+ {
+  "id": "f4",
+  "title": "a, the: the small words",
+  "card": [
+   {
+    "wrong": "It was ‸ complete waste of time.",
+    "right": "It was **a** complete waste of time.",
+    "good": "complete waste of time"
+   },
+   {
+    "wrong": "I learned it ~~in a~~ hard way.",
+    "right": "I learned it **the** hard way.",
+    "good": "I learned it"
+   }
+  ],
+  "why_en": "a waste of time, a learning curve · the hard way: always the.",
+  "why_ru": "a waste of time — нужен a; the hard way — всегда the",
+  "items": [
+   {
+    "kind": "place",
+    "word": [
+     "a",
+     "the"
+    ],
+    "tokens": [
+     "That two-hour webinar on productivity?",
+     "▢",
+     "complete",
+     "▢",
+     "waste of time."
+    ],
+    "cap": true,
+    "slot": 1,
+    "pick": "a",
+    "answer": "That two-hour webinar on productivity? A complete waste of time."
+   },
+   {
+    "kind": "place",
+    "word": [
+     "a",
+     "the"
+    ],
+    "tokens": [
+     "My first month with a puppy: I learned",
+     "▢",
+     "hard way",
+     "▢",
+     "that puppies eat shoes."
+    ],
+    "slot": 1,
+    "pick": "the",
+    "answer": "My first month with a puppy: I learned the hard way that puppies eat shoes."
+   }
+  ]
+ },
+ {
+  "id": "f5",
+  "title": "back in my day",
+  "card": [
+   {
+    "wrong": "Back in my ~~days~~, …",
+    "right": "Back in my **day**, …",
+    "good": "Back in my"
+   }
+  ],
+  "why_en": "back in my day / in our day: no -s (but: in my student days, in my younger days).",
+  "why_ru": "day — без -s",
+  "items": [
+   {
+    "kind": "write",
+    "o": "— My son orders everything online, even bread.",
+    "hint": "1 word",
+    "pre": "— Back in my ",
+    "post": ", you went to the shop and talked to people!",
+    "a": "day",
+    "acc": [
+     "day",
+     "youth",
+     "time"
+    ],
+    "n": "day, no -s · or: back in my youth"
+   },
+   {
+    "kind": "write",
+    "o": "— Kids get phones at nine now.",
+    "hint": "1 word",
+    "pre": "— I know! In our ",
+    "post": ", there was one phone in the hall and everyone could hear you.",
+    "a": "day",
+    "acc": [
+     "day",
+     "time",
+     "youth"
+    ],
+    "n": "day, no -s · or: in our time"
+   }
+  ]
+ }
+]

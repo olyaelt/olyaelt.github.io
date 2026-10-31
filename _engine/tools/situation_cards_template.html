@@ -55,9 +55,29 @@ __BASE_CSS__
 .coin.big{width:4.4rem;height:4.4rem}
 .coin.big .num{font-size:2.4rem}
 button.coin{cursor:pointer;padding:0;font:inherit}
+/* her 21:17: the coin (and the die) on the card is tapped to flip, as on the Example — no separate button */
+.die-btn{all:unset;cursor:pointer;display:grid;place-items:center;border-radius:14px;flex:none}
+.die-btn:focus-visible{outline:3px solid var(--instr);outline-offset:3px}
+.die-btn:hover .coin,.die-btn:hover .die{transform:scale(1.06)}
+.die-btn:disabled{cursor:wait}
 .coin-intro{display:flex;align-items:center;gap:16px;background:var(--ground);border-radius:12px;padding:8px 14px}
 .coin-intro p{margin:0;font-size:1.25rem;font-weight:800;line-height:1.6}
 .trow .coin.sm,.back .coin.sm,.model-ans .coin.sm,.die-how:not(.wait) .coin.sm{margin:0 6px 0 0}
+/* tools 14: the coin from game.js; the answer deck */
+.gcoin.sm{margin:0 1px 0 4px;top:-.08em}
+.trow .gcoin.sm,.back .gcoin.sm,.model-ans .gcoin.sm{margin:0 6px 0 0}
+.gcoin.md{width:3.7rem;height:3.7rem}
+.gcoin.md .gc-face span{font-size:2rem}
+.coin-btn{all:unset;cursor:pointer;display:grid;place-items:center;padding:4px 6px 10px;border-radius:50%}
+.coin-btn:focus-visible{outline:3px solid var(--instr);outline-offset:2px}
+.die-btn .gcoin{transition:transform .15s} .die-btn:hover .gcoin{transform:scale(1.05)}   /* no filter here: it would flatten the 3D coin */
+.die-row.draw{align-items:center;min-height:5.6rem;padding-bottom:1.3rem}
+.gd-pile.sm{width:3.6rem;height:5rem}
+.gd-pile.sm .gd-left{font-size:.78rem;bottom:-1.4rem}
+.die-row.draw .gd-slot{min-height:5rem;min-width:0}
+.die-row.draw .gd-card,.die-row.draw .gd-in{min-height:5rem;max-width:30rem}
+.die-row.draw .gd-f{font-size:1.08rem;padding:8px 14px}
+.mcard{display:inline-block;width:.85rem;height:1.15rem;border-radius:3px;border:2px solid #1D1D1B;background:#0693E3;box-shadow:inset 0 0 0 2px #FFFFFF;vertical-align:-.2em;margin-right:6px}
 .embed .next-card,.embed [data-start],.embed .speak .row-actions{display:none}   /* inside a field the field's Back / Next lead (her 14:56, as in the chats) */
 .react{margin:0;color:var(--muted);font-size:.98rem}
 .react b{color:var(--ink)}
@@ -81,6 +101,38 @@ details.model summary .ml{color:var(--label);font-weight:900;letter-spacing:.05e
 .empty-draw p{margin:0;color:var(--muted)}
 .btn.big{font-size:1.2rem;padding:10px 26px}
 .all-row .ty{font-weight:900;margin-right:6px}
+/* the guided start (handoff 30.10 21:20, her words: "so hard to understand what's going on here"): How it works → the card, the coin
+   always lands on heads + an example → the same card, always tails + an example → the cards, the two examples pinned at the bottom */
+.ex-title{margin:0;font-size:1.35rem;font-weight:900}
+.how{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.how li{font-size:1.18rem;line-height:1.45}
+.how li .gcoin.sm{margin:0 8px 0 0}
+.how-end{margin:0;font-size:1.18rem;font-weight:800}
+.try-after{margin:0;font-weight:800;font-size:1.12rem}
+.try-after.in,.try-lines.in{animation:enter .35s ease-out}
+.try-lines{background:var(--ground);border-radius:12px;padding:6px 14px}
+.try-lines p{margin:6px 0;font-size:1.15rem;line-height:1.7}
+.try-lines .sp{margin-right:5px}
+.die-btn.done{cursor:default}
+.gp{font:inherit;border:0;padding:0;background:transparent;cursor:pointer;color:inherit}
+.gp .f{color:var(--first,#0000FF);font-weight:900}
+.gp .r{background:#FFFF00;color:transparent;border-radius:3px;padding:0 1px}
+.gp.open .r,.gp.open .f{color:#1D1D1B;font-weight:700;background:#FFFF00}
+.gp.open .f{border-radius:3px 0 0 3px;padding-left:1px}
+.gp:not(.open):hover .r{outline:2px solid #E8D800}
+.go-line{margin:0;font-weight:800;font-size:1.08rem;background:#E8F4FD;border-left:5px solid var(--instr);border-radius:10px;padding:8px 12px}
+.expin{position:sticky;bottom:8px;z-index:3;display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:6px 10px;box-shadow:0 4px 14px rgba(0,0,0,.12);margin-top:6px}
+.expin .ml{font-weight:900;font-size:.85rem;letter-spacing:.05em;text-transform:uppercase;color:var(--label)}
+.expin-b{font:inherit;font-weight:800;font-size:1rem;display:inline-flex;align-items:center;gap:6px;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:3px 12px 3px 6px;cursor:pointer}
+.expin-b .gcoin.sm{margin:0}
+.expin-b.on{border-color:var(--instr);background:#E8F4FD}
+.expin-open{flex-basis:100%;display:grid;gap:2px;padding:2px 4px 4px}
+.expin-open p{margin:0;font-size:1rem;line-height:1.45}
+.expin-open .fill{font-weight:800}
+.expin.fly .expin-b{animation:flyDown .85s cubic-bezier(.2,.8,.2,1) both}
+.expin.fly .expin-b + .expin-b{animation-delay:.14s}
+@keyframes flyDown{from{opacity:0;transform:translateY(-280px) scale(1.3)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){ .expin.fly .expin-b,.try-after.in,.try-lines.in{animation:none} }
 @media (max-width:560px){ .stage{padding:14px} .scard .says{font-size:1.15rem} .trow{padding:8px 10px} }
 </style>
 </head>
@@ -102,17 +154,22 @@ const TYPES = D.die.map.map(m => m.type);                        /* R, W, D */
 const facesOf = range => String(range).split(/[–-]/).map(Number);  /* "1–2" → [1, 2] */
 /* tools 13: "coin": true = two faces (heads = map[0], tails = map[1]), tossed instead of rolled */
 const COIN = !!D.die.coin;
+/* tools 14 (her 30.10 21:32): "draw": true = an answer card drawn from a small deck instead of the die (as many cards per type as die faces) */
+const DRAW = !COIN && !!D.die.draw;
+const drawCards = () => D.die.map.flatMap(m => Array(Math.max(1, facesOf(m.faces).length)).fill(m.type));
 const typeOfFace = n => COIN ? (D.die.map[n - 1] || D.die.map[0]).type : (D.die.map.find(m => facesOf(m.faces).includes(n)) || D.die.map[0]).type;
 const facesFor = t => D.die.map[TYPES.indexOf(t)].faces;
 const ansText = t => liveText(`answers.${t}`, D.answers[t]);
 const cardText = (i, f) => liveText(`cards.${i}.${f}`, D.cards[i][f]);
-const modelText = f => liveText(`model.${f}`, D.model[f]);
+const modelText = f => D.model ? liveText(`model.${f}`, D.model[f]) : "";
+const IN = COIN && D.intro && (D.intro.tries || []).length ? D.intro : null;   /* the guided start (handoff 30.10 21:20) */
 const cardGone = i => liveHidden("cards." + i);
 const narrow = () => matchMedia("(max-width: 700px)").matches;
 let S;
 const deckAll = () => D.cards.map((_, i) => i).filter(i => !cardGone(i));
 function newDeck(last){ let d = shuffle(deckAll()); if(d.length > 1 && d[0] === last) d.push(d.shift()); return d; }
-function newGame(view){ S = {view: view || "example", exShown: false, modelOpen: !narrow(), deck: newDeck(), cur: null, seen: 0, hist: [], coinIntro: true}; }
+function newGame(view){ S = {view: view || "example", exShown: false, modelOpen: !narrow(), deck: newDeck(), cur: null, seen: 0, hist: [], coinIntro: true, ad: {order: shuffle(drawCards()), at: -1},
+  ex: 0, tries: IN ? IN.tries.map(() => ({face: 0, open: new Set()})) : [], pinOpen: null, goLine: false}; }
 newGame();
 /* her changes arrive: a card she hid leaves the deck */
 function liveAdjust(){ if(S) S.deck = S.deck.filter(i => !cardGone(i)); }
@@ -121,25 +178,24 @@ const DECK_SIZE = () => deckAll().length;
 function draw(){
   if(S.busy) return;
   if(!S.deck.length) S.deck = newDeck(S.cur && S.cur.i);
-  if(S.cur) S.hist.push(S.cur);
+  if(S.cur){ S.hist.push(S.cur); S.goLine = false; }
   const i = S.deck.shift(); S.seen++;
   S.cur = {i, face: 0, type: null, flipped: false}; S.fresh = true; render(); S.fresh = false;
 }
 
 /* ---------- the roll: the same calm motion as the council's die ---------- */
 const PIPS = {1:[5], 2:[1,9], 3:[1,5,9], 4:[1,3,7,9], 5:[1,3,5,7,9], 6:[1,3,4,6,7,9]};
-const HEAD_SVG = `<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="14" r="7.5" fill="#6A4700"/><path d="M6.5 35c0-8 6-12.5 13.5-12.5S33.5 27 33.5 35z" fill="#6A4700"/></svg>`;
-const coinFace = n => n === 1 ? HEAD_SVG : n === 2 ? `<span class="num">1</span>` : `<span class="num">?</span>`;
-const coinName = n => n === 1 ? "heads" : n === 2 ? "tails" : "";
-const coinHTML = (n, cls = "") => `<span class="coin ${cls} ${n ? "" : "blank"}" role="img" aria-label="${coinName(n)}">${coinFace(n)}</span>`;
-const setCoin = (el, n) => { el.innerHTML = coinFace(n); el.setAttribute("aria-label", coinName(n)); el.classList.remove("blank"); };
-/* the badge of an answer type: the coin's face (her 14:53), or the die faces "1–2" */
-const badge = (t, sm) => COIN ? coinHTML(TYPES.indexOf(t) + 1, "sm") : `<span class="type ${sm ? "sm" : ""}">${esc(facesFor(t))}</span>`;
-const dieHTML = n => COIN ? coinHTML(n) : `<span class="die ${n ? "" : "blank"}" aria-label="${n || ""}">${Array.from({length: 9}, (_, k) => `<i class="${n && PIPS[n].includes(k + 1) ? "p" : ""}"></i>`).join("")}</span>`;
+/* tools 14 (her 21:32): the coin is a real two-sided coin with a rim (game.js), tossed up, turning over and over, landing softly */
+const coinHTML = (n, cls = "") => gCoinHTML(n, cls);
+/* the badge of an answer type: the coin's face (her 14:53), a small card (draw), or the die faces "1–2" */
+const badge = (t, sm) => COIN ? coinHTML(TYPES.indexOf(t) + 1, "sm") : DRAW ? `<span class="mcard" aria-hidden="true"></span>` : `<span class="type ${sm ? "sm" : ""}">${esc(facesFor(t))}</span>`;
+const ansCardFace = t => `<span class="gd-k">${esc(D.die.label)}</span><span>${esc(ansText(t))}</span>`;
+const dieHTML = n => COIN ? coinHTML(n, "md") : `<span class="die ${n ? "" : "blank"}" aria-label="${n || ""}">${Array.from({length: 9}, (_, k) => `<i class="${n && PIPS[n].includes(k + 1) ? "p" : ""}"></i>`).join("")}</span>`;
 const setFace = (die, n) => die.querySelectorAll("i").forEach((p, j) => p.classList.toggle("p", PIPS[n].includes(j + 1)));
 function roll(){
   const c = S.cur; if(S.busy || !c) return;
   if(COIN) return toss(c);
+  if(DRAW) return drawAnswer(c);
   const final = 1 + Math.floor(Math.random() * 6);
   const done = () => { c.face = final; c.type = typeOfFace(final); S.rolled = true; render(); S.rolled = false; };
   const slot = document.querySelector("[data-die]");
@@ -170,23 +226,25 @@ function toss(c){
   if(calm() || !slot){ done(); return; }
   S.busy = true; document.querySelectorAll(".stage button").forEach(b => b.disabled = true);
   const how = document.querySelector(".die-how"); if(how){ how.classList.add("wait"); how.textContent = "…"; }
-  slot.innerHTML = coinHTML(final); spinCoin(slot.firstElementChild, final, () => { S.busy = false; done(); });
+  const coin = slot.querySelector(".gcoin"); if(!coin){ S.busy = false; done(); return; }
+  gToss(coin, final, () => { S.busy = false; done(); });
 }
-function spinCoin(coin, final, done){
-  const gaps = [70, 70, 80, 90, 100, 120, 140, 170, 210, 260], total = gaps.reduce((a, b) => a + b, 0);
-  let f = gaps.length % 2 ? 3 - final : final;   /* so the last turn lands on the final face */
-  setCoin(coin, f);
-  coin.animate([{transform: "translateY(0) rotateX(0deg)"}, {transform: "translateY(-18px) rotateX(900deg)", offset: .45},
-    {transform: "translateY(0) rotateX(1800deg)"}], {duration: total, easing: "cubic-bezier(.12,.75,.3,1)"});
-  let t = 0; gaps.forEach(g => { t += g; setTimeout(() => { f = 3 - f; setCoin(coin, f); }, t); });
-  setTimeout(done, total + 150);
+/* draw: the top card of the answer deck comes out and turns over (a new shuffled deck when it's used up) */
+function drawAnswer(c){
+  const A = S.ad; if(A.at >= A.order.length - 1){ A.order = shuffle(drawCards()); A.at = -1; }
+  A.at++; const t = A.order[A.at];
+  const done = () => { c.type = t; c.face = 0; S.rolled = true; render(); S.rolled = false; };
+  const pile = document.querySelector("[data-gpile]"), slot = document.querySelector("[data-aslot]");
+  if(calm() || !pile || !slot){ done(); return; }
+  S.busy = true; document.querySelectorAll(".stage button").forEach(b => b.disabled = true);
+  const w = slot.querySelector(".die-how"); if(w) w.remove();
+  gDeckFly(pile, slot, ansCardFace(t), () => { S.busy = false; done(); });
 }
 /* ⭐ on arrival the coin flips once by itself (her 14:53: what heads and tails are); a tap on it flips it again */
 function introCoin(){
-  const el = document.querySelector("[data-intro-coin]"); if(!el || S.introBusy) return;
+  const el = document.querySelector("[data-intro-coin] .gcoin"); if(!el || S.introBusy) return;
   const final = Math.random() < .5 ? 1 : 2; S.introFace = final;
-  if(calm()){ setCoin(el, final); return; }
-  S.introBusy = true; spinCoin(el, final, () => { S.introBusy = false; });
+  S.introBusy = true; gToss(el, final, () => { S.introBusy = false; });
 }
 
 /* ---------- views ---------- */
@@ -194,7 +252,7 @@ const exLine = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>');
 const host = (p, inner, opts) => `<div class="live-host ${liveDim(p)}" data-live-host>${inner}${liveTools(p, opts)}</div>`;
 /* ⭐ Example (her flow): the model card alone and the three answer types; the group says all three aloud, then shows the examples */
 function exampleHTML(){
-  const intro = !COIN ? "" : `<div class="coin-intro"><button class="coin big" data-intro-coin aria-label="Flip the coin" title="Flip the coin">${coinFace(S.introFace || 1)}</button>
+  const intro = !COIN ? "" : `<div class="coin-intro"><button class="coin-btn" data-intro-coin aria-label="Flip the coin" title="Flip the coin">${coinHTML(S.introFace || 1, "big")}</button>
       <p>Flip the coin. Did you get <b>heads</b> ${coinHTML(1, "sm")} or <b>tails</b> ${coinHTML(2, "sm")}?</p></div>`;
   return `<section class="stage ${S.enter ? "enter" : ""}"><div class="stage-top"><span class="sit-label">⭐ Example</span></div>${intro}
     <div class="scard">${host("model.who", `<p class="who">${esc(modelText("who"))}</p>`)}${host("model.says", `<p class="says">${esc(modelText("says"))}</p>`)}</div>
@@ -203,6 +261,59 @@ function exampleHTML(){
       ${S.exShown ? host(`model.${t}`, `<p class="tans ${S.exAnim ? "in" : ""}">${exLine(modelText(t))}</p>`) : ""}</div>`).join("")}</div>
     <div class="row-act"><button class="btn ${S.exShown ? "" : "primary"}" data-show-ex aria-pressed="${S.exShown}">${S.exShown ? "Hide the examples" : "Show the examples"}</button>
       <span class="grow"></span><button class="btn ${S.exShown ? "primary" : ""}" data-start>Start the cards →</button></div></section>`;
+}
+/* ⭐ the guided start: three screens — How it works · the card + heads (always) + an example · the same card + tails (always) + an example */
+const faceOf = tr => tr.coin === "tails" ? 2 : 1;
+const gapLine = (l, k, li) => `<p>${l.s ? `<b class="sp">${esc(l.s)}:</b>` : ""}${(l.p || []).map((x, xi) => typeof x === "string" ? esc(x)
+  : `<button class="gp ${S.tries[k].open.has(li + "-" + xi) ? "open" : ""}" data-tgap="${k}:${li}-${xi}" aria-label="Show the missing part">${x.f ? `<span class="f">${esc(x.f)}</span>` : ""}<span class="r">${esc(x.r)}</span></button>`).join("")}</p>`;
+const tryGaps = k => IN.tries[k].lines.flatMap((l, li) => (l.p || []).map((x, xi) => typeof x === "string" ? null : li + "-" + xi).filter(Boolean));
+const tryAllOpen = k => tryGaps(k).every(id => S.tries[k].open.has(id));
+const filledLine = l => `<p>${l.s ? `<b>${esc(l.s)}:</b> ` : ""}${(l.p || []).map(x => typeof x === "string" ? esc(x) : `<span class="fill">${esc((x.f || "") + x.r)}</span>`).join("")}</p>`;
+function introStageHTML(){
+  const k = S.ex, top = `<div class="stage-top"><span class="sit-label">⭐ Example</span><span class="sit-count" aria-label="Screen ${k + 1} of 3">${k + 1} of 3</span></div>`;
+  if(k === 0) return `<section class="stage ${S.enter ? "enter" : ""}">${top}<p class="ex-title">${esc(IN.title || "How the game works")}</p>
+    <ul class="how">${(IN.how || []).map(h => `<li>${/^\*\*Heads/i.test(h) ? coinHTML(1, "sm") : /^\*\*Tails/i.test(h) ? coinHTML(2, "sm") : ""}${exLine(h)}</li>`).join("")}</ul>
+    ${IN.how_end ? `<p class="how-end">${esc(IN.how_end)}</p>` : ""}<div class="row-act"><span class="grow"></span><button class="btn primary next-card" data-exnext>Next →</button></div></section>`;
+  const t = k - 1, tr = IN.tries[t], st = S.tries[t], ci = Math.max(0, Math.min(D.cards.length - 1, (IN.card || 1) - 1)), shown = st.face ? st.face : t > 0 ? faceOf(IN.tries[t - 1]) : 0;
+  const after = st.face ? `<p class="try-after ${S.tryAnim ? "in" : ""}">${exLine(tr.after || "")}</p><div class="try-lines ${S.tryAnim ? "in" : ""}">${tr.lines.map((l, li) => gapLine(l, t, li)).join("")}</div>` : "";
+  const last = k === IN.tries.length, ready = st.face && tryAllOpen(t);
+  return `<section class="stage ${S.enter ? "enter" : ""}">${top}
+    <div class="scard"><p class="who">${esc(cardText(ci, "who"))}</p><p class="says">${esc(cardText(ci, "says"))}</p></div>
+    <div class="die-row"><button class="die-btn ${st.face ? "done" : ""}" data-die data-trycoin="${t}" aria-label="${esc(tr.before || "Flip the coin")}" ${st.face ? "disabled" : ""}>${coinHTML(shown, "md")}</button>
+      <span class="die-how ${st.face ? "" : "wait"}"><span class="dl">${esc(D.die.label)}</span>${st.face ? `<b>${esc(ansText(TYPES[st.face - 1]))}</b>` : `<b>${esc(tr.before || "Flip the coin")}</b>`}</span></div>
+    ${after}<div class="row-act">${st.face ? `<button class="btn slim" data-tall="${t}">${tryAllOpen(t) ? "Hide all" : "Show all"}</button>` : ""}<span class="grow"></span>
+      <button class="btn ${ready ? "primary" : ""} next-card" data-exnext>${last && ready ? "Start the cards →" : "Next →"}</button></div></section>`;
+}
+/* the coin of an example screen always lands on its face (heads first, then tails) */
+function tryToss(t){
+  const st = S.tries[t]; if(S.busy || !st || st.face) return; const final = faceOf(IN.tries[t]);
+  const done = () => { st.face = final; S.tryAnim = true; render(); S.tryAnim = false; };
+  const el = document.querySelector("[data-trycoin] .gcoin"); if(calm() || !el){ done(); return; }
+  S.busy = true; document.querySelectorAll(".stage button").forEach(b => b.disabled = true);
+  const how = document.querySelector(".die-how"); if(how){ how.classList.add("wait"); how.textContent = "…"; }
+  gToss(el, final, () => { S.busy = false; done(); });
+}
+/* Next on the example screens, like slides: the coin → the answers → the next screen → the cards */
+function exNext(){
+  if(S.busy) return;
+  if(S.ex === 0){ S.ex = 1; S.enter = true; render(); S.enter = false; return; }
+  const t = S.ex - 1, st = S.tries[t];
+  if(!st.face){ tryToss(t); return; }
+  if(!tryAllOpen(t)){ tryGaps(t).forEach(id => st.open.add(id)); render(); return; }
+  if(S.ex < IN.tries.length){ S.ex++; S.enter = true; render(); S.enter = false; return; }
+  S.goLine = true; S.pinFly = true; goStage("cards");
+}
+function exBack(){
+  if(S.busy) return false; if(S.ex === 0) return true;
+  const t = S.ex - 1, st = S.tries[t];
+  if(st.face && st.open.size){ st.open.clear(); render(); return false; }
+  if(st.face){ st.face = 0; render(); return false; }
+  S.ex--; render(); return false;
+}
+/* 📌 the two examples, pinned at the bottom for the whole game (they fly down when the cards start); a tap opens one */
+function exPinHTML(){
+  return `<div class="expin ${S.pinFly ? "fly" : ""}" role="group" aria-label="Examples"><span class="ml">📌 Examples</span>${IN.tries.map((tr, i) => `<button class="expin-b ${S.pinOpen === i ? "on" : ""}" data-expin="${i}" aria-expanded="${S.pinOpen === i}">${coinHTML(faceOf(tr), "sm")}${faceOf(tr) === 2 ? "Tails" : "Heads"}</button>`).join("")}
+    ${S.pinOpen != null && IN.tries[S.pinOpen] ? `<div class="expin-open">${IN.tries[S.pinOpen].lines.map(filledLine).join("")}</div>` : ""}</div>`;
 }
 /* 🃏 Cards: the model with its three answers stays pinned on top (foldable) */
 function modelPinHTML(){
@@ -220,17 +331,17 @@ function backHTML(c){
 function cardsHTML(){
   const c = S.cur, n = DECK_SIZE();
   const top = `<div class="stage-top"><span class="sit-label">${c ? "Your card" : "Situation cards"}</span>${c ? `<span class="sit-count" aria-label="Card ${S.seen} of ${n}">${((S.seen - 1) % n) + 1} of ${n}</span>` : ""}</div>`;
-  const pin = narrow() ? modelPinHTML() : "";
-  if(!c) return `<section class="stage ${S.enter ? "enter" : ""}">${pin}${top}<div class="empty-draw"><p>One of you reads the card, the other ${COIN ? "flips the coin" : "rolls"} and answers.</p><button class="btn primary big" data-draw>🃏 Draw a card</button></div></section>`;
-  const how = c.type ? `<span class="die-how"><span class="dl">${esc(D.die.label)}</span>${badge(c.type)}<b>${esc(ansText(c.type))}</b></span>`
+  const pin = narrow() && !IN ? modelPinHTML() : "", go = IN && S.goLine && IN.go ? `<p class="go-line">${esc(IN.go)}</p>` : "", strip = IN ? exPinHTML() : "";
+  if(!c) return `<section class="stage ${S.enter ? "enter" : ""}">${pin}${go}${top}<div class="empty-draw"><p>One of you reads the card, the other ${COIN ? "flips the coin" : DRAW ? "draws an answer card" : "rolls"} and answers.</p><button class="btn primary big" data-draw>🃏 Draw a card</button></div>${strip}</section>`;
+  const how = c.type ? `<span class="die-how"><span class="dl">${esc(D.die.label)}</span>${COIN ? "" : badge(c.type)}<b>${esc(ansText(c.type))}</b></span>`   /* her 21:17: not a second, small coin next to the big one */
     : `<span class="die-how wait"><span class="dl">${esc(D.die.label)}</span>${COIN ? `Flip the coin. Heads ${coinHTML(1, "sm")} or tails ${coinHTML(2, "sm")}?` : "Roll the die: it decides how you answer."}</span>`;
-  return `<section class="stage ${S.enter ? "enter" : ""}">${pin}${top}
+  return `<section class="stage ${S.enter ? "enter" : ""}">${pin}${go}${top}
     ${host("cards." + c.i, `<div class="scard ${S.fresh ? "in" : ""}">${host(`cards.${c.i}.who`, `<p class="who">${esc(cardText(c.i, "who"))}</p>`)}${host(`cards.${c.i}.says`, `<p class="says">${esc(cardText(c.i, "says"))}</p>`)}</div>`, {edit: false})}
-    <div class="die-row"><span data-die>${dieHTML(c.face)}</span>${how}</div>
+    ${DRAW ? `<div class="die-row draw">${gPileHTML(S.ad.order.length - S.ad.at - 1, "Draw an answer card", "sm").replace("<button ", "<button data-roll ")}<div class="gd-slot" data-aslot>${c.type ? gCardHTML(ansCardFace(c.type)) : `<span class="die-how wait"><span class="dl">${esc(D.die.label)}</span>Draw an answer card: it decides how you answer.</span>`}</div></div>`
+    : `<div class="die-row"><button class="die-btn" data-die data-roll aria-label="${COIN ? (c.type ? "Flip again" : "Flip the coin") : (c.type ? "Roll again" : "Roll the die")}" title="${COIN ? (c.type ? "Flip again" : "Flip the coin") : (c.type ? "Roll again" : "Roll the die")}">${dieHTML(c.face)}</button>${how}</div>`}
     <p class="react">React: ${(D.react || []).map(r => `<b>${esc(r)}</b>`).join(" · ")}</p>
-    <div class="row-act"><button class="btn ${c.type ? "" : "primary"}" data-roll>${COIN ? `🪙 ${c.type ? "Flip again" : "Flip the coin"}` : `🎲 ${c.type ? "Roll again" : "Roll"}`}</button>
-      <span class="grow"></span><button class="btn next-card ${c.type ? "primary" : ""}" data-cardnext>Next →</button></div>
-    ${c.flipped ? backHTML(c) : ""}</section>`;
+    <div class="row-act"><span class="grow"></span><button class="btn next-card ${c.type ? "primary" : ""}" data-cardnext>Next →</button></div>
+    ${c.flipped ? backHTML(c) : ""}${strip}</section>`;
 }
 const allCardsHTML = () => allHTML("All the cards", D.cards.map((_, i) => (liveTeacher() || !cardGone(i)) ? `<div class="all-row"><span class="all-sub">${esc(cardText(i, "who"))}: ${esc(cardText(i, "says"))}</span>
     ${TYPES.map(t => `<p><span class="ty">${esc(t)}</span>${exLine(cardText(i, t))}</p>`).join("")}</div>` : "").join(""));
@@ -238,14 +349,14 @@ const speakStage = () => `<section class="stage-wrap ${S.enter ? "enter" : ""}">
 function headHTML(){
   return `<header class="head">${D.part ? `<span class="part">${esc(D.part)}</span>` : ""}<h1>${esc(D.title)}</h1>
       ${stagesHTML([["example", "⭐ Example"], ["cards", "🃏 Cards"], ["speak", "💬 Real talk"]], S.view)}</header>
-    ${S.view !== "cards" || S.cur ? "" : `<div class="hint-top dice-hint"><span>🃏 ${esc(D.hint)}</span></div>`}`;
+    ${S.view !== "cards" || S.cur || (IN && S.goLine) ? "" : `<div class="hint-top dice-hint"><span>🃏 ${esc(D.hint)}</span></div>`}`;
 }
 function goStage(v){ if(S.view === v || S.busy) return; S.view = v; S.enter = true; S.coinIntro = v === "example"; render(); S.enter = false; scrollTo(0, 0); }
 function render(){
   liveApply();   /* her latest changes, at the group's tap (live version) */
   const main = document.getElementById("main"), side = document.getElementById("side");
-  main.innerHTML = liveBarHTML(liveLabel) + headHTML() + (S.view === "speak" ? speakStage() : S.view === "cards" ? cardsHTML() : exampleHTML());
-  const st = side.scrollTop; side.innerHTML = boxHTML(D.box, {clickable: true}) + (S.view === "cards" && !narrow() ? modelPinHTML() : "") + allCardsHTML(); side.scrollTop = st;
+  main.innerHTML = liveBarHTML(liveLabel) + headHTML() + (S.view === "speak" ? speakStage() : S.view === "cards" ? cardsHTML() : IN ? introStageHTML() : exampleHTML());
+  const st = side.scrollTop; side.innerHTML = boxHTML(D.box, {clickable: true}) + (S.view === "cards" && !narrow() && !IN ? modelPinHTML() : "") + allCardsHTML(); side.scrollTop = st;
   wireAll(side); wireBox(side); wireSpeak(main, render); S.exAnim = false; S.flipAnim = false;
   wireLive(main, p => pathGet(D, p)); wireLive(side, p => pathGet(D, p));
   const on = (sel, fn) => document.querySelectorAll(sel).forEach(b => b.addEventListener("click", () => fn(b)));
@@ -255,9 +366,15 @@ function render(){
   on("[data-roll]", roll);
   /* Flip: the back, the rolled answer first (her rule 6: feedback right after the step); a second tap turns it back */
   on("[data-flip]", flipCard);
-  on("[data-cardnext]", () => { const c = S.cur; if(!c || S.busy) return; if(!c.flipped) flipCard(); else draw(); });   /* one Next, like slides (her 16:09) */
+  on("[data-cardnext]", () => { const c = S.cur; if(!c || S.busy) return; if(!c.type) roll(); else if(!c.flipped) flipCard(); else draw(); });   /* like slides: the coin / die, the answers, the next card */   /* one Next, like slides (her 16:09) */
   on("[data-intro-coin]", introCoin);
-  if(S.coinIntro && S.view === "example"){ S.coinIntro = false; setTimeout(introCoin, 350); }
+  on("[data-exnext]", exNext);
+  on("[data-trycoin]", b => tryToss(+b.dataset.trycoin));
+  on("[data-tgap]", b => { const [t, id] = b.dataset.tgap.split(":"), o = S.tries[+t].open; o.has(id) ? o.delete(id) : o.add(id); render(); });
+  on("[data-tall]", b => { const t = +b.dataset.tall, o = S.tries[t].open, all = tryAllOpen(t); tryGaps(t).forEach(id => all ? o.delete(id) : o.add(id)); render(); });
+  on("[data-expin]", b => { const i = +b.dataset.expin; S.pinOpen = S.pinOpen === i ? null : i; render(); });
+  if(S.pinFly) setTimeout(() => { S.pinFly = false; }, 1200);   /* the fly-down plays once, also when the field draws the first card right after */
+  if(S.coinIntro && S.view === "example" && !IN){ S.coinIntro = false; setTimeout(introCoin, 350); }
   document.querySelectorAll("[data-model]").forEach(d => d.addEventListener("toggle", () => { S.modelOpen = d.open; }));
   on("[data-stage]", b => goStage(b.dataset.stage));
   on("[data-back]", () => goStage("cards"));
@@ -268,6 +385,7 @@ function flipCard(){ const c = S.cur; if(!c) return; c.flipped = !c.flipped; S.f
    the coin → the answers → the next card …; after the whole deck the field goes on (lwStepEnd). Back = the step before. */
 function embNext(){
   if(S.busy) return false;
+  if(S.view === "example" && IN){ const wasEx = S.view; exNext(); if(S.view === "cards" && wasEx === "example" && !S.cur) draw(); return false; }
   if(S.view === "example"){ if(!S.exShown){ S.exShown = true; S.exAnim = true; render(); return false; } goStage("cards"); if(!S.cur) draw(); return false; }
   if(S.view === "cards"){ const c = S.cur;
     if(!c){ draw(); return false; }
@@ -285,6 +403,7 @@ function embBack(){
     if(c && c.flipped){ flipCard(); return false; }
     if(c && S.hist.length){ S.deck.unshift(c.i); S.seen--; S.cur = S.hist.pop(); S.cur.flipped = true; render(); return false; }
     goStage("example"); return false; }
+  if(S.view === "example" && IN) return exBack();
   if(S.view === "example" && S.exShown){ S.exShown = false; render(); return false; }
   return true;
 }

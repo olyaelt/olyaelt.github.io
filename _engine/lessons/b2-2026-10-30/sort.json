@@ -1,0 +1,97 @@
+{
+ "patterns": [
+  {
+   "id": "p1",
+   "ru": "Советую",
+   "en": "I'd recommend + что",
+   "ex": "I'd recommend it."
+  },
+  {
+   "id": "p2",
+   "ru": "Мне посоветовал(а) …",
+   "en": "… recommended it to me",
+   "ex": "A friend recommended it to me."
+  },
+  {
+   "id": "p3",
+   "ru": "Прошу совета",
+   "en": "Can you recommend …?",
+   "ex": "Can you recommend anything?"
+  },
+  {
+   "id": "p4",
+   "ru": "Не советую",
+   "en": "I wouldn't recommend …",
+   "ex": "I wouldn't recommend it."
+  }
+ ],
+ "items": [
+  {
+   "ru": "Я тебе очень советую этот сериал.",
+   "en": "I'd really recommend this series.",
+   "or": "I really / highly recommend this series.",
+   "p": "p1",
+   "mode": "auto",
+   "why": "Советуешь ты сам(а): I'd recommend + что — сразу после recommend."
+  },
+  {
+   "ru": "Мне её посоветовала сестра. (книгу)",
+   "en": "My sister recommended it to me.",
+   "p": "p2",
+   "mode": "hint",
+   "why": "Советуешь не ты — тебе посоветовали: кто + recommended + что + to me."
+  },
+  {
+   "ru": "Можешь мне что-нибудь посоветовать?",
+   "en": "Can you recommend anything?",
+   "or": "Can you recommend something? · Could you recommend anything?",
+   "p": "p3",
+   "mode": "hint",
+   "why": "Это вопрос: ты просишь совета. «Мне» не нужно: Can you recommend anything?"
+  },
+  {
+   "ru": "Значит, эту книгу ты мне не советуешь?",
+   "en": "So you wouldn't recommend this book?",
+   "or": "So you wouldn't recommend that book? · So you don't recommend this book?",
+   "p": "p4",
+   "mode": "hint",
+   "why": "«Значит, не советуешь?» — это «не советую», только вопросом."
+  },
+  {
+   "ru": "Это кафе мне посоветовал коллега.",
+   "en": "A colleague recommended this café to me.",
+   "or": "My colleague recommended this café to me.",
+   "p": "p2",
+   "mode": "free",
+   "why": "Посоветовал коллега — тебе: … recommended this café to me."
+  },
+  {
+   "ru": "Я бы не советовала этот ресторан.",
+   "en": "I wouldn't recommend that restaurant.",
+   "or": "I wouldn't recommend this restaurant.",
+   "p": "p4",
+   "mode": "free",
+   "why": "«Я бы не советовала» — wouldn't recommend."
+  },
+  {
+   "ru": "Советую посмотреть «Шерлока».",
+   "en": "I'd recommend Sherlock.",
+   "or": "I recommend Sherlock.",
+   "p": "p1",
+   "mode": "free",
+   "why": "Советуешь ты сам(а). Достаточно назвать сериал: I'd recommend Sherlock."
+  },
+  {
+   "ru": "Посоветуешь хорошего стоматолога?",
+   "en": "Can you recommend a good dentist?",
+   "or": "Could you recommend a good dentist?",
+   "p": "p3",
+   "mode": "free",
+   "why": "Ты спрашиваешь — просишь совета."
+  }
+ ],
+ "end": {
+  "q": "Посмотри на все восемь фраз. Что ни разу не стоит сразу после recommend?",
+  "a": "Тот, кому советуешь (you, me), — и to + глагол (to see, to watch). Сразу после recommend идёт ЧТО советуешь: it, this series, Sherlock, anything, a good dentist. А кому — to me, в конце."
+ }
+}

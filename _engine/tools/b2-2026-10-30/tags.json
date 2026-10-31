@@ -21,11 +21,94 @@
   "S": "Heads: you BOTH know it → B shares a feeling with a tag ↘, A agrees.",
   "N": "Tails: it's news to B → B reacts and asks a question."
  },
- "model": {
-  "who": "A colleague",
-  "says": "Have you seen the coffee machine? It's broken again!",
-  "S": "I **have**! It's so annoying, **isn't it?** — It **really is**. I've had three teas already.",
-  "N": "No, I haven't! Oh no — **what happened?**"
+ "intro": {
+  "title": "How the game works",
+  "how": [
+   "A takes a news card and reads it out.",
+   "Flip the coin. It decides: do you both already know the news?",
+   "**Heads:** you both already know it → B shares a feeling with a tag ↘, and A agrees.",
+   "**Tails:** it's news to B → B reacts and asks a question."
+  ],
+  "how_end": "Let's try it with one card first.",
+  "card": 1,
+  "tries": [
+   {
+    "coin": "heads",
+    "before": "Flip the coin",
+    "after": "Heads! You both already know it. Complete the replies. Then tap the yellow to check.",
+    "lines": [
+     {
+      "s": "A",
+      "p": [
+       "Have you seen the coffee machine? It's broken again!"
+      ]
+     },
+     {
+      "s": "B",
+      "p": [
+       "I ",
+       {
+        "f": "h",
+        "r": "ave"
+       },
+       "! It's so annoying, ",
+       {
+        "f": "i",
+        "r": "sn't it"
+       },
+       "?"
+      ]
+     },
+     {
+      "s": "A",
+      "p": [
+       "It ",
+       {
+        "f": "r",
+        "r": "eally is"
+       },
+       ". I've had three cups of tea already."
+      ]
+     }
+    ]
+   },
+   {
+    "coin": "tails",
+    "before": "Same card. Flip again!",
+    "after": "Tails! It's news to B. Complete the replies. Then tap the yellow to check.",
+    "lines": [
+     {
+      "s": "A",
+      "p": [
+       "Have you seen the coffee machine? It's broken again!"
+      ]
+     },
+     {
+      "s": "B",
+      "p": [
+       "No, I ",
+       {
+        "f": "h",
+        "r": "aven't"
+       },
+       ". Oh no, not again! ",
+       {
+        "f": "W",
+        "r": "hat happened"
+       },
+       "?"
+      ]
+     },
+     {
+      "s": "A",
+      "p": [
+       "No idea. It just stopped working this morning."
+      ]
+     }
+    ]
+   }
+  ],
+  "go": "Now play for real. Take turns being A: take a card and flip the coin. The two examples are at the bottom of the screen."
  },
  "cards": [
   {

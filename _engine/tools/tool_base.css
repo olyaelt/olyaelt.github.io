@@ -47,10 +47,10 @@ button:disabled{cursor:default}
 :focus-visible{outline:3px solid var(--instr);outline-offset:2px;border-radius:8px}
 h1,h2,h3{margin:0;text-wrap:balance}
 .wrap{max-width:72rem;margin:0 auto;padding:12px 0 16px;display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,30rem);gap:16px 1.4rem;align-items:start}
-.main{display:grid;gap:12px;min-width:0}
+.main{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;min-width:0}
 /* the box stays in view while the task scrolls; a box taller than the screen scrolls with the page (no hidden inner scroll) */
 .side{position:sticky;top:10px;display:grid;gap:10px;padding:0 4px 4px 12px;margin-left:-12px}
-@media (max-width:860px){ .wrap{grid-template-columns:1fr} .side{position:static} }
+@media (max-width:860px){ .wrap{grid-template-columns:minmax(0,1fr)} .side{position:static} }   /* minmax: a long title must wrap, not push the page sideways (31.10, a field with its box on a phone) */
 
 /* header */
 .head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}

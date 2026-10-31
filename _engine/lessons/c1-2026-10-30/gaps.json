@@ -1,0 +1,732 @@
+{
+ "steps": [
+  {
+   "type": "dlg",
+   "intro": "A radio show asked listeners: \"Should schools teach more practical things?\" Three more answers. First answer: fill the gaps. The glossary is beside the text.",
+   "lines": [
+    {
+     "s": "Sam, 24, graduated last year",
+     "p": [
+      "I'm not sure anyone knows what to teach anymore. I studied translation, and half the agencies I applied to ",
+      {
+       "f": "h",
+       "r": "ave"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "topped"
+      },
+      " ",
+      {
+       "f": "h",
+       "r": "iring"
+      },
+      " ",
+      {
+       "f": "j",
+       "r": "uniors"
+      },
+      ". Juniors used to do the simple stuff, like manuals and product descriptions. Now they're ",
+      {
+       "f": "h",
+       "r": "anding"
+      },
+      " a lot of that work ",
+      {
+       "f": "o",
+       "r": "ver"
+      },
+      " ",
+      {
+       "b": "to"
+      },
+      " ",
+      {
+       "f": "A",
+       "r": "I"
+      },
+      ". So what's the point of learning skills that could be ",
+      {
+       "f": "o",
+       "r": "ut"
+      },
+      " ",
+      {
+       "b": "of"
+      },
+      " ",
+      {
+       "f": "d",
+       "r": "ate"
+      },
+      " ",
+      {
+       "b": "by"
+      },
+      " ",
+      {
+       "b": "the"
+      },
+      " ",
+      {
+       "f": "t",
+       "r": "ime"
+      },
+      " ",
+      {
+       "b": "you"
+      },
+      " ",
+      {
+       "f": "g",
+       "r": "raduate"
+      },
+      "? ",
+      {
+       "f": "W",
+       "r": "hat"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "orries"
+      },
+      " ",
+      {
+       "b": "me"
+      },
+      " ",
+      {
+       "b": "is"
+      },
+      " that all that boring, basic work is exactly how people used to learn the job. So who's going to teach us now?"
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      "have stopped hiring juniors ",
+      {
+       "f": "",
+       "r": "/ˈdʒuːniəz/",
+       "o": 1
+      }
+     ],
+     "m": "don't take on beginners any more",
+     "ru": "перестали нанимать джунов"
+    },
+    {
+     "p": [
+      "hand sth over to AI"
+     ],
+     "m": "give it to AI to do instead",
+     "ru": "передавать что-то ИИ"
+    },
+    {
+     "p": [
+      "out of date by the time you graduate ",
+      {
+       "f": "",
+       "r": "/ˈɡrædʒueɪt/",
+       "o": 1
+      }
+     ],
+     "m": "no longer useful when you finish",
+     "ru": "устареет, пока ты доучишься"
+    },
+    {
+     "p": [
+      "What worries me is that … ",
+      {
+       "f": "",
+       "r": "/ˈwʌriz/",
+       "o": 1
+      }
+     ],
+     "m": "the thing I'm worried about is…",
+     "ru": "меня беспокоит то, что…"
+    }
+   ]
+  },
+  {
+   "type": "dlg",
+   "intro": "Now the same answer again, without the glossary.",
+   "lines": [
+    {
+     "s": "Sam, 24, graduated last year",
+     "p": [
+      "I'm not sure anyone knows what to teach anymore. I studied translation, and half the agencies I applied to ",
+      {
+       "f": "h",
+       "r": "ave"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "topped"
+      },
+      " ",
+      {
+       "f": "h",
+       "r": "iring"
+      },
+      " ",
+      {
+       "f": "j",
+       "r": "uniors"
+      },
+      ". Juniors used to do the simple stuff, like manuals and product descriptions. Now they're ",
+      {
+       "f": "h",
+       "r": "anding"
+      },
+      " a lot of that work ",
+      {
+       "f": "o",
+       "r": "ver"
+      },
+      " ",
+      {
+       "b": "to"
+      },
+      " ",
+      {
+       "f": "A",
+       "r": "I"
+      },
+      ". So what's the point of learning skills that could be ",
+      {
+       "f": "o",
+       "r": "ut"
+      },
+      " ",
+      {
+       "b": "of"
+      },
+      " ",
+      {
+       "f": "d",
+       "r": "ate"
+      },
+      " ",
+      {
+       "b": "by"
+      },
+      " ",
+      {
+       "b": "the"
+      },
+      " ",
+      {
+       "f": "t",
+       "r": "ime"
+      },
+      " ",
+      {
+       "b": "you"
+      },
+      " ",
+      {
+       "f": "g",
+       "r": "raduate"
+      },
+      "? ",
+      {
+       "f": "W",
+       "r": "hat"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "orries"
+      },
+      " ",
+      {
+       "b": "me"
+      },
+      " ",
+      {
+       "b": "is"
+      },
+      " that all that boring, basic work is exactly how people used to learn the job. So who's going to teach us now?"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "dlg",
+   "intro": "Second answer: fill the gaps. The glossary is beside the text.",
+   "lines": [
+    {
+     "s": "Priya, 35, works in logistics",
+     "p": [
+      "Honestly? It doesn't matter that much what they teach you. You'll end up learning something else at work anyway. What matters is ",
+      {
+       "f": "b",
+       "r": "eing"
+      },
+      " ",
+      {
+       "f": "a",
+       "r": "ble"
+      },
+      " ",
+      {
+       "b": "to"
+      },
+      " ",
+      {
+       "f": "a",
+       "r": "dapt"
+      },
+      ". In my job there's something new to learn every few months, and there's no training for it. Last year it was a whole new customs system. You ",
+      {
+       "f": "r",
+       "r": "ead"
+      },
+      " ",
+      {
+       "b": "up"
+      },
+      " ",
+      {
+       "b": "on"
+      },
+      " it, you ",
+      {
+       "f": "d",
+       "r": "o"
+      },
+      " ",
+      {
+       "b": "your"
+      },
+      " ",
+      {
+       "f": "h",
+       "r": "omework"
+      },
+      " before you talk to clients so you don't ",
+      {
+       "f": "l",
+       "r": "ook"
+      },
+      " ",
+      {
+       "f": "c",
+       "r": "lueless"
+      },
+      ", and you basically ",
+      {
+       "f": "t",
+       "r": "each"
+      },
+      " ",
+      {
+       "f": "y",
+       "r": "ourself"
+      },
+      ". If schools taught kids how to learn, that'd be the most useful thing of all."
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      "being able to adapt ",
+      {
+       "f": "",
+       "r": "/əˈdæpt/",
+       "o": 1
+      }
+     ],
+     "m": "change to fit a new situation · ≠ adopt /əˈdɒpt/",
+     "ru": "умение приспосабливаться"
+    },
+    {
+     "p": [
+      "read up on sth"
+     ],
+     "m": "read a lot about it",
+     "ru": "почитать, изучить тему"
+    },
+    {
+     "p": [
+      "do your homework (before you talk to clients)"
+     ],
+     "m": "prepare, find out what you need to know",
+     "ru": "подготовиться, изучить вопрос"
+    },
+    {
+     "p": [
+      "look clueless ",
+      {
+       "f": "",
+       "r": "/ˈkluːləs/",
+       "o": 1
+      }
+     ],
+     "m": "look as if you have no idea",
+     "ru": "выглядеть так, будто ничего не понимаешь"
+    },
+    {
+     "p": [
+      "teach yourself"
+     ],
+     "m": "learn without a teacher or a course",
+     "ru": "научиться самому"
+    }
+   ]
+  },
+  {
+   "type": "dlg",
+   "intro": "Now the same answer again, without the glossary.",
+   "lines": [
+    {
+     "s": "Priya, 35, works in logistics",
+     "p": [
+      "Honestly? It doesn't matter that much what they teach you. You'll end up learning something else at work anyway. What matters is ",
+      {
+       "f": "b",
+       "r": "eing"
+      },
+      " ",
+      {
+       "f": "a",
+       "r": "ble"
+      },
+      " ",
+      {
+       "b": "to"
+      },
+      " ",
+      {
+       "f": "a",
+       "r": "dapt"
+      },
+      ". In my job there's something new to learn every few months, and there's no training for it. Last year it was a whole new customs system. You ",
+      {
+       "f": "r",
+       "r": "ead"
+      },
+      " ",
+      {
+       "b": "up"
+      },
+      " ",
+      {
+       "b": "on"
+      },
+      " it, you ",
+      {
+       "f": "d",
+       "r": "o"
+      },
+      " ",
+      {
+       "b": "your"
+      },
+      " ",
+      {
+       "f": "h",
+       "r": "omework"
+      },
+      " before you talk to clients so you don't ",
+      {
+       "f": "l",
+       "r": "ook"
+      },
+      " ",
+      {
+       "f": "c",
+       "r": "lueless"
+      },
+      ", and you basically ",
+      {
+       "f": "t",
+       "r": "each"
+      },
+      " ",
+      {
+       "f": "y",
+       "r": "ourself"
+      },
+      ". If schools taught kids how to learn, that'd be the most useful thing of all."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "dlg",
+   "intro": "Third answer: fill the gaps. The glossary is beside the text.",
+   "lines": [
+    {
+     "s": "Mark, 26, in his first job as an engineer",
+     "p": [
+      "Yes, but practical shouldn't just mean cooking and managing money. When I started this job, it was ",
+      {
+       "b": "a"
+      },
+      " ",
+      {
+       "f": "r",
+       "r": "eally"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "teep"
+      },
+      " ",
+      {
+       "f": "l",
+       "r": "earning"
+      },
+      " ",
+      {
+       "f": "c",
+       "r": "urve"
+      },
+      ". I had good grades, but nobody had taught me any of the ",
+      {
+       "f": "s",
+       "r": "oft"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "kills"
+      },
+      ": how to manage my time, ask for help, or cope when things went wrong. You ",
+      {
+       "f": "p",
+       "r": "ick"
+      },
+      " most of that ",
+      {
+       "b": "up"
+      },
+      " ",
+      {
+       "b": "on"
+      },
+      " ",
+      {
+       "b": "the"
+      },
+      " ",
+      {
+       "f": "j",
+       "r": "ob"
+      },
+      ", usually ",
+      {
+       "b": "the"
+      },
+      " ",
+      {
+       "f": "h",
+       "r": "ard"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "ay"
+      },
+      ". It took me months to realise that asking for help isn't a sign of weakness. ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "f": "r",
+       "r": "eally"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "ish"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "omeone"
+      },
+      " ",
+      {
+       "b": "had"
+      },
+      " ",
+      {
+       "f": "t",
+       "r": "old"
+      },
+      " ",
+      {
+       "b": "me"
+      },
+      " that in school."
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      "a (really) steep learning curve ",
+      {
+       "f": "",
+       "r": "/stiːp ˈlɜːnɪŋ kɜːv/",
+       "o": 1
+      }
+     ],
+     "m": "a lot to learn, very fast",
+     "ru": "пришлось очень быстро всему учиться"
+    },
+    {
+     "p": [
+      "soft skills"
+     ],
+     "m": "personal and people skills, e.g. managing your time, asking for help",
+     "ru": "гибкие навыки"
+    },
+    {
+     "p": [
+      "pick sth up on the job"
+     ],
+     "m": "learn it while you're working",
+     "ru": "научиться в процессе работы"
+    },
+    {
+     "p": [
+      "the hard way"
+     ],
+     "m": "through your own mistakes",
+     "ru": "на собственных ошибках, набив шишки"
+    },
+    {
+     "p": [
+      "I (really) wish someone had told me that"
+     ],
+     "m": "but nobody did",
+     "ru": "жаль, что мне никто этого не сказал"
+    }
+   ]
+  },
+  {
+   "type": "dlg",
+   "intro": "Now the same answer again, without the glossary.",
+   "lines": [
+    {
+     "s": "Mark, 26, in his first job as an engineer",
+     "p": [
+      "Yes, but practical shouldn't just mean cooking and managing money. When I started this job, it was ",
+      {
+       "b": "a"
+      },
+      " ",
+      {
+       "f": "r",
+       "r": "eally"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "teep"
+      },
+      " ",
+      {
+       "f": "l",
+       "r": "earning"
+      },
+      " ",
+      {
+       "f": "c",
+       "r": "urve"
+      },
+      ". I had good grades, but nobody had taught me any of the ",
+      {
+       "f": "s",
+       "r": "oft"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "kills"
+      },
+      ": how to manage my time, ask for help, or cope when things went wrong. You ",
+      {
+       "f": "p",
+       "r": "ick"
+      },
+      " most of that ",
+      {
+       "b": "up"
+      },
+      " ",
+      {
+       "b": "on"
+      },
+      " ",
+      {
+       "b": "the"
+      },
+      " ",
+      {
+       "f": "j",
+       "r": "ob"
+      },
+      ", usually ",
+      {
+       "b": "the"
+      },
+      " ",
+      {
+       "f": "h",
+       "r": "ard"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "ay"
+      },
+      ". It took me months to realise that asking for help isn't a sign of weakness. ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "f": "r",
+       "r": "eally"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "ish"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "omeone"
+      },
+      " ",
+      {
+       "b": "had"
+      },
+      " ",
+      {
+       "f": "t",
+       "r": "old"
+      },
+      " ",
+      {
+       "b": "me"
+      },
+      " that in school."
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -42,6 +42,7 @@ __BASE_CSS__
 .sdots button.was{border-color:var(--instr);color:var(--instr-text);cursor:pointer}
 .sdots button.on{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
 .sdots button:disabled{cursor:default}
+@media (max-width:560px){ .stepbar{gap:6px} .stepbar .btn{min-width:0;padding:10px 12px} .sdots{gap:4px} .sdots button{width:1.6rem;height:1.6rem;font-size:.8rem} }   /* four screens + Back / Next fit a phone (31.10) */
 .blk .speak .row-actions [data-speak-next],.blk .speak .row-actions [data-speak-prev]{display:none}
 .bparts{display:flex;gap:6px;align-items:center}
 .bparts .bp-lbl{font-weight:800;color:var(--muted);font-size:.9rem}
@@ -110,6 +111,19 @@ __BASE_CSS__
 /* 🖼 picture */
 .pic img{width:100%;height:auto;max-height:52vh;object-fit:contain;border-radius:12px;display:block;background:var(--ground)}
 .pic .task{font-size:1.15rem;margin:0}
+.ptimer-row{margin:0 0 10px}
+.btn.ptimer{font-size:1.25rem;min-width:8.5rem;font-variant-numeric:tabular-nums}
+.btn.ptimer.run{background:var(--instr);color:var(--instr-ink)}
+.btn.ptimer.up{border-color:var(--ok);color:var(--ok)}
+.stepbar [data-step].ready{animation:nextGlow 1.1s ease-in-out 3}
+@keyframes nextGlow{50%{box-shadow:0 0 0 7px rgba(6,147,227,.3)}}
+.stepbar [data-step].ready-still{box-shadow:0 0 0 5px rgba(6,147,227,.25)}
+.mdl-pic{display:grid;gap:12px}
+.mdl-pic .pic img{max-height:30vh;width:auto;max-width:100%;margin:0 auto}
+.side-pic img{max-height:36vh;width:100%;object-fit:contain}
+@media (min-width:861px){ .mdl-pic.has-side > .pic{display:none} }
+@media (max-width:860px){ .side-pic{display:none} }
+@media (prefers-reduced-motion: reduce){ .stepbar [data-step].ready{animation:none;box-shadow:0 0 0 5px rgba(6,147,227,.3)} }
 /* 🃏 cards */
 .deck{display:grid;gap:12px}
 .fdots{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
@@ -314,7 +328,12 @@ function gapTools(b){
   const ids = allGaps(b), st = bs(b), all = ids.length && ids.every(id => st.open.has(id));
   return ids.length ? `<div class="tx-tools"><button class="btn slim" data-showall="${b._id}">${all ? "Hide all" : "Show all"}</button>${S.noFirst && b.kind === "text" ? `<span class="hint">⚡ No first letters this time.</span>` : sharing() ? `<span class="hint">🔖 next to an opened gap = we didn't know this</span>` : ""}</div>` : "";
 }
-const modelHTML = b => `<div class="parts">${b.parts.map((p, pi) => `<div class="dlg">${p.title ? `<p class="part-h">${esc(p.title)}</p>` : ""}${linesHTML(p.lines, b, `m${pi}`)}</div>`).join("")}</div>${gapTools(b)}`;
+const modelHTML = b => { const parts = `<div class="parts">${b.parts.map((p, pi) => `<div class="dlg">${p.title ? `<p class="part-h">${esc(p.title)}</p>` : ""}${linesHTML(p.lines, b, `m${pi}`)}</div>`).join("")}</div>`;
+  /* handoff 30.10 21:20: the model is the task done once, on the same material — the close-up they've just seen on the street, with the chat */
+  return b.img ? `<div class="mdl-pic${boxFor(b) ? " has-side" : ""}"><figure class="pic" style="margin:0"><img src="${esc(b.img)}" alt="${esc(b.alt || "")}"></figure>${parts}</div>${gapTools(b)}` : parts + gapTools(b); };
+/* the close-up and the six chat lines don't both fit 1280×720 above each other: on a computer the picture goes beside the chat, under the
+   box (the handoff's own fallback); on a phone it stays above the chat */
+const sidePicHTML = b => b && b.kind === "model" && b.img && !S.intro && !S.fast && S.view === "field" ? `<figure class="pic side-pic" style="margin:0"><img src="${esc(b.img)}" alt="${esc(b.alt || "")}"></figure>` : "";
 
 /* ---------- ✍️ write ---------- */
 function writeHTML(b){
@@ -348,7 +367,18 @@ function sayHTML(b){
       : `<div class="row-actions"><button class="btn primary" data-sayshow>Show the answer</button></div>`}`;
 }
 /* ---------- 🖼 picture, 🗓 calendars, 🔧 tool, 💬 questions ---------- */
-const pictureHTML = b => `<figure class="pic" style="margin:0"><img src="${esc(b.img)}" alt="${esc(b.alt || b.instr || "")}"></figure>${b.task ? `<p class="task">${mk(b.task)}</p>` : ""}`;
+const pictureHTML = b => `${b.timer ? `<div class="row-actions ptimer-row"><button class="btn ptimer" data-ptimer>${esc(ptimerText(b))}</button></div>` : ""}<figure class="pic" style="margin:0"><img src="${esc(b.img)}" alt="${esc(b.alt || b.instr || "")}"></figure>${b.task ? `<p class="task">${mk(b.task)}</p>` : ""}`;
+/* ---------- ⏱ a quiet minute with the picture (handoff 30.10 21:20, as in class): tap → it counts down on the button, then "Time's up"
+   and Next lights up; tap again = start again; no sound ---------- */
+const fmtT = s => Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+function ptimerText(b){ const st = bs(b); if(!st.tEnd) return "⏱ " + fmtT(b.timer); const left = Math.ceil((st.tEnd - Date.now()) / 1000); return left > 0 ? "⏱ " + fmtT(left) : "⏱ Time's up"; }
+function ptimerTick(){
+  const b = S.fast || curBlock(), el = document.querySelector("[data-ptimer]");
+  if(!el || !b || !b.timer){ clearInterval(ptimerTick.h); ptimerTick.h = 0; return; }
+  const st = bs(b), up = !!st.tEnd && Date.now() >= st.tEnd; el.textContent = ptimerText(b); el.classList.toggle("run", !!st.tEnd && !up); el.classList.toggle("up", up);
+  const nx = document.querySelector("[data-step]"); if(nx && up){ nx.classList.add(st.glowed ? "ready-still" : "ready"); st.glowed = true; }
+  if(!st.tEnd || up){ clearInterval(ptimerTick.h); ptimerTick.h = 0; } else if(!ptimerTick.h) ptimerTick.h = setInterval(ptimerTick, 250);
+}
 /* hidden calendars (handoff 30.10 15:15, her idea 15:38): every slot under her light-blue box, only A's call open; tap a box = that slot opens;
    the common row open in both = found → the done line, then "One way it could go" */
 function hiddenCalsHTML(b){
@@ -389,7 +419,9 @@ function questionsHTML(b){
    on -live her Hide per scene ---------- */
 const sceneList = b => liveList(b.scenes.map(x => x.img), "scenes." + b._pid);
 function sceneState(b){ const st = bs(b), ks = sceneList(b).filter(x => !x.hidden).map(x => x.k);
-  if(!st.sc) st.sc = {at: -1, order: shuffle(ks)};
+  const first = b.street_first === false ? 0 : -1;   /* handoff 30.10 21:20: straight into a scene, the street only behind 🏙 */
+  if(!st.sc) st.sc = {at: first, order: shuffle(ks)};
+  if(st.sc.at < first) st.sc.at = first;
   st.sc.order = st.sc.order.filter(k => ks.includes(k)).concat(ks.filter(k => !st.sc.order.includes(k)));   /* her Hide / Show during the lesson */
   if(st.sc.at >= st.sc.order.length) st.sc.at = st.sc.order.length - 1; return st.sc; }
 const sceneAt = b => sceneState(b).at;
@@ -492,7 +524,7 @@ function blockHTML(b){
   const body = b.kind === "text" ? textHTML(b) : b.kind === "model" ? modelHTML(b) : b.kind === "write" ? writeHTML(b) : b.kind === "say" ? sayHTML(b)
     : b.kind === "picture" ? pictureHTML(b) : b.kind === "calendars" ? calendarsHTML(b) : b.kind === "tool" ? toolHTML(b)
     : b.kind === "questions" ? questionsHTML(b) : b.kind === "cards" ? groupDotsHTML(b) + `<div class="deck">${cardsHTML(b)}</div>` : b.kind === "scenes" ? scenesHTML(b) : "";
-  const instr = b.kind === "cards" || b.kind === "questions" ? (b.kind === "questions" ? b.instr : "") : b.kind === "scenes" && sceneAt(b) >= 0 ? b.task : b.instr;
+  const instr = b.kind === "cards" || b.kind === "questions" ? (b.kind === "questions" ? b.instr : "") : b.kind === "scenes" && sceneAt(b) >= 0 ? (b.street_first === false ? [b.instr, b.task].filter(Boolean).join(" ") : b.task) : b.instr;
   const tip = S.howto && b.tip ? `<p class="tip">🎓 How it works: ${mk(b.tip)}</p>` : "";
   return `${tip}${instr ? `<p class="finstr">${mk(instr)}</p>` : ""}<section class="blk ${S.enter ? "enter" : ""}" data-blk="${b._id}">${body}</section>`;
 }
@@ -573,7 +605,7 @@ function stepBack(){
   if(S.fast){ S.fast = null; render(); return; }
   if(b && b.kind === "say" && bs(b).shown){ bs(b).shown = false; render(); return; }   /* the answer → the question, like the slide before */
   if(b && b.kind === "questions"){ const pv = document.querySelector(".speak [data-speak-prev]"); if(pv){ pv.click(); return; } }
-  if(b && b.kind === "scenes"){ const st = bs(b), sc = sceneState(b); if(st.peek){ st.peek = false; render(); return; } if(sc.at >= 0){ sc.at--; render(); return; } }
+  if(b && b.kind === "scenes"){ const st = bs(b), sc = sceneState(b); if(st.peek){ st.peek = false; render(); return; } if(sc.at > (b.street_first === false ? 0 : -1)){ sc.at--; render(); return; } }
   if(b && b.kind === "tool"){ const f = document.querySelector(".tool-frame"); if(f && f.contentWindow){ f.contentWindow.postMessage({lwStep: "back"}, "*"); return; } }
   stepOff();   /* the very first step: back to the board (her 13:04) */
 }
@@ -605,7 +637,7 @@ function render(){
   else main.innerHTML = bar + headHTML() + blockHTML(b) + fastHTML() + back + stepbarHTML();
   if(keepGrid){ const g = document.getElementById("gw-grid"); if(g) g.replaceWith(keepGrid); }
   pcRestore(pcs);
-  const st = side.scrollTop; side.innerHTML = box && D.boxes[box] ? fieldBoxHTML(D.boxes[box]) : ""; side.scrollTop = st;
+  const st = side.scrollTop; side.innerHTML = box && D.boxes[box] ? fieldBoxHTML(D.boxes[box]) + sidePicHTML(b) : ""; side.scrollTop = st;
   wireBox(side); wireBoxHidden(side);
   S.enter = false; if(b && b.kind === "cards") deckOf(b).fresh = false;
   wire(main); wireLive(main, p => { const m = String(p).match(/^questions\.(\d+)\.(\d+)$/); if(!m) return ""; const bl = BLOCKS.find(x => x._pid === +m[1]); return bl ? bl.items[+m[2]] || "" : ""; });
@@ -644,6 +676,8 @@ function wire(root){
     const was = st.done; if(b.common != null && b.cals.every((_, ci) => st.open.has(ci + "-" + b.common))) st.done = true; render();
     if(st.done && !was){ const f = document.querySelector(".cal-done"); if(f){ pop(f); f.scrollIntoView({block: "center", behavior: calm() ? "auto" : "smooth"}); } } });
   on("[data-peek]", () => { const st = bs(b); st.peek = !st.peek; render(); });
+  on("[data-ptimer]", () => { bs(b).tEnd = Date.now() + b.timer * 1000; bs(b).glowed = false; const nx = document.querySelector("[data-step]"); if(nx) nx.classList.remove("ready", "ready-still"); clearInterval(ptimerTick.h); ptimerTick.h = 0; ptimerTick(); });
+  if(b.timer) ptimerTick();
   on("[data-scn]", x => { sceneState(b).at = +x.dataset.scn; render(); });
   on("[data-covall]", () => { const st = bs(b); st.open.clear(); st.done = false; render(); });
   /* write */

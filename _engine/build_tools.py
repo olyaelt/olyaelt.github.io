@@ -10,8 +10,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 T = os.path.join(HERE, 'tools')
 site = sys.argv[1] if len(sys.argv) > 1 else os.path.dirname(HERE)
 VERSION = open(os.path.join(T, 'VERSION')).read().strip()
-base_css = open(os.path.join(T, 'tool_base.css'), encoding='utf-8').read()
-base_js = open(os.path.join(T, 'tool_base.js'), encoding='utf-8').read()
+base_css = open(os.path.join(T, 'tool_base.css'), encoding='utf-8').read() + '\n' + open(os.path.join(T, 'game.css'), encoding='utf-8').read()   # tools 14: the game pieces
+base_js = open(os.path.join(T, 'tool_base.js'), encoding='utf-8').read() + '\n' + open(os.path.join(T, 'game.js'), encoding='utf-8').read()
 # lesson work (tools 13): what the groups type, her notes, rooms — shared by the templates that have __LW_CSS__ / __LW_JS__
 lw_css = open(os.path.join(T, 'lesson_work.css'), encoding='utf-8').read()
 lw_js = open(os.path.join(T, 'lesson_work.js'), encoding='utf-8').read()

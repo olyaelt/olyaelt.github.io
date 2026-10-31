@@ -1,0 +1,331 @@
+{
+ "rev": {
+  "intro": "In class we asked each other: “Any recommendations?” Here are three short exchanges from our breakout rooms.",
+  "lines": [
+   {
+    "s": "",
+    "p": [
+     "Exchange 1"
+    ],
+    "scene": true
+   },
+   {
+    "s": "A",
+    "p": [
+     "Have you seen the new Marvel series about Vision? Everyone's ",
+     {
+      "f": "t",
+      "r": "alking"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "bout"
+     },
+     " it. I'd ",
+     {
+      "f": "r",
+      "r": "eally"
+     },
+     " ",
+     {
+      "f": "r",
+      "r": "ecommend"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "it"
+     },
+     " if you like Marvel."
+    ]
+   },
+   {
+    "s": "B",
+    "p": [
+     "Honestly, I'm not a big Marvel fan. There are a few exceptions, though — like Loki."
+    ]
+   },
+   {
+    "s": "A",
+    "p": [
+     "So what about you — ",
+     {
+      "f": "c",
+      "r": "an"
+     },
+     " you ",
+     {
+      "f": "r",
+      "r": "ecommend"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "nything"
+     },
+     "?"
+    ]
+   },
+   {
+    "s": "",
+    "p": [
+     "Exchange 2"
+    ],
+    "scene": true
+   },
+   {
+    "s": "A",
+    "p": [
+     "Have you seen Game of Thrones? I loved it, but the ending was really disappointing."
+    ]
+   },
+   {
+    "s": "B",
+    "p": [
+     {
+      "f": "S",
+      "r": "o"
+     },
+     " you ",
+     {
+      "f": "w",
+      "r": "ouldn't"
+     },
+     " ",
+     {
+      "f": "r",
+      "r": "ecommend"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "it"
+     },
+     "?"
+    ]
+   },
+   {
+    "s": "A",
+    "p": [
+     "Well… I'd ",
+     {
+      "f": "r",
+      "r": "ecommend"
+     },
+     " the ",
+     {
+      "f": "f",
+      "r": "irst"
+     },
+     " ",
+     {
+      "f": "f",
+      "r": "ew"
+     },
+     " seasons!"
+    ]
+   },
+   {
+    "s": "",
+    "p": [
+     "Exchange 3"
+    ],
+    "scene": true
+   },
+   {
+    "s": "A",
+    "p": [
+     "So, did you find anything you'd like to ",
+     {
+      "f": "g",
+      "r": "ive"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "a"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "ry"
+     },
+     "?"
+    ]
+   },
+   {
+    "s": "B",
+    "p": [
+     "Yes — Suits. Someone in my room ",
+     {
+      "f": "r",
+      "r": "ecommended"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "it"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "to"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "me"
+     },
+     ", so I'm looking forward to watching it."
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     "everyone's ",
+     {
+      "f": "t",
+      "r": "alking"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "bout"
+     },
+     " it"
+    ],
+    "m": "",
+    "ru": "все о нём говорят ('s = is)"
+   },
+   {
+    "p": [
+     "I'd ",
+     {
+      "f": "r",
+      "r": "ecommend"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "it"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˌrekəˈmend/",
+      "o": 1
+     }
+    ],
+    "m": "",
+    "ru": "советую (что — сразу после recommend)"
+   },
+   {
+    "p": [
+     {
+      "f": "C",
+      "r": "an"
+     },
+     " you ",
+     {
+      "f": "r",
+      "r": "ecommend"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "nything"
+     },
+     "?"
+    ],
+    "m": "",
+    "ru": "можешь что-нибудь посоветовать?"
+   },
+   {
+    "p": [
+     {
+      "f": "S",
+      "r": "o"
+     },
+     " you ",
+     {
+      "f": "w",
+      "r": "ouldn't"
+     },
+     " ",
+     {
+      "f": "r",
+      "r": "ecommend"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "it"
+     },
+     "?"
+    ],
+    "m": "",
+    "ru": "значит, не советуешь?"
+   },
+   {
+    "p": [
+     "the ",
+     {
+      "f": "f",
+      "r": "irst"
+     },
+     " ",
+     {
+      "f": "f",
+      "r": "ew"
+     },
+     " seasons"
+    ],
+    "m": "",
+    "ru": "первые несколько сезонов"
+   },
+   {
+    "p": [
+     {
+      "f": "g",
+      "r": "ive"
+     },
+     " sth ",
+     {
+      "f": "",
+      "r": "a"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "ry"
+     }
+    ],
+    "m": "",
+    "ru": "попробовать"
+   },
+   {
+    "p": [
+     "sb ",
+     {
+      "f": "r",
+      "r": "ecommended"
+     },
+     " it ",
+     {
+      "f": "",
+      "r": "to"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "me"
+     }
+    ],
+    "m": "",
+    "ru": "мне посоветовал(а) (кому — с to, в конце)"
+   }
+  ]
+ }
+}

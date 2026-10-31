@@ -555,6 +555,94 @@ audio{width:100%}
   .box-home p{break-inside:avoid;margin-bottom:3px}
 }
 .legal a{color:inherit}
+/* ===== sort (engine 49, B2 30.10): say it in English, then sort it into its pattern ===== */
+.dlg p.scene{text-align:center;line-height:1.4;margin:2px 0}
+.dlg p.scene span{display:inline-block;background:transparent;border:1.5px solid var(--line);color:var(--muted);font-size:.8em;font-weight:700;border-radius:8px;padding:2px 10px}
+.sort{display:grid;gap:14px;align-content:start}
+.sort-pats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sp{all:unset;box-sizing:border-box;cursor:pointer;display:grid;align-content:start;gap:2px;border:2px solid var(--line);border-radius:12px;background:var(--card);padding:8px 10px;min-height:4.6rem;position:relative;transition:border-color .3s,box-shadow .3s,background .3s}
+.sp:focus-visible{outline:3px solid var(--instr);outline-offset:2px}
+.sp-ru{font-weight:900;font-size:1.08rem;line-height:1.2}
+.sp-en{font-size:.86rem;color:var(--muted);line-height:1.25}
+.sp-c{position:absolute;top:6px;right:8px;min-width:1.4rem;height:1.4rem;border-radius:99px;background:var(--instr);color:var(--instr-ink);font-size:.8rem;font-weight:900;display:grid;place-items:center}
+.sp-list{display:grid;gap:2px;margin-top:4px}
+.sp-list span,.sp-list li{font-size:.86rem;line-height:1.3;font-weight:700}
+.sp.glow{border-color:var(--instr);box-shadow:0 0 0 4px rgba(21,120,192,.18);animation:spGlow 1.4s ease-in-out infinite}
+@keyframes spGlow{50%{box-shadow:0 0 0 7px rgba(21,120,192,.28)}}
+.sp.shake{animation:spShake .45s ease-in-out}
+@keyframes spShake{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.sp.landed{animation:spLand .5s ease-out}
+@keyframes spLand{40%{transform:scale(1.05);background:var(--good-hl)}}
+.sp-why{display:block;margin-top:4px;font-size:.85rem;font-weight:700;color:var(--ok-ink);line-height:1.3}
+.sort-card{border:2px solid var(--line);border-radius:14px;background:var(--card);padding:12px 14px;display:grid;gap:8px;touch-action:none}
+.sort-card.in{animation:scIn .4s ease-out}
+@keyframes scIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+.sort-card.nudge{animation:scNudge 1.2s ease-in-out 2}
+@keyframes scNudge{30%{transform:translate(var(--nx,0),var(--ny,-8px))}60%{transform:none}}
+.sc-n{font-size:.8rem;font-weight:800;color:var(--muted)}
+.sc-ru{margin:0;font-size:1.25rem;font-weight:800;line-height:1.35}
+.sc-en-row{margin:0;display:flex;align-items:center;gap:6px}
+.sc-en-row .reveal{flex:1;font-size:1.12rem}
+.sort-card.open .sc-en-row .reveal{cursor:grab;background:var(--fix-bg);color:var(--ink)}
+.sc-or{margin:0;color:var(--muted);font-size:.95rem}
+.sc-ask{margin:0;font-weight:800;color:var(--instr)}
+.sc-why{margin:0;font-weight:700;border-left:4px solid var(--muted);border-radius:4px;padding:4px 10px;line-height:1.35}
+.sort-fly{position:fixed;z-index:50;pointer-events:none;background:var(--fix-bg);color:var(--ink);font-weight:700;border-radius:8px;padding:6px 10px;box-shadow:0 6px 18px rgba(0,0,0,.18);max-width:80vw}
+.sort-pats.sum .sp{cursor:default}
+.sort-pats.sum .sp-list{list-style:none;margin:6px 0 0;padding:0}
+.sort-pats.sum .sp-list li{font-weight:400;font-size:.95rem}
+.sort-pats.sum .sp-list li b{font-weight:900}
+.sort-end{display:grid;gap:6px;border-top:2px dashed var(--line);padding-top:10px}
+.se-q{margin:0;font-weight:800;font-size:1.1rem}
+.se-a summary{cursor:pointer;font-weight:800;color:var(--instr)}
+.se-a p{margin:6px 0 0;line-height:1.45}
+@media (min-width:900px){ .sort:not(.done){grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start} .sort:not(.done) .sort-pats{order:2} }
+@media (prefers-reduced-motion: reduce){ .sp.glow,.sp.shake,.sp.landed,.sort-card.in,.sort-card.nudge{animation:none} }
+/* ===== /sort ===== */
+
+/* ===== fixit (engine 49, C1 30.10) ===== */
+.fx-card{border:2px solid var(--line);border-radius:12px;padding:10px 14px;display:grid;gap:6px;background:var(--ground)}
+.fx-t{margin:0;font-size:.82rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.fx-pair{display:grid;gap:2px}
+.fx-wrong{margin:0;font-size:var(--step-1);color:var(--ink)}
+.fx-del{text-decoration:line-through;text-decoration-thickness:2px;color:var(--strike)}
+.fx-caret{color:var(--label);font-weight:900;font-size:1.3em;line-height:1}
+.fx-right{margin:0;font-size:var(--step-1);font-weight:700}
+.fx-fix{color:var(--label);font-weight:900;font-size:1.35em;line-height:1}
+.fx-why{margin:4px 0 0;font-size:.98rem}
+.fx-ru{margin:0;font-size:.88rem;color:var(--muted)}
+.fx-sent{line-height:2.3}
+.fx-slot{display:inline-block;vertical-align:middle;width:2.4em;height:1.55em;margin:0 1px;border:2px dashed var(--instr);border-radius:7px;background:var(--card);cursor:pointer;padding:0}
+.fx-slot:hover,.fx-slot.over{background:var(--fix-bg);border-style:solid}
+.fx-slot.on{background:var(--fix-bg);border-style:solid;box-shadow:0 0 0 3px rgba(6,147,227,.25)}
+.fx-slot.shake{animation:fxShake .45s ease-in-out;border-color:var(--label)}
+@keyframes fxShake{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+.fx-chips{display:flex;flex-wrap:wrap;gap:10px}
+.fx-chip{font:inherit;font-size:var(--step-1);font-weight:900;border:2px solid var(--instr);background:var(--card);color:var(--instr);border-radius:10px;padding:4px 16px;min-height:44px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.fx-chip.on{background:var(--instr);color:var(--instr-ink,#fff)}
+.fx-chip.dragging{opacity:.35}
+.fx-ghost{position:fixed;z-index:50;pointer-events:none;margin:0;box-shadow:0 6px 16px rgba(0,0,0,.25);background:var(--instr);color:var(--instr-ink,#fff)}
+.fx-msg{margin:0;min-height:1.4em;font-weight:700}
+.fx-msg.no{color:var(--again,#C2410C)}
+.fx-msg.ok{color:var(--ok-ink,#1F7A35)}
+.fx-card.short{gap:3px;padding:8px 14px}
+.fx-card.short .fx-wrong,.fx-card.short .fx-right{font-size:1rem}
+.fx-ans .fx-in.pop{display:inline-block;animation:fxPop .5s ease-out}
+@keyframes fxPop{0%{transform:scale(1.6)}100%{transform:scale(1)}}
+.fx-q{margin:0;font-weight:800;font-size:var(--step-1);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.fx-opts{display:grid;gap:8px}
+.fx-opt{font:inherit;font-size:var(--step-1);text-align:left;display:flex;align-items:center;gap:10px;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 12px;cursor:pointer}
+.fx-box{flex:none;width:1.1em;height:1.1em;border:2px solid var(--muted);border-radius:4px}
+.fx-opt.on{border-color:var(--instr)}
+.fx-opt.on .fx-box{background:var(--instr);border-color:var(--instr)}
+.fx-opt.right{background:var(--good-hl);color:var(--hl-ink);border-color:var(--good-hl);cursor:default}
+.fx-opt.right .fx-box{border-color:var(--hl-ink)}
+.fx-opt.wrong{color:var(--strike);cursor:default}
+.fx-opt.wrong .fx-o{text-decoration:line-through;text-decoration-thickness:2px}
+.fx-opt.picked .fx-box{background:currentColor}
+.fx-tag{margin-left:auto;font-weight:900}
+@media (prefers-reduced-motion: reduce){ .fx-slot.shake,.fx-ans .fx-in.pop{animation:none} }
+/* ===== /fixit ===== */
 </style>
 
 <div class="wrap" id="app"></div>
@@ -761,7 +849,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = ["click on the top line to hear the context","click on the line with the gap and try to catch what's in the gap","check","listen again — how did the expression sound?","optional: pronounce the expression like the speaker"];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "48";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "49";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -772,7 +860,7 @@ if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
       : {type:"sayit", s:e.s, first:i===0, box:"", instr:e.instr})});
 }
 /* rough minutes per step, so students can plan their time */
-const EST = {gaps:5, dlg:2.5, rewrite:1, sayit:1.5, share:1.5, lookback:2, listen:1.2, task:1, plan:3, produce:12};
+const EST = {gaps:5, dlg:2.5, rewrite:1, fix:1, sayit:1.5, share:1.5, lookback:2, listen:1.2, task:1, plan:3, produce:12, sort:8};
 const framesOf = t => minutesOf(t) * ((t.steps||[]).some(s=>s.type==="produce") ? 2 : 1);   /* group goal: a frame per minute, Over to you double */
 const GROUP_ID = PAGE_KEY.split("-")[2] || "group";
 let groupStats = (()=>{ try{ return JSON.parse(localStorage.getItem("hw-group-"+GROUP_ID)||"null"); }catch(e){ return null; } })();
@@ -1183,6 +1271,7 @@ function stuckItems(t){
   const out = [];
   (t.steps||[]).forEach((st, si)=>{
     if(st.type==="rewrite"){ const r = st.r; out.push({si, row:-1, snippet: plainText(r.pre + r.a + r.post)}); }
+    else if(st.type==="fix") out.push({si, row:-1, snippet: fixSnippet(st)});   /* engine 49: Fix it */
     else if(st.type==="sayit") (st.s.rows||[]).forEach((row,i)=>out.push({si, row:i, snippet: st.s.html ? plainText(row[1]) : row[1]}));
     else if(st.type==="share"){ const s = st.s, q = s.q || ""; out.push({si, row:-1, snippet: plainText(s.s+(q?" "+q:""))}); }
     else if(st.type==="listen") (st.clip||[]).forEach((l,i)=>out.push({si, row:i, snippet: l[3].map(p=>typeof p==="string"?p:p.gap).join("")}));
@@ -1529,7 +1618,7 @@ function renderTask(){
   const st = t.steps[stepIdx];
   const count = t._once ? `Once more: your bookmarks · ${stepIdx+1} of ${t.steps.length}` : `${stepIdx+1} of ${t.steps.length}`;
   const pct = Math.round((stepIdx)/t.steps.length*100);
-  ({dlg:renderDlg, rewrite:renderRewrite, sayit:renderSayit, share:renderShare, lookback:renderLookback, listen:renderListen, task:renderTaskCard, plan:renderPlan, produce:renderProduce})[st.type](st, count, pct);
+  ({dlg:renderDlg, rewrite:renderRewrite, fix:renderFix, sayit:renderSayit, share:renderShare, lookback:renderLookback, listen:renderListen, task:renderTaskCard, plan:renderPlan, produce:renderProduce, sort:renderSort})[st.type](st, count, pct);
   if(!t._once) annotateMarks();
   window.scrollTo(0,0);
 }
@@ -1551,6 +1640,7 @@ function finish(t){ setMark(t.id, true); lastDone = t; lastFlagged = Object.valu
 /* ---------- gapped dialogue ---------- */
 let GNK = 0;   /* engine 43: ids that tie a gap to its red note */
 function gapLineHTML(line){
+  if(line.scene) return `<p class="scene"><span>${esc((line.p || []).join(""))}</span></p>`;   /* engine 49: a date / time line, like WhatsApp's */
   const parts = line.p; let html = "", i = 0, notes = "";
   while(i < parts.length){
     const x = parts[i];
@@ -1594,7 +1684,7 @@ document.addEventListener("click", ev => {
   b.classList.toggle("on", revs.has(r)); b.setAttribute("aria-pressed", revs.has(r));
 }, true);
 /* "Once more" for a steps task: the bookmarked steps again, each with only its bookmarked items to do */
-const REV_TYPES = new Set(["dlg", "rewrite", "sayit", "share", "listen", "lookback"]);
+const REV_TYPES = new Set(["dlg", "rewrite", "fix", "sayit", "share", "listen", "lookback", "sort"]);
 function onceMoreTask(t){
   const steps = (t.steps || []).map((st, s) => ({st, s, revs: REV_TYPES.has(st.type) ? getRev(t.id, s) : new Set()})).filter(x => x.revs.size)
     .map(x => ({...x.st, _orig: x.s, _rows: x.revs}));
@@ -1802,6 +1892,7 @@ function renderRewrite(st, count, pct){
   const hint = r.hint ? ` <span class="ru">(${esc(r.hint)})</span>` : "";
   const body = `
     <div class="panel ${checked?"checked":""}">
+      ${st.card?fixCardHTML(st.card, st.cardFirst !== false):""}
       ${r.o?`<p class="orig">${esc(r.o)}</p>`:""}
       ${r.k?`<p class="key">${r.k}</p>`:""}
       <p class="target">${br(r.pre)}${checked?rewriteShown(val, r):
@@ -1809,9 +1900,9 @@ function renderRewrite(st, count, pct){
       ${checked?markHint()+revHint():""}
       ${yours}
       ${checked?`<p class="note">${r.n}</p>`:""}
-    </div>${checked&&st.box?box(st.box):""}`;
+    </div>${(checked||st.boxAlways)&&st.box?box(st.box):""}`;   /* boxAlways (engine 49): the box beside it from the start, when the instruction says "use the box" */
   const instr = st.first ? (st.instrFirst || "Rewrite the sentence. Use the word in capitals. Type the missing part or say it aloud, then tap Check.") : (st.instr || "Rewrite the sentence.");
-  shell({count, pct, instr, stageHTML: body, withBox: checked && !!st.box, actionsHTML: navButtons()});
+  shell({count, pct, instr, stageHTML: body, withBox: (checked||st.boxAlways) && !!st.box, actionsHTML: navButtons()});
   const inp = document.getElementById("rw");
   if(inp){
     inp.addEventListener("input",()=>{ typed[key] = inp.value; });
@@ -1821,6 +1912,88 @@ function renderRewrite(st, count, pct){
 }
 /* re-render the same step after Check without resetting */
 function renderTaskKeep(){ const keep = checked; renderTask(); checked = keep; }
+/* ===== fixit (engine 49, C1 30.10) ===== */
+/* «Fix it» (TZ from the C1 lesson chat 31.10; her wish: the fixed form big and red). Each block opens with its card: the slip with only the
+   wrong bit struck grey (‸ = a missing word) and the good part green, the right version with the fix big and red, why in English, then
+   in Russian, smaller. Its items are `fix` steps — place (put the word in its ▢: tap a ▢ and a word, or drag the word; her approval
+   31.10: «перетащите слово в нужное место») and which (tap every possible option) — or rewrite steps (write) carrying the same card. */
+const fixMd = (s, good) => { let h = esc(s||"").replace(/~~(.+?)~~/g, '<span class="fx-del">$1</span>').replace(/\*\*(.+?)\*\*/g, '<b class="fx-fix">$1</b>').replace(/‸/g, '<span class="fx-caret" aria-label="a missing word">‸</span>');
+  if(good){ const g = esc(good), i = h.indexOf(g); if(i > -1) h = h.slice(0, i) + `<span class="good">${g}</span>` + h.slice(i + g.length); }
+  return h; };
+/* the first item of a block shows the whole card; the next ones a shorter card (the slip and the fix, no why), so the item stays on screen */
+function fixCardHTML(b, full = true){
+  return `<div class="fx-card ${full?"":"short"}">${b.title?`<p class="fx-t">${esc(b.title)}</p>`:""}${(b.card||[]).map(c=>`<div class="fx-pair"><p class="fx-wrong">${fixMd(c.wrong, c.good)}</p><p class="fx-right">${fixMd(c.right)}</p></div>`).join("")}
+    ${full&&b.why_en?`<p class="fx-why">${esc(b.why_en)}</p>`:""}${full&&b.why_ru?`<p class="fx-ru">${esc(b.why_ru)}</p>`:""}</div>`;
+}
+const fixWords = it => Array.isArray(it.word) ? it.word : [it.word];
+const fixRight = it => it.pick || fixWords(it)[0];
+/* the sentence with the word in its place (red), the other ▢ gone; cap: the word starts the sentence */
+const placeAnswerHTML = (it, w) => { const word = it.cap ? w.charAt(0).toUpperCase() + w.slice(1) : w;
+  return it.tokens.map((t, i) => t === "▢" ? (i === it.slot ? `<b class="fx-fix fx-in">${esc(word)}</b>` : null) : esc(t)).filter(x => x != null).join(" "); };
+function fixSnippet(st){ const it = st.it || {};
+  return it.kind === "place" ? plainText(placeAnswerHTML(it, fixRight(it))) : it.kind === "which" ? (it.q ? it.q + " " : "") + (it.opts||[]).join(" / ") : ""; }
+const fixSt = {};
+function renderFix(st, count, pct){
+  const it = st.it, key = current.id + "-" + curS() + (current._once ? "-again" : ""), S = fixSt[key] = fixSt[key] || {sel: null, slot: null, picks: [], msg: ""};
+  if(!checked) S.solved = false;
+  let inner = "";
+  if(it.kind === "place"){
+    const ws = fixWords(it);
+    inner = checked
+      ? `<p class="target fx-ans">${placeAnswerHTML(it, fixRight(it))}${markBtn(String(stepIdx), fixSnippet(st))}${bmBtn(curS(), 0)}</p>${S.solved ? `<p class="fx-msg ok">✓ That's it.</p>` : ""}`
+      : `<p class="target fx-sent">${it.tokens.map((t, i) => t === "▢" ? `<button type="button" class="fx-slot ${S.slot === i ? "on" : ""} ${S.shake === i ? "shake" : ""}" data-slot="${i}" aria-label="Put the word here"></button>` : `<span class="fx-tok">${esc(t)}</span>`).join(" ")}</p>
+         <div class="fx-chips" role="group" aria-label="The word">${ws.map(w => `<button type="button" class="fx-chip ${S.sel === w ? "on" : ""}" data-w="${esc(w)}">${esc(w)}</button>`).join("")}</div>
+         <p class="fx-msg ${S.msg ? "no" : ""}" aria-live="polite">${esc(S.msg || "")}</p>`;
+  } else if(it.kind === "which"){
+    const picks = new Set(S.picks), ok = new Set(it.ok || []);
+    inner = `${it.q ? `<p class="fx-q">${esc(it.q)}${checked ? markBtn(String(stepIdx), fixSnippet(st)) + bmBtn(curS(), 0) : ""}</p>` : ""}<div class="fx-opts">${(it.opts||[]).map((o, i) => { const on = picks.has(i);
+        const cls = checked ? (ok.has(i) ? "right" : "wrong") + (on ? " picked" : "") : (on ? "on" : "");
+        const tag = checked && on ? `<span class="fx-tag">${ok.has(i) ? "✓" : "✗"}</span>` : "";
+        return `<button type="button" class="fx-opt ${cls}" data-o="${i}" aria-pressed="${on}" ${checked ? "disabled" : ""}><span class="fx-box" aria-hidden="true"></span><span class="fx-o">${esc(o)}</span>${tag}</button>`; }).join("")}</div>
+      ${checked && !it.q ? `<p class="mk-row mk-right">${markBtn(String(stepIdx), fixSnippet(st))}${bmBtn(curS(), 0)}</p>` : ""}`;
+  }
+  const dflt = it.kind === "place" ? "Put the word in the right place: tap a ▢, then the word — or drag the word." : "Tap every possible option. Then tap Check.";
+  shell({count, pct, instr: st.instr || dflt,
+    stageHTML: `<div class="panel fx ${checked ? "checked" : ""}">${st.card ? fixCardHTML(st.card, st.cardFirst !== false) : ""}${inner}${checked ? markHint() + revHint() : ""}${checked && it.n ? `<p class="note">${esc(it.n)}</p>` : ""}</div>`,
+    actionsHTML: navButtons(it.kind === "place" ? "Show the answer" : "Check")});
+  wireNav(() => renderTaskKeep());
+  if(checked) return;
+  if(it.kind === "which"){
+    app.querySelectorAll(".fx-opt").forEach(b => b.addEventListener("click", () => { const i = +b.dataset.o, k = S.picks.indexOf(i);
+      if(k > -1) S.picks.splice(k, 1); else S.picks.push(i); b.classList.toggle("on", k < 0); b.setAttribute("aria-pressed", k < 0); }));
+    return;
+  }
+  const ws = fixWords(it);
+  const place = (i, w) => {
+    if(i === it.slot && w === fixRight(it)){ S.msg = ""; S.solved = true; checked = true; renderTaskKeep(); const a = app.querySelector(".fx-in"); if(a) a.classList.add("pop"); return; }
+    S.msg = i === it.slot ? "Not quite — try the other word." : "Not quite — try another place."; S.shake = i; S.sel = null; S.slot = null;
+    renderTaskKeep(); setTimeout(() => { S.shake = null; const sl = app.querySelector(".fx-slot.shake"); if(sl) sl.classList.remove("shake"); }, 600);
+  };
+  app.querySelectorAll(".fx-slot").forEach(b => b.addEventListener("click", () => { const i = +b.dataset.slot;
+    if(ws.length === 1) return place(i, ws[0]);
+    if(S.sel) return place(i, S.sel);
+    S.slot = S.slot === i ? null : i; S.msg = ""; renderTaskKeep(); }));
+  app.querySelectorAll(".fx-chip").forEach(c => {
+    const w = c.dataset.w;
+    const tap = () => { if(S.slot != null) return place(S.slot, w); S.sel = S.sel === w ? null : w; S.msg = ""; renderTaskKeep(); };
+    /* drag (a bonus; tapping works everywhere): a copy of the chip follows the finger, dropped on a ▢ it's placed there */
+    let x0 = 0, y0 = 0, ghost = null, moved = false;
+    c.addEventListener("pointerdown", e => { if(e.button > 0) return; x0 = e.clientX; y0 = e.clientY; moved = false; ghost = null; c.setPointerCapture && c.setPointerCapture(e.pointerId); });
+    c.addEventListener("pointermove", e => { if(x0 == null || (!moved && Math.hypot(e.clientX - x0, e.clientY - y0) < 6) || !c.hasPointerCapture || !c.hasPointerCapture(e.pointerId)) return;
+      if(!moved){ moved = true; const r = c.getBoundingClientRect(); ghost = c.cloneNode(true); ghost.classList.add("fx-ghost"); ghost.style.width = r.width + "px"; document.body.appendChild(ghost); c.classList.add("dragging"); }
+      ghost.style.left = (e.clientX - ghost.offsetWidth / 2) + "px"; ghost.style.top = (e.clientY - ghost.offsetHeight / 2) + "px";
+      app.querySelectorAll(".fx-slot").forEach(sl => sl.classList.remove("over")); const t = document.elementFromPoint(e.clientX, e.clientY), sl = t && t.closest && t.closest(".fx-slot"); if(sl) sl.classList.add("over"); });
+    c.addEventListener("pointerup", e => { if(c.hasPointerCapture && c.hasPointerCapture(e.pointerId)) c.releasePointerCapture(e.pointerId);
+      if(!moved){ x0 = null; return; }
+      x0 = null; if(ghost){ ghost.remove(); ghost = null; } c.classList.remove("dragging");
+      const t = document.elementFromPoint(e.clientX, e.clientY), sl = t && t.closest && t.closest(".fx-slot");
+      if(sl) place(+sl.dataset.slot, w); else app.querySelectorAll(".fx-slot").forEach(s2 => s2.classList.remove("over")); });
+    c.addEventListener("pointercancel", () => { x0 = null; if(ghost){ ghost.remove(); ghost = null; } c.classList.remove("dragging"); });
+    c.addEventListener("click", e => { if(moved){ moved = false; e.preventDefault(); return; } tap(); });
+  });
+}
+/* ===== /fixit ===== */
+
 /* engine 47 (her catch 29.10): when every answer of a step has been opened by hand, the step counts as checked — it shows what Check shows
    (notes, bookmarks) where the student is, and the button says Next / Finish, so there's no extra tap on "Check" */
 function checkWhenAllOpen(sel){
@@ -1848,6 +2021,93 @@ function renderSayit(st, count, pct){
   app.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>{ b.classList.toggle("open"); checkWhenAllOpen(".reveal"); }));
   wireNav(()=>renderTaskKeep());
 }
+
+/* ===== sort (engine 49, B2 30.10, her words: «паттерны сбоку… переводят с русского… появляется английский пример… в паттерн… первый за них
+   сделать, красиво летел медленно… потом с подсказками, паттерн за паттерном»): four pattern boxes and the Russian lines one by one —
+   say it aloud, tap to see the English, then tap a box (or drag the card onto it). mode "auto" flies into its box by itself, "hint" makes
+   the right box glow, "free" gives no help; a wrong box shakes and the card's why line shows. Then the four boxes with their lines and the
+   noticing question. "Show all the answers" (the step's Check) goes straight to that summary. ===== */
+const SORTS = {};
+function sortState(){ const k = current.id + ":" + curS() + (current._once ? ":once" : ""); return SORTS[k] || (SORTS[k] = {at: 0, open: false, placed: {}, done: false, why: null, wrong: null, fresh: true}); }
+const sortItems = st => st.data.items.map((it, i) => Object.assign({}, it, {i})).filter(it => !st._rows || st._rows.has(it.i)).map(it => st._rows ? Object.assign(it, {mode: "free"}) : it);
+const sortBold = (en, p) => p === "p2" || /\bto me\b/.test(en) ? esc(en).replace(/(recommended?\b.*?\bto me)/, "<b>$1</b>") : esc(en).replace(/^(.*?\brecommend(?:ed)?)\b/, "<b>$1</b>");
+function renderSort(st, count, pct){
+  const D = st.data, S = sortState(), items = sortItems(st), pats = D.patterns;
+  if(checked && !S.done){ items.forEach(x => { S.placed[x.i] = x.p; }); S.done = true; }
+  if(!checked && S.done){ checked = true; }
+  const inPat = p => items.filter(x => S.placed[x.i] === p);
+  if(S.done){
+    shell({count, pct, instr: "The four patterns, two sentences each. Then look at all eight.",
+      stageHTML: `<div class="panel sort done"><div class="sort-pats sum">${pats.map(p => `<div class="sp"><span class="sp-ru">${esc(p.ru)}</span><span class="sp-en">${esc(p.en)}</span>
+        <ul class="sp-list">${inPat(p.id).map(x => `<li>${sortBold(x.en, p.id)} ${markBtn(stepIdx + "-" + x.i, x.en)}${bmBtn(curS(), x.i)}</li>`).join("")}</ul></div>`).join("")}</div>
+        ${markHint()}${revHint()}
+        ${D.end && !current._once ? `<div class="sort-end"><p class="se-q">${esc(D.end.q)}</p><details class="se-a"><summary>Tap to see</summary><p>${esc(D.end.a)}</p></details></div>` : ""}</div>`,
+      withBox: false, actionsHTML: navButtons()});
+    wireNav(() => renderTaskKeep());
+    return;
+  }
+  const it = items[S.at];
+  const ask = !S.open ? `Say it in English — aloud. Then tap to check.${it.mode === "auto" ? " Watch the first one." : ""}`
+    : it.mode === "auto" ? "Watch: it goes into its pattern." : "Now put it in its pattern: tap the box (or drag the card).";
+  shell({count, pct, instr: st.instr || "Say each sentence in English, then sort it into its pattern.",
+    stageHTML: `<div class="panel sort"><div class="sort-pats">${pats.map(p => { const xs = inPat(p.id);
+        return `<button class="sp${S.open && it.mode === "hint" && p.id === it.p ? " glow" : ""}" data-sp="${p.id}" aria-label="${esc(p.ru)} — ${esc(p.en)}"><span class="sp-ru">${esc(p.ru)}</span><span class="sp-en">${esc(p.en)}</span>
+          ${xs.length ? `<span class="sp-c">${xs.length}</span>` : ""}<span class="sp-list">${xs.map(x => `<span>${esc(x.en)}</span>`).join("")}</span>${S.why && S.why.p === p.id ? `<span class="sp-why">${esc(S.why.t)}</span>` : ""}</button>`; }).join("")}</div>
+      <div class="sort-card${S.open ? " open" : ""}${S.fresh ? " in" : ""}" data-scard>
+        <span class="sc-n">${S.at + 1} of ${items.length}</span>
+        <p class="sc-ru">${esc(it.ru)}</p>
+        <p class="sc-en-row"><button class="reveal ${S.open ? "open" : ""}" data-sen aria-label="${S.open ? "The English" : "Show the English"}">${esc(it.en)}</button>${S.open ? markBtn(stepIdx + "-" + it.i, it.en) + bmBtn(curS(), it.i) : ""}</p>
+        ${S.open && it.or ? `<p class="sc-or">or: ${esc(it.or)}</p>` : ""}
+        <p class="sc-ask">${ask}</p>
+        ${S.wrong ? `<p class="sc-why">${esc(S.wrong)}</p>` : ""}
+      </div>${S.open ? markHint() + revHint() : ""}</div>`,
+    withBox: false, actionsHTML: navButtons("Show all the answers")});
+  S.fresh = false;
+  wireNav(() => renderTaskKeep());
+  const card = app.querySelector("[data-scard]"), en = app.querySelector("[data-sen]"), box = p => app.querySelector(`[data-sp="${p}"]`);
+  let busy = false;
+  const next = () => { S.at++; S.open = false; S.wrong = null; S.fresh = true;
+    if(S.at >= items.length){ S.done = true; checked = true; } const y = scrollY; renderTaskKeep(); scrollTo(0, y); };
+  /* the card's English flies into its box: slowly for the first one (1.2 s), quicker when they tap the box */
+  const fly = (p, ms, done) => {
+    const from = en.getBoundingClientRect(), to = box(p).getBoundingClientRect();
+    if(calmMotion()){ done(); return; }
+    const f = document.createElement("div"); f.className = "sort-fly"; f.textContent = it.en; document.body.appendChild(f);
+    f.style.left = from.left + "px"; f.style.top = from.top + "px"; f.style.width = from.width + "px";
+    const dx = to.left + 8 - from.left, dy = to.top + to.height / 2 - from.top - from.height / 2;
+    const sc = Math.min(1, (to.width - 16) / from.width); f.style.transformOrigin = "0 50%";
+    const a = f.animate([{transform: "translate(0,0) scale(1)"}, {transform: `translate(${dx}px,${dy}px) scale(${sc.toFixed(2)})`, opacity: .7}], {duration: ms, easing: "ease-in-out", fill: "forwards"});
+    en.style.visibility = "hidden"; a.onfinish = () => { f.remove(); done(); };
+  };
+  const land = (p, showWhy) => { S.placed[it.i] = p; S.why = showWhy ? {p, t: it.why} : null; S.wrong = null;
+    const y = scrollY; renderTaskKeep(); scrollTo(0, y); const b = box(p); if(b) b.classList.add("landed");
+    busy = true; setTimeout(() => { S.why = null; next(); }, showWhy ? 2600 : 900); };
+  const place = p => {
+    if(busy || !S.open || it.mode === "auto") return;
+    if(p === it.p){ busy = true; fly(p, 550, () => land(p, it.mode !== "free")); return; }
+    const b = box(p); b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake");
+    S.wrong = it.why; S.miss = (S.miss || 0) + 1; const y = scrollY; renderTaskKeep(); scrollTo(0, y);
+  };
+  en.addEventListener("click", () => { if(S.open || busy) return; S.open = true; const y = scrollY; renderTaskKeep(); scrollTo(0, y);
+    const c2 = app.querySelector("[data-scard]");
+    if(it.mode === "auto"){ setTimeout(() => { const e2 = app.querySelector("[data-sen]"); if(!e2) return; busy = true; enRef(e2); fly(it.p, 1200, () => land(it.p, true)); }, calmMotion() ? 0 : 700); }
+    else if(it.mode === "hint" && c2){ const b = app.querySelector(`[data-sp="${it.p}"]`).getBoundingClientRect(), r = c2.getBoundingClientRect();
+      c2.style.setProperty("--nx", Math.sign(b.left + b.width / 2 - r.left - r.width / 2) * 8 + "px"); c2.style.setProperty("--ny", Math.sign(b.top - r.top) * 8 + "px"); c2.classList.add("nudge"); } });
+  let enCur = en; const enRef = e => { enCur = e; };
+  app.querySelectorAll("[data-sp]").forEach(b => b.addEventListener("click", () => place(b.dataset.sp)));
+  /* drag the card onto a box (a bonus: tapping a box works everywhere) */
+  if(S.open && it.mode !== "auto"){
+    en.addEventListener("pointerdown", e => { if(busy) return; const r = en.getBoundingClientRect(), ox = e.clientX - r.left, oy = e.clientY - r.top; let g = null, moved = false;
+      const mv = ev => { if(!moved && Math.hypot(ev.clientX - e.clientX, ev.clientY - e.clientY) < 8) return;
+        if(!g){ g = document.createElement("div"); g.className = "sort-fly"; g.textContent = it.en; g.style.width = r.width + "px"; document.body.appendChild(g); moved = true; }
+        g.style.left = ev.clientX - ox + "px"; g.style.top = ev.clientY - oy + "px"; };
+      const up = ev => { removeEventListener("pointermove", mv); removeEventListener("pointerup", up); if(!g) return; g.remove();
+        const t = document.elementFromPoint(ev.clientX, ev.clientY), b = t && t.closest && t.closest("[data-sp]"); if(b) place(b.dataset.sp); };
+      addEventListener("pointermove", mv); addEventListener("pointerup", up); });
+  }
+}
+const calmMotion = () => !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+/* ===== /sort ===== */
 
 /* ---------- share your reaction and ask ---------- */
 function renderShare(st, count, pct){

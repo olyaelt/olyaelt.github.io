@@ -1,0 +1,13 @@
+{
+ "title": "So you wouldn't recommend it?",
+ "group": "b2",
+ "file": "2026-10-30.html",
+ "assets": {
+  "STICKER": "sticker.png",
+  "GAPS": "gaps.json",
+  "SORT": "sort.json",
+  "ARC": "arc.json"
+ },
+ "earlier": false,
+ "listed": false
+}

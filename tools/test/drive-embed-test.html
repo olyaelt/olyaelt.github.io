@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Drive embed test</title>
+<style>
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;margin:0 auto;padding:16px;max-width:860px;background:#F7F1E1;color:#1D1D1B;line-height:1.45}
+h1{font-size:1.35rem;margin:4px 0 8px}
+.v{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;border:3px solid #1D1D1B}
+.v iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+a.btn,button{display:inline-block;font:inherit;font-weight:800;border:2px solid #0693E3;color:#0679BD;background:#fff;border-radius:12px;padding:8px 16px;text-decoration:none;cursor:pointer}
+input{font:inherit;width:100%;box-sizing:border-box;padding:8px 10px;border:2px solid #D9D2B8;border-radius:10px;margin:6px 0}
+.legal{font-size:.85rem;margin-top:28px}
+.legal a{color:#6B6B6B}
+</style>
+</head>
+<body>
+<h1>Тест: видео с Google Диска на нашей странице</h1>
+<p>Нажми ▶ в рамке. Проверь на компьютере, на Android и на iPhone: в аккаунте Google и без него (например, в окне инкогнито).</p>
+<div class="v"><iframe id="f" src="https://drive.google.com/file/d/1axykmLXfUs8z7y0GMOO469EIDDUrWgQk/preview" allow="autoplay; fullscreen" allowfullscreen title="Video"></iframe></div>
+<p><a class="btn" id="open" href="https://drive.google.com/file/d/1axykmLXfUs8z7y0GMOO469EIDDUrWgQk/view" target="_blank" rel="noopener">Открыть на Google Диске ↗</a></p>
+<form id="other"><label>Другая ссылка на файл с Диска:<input id="u" placeholder="https://drive.google.com/file/d/…/view" autocomplete="off"></label><button>Показать</button></form>
+<p class="legal"><a href="../../impressum.html">Impressum</a> · <a href="../../datenschutz.html">Datenschutz</a></p>
+<script>
+document.getElementById("other").addEventListener("submit", e => { e.preventDefault();
+  const m = document.getElementById("u").value.match(/\/d\/([-\w]{10,})/) || document.getElementById("u").value.match(/[?&]id=([-\w]{10,})/);
+  if(!m) return; document.getElementById("f").src = "https://drive.google.com/file/d/" + m[1] + "/preview"; document.getElementById("open").href = "https://drive.google.com/file/d/" + m[1] + "/view"; });
+</script>
+</body>
+</html>

@@ -28,7 +28,7 @@
   {
    "pid": 5,
    "sig": "model two neighbours on maple road. complete their chat. then tap the yellow to check.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 6,
@@ -43,6 +43,21 @@
   {
    "pid": 8,
    "sig": "scenes this is maple road. look at the scene: what's been going on here? get ready to share the news like neighbours.",
+   "gone": true
+  },
+  {
+   "pid": 9,
+   "sig": "picture this is maple road. look at it for one minute and think quietly: what's been going on here? don't talk yet. maple-scene.jpg",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "model here's how two neighbours might talk about it. complete their chat. then tap the yellow to check. maple-4-bakery.jpg",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "scenes take turns: one scene each. tell your partner the news.",
    "gone": false
   }
  ],

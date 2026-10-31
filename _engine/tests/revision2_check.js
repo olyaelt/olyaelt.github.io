@@ -158,27 +158,37 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
     // the answers → the next card; after the 6th the field goes on
     const at = await TG.evaluate(() => { for (let si = 0; si < D.stages.length; si++) { const k = D.stages[si].blocks.findIndex(x => x.kind === 'tool'); if (k > -1) { goBlock(si, k); S.intro = false; render(); return [si, k]; } } });
     await TG.waitForTimeout(1500); const TF = TG.frameLocator('.tool-frame');
-    out.coinEmb = {own: await TF.locator('[data-start]:visible, .next-card:visible').count(), coin: await TF.locator('.coin-intro [data-intro-coin]').count()};
-    const cAt = () => TF.locator('body').evaluate(() => [S.view, S.exShown, S.seen, S.cur ? (S.cur.flipped ? 'open' : S.cur.type ? 'coin' : 'card') : '']);
+    out.coinEmb = {own: await TF.locator('[data-start]:visible, .next-card:visible').count(), how: await TF.locator('.how li').count()};
+    const cAt = () => TF.locator('body').evaluate(() => [S.view, S.view === 'example' ? S.ex + '/' + S.tries.map(t => t.face + '' + t.open.size).join('-') : S.seen + (S.cur ? (S.cur.flipped ? 'open' : S.cur.type ? 'coin' : 'card') : '')]);
     out.coinEmb.steps = [];
-    for (let k = 0; k < 19; k++) { await TG.click('[data-step]'); await TG.waitForTimeout(250); if (await TG.locator('.tool-frame').count() === 0) { out.coinEmb.steps.push('left at ' + k); break; } out.coinEmb.steps.push((await cAt()).join(':')); }
+    for (let k = 0; k < 24; k++) { await TG.click('[data-step]'); await TG.waitForTimeout(250); if (await TG.locator('.tool-frame').count() === 0) { out.coinEmb.steps.push('left at ' + k); break; } out.coinEmb.steps.push((await cAt()).join(':')); }
     await TG.click('[data-step]'); await TG.waitForTimeout(300); out.coinEmb.after = await TG.evaluate(() => [S.stage, bIdx(), curBlock().kind]);
     const ST = out.coinEmb.steps;
-    expect('coin cards in the field: no own Next; Next = examples, then card → coin → answers ×6, then the field goes on', out.coinEmb.own === 0 && out.coinEmb.coin === 1
-      && ST[0] === 'example:true:0:' && ST[1] === 'cards:true:1:card' && ST[2] === 'cards:true:1:coin' && ST[3] === 'cards:true:1:open' && ST[4] === 'cards:true:2:card' && ST[18] === 'cards:true:6:open'
+    // handoff 30.10 21:20: the guided start — How it works → the card, heads (always) → its answers → the same card, tails → its answers → the cards
+    expect('coin cards in the field: no own Next; Next = How it works → heads → answers → tails → answers, then card → coin → answers ×6, then the field goes on', out.coinEmb.own === 0 && out.coinEmb.how === 4
+      && ST[0] === 'example:1/00-00' && ST[1] === 'example:1/10-00' && ST[2] === 'example:1/13-00' && ST[3] === 'example:2/13-00' && ST[4] === 'example:2/13-20' && ST[5] === 'example:2/13-22'
+      && ST[6] === 'cards:1card' && ST[7] === 'cards:1coin' && ST[8] === 'cards:1open' && ST[9] === 'cards:2card' && ST[23] === 'cards:6open'
       && out.coinEmb.after[1] === at[1] + 1 && out.coinEmb.after[2] === 'questions', out.coinEmb);
     // her 15:17–15:18: ⚡ only on the last question, Next goes on to question 2 (also after going back), numbered screens between Back
     // and Next (the seen ones tappable), and the way back from the board to where they were
     const CR = await open(L + 'f-crime-live.html', 'anna'); await bubble(CR, 3); await CR.waitForTimeout(150);
+    // handoff 30.10 21:20: a quiet minute with the street (⏱ on the button, then "Time's up" and Next lights up), the model on the bakery close-up
+    out.timer = {before: await CR.locator('[data-ptimer]').innerText()}; await CR.click('[data-ptimer]'); await CR.waitForTimeout(1300); out.timer.running = await CR.locator('[data-ptimer]').innerText();
+    out.timer.up = await CR.evaluate(() => { bs(curBlock()).tEnd = Date.now() - 1; ptimerTick(); return [document.querySelector('[data-ptimer]').textContent, document.querySelector('[data-step]').className]; });
+    expect('⏱ 1:00 counts down on the button, then Time\'s up and Next lights up', out.timer.before === '⏱ 1:00' && /^⏱ 0:5\d$/.test(out.timer.running) && out.timer.up[0] === "⏱ Time's up" && /ready/.test(out.timer.up[1]), out.timer);
     const crs = () => CR.evaluate(() => ({b: bIdx(), dots: [...document.querySelectorAll('.sdots button')].map(x => x.className.trim() + (x.disabled ? '-' : '')).join(' '), next: !document.querySelector('[data-step]').disabled, fast: !!document.querySelector('.fast'), q: curBlock().kind === 'questions' ? spkCur.key : null}));
     out.crime = [await crs()]; for (let k = 0; k < 14 && (await CR.evaluate(() => curBlock().kind)) !== 'questions'; k++) { await CR.click('[data-step]'); await CR.waitForTimeout(120); out.crime.push(await crs()); }
     for (let k = 0; k < 1; k++) { await CR.click('[data-step]'); await CR.waitForTimeout(150); out.crime.push(await crs()); }
     await CR.click('[data-back]'); await CR.waitForTimeout(150); out.crime.push(await crs());
     const K = out.crime, Q = K.filter(x => x.q != null);
-    // her 15:14 (handoff 15:15): Maple Road scene by scene — the street, then 8 close-ups, one Next each
-    out.scenesSeen = K.filter(x => x.b === 1).length;
-    expect('Use it: numbered screens; Maple Road street + 8 scenes; ⚡ only on the last question; Next goes on to question 2, also after Back', K[0].dots === 'on- - -' && K.some(x => x.dots === 'was on- -') && out.scenesSeen === 9
+    // handoff 30.10 21:20: the street with ⏱ → the model on the bakery picture → 7 scenes, straight into a scene (the bakery is the model)
+    out.scenesSeen = K.filter(x => x.b === 2).length;
+    expect('Use it: numbered screens; street ⏱ → model → 7 scenes; ⚡ only on the last question; Next goes on to question 2, also after Back', K[0].dots === 'on- - - -' && K.some(x => x.dots === 'was on- - -') && out.scenesSeen === 7
       && Q[0].q === 0 && Q[0].next && !Q[0].fast && Q[1].q === 1 && !Q[1].next && Q[1].fast && Q[2].q === 0 && Q[2].next && !Q[2].fast, {K, scenes: out.scenesSeen});
+    out.crimeModel = await CR.evaluate(() => { goBlock(3, 1); const m = {kind: curBlock().kind, side: !!document.querySelector('#side .side-pic img[src$="maple-4-bakery.jpg"]'), mainPicShown: getComputedStyle(document.querySelector('.mdl-pic > .pic')).display !== 'none', lines: document.querySelectorAll('.mdl-pic .dlg p').length, h: document.documentElement.scrollHeight};
+      goBlock(3, 2); m.street = !!document.querySelector('.scn.street'); m.dots = document.querySelectorAll('.scn-dots button').length; m.bakery = D.stages[3].blocks[2].scenes.some(x => /bakery/.test(x.img)); return m; });
+    expect('the model on the bakery close-up (beside the chat on a computer), 6 lines; scenes start with a scene, 7, no bakery', out.crimeModel.kind === 'model' && out.crimeModel.side && !out.crimeModel.mainPicShown && out.crimeModel.lines === 6
+      && !out.crimeModel.street && out.crimeModel.dots === 7 && !out.crimeModel.bakery, out.crimeModel);
     await CR.click('.sdots [data-sdot="1"]'); await CR.waitForTimeout(150); out.crimeDot = await CR.evaluate(() => bIdx()); expect('a seen screen can be tapped', out.crimeDot === 1, out.crimeDot);
     await Promise.all([CR.waitForURL(/jeopardy-live\.html/), CR.click('.board-top')]); await CR.waitForTimeout(500); out.backstrip = await CR.locator('.backstrip').innerText().catch(() => '');
     await Promise.all([CR.waitForURL(/f-crime-live\.html/), CR.click('.backstrip')]); await CR.waitForFunction(() => typeof S !== 'undefined' && typeof render === 'function'); await CR.waitForTimeout(500); out.resumed = await CR.evaluate(() => [location.hash, S.stage, bIdx(), S.intro]);

@@ -1,0 +1,98 @@
+[
+ {
+  "o": "I thought cooking dinner for twelve people would be easy. It wasn't!",
+  "k": "THINK",
+  "pre": "It was a lot ",
+  "post": ".",
+  "a": "harder than you'd think",
+  "acc": [
+   "harder than you'd think",
+   "harder than you would think",
+   "more difficult than you'd think",
+   "more difficult than you would think",
+   "harder than you might think",
+   "more difficult than you might think",
+   "harder than you think",
+   "trickier than you'd think",
+   "more work than you'd think"
+  ],
+  "n": "or: more difficult than you'd think · than you'd think /ðən juːd ˈθɪŋk/"
+ },
+ {
+  "o": "The parenting books were helpful, but they weren't enough — nothing prepares you for the first night with a newborn.",
+  "k": "FAR",
+  "pre": "The books ",
+  "post": ".",
+  "a": "only got me so far",
+  "acc": [
+   "only got me so far",
+   "could only get me so far",
+   "only got us so far",
+   "only get you so far",
+   "can only get you so far",
+   "only took me so far",
+   "could only take me so far",
+   "only took us so far",
+   "could only get us so far"
+  ],
+  "n": "only get(s) you so far → past: only got me so far"
+ },
+ {
+  "o": "AI writes the first draft of our company newsletter, but our editor knows what our readers actually find funny.",
+  "k": "VALUE",
+  "pre": "That's where she ",
+  "post": ".",
+  "a": "really adds value",
+  "acc": [
+   "really adds value",
+   "adds value",
+   "adds real value",
+   "adds the most value"
+  ],
+  "n": "she adds (-s) · value /ˈvæljuː/"
+ },
+ {
+  "o": "In our block of flats, the residents used to organise everything themselves. Now a company does it all.",
+  "k": "HANDED",
+  "pre": "Now it's all ",
+  "post": " to a company.",
+  "a": "been handed over",
+  "acc": [
+   "been handed over"
+  ],
+  "n": "it's all been handed over = they've handed it all over · handed /ˈhændɪd/"
+ },
+ {
+  "o": "I learned to change a tyre years ago and thought I'd never need it. Then last summer, on a mountain road — it was so useful!",
+  "k": "HANDY",
+  "pre": "It ",
+  "post": ".",
+  "a": "came in really handy",
+  "acc": [
+   "came in really handy",
+   "came in handy",
+   "came in so handy",
+   "really came in handy",
+   "came in very handy",
+   "definitely came in handy",
+   "certainly came in handy",
+   "came in incredibly handy",
+   "came in extremely handy"
+  ],
+  "n": "It helped then (past) → came in handy · You never know when it might come in handy = about the future"
+ },
+ {
+  "o": "My kids' football club makes parents write a report after every match. Nobody reads them. Why do they make us do it?",
+  "k": "POINT",
+  "pre": "So ",
+  "post": " reports nobody reads?",
+  "a": "what's the point of writing",
+  "acc": [
+   "what's the point of writing",
+   "what is the point of writing",
+   "what's the point in writing",
+   "what is the point in writing"
+  ],
+  "n": "What's the point of (or in) + -ing? · or: what's the point of the reports?"
+ }
+]

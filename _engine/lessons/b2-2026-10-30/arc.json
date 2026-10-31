@@ -1,0 +1,467 @@
+{
+ "id": "arc",
+ "section": "Extension",
+ "title": "Isla, Rob and Mum: the clocks, a series and a scam",
+ "instr1": "Isla lives in Edinburgh, and her brother Rob lives in Toronto. Every Sunday they have a video call about the series they're both watching. It's Saturday 24 October. In the UK, the clocks go back tonight; in Canada, a week later. Say each missing bit, then tap to check.",
+ "instr2": "That evening, in the family group chat. Isla and Rob have just finished their series, so they need a new one. Say each missing bit, then tap to check.",
+ "part1": [
+  {
+   "type": "dlg",
+   "intro": "WhatsApp · Isla and Rob · Saturday 24 October",
+   "lines": [
+    {
+     "s": "Isla",
+     "p": [
+      "Hi! Just ",
+      {
+       "f": "",
+       "r": "a heads-up",
+       "n": "a heads-up — с a: просто предупреждаю"
+      },
+      " (heads-up): our clocks go back tonight, but yours don't change till next weekend."
+     ]
+    },
+    {
+     "s": "Isla",
+     "p": [
+      "So tomorrow's call will be ",
+      {
+       "f": "",
+       "r": "an",
+       "n": "an hour later — так обычно говорят; one hour — когда важно число (один, а не два)"
+      },
+      " (one / an?) hour later for you — 3 pm your time. Does that still ",
+      {
+       "f": "w",
+       "r": "ork",
+       "n": "does + work — без -s: Does that still work?"
+      },
+      " (work / works?) for you?"
+     ]
+    },
+    {
+     "s": "Rob",
+     "p": [
+      "Thanks for the heads-up! Last year I sat in front of my laptop for an hour, wondering where you were 😂"
+     ]
+    },
+    {
+     "s": "Rob",
+     "p": [
+      "But three's tricky — I already have something at ",
+      {
+       "f": "",
+       "r": "that",
+       "n": "время, которое назвал другой: at that time (или then), не at this time"
+      },
+      " (this / that?) time. ",
+      {
+       "f": "C",
+       "r": "ould",
+       "n": "Could (или Can) we make it + время? — так переносят встречу"
+      },
+      " we ",
+      {
+       "f": "m",
+       "r": "ake"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "it"
+      },
+      " (make) two, like always? That's six your time."
+     ]
+    },
+    {
+     "s": "Isla",
+     "p": [
+      "😂 I remember! Six works for me 👍"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "dlg",
+   "intro": "Sunday 25 October, 7:15 am",
+   "lines": [
+    {
+     "s": "Isla",
+     "p": [
+      "Well, the clocks went back, and Hamish still woke me up at his usual time. Which is five now 🙄"
+     ]
+    },
+    {
+     "s": "Rob",
+     "p": [
+      "😂 Nobody told Hamish about ",
+      {
+       "f": "",
+       "r": "the",
+       "n": "the clock change — существительное; а глагол: the clocks go back / change the clocks"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "clock"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "change"
+      },
+      " (clock · change)."
+     ]
+    },
+    {
+     "s": "Isla",
+     "p": [
+      "Seriously, it really ",
+      {
+       "f": "a",
+       "r": "ffects",
+       "n": "affect + что, без предлога: affects my sleep (но: an effect on)"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "my"
+      },
+      " (affect · I) sleep. I'll be a zombie all week."
+     ]
+    },
+    {
+     "s": "Rob",
+     "p": [
+      "Poor you. Changing the clocks does more harm than good, if you ask me."
+     ]
+    },
+    {
+     "s": "Isla",
+     "p": [
+      "Hamish clearly agrees 🐶"
+     ]
+    },
+    {
+     "s": "",
+     "p": [
+      "Sunday, 6:03 pm (Edinburgh)"
+     ],
+     "scene": true
+    },
+    {
+     "s": "Rob",
+     "p": [
+      "Sorry! Running five minutes late — stuck in traffic 🙈"
+     ]
+    },
+    {
+     "s": "Isla",
+     "p": [
+      "No worries! Hamish and I aren't going anywhere 😴"
+     ]
+    }
+   ]
+  }
+ ],
+ "part2": [
+  {
+   "type": "dlg",
+   "intro": "WhatsApp group “Family ❤️” · Mum, Isla, Rob",
+   "lines": [
+    {
+     "s": "Isla",
+     "p": [
+      "Mum, Rob and I need a new series for our Sunday calls. Any ideas?"
+     ]
+    },
+    {
+     "s": "Mum",
+     "p": [
+      "YES!!! Too Good to Be True! It's about scams. My friend Moira ",
+      {
+       "f": "r",
+       "r": "ecommended",
+       "n": "кому — с to, в конце: recommended it to me"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "it"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "to"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "me"
+      },
+      " (recommend · it · me), and I watched all eight episodes in one weekend 😎"
+     ]
+    },
+    {
+     "s": "Rob",
+     "p": [
+      "Mum!! 😂 Were you up till two again?"
+     ]
+    },
+    {
+     "s": "Mum",
+     "p": [
+      "Maybe 🙈 But everyone at my yoga class is talking about it!"
+     ]
+    },
+    {
+     "s": "Rob",
+     "p": [
+      "Everyone at work ",
+      {
+       "f": "k",
+       "r": "eeps",
+       "n": "everyone keeps — с -s, как she keeps"
+      },
+      " going ",
+      {
+       "f": "",
+       "r": "on",
+       "n": "going ON about — без on не говорят; keeps going on about it = уже надоели этим (or: won't stop talking about it)"
+      },
+      " (keep / keeps? + 1 small word) about it too. ",
+      {
+       "f": "",
+       "r": "Is",
+       "n": "any good — с be: Is it any good? (не Does it…)"
+      },
+      " (Is / Does?) it any good, though? Isla, have you seen it?"
+     ]
+    },
+    {
+     "s": "Isla",
+     "p": [
+      {
+       "f": "",
+       "r": "I've",
+       "n": "I've only seen — have не пропадает"
+      },
+      " only ",
+      {
+       "f": "s",
+       "r": "een"
+      },
+      " ",
+      {
+       "f": "b",
+       "r": "its",
+       "n": "bits = отдельные куски, сцены (не «две серии»)"
+      },
+      " (I · see · bits) of it. Mum had it on when I was at her place. The acting's brilliant, I'll give it that. But it looked a bit slow."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "dlg",
+   "intro": "",
+   "lines": [
+    {
+     "s": "Mum",
+     "p": [
+      "It's slow at first, but it really picks up in episode three. ",
+      {
+       "f": "",
+       "r": "It's",
+       "n": "worth — с be: it's worth it (не it worth)"
+      },
+      " (It / It's?) so worth it!"
+     ]
+    },
+    {
+     "s": "Rob",
+     "p": [
+      "OK, OK, ",
+      {
+       "f": "",
+       "r": "I'll",
+       "n": "решаю прямо сейчас → I'll: I'll give it a try"
+      },
+      " ",
+      {
+       "f": "g",
+       "r": "ive"
+      },
+      " it a ",
+      {
+       "f": "t",
+       "r": "ry"
+      },
+      " (I / I'll? · give) 😂"
+     ]
+    },
+    {
+     "s": "Mum",
+     "p": [
+      "And you won't believe what happened on Friday! I got a text from “my bank”: your card has been blocked, click this link. Someone ",
+      {
+       "f": "p",
+       "r": "retending",
+       "n": "pretend to be — выдавать себя за"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "to"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "be"
+      },
+      " (pretend) from the bank!"
+     ]
+    },
+    {
+     "s": "Isla",
+     "p": [
+      "Oh no! You didn't click, did you??"
+     ]
+    },
+    {
+     "s": "Mum",
+     "p": [
+      "Of course not. I've seen all eight episodes. Case closed 😎"
+     ]
+    },
+    {
+     "s": "Isla",
+     "p": [
+      "Impressive, Mum! 👏"
+     ]
+    },
+    {
+     "s": "Rob",
+     "p": [
+      "Nice one, Mum! By the way, I've got a new phone number. I'll text you from it now — save it!"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "dlg",
+   "intro": "Ten minutes later",
+   "lines": [
+    {
+     "s": "Mum",
+     "p": [
+      "Just got a message from an unknown number: “Hi Mum, it's me, new number.” There's a ",
+      {
+       "f": "s",
+       "r": "cam",
+       "n": "there's a scam going around — ходит такой развод"
+      },
+      " ",
+      {
+       "f": "g",
+       "r": "oing"
+      },
+      " ",
+      {
+       "f": "a",
+       "r": "round"
+      },
+      " (scam) EXACTLY like this! Episode four! 🕵️‍♀️"
+     ]
+    },
+    {
+     "s": "Isla",
+     "p": [
+      "Mum, that's Rob. He's just told you!"
+     ]
+    },
+    {
+     "s": "Rob",
+     "p": [
+      "Mum, it's really me!"
+     ]
+    },
+    {
+     "s": "Mum",
+     "p": [
+      "That's exactly what a scammer would say."
+     ]
+    },
+    {
+     "s": "Rob",
+     "p": [
+      "OK, ask me something only I would know. I'll answer from the new number."
+     ]
+    },
+    {
+     "s": "",
+     "p": [
+      "Five minutes later"
+     ],
+     "scene": true
+    },
+    {
+     "s": "Mum",
+     "p": [
+      "I asked “my son” what he broke when he was seven. Answer: “The kitchen window. With a football. Sorry again.”"
+     ]
+    },
+    {
+     "s": "Mum",
+     "p": [
+      "Hmm. Fine. Number saved 😘"
+     ]
+    },
+    {
+     "s": "Isla",
+     "p": [
+      "😂😂 ",
+      {
+       "f": "S",
+       "r": "o"
+      },
+      " you ",
+      {
+       "f": "w",
+       "r": "ouldn't"
+      },
+      " ",
+      {
+       "f": "r",
+       "r": "ecommend",
+       "n": "recommend + что: recommend the series (не recommend me to watch)"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "the"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "eries"
+      },
+      " (значит, не советуешь?), then, Rob?"
+     ]
+    },
+    {
+     "s": "Rob",
+     "p": [
+      "Are you kidding? I'd definitely recommend it. Mum's now 100% scam-proof 😂"
+     ]
+    },
+    {
+     "s": "Mum",
+     "p": [
+      "Wait till you get to episode four, you two 🕵️‍♀️"
+     ]
+    }
+   ]
+  }
+ ]
+}
