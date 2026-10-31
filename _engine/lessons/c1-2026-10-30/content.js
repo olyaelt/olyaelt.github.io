@@ -2,7 +2,8 @@ const STICKER = "__STICKER__";
 const GAPS = __GAPS__;
 const BETTER_ROWS = __BETTER__;   /* r2: the group's sentences from the lesson (slide 55) */
 const FIX = __FIX__;              /* e1: Fix it, five blocks */
-const SAYIT = __SAYIT__;          /* e2: say it another way, rewrite format */
+const SAYIT = __SAYIT__;          /* e2: say it another way, rewrite format; <b class="hl"> = the part to rephrase (fixes 31.10 12:25) */
+const TQ = __TQ__;                /* e3: TubeQuizard, 15 clips [videoId, start, duration, parts] (fixes 31.10 12:55) */
 /* Link to the group's homework spreadsheet. Leave empty and the page simply says where to write. */
 const SHEET_URL = "";
 const PAGE_KEY = "hw-ge-c1-2026-10-30";
@@ -84,26 +85,28 @@ const FIX_STEPS = FIX.flatMap((b, bi) => b.items.map((it, ii) => {
 }));
 const E2_INSTR = "Say it another way with a phrase from the box. Use the word in red. Then tap to check.";
 const TASKS = [
-  {id:"r1", topic:"school2", sec:"Revision", title:"Three more answers on the radio", meta:"6 steps", kind:"steps", steps:R1_STEPS},
-  {id:"r2", topic:"school2", sec:"Revision", title:"Our sentences: could be better → perfect", meta:"2 sentences", kind:"steps", core:true,
+  {id:"r1", topic:"school2", sec:"Revision", title:"Three more answers on the radio", meta:"6 steps", kind:"steps", min:8, steps:R1_STEPS},
+  {id:"r2", topic:"school2", sec:"Revision", title:"Our sentences: could be better → perfect", meta:"2 sentences", kind:"steps", core:true, min:2,
    steps:[{type:"sayit", s:BETTER, box:BOX_SCHOOL2, boxAlways:true, instr:"Our sentences from the lesson. Green = good, grey = could be better. How would you make each one perfect English? Use the box. Then tap to check."}]},
-  {id:"e1", topic:"school2", sec:"Extension", title:"Fix it: one small thing", meta:"5 blocks · 11 items", kind:"steps", steps:FIX_STEPS},
-  {id:"e2", topic:"school2", sec:"Extension", title:"Say it another way: new situations", meta:"6 sentences", kind:"steps",
+  {id:"e1", topic:"school2", sec:"Extension", title:"Fix it: one small thing", meta:"5 blocks · 11 items", kind:"steps", min:8, steps:FIX_STEPS},
+  {id:"e2", topic:"school2", sec:"Extension", title:"Say it another way: new situations", meta:"6 sentences", kind:"steps", min:4,
    steps:SAYIT.map((r, i) => ({type:"rewrite", r, first:i === 0, instrFirst:E2_INSTR, instr:"Say it another way. Use the word in red.", box:BOX_SCHOOL2, boxAlways:true}))},
-  {id:"write", topic:"school2", sec:"Over to you!", title:"A voice message for the radio show", meta:"Your task · plan · record and send", kind:"steps",
-   steps:[{type:"task"},{type:"plan"},{type:"produce", modes:["record", "write"]}]}
+  {id:"e3", topic:"school2", sec:"Extension", title:"Hear it: the phrases in real videos", meta:"15 clips, 15 gaps", kind:"steps", min:10,
+   takeaway:TQ.takeaway, tqLink:TQ.quiz_link, tq:TQ.quiz_link, steps:TQ.e3.map((clip,i)=>({type:"listen",clip,first:i===0}))},
+  {id:"write", topic:"school2", sec:"Over to you!", title:"A message for the radio show", meta:"Your task · plan · write or record and send", kind:"steps", min:12,
+   steps:[{type:"task"},{type:"plan"},{type:"produce"}]}
 ];
 const TASK_HTML2 = `
         <p class="task-h">Your task</p>
         <p>The radio show asked listeners: <b>“Should schools teach more practical things?”</b></p>
         <ul>
-          <li>Record a voice message (about a minute) with your answer.</li>
+          <li>Write or record a message for the show with your answer (about a minute if you record it).</li>
           <li>Tell one story — yours or someone you know: something you learned the hard way, picked up on the job or taught yourself (at school, at work, at home or in a hobby).</li>
           <li>End with a question for the host or the listeners.</li>
         </ul>
-        <p class="small">Listen back to it, then record a better version and send that one. Prefer to write? Write it.</p>`;
+        <p class="small">Recording? Listen back to it, then record a better version and send that one.</p>`;
 const PLAN_INSTR2 = "Tap the phrases you'll use — three or four are enough.";
-const PRODUCE_INSTR2 = "Record your voice message — about a minute. Then send it to Olya. (Prefer to write? Tap Write it.)";
+const PRODUCE_INSTR2 = "Write your message — a short paragraph is enough. Then send it to Olya. (Prefer to talk? Tap Record it.)";
 const CHECKS2 = [
   ["Your answer to the question, and why", ""],
   ["One story — yours or someone you know", ""],

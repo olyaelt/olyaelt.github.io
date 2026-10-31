@@ -1,0 +1,162 @@
+{
+ "READ": {
+  "type": "dlg",
+  "intro": "Sam has a long flight soon and sends a friend a message. Read the chat. What did Sam ask? Guess first, then tap to check.",
+  "lines": [
+   {
+    "s": "Sam",
+    "p": [
+     {
+      "f": "",
+      "r": "I've got a 10-hour flight on Saturday 😩 What should I watch? Any recommendations?"
+     }
+    ]
+   },
+   {
+    "s": "You",
+    "p": [
+     "Ten hours?! Poor you! 😅"
+    ]
+   },
+   {
+    "s": "You",
+    "p": [
+     "I'd really recommend Ward Nine. It's a comedy about doctors in a tiny hospital, and the episodes are only 25 minutes long, so you can watch loads of them. It's a bit slow at first, but it really picks up in episode three. A friend recommended it to me, and I loved it."
+    ]
+   },
+   {
+    "s": "Sam",
+    "p": [
+     "Ooh, short episodes — perfect! What about The Last Lighthouse? Everyone's talking about it."
+    ]
+   },
+   {
+    "s": "You",
+    "p": [
+     "Everyone keeps going on about it, but honestly, I wouldn't recommend it. The scenery's beautiful, I'll give it that, but I just couldn't get into it. I gave up after episode two."
+    ]
+   },
+   {
+    "s": "Sam",
+    "p": [
+     "Ha, OK. Ward Nine it is, then! Thanks 😊"
+    ]
+   },
+   {
+    "s": "You",
+    "p": [
+     "Have a good flight, and let me know what you think!"
+    ]
+   }
+  ]
+ },
+ "TASK": "Now it's your turn. A friend asks you the same question: “I've got a 10-hour flight on Saturday 😩 What should I watch? Any recommendations?” Write your reply: recommend one or two things, and mention one you wouldn't recommend.",
+ "MAP": [
+  {
+   "h": "React",
+   "items": [
+    [
+     "<b>Ten hours?! Poor you!</b>",
+     "десять часов?! бедняга!"
+    ],
+    [
+     "<b>Lucky you! Where are you going?</b>",
+     "везёт! куда летишь?"
+    ]
+   ]
+  },
+  {
+   "h": "Recommend",
+   "items": [
+    [
+     "<b>I'd really recommend</b> …",
+     "очень советую…"
+    ],
+    [
+     "<b>A friend recommended it to me</b>, and I loved it.",
+     "мне посоветовал друг — и мне очень понравилось"
+    ],
+    [
+     "It's slow at first, but it <b>really picks up</b> in episode …",
+     "сначала медленно, потом становится интереснее"
+    ],
+    [
+     "<b>It's really worth watching.</b>",
+     "его правда стоит посмотреть"
+    ],
+    [
+     "<b>Give it a try!</b>",
+     "попробуй!"
+    ]
+   ]
+  },
+  {
+   "h": "Not that one",
+   "items": [
+    [
+     "<b>Honestly, I wouldn't recommend</b> …",
+     "честно, не советую…"
+    ],
+    [
+     "Everyone <b>keeps going on about</b> …, but <b>honestly? I wouldn't bother.</b>",
+     "все о нём без конца твердят, но честно? не трать время"
+    ],
+    [
+     "<b>It's not as good as everyone says.</b>",
+     "не так хорош, как говорят"
+    ],
+    [
+     "The acting's great, <b>I'll give it that</b>, but …",
+     "актёры отличные, это надо признать, но…"
+    ],
+    [
+     "<b>I couldn't get into it.</b> I <b>gave up after</b> episode …",
+     "не смог(ла) втянуться, бросил(а) после … серии"
+    ]
+   ]
+  },
+  {
+   "h": "Finish",
+   "items": [
+    [
+     "<b>Let me know what you think!</b>",
+     "напиши, как тебе!"
+    ],
+    [
+     "<b>Have a good flight!</b>",
+     "хорошего полёта!"
+    ]
+   ]
+  }
+ ],
+ "MODEL": [
+  [
+   "Sam",
+   "I've got a 10-hour flight on Saturday 😩 What should I watch? Any recommendations?"
+  ],
+  [
+   "You",
+   "<b>Ten hours?! Poor you!</b> 😅"
+  ],
+  [
+   "You",
+   "<b>I'd really recommend</b> Ward Nine. It's a comedy about doctors in a tiny hospital, and the episodes are only 25 minutes long, so you can watch loads of them. It's a bit slow at first, but it <b>really picks up</b> in episode three. <b>A friend recommended it to me</b>, and I loved it."
+  ],
+  [
+   "Sam",
+   "Ooh, short episodes — perfect! What about The Last Lighthouse? Everyone's talking about it."
+  ],
+  [
+   "You",
+   "Everyone <b>keeps going on about</b> it, but <b>honestly, I wouldn't recommend it.</b> The scenery's beautiful, <b>I'll give it that</b>, but I just <b>couldn't get into it</b>. I <b>gave up after</b> episode two."
+  ],
+  [
+   "Sam",
+   "Ha, OK. Ward Nine it is, then! Thanks 😊"
+  ],
+  [
+   "You",
+   "<b>Have a good flight</b>, and <b>let me know what you think!</b>"
+  ]
+ ]
+}

@@ -557,13 +557,20 @@ function overview_(p) {
     (started[k] = started[k] || {})[r[1]] = true;
   });
   Object.keys(started).forEach(k => { pages[k].started = Object.keys(started[k]).length; });
+  // engine 49 (her 31.10: she answers in class or in Telegram): what she marked ✓ Discussed doesn't wait for an answer any more
+  const disc = {};
+  const ds = ss.getSheetByName(DISC);
+  if (ds && ds.getLastRow() > 1) ds.getRange(2, 1, ds.getLastRow() - 1, 4).getValues().forEach(r => {
+    const pg = String(r[1]); if (!pages[pg]) return;
+    try { (JSON.parse(String(r[3])).ids || []).forEach(id => { (disc[pg] = disc[pg] || {})[String(id)] = true; }); } catch (err) {}
+  });
   const wk = ss.getSheetByName(WORK);
   if (wk && wk.getLastRow() > 1) wk.getRange(2, 1, wk.getLastRow() - 1, WORK_HEAD.length).getValues().forEach(r => {
     const k = String(r[W.key - 1]).split("|"), c = pages[k[1]];
     if (!c || groupOf[k[0]] !== groupOfPage_(k[1])) return;
     const t = typeKey_(r[W.type - 1]);
     // a 🔖 mark waits for an answer only when the student added a note ("— …" after the marked line)
-    if (!String(r[W.feedback - 1] || "").trim() && (t !== "marked" || /\n— /.test(String(r[W.text - 1] || "")))) c.toAnswer++;
+    if (!String(r[W.feedback - 1] || "").trim() && (t !== "marked" || /\n— /.test(String(r[W.text - 1] || ""))) && !(disc[k[1]] && disc[k[1]][String(r[W.id - 1])])) c.toAnswer++;
     if (t === "marked") c.marked++; else if (t === "question") c.questions++; else c.work++;
   });
   const groups = {};

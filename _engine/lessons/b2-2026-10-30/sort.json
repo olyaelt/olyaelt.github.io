@@ -1,27 +1,28 @@
 {
+ "intro": "Russian and English build these sentences differently. Let's compare: say each Russian sentence in English, then put it in its English pattern.",
  "patterns": [
   {
    "id": "p1",
-   "ru": "Советую",
-   "en": "I'd recommend + что",
+   "en": "I'd recommend + what",
+   "ru": "советую",
    "ex": "I'd recommend it."
   },
   {
    "id": "p2",
-   "ru": "Мне посоветовал(а) …",
    "en": "… recommended it to me",
+   "ru": "мне посоветовали",
    "ex": "A friend recommended it to me."
   },
   {
    "id": "p3",
-   "ru": "Прошу совета",
    "en": "Can you recommend …?",
+   "ru": "прошу совета",
    "ex": "Can you recommend anything?"
   },
   {
    "id": "p4",
-   "ru": "Не советую",
    "en": "I wouldn't recommend …",
+   "ru": "не советую",
    "ex": "I wouldn't recommend it."
   }
  ],
@@ -32,14 +33,14 @@
    "or": "I really / highly recommend this series.",
    "p": "p1",
    "mode": "auto",
-   "why": "Советуешь ты сам(а): I'd recommend + что — сразу после recommend."
+   "why": "You recommend it yourself: I'd recommend + what. No “you” after recommend."
   },
   {
    "ru": "Мне её посоветовала сестра. (книгу)",
    "en": "My sister recommended it to me.",
    "p": "p2",
    "mode": "hint",
-   "why": "Советуешь не ты — тебе посоветовали: кто + recommended + что + to me."
+   "why": "Someone recommended it to you: … recommended it to me."
   },
   {
    "ru": "Можешь мне что-нибудь посоветовать?",
@@ -47,7 +48,7 @@
    "or": "Can you recommend something? · Could you recommend anything?",
    "p": "p3",
    "mode": "hint",
-   "why": "Это вопрос: ты просишь совета. «Мне» не нужно: Can you recommend anything?"
+   "why": "It's a question: you're asking for a tip. No “me” after recommend."
   },
   {
    "ru": "Значит, эту книгу ты мне не советуешь?",
@@ -55,7 +56,7 @@
    "or": "So you wouldn't recommend that book? · So you don't recommend this book?",
    "p": "p4",
    "mode": "hint",
-   "why": "«Значит, не советуешь?» — это «не советую», только вопросом."
+   "why": "Not recommending — as a question: So you wouldn't recommend…?"
   },
   {
    "ru": "Это кафе мне посоветовал коллега.",
@@ -63,7 +64,7 @@
    "or": "My colleague recommended this café to me.",
    "p": "p2",
    "mode": "free",
-   "why": "Посоветовал коллега — тебе: … recommended this café to me."
+   "why": "A colleague recommended it to you: … recommended this café to me."
   },
   {
    "ru": "Я бы не советовала этот ресторан.",
@@ -71,7 +72,7 @@
    "or": "I wouldn't recommend this restaurant.",
    "p": "p4",
    "mode": "free",
-   "why": "«Я бы не советовала» — wouldn't recommend."
+   "why": "Not recommending: I wouldn't recommend…"
   },
   {
    "ru": "Советую посмотреть «Шерлока».",
@@ -79,7 +80,7 @@
    "or": "I recommend Sherlock.",
    "p": "p1",
    "mode": "free",
-   "why": "Советуешь ты сам(а). Достаточно назвать сериал: I'd recommend Sherlock."
+   "why": "You recommend it yourself. Just name the series: I'd recommend Sherlock."
   },
   {
    "ru": "Посоветуешь хорошего стоматолога?",
@@ -87,11 +88,11 @@
    "or": "Could you recommend a good dentist?",
    "p": "p3",
    "mode": "free",
-   "why": "Ты спрашиваешь — просишь совета."
+   "why": "It's a question: you're asking for a tip."
   }
  ],
  "end": {
-  "q": "Посмотри на все восемь фраз. Что ни разу не стоит сразу после recommend?",
-  "a": "Тот, кому советуешь (you, me), — и to + глагол (to see, to watch). Сразу после recommend идёт ЧТО советуешь: it, this series, Sherlock, anything, a good dentist. А кому — to me, в конце."
+  "q": "Look at all eight sentences. What never comes right after recommend?",
+  "a": "Never the person who gets the tip (recommend you, recommend me), and never to + a verb (recommend to see). Right after recommend comes WHAT you recommend: it, this series, Sherlock, anything, a good dentist. The person comes with to, at the end: …recommended it to me."
  }
 }

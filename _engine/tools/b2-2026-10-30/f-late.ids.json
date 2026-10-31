@@ -23,11 +23,21 @@
   {
    "pid": 4,
    "sig": "cards our sentences. green = good, grey = could be better. how would you make it perfect english?",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 5,
    "sig": "tool read who's writing and how much it matters. agree together what to write, type it and send. late",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "fix fix it: say it right. then say the two messages with “work”.",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "game noughts and crosses (tic-tac-toe) with our sentences: pick a square and say the sentence better. then tap to check. three in a row wins!",
    "gone": false
   }
  ],
@@ -65,16 +75,61 @@
   {
    "pid": 6,
    "sig": "we'll be half an hour late for the meeting. сообщение в чат: встреча ещё не началась, вы в пути we are half an hour late for the meeting. встреча ещё не началась — предупреждаешь заранее: will be. we're late — когда уже опоздали. можно и так: we're running half an hour late.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 7,
    "sig": "sorry, i'll be 10 minutes late. / sorry, i'll be a bit late. ты опаздываешь на 10 минут sorry, i'll be later. later — «позже», в другое время. опоздаю → late: be + сколько + late (без for перед временем; late for — перед событием: late for the meeting).",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 8,
    "sig": "i hope i'll be there soon. ты в пробке, но надеешься скоро доехать i wish i'll be there soon. i wish — о том, чего не будет (i wish i could come). надеюсь → hope. ещё естественнее: hopefully, i'll be there soon.",
+   "gone": true
+  },
+  {
+   "pid": 9,
+   "sig": "could we make it 10 my time? переносите звонок, предлагаете 10 утра i suggest to meet at 10 my time. could we make it…? — так предлагают новое время.",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "sorry, i have a meeting then. коллега предлагает 3 часа sorry, i have a meeting at this time. время назвал собеседник → then (в это время).",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "we'll be half an hour late for the meeting. сообщение в чат: встреча ещё не началась, вы в пути we are half an hour late for the meeting. встреча ещё впереди → will be.",
+   "gone": false
+  },
+  {
+   "pid": 12,
+   "sig": "could we make it an hour later? у вас запись к врачу, просите сдвинуть звонок could you move an hour later? make it = назначить на (время): could we make it…?",
+   "gone": false
+  },
+  {
+   "pid": 13,
+   "sig": "just a heads-up: the clocks went back. голосовое коллеге: у вас перевели часы just remind you: the clocks went back. a heads-up = предупреждаю заранее.",
+   "gone": false
+  },
+  {
+   "pid": 14,
+   "sig": "sorry, i'll be 10 minutes late. ты ещё в пути и опоздаешь минут на 10 sorry, i'll be later. later — «позже», в другое время; опоздаю → late.",
+   "gone": false
+  },
+  {
+   "pid": 15,
+   "sig": "our call is now an hour later for you. у вас перевели часы, у коллеги нет our call is now one hour later for you. an hour later — так говорят; one hour — когда важно число (one hour, not two).",
+   "gone": false
+  },
+  {
+   "pid": 16,
+   "sig": "i hope i'll be there soon. ты в пробке; думаешь, что скоро доедешь, но не уверен(а) i wish i'll be there soon. i wish — о том, чего не будет; надеюсь → hope.",
+   "gone": false
+  },
+  {
+   "pid": 17,
+   "sig": "could we make it 1 pm my time? that's 4 pm your time. коллега предлагает 11 утра по его времени, а у тебя утро занято maybe we could meet 1 pm my time, 4 pm your time. тот же вопрос: could we make it…?",
    "gone": false
   }
  ],

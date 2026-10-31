@@ -49,7 +49,9 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
     out.rs.count2 = await count(p); out.rs.sayRows = await p.locator('.say-row').count();
     await walk(p);
     out.rs.home = await p.locator('[data-open="clocks-practice"]').count() > 0;
-    await openTask(p, 'clocks-practice'); await p.click('#go'); await p.waitForTimeout(80);
+    // engine 51: a finished task reopens on its last screen, answered — Back to screen 1, its answer and bookmark shown
+    await openTask(p, 'clocks-practice'); await p.waitForTimeout(80);
+    for (let k = 0; k < 12 && await p.evaluate(() => stepIdx) > 0; k++) { await p.click('#prev'); await p.waitForTimeout(60); }
     out.rs.kept = await p.locator('.target .rev.on').count();
     expect('rewrite + say it: Once more = 2 steps, the say-it step with its one bookmarked row, no "?"',
       /Once more: your bookmarks · 1 of 2/.test(out.rs.count1) && out.rs.rw === 1 && out.rs.mk === 0 && out.rs.revOnInOnce === 1 && /2 of 2/.test(out.rs.count2) && out.rs.sayRows === 1 && out.rs.home);

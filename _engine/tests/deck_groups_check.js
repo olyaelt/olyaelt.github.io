@@ -52,6 +52,11 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', PAGE = 'tools/c1-sc
   out.look = {lbl: await O.locator('.card.lookback .lbl').innerText(), front: await O.locator('.card.lookback .say').first().innerText()};
   const front = await O.evaluate(k => D.cards[k][0].replace(/\(\(|\)\)/g, ''), x);
   expect('tap → that card with "back into the deck 3× · 2 screens"', /3×/.test(out.look.lbl) && /2 screens/i.test(out.look.lbl) && out.look.front.replace(/\s+/g, ' ').includes(front.replace(/\s+/g, ' ').slice(0, 20)), {look: out.look, front});
+  // engine 49 (her catch 31.10): her dot opens the card on its FRONT (the group does it again); a tap on the card shows the answer
+  out.lookShut = {open: await O.locator('.card.lookback.open').count(), ans: await O.locator('.card.lookback .ans').count()};
+  await O.click('.card.lookback[data-lookflip]'); await O.waitForTimeout(150);
+  out.lookOpen = {open: await O.locator('.card.lookback.open').count(), ans: await O.locator('.card.lookback .ans').count()};
+  expect('her dot: the front first (no answer), a tap shows the answer', out.lookShut.open === 0 && out.lookShut.ans === 0 && out.lookOpen.open === 1 && out.lookOpen.ans === 1, [out.lookShut, out.lookOpen]);
   if (shots) await O.screenshot({path: path.join(shots, 'deck-groups.png')});
   // 📋 Copy the hard cards: most often first, front → answer
   await O.click('[data-gd-copy]'); await O.waitForTimeout(200); out.copy = await O.evaluate(() => navigator.clipboard.readText());

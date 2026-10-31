@@ -7,7 +7,8 @@
   "GAPS": "gaps.json",
   "BETTER": "better.json",
   "FIX": "fixit.json",
-  "SAYIT": "sayit.json"
+  "SAYIT": "sayit.json",
+  "TQ": "tq.json"
  },
  "listed": false,
  "earlier_only": [

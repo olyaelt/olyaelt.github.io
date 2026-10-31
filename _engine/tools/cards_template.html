@@ -160,7 +160,7 @@ function groupDotsHTML(){
 }
 function wireGroupDots(root){
   root.querySelectorAll("[data-gd]").forEach(b => b.addEventListener("click", () => { const id = b.dataset.gd; if(!byId(id)) return;
-    S.look = S.look === id ? null : id; S.lookFrom = S.look ? "groups" : null; S.fresh = true; render(); }));
+    S.look = S.look === id ? null : id; S.lookFrom = S.look ? "groups" : null; S.lookOpen = false; S.fresh = true; render(); }));
   root.querySelectorAll("[data-gd-fresh]").forEach(b => b.addEventListener("click", () => { if(!GD.sure){ GD.sure = true; paintGroupDots(); return; }
     GD.sure = false; store.set(GSINCE, Date.now() + (GD.skew || 0)); paintGroupDots(); }));
   root.querySelectorAll("[data-gd-all]").forEach(b => b.addEventListener("click", () => { store.set(GSINCE, 0); paintGroupDots(); }));
@@ -244,11 +244,11 @@ function progressHTML(){
     return seen && c.id !== now ? `<button data-id="${c.id}" data-look="${c.id}" class="${cls} tap" aria-label="Look at this card again"></button>` : `<span data-id="${c.id}" class="${cls}" aria-hidden="true"></span>`; }).join("")}</div>`;
 }
 function lookHTML(){
-  const c = byId(S.look), wasGot = S.got.has(c.id);
-  return `<div class="scene"><div class="card open lookback ${S.fresh ? "back-in" : ""}">
+  const c = byId(S.look), wasGot = S.got.has(c.id), shut = S.lookFrom === "groups" && !S.lookOpen;   /* her 👥 dot (31.10): the front first, so the group does it again */
+  return `<div class="scene"><div class="card ${shut ? "" : "open"} lookback ${S.fresh ? "back-in" : ""}" ${shut ? `data-lookflip role="button" tabindex="0" aria-label="Show the answer"` : ""}>
       ${S.lookFrom === "groups" && liveTeacher() ? (() => { const s = groupStats().card(pidOf("cards", c.i)); return `<span class="lbl from-groups">👥 ${s.again ? `Back into the deck ${s.again}× · ${s.groups} screen${s.groups === 1 ? "" : "s"}` : s.got ? "Nobody sent it back" : "No group has answered it yet"}</span>`; })() : `<span class="lbl">Looking back</span>`}
       <p class="say">${fHTML(c.f, c.k)}</p>
-      <div class="ans"><p class="say">${esc(c.b)}</p></div>
+      ${shut ? `<span class="corner">tap to check ↓</span>` : `<div class="ans"><p class="say">${esc(c.b)}</p></div>`}
     </div></div>
     <div class="actions">${wasGot ? `<button class="btn again" data-look-again>↺ Again — back into the deck</button>` : ""}<button class="btn primary" data-look-done>Back to the cards →</button></div>`;
 }
@@ -303,6 +303,7 @@ function render(){
   on("[data-flip]", flip); wireActions();
   on("[data-look]", b => { S.look = b.dataset.look === S.look ? null : b.dataset.look; S.fresh = true; render(); });
   on("[data-look-done]", () => { S.look = null; S.fresh = true; render(); });
+  on("[data-lookflip]", () => { S.lookOpen = true; render(); });
   on("[data-look-again]", lookAgain);
   on("[data-speak]", () => { S.speak = true; spkReset(); S.look = null; S.stageIn = true; render(); scrollTo(0, 0); });
   on("[data-stage]", b => { const sp = b.dataset.stage === "speak"; if(sp === !!S.speak || S.busy) return; S.speak = sp; S.look = null; S.fresh = true; S.stageIn = sp; render(); scrollTo(0, 0); });

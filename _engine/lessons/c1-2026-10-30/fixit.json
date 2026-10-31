@@ -213,8 +213,8 @@
     "good": "Back in my"
    }
   ],
-  "why_en": "back in my day / in our day: no -s (but: in my student days, in my younger days).",
-  "why_ru": "day — без -s",
+  "why_en": "back in my day: day, no -s.",
+  "why_ru": "back in my day — day без -s",
   "items": [
    {
     "kind": "write",
@@ -225,24 +225,22 @@
     "a": "day",
     "acc": [
      "day",
-     "youth",
-     "time"
+     "youth"
     ],
-    "n": "day, no -s · or: back in my youth"
+    "n": "day, no -s."
    },
    {
     "kind": "write",
-    "o": "— Kids get phones at nine now.",
+    "o": "— My daughter can't believe we did our homework without the internet.",
     "hint": "1 word",
-    "pre": "— I know! In our ",
-    "post": ", there was one phone in the hall and everyone could hear you.",
+    "pre": "— I know! Back in my ",
+    "post": ", we went to the library for everything.",
     "a": "day",
     "acc": [
      "day",
-     "time",
      "youth"
     ],
-    "n": "day, no -s · or: in our time"
+    "n": "day, no -s."
    }
   ]
  }

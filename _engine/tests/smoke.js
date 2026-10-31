@@ -21,6 +21,9 @@ const FAKE_YT = `window.YT={Player:function(id,o){const d=document.getElementByI
     while (clicks < 120 && await p.locator('.lesson-head').count() === 0) {
       const go = p.locator('#go, #fin').first();
       if (!(await go.count())) break;
+      /* engine 50: the sort step waits until the card is in its box (her rule: nothing skips the task) — put it in the right one */
+      if (await p.locator('.sort-card').count() && await go.isDisabled()) { await p.evaluate(() => { const S = SORTS[Object.keys(SORTS).find(k => k.startsWith(current.id + ':'))], st = current.steps[stepIdx], it = st.data.items[S.at];
+        const b = it && document.querySelector(`[data-sp="${it.p}"]`); if (b && it.mode !== 'auto') b.click(); }); await p.waitForTimeout(1400); clicks++; continue; }
       await go.click(); clicks++; await p.waitForTimeout(60);
     }
     const back = await p.locator('.lesson-head').count() > 0;

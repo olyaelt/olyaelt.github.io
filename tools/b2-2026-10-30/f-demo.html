@@ -785,6 +785,47 @@ details.all[open] summary{color:var(--ink)}
 .pc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(20rem,1fr));gap:10px}
 
 @media (max-width:760px){ .tx{grid-template-columns:1fr} .blk{padding:12px} .fc .say{font-size:1.3rem} .tool-frame{height:80vh} }
+/* tools 16: ✏️ Fix it (field block) */
+.fx-big,.fx-place{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:18px 22px;display:grid;gap:10px}
+.fx-big.small{padding:10px 16px;gap:4px}
+.fx-line{margin:0;font-size:1.7rem;font-weight:800;line-height:1.35}
+.fx-big.small .fx-line{font-size:1.2rem}
+.fx-red{color:var(--label);font-weight:900}
+.fx-note{margin:0;color:var(--muted);font-size:1.02rem}
+.fx-slot{display:inline-block;min-width:4.2em;height:1.15em;vertical-align:-.15em;border-bottom:3px solid var(--ink);margin:0 .25em}
+.fx-in{animation:ansIn .3s ease-out}
+.fx-chips{display:flex;gap:12px;flex-wrap:wrap}
+.fx-chip{all:unset;box-sizing:border-box;cursor:pointer;font-size:1.35rem;font-weight:800;padding:8px 22px;border-radius:999px;border:2px solid var(--instr);color:var(--instr-text);background:var(--card)}
+.fx-chip:focus-visible{outline:3px solid var(--instr);outline-offset:3px}
+.fx-chip.no{border-color:var(--again);color:var(--again)}
+.fx-chip.shake{animation:fxshake .4s}
+@keyframes fxshake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.fx-msg{margin:0;color:var(--ok);font-weight:900;font-size:1.1rem}
+.fx-says{display:grid;gap:12px;margin-top:12px}
+.fx-say{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:12px 18px;display:grid;gap:8px;animation:ansIn .3s ease-out}
+.fx-q{margin:0;font-size:1.3rem;font-weight:700}
+.fx-a{margin:0;font-size:1.3rem;font-weight:700;animation:ansIn .3s ease-out}
+.fx-a .bx{background:var(--fix-bg);border-radius:4px;padding:0 4px}
+.fx-a.shut{all:unset;box-sizing:border-box;cursor:pointer;justify-self:start;background:var(--hl);color:var(--hl-ink);border-radius:6px;padding:4px 12px;font-size:1rem;font-weight:700}
+@media (prefers-reduced-motion: reduce){ .fx-in,.fx-say,.fx-a,.fx-chip.shake{animation:none} }
+/* tools 16: 🎮 the game block — the task card is a white board card in both themes */
+.fgame .gttt{gap:16px}
+.fgame .gt-board{width:calc(var(--n) * 5.2rem);gap:7px}
+.fgame .gt-back{font-size:1.35rem}
+.fgame .gt-task{padding:10px 14px;gap:8px}
+.fgame .gt-q{display:grid;gap:4px;font-size:1.12rem}
+.fgame .gt-a .say{font-size:1.12rem;font-weight:800}
+.fgame .gt-acts .btn{padding:7px 14px}
+.fgame .gt-task .btn{background:#FFFFFF;color:#1D1D1B;border-color:#1D1D1B}
+.fgame .gt-task .btn.primary{background:#0693E3;border-color:#0693E3;color:#FFFFFF}
+.fgame .gt-task .btn.ok{color:#2E7D32;border-color:#2E7D32}
+.fgame .gt-task .btn.again{color:#B35C00;border-color:#B35C00}
+.fgame .gt-q .lctx{color:#5F6368;font-size:.95rem;font-weight:600}
+.fgame .gt-q .m-del{color:#6B6E72}
+.fgame .gt-a{background:none;color:#1D1D1B;padding:0;display:grid;gap:6px;justify-self:stretch}
+.fgame .gt-a .chk{justify-self:start;background:#7BC043;color:#FFFFFF;border-radius:6px;padding:1px 8px;font-size:.8rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase}
+.fgame .gt-a .bx{color:#0679BD;background:#D6E6FF;border-radius:4px;padding:0 4px}
+.fgame .gt-a .note{color:#5F6368;font-size:.95rem;font-weight:600}
 </style>
 </head>
 <body>
@@ -793,7 +834,7 @@ details.all[open] summary{color:var(--ink)}
 <script>
 const D = {"type": "revision-field", "demo": true, "board": {"button": "🎓 How the game works"}, "title": "How the game works", "boxes": {"BOX": [{"h": "THE NEWS", "items": ["**Just a heads-up** — …", "Gary's **gone missing**!", "He's **been missing since** Friday."]}, {"h": "SHARE A FEELING ↘", "items": ["It's so weird, **isn't it?**", "— It **really is**!"]}, {"h": "REACT AND ASK", "items": ["No way! **When did you last see him?**", "**Thanks for the heads-up!**"]}]}, "stages": [{"label": "📝 Test yourself", "blocks": [{"kind": "write", "lesson_work": true, "instr": "Gary is the office goldfish. Your colleague texts you. Write a reply together, then send it.", "tip": "First you try on your own — before any help. On the real pages Olya sees what you type and can send you a note.", "items": [{"ctx": "((Your colleague, in the office chat:))", "incoming": "Have you seen Gary? His bowl is empty! 🐟", "label": "Your reply"}], "example": "No way! That's so weird. **When did you last see him?**"}]}, {"label": "🔁 Recall", "blocks": [{"kind": "text", "instr": "Complete the chat and say the words. Tap the yellow to check.", "tip": "Here comes the text from our lesson, with the first letters. 🔖 = \"we didn't know this\" — Olya sees which gaps were hard.", "lines": [{"s": "Mia", "p": ["Just a ", {"f": "h", "r": "eads-up"}, " — Gary's ", {"f": "g", "r": "one missing"}, "! 🐟"]}, {"s": "Sam", "p": ["I know! I saw the empty bowl this morning. It's so weird, ", {"f": "i", "r": "sn't it"}, "?"]}, {"s": "Mia", "p": ["It ", {"f": "r", "r": "eally is"}, ". The bowl's still here, but no Gary."]}, {"s": "Sam", "p": ["UPDATE: found him. Ken took him home for the weekend and forgot to bring him back. He said Gary looked lonely."]}], "gloss": [{"p": [{"f": "h", "r": "eads-up"}], "ru": "предупреждение"}, {"p": [{"f": "g", "r": "one"}, " ", {"f": "m", "r": "issing"}], "ru": "пропал"}]}]}, {"label": "🃏 Practice", "blocks": [{"kind": "cards", "style": "mix", "instr": "Three cards, three kinds. Say your answer, then tap the card to check.", "tip": "↺ Again later = \"we weren't sure\": the card comes back two or three cards later. ✓ Got it = done. Olya sees which cards came back.", "cards": [{"front": "Nobody knows where Gary is.", "key": "MISSING", "frame": "Gary has ___.", "answer": "gone missing", "back": "Gary has **gone missing**.", "note": "пропал → has gone missing · also fine: Gary is missing.", "style": "kwt"}, {"ctx": "в чате офиса", "front": "<g>Gary<\/g> ~~is missing~~ <g>since Friday<\/g>.", "back": "Gary **has been missing** since Friday.", "why": "С since — «с тех пор и до сих пор»: has been missing.", "style": "ours", "instr": "One of our sentences. Green = good, grey = could be better. How would you make it perfect English?", "check": "Perfect English"}, {"front": "((Спасибо, что предупредила!))", "back": "**Thanks for the heads-up!**", "style": "say", "instr": "How do you say it in English?"}]}]}, {"label": "💬 Use it", "blocks": [{"kind": "questions", "box": "BOX", "instr": "Now talk. Use the box.", "tip": "Tap a phrase in the box when you say it — it turns green. ⬅ Board takes you back to the game.", "items": ["Tell your partner about a time something went missing at work or at home (real or made up!). What was it? Did it turn up? Your partner reacts and asks **two** questions."], "fast": "If you're done: act out Mia and Sam's chat from memory."}]}], "_pids": {"blocks": [0, 1, 2, 5], "cards": [0, 1, 2], "write": [0], "questions.5": [0]}, "boardPage": "jeopardy", "embeds": {}};
 const STICKER = "data:image/png;base64,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";
-const TOOLS_VERSION = "14";
+const TOOLS_VERSION = "16";
 const PAGE_ID = "b2-2026-10-30/f-demo";
 const LIVE_ON = false, LIVE_URL = "";
 /* shared by the lesson tools: the Useful language box, shuffling, small helpers */
@@ -1226,8 +1267,12 @@ function gRoll(el, final, done){
 
 /* ---------- ⭕ tic-tac-toe (her 21:48): tap a square, it turns over and shows a task; do it → the square is yours (✓) or not this time (✗);
    three in a row (3×3) or four in a row (4×4) wins; the turn passes either way ---------- */
-function gTicTacToe(host, tasks, {size = 3, win = 3, marks = ["X", "O"], answer = t => t.a || "", prompt = t => gEsc(t.q || t)} = {}){
-  const T = {cells: gShuffle(tasks).slice(0, size * size).map(t => ({t, m: null})), turn: 0, open: -1, shown: false, over: null};
+/* tools 16 (the B2 revision field f-late, its first use): state = a board to carry on with (the field redraws its screen often);
+   revealFirst = ✓ / ✗ only after Show the answer ("we lead the students"); labels = the two answers' words; onResult(task, ok),
+   onWin(el), onChange() for the page around it */
+function gTicTacToe(host, tasks, {size = 3, win = 3, marks = ["X", "O"], answer = t => t.a || "", prompt = t => gEsc(t.q || t), state = null, revealFirst = false, labels = null, onResult = null, onWin = null, onChange = null} = {}){
+  const T = state || {cells: gShuffle(tasks).slice(0, size * size).map(t => ({t, m: null})), turn: 0, open: -1, shown: false, over: null};
+  const changed = () => { if(onChange) onChange(T); };
   const lines = (() => { const L = [], ok = (r, c) => r >= 0 && c >= 0 && r < size && c < size;
     for(let r = 0; r < size; r++) for(let c = 0; c < size; c++) [[0, 1], [1, 0], [1, 1], [1, -1]].forEach(([dr, dc]) => { const l = []; for(let k = 0; k < win; k++){ if(!ok(r + dr * k, c + dc * k)) return; l.push((r + dr * k) * size + c + dc * k); } L.push(l); });
     return L; })();
@@ -1240,16 +1285,17 @@ function gTicTacToe(host, tasks, {size = 3, win = 3, marks = ["X", "O"], answer 
       <div class="gt-side">${T.over ? `<p class="gt-turn big">${T.over.who ? `${markSVG(T.over.who)} wins! 🎉` : "It's a draw!"}</p><button class="btn primary" data-gt-again>Play again</button>`
         : `<p class="gt-turn">${markSVG(cur)} <b>${gEsc(cur)}'s turn</b>${o ? "" : " — choose a square"}</p>
         ${o ? `<div class="gt-task${T.shown ? " shown" : ""}"><p class="gt-q">${prompt(o.t)}</p>${T.shown && answer(o.t) ? `<p class="gt-a">${answer(o.t)}</p>` : ""}
-          <div class="gt-acts">${answer(o.t) && !T.shown ? `<button class="btn" data-gt-show>Show the answer</button>` : ""}<button class="btn ok" data-gt-yes>✓ ${gEsc(cur)} takes it</button><button class="btn again" data-gt-no>✗ Not this time</button></div></div>` : ""}`}</div></div>`;
-    host.querySelectorAll("[data-gt]").forEach(b => b.addEventListener("click", () => { if(T.open > -1) return; T.open = +b.dataset.gt; T.shown = false; render(); }));
+          <div class="gt-acts">${answer(o.t) && !T.shown ? `<button class="btn${revealFirst ? " primary" : ""}" data-gt-show>Show the answer</button>` : ""}${!revealFirst || T.shown || !answer(o.t) ? `<button class="btn ok" data-gt-yes>${labels ? gEsc(labels.yes) : `✓ ${gEsc(cur)} takes it`}</button><button class="btn again" data-gt-no>${labels ? gEsc(labels.no) : "✗ Not this time"}</button>` : ""}</div></div>` : ""}`}</div></div>`;
+    host.querySelectorAll("[data-gt]").forEach(b => b.addEventListener("click", () => { if(T.open > -1) return; T.open = +b.dataset.gt; T.shown = false; render(); changed(); }));
     const on = (q, f) => { const b = host.querySelector(q); if(b) b.addEventListener("click", f); };
-    on("[data-gt-show]", () => { T.shown = true; render(); });
+    on("[data-gt-show]", () => { T.shown = true; render(); changed(); });
     on("[data-gt-yes]", () => { const k = T.open; T.cells[k].m = marks[T.turn]; T.open = -1; const l = lines.find(l => l.every(i => T.cells[i].m === marks[T.turn]));
-      if(l) T.over = {who: marks[T.turn], line: l}; else if(T.cells.every(c => c.m)) T.over = {who: null}; else T.turn = 1 - T.turn; render(k); });
-    on("[data-gt-no]", () => { T.open = -1; T.turn = 1 - T.turn; render(); });
-    on("[data-gt-again]", () => { T.cells = gShuffle(tasks).slice(0, size * size).map(t => ({t, m: null})); T.turn = 0; T.open = -1; T.over = null; render(); });
+      if(l) T.over = {who: marks[T.turn], line: l}; else if(T.cells.every(c => c.m)) T.over = {who: null}; else T.turn = 1 - T.turn; render(k);
+      if(onResult) onResult(T.cells[k].t, true); if(T.over && T.over.who && onWin) onWin(host.querySelector(".gt-turn.big") || host); changed(); });
+    on("[data-gt-no]", () => { const t = T.cells[T.open].t; T.open = -1; T.turn = 1 - T.turn; render(); if(onResult) onResult(t, false); changed(); });
+    on("[data-gt-again]", () => { T.cells = gShuffle(tasks).slice(0, size * size).map(t => ({t, m: null})); T.turn = 0; T.open = -1; T.over = null; render(); changed(); });
   }
-  render(); return T;
+  T.redraw = () => render(); render(); return T;
 }
 
 /* ---------- 🐍🪜 snakes and ladders (her 21:48, for revision): 30 squares, turns for 2–3 players; roll the die, the pawn hops square by
@@ -2071,6 +2117,10 @@ D.stages.forEach((st, si) => st.blocks.forEach((b, bi) => {
   if(b.kind === "cards") b.cards.forEach((c, j) => { c._n = (P.cards || [])[cardN] != null ? P.cards[cardN] : cardN; cardN++;
     c._b = b.style === "mix" ? Object.assign({}, b, {style: c.style || "say", check: c.check || "", instr: c.instr || b.instr, instr_next: null}) : b;
     c._lbl = b.style === "mix" ? (c.instr || b.instr) : b.style === "share" && c.instr ? c.instr : j === 0 || !b.instr_next ? b.instr : b.instr_next; });
+  /* tools 16: a game's squares are numbered with the cards (her 📥 / 👥: a "✗ Not quite" counts like a card sent back); in "↺ Your hard
+     cards once more" a square comes back as an "our sentences" card */
+  if(b.kind === "game") (b.tasks || []).forEach(t => { t._n = (P.cards || [])[cardN] != null ? P.cards[cardN] : cardN; cardN++;
+    Object.assign(t, {front: t.q, back: t.a, _b: {style: "ours", check: b.check || "", box: b.box || null}, _lbl: "How would you make it perfect English?"}); });
 }));
 /* her rule 30.10 12:17: all the cards of a stage are one deck (a missed Got it + Next must not land in another deck — "a logistical
    nightmare"); each card keeps its own kind, label, box and check. The data and the permanent numbers stay as they are. */
@@ -2093,7 +2143,7 @@ function keepPlace(){
   if(S.view !== "field" || S.fast) return;
   const bsOut = Object.assign({}, S._restore || {}); Object.entries(S.bs).forEach(([id, st]) => { if(id === "fastdeck") return; const d = st.deck;
     bsOut[id] = {open: [...st.open], shown: !!st.shown, check: st.check || "", done: !!st.done, bm: [...(st.bm || [])], spk: st.spk ? st.spk.key : null,
-      sc: st.sc || null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, flipped: !!d.flipped} : (st._deck || null)}; });
+      sc: st.sc || null, fx: st.fx || null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, flipped: !!d.flipped} : (st._deck || null)}; });
   store.set(PLACE_KEY, {stage: S.stage, at: S.at, far: S.far, intro: S.intro, bs: bsOut, t: Date.now()});
   store.set(LEFT_KEY, {page: PAGE_ID, href: location.pathname.split("/").pop(), cell: cellName(), title: D.title, stage: String(D.stages[S.stage].label || ""), t: Date.now()});
 }
@@ -2103,7 +2153,9 @@ function leftForBoard(){ keepPlace(); }
   if(location.hash) try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){} })();
 function restoreBs(id){ const r = S._restore && S._restore[id]; if(!r) return null; delete S._restore[id];
   const st = {open: new Set(r.open || []), shown: !!r.shown, check: r.check || "", deck: null, look: null, done: !!r.done, bm: new Set(r.bm || []), _deck: r.deck || null};
-  if(r.spk != null) st.spk = Object.assign(newCursor(), {key: r.spk}); if(r.sc && Array.isArray(r.sc.order)) st.sc = r.sc; return st; }
+  if(r.spk != null) st.spk = Object.assign(newCursor(), {key: r.spk}); if(r.sc && Array.isArray(r.sc.order)) st.sc = r.sc;
+  if(r.fx) st.fx = r.fx; if(r.ttt && Array.isArray(r.ttt.cells)) st.ttt = r.ttt;   /* tools 16 */
+  return st; }
 const curBlocks = () => D.stages[S.stage].blocks;
 const bIdx = () => Math.min(S.at[S.stage] || 0, curBlocks().length - 1);
 const curBlock = () => curBlocks()[bIdx()];
@@ -2278,6 +2330,11 @@ function cardsHTML(b){
   const nowI = st.look != null ? st.look : d.queue.length ? d.queue[0] : -1;   /* looking back: the dot of the card on screen */
   const dots = `<div class="fdots">${d.cards.map((c, i) => `<span class="${d.got.has(i) ? "got" : d.again.has(i) ? "again" : ""} ${i === nowI ? "now" : ""}"></span>`).join("")}</div>`;
   if(st.look != null){ const c = d.cards[st.look];
+    /* her 👥 dot (31.10, her catch from the B2 revision: "the card was already shown with its answer — we sat and didn't know why we were
+       looking at it"): the card opens on its front, so the group does it again; a tap (or Next) shows the answer */
+    const shut = !st.lookBack && !st.lookOpen;
+    if(shut) return `${dots}<div class="fc look" data-lookflip role="button" tabindex="0" aria-label="Show the answer"><span class="lbl from-groups">${esc(st.lookLbl || "Looking back")}</span>${frontHTML(b, c, st.look, false)}<span class="corner">tap to check ↓</span></div>
+      <div class="deck-act"><button class="btn" data-lookdone>Back to the cards →</button></div>`;
     return `${dots}<div class="fc open look"><span class="lbl from-groups">${esc(st.lookLbl || "Looking back")}</span>${frontHTML(b, c, st.look, true)}${ansHTML(b, c)}</div>
       ${st.lookBack ? "" : `<div class="deck-act"><button class="btn primary" data-lookdone>Back to the cards →</button></div>`}`; }
   if(!d.queue.length){
@@ -2301,6 +2358,7 @@ function boxFor(b){
     const o = c._b; if(o.style === "share") return c.support === "box" ? "BOX" : c.support === "strip" ? "STRIP" : null; return o.box || null; }
   if(b.kind === "cards" && b.style === "share"){ const d = deckOf(b), i = d.queue[0], c = i != null ? b.cards[i] : null, sup = c ? c.support : "none";
     return sup === "box" ? "BOX" : sup === "strip" ? "STRIP" : null; }
+  if(b.kind === "fix" && !b.box && D.boxes && D.boxes.BOX) return "BOX";   /* tools 16: Fix it sits beside the stage's box, like the other Practice blocks */
   return b.box || null;
 }
 
@@ -2312,14 +2370,16 @@ function deckStats(n){
 function groupDotsHTML(b){
   if(!liveTeacher()) return "";
   const n = (GW.decks || []).filter(r => r.ts >= gwSince()).length;
-  return `<div class="gdots" data-gdots="${b._id}"><span class="gd-lbl">👥 The groups:</span>${b.cards.map((c, i) => { const s = deckStats(c._n), size = s.again ? Math.min(2.2, 1.1 + .3 * s.again) : .95;
+  return `<div class="gdots" data-gdots="${b._id}"><span class="gd-lbl">👥 The groups:</span>${(b.kind === "game" ? b.tasks : b.cards).map((c, i) => { const s = deckStats(c._n), size = s.again ? Math.min(2.2, 1.1 + .3 * s.again) : .95;
     const tip = s.again ? `back into the deck ${s.again}× (${s.screens} screen${s.screens === 1 ? "" : "s"})` : s.got ? "got it — nobody sent it back" : "no group has answered it yet";
     return `<button class="gd ${s.again ? "gd-again" : s.got ? "gd-ok" : ""}" style="--s:${size.toFixed(2)}rem" data-gd="${i}" title="${esc(cardFrontPlain(b, c).replace(/\(\(|\)\)|\*\*/g, ""))} — ${tip}" aria-label="Card ${i + 1}: ${tip}"></button>`; }).join("")}<span class="gd-meta">${n} screen${n === 1 ? "" : "s"}</span></div>`;
 }
 function onGroupData(){ document.querySelectorAll("[data-gdots]").forEach(el => { const b = BLOCKS.find(x => x._id === el.dataset.gdots); const h = groupDotsHTML(b); if(el.outerHTML !== h){ el.outerHTML = h; wireGroupDots(); } }); }
 function wireGroupDots(){ document.querySelectorAll("[data-gdots] [data-gd]").forEach(btn => btn.addEventListener("click", () => {
-  const b = BLOCKS.find(x => x._id === btn.closest("[data-gdots]").dataset.gdots), st = bs(b), i = +btn.dataset.gd, s = deckStats(b.cards[i]._n);
-  st.look = st.look === i ? null : i; st.lookLbl = `👥 ${s.again ? `Back into the deck ${s.again}× · ${s.screens} screen${s.screens === 1 ? "" : "s"}` : s.got ? "Nobody sent it back" : "No group has answered it yet"}`; render(); })); }
+  const b = BLOCKS.find(x => x._id === btn.closest("[data-gdots]").dataset.gdots), st = bs(b), i = +btn.dataset.gd;
+  if(b.kind === "game"){ gameOpenTask(b, b.tasks[i]); return; }   /* tools 16: her dot opens that square on the board */
+  const s = deckStats(b.cards[i]._n);
+  st.look = st.look === i ? null : i; st.lookOpen = false; st.lookLbl = `👥 ${s.again ? `Back into the deck ${s.again}× · ${s.screens} screen${s.screens === 1 ? "" : "s"}` : s.got ? "Nobody sent it back" : "No group has answered it yet"}`; render(); })); }
 
 /* ---------- ⚡ fast finishers (the last block): the fast line, their ↺ cards once more, the text again without first letters ---------- */
 function fastHTML(){
@@ -2331,15 +2391,54 @@ function fastHTML(){
     <div class="row-actions">${again ? `<button class="btn slim" data-fast-cards>↺ Your ${again} hard card${again === 1 ? "" : "s"} once more</button>` : ""}${text ? `<button class="btn slim" data-fast-text>📖 The text again — no first letters</button>` : ""}</div></section>`;
 }
 function fastDeckBlock(){
-  const cards = saved.again.map(n => BLOCKS.filter(b => b.kind === "cards").flatMap(b => b.cards).find(c => c._n === n)).filter(Boolean);
+  const cards = saved.again.map(n => BLOCKS.filter(b => b.kind === "cards").flatMap(b => b.cards).concat(BLOCKS.filter(b => b.kind === "game").flatMap(b => b.tasks)).find(c => c._n === n)).filter(Boolean);
   return {kind: "cards", style: "mix", _id: "fastdeck", instr: "Your hard cards once more", cards};
 }
+
+/* ---------- tools 16 (B2 revision f-late, handoff 31.10 12:30): ✏️ Fix it as a field block — the big line with the key word red and the
+   Russian note; then the gap with two chips (a wrong chip: the note); then the messages one at a time: say it, tap → the answer.
+   One screen, steps by Next like everything else (ph: 0 the line · 1 the gap · 2, 3 the first message and its answer · …) ---------- */
+const reEsc = x => String(x).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const fixWord = (s, red, cls) => red ? esc(s).replace(new RegExp(`\\b(${reEsc(red)}\\w*)\\b`, "gi"), `<b class="${cls}">$1</b>`) : esc(s);
+const fixPh = b => { const st = bs(b); return st.fx = st.fx || {ph: 0, solved: false, wrong: null}; };
+const fixLast = b => 1 + 2 * (b.say || []).length;
+function fixHTML(b){
+  const F = fixPh(b), say = b.say || [], pl = b.place || null, note = b.note ? `<p class="fx-note">${mk(b.note)}</p>` : "";
+  const big = (small) => `<div class="fx-big${small ? " small" : ""}"><p class="fx-line">${fixWord(b.big, b.red, "fx-red")}</p>${note}</div>`;
+  if(F.ph === 0 || !pl && F.ph === 1) return big(false);
+  if(F.ph === 1){ const [pre, post] = String(pl.tokens).split("▢");
+    return `<div class="fx-place"><p class="fx-line">${esc(pre)}${F.solved ? `<b class="fx-red fx-in">${esc(pl.answer)}</b>` : `<span class="fx-slot" aria-label="the gap"></span>`}${esc(post || "")}</p>
+      ${F.solved ? `<p class="fx-msg">✓ That's it.</p>${note}` : `<div class="fx-chips">${pl.chips.map(c => `<button class="fx-chip${F.wrong === c ? " no" : ""}" data-fxchip="${esc(c)}">${esc(c)}</button>`).join("")}</div>${F.wrong ? note : ""}`}</div>`; }
+  const upto = Math.min(say.length - 1, Math.floor((F.ph - 2) / 2));
+  return big(true) + `<div class="fx-says">${say.slice(0, upto + 1).map((x, k) => { const open = k < upto || F.ph >= 3 + 2 * k;
+    return `<div class="fx-say"><p class="fx-q">${esc(x.q)}</p>${open ? `<p class="fx-a">${fixWord(x.a, b.red, "bx")}</p>` : `<button class="fx-a shut" data-fxa="${k}">say it — then tap to check</button>`}</div>`; }).join("")}</div>`;
+}
+const fixPending = b => { const F = fixPh(b); return F.ph < fixLast(b) || (F.ph === 1 && !F.solved && !!b.place); };
+function fixNext(b){ const F = fixPh(b); if(F.ph === 1 && b.place && !F.solved){ F.solved = true; F.wrong = null; } else F.ph++; render(); }
+/* ---------- tools 16: 🎮 a game as a field block (first: noughts and crosses, game.js gTicTacToe): tap a square → its sentence and its
+   context → Show the answer → ✓ Correct (the square is theirs) / ✗ Not quite (it stays free); three in a row wins. The board stays as the
+   room left it (this device) ---------- */
+const gameTasks = (b, cells) => (cells || []).map(c => ({t: b.tasks[c.i] || b.tasks[0], m: c.m || null}));
+function gameMount(b, host){
+  if(!host) return; const st = bs(b);
+  if(st.ttt && st.ttt.cells && st.ttt.cells[0] && st.ttt.cells[0].i != null) st.ttt.cells = gameTasks(b, st.ttt.cells);   /* reopened on this device */
+  st.ttt = gTicTacToe(host, b.tasks, {size: b.size || 3, state: st.ttt || null, revealFirst: true, labels: {yes: "✓ Correct", no: "✗ Not quite"},
+    prompt: t => `${t.ctx ? `<span class="lctx">${mk(t.ctx)}</span>` : ""}<span class="say">${mk(t.q)}</span>`,
+    answer: t => `${b.check ? `<span class="chk">${esc(b.check)}</span>` : ""}<span class="say fixline">${mk(t.a)}</span>${t.why ? `<span class="note">${mk(t.why)}</span>` : ""}`,
+    onResult: (t, ok) => { lwDeck(t._n, ok); if(!ok && !saved.again.includes(t._n)){ saved.again.push(t._n); save(); } },
+    onWin: el => { if(typeof confetti === "function") confetti(el); },
+    onChange: () => { keepPlace(); const sb = document.querySelector("[data-step]"); if(sb) sb.disabled = !canNext(); }});
+}
+const gamePending = b => { const T = bs(b).ttt; return !!(T && T.open > -1 && !T.shown && !T.over); };
+function gameOpenTask(b, t){ const T = bs(b).ttt; if(!T || T.over) return; const k = T.cells.findIndex(c => c.t === t && !c.m); if(k < 0 || (T.open > -1 && T.open !== k)) return;
+  T.open = k; T.shown = false; render(); }
 
 /* ---------- the page ---------- */
 function blockHTML(b){
   const body = b.kind === "text" ? textHTML(b) : b.kind === "model" ? modelHTML(b) : b.kind === "write" ? writeHTML(b) : b.kind === "say" ? sayHTML(b)
     : b.kind === "picture" ? pictureHTML(b) : b.kind === "calendars" ? calendarsHTML(b) : b.kind === "tool" ? toolHTML(b)
-    : b.kind === "questions" ? questionsHTML(b) : b.kind === "cards" ? groupDotsHTML(b) + `<div class="deck">${cardsHTML(b)}</div>` : b.kind === "scenes" ? scenesHTML(b) : "";
+    : b.kind === "questions" ? questionsHTML(b) : b.kind === "cards" ? groupDotsHTML(b) + `<div class="deck">${cardsHTML(b)}</div>` : b.kind === "scenes" ? scenesHTML(b)
+    : b.kind === "fix" ? fixHTML(b) : b.kind === "game" ? groupDotsHTML(b) + `<div class="fgame" data-game="${b._id}"></div>` : "";
   const instr = b.kind === "cards" || b.kind === "questions" ? (b.kind === "questions" ? b.instr : "") : b.kind === "scenes" && sceneAt(b) >= 0 ? (b.street_first === false ? [b.instr, b.task].filter(Boolean).join(" ") : b.task) : b.instr;
   const tip = S.howto && b.tip ? `<p class="tip">🎓 How it works: ${mk(b.tip)}</p>` : "";
   return `${tip}${instr ? `<p class="finstr">${mk(instr)}</p>` : ""}<section class="blk ${S.enter ? "enter" : ""}" data-blk="${b._id}">${body}</section>`;
@@ -2364,7 +2463,9 @@ function stepPending(b){
   if(!b) return false; const st = bs(b);
   if(b.kind === "tool") return true;   /* the page inside says when it has nothing more (lwStepEnd) */
   if(b.kind === "say") return !st.shown;
-  if(b.kind === "cards") return deckOf(b).queue.length > 0 || (st.look != null && !!st.lookBack);
+  if(b.kind === "fix") return fixPending(b);   /* tools 16 */
+  if(b.kind === "game") return gamePending(b);
+  if(b.kind === "cards") return deckOf(b).queue.length > 0 || (st.look != null && (!!st.lookBack || !st.lookOpen));
   if(b.kind === "calendars" && b.done && !st.done) return true;
   if(["text", "model", "calendars"].includes(b.kind)){ const ids = allGaps(b); return ids.length > 0 && !ids.every(id => st.open.has(id)); }
   if(b.kind === "questions") return !!document.querySelector(".speak [data-speak-next]");
@@ -2392,7 +2493,10 @@ function stepNext(){
   /* the chat page inside (her 13:24: no Next of its own): the field's Next / Back step through its chats and its speaking */
   if(b.kind === "tool"){ const f = document.querySelector(".tool-frame"); if(f && f.contentWindow){ f.contentWindow.postMessage({lwStep: "next"}, "*"); return; } }
   if(b.kind === "say" && !st.shown){ st.shown = true; render(); return; }
+  if(b.kind === "fix" && fixPending(b)){ fixNext(b); return; }   /* tools 16: the gap's answer, then message by message */
+  if(b.kind === "game" && gamePending(b)){ st.ttt.shown = true; render(); return; }   /* an open square: Next shows its answer */
   if(b.kind === "cards"){ const d = deckOf(b);
+    if(st.look != null && !st.lookBack && !st.lookOpen){ st.lookOpen = true; render(); return; }   /* her 👥 dot: the front first, Next shows the answer */
     if(st.look != null && !st.lookBack){ st.look = null; render(); return; }   /* her 👥 dot view → back to the cards */
     if(st.look != null && st.lookBack){ const k = d.hist.lastIndexOf(st.look); st.look = k > -1 && k < d.hist.length - 1 ? d.hist[k + 1] : null;
       if(st.look == null){ st.lookBack = false; if(!d.queue.length && !S.fast && !deckHasList(b) && !isLast()){ stepOn(); return; } } render(); return; }
@@ -2420,6 +2524,7 @@ function stepBack(){
     else if(d.hist.length){ st.look = d.hist[d.hist.length - 1]; st.lookBack = true; st.lookLbl = "↩ Looking back"; render(); return; } }
   if(S.fast){ S.fast = null; render(); return; }
   if(b && b.kind === "say" && bs(b).shown){ bs(b).shown = false; render(); return; }   /* the answer → the question, like the slide before */
+  if(b && b.kind === "fix" && fixPh(b).ph > 0){ fixPh(b).ph--; render(); return; }   /* tools 16: the screen before */
   if(b && b.kind === "questions"){ const pv = document.querySelector(".speak [data-speak-prev]"); if(pv){ pv.click(); return; } }
   if(b && b.kind === "scenes"){ const st = bs(b), sc = sceneState(b); if(st.peek){ st.peek = false; render(); return; } if(sc.at > (b.street_first === false ? 0 : -1)){ sc.at--; render(); return; } }
   if(b && b.kind === "tool"){ const f = document.querySelector(".tool-frame"); if(f && f.contentWindow){ f.contentWindow.postMessage({lwStep: "back"}, "*"); return; } }
@@ -2508,6 +2613,12 @@ function wire(root){
   on("[data-redo]", () => { bs(b).deck = newDeck(d.cards.filter((_, i) => d.again.has(i))); if(b._id === "fastdeck") S.fast.cards = bs(b).deck.cards; render(); });
   on("[data-restart]", () => { bs(b).deck = newDeck(b.cards); render(); });
   on("[data-lookdone]", () => { bs(b).look = null; render(); });
+  /* tools 16: Fix it and the game */
+  on("[data-fxchip]", x => { const F = fixPh(b); if(x.dataset.fxchip === b.place.answer){ F.solved = true; F.wrong = null; render(); }
+    else { F.wrong = x.dataset.fxchip; render(); const c = root.querySelector(`[data-fxchip="${CSS.escape(F.wrong)}"]`); if(c){ c.classList.remove("shake"); void c.offsetWidth; c.classList.add("shake"); } } });
+  on("[data-fxa]", x => { const F = fixPh(b), k = +x.dataset.fxa; if(F.ph === 2 + 2 * k) F.ph++; render(); });
+  if(b.kind === "game") gameMount(b, root.querySelector(`[data-game="${b._id}"]`));
+  on("[data-lookflip]", () => { bs(b).lookOpen = true; render(); });
   wireGroupDots();
   /* questions */
   if(b.kind === "questions") wireSpeak(root, render);

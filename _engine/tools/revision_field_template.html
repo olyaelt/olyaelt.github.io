@@ -214,6 +214,47 @@ __BASE_CSS__
 .gd-meta{color:var(--muted);font-size:.82rem;margin-left:auto}
 __LW_CSS__
 @media (max-width:760px){ .tx{grid-template-columns:1fr} .blk{padding:12px} .fc .say{font-size:1.3rem} .tool-frame{height:80vh} }
+/* tools 16: ✏️ Fix it (field block) */
+.fx-big,.fx-place{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:18px 22px;display:grid;gap:10px}
+.fx-big.small{padding:10px 16px;gap:4px}
+.fx-line{margin:0;font-size:1.7rem;font-weight:800;line-height:1.35}
+.fx-big.small .fx-line{font-size:1.2rem}
+.fx-red{color:var(--label);font-weight:900}
+.fx-note{margin:0;color:var(--muted);font-size:1.02rem}
+.fx-slot{display:inline-block;min-width:4.2em;height:1.15em;vertical-align:-.15em;border-bottom:3px solid var(--ink);margin:0 .25em}
+.fx-in{animation:ansIn .3s ease-out}
+.fx-chips{display:flex;gap:12px;flex-wrap:wrap}
+.fx-chip{all:unset;box-sizing:border-box;cursor:pointer;font-size:1.35rem;font-weight:800;padding:8px 22px;border-radius:999px;border:2px solid var(--instr);color:var(--instr-text);background:var(--card)}
+.fx-chip:focus-visible{outline:3px solid var(--instr);outline-offset:3px}
+.fx-chip.no{border-color:var(--again);color:var(--again)}
+.fx-chip.shake{animation:fxshake .4s}
+@keyframes fxshake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.fx-msg{margin:0;color:var(--ok);font-weight:900;font-size:1.1rem}
+.fx-says{display:grid;gap:12px;margin-top:12px}
+.fx-say{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:12px 18px;display:grid;gap:8px;animation:ansIn .3s ease-out}
+.fx-q{margin:0;font-size:1.3rem;font-weight:700}
+.fx-a{margin:0;font-size:1.3rem;font-weight:700;animation:ansIn .3s ease-out}
+.fx-a .bx{background:var(--fix-bg);border-radius:4px;padding:0 4px}
+.fx-a.shut{all:unset;box-sizing:border-box;cursor:pointer;justify-self:start;background:var(--hl);color:var(--hl-ink);border-radius:6px;padding:4px 12px;font-size:1rem;font-weight:700}
+@media (prefers-reduced-motion: reduce){ .fx-in,.fx-say,.fx-a,.fx-chip.shake{animation:none} }
+/* tools 16: 🎮 the game block — the task card is a white board card in both themes */
+.fgame .gttt{gap:16px}
+.fgame .gt-board{width:calc(var(--n) * 5.2rem);gap:7px}
+.fgame .gt-back{font-size:1.35rem}
+.fgame .gt-task{padding:10px 14px;gap:8px}
+.fgame .gt-q{display:grid;gap:4px;font-size:1.12rem}
+.fgame .gt-a .say{font-size:1.12rem;font-weight:800}
+.fgame .gt-acts .btn{padding:7px 14px}
+.fgame .gt-task .btn{background:#FFFFFF;color:#1D1D1B;border-color:#1D1D1B}
+.fgame .gt-task .btn.primary{background:#0693E3;border-color:#0693E3;color:#FFFFFF}
+.fgame .gt-task .btn.ok{color:#2E7D32;border-color:#2E7D32}
+.fgame .gt-task .btn.again{color:#B35C00;border-color:#B35C00}
+.fgame .gt-q .lctx{color:#5F6368;font-size:.95rem;font-weight:600}
+.fgame .gt-q .m-del{color:#6B6E72}
+.fgame .gt-a{background:none;color:#1D1D1B;padding:0;display:grid;gap:6px;justify-self:stretch}
+.fgame .gt-a .chk{justify-self:start;background:#7BC043;color:#FFFFFF;border-radius:6px;padding:1px 8px;font-size:.8rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase}
+.fgame .gt-a .bx{color:#0679BD;background:#D6E6FF;border-radius:4px;padding:0 4px}
+.fgame .gt-a .note{color:#5F6368;font-size:.95rem;font-weight:600}
 </style>
 </head>
 <body>
@@ -255,6 +296,10 @@ D.stages.forEach((st, si) => st.blocks.forEach((b, bi) => {
   if(b.kind === "cards") b.cards.forEach((c, j) => { c._n = (P.cards || [])[cardN] != null ? P.cards[cardN] : cardN; cardN++;
     c._b = b.style === "mix" ? Object.assign({}, b, {style: c.style || "say", check: c.check || "", instr: c.instr || b.instr, instr_next: null}) : b;
     c._lbl = b.style === "mix" ? (c.instr || b.instr) : b.style === "share" && c.instr ? c.instr : j === 0 || !b.instr_next ? b.instr : b.instr_next; });
+  /* tools 16: a game's squares are numbered with the cards (her 📥 / 👥: a "✗ Not quite" counts like a card sent back); in "↺ Your hard
+     cards once more" a square comes back as an "our sentences" card */
+  if(b.kind === "game") (b.tasks || []).forEach(t => { t._n = (P.cards || [])[cardN] != null ? P.cards[cardN] : cardN; cardN++;
+    Object.assign(t, {front: t.q, back: t.a, _b: {style: "ours", check: b.check || "", box: b.box || null}, _lbl: "How would you make it perfect English?"}); });
 }));
 /* her rule 30.10 12:17: all the cards of a stage are one deck (a missed Got it + Next must not land in another deck — "a logistical
    nightmare"); each card keeps its own kind, label, box and check. The data and the permanent numbers stay as they are. */
@@ -277,7 +322,7 @@ function keepPlace(){
   if(S.view !== "field" || S.fast) return;
   const bsOut = Object.assign({}, S._restore || {}); Object.entries(S.bs).forEach(([id, st]) => { if(id === "fastdeck") return; const d = st.deck;
     bsOut[id] = {open: [...st.open], shown: !!st.shown, check: st.check || "", done: !!st.done, bm: [...(st.bm || [])], spk: st.spk ? st.spk.key : null,
-      sc: st.sc || null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, flipped: !!d.flipped} : (st._deck || null)}; });
+      sc: st.sc || null, fx: st.fx || null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, flipped: !!d.flipped} : (st._deck || null)}; });
   store.set(PLACE_KEY, {stage: S.stage, at: S.at, far: S.far, intro: S.intro, bs: bsOut, t: Date.now()});
   store.set(LEFT_KEY, {page: PAGE_ID, href: location.pathname.split("/").pop(), cell: cellName(), title: D.title, stage: String(D.stages[S.stage].label || ""), t: Date.now()});
 }
@@ -287,7 +332,9 @@ function leftForBoard(){ keepPlace(); }
   if(location.hash) try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){} })();
 function restoreBs(id){ const r = S._restore && S._restore[id]; if(!r) return null; delete S._restore[id];
   const st = {open: new Set(r.open || []), shown: !!r.shown, check: r.check || "", deck: null, look: null, done: !!r.done, bm: new Set(r.bm || []), _deck: r.deck || null};
-  if(r.spk != null) st.spk = Object.assign(newCursor(), {key: r.spk}); if(r.sc && Array.isArray(r.sc.order)) st.sc = r.sc; return st; }
+  if(r.spk != null) st.spk = Object.assign(newCursor(), {key: r.spk}); if(r.sc && Array.isArray(r.sc.order)) st.sc = r.sc;
+  if(r.fx) st.fx = r.fx; if(r.ttt && Array.isArray(r.ttt.cells)) st.ttt = r.ttt;   /* tools 16 */
+  return st; }
 const curBlocks = () => D.stages[S.stage].blocks;
 const bIdx = () => Math.min(S.at[S.stage] || 0, curBlocks().length - 1);
 const curBlock = () => curBlocks()[bIdx()];
@@ -462,6 +509,11 @@ function cardsHTML(b){
   const nowI = st.look != null ? st.look : d.queue.length ? d.queue[0] : -1;   /* looking back: the dot of the card on screen */
   const dots = `<div class="fdots">${d.cards.map((c, i) => `<span class="${d.got.has(i) ? "got" : d.again.has(i) ? "again" : ""} ${i === nowI ? "now" : ""}"></span>`).join("")}</div>`;
   if(st.look != null){ const c = d.cards[st.look];
+    /* her 👥 dot (31.10, her catch from the B2 revision: "the card was already shown with its answer — we sat and didn't know why we were
+       looking at it"): the card opens on its front, so the group does it again; a tap (or Next) shows the answer */
+    const shut = !st.lookBack && !st.lookOpen;
+    if(shut) return `${dots}<div class="fc look" data-lookflip role="button" tabindex="0" aria-label="Show the answer"><span class="lbl from-groups">${esc(st.lookLbl || "Looking back")}</span>${frontHTML(b, c, st.look, false)}<span class="corner">tap to check ↓</span></div>
+      <div class="deck-act"><button class="btn" data-lookdone>Back to the cards →</button></div>`;
     return `${dots}<div class="fc open look"><span class="lbl from-groups">${esc(st.lookLbl || "Looking back")}</span>${frontHTML(b, c, st.look, true)}${ansHTML(b, c)}</div>
       ${st.lookBack ? "" : `<div class="deck-act"><button class="btn primary" data-lookdone>Back to the cards →</button></div>`}`; }
   if(!d.queue.length){
@@ -485,6 +537,7 @@ function boxFor(b){
     const o = c._b; if(o.style === "share") return c.support === "box" ? "BOX" : c.support === "strip" ? "STRIP" : null; return o.box || null; }
   if(b.kind === "cards" && b.style === "share"){ const d = deckOf(b), i = d.queue[0], c = i != null ? b.cards[i] : null, sup = c ? c.support : "none";
     return sup === "box" ? "BOX" : sup === "strip" ? "STRIP" : null; }
+  if(b.kind === "fix" && !b.box && D.boxes && D.boxes.BOX) return "BOX";   /* tools 16: Fix it sits beside the stage's box, like the other Practice blocks */
   return b.box || null;
 }
 
@@ -496,14 +549,16 @@ function deckStats(n){
 function groupDotsHTML(b){
   if(!liveTeacher()) return "";
   const n = (GW.decks || []).filter(r => r.ts >= gwSince()).length;
-  return `<div class="gdots" data-gdots="${b._id}"><span class="gd-lbl">👥 The groups:</span>${b.cards.map((c, i) => { const s = deckStats(c._n), size = s.again ? Math.min(2.2, 1.1 + .3 * s.again) : .95;
+  return `<div class="gdots" data-gdots="${b._id}"><span class="gd-lbl">👥 The groups:</span>${(b.kind === "game" ? b.tasks : b.cards).map((c, i) => { const s = deckStats(c._n), size = s.again ? Math.min(2.2, 1.1 + .3 * s.again) : .95;
     const tip = s.again ? `back into the deck ${s.again}× (${s.screens} screen${s.screens === 1 ? "" : "s"})` : s.got ? "got it — nobody sent it back" : "no group has answered it yet";
     return `<button class="gd ${s.again ? "gd-again" : s.got ? "gd-ok" : ""}" style="--s:${size.toFixed(2)}rem" data-gd="${i}" title="${esc(cardFrontPlain(b, c).replace(/\(\(|\)\)|\*\*/g, ""))} — ${tip}" aria-label="Card ${i + 1}: ${tip}"></button>`; }).join("")}<span class="gd-meta">${n} screen${n === 1 ? "" : "s"}</span></div>`;
 }
 function onGroupData(){ document.querySelectorAll("[data-gdots]").forEach(el => { const b = BLOCKS.find(x => x._id === el.dataset.gdots); const h = groupDotsHTML(b); if(el.outerHTML !== h){ el.outerHTML = h; wireGroupDots(); } }); }
 function wireGroupDots(){ document.querySelectorAll("[data-gdots] [data-gd]").forEach(btn => btn.addEventListener("click", () => {
-  const b = BLOCKS.find(x => x._id === btn.closest("[data-gdots]").dataset.gdots), st = bs(b), i = +btn.dataset.gd, s = deckStats(b.cards[i]._n);
-  st.look = st.look === i ? null : i; st.lookLbl = `👥 ${s.again ? `Back into the deck ${s.again}× · ${s.screens} screen${s.screens === 1 ? "" : "s"}` : s.got ? "Nobody sent it back" : "No group has answered it yet"}`; render(); })); }
+  const b = BLOCKS.find(x => x._id === btn.closest("[data-gdots]").dataset.gdots), st = bs(b), i = +btn.dataset.gd;
+  if(b.kind === "game"){ gameOpenTask(b, b.tasks[i]); return; }   /* tools 16: her dot opens that square on the board */
+  const s = deckStats(b.cards[i]._n);
+  st.look = st.look === i ? null : i; st.lookOpen = false; st.lookLbl = `👥 ${s.again ? `Back into the deck ${s.again}× · ${s.screens} screen${s.screens === 1 ? "" : "s"}` : s.got ? "Nobody sent it back" : "No group has answered it yet"}`; render(); })); }
 
 /* ---------- ⚡ fast finishers (the last block): the fast line, their ↺ cards once more, the text again without first letters ---------- */
 function fastHTML(){
@@ -515,15 +570,54 @@ function fastHTML(){
     <div class="row-actions">${again ? `<button class="btn slim" data-fast-cards>↺ Your ${again} hard card${again === 1 ? "" : "s"} once more</button>` : ""}${text ? `<button class="btn slim" data-fast-text>📖 The text again — no first letters</button>` : ""}</div></section>`;
 }
 function fastDeckBlock(){
-  const cards = saved.again.map(n => BLOCKS.filter(b => b.kind === "cards").flatMap(b => b.cards).find(c => c._n === n)).filter(Boolean);
+  const cards = saved.again.map(n => BLOCKS.filter(b => b.kind === "cards").flatMap(b => b.cards).concat(BLOCKS.filter(b => b.kind === "game").flatMap(b => b.tasks)).find(c => c._n === n)).filter(Boolean);
   return {kind: "cards", style: "mix", _id: "fastdeck", instr: "Your hard cards once more", cards};
 }
+
+/* ---------- tools 16 (B2 revision f-late, handoff 31.10 12:30): ✏️ Fix it as a field block — the big line with the key word red and the
+   Russian note; then the gap with two chips (a wrong chip: the note); then the messages one at a time: say it, tap → the answer.
+   One screen, steps by Next like everything else (ph: 0 the line · 1 the gap · 2, 3 the first message and its answer · …) ---------- */
+const reEsc = x => String(x).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const fixWord = (s, red, cls) => red ? esc(s).replace(new RegExp(`\\b(${reEsc(red)}\\w*)\\b`, "gi"), `<b class="${cls}">$1</b>`) : esc(s);
+const fixPh = b => { const st = bs(b); return st.fx = st.fx || {ph: 0, solved: false, wrong: null}; };
+const fixLast = b => 1 + 2 * (b.say || []).length;
+function fixHTML(b){
+  const F = fixPh(b), say = b.say || [], pl = b.place || null, note = b.note ? `<p class="fx-note">${mk(b.note)}</p>` : "";
+  const big = (small) => `<div class="fx-big${small ? " small" : ""}"><p class="fx-line">${fixWord(b.big, b.red, "fx-red")}</p>${note}</div>`;
+  if(F.ph === 0 || !pl && F.ph === 1) return big(false);
+  if(F.ph === 1){ const [pre, post] = String(pl.tokens).split("▢");
+    return `<div class="fx-place"><p class="fx-line">${esc(pre)}${F.solved ? `<b class="fx-red fx-in">${esc(pl.answer)}</b>` : `<span class="fx-slot" aria-label="the gap"></span>`}${esc(post || "")}</p>
+      ${F.solved ? `<p class="fx-msg">✓ That's it.</p>${note}` : `<div class="fx-chips">${pl.chips.map(c => `<button class="fx-chip${F.wrong === c ? " no" : ""}" data-fxchip="${esc(c)}">${esc(c)}</button>`).join("")}</div>${F.wrong ? note : ""}`}</div>`; }
+  const upto = Math.min(say.length - 1, Math.floor((F.ph - 2) / 2));
+  return big(true) + `<div class="fx-says">${say.slice(0, upto + 1).map((x, k) => { const open = k < upto || F.ph >= 3 + 2 * k;
+    return `<div class="fx-say"><p class="fx-q">${esc(x.q)}</p>${open ? `<p class="fx-a">${fixWord(x.a, b.red, "bx")}</p>` : `<button class="fx-a shut" data-fxa="${k}">say it — then tap to check</button>`}</div>`; }).join("")}</div>`;
+}
+const fixPending = b => { const F = fixPh(b); return F.ph < fixLast(b) || (F.ph === 1 && !F.solved && !!b.place); };
+function fixNext(b){ const F = fixPh(b); if(F.ph === 1 && b.place && !F.solved){ F.solved = true; F.wrong = null; } else F.ph++; render(); }
+/* ---------- tools 16: 🎮 a game as a field block (first: noughts and crosses, game.js gTicTacToe): tap a square → its sentence and its
+   context → Show the answer → ✓ Correct (the square is theirs) / ✗ Not quite (it stays free); three in a row wins. The board stays as the
+   room left it (this device) ---------- */
+const gameTasks = (b, cells) => (cells || []).map(c => ({t: b.tasks[c.i] || b.tasks[0], m: c.m || null}));
+function gameMount(b, host){
+  if(!host) return; const st = bs(b);
+  if(st.ttt && st.ttt.cells && st.ttt.cells[0] && st.ttt.cells[0].i != null) st.ttt.cells = gameTasks(b, st.ttt.cells);   /* reopened on this device */
+  st.ttt = gTicTacToe(host, b.tasks, {size: b.size || 3, state: st.ttt || null, revealFirst: true, labels: {yes: "✓ Correct", no: "✗ Not quite"},
+    prompt: t => `${t.ctx ? `<span class="lctx">${mk(t.ctx)}</span>` : ""}<span class="say">${mk(t.q)}</span>`,
+    answer: t => `${b.check ? `<span class="chk">${esc(b.check)}</span>` : ""}<span class="say fixline">${mk(t.a)}</span>${t.why ? `<span class="note">${mk(t.why)}</span>` : ""}`,
+    onResult: (t, ok) => { lwDeck(t._n, ok); if(!ok && !saved.again.includes(t._n)){ saved.again.push(t._n); save(); } },
+    onWin: el => { if(typeof confetti === "function") confetti(el); },
+    onChange: () => { keepPlace(); const sb = document.querySelector("[data-step]"); if(sb) sb.disabled = !canNext(); }});
+}
+const gamePending = b => { const T = bs(b).ttt; return !!(T && T.open > -1 && !T.shown && !T.over); };
+function gameOpenTask(b, t){ const T = bs(b).ttt; if(!T || T.over) return; const k = T.cells.findIndex(c => c.t === t && !c.m); if(k < 0 || (T.open > -1 && T.open !== k)) return;
+  T.open = k; T.shown = false; render(); }
 
 /* ---------- the page ---------- */
 function blockHTML(b){
   const body = b.kind === "text" ? textHTML(b) : b.kind === "model" ? modelHTML(b) : b.kind === "write" ? writeHTML(b) : b.kind === "say" ? sayHTML(b)
     : b.kind === "picture" ? pictureHTML(b) : b.kind === "calendars" ? calendarsHTML(b) : b.kind === "tool" ? toolHTML(b)
-    : b.kind === "questions" ? questionsHTML(b) : b.kind === "cards" ? groupDotsHTML(b) + `<div class="deck">${cardsHTML(b)}</div>` : b.kind === "scenes" ? scenesHTML(b) : "";
+    : b.kind === "questions" ? questionsHTML(b) : b.kind === "cards" ? groupDotsHTML(b) + `<div class="deck">${cardsHTML(b)}</div>` : b.kind === "scenes" ? scenesHTML(b)
+    : b.kind === "fix" ? fixHTML(b) : b.kind === "game" ? groupDotsHTML(b) + `<div class="fgame" data-game="${b._id}"></div>` : "";
   const instr = b.kind === "cards" || b.kind === "questions" ? (b.kind === "questions" ? b.instr : "") : b.kind === "scenes" && sceneAt(b) >= 0 ? (b.street_first === false ? [b.instr, b.task].filter(Boolean).join(" ") : b.task) : b.instr;
   const tip = S.howto && b.tip ? `<p class="tip">🎓 How it works: ${mk(b.tip)}</p>` : "";
   return `${tip}${instr ? `<p class="finstr">${mk(instr)}</p>` : ""}<section class="blk ${S.enter ? "enter" : ""}" data-blk="${b._id}">${body}</section>`;
@@ -548,7 +642,9 @@ function stepPending(b){
   if(!b) return false; const st = bs(b);
   if(b.kind === "tool") return true;   /* the page inside says when it has nothing more (lwStepEnd) */
   if(b.kind === "say") return !st.shown;
-  if(b.kind === "cards") return deckOf(b).queue.length > 0 || (st.look != null && !!st.lookBack);
+  if(b.kind === "fix") return fixPending(b);   /* tools 16 */
+  if(b.kind === "game") return gamePending(b);
+  if(b.kind === "cards") return deckOf(b).queue.length > 0 || (st.look != null && (!!st.lookBack || !st.lookOpen));
   if(b.kind === "calendars" && b.done && !st.done) return true;
   if(["text", "model", "calendars"].includes(b.kind)){ const ids = allGaps(b); return ids.length > 0 && !ids.every(id => st.open.has(id)); }
   if(b.kind === "questions") return !!document.querySelector(".speak [data-speak-next]");
@@ -576,7 +672,10 @@ function stepNext(){
   /* the chat page inside (her 13:24: no Next of its own): the field's Next / Back step through its chats and its speaking */
   if(b.kind === "tool"){ const f = document.querySelector(".tool-frame"); if(f && f.contentWindow){ f.contentWindow.postMessage({lwStep: "next"}, "*"); return; } }
   if(b.kind === "say" && !st.shown){ st.shown = true; render(); return; }
+  if(b.kind === "fix" && fixPending(b)){ fixNext(b); return; }   /* tools 16: the gap's answer, then message by message */
+  if(b.kind === "game" && gamePending(b)){ st.ttt.shown = true; render(); return; }   /* an open square: Next shows its answer */
   if(b.kind === "cards"){ const d = deckOf(b);
+    if(st.look != null && !st.lookBack && !st.lookOpen){ st.lookOpen = true; render(); return; }   /* her 👥 dot: the front first, Next shows the answer */
     if(st.look != null && !st.lookBack){ st.look = null; render(); return; }   /* her 👥 dot view → back to the cards */
     if(st.look != null && st.lookBack){ const k = d.hist.lastIndexOf(st.look); st.look = k > -1 && k < d.hist.length - 1 ? d.hist[k + 1] : null;
       if(st.look == null){ st.lookBack = false; if(!d.queue.length && !S.fast && !deckHasList(b) && !isLast()){ stepOn(); return; } } render(); return; }
@@ -604,6 +703,7 @@ function stepBack(){
     else if(d.hist.length){ st.look = d.hist[d.hist.length - 1]; st.lookBack = true; st.lookLbl = "↩ Looking back"; render(); return; } }
   if(S.fast){ S.fast = null; render(); return; }
   if(b && b.kind === "say" && bs(b).shown){ bs(b).shown = false; render(); return; }   /* the answer → the question, like the slide before */
+  if(b && b.kind === "fix" && fixPh(b).ph > 0){ fixPh(b).ph--; render(); return; }   /* tools 16: the screen before */
   if(b && b.kind === "questions"){ const pv = document.querySelector(".speak [data-speak-prev]"); if(pv){ pv.click(); return; } }
   if(b && b.kind === "scenes"){ const st = bs(b), sc = sceneState(b); if(st.peek){ st.peek = false; render(); return; } if(sc.at > (b.street_first === false ? 0 : -1)){ sc.at--; render(); return; } }
   if(b && b.kind === "tool"){ const f = document.querySelector(".tool-frame"); if(f && f.contentWindow){ f.contentWindow.postMessage({lwStep: "back"}, "*"); return; } }
@@ -692,6 +792,12 @@ function wire(root){
   on("[data-redo]", () => { bs(b).deck = newDeck(d.cards.filter((_, i) => d.again.has(i))); if(b._id === "fastdeck") S.fast.cards = bs(b).deck.cards; render(); });
   on("[data-restart]", () => { bs(b).deck = newDeck(b.cards); render(); });
   on("[data-lookdone]", () => { bs(b).look = null; render(); });
+  /* tools 16: Fix it and the game */
+  on("[data-fxchip]", x => { const F = fixPh(b); if(x.dataset.fxchip === b.place.answer){ F.solved = true; F.wrong = null; render(); }
+    else { F.wrong = x.dataset.fxchip; render(); const c = root.querySelector(`[data-fxchip="${CSS.escape(F.wrong)}"]`); if(c){ c.classList.remove("shake"); void c.offsetWidth; c.classList.add("shake"); } } });
+  on("[data-fxa]", x => { const F = fixPh(b), k = +x.dataset.fxa; if(F.ph === 2 + 2 * k) F.ph++; render(); });
+  if(b.kind === "game") gameMount(b, root.querySelector(`[data-game="${b._id}"]`));
+  on("[data-lookflip]", () => { bs(b).lookOpen = true; render(); });
   wireGroupDots();
   /* questions */
   if(b.kind === "questions") wireSpeak(root, render);

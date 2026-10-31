@@ -46,7 +46,7 @@ const {chromium} = require('playwright'); const path = require('path'); const fs
     expect('the hard way', out.t4.checked && out.t4.ans.trim() === 'My first month with a puppy: I learned the hard way that puppies eat shoes.', out.t4);
     // Show the answer without placing
     await go(p, 0); await p.click('#go'); out.show = await st(p); expect('"Show the answer" shows it (no ✓)', out.show.checked && /picked it up/.test(out.show.ans) && !/That's it/.test(out.show.msg), out.show);
-    out.min = await p.evaluate(() => minutesOf(TASKS.find(t => t.id === 'e1'))); expect('e1 ≈ 11 min', out.min === 11, out.min);
+    out.min = await p.evaluate(() => minutesOf(TASKS.find(t => t.id === 'e1'))); expect('e1: her 8 min (fixes 31.10 12:25: she did r1–e2 in 10 min)', out.min === 8, out.min);
     // e2: the box beside the rewrite from the start; "been handed over" accepted
     await p.evaluate(() => openTask('e2', 3)); await p.waitForTimeout(200);
     out.e2 = {box: await p.locator('.stage aside.box').count()}; await p.fill('#rw', 'been handed over'); await p.click('#go'); out.e2.ok = await p.locator('.you-ok').count();

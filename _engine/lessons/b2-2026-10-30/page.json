@@ -6,7 +6,8 @@
   "STICKER": "sticker.png",
   "GAPS": "gaps.json",
   "SORT": "sort.json",
-  "ARC": "arc.json"
+  "ARC": "arc.json",
+  "OTU": "otu.json"
  },
  "earlier": false,
  "listed": false

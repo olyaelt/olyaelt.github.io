@@ -1,6 +1,6 @@
 [
  {
-  "o": "I thought cooking dinner for twelve people would be easy. It wasn't!",
+  "o": "I thought cooking dinner for twelve people <b class=\"hl\">would be easy. It wasn't!</b>",
   "k": "THINK",
   "pre": "It was a lot ",
   "post": ".",
@@ -19,7 +19,7 @@
   "n": "or: more difficult than you'd think · than you'd think /ðən juːd ˈθɪŋk/"
  },
  {
-  "o": "The parenting books were helpful, but they weren't enough — nothing prepares you for the first night with a newborn.",
+  "o": "The parenting books were helpful, but <b class=\"hl\">they weren't enough</b> — nothing prepares you for the first night with a newborn.",
   "k": "FAR",
   "pre": "The books ",
   "post": ".",
@@ -38,7 +38,7 @@
   "n": "only get(s) you so far → past: only got me so far"
  },
  {
-  "o": "AI writes the first draft of our company newsletter, but our editor knows what our readers actually find funny.",
+  "o": "AI writes the first draft of our company newsletter, but <b class=\"hl\">our editor knows what our readers actually find funny</b>.",
   "k": "VALUE",
   "pre": "That's where she ",
   "post": ".",
@@ -52,7 +52,7 @@
   "n": "she adds (-s) · value /ˈvæljuː/"
  },
  {
-  "o": "In our block of flats, the residents used to organise everything themselves. Now a company does it all.",
+  "o": "In our block of flats, the residents used to organise everything themselves. Now <b class=\"hl\">a company does it all</b>.",
   "k": "HANDED",
   "pre": "Now it's all ",
   "post": " to a company.",
@@ -63,7 +63,7 @@
   "n": "it's all been handed over = they've handed it all over · handed /ˈhændɪd/"
  },
  {
-  "o": "I learned to change a tyre years ago and thought I'd never need it. Then last summer, on a mountain road — it was so useful!",
+  "o": "I learned to change a tyre years ago and thought I'd never need it. Then last summer, on a mountain road — <b class=\"hl\">it was so useful!</b>",
   "k": "HANDY",
   "pre": "It ",
   "post": ".",
@@ -82,17 +82,19 @@
   "n": "It helped then (past) → came in handy · You never know when it might come in handy = about the future"
  },
  {
-  "o": "My kids' football club makes parents write a report after every match. Nobody reads them. Why do they make us do it?",
+  "o": "My kids' football club makes parents write a report after every match. Nobody reads them. <b class=\"hl\">Why do they make us do it?</b>",
   "k": "POINT",
   "pre": "So ",
   "post": " reports nobody reads?",
-  "a": "what's the point of writing",
+  "a": "what's the point of",
   "acc": [
+   "what's the point of",
+   "what is the point of",
    "what's the point of writing",
    "what is the point of writing",
    "what's the point in writing",
    "what is the point in writing"
   ],
-  "n": "What's the point of (or in) + -ing? · or: what's the point of the reports?"
+  "n": "or: So what's the point of writing reports nobody reads? · point of + a noun (reports) or + -ing (writing reports)"
  }
 ]

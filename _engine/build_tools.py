@@ -105,7 +105,7 @@ def page_ids(lesson, name, d, save=True):
     if t == 'revision-field':
         blocks = [b for st in d['stages'] for b in st['blocks']]
         pids['blocks'] = assign_ids(reg, 'blocks', blocks, report, sig=lambda b: _plain([b.get('kind', ''), b.get('instr', ''), b.get('page', ''), b.get('img', '')]))
-        pids['cards'] = assign_ids(reg, 'cards', [c for b in blocks if b.get('kind') == 'cards' for c in b['cards']], report)
+        pids['cards'] = assign_ids(reg, 'cards', [c for b in blocks for c in (b['cards'] if b.get('kind') == 'cards' else b.get('tasks', []) if b.get('kind') == 'game' else [])], report)   # tools 16: a game's squares count as cards
         pids['write'] = assign_ids(reg, 'write', [it for b in blocks if b.get('kind') == 'write' for it in b['items']], report)
         for b, bp in zip(blocks, pids['blocks']):
             if b.get('kind') == 'questions': pids['questions.%d' % bp] = assign_ids(reg, 'questions.%d' % bp, b['items'], report)

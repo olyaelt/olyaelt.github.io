@@ -1,7 +1,7 @@
 // engine 49: the `sort` step (B2 30.10, task 2 «Recommend: say it, then sort it») and `scene` lines in dlg.
 //   node tests/sort_check.js SITE_DIR [shots_dir]
 // item 1 flies into its box by itself; item 2: the right box glows; a wrong box → why line, the card stays; the right box → next item;
-// item 5 into «Советую» → «Посоветовал коллега…»; after item 8: 4 × 2 lines + the question; "Show all the answers" → the summary at once;
+// item 5 into «I'd recommend» → «A colleague recommended it to you…» (the why lines in English since 31.10); after item 8: 4 × 2 lines + the question; engine 50: nothing moves on by itself, no skip button;
 // scene lines are grey date lines without a speaker; phone: no sideways scroll.
 const {chromium} = require('playwright'); const path = require('path'); const fs = require('fs'); const http = require('http');
 const PAGE = 'b2/2026-10-30.html';
@@ -15,31 +15,53 @@ const PAGE = 'b2/2026-10-30.html';
   const open = async (w, h, hash) => { const p = await (await b.newContext({viewport: {width: w, height: h}})).newPage(); p.on('pageerror', e => errs.push(e.message));
     await p.emulateMedia({reducedMotion: 'reduce'}); await p.goto(base + PAGE + hash); await p.waitForTimeout(400); return p; };
   const S = p => p.evaluate(() => { const s = SORTS[Object.keys(SORTS)[0]]; return s ? {at: s.at, open: s.open, n: Object.keys(s.placed).length, done: s.done, wrong: s.wrong || '', glow: [...document.querySelectorAll('.sp.glow')].map(x => x.dataset.sp).join()} : null; });
+  const goTxt = p => p.evaluate(() => { const g = document.getElementById('go'); return (g.disabled ? 'disabled:' : '') + g.textContent.trim(); });
+  const right = p => p.evaluate(() => SORT.items[SORTS[Object.keys(SORTS)[0]].at].p);
   for (const [w, h, tag] of [[400, 860, 'phone'], [1280, 720, 'laptop']]) {
     const p = await open(w, h, '#sort'), log = [];
-    await p.click('[data-sen]'); await p.waitForTimeout(3300); log.push(await S(p));                       // 0: auto flew + why, next
-    await p.click('[data-sen]'); await p.waitForTimeout(150); log.push(await S(p));                        // 1: item 2 open, p2 glows
-    await p.click('[data-sp="p1"]'); await p.waitForTimeout(150); log.push(await S(p));                    // 2: wrong
-    await p.click('[data-sp="p2"]'); await p.waitForTimeout(2900); log.push(await S(p));                   // 3: right → item 3
-    for (let k = 0; k < 2; k++) { const want = await p.evaluate(() => SORT.items[SORTS[Object.keys(SORTS)[0]].at].p); await p.click('[data-sen]'); await p.click(`[data-sp="${want}"]`); await p.waitForTimeout(2900); }
-    await p.click('[data-sen]'); await p.waitForTimeout(100); const glow5 = (await S(p)).glow; await p.click('[data-sp="p1"]'); await p.waitForTimeout(150); log.push(await S(p));   // 4: item 5 wrong
+    log.push({go: await goTxt(p)});                                                                         // 0: Check
+    await p.click('[data-sen]'); await p.waitForTimeout(5000); log.push(Object.assign(await S(p), {go: await goTxt(p)}));   // 1: auto flew, waits
+    await p.click('#go'); await p.waitForTimeout(150);
+    await p.click('#go'); await p.waitForTimeout(150); log.push(Object.assign(await S(p), {go: await goTxt(p)}));           // 2: item 2 open via Check, glow
+    await p.click('[data-sp="p1"]'); await p.waitForTimeout(150); log.push(await S(p));                       // 3: wrong
+    await p.click('[data-sp="p2"]'); await p.waitForTimeout(4000); log.push(Object.assign(await S(p), {go: await goTxt(p), why: await p.locator('.sp-why').count()}));   // 4: landed, stays
+    await p.click('#go'); await p.waitForTimeout(150);
+    for (let k = 0; k < 2; k++) { const want = await right(p); await p.click('[data-sen]'); await p.click(`[data-sp="${want}"]`); await p.waitForTimeout(400); await p.click('#go'); await p.waitForTimeout(150); }
+    await p.click('[data-sen]'); await p.waitForTimeout(100); const glow5 = (await S(p)).glow; await p.click('[data-sp="p1"]'); await p.waitForTimeout(150); log.push(await S(p));   // 5: item 5 wrong
     if (shots) await p.screenshot({path: path.join(shots, `sort-${tag}-wrong.png`)});
-    for (let k = 0; k < 4; k++) { const want = await p.evaluate(() => SORT.items[SORTS[Object.keys(SORTS)[0]].at].p); if (k) await p.click('[data-sen]'); await p.click(`[data-sp="${want}"]`); await p.waitForTimeout(1100); }
-    log.push(await S(p));                                                                                   // 5: done
-    out[tag] = {log, glow5, sum: await p.evaluate(() => ({boxes: document.querySelectorAll('.sort-pats.sum .sp').length, lines: [...document.querySelectorAll('.sort-pats.sum .sp')].map(x => x.querySelectorAll('li').length).join(), bold: !!document.querySelector('.sort-pats.sum li b'), q: (document.querySelector('.se-q') || {}).textContent || '', go: document.getElementById('go').textContent, w: document.documentElement.scrollWidth, vw: innerWidth}))};
+    for (let k = 0; k < 4; k++) { const want = await right(p); if (k) await p.click('[data-sen]'); await p.click(`[data-sp="${want}"]`); await p.waitForTimeout(400);
+      if (k === 3) log.push({go: await goTxt(p)}); await p.click('#go'); await p.waitForTimeout(150); }
+    log.push(await S(p));                                                                                   // 6: last go label, 7: done
+    out[tag] = {log, glow5, sum: await p.evaluate(() => ({boxes: document.querySelectorAll('.sort-pats.sum .sp').length, lines: [...document.querySelectorAll('.sort-pats.sum .sp')].map(x => x.querySelectorAll('li').length).join(), bold: !!document.querySelector('.sort-pats.sum li b'), q: (document.querySelector('.se-q') || {}).textContent || '', go: document.getElementById('go').textContent, w: document.documentElement.scrollWidth, vw: innerWidth, skip: /Show all the answers/.test(document.body.innerText)}))};
     const L = log, M = out[tag].sum;
-    expect(tag + ': item 1 flies by itself', L[0].n === 1 && L[0].at === 1, L[0]);
-    expect(tag + ': item 2 open, its box glows', L[1].open && L[1].glow === 'p2', L[1]);
-    expect(tag + ': wrong box → why, the card stays', L[2].at === 1 && L[2].n === 1 && /тебе посоветовали/.test(L[2].wrong), L[2]);
-    expect(tag + ': right box → item 3', L[3].at === 2 && L[3].n === 2 && !L[3].wrong, L[3]);
-    expect(tag + ': item 5 (free): no glow; «Советую» brings the why line', glow5 === '' && L[4].at === 4 && /Посоветовал коллега/.test(L[4].wrong), [glow5, L[4]]);
-    expect(tag + ': after item 8 the summary: 4 boxes × 2 lines, the question, Finish', L[5].done && M.boxes === 4 && M.lines === '2,2,2,2' && M.bold && /ни разу не стоит/.test(M.q) && /Finish/.test(M.go), M);
+    expect(tag + ': the main button starts as Check', L[0].go === 'Check', L[0]);
+    expect(tag + ': item 1 flies by itself and then WAITS (her 31.10: nothing moves on by itself)', L[1].n === 1 && L[1].at === 0 && L[1].go === 'Next card →', L[1]);
+    expect(tag + ': Check opens item 2; the main button waits; its box glows', L[2].at === 1 && L[2].open && L[2].go.startsWith('disabled:') && L[2].glow === 'p2', L[2]);
+    expect(tag + ': wrong box → why, the card stays', L[3].at === 1 && L[3].n === 1 && /Someone recommended it to you/.test(L[3].wrong), L[3]);
+    expect(tag + ': right box → it lands, the why line stays, Next card', L[4].at === 1 && L[4].n === 2 && L[4].why === 1 && L[4].go === 'Next card →', L[4]);
+    expect(tag + ': item 5 (free): no glow; «Советую» brings the why line', glow5 === '' && L[5].at === 4 && /A colleague recommended it to you/.test(L[5].wrong), [glow5, L[5]]);
+    expect(tag + ': the last card: "See all four patterns →", then the summary', L[6].go === 'See all four patterns →' && L[7].done, [L[6], L[7]]);
+    expect(tag + ': the summary: 4 boxes × 2 lines, the question, Finish; no "Show all the answers" anywhere', M.boxes === 4 && M.lines === '2,2,2,2' && M.bold && /never comes right after recommend/.test(M.q) && /Finish/.test(M.go) && !M.skip, M);
     expect(tag + ': no sideways scroll', M.w <= M.vw, M);
     if (shots) await p.screenshot({path: path.join(shots, `sort-${tag}-summary.png`)});
   }
-  { const p = await open(400, 860, '#sort'); await p.click('#go'); await p.waitForTimeout(200);
-    out.showAll = await p.evaluate(() => [document.querySelectorAll('.sort-pats.sum li').length, document.getElementById('go').textContent]);
-    expect('"Show all the answers" → the summary at once', out.showAll[0] === 8 && /Finish/.test(out.showAll[1]), out.showAll); }
+  { // engine 50 (her 31.10): Back = the card before, as it was left; the summary's Back = the last card; ↺ Do it again; opening the task again = a fresh start
+    const p = await open(400, 860, '#sort'); const right = () => p.evaluate(() => SORT.items[SORTS[Object.keys(SORTS)[0]].at].p);
+    await p.click('[data-sen]'); await p.waitForTimeout(300); await p.click('#go'); await p.waitForTimeout(150);
+    await p.click('[data-sen]'); await p.click(`[data-sp="${await right()}"]`); await p.waitForTimeout(300); await p.click('#go'); await p.waitForTimeout(150);
+    const backOn = await p.evaluate(() => !document.getElementById('prev').disabled);
+    await p.click('#prev'); await p.waitForTimeout(150); const back1 = Object.assign(await S(p), {why: await p.locator('.sp-why').count(), go: await p.evaluate(() => document.getElementById('go').textContent.trim())});
+    await p.click('#go'); await p.waitForTimeout(150); const fwd = await S(p);
+    out.backs = {backOn, back1, fwd};
+    expect('Back on a card = the card before, in its box with its why line; Next card → forward again', backOn && back1.at === 1 && back1.open && back1.why === 1 && back1.go === 'Next card →' && fwd.at === 2 && !fwd.open, out.backs);
+    await p.click('#go'); await p.waitForTimeout(100);   // Check
+    for (let k = 2; k < 8; k++) { const want = await right(); if (k > 2) await p.click('[data-sen]'); await p.click(`[data-sp="${want}"]`); await p.waitForTimeout(300); await p.click('#go'); await p.waitForTimeout(150); }
+    const sumBack = await p.evaluate(() => !document.getElementById('prev').disabled); await p.click('#prev'); await p.waitForTimeout(150); const last = await S(p);
+    await p.click('#go'); await p.waitForTimeout(150); const again = await S(p);
+    await p.click('[data-sort-again]'); await p.waitForTimeout(150); const fresh = await S(p);
+    await p.click('#home'); await p.waitForTimeout(150); await p.click('[data-open="sort"]'); await p.waitForTimeout(200); const reopened = await S(p);
+    out.redo = {sumBack, last, again, fresh, reopened};
+    expect('the summary: Back = the last card; ↺ Do it again = card 1, empty; opening the task again = a fresh start', sumBack && last.at === 7 && last.open && !last.done && again.done && fresh.at === 0 && fresh.n === 0 && !fresh.done && reopened && reopened.at === 0 && reopened.n === 0, out.redo); }
   { const p = await open(400, 860, '#rev');
     out.scene = await p.evaluate(() => [...document.querySelectorAll('.dlg p.scene')].map(x => x.textContent.trim() + (x.querySelector('.spk') ? '+spk' : '')).join('|'));
     expect('scene lines: grey date lines, no speaker', out.scene === 'Exchange 1|Exchange 2|Exchange 3', out.scene); }

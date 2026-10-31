@@ -325,33 +325,95 @@
      ]
     },
     {
-     "kind": "cards",
-     "style": "ours",
-     "instr": "Our sentences. Green = good, grey = could be better. How would you make it perfect English?",
-     "instr_next": "One more of our sentences. How would you make it perfect English?",
-     "check": "Perfect English",
-     "summary": "Could be better → perfect: the full list",
+     "kind": "fix",
+     "instr": "Fix it: say it right. Then say the two messages with “work”.",
+     "big": "Does that still work for you?",
+     "red": "work",
+     "note": "-s уже есть в does, поэтому work. А в ответе — works: That still works for me.",
+     "place": {
+      "tokens": "Does that still ▢ for you?",
+      "chips": [
+       "work",
+       "works"
+      ],
+      "answer": "work"
+     },
+     "say": [
+      {
+       "q": "Is eight still OK for you?",
+       "a": "Does eight still work for you?"
+      },
+      {
+       "q": "Yes, eight is still fine for me.",
+       "a": "Yes, eight still works for me."
+      }
+     ],
+     "tip": "Fix it: look at the red word and say the sentence. Then say the two messages with it and tap to check."
+    },
+    {
+     "kind": "game",
+     "piece": "tictactoe",
+     "size": 3,
      "box": "BOX",
-     "cards": [
+     "instr": "Noughts and crosses (tic-tac-toe) with our sentences: pick a square and say the sentence better. Then tap to check. Three in a row wins!",
+     "check": "Perfect English",
+     "tasks": [
+      {
+       "ctx": "переносите звонок, предлагаете 10 утра",
+       "q": "~~I suggest to meet at~~ 10 <g>my time</g>.",
+       "a": "**Could we make it** 10 my time?",
+       "why": "Could we make it…? — так предлагают новое время."
+      },
+      {
+       "ctx": "коллега предлагает 3 часа",
+       "q": "Sorry, I have a meeting ~~at this time~~.",
+       "a": "Sorry, I have a meeting **then**.",
+       "why": "Время назвал собеседник → then (в это время)."
+      },
       {
        "ctx": "сообщение в чат: встреча ещё не началась, вы в пути",
-       "front": "We ~~are~~ <g>half an hour late</g> for the meeting.",
-       "back": "We**'ll be** half an hour late for the meeting.",
-       "why": "Встреча ещё не началась — предупреждаешь заранее: will be. We're late — когда уже опоздали. Можно и так: We're running half an hour late."
+       "q": "We ~~are~~ <g>half an hour late</g> for the meeting.",
+       "a": "We**'ll be** half an hour late for the meeting.",
+       "why": "Встреча ещё впереди → will be."
       },
       {
-       "ctx": "ты опаздываешь на 10 минут",
-       "front": "<g>Sorry, I'll be</g> ~~later~~.",
-       "back": "Sorry, I'll be **10 minutes late**. / Sorry, I'll be **a bit late**.",
-       "why": "Later — «позже», в другое время. Опоздаю → late: be + сколько + late (без for перед временем; late for — перед событием: late for the meeting)."
+       "ctx": "у вас запись к врачу, просите сдвинуть звонок",
+       "q": "<g>Could</g> ~~you move~~ <g>an hour later</g>?",
+       "a": "Could **we make it** an hour later?",
+       "why": "make it = назначить на (время): Could we make it…?"
       },
       {
-       "ctx": "ты в пробке, но надеешься скоро доехать",
-       "front": "I ~~wish~~ <g>I'll be there soon</g>.",
-       "back": "I **hope** I'll be there soon.",
-       "why": "I wish — о том, чего не будет (I wish I could come). Надеюсь → hope. Ещё естественнее: Hopefully, I'll be there soon."
+       "ctx": "голосовое коллеге: у вас перевели часы",
+       "q": "~~Just remind you~~: the clocks went back.",
+       "a": "**Just a heads-up**: the clocks went back.",
+       "why": "a heads-up = предупреждаю заранее."
+      },
+      {
+       "ctx": "ты ещё в пути и опоздаешь минут на 10",
+       "q": "<g>Sorry, I'll be</g> ~~later~~.",
+       "a": "Sorry, I'll be **10 minutes late**.",
+       "why": "later — «позже», в другое время; опоздаю → late."
+      },
+      {
+       "ctx": "у вас перевели часы, у коллеги нет",
+       "q": "Our call is now ~~one~~ <g>hour later for you</g>.",
+       "a": "Our call is now **an** hour later for you.",
+       "why": "an hour later — так говорят; one hour — когда важно число (one hour, not two)."
+      },
+      {
+       "ctx": "ты в пробке; думаешь, что скоро доедешь, но не уверен(а)",
+       "q": "I ~~wish~~ <g>I'll be there soon</g>.",
+       "a": "I **hope** I'll be there soon.",
+       "why": "I wish — о том, чего не будет; надеюсь → hope."
+      },
+      {
+       "ctx": "коллега предлагает 11 утра по его времени, а у тебя утро занято",
+       "q": "~~Maybe we could meet~~ 1 pm <g>my time</g>~~,~~ 4 pm <g>your time</g>.",
+       "a": "**Could we make it** 1 pm my time? **That's** 4 pm your time.",
+       "why": "Тот же вопрос: Could we make it…?"
       }
-     ]
+     ],
+     "tip": "Play against your partner. Tap a square, say the sentence better, then tap to check. Correct? The square is yours. Three in a row wins!"
     }
    ]
   },

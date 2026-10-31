@@ -23,7 +23,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
   await p.locator('.mk[data-mk]').first().click(); out.markedOn = await p.locator('.mk.on').count();
   let markedSay = false;
   for (let i = 0; i < 40 && !(await p.locator('.lesson-head').count()); i++) {
-    if (!markedSay && await p.locator('.say-a .mk').count()) { await p.locator('.say-a .mk').first().click(); markedSay = true; }
+    if (!markedSay && await p.locator('.say-a .mk:visible').count()) { await p.locator('.say-a .mk:visible').first().click(); markedSay = true; }   // engine 52: the ? is there once the row is open
     await p.locator('#go').click(); await p.waitForTimeout(40);
   }
   out.banner = (await p.locator('.flagged b').count()) ? await p.locator('.flagged b').innerText() : 'none';

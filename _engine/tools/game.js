@@ -130,8 +130,12 @@ function gRoll(el, final, done){
 
 /* ---------- ⭕ tic-tac-toe (her 21:48): tap a square, it turns over and shows a task; do it → the square is yours (✓) or not this time (✗);
    three in a row (3×3) or four in a row (4×4) wins; the turn passes either way ---------- */
-function gTicTacToe(host, tasks, {size = 3, win = 3, marks = ["X", "O"], answer = t => t.a || "", prompt = t => gEsc(t.q || t)} = {}){
-  const T = {cells: gShuffle(tasks).slice(0, size * size).map(t => ({t, m: null})), turn: 0, open: -1, shown: false, over: null};
+/* tools 16 (the B2 revision field f-late, its first use): state = a board to carry on with (the field redraws its screen often);
+   revealFirst = ✓ / ✗ only after Show the answer ("we lead the students"); labels = the two answers' words; onResult(task, ok),
+   onWin(el), onChange() for the page around it */
+function gTicTacToe(host, tasks, {size = 3, win = 3, marks = ["X", "O"], answer = t => t.a || "", prompt = t => gEsc(t.q || t), state = null, revealFirst = false, labels = null, onResult = null, onWin = null, onChange = null} = {}){
+  const T = state || {cells: gShuffle(tasks).slice(0, size * size).map(t => ({t, m: null})), turn: 0, open: -1, shown: false, over: null};
+  const changed = () => { if(onChange) onChange(T); };
   const lines = (() => { const L = [], ok = (r, c) => r >= 0 && c >= 0 && r < size && c < size;
     for(let r = 0; r < size; r++) for(let c = 0; c < size; c++) [[0, 1], [1, 0], [1, 1], [1, -1]].forEach(([dr, dc]) => { const l = []; for(let k = 0; k < win; k++){ if(!ok(r + dr * k, c + dc * k)) return; l.push((r + dr * k) * size + c + dc * k); } L.push(l); });
     return L; })();
@@ -144,16 +148,17 @@ function gTicTacToe(host, tasks, {size = 3, win = 3, marks = ["X", "O"], answer 
       <div class="gt-side">${T.over ? `<p class="gt-turn big">${T.over.who ? `${markSVG(T.over.who)} wins! 🎉` : "It's a draw!"}</p><button class="btn primary" data-gt-again>Play again</button>`
         : `<p class="gt-turn">${markSVG(cur)} <b>${gEsc(cur)}'s turn</b>${o ? "" : " — choose a square"}</p>
         ${o ? `<div class="gt-task${T.shown ? " shown" : ""}"><p class="gt-q">${prompt(o.t)}</p>${T.shown && answer(o.t) ? `<p class="gt-a">${answer(o.t)}</p>` : ""}
-          <div class="gt-acts">${answer(o.t) && !T.shown ? `<button class="btn" data-gt-show>Show the answer</button>` : ""}<button class="btn ok" data-gt-yes>✓ ${gEsc(cur)} takes it</button><button class="btn again" data-gt-no>✗ Not this time</button></div></div>` : ""}`}</div></div>`;
-    host.querySelectorAll("[data-gt]").forEach(b => b.addEventListener("click", () => { if(T.open > -1) return; T.open = +b.dataset.gt; T.shown = false; render(); }));
+          <div class="gt-acts">${answer(o.t) && !T.shown ? `<button class="btn${revealFirst ? " primary" : ""}" data-gt-show>Show the answer</button>` : ""}${!revealFirst || T.shown || !answer(o.t) ? `<button class="btn ok" data-gt-yes>${labels ? gEsc(labels.yes) : `✓ ${gEsc(cur)} takes it`}</button><button class="btn again" data-gt-no>${labels ? gEsc(labels.no) : "✗ Not this time"}</button>` : ""}</div></div>` : ""}`}</div></div>`;
+    host.querySelectorAll("[data-gt]").forEach(b => b.addEventListener("click", () => { if(T.open > -1) return; T.open = +b.dataset.gt; T.shown = false; render(); changed(); }));
     const on = (q, f) => { const b = host.querySelector(q); if(b) b.addEventListener("click", f); };
-    on("[data-gt-show]", () => { T.shown = true; render(); });
+    on("[data-gt-show]", () => { T.shown = true; render(); changed(); });
     on("[data-gt-yes]", () => { const k = T.open; T.cells[k].m = marks[T.turn]; T.open = -1; const l = lines.find(l => l.every(i => T.cells[i].m === marks[T.turn]));
-      if(l) T.over = {who: marks[T.turn], line: l}; else if(T.cells.every(c => c.m)) T.over = {who: null}; else T.turn = 1 - T.turn; render(k); });
-    on("[data-gt-no]", () => { T.open = -1; T.turn = 1 - T.turn; render(); });
-    on("[data-gt-again]", () => { T.cells = gShuffle(tasks).slice(0, size * size).map(t => ({t, m: null})); T.turn = 0; T.open = -1; T.over = null; render(); });
+      if(l) T.over = {who: marks[T.turn], line: l}; else if(T.cells.every(c => c.m)) T.over = {who: null}; else T.turn = 1 - T.turn; render(k);
+      if(onResult) onResult(T.cells[k].t, true); if(T.over && T.over.who && onWin) onWin(host.querySelector(".gt-turn.big") || host); changed(); });
+    on("[data-gt-no]", () => { const t = T.cells[T.open].t; T.open = -1; T.turn = 1 - T.turn; render(); if(onResult) onResult(t, false); changed(); });
+    on("[data-gt-again]", () => { T.cells = gShuffle(tasks).slice(0, size * size).map(t => ({t, m: null})); T.turn = 0; T.open = -1; T.over = null; render(); changed(); });
   }
-  render(); return T;
+  T.redraw = () => render(); render(); return T;
 }
 
 /* ---------- 🐍🪜 snakes and ladders (her 21:48, for revision): 30 squares, turns for 2–3 players; roll the die, the pawn hops square by

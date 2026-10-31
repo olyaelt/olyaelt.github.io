@@ -94,8 +94,9 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
     if (shots) { await OF.evaluate(() => document.querySelector('[data-pchost]').scrollIntoView()); await OF.screenshot({path: path.join(shots, 'r2-under-frame.png')}); }
     // f-late's 🃏 Practice: all its cards in one deck (warm replies, rewrites, our sentences), no Next until the end
     const PL = await open(L + 'f-late-live.html', ''); await bubble(PL, 2); await PL.waitForTimeout(150);
-    out.lateDeck = await PL.evaluate(() => ({blocks: curBlocks().length, cards: curBlock().cards.length, all: D.stages[2].blocks.reduce((n, b) => n + b.cards.length, 0), kinds: [...new Set(curBlock().cards.map(c => c._b.style))].join(), next: document.querySelectorAll('.blk-nav [data-next]').length}));
-    expect('f-late Practice: one deck of every card, three kinds, no Next yet', out.lateDeck.blocks === 1 && out.lateDeck.cards === out.lateDeck.all && out.lateDeck.kinds === 'say,kwt,ours' && out.lateDeck.next === 0, out.lateDeck);
+    out.lateDeck = await PL.evaluate(() => ({blocks: curBlocks().map(b => b.kind).join(), cards: curBlock().cards.length, all: D.stages[2].blocks.filter(b => b.kind === 'cards').reduce((n, b) => n + b.cards.length, 0), kinds: [...new Set(curBlock().cards.map(c => c._b.style))].join(), next: document.querySelectorAll('.blk-nav [data-next]').length}));
+    // tools 16 (handoff 31.10 12:30): the deck (warm replies, rewrites), then ✏️ Fix it, then 🎮 noughts and crosses with "our sentences"
+    expect('f-late Practice: one deck of every card (two kinds), then Fix it and the game, no Next yet', out.lateDeck.blocks === 'cards,fix,game' && out.lateDeck.cards === out.lateDeck.all && out.lateDeck.kinds === 'say,kwt' && out.lateDeck.next === 0, out.lateDeck);
     // her rule 12:29: one Back / Next, always in the same place; Next first shows the answers, then goes on
     const C = await open(L + 'f-clocks-live.html', 'anna'); const where = () => C.evaluate(() => [S.stage, bIdx()]);
     out.steps = {bar: await C.locator('.stepbar [data-back], .stepbar [data-step]').count(), other: await C.locator('[data-next], [data-prev]').count()};
