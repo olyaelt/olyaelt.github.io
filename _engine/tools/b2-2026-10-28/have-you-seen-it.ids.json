@@ -2,7 +2,7 @@
  "blocks": [
   {
    "pid": 0,
-   "sig": "say how would you say these in english? take turns. then tap “show the answer”.",
+   "sig": "say back to the start: how would you say these now? take turns. then tap “show the answer”.",
    "gone": false
   },
   {
@@ -27,7 +27,7 @@
   },
   {
    "pid": 5,
-   "sig": "cards say it another way with a phrase from the box. then tap the card.",
+   "sig": "cards not done in class yet. say it another way with a phrase from the box. then tap the card.",
    "gone": false
   },
   {
@@ -38,7 +38,7 @@
   {
    "pid": 7,
    "sig": "cards recommending: what we often say → what people usually say. how would you say it?",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 8,
@@ -48,6 +48,51 @@
   {
    "pid": 9,
    "sig": "text part 1, the rest. what do zoe and marcus think of the long winter? remember the missing words. tap the yellow and orange to check.",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "cards what might they say? use the box. then tap the card.",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "say in pairs: how would you say these in english? take turns. don't worry about mistakes — we'll come back to them at the end.",
+   "gone": false
+  },
+  {
+   "pid": 12,
+   "sig": "postits share with your partner:",
+   "gone": false
+  },
+  {
+   "pid": 13,
+   "sig": "say which tense is this — and why this one? then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 14,
+   "sig": "cards no ‘when’? past simple is fine in american english. what would a british speaker usually say? then tap the card.",
+   "gone": false
+  },
+  {
+   "pid": 15,
+   "sig": "cards our sentences. with a finished time it's past simple — in both. how would you say the grey part?",
+   "gone": false
+  },
+  {
+   "pid": 16,
+   "sig": "text can you remember today's phrases? say each one, then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 17,
+   "sig": "text the rest of the box. say each one, then tap the yellow to check.",
+   "gone": true
+  },
+  {
+   "pid": 18,
+   "sig": "cards things you wanted to say last week. which phrase from the box says it? then tap the card.",
    "gone": false
   }
  ],
@@ -170,31 +215,131 @@
   {
    "pid": 23,
    "sig": "i recommend watching it with subtitles. советуешь смотреть с субтитрами i recommend to watch it with subtitles. recommend + -ing, не to.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 24,
    "sig": "i strongly recommend it. очень советуешь i strongly recommend to see. or: i highly recommend it.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 25,
    "sig": "i definitely recommend it. точно советуешь i definitely recommend this for you. без for you.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 26,
    "sig": "i honestly think you should give this series a try. советуешь другу попробовать сериал i honestly suggest you to give this series a try. suggest you to — так не говорят.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 27,
    "sig": "so you wouldn't recommend it? переспрашиваешь: значит, не советуешь? so you don't recommend to read it?",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 28,
    "sig": "it's not really my thing. i would not recommend it. / honestly? i wouldn't bother. не советуешь — это не твоё it's not really my thing. i would not recommend you to watch it. recommend sb to do — редко и звучит официально.",
+   "gone": true
+  },
+  {
+   "pid": 29,
+   "sig": "stick with it! it really picks up in episode three. sam loves a series. his friend watched one episode and says it was slow.",
+   "gone": false
+  },
+  {
+   "pid": 30,
+   "sig": "everyone keeps going on about it, but to be honest, all the hype put me off. everyone calls a new film ‘the best film of the year’. tom is so tired of hearing about it that he doesn't feel like watching it.",
+   "gone": false
+  },
+  {
+   "pid": 31,
+   "sig": "well, it is a horror film! rosa's husband says the horror film they watched was ‘far too scary’. rosa teases him.",
+   "gone": false
+  },
+  {
+   "pid": 32,
+   "sig": "it still takes me back. but some of the jokes haven't aged well. kate, 58, rewatched a 90s sitcom with her teenage son. some jokes made her cringe.",
+   "gone": false
+  },
+  {
+   "pid": 33,
+   "sig": "i see the dad in a completely different light now. mark, 45, watched a cartoon from his childhood with his kids. now he understands the father.",
+   "gone": false
+  },
+  {
+   "pid": 34,
+   "sig": "i've only seen bits of it. is it any good? a colleague asks paul if he's seen a new quiz show. he's only watched a few clips online.",
+   "gone": false
+  },
+  {
+   "pid": 35,
+   "sig": "i've seen all of them, i think. you said: i saw all of them, i think.",
+   "gone": false
+  },
+  {
+   "pid": 36,
+   "sig": "i've seen the first season of breaking bad. you said: i saw the first season of breaking bad.",
+   "gone": false
+  },
+  {
+   "pid": 37,
+   "sig": "have you seen sherlock? you said: did you see sherlock?",
+   "gone": false
+  },
+  {
+   "pid": 38,
+   "sig": "i've seen suits. i liked it very much. you said: i saw suits. i liked it very much.",
+   "gone": false
+  },
+  {
+   "pid": 39,
+   "sig": "i haven't seen all the episodes of game of thrones. you said: i didn't see all the episodes of game of thrones. with a finished time (^^yesterday, last night, a week ago^^) — past simple in both: did you see the final last night?",
+   "gone": false
+  },
+  {
+   "pid": 40,
+   "sig": "did you see the star kitchen final yesterday? have you seen the star kitchen final ^^yesterday^^?",
+   "gone": false
+  },
+  {
+   "pid": 41,
+   "sig": "when did you hear about it? ^^when^^ have you heard about it?",
+   "gone": false
+  },
+  {
+   "pid": 42,
+   "sig": "did you cry when you watched it? have you cried ^^when you watched it^^?",
+   "gone": false
+  },
+  {
+   "pid": 43,
+   "sig": "i cried all evening. about the episode last night i've cried all evening.",
+   "gone": false
+  },
+  {
+   "pid": 44,
+   "sig": "i went to the cinema a week ago. i've been to the cinema ^^a week ago^^.",
+   "gone": false
+  },
+  {
+   "pid": 45,
+   "sig": "i couldn't get into it. a series that didn't grab you no, no, i couldn't.",
+   "gone": false
+  },
+  {
+   "pid": 46,
+   "sig": "everyone's talking about it, but i haven't seen it yet. a series that's popular right now it's not the first time someone's mentioned it, but i haven't seen it.",
+   "gone": false
+  },
+  {
+   "pid": 47,
+   "sig": "the casting's great, i'll give it that. but the logic… sherlock the casting and the music were good, but the logic… i didn't get it.",
+   "gone": false
+  },
+  {
+   "pid": 48,
+   "sig": "it's pretty short. give it a try! the series wednesday it's pretty short. you can watch it.",
    "gone": false
   }
  ],

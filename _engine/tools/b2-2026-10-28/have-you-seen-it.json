@@ -3,6 +3,7 @@
  "file": "have-you-seen-it",
  "title": "Have you seen it?",
  "part": "Lesson 9 · 28.10",
+ "sketch": true,
  "boxes": {
   "BOX": [
    {
@@ -49,52 +50,30 @@
    "blocks": [
     {
      "kind": "say",
-     "instr": "How would you say these in English? Take turns. Then tap “Show the answer”.",
+     "instr": "In pairs: how would you say these in English? Take turns. Don't worry about mistakes — we'll come back to them at the end.",
      "task": [
-      "**1**  ((Все на работе без конца о нём твердят — уже надоело.))",
-      "• • •",
-      "**2**  ((Я бросила после третьей серии — не смогла втянуться.))",
-      "• • •",
-      "**3**  ((Честно? Не так уж он хорош, как все говорят.))",
-      "• • •"
+      "**1**  Все на работе без конца о нём твердят — уже надоело.",
+      "**2**  Я бросила после третьей серии — не смогла втянуться.",
+      "**3**  Честно? Не так уж он хорош, как все говорят.",
+      "**4**  Ну это же детектив! (чего ты хотел?)",
+      "**5**  Пересматриваю «Друзей» — некоторые шутки устарели.",
+      "**6**  Я бы не стала тратить на него время."
      ],
-     "answer": [
-      "**1**  ((Все на работе без конца о нём твердят — уже надоело.))",
-      "Everyone at work **keeps going on about it**.",
-      "**2**  ((Я бросила после третьей серии — не смогла втянуться.))",
-      "I **gave up after** episode three. I just **couldn't get into** it.",
-      "**3**  ((Честно? Не так уж он хорош, как все говорят.))",
-      "Honestly? It's **not as good as everyone says**."
-     ],
-     "answer_title": "Our answers",
-     "tip": "This is how the lesson started: the same six sentences. Say them aloud first, then check."
+     "later": "The answers come at the end of the lesson: 🔁 Back to the start."
     },
     {
-     "kind": "say",
-     "instr": "Three more. Take turns, then tap “Show the answer”.",
-     "task": [
-      "**4**  ((Ну это же детектив! (чего ты хотел?)))",
-      "• • •",
-      "**5**  ((Пересматриваю «Друзей» — некоторые шутки устарели.))",
-      "• • •",
-      "**6**  ((Я бы не стала тратить на него время.))",
-      "• • •"
-     ],
-     "answer": [
-      "**4**  ((Ну это же детектив! (чего ты хотел?)))",
-      "Well, it **is** a crime drama!",
-      "**5**  ((Пересматриваю «Друзей» — некоторые шутки устарели.))",
-      "I've been rewatching Friends — some of the jokes **haven't aged well**.",
-      "**6**  ((Я бы не стала тратить на него время.))",
-      "Honestly? **I wouldn't bother**."
-     ],
-     "answer_title": "Our answers",
-     "tip": "This is how the lesson started: the same six sentences. Say them aloud first, then check."
+     "kind": "postits",
+     "instr": "Share with your partner:",
+     "notes": [
+      "A series **everyone's talking about** right now. Have you seen it?",
+      "Something you **started but didn't finish**. Why?",
+      "An **old film or series** you'd happily watch again."
+     ]
     }
    ]
   },
   {
-   "label": "📖 The text",
+   "label": "📖 Text & new phrases",
    "blocks": [
     {
      "kind": "text",
@@ -558,6 +537,51 @@
      ]
     },
     {
+     "kind": "cards",
+     "style": "say",
+     "instr": "Which situation fits the phrase, a or b? Why not the other one? Then tap the card.",
+     "tip": "Say a or b and why. Tap to check. ↺ Again later = we weren't sure: the card comes back two or three cards later.",
+     "cards": [
+      {
+       "front": "It really **picks up**.\na) The first episodes are slow, but then it gets exciting.\nb) It starts brilliantly, but then it gets boring.",
+       "back": "**a** — it gets better and more interesting"
+      },
+      {
+       "front": "I just **couldn't get into** it.\na) The cinema was full, so we couldn't get in.\nb) I watched two episodes, but it didn't grab me.",
+       "back": "**b** — it didn't interest me, so I stopped"
+      },
+      {
+       "front": "All the **hype put me off**.\na) Everyone said it was a masterpiece, so I didn't want to watch it.\nb) The music was so loud that I switched it off.",
+       "back": "**a** — all the excitement made me not want to watch it"
+      },
+      {
+       "front": "Some of the jokes **haven't aged well**.\na) The actors look much older now.\nb) An old comedy has jokes that feel wrong or awkward today.",
+       "back": "**b** — about how something feels now, not how people look"
+      },
+      {
+       "front": "It **takes me back**.\na) A film from your childhood reminds you of Sunday evenings with your family.\nb) You take a DVD back to the library.",
+       "back": "**a** — it brings back memories"
+      },
+      {
+       "front": "…, **I'll give it that**.\na) You give your friend a DVD as a present.\nb) You didn't like the film, but you admit the music was great.",
+       "back": "**b** — you admit one good thing"
+      },
+      {
+       "front": "I **see** it **in a different light** now.\na) You watched it again on a bigger, brighter TV.\nb) You rewatched it as an adult and now you understand the parents.",
+       "back": "**b** — you understand it differently now"
+      },
+      {
+       "front": "**Is it any good?**\na) You want a friend's opinion of a series before you watch it.\nb) You want to know if the series is suitable for children.",
+       "back": "**a** — a question about quality"
+      },
+      {
+       "front": "Honestly? **I wouldn't bother.**\na) A noise outside doesn't disturb you.\nb) A friend asks if a film is worth watching, and you found it boring.",
+       "back": "**b** — it's not worth your time"
+      }
+     ],
+     "pic": "think"
+    },
+    {
      "kind": "text",
      "instr": "Part 2. What does Dan decide to watch? Remember the missing words. Tap the yellow and orange to check.",
      "lines": [
@@ -876,56 +900,588 @@
    ]
   },
   {
-   "label": "🃏 Practice",
+   "label": "🔧 Grammar",
    "blocks": [
+    {
+     "kind": "say",
+     "instr": "Which tense is this — and why this one? Then tap “Show the answer”.",
+     "task": [
+      "I**'ve** only **seen** bits of it.",
+      "((видела только отрывки))"
+     ],
+     "answer": [
+      "I**'ve** only **seen** bits of it.",
+      "((видела только отрывки))",
+      "**Present perfect.** There's no ‘when’ — it's your experience so far.",
+      "((«когда» не сказано — говорим о том, что видела к этому моменту))"
+     ],
+     "answer_title": "Check"
+    },
     {
      "kind": "cards",
      "style": "say",
-     "instr": "Which situation fits the phrase, a or b? Why not the other one? Then tap the card.",
-     "tip": "Say a or b and why. Tap to check. ↺ Again later = we weren't sure: the card comes back two or three cards later.",
+     "instr": "No ‘when’? Past simple is fine in American English. What would a British speaker usually say? Then tap the card.",
      "cards": [
       {
-       "front": "It really **picks up**.\na) The first episodes are slow, but then it gets exciting.\nb) It starts brilliantly, but then it gets boring.",
-       "back": "**a** — it gets better and more interesting"
+       "front": "((You said:)) I saw all of them, I think.",
+       "back": "I**'ve seen** all of them, I think."
       },
       {
-       "front": "I just **couldn't get into** it.\na) The cinema was full, so we couldn't get in.\nb) I watched two episodes, but it didn't grab me.",
-       "back": "**b** — it didn't interest me, so I stopped"
+       "front": "((You said:)) I saw the first season of Breaking Bad.",
+       "back": "I**'ve seen** the first season of Breaking Bad."
       },
       {
-       "front": "All the **hype put me off**.\na) Everyone said it was a masterpiece, so I didn't want to watch it.\nb) The music was so loud that I switched it off.",
-       "back": "**a** — all the excitement made me not want to watch it"
+       "front": "((You said:)) Did you see Sherlock?",
+       "back": "**Have** you **seen** Sherlock?"
       },
       {
-       "front": "Some of the jokes **haven't aged well**.\na) The actors look much older now.\nb) An old comedy has jokes that feel wrong or awkward today.",
-       "back": "**b** — about how something feels now, not how people look"
+       "front": "((You said:)) I saw Suits. I liked it very much.",
+       "back": "I**'ve seen** Suits. I liked it very much."
       },
       {
-       "front": "It **takes me back**.\na) A film from your childhood reminds you of Sunday evenings with your family.\nb) You take a DVD back to the library.",
-       "back": "**a** — it brings back memories"
-      },
-      {
-       "front": "…, **I'll give it that**.\na) You give your friend a DVD as a present.\nb) You didn't like the film, but you admit the music was great.",
-       "back": "**b** — you admit one good thing"
-      },
-      {
-       "front": "I **see** it **in a different light** now.\na) You watched it again on a bigger, brighter TV.\nb) You rewatched it as an adult and now you understand the parents.",
-       "back": "**b** — you understand it differently now"
-      },
-      {
-       "front": "**Is it any good?**\na) You want a friend's opinion of a series before you watch it.\nb) You want to know if the series is suitable for children.",
-       "back": "**a** — a question about quality"
-      },
-      {
-       "front": "Honestly? **I wouldn't bother.**\na) A noise outside doesn't disturb you.\nb) A friend asks if a film is worth watching, and you found it boring.",
-       "back": "**b** — it's not worth your time"
+       "front": "((You said:)) I didn't see all the episodes of Game of Thrones.",
+       "back": "I **haven't seen** all the episodes of Game of Thrones.",
+       "note": "With a finished time (^^yesterday, last night, a week ago^^) — past simple in both: **Did you see the final last night?**"
       }
      ]
     },
     {
      "kind": "cards",
+     "style": "ours",
+     "pic": "check",
+     "check": "Check",
+     "instr": "Our sentences. With a finished time it's past simple — in both. How would you say the grey part?",
+     "cards": [
+      {
+       "front": "~~Have you seen~~ the Star Kitchen final ^^yesterday^^?",
+       "back": "**Did you see** the Star Kitchen final yesterday?"
+      },
+      {
+       "front": "^^When^^ ~~have you heard~~ about it?",
+       "back": "When **did you hear** about it?"
+      },
+      {
+       "front": "~~Have you cried~~ ^^when you watched it^^?",
+       "back": "**Did you cry** when you watched it?"
+      },
+      {
+       "ctx": "about the episode last night",
+       "front": "~~I've cried~~ all evening.",
+       "back": "I **cried** all evening."
+      },
+      {
+       "front": "~~I've been~~ to the cinema ^^a week ago^^.",
+       "back": "I **went** to the cinema a week ago."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "✏️ Our sentences",
+   "blocks": [
+    {
+     "kind": "cards",
+     "style": "ours",
+     "instr": "Our sentences. Green = good, grey = could be better. How would you make it perfect English?",
+     "check": "Perfect English",
+     "box": "BOX",
+     "cards": [
+      {
+       "ctx": "весь этот хайп испортил впечатление",
+       "front": "Do you think so? I found it a bit boring. Maybe all <g>the hype</g> ~~affect me negatively~~.",
+       "back": "Maybe all the hype **spoiled it for me**.",
+       "why": "Hype — отличное слово! Spoiled it for me — испортило удовольствие. Put me off — оттолкнуло, отбило желание смотреть."
+      },
+      {
+       "ctx": "пересмотрела — и теперь вижу фильм по-другому",
+       "front": "So now I ~~watch this film with another eyes~~.",
+       "back": "So now I **see this film in a different light**.",
+       "why": "With another eyes здесь не подходит. Наш вариант: I see it in a different light now."
+      },
+      {
+       "ctx": "фильм из детства — пересматриваешь, и как будто снова там",
+       "front": "You can just enjoy it because ~~you can get back to~~ <g>your childhood</g>.",
+       "back": "You can just enjoy it because **it takes you back to** your childhood.",
+       "why": "It takes me back (to…) — возвращает в прошлое."
+      },
+      {
+       "ctx": "не смотрела — спрашиваешь, смотреть или нет",
+       "front": "<g>I haven't, actually.</g> ~~Maybe should I see that or no~~?",
+       "back": "I haven't, actually. **Should I watch it?** / **Is it any good?**",
+       "why": "I haven't, actually — отлично! В вопросе should — на первом месте, а or no не нужно. «Стоит смотреть?» обычно спрашивают так: Is it any good?"
+      }
+     ],
+     "pic": "check"
+    },
+    {
+     "kind": "text",
+     "instr": "Can you remember today's phrases? Say each one, then tap the yellow to check.",
+     "lines": [
+      {
+       "h": "HAVE YOU SEEN IT?"
+      },
+      {
+       "p": [
+        "Everyone",
+        {
+         "b": "'s"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "alking"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "bout"
+        },
+        " it.",
+        "  ((– Все о нём говорят.))"
+       ]
+      },
+      {
+       "p": [
+        "Everyone ",
+        {
+         "f": "k",
+         "r": "eeps"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "oing"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "n"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "bout"
+        },
+        " it.",
+        "  ((– Все без конца о нём твердят.))"
+       ]
+      },
+      {
+       "p": [
+        "I've ",
+        {
+         "f": "o",
+         "r": "nly"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "een"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "its"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "f"
+        },
+        " it.",
+        "  ((– Видела только отрывки.))"
+       ]
+      },
+      {
+       "p": [
+        "I ",
+        {
+         "f": "g",
+         "r": "ave"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "p"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "fter"
+        },
+        " episode 3.",
+        "  ((– Бросила после третьей серии.))"
+       ]
+      },
+      {
+       "p": [
+        "I ",
+        {
+         "f": "c",
+         "r": "ouldn't"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "et"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "nto"
+        },
+        " it.",
+        "  ((– Не смогла втянуться.))"
+       ]
+      },
+      {
+       "h": "WHAT'S IT LIKE?"
+      },
+      {
+       "p": [
+        "It really ",
+        {
+         "f": "p",
+         "r": "icks"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "p"
+        },
+        " in episode 4.",
+        "  ((– С четвёртой серии становится интересно.))"
+       ]
+      },
+      {
+       "p": [
+        "It's ",
+        {
+         "f": "n",
+         "r": "ot"
+        },
+        " ",
+        {
+         "b": "as"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "ood"
+        },
+        " ",
+        {
+         "b": "as"
+        },
+        " ",
+        {
+         "f": "e",
+         "r": "veryone"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "ays"
+        },
+        ".",
+        "  ((– Не так хорош, как все говорят.))"
+       ]
+      },
+      {
+       "p": [
+        "All the ",
+        {
+         "f": "h",
+         "r": "ype"
+        },
+        " ",
+        {
+         "f": "p",
+         "r": "ut"
+        },
+        " ",
+        {
+         "b": "me"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "ff"
+        },
+        ".",
+        "  ((– Весь этот хайп меня оттолкнул.))"
+       ]
+      },
+      {
+       "p": [
+        "The acting's great, ",
+        {
+         "f": "I",
+         "r": "'ll"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "ive"
+        },
+        " ",
+        {
+         "b": "it"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "hat"
+        },
+        ".",
+        "  ((– Актёры отличные, это надо признать.))"
+       ]
+      },
+      {
+       "p": [
+        "Well, it ",
+        {
+         "f": "i",
+         "r": "s"
+        },
+        " a crime drama!",
+        "  ((– Ну это же детектив!))"
+       ]
+      },
+      {
+       "h": "OLD FAVOURITES"
+      },
+      {
+       "p": [
+        "It ",
+        {
+         "f": "t",
+         "r": "akes"
+        },
+        " ",
+        {
+         "b": "me"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "ack"
+        },
+        ".",
+        "  ((– Возвращает в прошлое.))"
+       ]
+      },
+      {
+       "p": [
+        "The jokes ",
+        {
+         "f": "h",
+         "r": "aven't"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "ged"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "ell"
+        },
+        ".",
+        "  ((– Шутки устарели.))"
+       ]
+      },
+      {
+       "p": [
+        "I ",
+        {
+         "f": "s",
+         "r": "ee"
+        },
+        " it ",
+        {
+         "b": "in a"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "ifferent"
+        },
+        " ",
+        {
+         "f": "l",
+         "r": "ight"
+        },
+        " now.",
+        "  ((– Сейчас смотрю на это совсем по-другому.))"
+       ]
+      },
+      {
+       "h": "SHOULD I WATCH IT?"
+      },
+      {
+       "p": [
+        {
+         "f": "I",
+         "r": "s"
+        },
+        " ",
+        {
+         "b": "it"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "ny"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "ood"
+        },
+        "?",
+        "  ((– Ну как, стоит смотреть?))"
+       ]
+      },
+      {
+       "p": [
+        {
+         "f": "G",
+         "r": "ive"
+        },
+        " ",
+        {
+         "b": "it a"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "ry"
+        },
+        ".",
+        "  ((– Попробуй.))"
+       ]
+      },
+      {
+       "p": [
+        "I ",
+        {
+         "f": "w",
+         "r": "ouldn't"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "other"
+        },
+        ".",
+        "  ((– Я бы не тратила время.))"
+       ]
+      }
+     ],
+     "cols": 2
+    },
+    {
+     "kind": "cards",
      "style": "say",
-     "instr": "Say it another way with a phrase from the box. Then tap the card.",
+     "box": "BOX",
+     "instr": "Things you wanted to say last week. Which phrase from the box says it? Then tap the card.",
+     "cards": [
+      {
+       "front": "((a series that didn't grab you)) No, no, I couldn't.",
+       "back": "I **couldn't get into** it."
+      },
+      {
+       "front": "((a series that's popular right now)) It's not the first time someone's mentioned it, but I haven't seen it.",
+       "back": "**Everyone's talking about it**, but I haven't seen it yet."
+      },
+      {
+       "front": "((Sherlock)) The casting and the music were good, but the logic… I didn't get it.",
+       "back": "The casting's great, **I'll give it that**. But the logic…"
+      },
+      {
+       "front": "((the series Wednesday)) It's pretty short. You can watch it.",
+       "back": "It's pretty short. **Give it a try!**"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "💬 Use it",
+   "blocks": [
+    {
+     "kind": "questions",
+     "instr": "What have you been watching or reading? Recommend or warn your partner off. Use the box.",
+     "box": "BOX",
+     "items": [
+      "**1**  Get ready (1 min): think of something you'd recommend, something you gave up on or wouldn't bother with, and an old favourite — has it aged well?",
+      "**2**  In pairs: Have you seen / read …? Is it any good? Recommend it or warn your partner off. Follow up on what your partner says.",
+      "**3**  Which is the worst: a slow start, a disappointing ending, or jokes that haven't aged well? Give a reason for each.",
+      "**4**  Think of a series you gave up on — or a popular one lots of people give up on. Give two reasons why it's hard to get into. Is it worth a second try?"
+     ],
+     "fast": "If you're done: go back to 📖 Text & new phrases and say the missing words without looking. Then tell your partner what you'll give a try — and what you'll skip."
+    }
+   ]
+  },
+  {
+   "label": "🔁 Back to the start",
+   "blocks": [
+    {
+     "kind": "say",
+     "instr": "Back to the start: how would you say these now? Take turns. Then tap “Show the answer”.",
+     "task": [
+      "**1**  ((Все на работе без конца о нём твердят — уже надоело.))",
+      "• • •",
+      "**2**  ((Я бросила после третьей серии — не смогла втянуться.))",
+      "• • •",
+      "**3**  ((Честно? Не так уж он хорош, как все говорят.))",
+      "• • •"
+     ],
+     "answer": [
+      "**1**  ((Все на работе без конца о нём твердят — уже надоело.))",
+      "Everyone at work **keeps going on about it**.",
+      "**2**  ((Я бросила после третьей серии — не смогла втянуться.))",
+      "I **gave up after** episode three. I just **couldn't get into** it.",
+      "**3**  ((Честно? Не так уж он хорош, как все говорят.))",
+      "Honestly? It's **not as good as everyone says**."
+     ],
+     "answer_title": "Our answers",
+     "tip": "This is how the lesson started: the same six sentences. Say them aloud first, then check."
+    },
+    {
+     "kind": "say",
+     "instr": "Three more. Take turns, then tap “Show the answer”.",
+     "task": [
+      "**4**  ((Ну это же детектив! (чего ты хотел?)))",
+      "• • •",
+      "**5**  ((Пересматриваю «Друзей» — некоторые шутки устарели.))",
+      "• • •",
+      "**6**  ((Я бы не стала тратить на него время.))",
+      "• • •"
+     ],
+     "answer": [
+      "**4**  ((Ну это же детектив! (чего ты хотел?)))",
+      "Well, it **is** a crime drama!",
+      "**5**  ((Пересматриваю «Друзей» — некоторые шутки устарели.))",
+      "I've been rewatching Friends — some of the jokes **haven't aged well**.",
+      "**6**  ((Я бы не стала тратить на него время.))",
+      "Honestly? **I wouldn't bother**."
+     ],
+     "answer_title": "Our answers",
+     "tip": "This is how the lesson started: the same six sentences. Say them aloud first, then check."
+    }
+   ]
+  },
+  {
+   "label": "🃏 Extra practice",
+   "blocks": [
+    {
+     "kind": "cards",
+     "style": "say",
+     "instr": "Not done in class yet. Say it another way with a phrase from the box. Then tap the card.",
      "box": "BOX",
      "cards": [
       {
@@ -969,107 +1525,92 @@
        "back": "The music's good, **I'll give it that**."
       }
      ]
-    }
-   ]
-  },
-  {
-   "label": "✏️ Our sentences",
-   "blocks": [
-    {
-     "kind": "cards",
-     "style": "ours",
-     "instr": "Our sentences. Green = good, grey = could be better. How would you make it perfect English?",
-     "check": "Perfect English",
-     "box": "BOX",
-     "cards": [
-      {
-       "ctx": "весь этот хайп испортил впечатление",
-       "front": "Do you think so? I found it a bit boring. Maybe all <g>the hype</g> ~~affect me negatively~~.",
-       "back": "Maybe all the hype **spoiled it for me**.",
-       "why": "Hype — отличное слово! Spoiled it for me — испортило удовольствие. Put me off — оттолкнуло, отбило желание смотреть."
-      },
-      {
-       "ctx": "пересмотрела — и теперь вижу фильм по-другому",
-       "front": "So now I ~~watch this film with another eyes~~.",
-       "back": "So now I **see this film in a different light**.",
-       "why": "With another eyes здесь не подходит. Наш вариант: I see it in a different light now."
-      },
-      {
-       "ctx": "фильм из детства — пересматриваешь, и как будто снова там",
-       "front": "You can just enjoy it because ~~you can get back to~~ <g>your childhood</g>.",
-       "back": "You can just enjoy it because **it takes you back to** your childhood.",
-       "why": "It takes me back (to…) — возвращает в прошлое."
-      },
-      {
-       "ctx": "не смотрела — спрашиваешь, смотреть или нет",
-       "front": "<g>I haven't, actually.</g> ~~Maybe should I see that or no~~?",
-       "back": "I haven't, actually. **Should I watch it?** / **Is it any good?**",
-       "why": "I haven't, actually — отлично! В вопросе should — на первом месте, а or no не нужно. «Стоит смотреть?» обычно спрашивают так: Is it any good?"
-      }
-     ]
     },
     {
      "kind": "cards",
-     "style": "ours",
-     "instr": "Recommending: what we often say → what people usually say. How would you say it?",
-     "check": "People usually say",
+     "style": "bubble",
+     "instr": "What might they say? Use the box. Then tap the card.",
+     "box": "BOX",
+     "tip": "Everyone thinks, then you take turns to say it. Tap the card: the bubble shows one possible answer.",
      "cards": [
       {
-       "ctx": "советуешь смотреть с субтитрами",
-       "front": "I recommend ~~to watch~~ it with subtitles.",
-       "back": "I recommend **watching** it with subtitles.",
-       "why": "recommend + -ing, не to."
+       "instr": "What might Sam say? Use the box. Then tap the card.",
+       "ctx": "Sam loves a series. His friend watched one episode and says it was slow.",
+       "back": "Stick with it! It really **picks up** in episode three."
       },
       {
-       "ctx": "очень советуешь",
-       "front": "I strongly recommend ~~to see~~.",
-       "back": "I strongly recommend **it**.",
-       "why": "Or: I highly recommend it."
+       "ctx": "Everyone calls a new film ‘the best film of the year’. Tom is so tired of hearing about it that he doesn't feel like watching it.",
+       "back": "Everyone **keeps going on about it**, but to be honest, all the **hype put me off**."
       },
       {
-       "ctx": "точно советуешь",
-       "front": "I definitely recommend ~~this for you~~.",
-       "back": "I definitely recommend **it**.",
-       "why": "Без for you."
+       "ctx": "Rosa's husband says the horror film they watched was ‘far too scary’. Rosa teases him.",
+       "back": "Well, it **is** a horror film!"
       },
       {
-       "ctx": "советуешь другу попробовать сериал",
-       "front": "I honestly ~~suggest you to~~ give this series a try.",
-       "back": "I honestly **think you should** give this series a try.",
-       "why": "suggest you to — так не говорят."
+       "ctx": "Kate, 58, rewatched a 90s sitcom with her teenage son. Some jokes made her cringe.",
+       "back": "It still **takes me back**. But some of the jokes **haven't aged well**."
       },
       {
-       "ctx": "переспрашиваешь: значит, не советуешь?",
-       "front": "So you ~~don't recommend to read~~ it?",
-       "back": "So you **wouldn't** recommend it?",
-       "why": ""
+       "ctx": "Mark, 45, watched a cartoon from his childhood with his kids. Now he understands the father.",
+       "back": "I **see** the dad **in a completely different light** now."
       },
       {
-       "ctx": "не советуешь — это не твоё",
-       "front": "It's not really my thing. I would not recommend ~~you to watch~~ it.",
-       "back": "It's not really my thing. I would not recommend it. / Honestly? **I wouldn't bother.**",
-       "why": "recommend sb to do — редко и звучит официально."
+       "ctx": "A colleague asks Paul if he's seen a new quiz show. He's only watched a few clips online.",
+       "back": "I've **only seen bits of** it. **Is it any good?**"
       }
      ]
     }
    ]
-  },
-  {
-   "label": "💬 Use it",
-   "blocks": [
-    {
-     "kind": "questions",
-     "instr": "What have you been watching or reading? Recommend or warn your partner off. Use the box.",
-     "box": "BOX",
-     "items": [
-      "**1**  Get ready (1 min): think of something you'd recommend, something you gave up on or wouldn't bother with, and an old favourite — has it aged well?",
-      "**2**  In pairs: Have you seen / read …? Is it any good? Recommend it or warn your partner off. Follow up on what your partner says.",
-      "**3**  Which is the worst: a slow start, a disappointing ending, or jokes that haven't aged well? Give a reason for each.",
-      "**4**  Think of a series you gave up on — or a popular one lots of people give up on. Give two reasons why it's hard to get into. Is it worth a second try?"
-     ],
-     "fast": "If you're done: go back to 📖 The text and say the missing words without looking. Then tell your partner what you'll give a try — and what you'll skip."
-    }
-   ]
   }
- ]
+ ],
+ "parked": {
+  "why": "Recommending (slide 56): recommend + -ing is on hold in the grammar strand (lesson chat 31.10 18:20) — back on the page only when Olya says so.",
+  "blocks": [
+   {
+    "kind": "cards",
+    "style": "ours",
+    "instr": "Recommending: what we often say → what people usually say. How would you say it?",
+    "check": "People usually say",
+    "cards": [
+     {
+      "ctx": "советуешь смотреть с субтитрами",
+      "front": "I recommend ~~to watch~~ it with subtitles.",
+      "back": "I recommend **watching** it with subtitles.",
+      "why": "recommend + -ing, не to."
+     },
+     {
+      "ctx": "очень советуешь",
+      "front": "I strongly recommend ~~to see~~.",
+      "back": "I strongly recommend **it**.",
+      "why": "Or: I highly recommend it."
+     },
+     {
+      "ctx": "точно советуешь",
+      "front": "I definitely recommend ~~this for you~~.",
+      "back": "I definitely recommend **it**.",
+      "why": "Без for you."
+     },
+     {
+      "ctx": "советуешь другу попробовать сериал",
+      "front": "I honestly ~~suggest you to~~ give this series a try.",
+      "back": "I honestly **think you should** give this series a try.",
+      "why": "suggest you to — так не говорят."
+     },
+     {
+      "ctx": "переспрашиваешь: значит, не советуешь?",
+      "front": "So you ~~don't recommend to read~~ it?",
+      "back": "So you **wouldn't** recommend it?",
+      "why": ""
+     },
+     {
+      "ctx": "не советуешь — это не твоё",
+      "front": "It's not really my thing. I would not recommend ~~you to watch~~ it.",
+      "back": "It's not really my thing. I would not recommend it. / Honestly? **I wouldn't bother.**",
+      "why": "recommend sb to do — редко и звучит официально."
+     }
+    ],
+    "pic": "check"
+   }
+  ]
+ }
 }

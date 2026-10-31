@@ -15,6 +15,11 @@ __BASE_CSS__
 .wrap.wide .side{display:none}
 .head .part{white-space:nowrap}
 .head h1{font-size:1.6rem}
+/* tools 18: a compact stage bar (L9: seven stages beside the box took four rows): 🎓 How it works on the title's row, smaller pills */
+.head .howto{order:1;margin-left:0}
+.head .stages{order:2}
+.head .stage-btn{padding:3px 10px;font-size:.96rem}
+.head .stage-arrow{font-size:.85rem}
 .blk{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 18px;display:grid;gap:12px;align-content:start}
 .blk.enter{animation:enterR .45s cubic-bezier(.2,.8,.2,1)}
 @keyframes enterR{from{opacity:0;transform:translateX(50px)}to{opacity:1;transform:none}}
@@ -33,6 +38,7 @@ __BASE_CSS__
 .si-card{position:relative;width:min(100%, calc(58vh * 962 / 649 + 40px));background:#FFFFFF;border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px;display:grid;place-items:center}
 .si-card img{width:100%;height:auto;max-height:58vh;object-fit:contain;display:block}
 .si-name{position:absolute;left:50%;top:50%;transform:translate(-50%,-62%);color:#1D1D1B;font-family:"Permanent Marker","Segoe Print","Bradley Hand","Chalkboard SE","Comic Sans MS",cursive;font-size:clamp(1.8rem, 5vw, 3.4rem);font-weight:700;white-space:nowrap}
+.si-name.long{font-size:clamp(1.3rem, 3.4vw, 2.5rem)}   /* tools 18: a long stage name (Text & new phrases) stays inside the cloud */
 .stepbar{position:sticky;bottom:0;z-index:6;display:flex;align-items:center;gap:12px;padding:10px 0 12px;background:linear-gradient(to bottom, transparent, var(--ground) 35%)}
 .stepbar .btn{min-width:8.5rem;font-size:1.1rem}
 .stepbar .step-msg{text-align:center;font-weight:800;color:var(--again)}
@@ -156,6 +162,41 @@ __BASE_CSS__
 .fc .corner{position:absolute;right:16px;bottom:8px;color:var(--muted);font-size:.88rem}
 .fc .hintline{color:var(--muted);margin:0}
 .fc.look{border-style:dashed}
+/* tools 18 (her 17:45: the sketches of her slides "were so beautiful"): her figures in the field. A card with "pic": the thinking
+   figure with "?" while the group thinks, the figure with the bulb when the card opens (her a/b and "Check" slides); "What might they
+   say?" cards (style "bubble"): two people under a speech bubble, the answer appears in the bubble; the Glossary sticker ("sketch": true) */
+.fc:has(> .skp){padding-right:210px}
+.fc .skp{position:absolute;right:22px;bottom:14px;height:min(200px, calc(100% - 30px));width:auto;pointer-events:none}
+.fc:has(> .skp) .corner{right:220px}
+.fc.open .skp.idea{animation:skpop .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes skpop{from{transform:translateY(10px) scale(.9);opacity:.2}to{transform:none;opacity:1}}
+.fc .sit{font-size:1.25rem;font-weight:600;line-height:1.32;margin:0}
+.chkrow{display:flex;align-items:center;gap:8px}
+.chkrow .chk{flex:1}
+.chkrow .bulb{height:30px;width:auto;margin:-6px 0;animation:skpop .45s cubic-bezier(.2,.8,.2,1)}
+.scene{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:end;gap:8px 14px;margin-top:2px}
+.scene .fig{height:124px;width:auto;display:block}
+.bub{position:relative;align-self:start;margin:0 0 44px;min-height:3.9rem;display:grid;place-items:center;text-align:center;background:var(--card);border:3px solid var(--ink);
+  border-radius:34px 42px 36px 44px / 30px 36px 40px 32px;padding:10px 22px;font-size:1.4rem;font-weight:700;line-height:1.28}
+.bub .dots{letter-spacing:.3em;color:var(--muted);font-size:1.6rem}
+.bub .tail{position:absolute;right:13%;bottom:-31px;width:46px;height:34px;overflow:visible}
+.bub.said{animation:skpop .45s cubic-bezier(.2,.8,.2,1)}
+.m-red{color:var(--label);font-weight:800}
+.dlg .lh{margin:10px 0 0;color:var(--label);font-size:.92rem;letter-spacing:.07em;font-weight:900;text-transform:uppercase}
+.dlg .lh:first-child{margin-top:0}
+@media (min-width:900px){ .dlg.cols{columns:2;column-gap:40px} .dlg.cols p{break-inside:avoid;font-size:1.06rem;line-height:1.45;margin-bottom:5px} .dlg.cols p.lh{font-size:.88rem} .dlg.cols .lh{break-after:avoid} }
+.say-later{margin:6px 0 0;color:var(--muted);font-size:1rem}
+.postits{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:26px;padding:10px 6px 16px}
+.postit{position:relative;min-height:9.5rem;padding:16px 18px 30px;font-size:1.35rem;font-weight:600;line-height:1.3;border:2px solid #1D1D1B;border-radius:3px 3px 3px 26px;box-shadow:3px 5px 0 rgba(0,0,0,.14);transform:rotate(-1.6deg)}
+.postit:nth-child(2){transform:rotate(1.2deg)} .postit:nth-child(3){transform:rotate(-.6deg)}
+.postit .bx{color:inherit;font-weight:900}
+.postit.c0{background:#1E8FE1;color:#FFFFFF} .postit.c1{background:#E8175D;color:#FFFFFF} .postit.c2{background:#FFB900;color:#1D1D1B} .postit.c3{background:#7CC243;color:#1D1D1B}
+.gloss.sk{background:var(--card);border:2px solid var(--ink);border-radius:4px;margin-top:2.4rem;padding:6px 12px 10px;align-self:start}
+.gloss.sk .sticker{width:6.6rem;height:auto;margin:-2.9rem 0 -2px -14px;display:block}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .skimg{filter:invert(1) hue-rotate(180deg)} }
+:root[data-theme="dark"] .skimg{filter:invert(1) hue-rotate(180deg)}
+@media (prefers-reduced-motion: reduce){ .fc.open .skp.idea,.bub.said,.chkrow .bulb{animation:none} }
+@media (max-width:760px){ .fc:has(> .skp){padding-right:26px} .fc .skp{display:none} .fc:has(> .skp) .corner{right:16px} .scene{gap:6px 8px} .scene .fig{height:80px} .bub{font-size:1.15rem;margin-bottom:40px;padding:8px 14px} }
 .deck-act{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
 .deck-act .btn{min-width:10rem}
 .endlist{display:grid;gap:8px;margin:0;padding:0;list-style:none}
@@ -367,6 +408,7 @@ const mk = s => esc(s == null ? "" : s)
   .replace(/\(\((.+?)\)\)/g, '<span class="ctx">$1</span>')
   .replace(/&lt;g&gt;(.+?)&lt;\/g&gt;/g, '<span class="m-good">$1</span>')
   .replace(/~~(.+?)~~/g, '<span class="m-del">$1</span>')
+  .replace(/\^\^(.+?)\^\^/g, '<span class="m-red">$1</span>')   /* tools 18: her red words on the slides (yesterday, a week ago — why it's past simple) */
   .replace(/\n/g, "<br>");   /* tools 17: a line break in the data (a / b options on a card) */
 const KEY = "tool-field-" + PAGE_ID;
 let saved = store.get(KEY) || {w: {}, again: []};      /* this device: what they wrote ({chat: {text, sent}}), the cards they sent back */
@@ -383,7 +425,7 @@ D.stages.forEach((st, si) => st.blocks.forEach((b, bi) => {
   /* a mixed deck from the data (f-demo, her catch 11:58: three kinds of card, one deck): each card its own style, check and label */
   if(b.kind === "cards") b.cards.forEach((c, j) => { c._n = (P.cards || [])[cardN] != null ? P.cards[cardN] : cardN; cardN++;
     c._b = b.style === "mix" ? Object.assign({}, b, {style: c.style || "say", check: c.check || "", instr: c.instr || b.instr, instr_next: null}) : b;
-    c._lbl = b.style === "mix" ? (c.instr || b.instr) : b.style === "share" && c.instr ? c.instr : j === 0 || !b.instr_next ? b.instr : b.instr_next; });
+    c._lbl = b.style === "mix" ? (c.instr || b.instr) : c.instr ? c.instr : j === 0 || !b.instr_next ? b.instr : b.instr_next; });   /* tools 18: any card may have its own label ("What might Sam say?") */
   /* tools 16: a game's squares are numbered with the cards (her 📥 / 👥: a "✗ Not quite" counts like a card sent back); in "↺ Your hard
      cards once more" a square comes back as an "our sentences" card */
   if(b.kind === "game") (b.tasks || []).forEach(t => { t._n = (P.cards || [])[cardN] != null ? P.cards[cardN] : cardN; cardN++;
@@ -448,7 +490,7 @@ function gapAnswer(b, id){
   const gaps = ((lines[+m[2]] || {}).p || []).filter(x => x && typeof x === "object" && x.r != null), g = gaps[+m[3]];
   return g ? (g.f || "") + g.r : id;
 }
-const linesHTML = (lines, b, pre) => (lines || []).map((l, li) => l.ctx != null ? `<p class="lctx">${mk(l.ctx)}</p>` : `<p>${l.s ? `<b class="sp">${esc(l.s)}:</b>` : ""}${partsHTML(l.p, b, `${pre}l${li}g`)}</p>`).join("");
+const linesHTML = (lines, b, pre) => (lines || []).map((l, li) => l.h != null ? `<p class="lh">${esc(l.h)}</p>` : l.ctx != null ? `<p class="lctx">${mk(l.ctx)}</p>` : `<p>${l.s ? `<b class="sp">${esc(l.s)}:</b>` : ""}${partsHTML(l.p, b, `${pre}l${li}g`)}</p>`).join("");
 const gapIds = (lines, pre) => (lines || []).flatMap((l, li) => (l.p || []).filter(x => x && typeof x === "object" && x.r != null).map((_, k) => `${pre}l${li}g${k}`));
 function allGaps(b){
   if(b.kind === "text") return gapIds(b.lines, "t").concat(gapIds((b.gloss || []).map(g => ({p: g.p})), "x"));
@@ -458,8 +500,8 @@ function allGaps(b){
   return [];
 }
 function textHTML(b){
-  const gl = b.gloss && b.gloss.length ? `<aside class="gloss" aria-label="Glossary">${b.gloss.map((g, gi) => `<p class="gl">${partsHTML(g.p, b, `xl${gi}g`)} <span class="ru">– ${esc(g.ru)}</span></p>`).join("")}</aside>` : "";
-  return `<div class="tx ${gl ? "" : "single"}"><div class="dlg">${linesHTML(b.lines, b, "t")}</div>${gl}</div>${gapTools(b)}`;
+  const gl = b.gloss && b.gloss.length ? `<aside class="gloss${D.sketch ? " sk" : ""}" aria-label="Glossary">${D.sketch ? `<img class="sticker" src="../sk-glossary.png" alt="Glossary">` : ""}${b.gloss.map((g, gi) => `<p class="gl">${partsHTML(g.p, b, `xl${gi}g`)} <span class="ru">– ${esc(g.ru)}</span></p>`).join("")}</aside>` : "";
+  return `<div class="tx ${gl ? "" : "single"}"><div class="dlg${b.cols ? " cols" : ""}">${linesHTML(b.lines, b, "t")}</div>${gl}</div>${gapTools(b)}`;
 }
 function gapTools(b){
   const ids = allGaps(b), st = bs(b), all = ids.length && ids.every(id => st.open.has(id));
@@ -493,16 +535,18 @@ const recallStage = () => { const t = BLOCKS.find(x => x.kind === "text"); retur
 function sayHTML(b){
   const st = bs(b), opts = [["yes", "✓ We said it like this"], ["close", "≈ Close"], ["no", "✗ Differently"]];
   /* a new island starts at a numbered line (**1**, **2** …); the answer lines that weren't in the task are marked */
-  const lines = st.shown ? b.answer : b.task, isles = [];
+  const lines = st.shown && b.answer ? b.answer : b.task, isles = [];
   let titled = !st.shown || !b.answer_title;
   lines.forEach(l => { if(!isles.length || /^\*\*\d+\*\*/.test(l)) isles.push([]);
     const isNew = st.shown && !b.task.includes(l), head = isNew && !titled ? `<p class="ans-h">${esc(b.answer_title)}</p>` : "";
     if(isNew) titled = true; isles[isles.length - 1].push(`${head}<p class="${isNew ? "new" : ""}">${mk(l)}</p>`); });
   const body = isles.length > 1 ? `<div class="say-isles">${isles.map(x => `<div class="say-isle">${x.join("")}</div>`).join("")}</div>` : isles.map(x => x.join("")).join("");
   return `<div class="say-lines">${body}</div>
-    ${st.shown ? `<div class="selfcheck"><span class="q">How close were you?</span>${opts.map(([v, l]) => `<button data-check="${v}" class="${st.check === v ? "on" : ""}" aria-pressed="${st.check === v}">${l}</button>`).join("")}</div>`
+    ${!b.answer ? (b.later ? `<p class="say-later">${mk(b.later)}</p>` : "") : st.shown ? `<div class="selfcheck"><span class="q">How close were you?</span>${opts.map(([v, l]) => `<button data-check="${v}" class="${st.check === v ? "on" : ""}" aria-pressed="${st.check === v}">${l}</button>`).join("")}</div>`
       : `<div class="row-actions"><button class="btn primary" data-sayshow>Show the answer</button></div>`}`;
 }
+/* ---------- 🗒 sticky notes (tools 18, her slide "Share with your partner": three coloured notes, all on the screen at once) ---------- */
+const postitsHTML = b => `<div class="postits">${(b.notes || []).map((n, i) => `<div class="postit c${i % 4}">${mk(n)}</div>`).join("")}</div>`;
 /* ---------- 🖼 picture, 🗓 calendars, 🔧 tool, 💬 questions ---------- */
 const pictureHTML = b => `${b.timer ? `<div class="row-actions ptimer-row"><button class="btn ptimer" data-ptimer>${esc(ptimerText(b))}</button></div>` : ""}<figure class="pic" style="margin:0"><img src="${esc(b.img)}" alt="${esc(b.alt || b.instr || "")}"></figure>${b.task ? `<p class="task">${mk(b.task)}</p>` : ""}`;
 /* ---------- ⏱ a quiet minute with the picture (handoff 30.10 21:20, as in class): tap → it counts down on the button, then "Time's up"
@@ -583,13 +627,20 @@ function frontHTML(b, c, i, open){
   if(st === "kwt") return `<p class="sm">${mk(c.front)}</p><p class="frame">${open ? kwtFill(c) : mk(c.frame)}<span class="kw">${esc(c.key)}</span></p>`;
   if(st === "ours") return `${c.ctx ? `<p class="lctx">${esc(c.ctx)}</p>` : ""}<p class="say">${mk(c.front)}</p>`;
   if(st === "share") return `${c.ctx ? `<p class="lctx">${mk(c.ctx)}</p>` : ""}<p class="say">A: ${mk(c.a)}</p>${c.hint ? `<p class="hintline">${esc(c.hint)}</p>` : ""}`;
-  return `<p class="say">${mk(c.front)}</p>`;
+  if(st === "bubble") return `<p class="sit">${mk(c.ctx)}</p><div class="scene"><img class="skimg fig" src="../sk-listen.png" alt="">
+    <div class="bub ${open ? "said" : ""}">${open ? `<span>${mk(c.back)}</span>` : `<span class="dots" aria-label="What might they say?">•••</span>`}${TAIL}</div><img class="skimg fig" src="../sk-talk.png" alt=""></div>`;
+  return `<p class="say">${mk(c.front)}</p>${picHTML(b, open)}`;
 }
+const TAIL = `<svg class="tail" viewBox="0 0 46 34" aria-hidden="true"><path d="M2 0 C 14 12, 28 24, 43 32 C 31 18, 27 9, 25 0 Z" fill="var(--card)"/><path d="M2 2 C 14 12, 28 24, 43 32 C 31 18, 27 9, 25 2" fill="none" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/></svg>`;
+/* "pic": "think" = the "?" figure, then the figure with the bulb (needs room: a card without the box beside it); "check" on "our
+   sentences" cards = a small bulb beside the check chip when the card opens (nothing moves) */
+const picHTML = (b, open) => b.pic !== "think" ? "" : open ? `<img class="skimg skp idea" src="../sk-idea.png" alt="">` : `<img class="skimg skp" src="../sk-think.png" alt="">`;
 const ansHTML = (b, c) => { const h = backHTML(b, c); return h ? `<div class="ans">${h}</div>` : ""; };
 function backHTML(b, c){
   if(b.style === "mix") b = c._b; const st = b.style;
   if(st === "kwt") return c.note ? `<p class="note">${mk(c.note)}</p>` : "";
-  if(st === "ours") return `${b.check ? `<span class="chk">${esc(b.check)}</span>` : ""}<p class="say fixline">${mk(c.back)}</p>${c.why ? `<p class="note">${mk(c.why)}</p>` : ""}`;
+  if(st === "ours") return `${b.check ? (b.pic === "check" ? `<span class="chkrow"><span class="chk">${esc(b.check)}</span><img class="skimg bulb" src="../sk-bulb.png" alt=""></span>` : `<span class="chk">${esc(b.check)}</span>`) : ""}<p class="say fixline">${mk(c.back)}</p>${c.why ? `<p class="note">${mk(c.why)}</p>` : ""}`;
+  if(st === "bubble") return c.note ? `<p class="note">${mk(c.note)}</p>` : "";
   if(st === "share") return `<p class="say">B: ${mk(c.back)}</p>${c.next ? `<p class="next">A: ${mk(c.next)}</p>` : ""}${c.note ? `<p class="note">${mk(c.note)}</p>` : ""}`;
   return `<p class="say">${mk(c.back)}</p>${c.note ? `<p class="note">${mk(c.note)}</p>` : ""}`;
 }
@@ -619,7 +670,7 @@ function cardsHTML(b){
       ${d.flipped ? ansHTML(b, c) : `<span class="corner">tap to check ↓</span>`}</div>
     <div class="deck-act">${d.flipped ? `<button class="btn again" data-again>↺ Again later</button><button class="btn ok" data-got>✓ Got it</button>` : ""}</div>`;
 }
-const cardFrontPlain = (b, c) => (b.style === "mix" ? c._b.style : b.style) === "share" ? c.a : c.front;
+const cardFrontPlain = (b, c) => { const st = b.style === "mix" ? c._b.style : b.style; return st === "share" ? c.a : st === "bubble" ? c.ctx : c.front; };
 /* the box beside a card: a "share" card says how much support (box · strip · none, her rule: support fades) */
 function boxFor(b){
   if(!b) return null;
@@ -823,7 +874,7 @@ function wireSecret(b, root){ const X = secSt(b);
 
 /* ---------- the page ---------- */
 function blockHTML(b){
-  const body = b.kind === "text" ? textHTML(b) : b.kind === "model" ? modelHTML(b) : b.kind === "write" ? writeHTML(b) : b.kind === "say" ? sayHTML(b)
+  const body = b.kind === "text" ? textHTML(b) : b.kind === "model" ? modelHTML(b) : b.kind === "write" ? writeHTML(b) : b.kind === "say" ? sayHTML(b) : b.kind === "postits" ? postitsHTML(b)
     : b.kind === "picture" ? pictureHTML(b) : b.kind === "calendars" ? calendarsHTML(b) : b.kind === "tool" ? toolHTML(b)
     : b.kind === "questions" ? questionsHTML(b) : b.kind === "cards" ? groupDotsHTML(b) + `<div class="deck">${cardsHTML(b)}</div>` : b.kind === "scenes" ? scenesHTML(b)
     : b.kind === "fix" ? fixHTML(b) : b.kind === "sort" ? sortHTML(b) : b.kind === "game" && b.piece === "secret" ? secretHTML(b)
@@ -852,7 +903,7 @@ function stepMsg(t){ const m = document.getElementById("step-msg"); if(m){ m.tex
 function stepPending(b){
   if(!b) return false; const st = bs(b);
   if(b.kind === "tool") return true;   /* the page inside says when it has nothing more (lwStepEnd) */
-  if(b.kind === "say") return !st.shown;
+  if(b.kind === "say") return !!b.answer && !st.shown;
   if(b.kind === "fix") return fixPending(b);   /* tools 16 */
   if(b.kind === "game") return gamePending(b);
   if(b.kind === "cards") return deckOf(b).queue.length > 0 || (st.look != null && (!!st.lookBack || !st.lookOpen));
@@ -882,7 +933,7 @@ function stepNext(){
   if(b.kind === "write") b.items.filter(it => !(saved.w[it._chat] || {}).sent && ((saved.w[it._chat] || {}).text || "").trim()).forEach(it => sendItem(it._chat, saved.w[it._chat].text.trim()));
   /* the chat page inside (her 13:24: no Next of its own): the field's Next / Back step through its chats and its speaking */
   if(b.kind === "tool"){ const f = document.querySelector(".tool-frame"); if(f && f.contentWindow){ f.contentWindow.postMessage({lwStep: "next"}, "*"); return; } }
-  if(b.kind === "say" && !st.shown){ st.shown = true; render(); return; }
+  if(b.kind === "say" && b.answer && !st.shown){ st.shown = true; render(); return; }
   if(b.kind === "fix" && fixPending(b)){ fixNext(b); return; }   /* tools 16: the gap's answer, then message by message */
   if(b.kind === "game" && b.piece === "memo" && memoPending(b)){ memoNext(b); return; }   /* tools 17: ▶ → hide → check */
   if(b.kind === "game" && b.piece === "secret" && secPending(b)){ secNext(b); return; }   /* the chat's answers → How it works → the game */
@@ -927,7 +978,7 @@ function stepBack(){
   stepOff();   /* the very first step: back to the board (her 13:04) */
 }
 /* a new stage begins with her blue cloud and its name, as on her class slides (her 13:29): Next → its first task */
-const introHTML = () => `<section class="stage-intro ${S.enter ? "enter" : ""}" aria-label="${esc(D.stages[S.stage].label)}"><div class="si-card"><img src="../stage-cloud.png" alt=""><span class="si-name">${esc(String(D.stages[S.stage].label).replace(/^[^A-Za-z]+/, ""))}</span></div></section>`;
+const introHTML = () => `<section class="stage-intro ${S.enter ? "enter" : ""}" aria-label="${esc(D.stages[S.stage].label)}"><div class="si-card"><img src="../stage-cloud.png" alt=""><span class="si-name ${String(D.stages[S.stage].label).replace(/^[^A-Za-z]+/, "").length > 13 ? "long" : ""}">${esc(String(D.stages[S.stage].label).replace(/^[^A-Za-z]+/, ""))}</span></div></section>`;
 const cellName = () => D.board && D.board.col ? `${D.board.col} · $${D.board.value}` : "";
 const boardHref = () => D.boardPage ? `${D.boardPage}${LIVE_ON ? "-live" : ""}.html` : "";
 function headHTML(){
