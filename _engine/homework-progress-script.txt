@@ -131,7 +131,7 @@ function submit_(stu, page, p) {
   const sh = work_();
   const task = clean_(p.task, 60);
   if (!task) return { ok: false, error: "no-task" };
-  const type = p.type === "recording" ? "🎙 recording (in Telegram)" : p.type === "question" ? "❓ question" : p.type === "marked" ? "🔖 marked" : "✍️ text";
+  const type = p.type === "recording-drive" ? "🎙 recording (Drive)" : p.type === "recording" ? "🎙 recording (in Telegram)" : p.type === "question" ? "❓ question" : p.type === "marked" ? "🔖 marked" : "✍️ text";
   const text = String(p.text == null ? "" : p.text).replace(/\r/g, "").slice(0, 20000);
   const phrases = (Array.isArray(p.phrases) ? p.phrases : []).map(x => clean_(x, 120)).filter(Boolean).join("\n");
   const key = stu.code + "|" + page + "|" + task;
@@ -148,6 +148,40 @@ function submit_(stu, page, p) {
   if (row) sh.getRange(row, 1, 1, WORK_HEAD.length).setValues([values]);
   else sh.appendRow(values);
   return { ok: true, id: values[0] };
+}
+
+// engine 57 (1.11, her «чтобы записи не терялись… если им пару раз придётся записать, они просто прекратят»): a recording from "Over to you"
+// goes straight into her Google Drive — folder "Homework recordings", a subfolder per group — saved by this script as her, so students sign in
+// nowhere and choose no app; the Work row gets the file's link. The folder stays private: only her account opens the files.
+const REC_FOLDER = "Homework recordings";
+function recFolder_(group) {
+  const props = PropertiesService.getScriptProperties(); let root = null; const id = props.getProperty("REC_FOLDER_ID");
+  if (id) { try { root = DriveApp.getFolderById(id); } catch (err) { root = null; } }
+  if (!root) { const it = DriveApp.getFoldersByName(REC_FOLDER); root = it.hasNext() ? it.next() : DriveApp.createFolder(REC_FOLDER); props.setProperty("REC_FOLDER_ID", root.getId()); }
+  const g = String(group || "other"), sub = root.getFoldersByName(g);
+  return sub.hasNext() ? sub.next() : root.createFolder(g);
+}
+// run this once from the editor (Run ▸ checkRecordings) after pasting the new script: Google asks to allow Drive, and the folder appears
+function checkRecordings() { const f = recFolder_("B2").getParents().next(); Logger.log("Recordings go to: " + f.getUrl()); return f.getUrl(); }
+function upload_(p) {
+  const stu = findStudent_(p.code);
+  if (!stu) return { ok: false, error: "unknown-code" };
+  if (stu.group === TEACHER) return { ok: false, error: "teacher" };
+  const page = clean_(p.page, 80), task = clean_(p.task, 60);
+  if (!page || !task) return { ok: false, error: "no-task" };
+  const asked = groupOfPage_(page);
+  if (asked && asked !== stu.group && isGroup_(stu.group)) return { ok: false, error: "other-group", gid: stu.group.toLowerCase() };
+  const b64 = String(p.b64 || "");
+  if (!b64 || b64.length > 40000000) return { ok: false, error: "size" };   // ≈ 30 MB: far more than five minutes of speech
+  const mime = /^audio\/[\w.+-]+/.test(String(p.mime || "")) ? String(p.mime).split(";")[0] : "audio/mp4";
+  const ext = /mp4|aac|m4a/.test(mime) ? "m4a" : /wav/.test(mime) ? "wav" : /ogg/.test(mime) ? "ogg" : "webm";
+  const name = (Utilities.formatDate(new Date(), TZ, "yyyy-MM-dd HH-mm") + " " + stu.name + " · " + (clean_(p.title, 60) || task) + "." + ext).replace(/[\\/:*?"<>|]/g, "-");
+  const file = recFolder_(stu.group).createFile(Utilities.newBlob(Utilities.base64Decode(b64), mime, name));
+  const url = file.getUrl();
+  const lock = LockService.getScriptLock();
+  try { lock.waitLock(25000); } catch (err) { return { ok: true, id: null, url: url, late: true }; }   // the file is safe in Drive even if the table is busy
+  try { const r = submit_(stu, page, Object.assign({}, p, { type: "recording-drive", text: url })); st_touch_(stu); return Object.assign(r, { url: url }); }
+  finally { lock.releaseLock(); }
 }
 
 // the student opened your feedback on their page
@@ -837,6 +871,7 @@ function readOnly_(p) {
 function sync_(p) {
   const quick = readOnly_(p);
   if (quick) return quick;
+  if (p.action === "upload") return upload_(p);   // engine 57: the Drive write happens outside the lock (it can take a few seconds)
   const lock = LockService.getScriptLock();
   try { lock.waitLock(20000); } catch (err) { return { ok: false, error: "busy" }; }
   try {

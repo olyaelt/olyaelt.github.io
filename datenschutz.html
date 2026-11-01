@@ -42,6 +42,7 @@ a{color:var(--link)}
       <li>These pages are homework for Olya's English groups. No ads, no tracking, no analytics.</li>
       <li>Without a code, your progress stays only on your device.</li>
       <li>With your code, your ticks, reactions, questions, "?" marks and the texts you send go to Olya's private Google table, so she can see them and answer you.</li>
+      <li>Voice recordings you send with your code go to a private folder in Olya's Google Drive — only she can open it. You can listen to your own recording again on the homework page.</li>
       <li>Olya also uses this to make her future courses better. If she uses an example from your texts in materials, it's without your name and anything that shows it's you.</li>
       <li>Many students come back after a break, so Olya keeps your data for up to five years after your last course, then deletes it or makes it anonymous.</li>
       <li>Videos load from YouTube only after you tap <b>Load the videos</b>.</li>
@@ -65,7 +66,7 @@ a{color:var(--link)}
     <p>Die Schrift wird von dieser Website selbst geladen. Es werden keine Verbindungen zu Google Fonts oder anderen Schriftanbietern aufgebaut.</p>
 
     <h2>5. Speicherung auf Ihrem Gerät</h2>
-    <p>Die Seiten speichern im Speicher Ihres Browsers (localStorage): welche Aufgaben Sie erledigt haben, Ihre Eingaben in den Übungen, Ihren Code und Namen, Einstellungen (z. B. langsamere Wiedergabe) sowie, falls erteilt, Ihre Einwilligung für YouTube. Diese Speicherung ist für die von Ihnen gewünschte Funktion unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Die Daten bleiben auf Ihrem Gerät, soweit unter Punkt 6 nichts anderes steht. Sie können sie jederzeit löschen, indem Sie die Website-Daten in Ihrem Browser löschen.</p>
+    <p>Die Seiten speichern im Speicher Ihres Browsers (localStorage): welche Aufgaben Sie erledigt haben, Ihre Eingaben in den Übungen, Ihren Code und Namen, Einstellungen (z. B. langsamere Wiedergabe) sowie, falls erteilt, Ihre Einwilligung für YouTube. Eine Sprachaufnahme wird bis zum Absenden zusätzlich im Speicher Ihres Browsers (IndexedDB) aufbewahrt (siehe Punkt 8). Diese Speicherung ist für die von Ihnen gewünschte Funktion unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Die Daten bleiben auf Ihrem Gerät, soweit unter Punkt 6 nichts anderes steht. Sie können sie jederzeit löschen, indem Sie die Website-Daten in Ihrem Browser löschen.</p>
 
     <h2>6. Ihr Code und meine Kurstabelle (Google)</h2>
     <p>Die Hausaufgabenseiten öffnen sich nur mit Ihrem persönlichen Code, den Sie von mir bekommen. Wenn Sie Ihren Code eingeben, sendet die Seite folgende Daten an meine Tabelle in Google Sheets (über Google Apps Script):</p>
@@ -73,10 +74,10 @@ a{color:var(--link)}
       <li>Ihren Code und den Zeitpunkt Ihres letzten Besuchs;</li>
       <li>welche Aufgaben Sie wann erledigt haben, Ihre Einschätzung (easy / OK / hard);</li>
       <li>Ihre Fragen, Ihre Markierungen („?“) mit der markierten Stelle und Ihrer Notiz;</li>
-      <li>Texte, die Sie im Teil „Over to you“ abschicken, und die dafür ausgewählten Ausdrücke; bei Sprachaufnahmen nur den Vermerk, dass Sie eine Aufnahme geschickt haben;</li>
+      <li>Texte, die Sie im Teil „Over to you“ abschicken, und die dafür ausgewählten Ausdrücke; Sprachaufnahmen, die Sie dort abschicken (Näheres unter Punkt 8);</li>
       <li>wann Sie mein Feedback geöffnet haben.</li>
     </ul>
-    <p>In der Tabelle sind dazu Ihr Name und Ihre Gruppe eingetragen. Anbieter der Tabelle ist Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Eine Übermittlung an Google LLC in den USA ist möglich; Google LLC ist nach dem EU-U.S. Data Privacy Framework zertifiziert.</p>
+    <p>In der Tabelle sind dazu Ihr Name und Ihre Gruppe eingetragen. Anbieter der Tabelle und von Google Drive ist Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Eine Übermittlung an Google LLC in den USA ist möglich; Google LLC ist nach dem EU-U.S. Data Privacy Framework zertifiziert.</p>
     <p>Interaktive Unterrichtsseiten, deren Adresse auf „-live.html“ endet, fragen beim Öffnen und alle 30 Sekunden bei meiner Tabelle nach, ob ich Aufgaben geändert habe. Dabei werden keine Angaben über Sie gesendet; technisch bedingt erhält Google Ihre IP-Adresse.</p>
     <p>Auf manchen dieser Seiten schreiben Sie im Unterricht in ein Eingabefeld, zum Beispiel eine kurze Chat-Nachricht mit Ihrer Gruppe. Damit ich die Gruppenarbeit begleiten und Ihnen schon während des Schreibens einen kurzen Hinweis geben kann, sendet die Seite diesen Text beim Tippen und beim Abschicken an meine Tabelle, zusammen mit einer zufälligen Kennung Ihres Geräts. Auf Kartenseiten sendet die Seite ebenso, welche Karten Ihre Gruppe mit „Again“ noch einmal üben wollte und welche sie mit „Got it“ abgehakt hat. Auf den Seiten einer Wiederholungsstunde sendet sie außerdem, in welchem Teil der Seite Ihre Gruppe gerade ist, und einzelne Antippen: wie nah Ihre Antwort an der Lösung war (✓ / ≈ / ✗), welche Lücken Sie mit 🔖 markiert haben, welche Ausdrücke im Kasten Sie angetippt haben und Ihre Antwort auf meine Hinweise („Go“ / „Not yet“). Ist auf dem Gerät Ihr persönlicher Code gespeichert (weil Sie dort Ihre Hausaufgaben öffnen), wird auch der Code gesendet und ich sehe Ihren Namen; sonst sehe ich den Text ohne Namen. Die Seite weist unter dem Eingabefeld darauf hin. Meine Hinweise an Ihre Gruppe werden ebenfalls in der Tabelle gespeichert. Für diese Texte gelten dieselben Zwecke, Rechtsgrundlagen und Speicherfristen wie für die übrigen Daten in diesem Abschnitt.</p>
     <p><b>Zwecke und Rechtsgrundlagen:</b></p>
@@ -92,7 +93,9 @@ a{color:var(--link)}
     <p>Weitere Informationen: <a href="https://policies.google.com/privacy?hl=de" rel="noopener">Datenschutzerklärung von Google</a>.</p>
 
     <h2>8. Sprachaufnahmen</h2>
-    <p>Wenn Sie im Teil „Over to you“ eine Aufnahme machen, fragt Ihr Browser nach dem Zugriff auf das Mikrofon. Die Aufnahme bleibt auf Ihrem Gerät, bis Sie sie selbst (z. B. über Telegram) an mich schicken. Die Seiten laden keine Aufnahmen hoch.</p>
+    <p>Wenn Sie im Teil „Over to you“ eine Aufnahme machen, fragt Ihr Browser nach dem Zugriff auf das Mikrofon. Bis die Aufnahme bei mir angekommen ist, bleibt eine Kopie im Speicher Ihres Browsers (IndexedDB), damit sie nicht verloren geht – nach dem Absenden höchstens 14 Tage, eine nicht abgeschickte Aufnahme höchstens 60 Tage.</p>
+    <p>Wenn Sie Ihren Code eingegeben haben, schickt die Seite die Aufnahme über mein Google Apps Script in einen privaten Ordner in meinem Google Drive; in meiner Tabelle steht der Link dazu. Zugriff auf diesen Ordner habe nur ich. Ihre eigene Aufnahme können Sie auf der Hausaufgabenseite noch einmal anhören; die Seite lädt sie dazu mit Ihrem Code aus meinem Google Drive. Ohne Code schicken Sie die Aufnahme selbst (z. B. über Telegram) an mich.</p>
+    <p>Anbieter von Google Drive ist Google Ireland Limited (siehe Punkt 6). Für die Aufnahmen gelten dieselben Zwecke, Rechtsgrundlagen und Speicherfristen wie für die übrigen Daten unter Punkt 6.</p>
 
     <h2>9. Links zu anderen Seiten</h2>
     <p>Links zu anderen Angeboten (z. B. TubeQuizard, Brainscape) führen zu Seiten anderer Anbieter, für die deren Datenschutzbestimmungen gelten. Solange Sie einen Link nicht antippen, werden keine Daten an diese Anbieter übertragen.</p>
@@ -100,7 +103,7 @@ a{color:var(--link)}
     <h2>10. Ihre Rechte</h2>
     <p>Sie haben das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und Widerspruch (Art. 21) sowie das Recht, eine Einwilligung jederzeit mit Wirkung für die Zukunft zu widerrufen (Art. 7 Abs. 3). Schreiben Sie mir dazu einfach (Kontakt im <a href="impressum.html">Impressum</a>); wenn Sie die Löschung Ihrer Daten wünschen, lösche ich sie umgehend. Sie können sich außerdem bei einer Datenschutz-Aufsichtsbehörde beschweren, zum Beispiel bei der Berliner Beauftragten für Datenschutz und Informationsfreiheit, Alt-Moabit 59–61, 10555 Berlin.</p>
   </div>
-  <p class="small">Stand: Oktober 2026</p>
+  <p class="small">Stand: November 2026</p>
 </div>
 <footer class="legal"><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></footer>
 <script>

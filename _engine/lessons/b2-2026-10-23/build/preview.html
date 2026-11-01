@@ -2342,7 +2342,7 @@ function renderTeacherTask(id, wid){
   const rowsOf = s => Math.min(18, Math.max(3, String(s).split("\n").length + 1));
   const sentAs = w => {
     const lines = String(w.text||"").split("\n"), links = lines.filter(l=>/^https?:/.test(l));
-    if(w.type==="recording") return `<p class="small">Sent in Telegram.</p>`;
+    if(w.type==="recording") return links.length ? links.map(l=>`<a class="t-link" href="${esc(l)}" target="_blank" rel="noopener">▶ Listen to the recording (your Google Drive)</a>`).join("") : `<p class="small">Sent in Telegram.</p>`;   /* engine 57 */
     if(w.type==="text") return `${taskCard?`<details class="task-peek"><summary><b>The task</b> <span class="small">tap to see</span></summary><div class="task-card">${TASK_HTML}</div></details>`:""}`
       + `<details class="task-peek"><summary><b>What they sent</b> <span class="small">tap to see</span></summary><div class="t-text">${esc(textOf(w)).replace(/\n/g,"<br>")}</div>${w.phrases?`<p class="small">Phrases they planned to use: ${esc(w.phrases.replace(/\n/g," · "))}</p>`:""}</details>`;
     return `<p class="fb-q">${esc(textOf(w)).replace(/\n/g,"<br>")}</p>${links.map(l=>`<a class="t-link" href="${esc(l)}" target="_blank" rel="noopener">▶ Listen to this line on YouTube</a>`).join("")}`;
@@ -3614,11 +3614,12 @@ function renderProduce(st, count, pct){
   const recBtn = $("rec"), label = $("rec-label"), time = $("rec-time"), rk = recKey();
   const showReview = () => { $("rec-review").hidden = false; $("rec-row").hidden = true; $("rec-audio").src = recState.url;
     const n = $("rec-kept"); if(n && recState.note){ n.hidden = false; n.classList.toggle("warn", !!recState.noteWarn); n.textContent = recState.note; } };
-  if(recState.key && recState.key !== rk){ if(recState.url) URL.revokeObjectURL(recState.url); recState.file = null; recState.url = null; recState.note = ""; }   /* another task's recording stays with that task */
+  if(recState.key && recState.key !== rk){ if(recState.url) URL.revokeObjectURL(recState.url); recState.file = null; recState.url = null; recState.raw = null; recState.note = ""; }   /* another task's recording stays with that task */
   recState.key = rk;
   if(recState.url) showReview();
   else recGet(rk).then(v => { if(!v || !v.blob || recState.file || recState.key !== rk || !document.getElementById("rec-review")) return;   /* engine 57: back from the device */
     recState.file = new File([v.blob], v.name || "recording.m4a", {type: v.type || v.blob.type}); recState.url = URL.createObjectURL(recState.file);
+    recState.raw = v.raw ? new Blob([v.raw], {type: v.rawType || "audio/webm"}) : null;
     recState.note = v.sent ? "✓ Saved on this device · sent" : "✓ Saved on this device — not sent yet: tap Send to Olya."; recState.noteWarn = false; showReview(); });
   recBtn.addEventListener("click", async ()=>{
     if(recState.rec){ recState.rec.stop(); return; }
@@ -3640,10 +3641,10 @@ function renderProduce(st, count, pct){
       if(/mp4|aac|m4a/.test(type)) file = new File([blob], "recording.m4a", {type:"audio/mp4"});
       else { try{ file = new File([await toWav(blob)], "recording.wav", {type:"audio/wav"}); }catch(e){ file = new File([blob], "recording.webm", {type:"audio/webm"}); } }
       if(recState.url) URL.revokeObjectURL(recState.url);
-      recState.file = file; recState.url = URL.createObjectURL(file);
+      recState.file = file; recState.url = URL.createObjectURL(file); recState.raw = file.type === "audio/wav" ? blob : null;   /* the small original goes to Drive */
       recBtn.disabled = false; label.textContent = "Start recording"; time.textContent = "";
       showReview();
-      const kept = await recPut(rk, {blob: file, name: file.name, type: file.type, t: Date.now(), sent: false});   /* engine 57 */
+      const kept = await recPut(rk, {blob: file, name: file.name, type: file.type, raw: recState.raw, rawType: recState.raw ? recState.raw.type : "", t: Date.now(), sent: false});   /* engine 57 */
       recState.note = kept ? "✓ Saved on this device" : "This browser can't keep the recording if you close the page — send it now."; recState.noteWarn = !kept; showReview();
       ls.set(sentKey(), "");
     };
@@ -3692,6 +3693,27 @@ function renderProduce(st, count, pct){
       $("copy").click(); return;
     }
     const f = recState.file; if(!f){ say("msg","Record it first."); return; }
+    /* engine 57 (her «записи не должны теряться»): with a code the recording goes straight to Olya (her Google Drive, through her table) —
+       no app to choose; it stays on this phone until it has arrived. The share sheet only without a code, or as the way out */
+    if(synced()){
+      const b = $("send"); b.disabled = true; say("msg", "Sending your recording to Olya… It can take up to a minute — keep this page open.");
+      const up = recState.raw || f, res = await upRec(up); b.disabled = false;
+      if(res.ok && res.url){   /* only her new script answers with the file's link: an older one must not count as "sent" */
+        markSent(); recGet(rk).then(v => { if(v) recPut(rk, Object.assign(v, {sent: true})); });
+        const list = work[current.id] = work[current.id] || [], d = new Date(), p2 = n=>String(n).padStart(2,"0");
+        if(res.id){ const item = {id:res.id, sent:`${p2(d.getDate())}.${p2(d.getMonth()+1)} ${p2(d.getHours())}:${p2(d.getMinutes())}`, type:"recording", text:res.url || "", feedback:"", seen:false};
+          const i = list.findIndex(w=>String(w.id)===String(res.id)); if(i>-1) list[i] = item; else list.push(item); saveWork(); }
+        recState.note = "✓ Sent to Olya"; recState.noteWarn = false; const n = $("rec-kept"); if(n){ n.hidden = false; n.classList.remove("warn"); n.textContent = recState.note; }
+        say("msg", sentMsg); return;
+      }
+      say("msg", `${res.error === "size" ? "This recording is too long to send." : "It didn't go through — maybe no internet right now."} Your recording is saved on this phone: try <b>Send to Olya</b> again in a minute.
+        <br><button class="linklike" id="rec-share">Or send it to Olya in Telegram</button>`);
+      const sh = $("rec-share"); if(sh) sh.addEventListener("click", () => shareRec(f));
+      return;
+    }
+    shareRec(f);
+  });
+  async function shareRec(f){
     const named = new File([f], fileBase(who.value)+f.name.slice(f.name.lastIndexOf(".")), {type:f.type});
     if(navigator.canShare && navigator.canShare({files:[named]})){
       try{ await navigator.share({files:[named], title:tag(), text:tag()}); markSent();
@@ -3701,7 +3723,13 @@ function renderProduce(st, count, pct){
     }
     say("msg", `This browser can't send the file directly. <a href="${recState.url}" download="${esc(named.name)}" id="save-rec">Save the recording</a>, then send it to Olya in Telegram.`);
     const sv = $("save-rec"); if(sv) sv.addEventListener("click",()=>{ markSent(); if(synced()) toTable("recording",""); });
-  });
+  }
+  /* the recording as text for her script (base64) */
+  async function upRec(blob){
+    try{ const b64 = await new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(",")[1] || ""); r.onerror = () => rej(r.error); r.readAsDataURL(blob); });
+      return await post({action:"upload", code:myCode(), page:PAGE_KEY, date:LESSON.date, task:current.id, title:current.title, mime: blob.type || "audio/webm", b64, phrases:usedPhrases()});
+    }catch(e){ return {ok:false, error:"offline"}; }
+  }
   /* engine 57: Finish (Next) before anything was sent → one gentle line: send it first, or go on anyway */
   const sentHere = () => isTeacher() || (work[current.id] || []).length > 0 || !!ls.get(sentKey());
   const goOn = () => { stepIdx++; checked = false; renderTask(); };

@@ -30,22 +30,33 @@ class Sheet {
 }
 
 function makeEnv() {
-  const sheets = {};
+  const sheets = {}, drive = { props: {}, folders: [], files: [], n: 0 };
   const ss = { getSheetByName: n => sheets[n] || null, insertSheet: n => (sheets[n] = new Sheet(n)),
     getSheets: () => Object.values(sheets), deleteSheet: s => { delete sheets[s.name]; } };
   const pad = n => String(n).padStart(2, "0");
   const ctx = {
     SpreadsheetApp: { getActiveSpreadsheet: () => ss, getUi: () => { throw new Error("no ui"); } },
     LockService: { getScriptLock: () => ({ waitLock() {}, releaseLock() {} }) },
+    /* engine 57: her Drive (recordings) */
+    PropertiesService: { getScriptProperties: () => ({ getProperty: k => drive.props[k] || null, setProperty: (k, v) => { drive.props[k] = v; } }) },
+    DriveApp: (() => { const iter = a => { let i = 0; return { hasNext: () => i < a.length, next: () => a[i++] }; };
+      const folder = (name, parent) => { const f = { id: "fold" + (++drive.n), name, parent, kids: [], files: [], getId: () => f.id, getUrl: () => "https://drive.google.com/drive/folders/" + f.id,
+        getFoldersByName: n => iter(f.kids.filter(k => k.name === n)), createFolder: n => { const k = folder(n, f); f.kids.push(k); return k; },
+        getParents: () => iter(parent ? [parent] : []),
+        createFile: blob => { const file = { id: "file" + (++drive.n), name: blob.name, mime: blob.mime, size: blob.bytes.length, folder: f, getId: () => file.id, getUrl: () => "https://drive.google.com/file/d/" + file.id + "/view" }; f.files.push(file); drive.files.push(file); return file; } };
+        drive.folders.push(f); return f; };
+      return { getFoldersByName: n => iter(drive.folders.filter(f => !f.parent && f.name === n)), createFolder: n => folder(n, null),
+        getFolderById: id => { const f = drive.folders.find(x => x.id === id); if (!f) throw new Error("no folder"); return f; } }; })(),
     ContentService: { MimeType: { JSON: "json" }, createTextOutput: s => ({ s, setMimeType() { return this; } }) },
-    Utilities: { formatDate: (d, tz, f) => f.replace("dd", pad(d.getDate())).replace("MM", pad(d.getMonth()+1)).replace("HH", pad(d.getHours())).replace("mm", pad(d.getMinutes())) },
+    Utilities: { formatDate: (d, tz, f) => f.replace("yyyy", d.getFullYear()).replace("dd", pad(d.getDate())).replace("MM", pad(d.getMonth()+1)).replace("HH", pad(d.getHours())).replace("mm", pad(d.getMinutes())),
+      base64Decode: b => Array.from(Buffer.from(String(b), "base64")), newBlob: (bytes, mime, name) => ({ bytes, mime, name }) },
     Logger: { log(m) { ctx.alerts.push(m); } },
     console, Math, Date, JSON, String, Number, Object, Array, isFinite, alerts: [],
   };
   vm.createContext(ctx);
   vm.runInContext(fs.readFileSync(__dirname + "/../Code.gs", "utf8"), ctx);
   return {
-    sheets, ctx,
+    sheets, ctx, drive,
     post: body => JSON.parse(ctx.doPost({ postData: { contents: body } }).s),
     get: () => JSON.parse(ctx.doGet({}).s),
   };
