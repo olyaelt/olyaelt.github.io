@@ -17,18 +17,21 @@ const FAKE_YT = `window.YT={Player:function(id,o){const d=document.getElementByI
   for (const id of ids) {
     await p.click(`[data-open="${id}"]`); await p.waitForTimeout(150);
     if (shots) await p.screenshot({path: path.join(shots, id + '.png')});
-    let clicks = 0;
+    let clicks = 0, savedOnly = false;
     while (clicks < 120 && await p.locator('.lesson-head').count() === 0) {
       const go = p.locator('#go, #fin').first();
       if (!(await go.count())) break;
       /* engine 50: the sort step waits until the card is in its box (her rule: nothing skips the task) — put it in the right one */
       if (await p.locator('.sort-card').count() && await go.isDisabled()) { await p.evaluate(() => { const S = SORTS[Object.keys(SORTS).find(k => k.startsWith(current.id + ':'))], st = current.steps[stepIdx], it = st.data.items[S.at];
         const b = it && document.querySelector(`[data-sp="${it.p}"]`); if (b && it.mode !== 'auto') b.click(); }); await p.waitForTimeout(1400); clicks++; continue; }
+      /* engine 58: Over to you — Save without sending (stays on the page), then Back to the homework: not sent, not ticked */
+      if (await p.locator('#nosend').count() && await p.locator('#nosend').isVisible()) { await p.click('#nosend'); await p.waitForTimeout(80);
+        if (await p.locator('#to-list').count()) await p.click('#to-list'); await p.waitForTimeout(80); savedOnly = true; clicks++; continue; }
       await go.click(); clicks++; await p.waitForTimeout(60);
     }
-    /* engine 58: Over to you finished without sending ends on "Not sent yet" and stays unticked (her rule of 1.11) */
-    const notSent = await p.locator('.unsent-end').count() > 0;
-    if (notSent) { await p.click('#list'); await p.waitForTimeout(100); }
+    /* engine 58: Over to you left without sending stays unticked (her rule of 1.11) */
+    const notSent = savedOnly || await p.locator('.unsent-end').count() > 0;
+    if (await p.locator('.unsent-end').count()) { await p.click('#list'); await p.waitForTimeout(100); }
     const back = await p.locator('.lesson-head').count() > 0;
     const ticked = back && await p.locator(`.task-row.is-done [data-toggle="${id}"]`).count() > 0;
     report.push(`${back && (notSent ? !ticked : ticked) ? 'ok  ' : 'FAIL'} ${id} (${clicks} taps${notSent ? ', not sent → not ticked' : ''})`);

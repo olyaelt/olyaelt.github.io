@@ -18,8 +18,8 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
   if (prodTask) {
     await phone.click(`[data-open="${prodTask}"]`);
     for (let i = 0; i < 10 && !(await phone.locator('#txt').count()); i++) { await phone.click('#go'); await phone.waitForTimeout(80); }
-    await phone.click('.seg-btn[data-mode="write"]'); await phone.fill('#txt', 'A test text.'); await phone.click('#send'); await phone.waitForTimeout(300);
-    out.sent = (await phone.locator('#msg').textContent()).trim();
+    await phone.click('.seg-btn[data-mode="write"]'); await phone.fill('#txt', 'A test text.'); await phone.click('#go'); await phone.waitForTimeout(500);   /* engine 58: Finish and send */
+    out.sent = (await phone.locator('.lesson-head').count()) && (await phone.evaluate(id => (work[id] || []).length, prodTask)) ? 'Sent ✓ (Finish and send → the list)' : 'not sent';
     env.sheets.Work.set(2, 10, 'A **test** ~~text~~ {line}.');
   }
   // finish the first task through its own button → the banner asks how it was

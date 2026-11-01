@@ -231,6 +231,9 @@ details.summary[open] summary::after{content:"Hide"}
 .fb-line.is-new::after{content:" • new";color:var(--label)}
 .fb-wait{background:transparent;color:var(--muted);font-weight:400;cursor:default;padding:8px 4px 0;margin-top:0}
 .fb-wait.fb-rec{cursor:pointer;color:var(--ink)}
+.fb-wait.fb-unsent{cursor:pointer;color:var(--ink);font-weight:700}
+.actions.prod{flex-wrap:wrap}
+@media (max-width:560px){ .actions.prod #go{order:-1;flex:1 1 100%} .actions.prod #nosend{flex:1} }
 .fb-key{margin:0 0 10px}
 .fb-item{margin-bottom:12px}
 .fb-text{font-size:var(--step-1);line-height:1.6}
@@ -829,6 +832,8 @@ function refreshTicks(){
   });
 }
 function fbLine(id){
+  { const t = TASKS.find(x => x.id === id);
+    if(t && needsSend(t) && !sentFor(t) && ls.get(savedKey(id))) return `<button class="fb-line fb-wait fb-unsent" data-tosend="${id}">✏️ Saved on this device · not sent to Olya yet — tap to send</button>`; }
   const list = myCode() ? (work[id]||[]) : [];
   if(!list.length) return "";
   const withFb = list.filter(w=>String(w.feedback||"").trim());
@@ -855,7 +860,9 @@ function refreshWork(){
   document.querySelectorAll("[data-fbslot]").forEach(s=>{ s.innerHTML = fbLine(s.dataset.fbslot); });
   wireFb();
 }
-function wireFb(){ document.querySelectorAll("[data-fb]").forEach(b=>{ if(b._w) return; b._w = 1; b.addEventListener("click",()=>renderFeedback(b.dataset.fb)); }); }
+function wireFb(){ document.querySelectorAll("[data-fb]").forEach(b=>{ if(b._w) return; b._w = 1; b.addEventListener("click",()=>renderFeedback(b.dataset.fb)); });
+  document.querySelectorAll("[data-tosend]").forEach(b=>{ if(b._w) return; b._w = 1; b.addEventListener("click", ev => { ev.stopPropagation();
+    const t = TASKS.find(x => x.id === b.dataset.tosend); if(t) openTask(t.id, t.steps.findIndex(s => s.type === "produce")); }); }); }
 const fbMarks = s => esc(s)
   .replace(/\*\*([\s\S]+?)\*\*/g,'<b class="fb-good">$1</b>')
   .replace(/~~([\s\S]+?)~~/g,'<s class="fb-del">$1</s>')
@@ -2356,7 +2363,8 @@ function renderLookback(st, count, pct){
 /* engine 57 (her 09:25: «если нажала Finish, но не нажала Send, задание не отмечается как сделанное — и студентам напомнит, и меня не введёт
    в заблуждение»): a task with Over to you counts as done only once its text or recording was sent (to her table, or shared / copied) */
 function needsSend(t){ return (t.steps || []).some(s => s.type === "produce"); }
-function sentFor(t){ return isTeacher() || (work[t.id] || []).length > 0 || !!ls.get("hw-sent-" + PAGE_KEY + "-" + t.id); }
+function sentFor(t){ return isTeacher() || (work[t.id] || []).some(w => w.type === "text" || w.type === "recording") || !!ls.get("hw-sent-" + PAGE_KEY + "-" + t.id); }
+const savedKey = id => "hw-saved-" + PAGE_KEY + "-" + id;   /* engine 58: "Save without sending" was tapped — the list reminds them */
 function renderNotSent(t){
   { const at = t.steps.findIndex(s => s.type === "produce"); if(!isTeacher()) savePos(t.id, at);
     shell({stageHTML:`<div class="end unsent-end"><div class="cloud">Not sent yet</div>
@@ -2485,6 +2493,17 @@ function renderPlan(st, count, pct){
 }
 
 /* 3. record it (or write it), tick the phrases you used, send it */
+/* engine 58 (her 1.11 10:29: «кнопки дико confusing — должно быть Finish and send либо Save without sending, две кнопки»): at the bottom of
+   Over to you — Finish and send (sends to Olya, then the task is done) · Save without sending (back to the list, not ticked, a reminder line).
+   Once what is on the screen has reached her, the button is just Finish. Her own view: Back · Finish, as before. */
+function prodActions(){
+  checked = true;
+  if(isTeacher()) return navButtons();
+  const last = stepIdx === current.steps.length - 1;
+  return `<button class="btn" id="prev">Back</button>
+    <button class="btn" id="nosend">${last ? "Save without sending" : "Go on without sending"}</button>
+    <button class="btn primary grow" id="go">${last ? "Finish and send" : "Send and go on"}</button>`;
+}
 function renderProduce(st, count, pct){
   /* modes:["write"] on the step (or the task) = writing only, no Record tab (dialogues); default both */
   const modes = (st.modes || current.modes || ["write", "record"]).filter(m => m === "write" || m === "record");
@@ -2533,14 +2552,18 @@ function renderProduce(st, count, pct){
         <label class="field"><span class="small">Your name</span><input id="who" type="text" autocomplete="given-name" placeholder="Your name" value="${esc(ls.get("hw-name"))}"></label>
         <div class="row-btns">
           <button class="btn" id="copy" ${mode==="write"?"":"hidden"}>Copy</button>
-          <button class="btn primary grow" id="send">Send to Olya</button>
         </div>
         <p class="small" id="msg" hidden></p>
       </div>`,
-    actionsHTML: plainNext()});
+    actionsHTML: prodActions()});
   const $ = id => document.getElementById(id), who = $("who");
   const say = (id, html) => { const el=$(id); el.hidden=false; el.innerHTML=html; };
   let curMode = mode;
+  /* engine 58: fresh = what is on the screen hasn't reached Olya yet (the bottom button sends it); a new recording or new text makes it fresh again */
+  const lastStep = stepIdx === current.steps.length - 1;
+  let fresh = !sentFor(current);
+  function setLabels(){ if(isTeacher()) return; const go = $("go"), ns = $("nosend"); if(!go) return;
+    go.textContent = fresh ? (lastStep ? "Finish and send" : "Send and go on") : (lastStep ? "Finish" : "Next"); if(ns) ns.hidden = !fresh; }
   app.querySelectorAll(".seg-btn").forEach(b=>b.addEventListener("click",()=>{
     curMode = b.dataset.mode; ls.set("hw-mode", curMode);
     app.querySelectorAll(".seg-btn").forEach(x=>{ x.classList.toggle("on", x===b); x.setAttribute("aria-selected", x===b); });
@@ -2569,7 +2592,7 @@ function renderProduce(st, count, pct){
   else recGet(rk).then(v => { if(!v || !v.blob || recState.file || recState.key !== rk || !document.getElementById("rec-review")) return;   /* engine 57: back from the device */
     recState.file = new File([v.blob], v.name || "recording.m4a", {type: v.type || v.blob.type}); recState.url = URL.createObjectURL(recState.file);
     recState.raw = v.raw ? new Blob([v.raw], {type: v.rawType || "audio/webm"}) : null;
-    recState.note = v.sent ? "✓ Saved on this device · sent" : "✓ Saved on this device — not sent yet: tap Send to Olya."; recState.noteWarn = false; showReview(); });
+    recState.note = v.sent ? "✓ Saved on this device · sent" : "✓ Saved on this device — not sent yet."; recState.noteWarn = false; showReview(); });
   recBtn.addEventListener("click", async ()=>{
     if(recState.rec){ recState.rec.stop(); return; }
     if(!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder)){
@@ -2595,7 +2618,7 @@ function renderProduce(st, count, pct){
       showReview();
       const kept = await recPut(rk, {blob: file, name: file.name, type: file.type, raw: recState.raw, rawType: recState.raw ? recState.raw.type : "", t: Date.now(), sent: false});   /* engine 57 */
       recState.note = kept ? "✓ Saved on this device" : "This browser can't keep the recording if you close the page — send it now."; recState.noteWarn = !kept; showReview();
-      ls.set(sentKey(), "");
+      ls.set(sentKey(), ""); fresh = true; setLabels();
     };
     rec.start(); recState.t0 = Date.now();
     recBtn.classList.add("on"); label.textContent = "Stop"; $("rec-msg").hidden = true;
@@ -2606,8 +2629,7 @@ function renderProduce(st, count, pct){
   /* sending */
   const synced = () => !!myCode() && syncState!=="unknown" && !isTeacher();
   const usedPhrases = () => [...app.querySelectorAll(".check input")].filter(x=>x.checked).map(x=>{ const l=x.closest("label"); return l ? l.textContent.trim() : ""; }).filter(Boolean);
-  const sentMsg = "Sent ✓ Olya's feedback will appear on the homework page — look for 💬. Now tap Finish.";
-  const markSent = () => { ls.set(sentKey(), String(Date.now())); const w = $("unsent"); if(w) w.remove();
+  const markSent = () => { ls.set(sentKey(), String(Date.now())); ls.set(savedKey(current.id), ""); fresh = false; setLabels();
     if(curMode === "record" && recState.file) recGet(rk).then(v => { if(v) recPut(rk, Object.assign(v, {sent: true})); }); };
   async function toTable(type, text){
     const res = await post({action:"submit", code:myCode(), page:PAGE_KEY, date:LESSON.date, task:current.id, title:current.title, type, text, phrases:usedPhrases()});
@@ -2626,52 +2648,55 @@ function renderProduce(st, count, pct){
   const done = "If you sent it to Olya, mark the task in our spreadsheet in your colour.";
   $("copy").addEventListener("click", async ()=>{
     const text = txt.value.trim(); if(!text){ say("msg","Write or dictate it first."); return; }
-    try{ await navigator.clipboard.writeText(tag()+"\n\n"+text); markSent(); say("msg","Copied. Paste it into your chat with Olya or into our spreadsheet."); }
+    try{ await navigator.clipboard.writeText(tag()+"\n\n"+text); markSent(); say("msg","Copied. Paste it into your chat with Olya or into our spreadsheet, then tap <b>Finish</b>."); }
     catch(e){ txt.select(); say("msg","Copying didn't work here. Select the text and copy it."); }
   });
-  $("send").addEventListener("click", async ()=>{
+  /* engine 58: send what is on the screen; true = it has reached Olya (or the share sheet sent it), so the task can finish */
+  async function sendNow(){
+    const go = $("go");
     if(curMode==="write"){
-      const text = txt.value.trim(); if(!text){ say("msg","Write or dictate it first."); return; }
+      const text = txt.value.trim(); if(!text){ say("msg","Write or dictate it first — or tap <b>Save without sending</b> to come back later."); return false; }
       if(synced()){
-        const b = $("send"); b.disabled = true; say("msg","Sending…");
-        const res = await toTable("text", text); b.disabled = false;
-        say("msg", res.ok ? sentMsg : "It didn't go through — no connection right now. Your text is saved here, so try again in a minute.");
-        return;
+        go.disabled = true; go.textContent = "Sending…";
+        const res = await toTable("text", text); go.disabled = false; setLabels();
+        if(res.ok) return true;
+        say("msg", "It didn't go through — no connection right now. Your text is saved here, so try again in a minute."); return false;
       }
-      if(navigator.share){ try{ await navigator.share({title:tag(), text:tag()+"\n\n"+text}); markSent(); say("msg",done); return; }catch(e){ if(e && e.name==="AbortError") return; } }
-      $("copy").click(); return;
+      if(navigator.share){ try{ await navigator.share({title:tag(), text:tag()+"\n\n"+text}); markSent(); return true; }catch(e){ if(e && e.name==="AbortError") return false; } }
+      $("copy").click(); return false;
     }
-    const f = recState.file; if(!f){ say("msg","Record it first."); return; }
+    const f = recState.file; if(!f){ say("msg","Record it first — or tap <b>Save without sending</b> to come back later."); return false; }
     /* engine 57 (her «записи не должны теряться»): with a code the recording goes straight to Olya (her Google Drive, through her table) —
        no app to choose; it stays on this phone until it has arrived. The share sheet only without a code, or as the way out */
     if(synced()){
-      const b = $("send"); b.disabled = true; say("msg", "Sending your recording to Olya… It can take up to a minute — keep this page open.");
-      const up = recState.raw || f, res = await upRec(up); b.disabled = false;
+      go.disabled = true; go.textContent = "Sending…"; say("msg", "Sending your recording to Olya… It can take up to a minute — keep this page open.");
+      const up = recState.raw || f, res = await upRec(up); go.disabled = false; setLabels();
       if(res.ok && res.url){   /* only her new script answers with the file's link: an older one must not count as "sent" */
         markSent(); recGet(rk).then(v => { if(v) recPut(rk, Object.assign(v, {sent: true, wid: res.id})); });
         const list = work[current.id] = work[current.id] || [], d = new Date(), p2 = n=>String(n).padStart(2,"0");
         if(res.id){ const item = {id:res.id, sent:`${p2(d.getDate())}.${p2(d.getMonth()+1)} ${p2(d.getHours())}:${p2(d.getMinutes())}`, type:"recording", text:res.url || "", feedback:"", seen:false};
           const i = list.findIndex(w=>String(w.id)===String(res.id)); if(i>-1) list[i] = item; else list.push(item); saveWork(); }
-        recState.note = "✓ Sent to Olya"; recState.noteWarn = false; const n = $("rec-kept"); if(n){ n.hidden = false; n.classList.remove("warn"); n.textContent = recState.note; }
-        say("msg", sentMsg); return;
+        recState.note = "✓ Sent to Olya"; recState.noteWarn = false;
+        return true;
       }
-      say("msg", `${res.error === "size" ? "This recording is too long to send." : "It didn't go through — maybe no internet right now."} Your recording is saved on this phone: try <b>Send to Olya</b> again in a minute.
+      say("msg", `${res.error === "size" ? "This recording is too long to send." : "It didn't go through — maybe no internet right now."} Your recording is saved on this phone: tap <b>Finish and send</b> again in a minute.
         <br><button class="linklike" id="rec-share">Or send it to Olya in Telegram</button>`);
-      const sh = $("rec-share"); if(sh) sh.addEventListener("click", () => shareRec(f));
-      return;
+      const sh = $("rec-share"); if(sh) sh.addEventListener("click", async () => { if(await shareRec(f)) goOn(); });
+      return false;
     }
-    shareRec(f);
-  });
+    return await shareRec(f);
+  }
   async function shareRec(f){
     const named = new File([f], fileBase(who.value)+f.name.slice(f.name.lastIndexOf(".")), {type:f.type});
     if(navigator.canShare && navigator.canShare({files:[named]})){
       try{ await navigator.share({files:[named], title:tag(), text:tag()}); markSent();
-        if(synced()){ const res = await toTable("recording", ""); say("msg", res.ok ? sentMsg : done); } else say("msg",done);
-        return; }
-      catch(e){ if(e && e.name==="AbortError") return; }
+        if(synced()) await toTable("recording", "");
+        return true; }
+      catch(e){ if(e && e.name==="AbortError") return false; }
     }
     say("msg", `This browser can't send the file directly. <a href="${recState.url}" download="${esc(named.name)}" id="save-rec">Save the recording</a>, then send it to Olya in Telegram.`);
     const sv = $("save-rec"); if(sv) sv.addEventListener("click",()=>{ markSent(); if(synced()) toTable("recording",""); });
+    return false;
   }
   /* the recording as text for her script (base64) */
   async function upRec(blob){
@@ -2679,18 +2704,29 @@ function renderProduce(st, count, pct){
       return await post({action:"upload", code:myCode(), page:PAGE_KEY, date:LESSON.date, task:current.id, title:current.title, mime: blob.type || "audio/webm", b64, phrases:usedPhrases()});
     }catch(e){ return {ok:false, error:"offline"}; }
   }
-  /* engine 57: Finish (Next) before anything was sent → one gentle line: send it first, or go on anyway */
-  const sentHere = () => isTeacher() || (work[current.id] || []).length > 0 || !!ls.get(sentKey());
+  /* engine 58: what is on the screen has reached her → just Finish; something new (typed, recorded again) → Finish and send */
   const goOn = () => { stepIdx++; checked = false; renderTask(); };
-  wireNav(()=>{}, () => {
-    if(sentHere() || $("unsent")) return true;
-    const last = stepIdx === current.steps.length - 1, has = (txt.value.trim() && curMode === "write") || (recState.file && curMode === "record");
-    app.querySelector(".actions").insertAdjacentHTML("beforebegin", `<div class="unsent" id="unsent" role="alert"><p><b>${has ? "You haven't sent it to Olya yet." : "You haven't written or recorded anything yet."}</b> The task counts as done once she gets it.</p>
-      <div class="row-btns">${has ? `<button class="btn primary" id="us-send">Send to Olya</button>` : ""}<button class="btn" id="us-skip">${last ? "Finish for now" : "Go on for now"}</button></div></div>`);
-    const u = $("unsent"); u.scrollIntoView({block: "center", behavior: "smooth"});
-    const ss = $("us-send"); if(ss) ss.addEventListener("click", () => { $("send").click(); });
-    $("us-skip").addEventListener("click", goOn);
-    return false;
+  if(isTeacher()){ wireNav(()=>{}); return; }
+  const last = lastStep;
+  txt.addEventListener("input", () => { if(txt.value.trim() && !fresh){ fresh = true; setLabels(); } });
+  document.getElementById("rec-again").addEventListener("click", () => { fresh = true; setLabels(); });
+  app.querySelector(".actions").classList.add("prod");
+  setLabels();
+  $("prev").addEventListener("click",()=>{ if(stepIdx>0){ stepIdx--; checked=false; renderTask(); } else goHome(); });
+  /* her 10:31: «Save не должно выводить со страницы» — it stays here, says it's kept, and offers the way back to the homework */
+  $("nosend").addEventListener("click", () => {
+    if(!last){ ls.set(savedKey(current.id), "1"); return goOn(); }
+    const has = (curMode === "write" && txt.value.trim()) || (curMode === "record" && recState.file);
+    if(has) ls.set(savedKey(current.id), "1");
+    say("msg", `${has ? "✓ Saved on this device — not sent to Olya yet. Come back and send it any time." : "There's nothing to save yet."}
+      <br><button class="btn" id="to-list">Back to the homework</button>`);
+    $("to-list").addEventListener("click", () => goHome());
+    $("msg").scrollIntoView({block: "center", behavior: "smooth"});
+  });
+  $("go").addEventListener("click", async () => {
+    if(!fresh) return goOn();
+    if(await sendNow()) goOn();
+    else if(!fresh) setLabels();
   });
 }
 
