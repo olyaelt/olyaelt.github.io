@@ -292,8 +292,11 @@ details.all[open] summary{color:var(--ink)}
 .gt-x,.gt-o{width:72%;height:72%;fill:none;stroke-width:6;stroke-linecap:round}
 .gt-x{stroke:#0693E3} .gt-o{stroke:#FF9900}
 .gt-t{width:72%;height:72%;fill:none;stroke-width:6;stroke-linejoin:round;stroke:#9B51E0}   /* tools 23: the third player's mark */
-.gt-cell.fresh .gt-x path,.gt-cell.fresh .gt-o circle,.gt-cell.fresh .gt-t path{stroke-dasharray:80;stroke-dashoffset:80;animation:gtdraw .5s .35s ease-out forwards}
-@keyframes gtdraw{to{stroke-dashoffset:0}}
+/* tools 23 (her 1.11 19:26: «опять потерялся третий крестик»): the hidden start lives in the keyframes, not in the mark itself — with
+   reduced motion (Windows "animation effects" off, iPhone "Reduce Motion") every animation is switched off, and the newest mark used to stay
+   invisible while the line was already there; now it is simply drawn, together with the line */
+.gt-cell.fresh .gt-x path,.gt-cell.fresh .gt-o circle,.gt-cell.fresh .gt-t path{stroke-dasharray:80;stroke-dashoffset:0;animation:gtdraw .5s .35s ease-out both}
+@keyframes gtdraw{from{stroke-dashoffset:80}to{stroke-dashoffset:0}}
 .gt-turn{display:flex;align-items:center;gap:8px;margin:0;font-size:1.15rem}
 .gt-turn .gt-x,.gt-turn .gt-o,.gt-turn .gt-t{width:1.8rem;height:1.8rem;stroke-width:7}
 .gt-turn.big{font-size:1.5rem;font-weight:900}

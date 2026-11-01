@@ -74,7 +74,9 @@ const DIR = 'tools/b2-2026-10-30/';
     /* X takes 0, O takes 4, △ takes 8, X takes 1, O takes 5, △ takes 9, X takes 2 → X: 0 1 2 = three in a row */
     for (const k of [0, 4, 8, 1, 5, 9, 2]) { turns.push(await p.evaluate(() => (document.querySelector('.gttt .gt-turn b') || {}).textContent || ''));
       await p.click(`[data-gt="${k}"]`); await p.waitForTimeout(150); await p.click('[data-gt-show]'); await p.waitForTimeout(150); await p.click('[data-gt-yes]'); await p.waitForTimeout(250); }
-    out.tttPlay = {turns: turns.slice(0, 4), tri: await p.locator('.gt-cell svg.gt-t').count(), win: await p.evaluate(() => (document.querySelector('.gttt .gt-turn.big') || {}).textContent || '')};
+    out.tttPlay = {turns: turns.slice(0, 4), tri: await p.locator('.gt-cell svg.gt-t').count(), win: await p.evaluate(() => (document.querySelector('.gttt .gt-turn.big') || {}).textContent || ''),
+      lastMark: await p.evaluate(() => { const m = document.querySelector('.gt-cell.fresh svg path, .gt-cell.fresh svg circle'); return m ? getComputedStyle(m).strokeDashoffset : 'none'; })};
+    expect('with reduced motion the winning mark is drawn (not left invisible under the line)', out.tttPlay.lastMark === '0px', out.tttPlay.lastMark);
     if (shots) await p.screenshot({path: path.join(shots, 'tp-ttt.png')});
     expect('X → O → △ → X; △ on the board; three in a row wins on 4×4', out.tttPlay.turns.join('|') === "X's turn|O's turn|△'s turn|X's turn" && out.tttPlay.tri === 2 && /wins/.test(out.tttPlay.win), out.tttPlay);
     expect('noughts and crosses for three fits', await fits(), 'scrolls');

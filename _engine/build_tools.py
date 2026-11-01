@@ -6,6 +6,7 @@ Types (details in ../README.md, "Lesson tools"): "dice-council" (Reasons -> Deci
 "say-it-another-way" (Cards -> Speaking; "review": {"from": "<page>", "n": 4} adds cards from an earlier part,
 switched on in Settings or with ?review=1). A new type is an engine request."""
 import base64, glob, json, os, re, shutil, sys
+SITE = 'https://clickswith.me/'   # her own domain since 1.11.26 (olyaelt.github.io redirects here)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import site_theme
 HERE = os.path.dirname(os.path.abspath(__file__))
 T = os.path.join(HERE, 'tools')
@@ -181,7 +182,7 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
                 if b.get('kind') in ('picture', 'model') and b.get('img'):   # tools 18: a model with its picture (Ljubljana) too
                     shutil.copyfile(os.path.join(T, lesson, b['img']), os.path.join(out_dir, b['img']))
                 if b.get('kind') == 'game' and b.get('piece') == 'secret' and b.get('phone'):   # tools 17: the phone card
-                    b['_cardUrl'] = 'https://olyaelt.github.io/tools/%s/%s-card.html' % (lesson, name)
+                    b['_cardUrl'] = SITE + 'tools/%s/%s-card.html' % (lesson, name)
                     b['_qr'] = qr_svg(b['_cardUrl'])
                     open(os.path.join(out_dir, name + '-card.html'), 'w', encoding='utf-8').write(
                         CARD_PAGE.replace('__T__', b['phone']['title']).replace('__D__', js({'page': lesson + '/' + name, 'phone': b['phone'], 'cards': [c['front'] for c in b['cards']]})))
@@ -231,7 +232,7 @@ for g in sorted({p['lesson'].split('-')[0] for p in pages}):
         nice = 'Lesson of %s.%s.%s' % (dm.group(3), dm.group(2), dm.group(1)[2:]) if dm else rest.replace('-', ' ')
         rows.append('<h3>%s</h3>' % esc(nice[:1].upper() + nice[1:]))
         for p in [x for x in pages if x['lesson'] == lesson]:
-            base = 'https://olyaelt.github.io/tools/%s/%s' % (p['lesson'], p['name'])
+            base = SITE + 'tools/%s/%s' % (p['lesson'], p['name'])
             rows.append('<div class="pg"><div class="pg-t"><b>%s</b>%s <span class="kind">%s · %s</span></div>'
                         '<div class="pg-a"><a class="btn primary" href="%s/%s-live.html" target="_blank" rel="noopener">Open live</a>'
                         '<button class="btn" data-copy="%s-live.html">Copy link</button>'
@@ -276,4 +277,4 @@ document.addEventListener("click", ev => {
 """.replace('__BLOCKS__', ''.join(blocks))
 open(os.path.join(site, 'tools', 'index.html'), 'w', encoding='utf-8').write(site_theme.add(index))
 print('tools %s: built %d pages + tools/index.html (her list)' % (VERSION, len(built)))
-for b in built: print('  https://olyaelt.github.io/' + b)
+for b in built: print('  ' + SITE + b)
