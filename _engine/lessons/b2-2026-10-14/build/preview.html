@@ -230,6 +230,7 @@ details.summary[open] summary::after{content:"Hide"}
 .fb-line{display:block;width:100%;text-align:left;margin-top:-6px;padding:12px 14px 8px;border-radius:0 0 12px 12px;font:inherit;font-size:.92rem;font-weight:700;border:0;background:var(--note-bg);color:var(--note-ink);cursor:pointer}
 .fb-line.is-new::after{content:" • new";color:var(--label)}
 .fb-wait{background:transparent;color:var(--muted);font-weight:400;cursor:default;padding:8px 4px 0;margin-top:0}
+.fb-wait.fb-rec{cursor:pointer;color:var(--ink)}
 .fb-key{margin:0 0 10px}
 .fb-item{margin-bottom:12px}
 .fb-text{font-size:var(--step-1);line-height:1.6}
@@ -520,6 +521,8 @@ textarea{min-height:10em;resize:vertical;line-height:1.5}
 .saved-note.warn{color:var(--muted);font-weight:400}
 .unsent{background:var(--no-bg);border:2px solid var(--no-chip);border-radius:var(--radius);padding:12px 14px;margin:10px 0}
 .unsent p{margin:0 0 8px}
+.my-rec{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px}
+.my-rec audio{width:100%;max-width:26rem}
 .rec-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .rec-btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 22px;border-radius:999px;border:2px solid var(--rec);background:var(--card);color:var(--rec);font-weight:900;cursor:pointer}
 .rec-btn .dot{width:14px;height:14px;border-radius:50%;background:var(--rec)}
@@ -790,7 +793,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = ["click on the top line to hear the context","click on the line with the gap and try to catch what's in the gap","check","listen again — how did the expression sound?","optional: pronounce the expression like the speaker"];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "57";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "58";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -952,7 +955,9 @@ function fbLine(id){
   const last = list[list.length-1];
   if(last.type==="marked" && !hasNote(last)) return `<div class="fb-line fb-wait">✓ Marked for Olya ${esc(last.sent||"")} · she'll see it</div>`;
   const q = last.type==="question" || last.type==="marked";
-  return `<div class="fb-line fb-wait">✓ ${last.type==="marked"?"Marked for Olya":q?"Question sent":"Sent to Olya"} ${esc(last.sent||"")} · ${q?"her answer":"her feedback"} will appear here</div>`;
+  const line = `✓ ${last.type==="marked"?"Marked for Olya":q?"Question sent":"Sent to Olya"} ${esc(last.sent||"")} · ${q?"her answer":"her feedback"} will appear here`;
+  /* engine 57: a recording in her Drive can be heard again before her feedback comes, too */
+  return list.some(w=>w.type==="recording" && /drive\.google\.com/.test(String(w.text||""))) ? `<button class="fb-line fb-wait fb-rec" data-fb="${id}">${line} · ▶ your recording</button>` : `<div class="fb-line fb-wait">${line}</div>`;
 }
 /* new feedback the student hasn't marked as read: a red box on top of the home screen */
 const unreadIn = id => (work[id]||[]).filter(w=>String(w.feedback||"").trim() && !w.seen);
@@ -999,11 +1004,25 @@ function renderFeedback(id){
         ${(w.type==="question"||w.type==="marked") ? `<p class="fb-q">${esc(String(w.text||"").split("\n").filter(l=>!/^https?:/.test(l)).join(" "))}</p>` : ""}
         ${String(w.feedback||"").trim() ? `<div class="fb-text">${fbHTML(w.feedback)}</div>` : `<p class="small">Olya hasn't written feedback on this one yet.</p>`}
         ${w.type==="text" && w.text ? `<details class="fb-orig"><summary>What you sent</summary><div class="fb-sent">${esc(w.text).replace(/\n/g,"<br>")}</div></details>` : ""}
+        ${w.type==="recording" && /drive\.google\.com/.test(String(w.text||"")) ? `<div class="my-rec"><button class="btn" data-myrec="${w.id}">▶ Your recording</button><span class="small" data-myrec-msg="${w.id}"></span></div>` : ""}
         ${String(w.feedback||"").trim() ? (w.seen ? `<p class="small fb-isread">✓ Read</p>` : `<div class="fb-read"><button class="btn" data-read="${w.id}">✓ I've read it</button></div>`) : ""}
       </div>`).join(""),
     actionsHTML:`<button class="btn primary grow" id="fb-home">Back to all tasks</button>`});
   document.getElementById("fb-home").addEventListener("click", goHome);
   window.scrollTo(0,0);
+  /* engine 57 (her 09:25: «чтобы у них была возможность переслушать» — in May too, from any device): the recording comes back from her Drive
+     through her script, only with this student's code; the copy on this phone, if it's still here, plays at once */
+  app.querySelectorAll("[data-myrec]").forEach(b=>b.addEventListener("click", async ()=>{
+    const wid = b.dataset.myrec, msg = app.querySelector(`[data-myrec-msg="${wid}"]`);
+    const play = blob => { const a = document.createElement("audio"); a.controls = true; a.preload = "auto"; a.src = URL.createObjectURL(blob); b.replaceWith(a); if(msg) msg.textContent = ""; a.play().catch(()=>{}); };
+    const local = await recGet(PAGE_KEY + "|" + id);
+    if(local && local.sent && String(local.wid) === String(wid) && (local.raw || local.blob)){ play(local.raw || local.blob); return; }
+    b.disabled = true; if(msg) msg.textContent = " Loading…";
+    const res = await post({action:"myRecording", code:myCode(), page:PAGE_KEY, id:wid});
+    if(!res.ok || !res.b64){ b.disabled = false; if(msg) msg.textContent = " It didn't load — try again in a minute."; return; }
+    const bin = atob(res.b64), u8 = new Uint8Array(bin.length); for(let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+    play(new Blob([u8], {type: res.mime || "audio/mp4"}));
+  }));
   app.querySelectorAll("[data-read]").forEach(b=>b.addEventListener("click",()=>{
     const w = list.find(x=>String(x.id)===b.dataset.read); if(!w) return;
     w.seen = true; saveWork(); post({action:"seen", code:myCode(), page:PAGE_KEY, id:w.id});
@@ -1594,6 +1613,7 @@ function renderTask(){
   if(stepIdx >= t.steps.length){
     if(t._once){ current = t._base; return goHome(true); }
     if(t._review) return goHome();
+    if(needsSend(t) && !sentFor(t)) return renderNotSent(t);   /* engine 57: no ✓ until Olya has it */
     finish(t);
     const again = onceMoreTask(t);
     if(again){ current = again; stepIdx = 0; checked = false; return renderTask(); }
@@ -2452,6 +2472,20 @@ function renderLookback(st, count, pct){
 }
 
 /* ---------- end ---------- */
+/* engine 57 (her 09:25: «если нажала Finish, но не нажала Send, задание не отмечается как сделанное — и студентам напомнит, и меня не введёт
+   в заблуждение»): a task with Over to you counts as done only once its text or recording was sent (to her table, or shared / copied) */
+function needsSend(t){ return (t.steps || []).some(s => s.type === "produce"); }
+function sentFor(t){ return isTeacher() || (work[t.id] || []).length > 0 || !!ls.get("hw-sent-" + PAGE_KEY + "-" + t.id); }
+function renderNotSent(t){
+  { const at = t.steps.findIndex(s => s.type === "produce"); if(!isTeacher()) savePos(t.id, at);
+    shell({stageHTML:`<div class="end unsent-end"><div class="cloud">Not sent yet</div>
+        <p>This task counts as done when Olya gets your answer. Your text or recording is saved on this device — send it whenever you're ready.</p></div>`,
+      actionsHTML:`<button class="btn" id="list">All tasks</button><button class="btn primary grow" id="tosend">Send it now</button>`});
+    document.getElementById("list").addEventListener("click",goHome);
+    document.getElementById("tosend").addEventListener("click",()=>openTask(t.id, at));
+    window.scrollTo(0,0);
+  }
+}
 function renderEnd(t){
   finish(t);
   shell({stageHTML:`
@@ -2733,7 +2767,7 @@ function renderProduce(st, count, pct){
       const b = $("send"); b.disabled = true; say("msg", "Sending your recording to Olya… It can take up to a minute — keep this page open.");
       const up = recState.raw || f, res = await upRec(up); b.disabled = false;
       if(res.ok && res.url){   /* only her new script answers with the file's link: an older one must not count as "sent" */
-        markSent(); recGet(rk).then(v => { if(v) recPut(rk, Object.assign(v, {sent: true})); });
+        markSent(); recGet(rk).then(v => { if(v) recPut(rk, Object.assign(v, {sent: true, wid: res.id})); });
         const list = work[current.id] = work[current.id] || [], d = new Date(), p2 = n=>String(n).padStart(2,"0");
         if(res.id){ const item = {id:res.id, sent:`${p2(d.getDate())}.${p2(d.getMonth()+1)} ${p2(d.getHours())}:${p2(d.getMinutes())}`, type:"recording", text:res.url || "", feedback:"", seen:false};
           const i = list.findIndex(w=>String(w.id)===String(res.id)); if(i>-1) list[i] = item; else list.push(item); saveWork(); }
@@ -2770,8 +2804,8 @@ function renderProduce(st, count, pct){
   wireNav(()=>{}, () => {
     if(sentHere() || $("unsent")) return true;
     const last = stepIdx === current.steps.length - 1, has = (txt.value.trim() && curMode === "write") || (recState.file && curMode === "record");
-    app.querySelector(".actions").insertAdjacentHTML("beforebegin", `<div class="unsent" id="unsent" role="alert"><p><b>${has ? "You haven't sent it to Olya yet." : "You haven't written or recorded anything yet."}</b> ${has ? "Send it first?" : ""}</p>
-      <div class="row-btns">${has ? `<button class="btn primary" id="us-send">Send to Olya</button>` : ""}<button class="btn" id="us-skip">${last ? "Finish anyway" : "Go on anyway"}</button></div></div>`);
+    app.querySelector(".actions").insertAdjacentHTML("beforebegin", `<div class="unsent" id="unsent" role="alert"><p><b>${has ? "You haven't sent it to Olya yet." : "You haven't written or recorded anything yet."}</b> The task counts as done once she gets it.</p>
+      <div class="row-btns">${has ? `<button class="btn primary" id="us-send">Send to Olya</button>` : ""}<button class="btn" id="us-skip">${last ? "Finish for now" : "Go on for now"}</button></div></div>`);
     const u = $("unsent"); u.scrollIntoView({block: "center", behavior: "smooth"});
     const ss = $("us-send"); if(ss) ss.addEventListener("click", () => { $("send").click(); });
     $("us-skip").addEventListener("click", goOn);

@@ -26,9 +26,12 @@ const FAKE_YT = `window.YT={Player:function(id,o){const d=document.getElementByI
         const b = it && document.querySelector(`[data-sp="${it.p}"]`); if (b && it.mode !== 'auto') b.click(); }); await p.waitForTimeout(1400); clicks++; continue; }
       await go.click(); clicks++; await p.waitForTimeout(60);
     }
+    /* engine 58: Over to you finished without sending ends on "Not sent yet" and stays unticked (her rule of 1.11) */
+    const notSent = await p.locator('.unsent-end').count() > 0;
+    if (notSent) { await p.click('#list'); await p.waitForTimeout(100); }
     const back = await p.locator('.lesson-head').count() > 0;
     const ticked = back && await p.locator(`.task-row.is-done [data-toggle="${id}"]`).count() > 0;
-    report.push(`${back && ticked ? 'ok  ' : 'FAIL'} ${id} (${clicks} taps)`);
+    report.push(`${back && (notSent ? !ticked : ticked) ? 'ok  ' : 'FAIL'} ${id} (${clicks} taps${notSent ? ', not sent → not ticked' : ''})`);
     if (!back) { await p.click('#home').catch(() => {}); await p.waitForTimeout(100); }
   }
   console.log(report.join('\n')); console.log(errs.length ? 'PAGE ERRORS:\n' + errs.join('\n') : 'no page errors');

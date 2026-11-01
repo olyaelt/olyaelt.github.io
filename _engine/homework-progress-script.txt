@@ -184,6 +184,30 @@ function upload_(p) {
   finally { lock.releaseLock(); }
 }
 
+// engine 57 (her 09:25: «чтобы у них была возможность переслушать» — in May too, from any phone): a student hears their own recording
+// again. Only with their code, only the file named in their own row, and only if it lies in her recordings folder for their group —
+// the folder and the files stay private (nobody gets a link that opens them).
+function myRecording_(p) {
+  const stu = findStudent_(p.code);
+  if (!stu) return { ok: false, error: "unknown-code" };
+  if (stu.group === TEACHER) return { ok: false, error: "teacher" };
+  const sh = work_(); const n = sh.getLastRow() - 1; if (n < 1) return { ok: false, error: "not-found" };
+  const rows = sh.getRange(2, 1, n, WORK_HEAD.length).getValues();
+  for (let i = 0; i < rows.length; i++) {
+    if (String(rows[i][W.id - 1]) !== String(p.id) || String(rows[i][W.key - 1]).indexOf(stu.code + "|") !== 0) continue;
+    const link = String(rows[i][W.text - 1]).split("\n").filter(l => /^https:\/\/drive\.google\.com\/file\/d\/[\w-]+/.test(l)).pop() || "";
+    const m = link.match(/\/file\/d\/([\w-]+)/); if (!m) return { ok: false, error: "no-file" };
+    let file = null; try { file = DriveApp.getFileById(m[1]); } catch (err) { return { ok: false, error: "no-file" }; }
+    const home = recFolder_(stu.group).getId(), parents = file.getParents(); let inside = false;
+    while (parents.hasNext()) if (parents.next().getId() === home) inside = true;
+    if (!inside) return { ok: false, error: "no-file" };
+    const blob = file.getBlob(), bytes = blob.getBytes();
+    if (bytes.length > 30000000) return { ok: false, error: "size" };
+    return { ok: true, mime: blob.getContentType() || "audio/mp4", b64: Utilities.base64Encode(bytes) };
+  }
+  return { ok: false, error: "not-found" };
+}
+
 // the student opened your feedback on their page
 function seen_(stu, id) {
   const sh = work_();
@@ -865,6 +889,7 @@ function readOnly_(p) {
     if (!stu) return { ok: false, error: "unknown-code" };
     return stu.group === TEACHER ? toolList_(String(p.tool || "")) : { ok: false, error: "not-teacher" };
   }
+  if (p.action === "myRecording") return myRecording_(p);                                      // engine 57: a student listens to their own recording again
   return null;
 }
 

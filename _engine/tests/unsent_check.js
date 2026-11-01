@@ -1,6 +1,8 @@
 // Engine 57 (1.11, a student's recording was lost — Done ticked, nothing reached Olya): on Over to you
-//  · Finish before anything was sent → "You haven't sent it to Olya yet. Send it first?" (Send to Olya · Finish anyway); nothing written →
-//    "You haven't written or recorded anything yet."; Finish anyway goes on; after a send (Copy here) Finish just finishes;
+//  · Finish before anything was sent → "You haven't sent it to Olya yet." (Send to Olya · Finish for now); nothing written →
+//    "You haven't written or recorded anything yet."; after a send (Copy here) Finish just finishes;
+//  · (her 09:25) Finish for now → "Not sent yet": the task is NOT ticked, Send it now goes back to Over to you; sent → ticked;
+//  · (her 09:25) with a code, "▶ Your recording" plays the recording again: this phone's copy, or (another phone) from her Drive via the script;
 //  · a recording is kept on the device (IndexedDB): after a reload the task shows it again, "not sent yet".
 //   node tests/unsent_check.js SITE_DIR/b2/2026-10-30.html
 const {chromium} = require('playwright'); const path = require('path'); const fs = require('fs'); const http = require('http');
@@ -29,17 +31,26 @@ const {chromium} = require('playwright'); const path = require('path'); const fs
   await p.evaluate(() => { const x = document.getElementById('unsent'); if (x) x.remove(); });
   await p.click('#go'); await p.waitForTimeout(150);
   u = await p.evaluate(() => ({box: (document.getElementById('unsent') || {}).textContent || '', send: !!document.getElementById('us-send'), skip: (document.getElementById('us-skip') || {}).textContent || ''}));
-  expect('written, not sent → "You haven\'t sent it to Olya yet" with Send to Olya and Finish anyway', /haven't sent it to Olya yet/.test(u.box) && u.send && /anyway/.test(u.skip), u);
+  expect('written, not sent → "You haven\'t sent it to Olya yet" with Send to Olya and Finish for now', /haven't sent it to Olya yet/.test(u.box) && u.send && /for now/.test(u.skip), u);
   await p.click('#us-skip'); await p.waitForTimeout(250);
-  const after = await p.evaluate(() => ({send: !!document.getElementById('send'), end: !!document.querySelector('.end, .stage .cloud') || !!document.querySelector('#list')}));
-  expect('Finish anyway → on (the end screen)', !after.send, after);
+  const ticked = () => p.evaluate(id => !!(marks[id] && marks[id].done), info.id);
+  let after = await p.evaluate(() => ({send: !!document.getElementById('send'), ns: (document.querySelector('.unsent-end') || {}).textContent || '', btn: !!document.getElementById('tosend')}));
+  after.ticked = await ticked(); out.notSent = after;
+  expect('Finish for now → "Not sent yet", the task is not ticked', !after.send && /Not sent yet/.test(after.ns) && after.btn && !after.ticked, after);
+  await p.click('#tosend'); await p.waitForTimeout(200);
+  after = await p.evaluate(() => ({send: !!document.getElementById('send'), txt: (document.getElementById('txt') || {}).value || ''}));
+  expect('Send it now → back on Over to you, the text still there', after.send && /The Bear/.test(after.txt), after);
+  await p.evaluate(() => goHome()); await p.waitForTimeout(200);
+  after = await p.evaluate(id => { const r = document.querySelector(`[data-toggle="${id}"]`); return r ? r.closest('.task-row').classList.contains('is-done') : null; }, info.id);
+  expect('on the list it is not ticked', after === false, after);
   // after a send (Copy) Finish doesn't ask
   await toProduce(); await p.waitForTimeout(200);
   await p.evaluate(() => { const m = document.querySelector('[data-mode="write"]'); if (m) m.click(); });
   await p.fill('#txt', 'Something to copy.'); await ctx.grantPermissions(['clipboard-read', 'clipboard-write']); await p.click('#copy'); await p.waitForTimeout(150);
   await p.click('#go'); await p.waitForTimeout(250);
-  u = await p.evaluate(() => ({unsent: !!document.getElementById('unsent'), send: !!document.getElementById('send')}));
-  expect('after Copy, Finish just finishes', !u.unsent && !u.send, u);
+  u = await p.evaluate(() => ({unsent: !!document.getElementById('unsent'), send: !!document.getElementById('send'), ns: !!document.querySelector('.unsent-end')}));
+  u.ticked = await ticked();
+  expect('after Copy, Finish just finishes, and the task is ticked', !u.unsent && !u.send && !u.ns && u.ticked, u);
   // a recording is kept on the device
   await toProduce(); await p.waitForTimeout(200);
   await p.evaluate(() => { const m = document.querySelector('[data-mode="record"]'); if (m) m.click(); });
@@ -59,9 +70,10 @@ const {chromium} = require('playwright'); const path = require('path'); const fs
   { const {makeEnv} = require('./mock'); const env = makeEnv(); env.ctx.setUp(); env.sheets.Students.appendRow(['abc123', 'Anna', 'B2', '']);
     const c2 = await b.newContext({...require('playwright').devices['iPhone 13'], permissions: ['microphone'], reducedMotion: 'reduce'});
     await c2.addInitScript(() => { localStorage.setItem('hw-code', 'abc123'); localStorage.setItem('hw-yt-ok', '1'); });
-    let ups = 0;
-    await c2.route(/script\.google\.com/, r => { const body = r.request().postData() || ''; if (/"action":"upload"/.test(body)) ups++;
-      return r.fulfill({status: 200, contentType: 'application/json', headers: {'Access-Control-Allow-Origin': '*'}, body: JSON.stringify(env.post(body))}); });
+    let ups = 0, mine = 0;
+    const route = r => { const body = r.request().postData() || ''; if (/"action":"upload"/.test(body)) ups++; if (/"action":"myRecording"/.test(body)) mine++;
+      return r.fulfill({status: 200, contentType: 'application/json', headers: {'Access-Control-Allow-Origin': '*'}, body: JSON.stringify(env.post(body))}); };
+    await c2.route(/script\.google\.com/, route);
     const q = await c2.newPage(); q.on('pageerror', e => errs.push('drive: ' + e.message));
     await q.goto(url); await q.waitForTimeout(800);
     const live = await q.evaluate(() => typeof SYNC_URL !== 'undefined' && !!SYNC_URL);
@@ -75,7 +87,35 @@ const {chromium} = require('playwright'); const path = require('path'); const fs
       expect('with a code: the recording lands in her Drive (folder B2), the row says Drive with the link, the page says Sent ✓',
         ups === 1 && env.drive.files.length === 1 && env.drive.files[0].folder.name === 'B2' && env.drive.files[0].size > 500 && out.drive.rows.some(r => /recording \(Drive\)/.test(r[1]) && /drive\.google\.com/.test(r[2])) && /Sent ✓/.test(d.msg) && /Sent to Olya/.test(d.kept), out.drive);
       await q.click('#go'); await q.waitForTimeout(300);
-      expect('after the upload, Finish just finishes', !(await q.$('#unsent')), 'asked');
+      const tid = await q.evaluate(() => TASKS.find(t => (t.steps || []).some(s => s.type === 'produce')).id);
+      const fin = await q.evaluate(id => ({asked: !!document.getElementById('unsent'), ns: !!document.querySelector('.unsent-end'), ticked: !!(marks[id] && marks[id].done)}), tid);
+      expect('after the upload, Finish just finishes and the task is ticked', !fin.asked && !fin.ns && fin.ticked, fin);
+      /* ▶ Your recording, on this phone: its own copy, no request */
+      await q.evaluate(() => goHome()); await q.waitForTimeout(300);
+      const line = await q.evaluate(id => { const b = document.querySelector(`.fb-rec[data-fb="${id}"]`); return b ? b.textContent : ''; }, tid);
+      expect('the list: "✓ Sent to Olya … · ▶ your recording"', /Sent to Olya/.test(line) && /your recording/.test(line), line);
+      await q.click(`.fb-rec[data-fb="${tid}"]`); await q.waitForTimeout(300);
+      await q.click('[data-myrec]'); await q.waitForTimeout(600);
+      const here = await q.evaluate(() => { const a = document.querySelector('.my-rec audio'); return a ? {src: /^blob:/.test(a.src)} : null; });
+      expect('▶ Your recording plays this phone\'s copy (no request)', here && here.src && mine === 0, {here, mine});
+      /* another phone (no copy): from her Drive, through her script */
+      const c3 = await b.newContext({...require('playwright').devices['iPhone 13'], reducedMotion: 'reduce'});
+      await c3.addInitScript(() => { localStorage.setItem('hw-code', 'abc123'); localStorage.setItem('hw-yt-ok', '1'); });
+      await c3.route(/script\.google\.com/, route);
+      const q3 = await c3.newPage(); q3.on('pageerror', e => errs.push('phone 2: ' + e.message));
+      await q3.goto(url); await q3.waitForTimeout(1200);
+      const l3 = await q3.$(`.fb-rec[data-fb="${tid}"]`);
+      if (l3) { await l3.click(); await q3.waitForTimeout(300); await q3.click('[data-myrec]'); await q3.waitForTimeout(1200);
+        const there = await q3.evaluate(async () => { const a = document.querySelector('.my-rec audio'); if (!a) return null; const bl = await (await fetch(a.src)).blob(); return {size: bl.size, type: bl.type}; });
+        out.phone2 = {there, mine};
+        expect('another phone: ▶ Your recording comes from her Drive (one request), the same recording', there && there.size > 500 && mine === 1 && there.size === env.drive.files[0].size, out.phone2);
+      } else fail.push('phone 2: no "▶ your recording" line on the list');
+      /* someone else's code can't get it */
+      env.sheets.Students.appendRow(['zzz999', 'Boris', 'B2', '']);
+      const wid = env.sheets.Work.d[1][0];
+      const other = env.post(JSON.stringify({action: 'myRecording', code: 'zzz999', page: 'hw-ge-b2-2026-10-30', id: wid}));
+      expect('another student\'s code gets nothing', other.ok === false && !other.b64, other);
+      await c3.close();
     } else fail.push('the page has no SYNC_URL — the Drive part needs the built site page');
     await c2.close(); }
   console.log(JSON.stringify(out, null, 1)); if (errs.length) fail.push('page errors: ' + errs.join(' | '));
