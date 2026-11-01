@@ -1,0 +1,99 @@
+{
+ "blocks": [
+  {
+   "pid": 0,
+   "sig": "say what would you say? then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "text remember priya and dan? say the missing words. tap the yellow and orange to check.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "text read on. say the missing words.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "game the wheel of starts: take turns to spin and read the situation. how would you start the chat? say it, then tap to check.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "fix fix it: say it right. then say the two sentences with “'d better”.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "game roll both dice: what you talk about and how you start. make up a name for the show. a starts, b shares and asks. end with “anyway, i'd better…” then swap.",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "questions round 2: your real life. have the same kind of chat.",
+   "gone": false
+  }
+ ],
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "are you still watching crown street? 1 you and a colleague both started season 3 of crown street a few weeks ago. оба начали давно — смотрит ли ещё, не бросил(а)? → are you still watching…?",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "are you still watching that crime series? 2 a colleague started a long crime series last month. you wonder: has she given up on it? начала давно — продолжает ли? → still watching.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "did you see the star kitchen final last night? 3 the star kitchen final was on tv last night. было вчера, время названо → past simple: did you see … last night?",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "did you see the match last night? 4 there was a big football match on tv yesterday evening. было вчера вечером → did you see…? (yesterday evening → обычно говорят last night)",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "have you seen the new season yet? 5 a new season of a comedy series came out on friday. уже вышло — а ты уже посмотрел(а)? → have you seen … yet?",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "have you seen silent harbour yet? everyone's talking about it. 6 everyone's talking about silent harbour, a new film. it came out last week. новое, только вышло → yet.",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "have you ever seen friends? 7 you love friends, a comedy series from the 90s. does your colleague know it? старый сериал — опыт вообще → ever. yet — про новое, что только вышло.",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "have you ever seen back to the future? 8 your favourite film is back to the future, a classic from the 80s. you want to recommend it to a colleague. классика, опыт за всю жизнь → have you ever seen…? (ever можно опустить)",
+   "gone": false
+  }
+ ],
+ "write": [],
+ "questions.6": [
+  {
+   "pid": 0,
+   "sig": "1 start a chat about something you're watching or following right now (a series, a show, a tournament). use one of the four starts. then ask each other two more questions.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 tell your partner about something you watched or read in one go — or something that took you ages to finish. your partner asks what you thought of the ending.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "3 then finish the chat politely: anyway, i'd better…",
+   "gone": false
+  }
+ ]
+}

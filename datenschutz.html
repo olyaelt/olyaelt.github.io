@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
+<script>/* the site theme: light unless this device chose dark (engine 56) */(function(){var t="light";try{if(localStorage.getItem("site-theme")==="dark")t="dark"}catch(e){}document.documentElement.setAttribute("data-theme",t)})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#F6F1DC">
 <meta name="robots" content="noindex">
@@ -10,7 +11,7 @@
 <style>
 :root{--ground:#F6F1DC;--card:#FFFFFF;--ink:#1D1D1B;--muted:#6B6B6B;--line:#E2DCC4;--link:#1578C0;--instr:#1578C0;--box:#EAF3FB;
   --font-body:"Homework Sans","Calibri","Carlito","Segoe UI",system-ui,sans-serif}
-@media (prefers-color-scheme: dark){:root{--ground:#121416;--card:#1C1F23;--ink:#ECECEA;--muted:#A4A7AB;--line:#33373D;--link:#8FB0FF;--box:#1E2A36}}
+:root[data-theme="dark"]{--ground:#121416;--card:#1C1F23;--ink:#ECECEA;--muted:#A4A7AB;--line:#33373D;--link:#8FB0FF;--box:#1E2A36}
 *{box-sizing:border-box}
 body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font-body);font-size:1.02rem;line-height:1.55}
 .wrap{max-width:720px;margin:0 auto;padding:24px 16px 8px}

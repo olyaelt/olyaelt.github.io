@@ -1,0 +1,1404 @@
+{
+ "type": "revision-field",
+ "file": "f-wc",
+ "board": {
+  "col": "Everyday English",
+  "value": 200
+ },
+ "title": "At the water cooler",
+ "boxes": {
+  "BOX": [
+   {
+    "h": "START",
+    "items": [
+     "**Are you still watching** …?",
+     "**Did you see** … **last night**?",
+     "**Have you seen** … **yet**?",
+     "**Have you ever seen** …?"
+    ]
+   },
+   {
+    "h": "SHARE AND ASK",
+    "items": [
+     "I was **on the edge of my seat**!",
+     "I watched it **in one go**.",
+     "I'm **still not over it**.",
+     "**What did you think of** the ending?"
+    ]
+   },
+   {
+    "h": "REACT · FINISH",
+    "items": [
+     "**Me too!** · **Me neither.**",
+     "**Anyway, I'd better get back** …"
+    ]
+   }
+  ]
+ },
+ "stages": [
+  {
+   "label": "📝 Test yourself",
+   "blocks": [
+    {
+     "kind": "say",
+     "instr": "What would you say? Then tap “Show the answer”.",
+     "task": [
+      "(([Monday morning, the office kitchen. You meet a colleague. What would you say to start a chat about…]))",
+      "**1**  a series you both started a few weeks ago?",
+      "**2**  the final of a show that was on last night?",
+      "**3**  a new season that came out on Friday?"
+     ],
+     "answer": [
+      "(([Monday morning, the office kitchen. You meet a colleague. What would you say to start a chat about…]))",
+      "**1**  **Are you still watching** Crown Street?",
+      "**2**  **Did you see** the final **last night**?",
+      "**3**  **Have you seen** the new season **yet**?",
+      "((начали давно, смотрит ли ещё? → Are you still watching · закончилось вчера → Did you see … last night? · уже вышло, а ты посмотрел? → Have you seen … yet?))"
+     ],
+     "tip": "Say it aloud first, then tap “Show the answer”."
+    }
+   ]
+  },
+  {
+   "label": "🔁 Recall",
+   "blocks": [
+    {
+     "kind": "text",
+     "instr": "Remember Priya and Dan? Say the missing words. Tap the yellow and orange to check.",
+     "lines": [
+      {
+       "s": "Priya",
+       "p": [
+        "Dan! It's ",
+        {
+         "f": "b",
+         "r": "een"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "ges"
+        },
+        "! ",
+        {
+         "f": "H",
+         "r": "ow"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "ave"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "een"
+        },
+        "?"
+       ]
+      },
+      {
+       "s": "Dan",
+       "p": [
+        "Good, thanks. I've ",
+        {
+         "f": "j",
+         "r": "ust"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "ot"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "ack"
+        },
+        " ",
+        {
+         "f": "f",
+         "r": "rom"
+        },
+        " Crete, actually. Two weeks of sun, sea and no emails."
+       ]
+      },
+      {
+       "s": "Priya",
+       "p": [
+        {
+         "f": "L",
+         "r": "ucky"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        "! ",
+        {
+         "f": "W",
+         "r": "hen"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "id"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "et"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "ack"
+        },
+        "?"
+       ]
+      },
+      {
+       "s": "Dan",
+       "p": [
+        "Last night. I ",
+        {
+         "f": "w",
+         "r": "as"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "p"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "ill"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "wo"
+        },
+        " unpacking."
+       ]
+      },
+      {
+       "s": "Priya",
+       "p": [
+        "Oh no. So ",
+        {
+         "f": "d",
+         "r": "id"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "ee"
+        },
+        " the Star Kitchen final ",
+        {
+         "f": "l",
+         "r": "ast"
+        },
+        " ",
+        {
+         "f": "n",
+         "r": "ight"
+        },
+        ", or were you too tired?"
+       ]
+      },
+      {
+       "s": "Dan",
+       "p": [
+        "Are you joking? I unpacked in front of the TV. I ",
+        {
+         "f": "w",
+         "r": "as"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "n"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "he"
+        },
+        " ",
+        {
+         "f": "e",
+         "r": "dge"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "f"
+        },
+        " ",
+        {
+         "f": "m",
+         "r": "y"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "eat"
+        },
+        "!"
+       ]
+      },
+      {
+       "s": "Priya",
+       "p": [
+        "Me too! ",
+        {
+         "f": "W",
+         "r": "hat"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "id"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "hink"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "f"
+        },
+        " the result?"
+       ]
+      },
+      {
+       "s": "Dan",
+       "p": [
+        {
+         "f": "H",
+         "r": "onestly"
+        },
+        "? I was a bit ",
+        {
+         "f": "d",
+         "r": "isappointed"
+        },
+        ". Marco was much better."
+       ]
+      },
+      {
+       "s": "Priya",
+       "p": [
+        "Totally. Everyone's ",
+        {
+         "f": "s",
+         "r": "aying"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "hat"
+        },
+        "."
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        "It's ",
+        {
+         "f": "b",
+         "r": "een"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "ges"
+        },
+        "! ",
+        {
+         "f": "H",
+         "r": "ow"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "ave"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "een"
+        },
+        "?"
+       ],
+       "ru": "сто лет не виделись! как ты?"
+      },
+      {
+       "p": [
+        "I've ",
+        {
+         "f": "j",
+         "r": "ust"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "ot"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "ack"
+        },
+        " ",
+        {
+         "f": "f",
+         "r": "rom"
+        },
+        " Crete",
+        " ",
+        {
+         "f": "",
+         "r": "/kriːt/",
+         "o": 1
+        }
+       ],
+       "ru": "только что вернулся с Крита"
+      },
+      {
+       "p": [
+        {
+         "f": "L",
+         "r": "ucky"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        "!"
+       ],
+       "ru": "везёт тебе!"
+      },
+      {
+       "p": [
+        {
+         "f": "W",
+         "r": "hen"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "id"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "et"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "ack"
+        },
+        "?"
+       ],
+       "ru": "когда вернулся?"
+      },
+      {
+       "p": [
+        "I ",
+        {
+         "f": "w",
+         "r": "as"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "p"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "ill"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "wo"
+        },
+        "."
+       ],
+       "ru": "не спал до двух"
+      },
+      {
+       "p": [
+        {
+         "f": "D",
+         "r": "id"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "ee"
+        },
+        " … ",
+        {
+         "f": "l",
+         "r": "ast"
+        },
+        " ",
+        {
+         "f": "n",
+         "r": "ight"
+        },
+        "?"
+       ],
+       "ru": "ты вчера видел…?"
+      },
+      {
+       "p": [
+        "I was ",
+        {
+         "f": "o",
+         "r": "n"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "he"
+        },
+        " ",
+        {
+         "f": "e",
+         "r": "dge"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "f"
+        },
+        " ",
+        {
+         "f": "m",
+         "r": "y"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "eat"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "/edʒ/",
+         "o": 1
+        }
+       ],
+       "ru": "смотрел, затаив дыхание"
+      },
+      {
+       "p": [
+        {
+         "f": "W",
+         "r": "hat"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "id"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "hink"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "f"
+        },
+        " the result?"
+       ],
+       "ru": "как тебе результат?"
+      },
+      {
+       "p": [
+        {
+         "f": "H",
+         "r": "onestly"
+        },
+        "? I was a bit ",
+        {
+         "f": "d",
+         "r": "isappointed"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "/ˌdɪsəˈpɔɪntɪd/",
+         "o": 1
+        }
+       ],
+       "ru": "честно? я немного разочарован"
+      },
+      {
+       "p": [
+        "Everyone's ",
+        {
+         "f": "s",
+         "r": "aying"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "hat"
+        },
+        "."
+       ],
+       "ru": "все так говорят"
+      }
+     ],
+     "tip": "The first letters are given; the glossary is beside the chat. Tap the yellow (and the orange sounds) to check."
+    },
+    {
+     "kind": "text",
+     "instr": "Read on. Say the missing words.",
+     "lines": [
+      {
+       "s": "Dan",
+       "p": [
+        {
+         "f": "A",
+         "r": "nyway"
+        },
+        " — ",
+        {
+         "f": "w",
+         "r": "hat"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "ave"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "een"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "p"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "o"
+        },
+        " while I was away?"
+       ]
+      },
+      {
+       "s": "Priya",
+       "p": [
+        "Oh, not much. Work, mostly. ",
+        {
+         "f": "A",
+         "r": "re"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "till"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "atching"
+        },
+        " Crown Street? ",
+        {
+         "f": "H",
+         "r": "ave"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "een"
+        },
+        " the new season ",
+        {
+         "f": "y",
+         "r": "et"
+        },
+        "?"
+       ]
+      },
+      {
+       "s": "Dan",
+       "p": [
+        "Yes! I watched the ",
+        {
+         "f": "w",
+         "r": "hole"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "hing"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "n"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "ne"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "o"
+        },
+        " the weekend before I left."
+       ]
+      },
+      {
+       "s": "Priya",
+       "p": [
+        "In one go? It's ten episodes! ",
+        {
+         "f": "I",
+         "r": "t"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "ook"
+        },
+        " ",
+        {
+         "f": "m",
+         "r": "e"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "ll"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "eek"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Dan",
+       "p": [
+        "I know, I know. I just couldn't stop. So ",
+        {
+         "f": "w",
+         "r": "hat"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "id"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "hink"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "f"
+        },
+        " the ending?"
+       ]
+      },
+      {
+       "s": "Priya",
+       "p": [
+        "Honestly? I was so angry. Why would they do that to Jess?"
+       ]
+      },
+      {
+       "s": "Dan",
+       "p": [
+        "Seriously! I'm ",
+        {
+         "f": "s",
+         "r": "till"
+        },
+        " ",
+        {
+         "f": "n",
+         "r": "ot"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "ver"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "t"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Priya",
+       "p": [
+        "Me ",
+        {
+         "f": "n",
+         "r": "either"
+        },
+        ". Right, I'd ",
+        {
+         "f": "b",
+         "r": "etter"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "et"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "ack"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "o"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "ork"
+        },
+        ". See you at lunch?"
+       ]
+      },
+      {
+       "s": "Dan",
+       "p": [
+        "Yeah, see you then."
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        {
+         "f": "A",
+         "r": "nyway"
+        },
+        " …",
+        " ",
+        {
+         "f": "",
+         "r": "/ˈeniweɪ/",
+         "o": 1
+        }
+       ],
+       "ru": "слушай, кстати… (меняем тему)"
+      },
+      {
+       "p": [
+        {
+         "f": "W",
+         "r": "hat"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "ave"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "een"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "p"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "o"
+        },
+        "?"
+       ],
+       "ru": "чем занимался?"
+      },
+      {
+       "p": [
+        {
+         "f": "A",
+         "r": "re"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "till"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "atching"
+        },
+        " …?"
+       ],
+       "ru": "ты всё ещё смотришь…?"
+      },
+      {
+       "p": [
+        {
+         "f": "H",
+         "r": "ave"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "een"
+        },
+        " the new season ",
+        {
+         "f": "y",
+         "r": "et"
+        },
+        "?",
+        " ",
+        {
+         "f": "",
+         "r": "/ˈsiːzn/",
+         "o": 1
+        }
+       ],
+       "ru": "ты уже смотрел…?"
+      },
+      {
+       "p": [
+        "I watched ",
+        {
+         "f": "t",
+         "r": "he"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "hole"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "hing"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "n"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "ne"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "o"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "/həʊl/",
+         "o": 1
+        }
+       ],
+       "ru": "посмотрел всё за один присест"
+      },
+      {
+       "p": [
+        {
+         "f": "I",
+         "r": "t"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "ook"
+        },
+        " ",
+        {
+         "f": "m",
+         "r": "e"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "ll"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "eek"
+        },
+        "."
+       ],
+       "ru": "у меня на это ушла вся неделя"
+      },
+      {
+       "p": [
+        {
+         "f": "W",
+         "r": "hat"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "id"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "hink"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "f"
+        },
+        " the ending?"
+       ],
+       "ru": "как тебе концовка?"
+      },
+      {
+       "p": [
+        "I'm ",
+        {
+         "f": "s",
+         "r": "till"
+        },
+        " ",
+        {
+         "f": "n",
+         "r": "ot"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "ver"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "t"
+        },
+        "."
+       ],
+       "ru": "до сих пор не могу отойти"
+      },
+      {
+       "p": [
+        "Me ",
+        {
+         "f": "n",
+         "r": "either"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "/ˈnaɪðə/ or /ˈniːðə/",
+         "o": 1
+        }
+       ],
+       "ru": "я тоже нет"
+      },
+      {
+       "p": [
+        "I'd ",
+        {
+         "f": "b",
+         "r": "etter"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "et"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "ack"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "o"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "ork"
+        },
+        "."
+       ],
+       "ru": "мне пора за работу"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "🃏 Practice",
+   "blocks": [
+    {
+     "kind": "game",
+     "piece": "wheel",
+     "instr": "The wheel of starts: take turns to spin and read the situation. How would you start the chat? Say it, then tap to check.",
+     "box": "BOX",
+     "check": "Check",
+     "tasks": [
+      {
+       "label": "1",
+       "q": "You and a colleague both started season 3 of Crown Street a few weeks ago.",
+       "a": "Are you still watching Crown Street?",
+       "why": "Оба начали давно — смотрит ли ещё, не бросил(а)? → Are you still watching…?"
+      },
+      {
+       "label": "2",
+       "q": "A colleague started a long crime series last month. You wonder: has she given up on it?",
+       "a": "Are you still watching that crime series?",
+       "why": "Начала давно — продолжает ли? → still watching."
+      },
+      {
+       "label": "3",
+       "q": "The Star Kitchen final was on TV last night.",
+       "a": "Did you see the Star Kitchen final last night?",
+       "why": "Было вчера, время названо → past simple: Did you see … last night?"
+      },
+      {
+       "label": "4",
+       "q": "There was a big football match on TV yesterday evening.",
+       "a": "Did you see the match last night?",
+       "why": "Было вчера вечером → Did you see…? (yesterday evening → обычно говорят last night)"
+      },
+      {
+       "label": "5",
+       "q": "A new season of a comedy series came out on Friday.",
+       "a": "Have you seen the new season yet?",
+       "why": "Уже вышло — а ты уже посмотрел(а)? → Have you seen … yet?"
+      },
+      {
+       "label": "6",
+       "q": "Everyone's talking about Silent Harbour, a new film. It came out last week.",
+       "a": "Have you seen Silent Harbour yet? Everyone's talking about it.",
+       "why": "Новое, только вышло → yet."
+      },
+      {
+       "label": "7",
+       "q": "You love Friends, a comedy series from the 90s. Does your colleague know it?",
+       "a": "Have you ever seen Friends?",
+       "why": "Старый сериал — опыт вообще → ever. Yet — про новое, что только вышло."
+      },
+      {
+       "label": "8",
+       "q": "Your favourite film is Back to the Future, a classic from the 80s. You want to recommend it to a colleague.",
+       "a": "Have you ever seen Back to the Future?",
+       "why": "Классика, опыт за всю жизнь → Have you ever seen…? (ever можно опустить)"
+      }
+     ],
+     "tip": "Spin the wheel. Say how you'd start the chat, then tap to check. Take turns."
+    },
+    {
+     "kind": "fix",
+     "instr": "Fix it: say it right. Then say the two sentences with “'d better”.",
+     "big": "Anyway, I'd better get back to work.",
+     "red": "'d",
+     "note": "I'd better = I had better («мне лучше…»): 'd не пропадает, глагол без to: I'd better go. We'd better, you'd better.",
+     "place": {
+      "tokens": "Anyway, I ▢ better ▢ get back ▢ to work.",
+      "chips": [
+       "'d"
+      ],
+      "answer": "'d",
+      "slot": 0
+     },
+     "say": [
+      {
+       "q": "You're chatting with a colleague, but your meeting starts in five minutes.",
+       "a": "Sorry, I'd better go — my meeting starts in five minutes."
+      },
+      {
+       "q": "Your boss is looking for you.",
+       "a": "Anyway, I'd better get back to my desk."
+      }
+     ],
+     "tip": "Fix it: put the word in the right place. Then say the two lines and tap to check."
+    }
+   ]
+  },
+  {
+   "label": "💬 Use it",
+   "blocks": [
+    {
+     "kind": "game",
+     "piece": "dice2",
+     "instr": "Roll both dice: what you talk about and how you start. Make up a name for the show. A starts, B shares and asks. End with “Anyway, I'd better…” Then swap.",
+     "box": "BOX",
+     "dice": [
+      {
+       "title": "Dice 1: What?",
+       "faces": [
+        {
+         "n": 1,
+         "text": "a cooking show"
+        },
+        {
+         "n": 2,
+         "text": "a crime series"
+        },
+        {
+         "n": 3,
+         "text": "a reality show"
+        },
+        {
+         "n": 4,
+         "text": "a sitcom"
+        },
+        {
+         "n": 5,
+         "text": "a documentary series"
+        },
+        {
+         "n": 6,
+         "text": "a fantasy series"
+        }
+       ]
+      },
+      {
+       "title": "Dice 2: How to start?",
+       "faces": [
+        {
+         "n": "1 · 2",
+         "text": "It was on last night.",
+         "start": "**Did you see** … **last night**?"
+        },
+        {
+         "n": "3 · 4",
+         "text": "You both started it a while ago.",
+         "start": "**Are you still watching** …?"
+        },
+        {
+         "n": "5",
+         "text": "It's just come out.",
+         "start": "**Have you seen** … **yet**?"
+        },
+        {
+         "n": "6",
+         "text": "It's an old show you love.",
+         "start": "**Have you ever seen** …?"
+        }
+       ]
+      }
+     ],
+     "intro": {
+      "instr": "Here's an example chat. Complete it. Then tap the yellow to check.",
+      "dice": [
+       1,
+       2
+      ],
+      "ctx": "(([Dice 1 → 1: a cooking show (we call it Burnt Toast). Dice 2 → 2: it was on last night.]))",
+      "lines": [
+       {
+        "s": "A",
+        "p": [
+         {
+          "f": "D",
+          "r": "id you see"
+         },
+         " the Burnt Toast final ",
+         {
+          "f": "l",
+          "r": "ast night"
+         },
+         "?"
+        ]
+       },
+       {
+        "s": "B",
+        "p": [
+         "I did! I was ",
+         {
+          "f": "o",
+          "r": "n the edge of my seat"
+         },
+         ". ",
+         {
+          "f": "W",
+          "r": "hat did you think of"
+         },
+         " the judges?"
+        ]
+       },
+       {
+        "s": "A",
+        "p": [
+         "Oh, don't! I didn't agree with them at all."
+        ]
+       },
+       {
+        "s": "B",
+        "p": [
+         "Me ",
+         {
+          "f": "n",
+          "r": "either"
+         },
+         "! Everyone's ",
+         {
+          "f": "s",
+          "r": "aying that"
+         },
+         "."
+        ]
+       },
+       {
+        "s": "A",
+        "p": [
+         "Right, ",
+         {
+          "f": "a",
+          "r": "nyway"
+         },
+         ", ",
+         {
+          "f": "I",
+          "r": "'d better get back to work"
+         },
+         ". See you later!"
+        ]
+       }
+      ]
+     },
+     "tip": "Roll the two dice. The first says what you talk about, the second how to start. The example is at the bottom of the screen."
+    },
+    {
+     "kind": "questions",
+     "instr": "Round 2: your real life. Have the same kind of chat.",
+     "items": [
+      "**1**  Start a chat about something you're watching or following right now (a series, a show, a tournament). Use one of the four starts. Then ask each other **two** more questions.",
+      "**2**  Tell your partner about something you watched or read in one go — or something that took you ages to finish. Your partner asks what you thought of the ending.",
+      "**3**  Then finish the chat politely: Anyway, I'd better…"
+     ],
+     "box": "BOX",
+     "fast": "If you're done: go back to Priya and Dan in 🔁 Recall and say the missing words from memory. Then: what are your family, friends or colleagues watching right now? Name **two** things. Have you seen them yet? Why or why not?"
+    }
+   ]
+  }
+ ]
+}

@@ -74,13 +74,16 @@ const spkReset = () => { spkCur = newCursor(); };
 const dotsHTML = (n, i, attr, what, list, base, seen) => { const drag = list && base && liveTeacher();
   return `<span class="speak-dots ${drag ? "draggable" : ""}" ${drag ? `data-drag="${base}"` : ""}>${Array.from({length: n}, (_, k) =>
   `<button class="${k === i ? "on" : (seen && list ? seen.has(list[k].k) : k < i) ? "was" : ""} ${list && list[k].hidden ? "hid" : ""}" ${attr}="${k}" aria-label="${what} ${k + 1}" ${k === i ? `aria-current="step"` : ""}${drag ? ` data-k="${list[k].k}" title="${esc(String(list[k].t).replace(/\*\*/g, "").slice(0, 90))} — drag to move"` : ""}></button>`).join("")}</span>`; };
+/* tools 19 (her husband, C1, 31.10: "1 Name two ways…" read as "one name, two ways…"): a speaking task shows no number of its own —
+   the dots above it already say where you are; the slide numbers in the data ("**1**  …") are left out on the page */
+const noNum = t => String(t).replace(/^\s*\*\*\d{1,2}[.)]?\*\*\s+(?=\S)/, "");
 function speakHTML(list, endButtons, label = "Speaking", base = "speaking"){
   list = (list || []).map((x, k) => typeof x === "string" ? {k, t: x} : x);
   if(!list.length) return "";
   const {i, more, back} = cursorPick(spkCur, list), last = !more; spkView = list; liveViews[base] = list;
   return `<section class="speak" aria-live="polite"><div class="speak-top"><span class="speak-h">💬 ${esc(label)}</span>
       ${dotsHTML(list.length, i, "data-speak-go", "Question", list, base, spkCur.seen)}</div>
-    <div class="live-host ${liveDim(base + "." + list[i].k)}" data-live-host><p class="speak-task">${boxMarks(list[i].t)}</p>${liveTools(base + "." + list[i].k, {last: true})}</div>
+    <div class="live-host ${liveDim(base + "." + list[i].k)}" data-live-host><p class="speak-task">${boxMarks(noNum(list[i].t))}</p>${liveTools(base + "." + list[i].k, {last: true})}</div>
     <div class="row-actions">${back ? `<button class="btn" data-speak-prev>← Previous question</button>` : ""}${last ? endButtons : `<button class="btn primary" data-speak-next>Next question →</button>`}</div></section>`;
 }
 function wireSpeak(root, rerender){

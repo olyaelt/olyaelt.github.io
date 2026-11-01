@@ -65,7 +65,7 @@ __BASE_CSS__
 /* 📖 a gapped text, as the homework dlg: first letters blue bold, the rest yellow; tap to open; IPA hidden orange */
 .tx{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px;align-items:start}
 .tx.single{grid-template-columns:minmax(0,1fr)}
-.dlg p{margin:0 0 6px;font-size:1.18rem;line-height:1.55}
+.dlg p{margin:0 0 calc(6px * var(--k, 1));font-size:calc(1.18rem * var(--k, 1));line-height:calc(1.55 * (.85 + .15 * var(--k, 1)))}
 .dlg .sp{font-weight:900;margin-right:4px}
 .gp{font:inherit;border:0;padding:0;background:transparent;cursor:pointer;color:inherit}
 :root{--first:#0000FF}
@@ -81,7 +81,7 @@ __BASE_CSS__
 .bm{border:0;background:transparent;font-size:.8rem;padding:0 2px;opacity:.3;cursor:pointer;vertical-align:super}
 .bm.on{opacity:1}
 .bm:hover{opacity:.8}
-.gloss{background:var(--ground);border-radius:12px;padding:8px 12px;display:grid;gap:4px;font-size:1.02rem}
+.gloss{background:var(--ground);border-radius:12px;padding:8px 12px;display:grid;gap:4px;font-size:calc(1.02rem * var(--k, 1))}
 .gloss .gl{margin:0;line-height:1.35}
 .gloss .ru{color:var(--muted);font-style:italic}
 .tx-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
@@ -334,7 +334,7 @@ __BASE_CSS__
 .ph .bh{background:#FFFF00;color:transparent;border-radius:3px}
 .ph .bh.open{color:#1D1D1B;font-weight:700}
 /* her group dots on a deck (as on the cards pages) */
-.gdots{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;background:var(--card);border:2px dashed var(--line);border-radius:14px;padding:6px 12px}
+.gdots[data-gdots]{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;background:var(--card);border:2px dashed var(--line);border-radius:14px;padding:6px 12px}   /* tools 20: [data-gdots] — the dots-and-boxes game has class gdots too */
 .gd-lbl{font-weight:900;font-size:.9rem}
 .gd{width:var(--s);height:var(--s);border-radius:50%;border:0;padding:0;background:var(--line);cursor:pointer;flex:none}
 .gd.gd-ok{background:var(--ok)}
@@ -365,14 +365,82 @@ __LW_CSS__
 .fx-a .bx{background:var(--fix-bg);border-radius:4px;padding:0 4px}
 .fx-a.shut{all:unset;box-sizing:border-box;cursor:pointer;justify-self:start;background:var(--hl);color:var(--hl-ink);border-radius:6px;padding:4px 12px;font-size:1rem;font-weight:700}
 @media (prefers-reduced-motion: reduce){ .fx-in,.fx-say,.fx-a,.fx-chip.shake{animation:none} }
+/* tools 20: 🎡 the wheel beside its situation, 🎲 the dice with a guided start, 🏝 the islands, 🧩 mix */
+.g-rule{margin:0 0 6px;color:var(--muted);font-size:.95rem;font-weight:600}
+.fwheel{display:grid;grid-template-columns:minmax(12rem,17rem) minmax(0,1fr);gap:20px;align-items:center}
+.fwheel .gwheel{width:min(100%,17rem)}
+.fwheel .gwheel.empty{opacity:.35}
+.fw-side{display:grid;gap:10px;align-content:start}
+.fw-task{position:relative}
+.fw-n{width:2rem;height:2rem;border-radius:50%;background:#0693E3;color:#FFFFFF;font-weight:900;display:grid;place-items:center;font-size:1rem}
+.fw-hint{margin:0;font-size:1.2rem;font-weight:800}
+.fw-left,.rl-hint{margin:0;color:var(--muted);font-weight:700}
+@media (max-width:700px){ .fwheel{grid-template-columns:1fr} .fwheel .gwheel{width:min(100%,15rem)} }
+.fgame .gt-q .glbl{display:block;font-size:.78rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:var(--label)}
+.fgame .gt-q .frame{font-weight:800}
+.fgame .gt-q .kw{color:var(--label);font-weight:900;letter-spacing:.03em;margin-left:.3em}
+.fg-goose .ggo-t{font-size:.84rem;line-height:1.15;hyphens:none;overflow-wrap:normal}
+.fg-snakes .gs-board{max-height:22rem}
+.fg-snakes .gsnl{grid-template-columns:minmax(0,1fr) minmax(16rem,1.05fr);gap:14px}
+.fg-goose .ggo{grid-template-columns:minmax(0,1.35fr) minmax(15rem,1fr);gap:14px}
+.fg-dots .gdots{grid-template-columns:auto minmax(16rem,1fr);gap:14px}
+.fgame .gt-turn{font-size:calc(1.1rem * var(--k, 1))}
+@media (max-width:760px){ .fg-snakes .gsnl,.fg-goose .ggo,.fg-dots .gdots{grid-template-columns:minmax(0,1fr)} }
+.fg-dots .gdt-board{width:min(100%,15rem)}
+.rl{display:grid;gap:10px}
+.rl-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px}
+.rl-mini{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px}
+.rl-m{display:inline-flex;align-items:center;gap:8px;font-weight:800}
+.gdie.mini{width:2.1rem;height:2.1rem;border-width:2px;border-radius:8px;padding:.28rem;box-shadow:0 2px 0 #1D1D1B}
+.gdie.mini i{width:.36rem;height:.36rem}
+.rl-tools{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.rl-tools .tx-tools{margin:0}
+
+.rl .ex-lbl{justify-self:start;background:#FFF3C4;color:#7A5C00;border-radius:99px;padding:2px 10px;font-weight:900;font-size:.85rem;letter-spacing:.04em;text-transform:uppercase}
+.rl-dice{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px}
+.rl-die{display:grid;justify-items:center;gap:4px}
+.rl-dt{font-size:.8rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:var(--label);margin:0}
+.rl-face{font-weight:800;max-width:14rem;text-align:center}
+.rl-roll{align-self:center}
+.rl-res{margin:0;font-size:1.3rem;font-weight:700;line-height:1.5;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;animation:ansIn .3s ease-out}
+.rl-res.big{font-size:1.5rem;font-weight:800}
+.rl-res .rl-start{color:var(--ink)}
+.rl-res .rl-start b{color:#0679BD}
+.rl-arrow{color:var(--muted)}
+.rl-isle{margin:0;font-size:1.25rem}
+.rl-go{margin:4px 0 0}
+.rl-all summary,.expin-f summary{cursor:pointer;font-weight:800;color:var(--muted)}
+.rl-lists{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:10px}
+.rl-lists ol{margin:4px 0 0;padding-left:0;list-style:none;display:grid;gap:2px}
+.expin-f{position:sticky;bottom:72px;z-index:3;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:6px 12px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.expin-f[open]{padding-bottom:10px}
+.expin-f .expin-open{display:grid;gap:2px;margin-top:6px}
+.expin-f .expin-open p{margin:0;font-size:1rem;line-height:1.45}
+.expin-f.fly{animation:flyDown .85s cubic-bezier(.2,.8,.2,1) both}
+@keyframes flyDown{from{transform:translateY(-40px);opacity:0}to{transform:none;opacity:1}}
+.mix{display:grid;gap:8px}
+.mx-q{margin:0;font-size:calc(1.3rem * var(--k, 1));font-weight:700;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:8px 14px}
+.mx-q b{color:#0679BD}
+.mx-slot{color:var(--muted)}
+.mx-cols{display:grid;grid-template-columns:1.3fr 1fr;gap:12px}
+.mx-col{display:grid;gap:4px;align-content:start}
+.mx-h{margin:0;font-size:.85rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--label)}
+.mx-it{font:inherit;font-size:calc(1rem * var(--k, 1));line-height:1.25;text-align:left;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:3px 9px;cursor:pointer}
+.mx-it.on{border-color:#0693E3;background:#E8F4FD;color:#1D1D1B;font-weight:800}
+.mx-it .lctx,.mx-it .m-ctx{color:var(--muted);font-size:.9rem}
+.mx-acts{margin:0}
+.mx-more{margin:0;font-size:calc(1rem * var(--k, 1))}
+.mx-note{margin:0;color:var(--muted);font-size:calc(.92rem * var(--k, 1))}
+@media (max-width:700px){ .mx-cols{grid-template-columns:1fr} }
+@media (prefers-reduced-motion: reduce){ .expin-f.fly,.rl-res{animation:none} }
 /* tools 16: 🎮 the game block — the task card is a white board card in both themes */
 .fgame .gttt{gap:16px}
 .fgame .gt-board{width:calc(var(--n) * 5.2rem);gap:7px}
 .fgame .gt-back{font-size:1.35rem}
-.fgame .gt-task{padding:10px 14px;gap:8px}
-.fgame .gt-q{display:grid;gap:4px;font-size:1.12rem}
-.fgame .gt-a .say{font-size:1.12rem;font-weight:800}
-.fgame .gt-acts .btn{padding:7px 14px}
+.fgame .gt-task{padding:calc(10px * var(--k, 1)) 14px;gap:calc(8px * var(--k, 1))}
+.fgame .gt-q{display:grid;gap:4px;font-size:calc(1.12rem * var(--k, 1))}
+.fgame .gt-a .say{font-size:calc(1.12rem * var(--k, 1));font-weight:800}
+.fgame .gt-acts .btn{padding:calc(7px * var(--k, 1)) 12px;font-size:calc(1rem * var(--k, 1))}
 .fgame .gt-task .btn{background:#FFFFFF;color:#1D1D1B;border-color:#1D1D1B}
 .fgame .gt-task .btn.primary{background:#0693E3;border-color:#0693E3;color:#FFFFFF}
 .fgame .gt-task .btn.ok{color:#2E7D32;border-color:#2E7D32}
@@ -382,7 +450,7 @@ __LW_CSS__
 .fgame .gt-a{background:none;color:#1D1D1B;padding:0;display:grid;gap:6px;justify-self:stretch}
 .fgame .gt-a .chk{justify-self:start;background:#7BC043;color:#FFFFFF;border-radius:6px;padding:1px 8px;font-size:.8rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase}
 .fgame .gt-a .bx{color:#0679BD;background:#D6E6FF;border-radius:4px;padding:0 4px}
-.fgame .gt-a .note{color:#5F6368;font-size:.95rem;font-weight:600}
+.fgame .gt-a .note{color:#5F6368;font-size:calc(.95rem * var(--k, 1));font-weight:600}
 /* tools 17: Fix it with several ▢ */
 .fx-slotb{all:unset;box-sizing:border-box;cursor:pointer;display:inline-grid;place-items:center;min-width:1.6em;margin:0 .15em;padding:0 .2em;border:2px dashed var(--instr);border-radius:8px;color:var(--instr-text);font-weight:900;vertical-align:.05em;line-height:1.2}
 .fx-slotb:focus-visible{outline:3px solid var(--instr);outline-offset:2px}
@@ -517,7 +585,10 @@ D.stages.forEach((st, si) => st.blocks.forEach((b, bi) => {
   /* tools 16: a game's squares are numbered with the cards (her 📥 / 👥: a "✗ Not quite" counts like a card sent back); in "↺ Your hard
      cards once more" a square comes back as an "our sentences" card */
   if(b.kind === "game") (b.tasks || []).forEach(t => { t._n = (P.cards || [])[cardN] != null ? P.cards[cardN] : cardN; cardN++;
-    Object.assign(t, {front: t.q, back: t.a, _b: {style: "ours", check: b.check || "", box: b.box || null}, _lbl: "How would you make it perfect English?"}); });
+    /* tools 20: the wheel's situations come back as "how would you start the chat?", a key word transformation (dots) as a kwt card */
+    if(b.piece === "dots") Object.assign(t, {front: t.q, _b: {style: "kwt", check: b.check || "", box: b.box || null}, _lbl: "Complete the second sentence."});
+    else Object.assign(t, {front: t.q, back: t.a, _b: {style: "ours", check: b.check || "", box: b.box || null},
+      _lbl: b.piece === "wheel" ? "How would you start the chat?" : t.label && !/^\d+$/.test(t.label) ? t.label : "How would you make it perfect English?"}); });
 }));
 /* her rule 30.10 12:17: all the cards of a stage are one deck (a missed Got it + Next must not land in another deck — "a logistical
    nightmare"); each card keeps its own kind, label, box and check. The data and the permanent numbers stay as they are. */
@@ -543,7 +614,7 @@ function keepPlace(){
   if(S.view !== "field" || S.fast) return;
   const bsOut = Object.assign({}, S._restore || {}); Object.entries(S.bs).forEach(([id, st]) => { if(id === "fastdeck") return; const d = st.deck;
     bsOut[id] = {open: [...st.open], shown: !!st.shown, check: st.check || "", done: !!st.done, bm: [...(st.bm || [])], spk: st.spk ? st.spk.key : null,
-      sc: st.sc || null, cn: st.cn ? Object.assign({}, st.cn, {busy: false, enter: false}) : null, fx: st.fx || null, so: st.so || null, sec: st.sec || null, memo: st.memo ? {phase: st.memo.phase, got: [...st.memo.got], end: st.memo.end || 0} : null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, flipped: !!d.flipped} : (st._deck || null)}; });
+      sc: st.sc || null, cn: st.cn ? Object.assign({}, st.cn, {busy: false, enter: false}) : null, fx: st.fx || null, so: st.so || null, sec: st.sec || null, memo: st.memo ? {phase: st.memo.phase, got: [...st.memo.got], end: st.memo.end || 0} : null, g: st.g || null, wh: st.wh || null, rl: st.rl ? {ph: st.rl.ph, roll: st.rl.roll} : null, mx: st.mx || null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, flipped: !!d.flipped} : (st._deck || null)}; });
   store.set(PLACE_KEY, {stage: S.stage, at: S.at, far: S.far, intro: S.intro, bs: bsOut, t: Date.now(), shape: SHAPE});
   store.set(LEFT_KEY, {page: PAGE_ID, href: location.pathname.split("/").pop(), cell: cellName(), title: D.title, stage: String(D.stages[S.stage].label || ""), t: Date.now()});
 }
@@ -557,6 +628,7 @@ function restoreBs(id){ const r = S._restore && S._restore[id]; if(!r) return nu
   if(r.fx) st.fx = r.fx; if(r.ttt && Array.isArray(r.ttt.cells)) st.ttt = r.ttt;   /* tools 16 */
   if(r.so) st.so = r.so; if(r.sec) st.sec = r.sec; if(r.memo) st.memo = r.memo;   /* tools 17 */
   if(r.cn && Array.isArray(r.cn.subs)) st.cn = r.cn;   /* tools 18 */
+  if(r.g) st.g = r.g; if(r.wh) st.wh = r.wh; if(r.rl) st.rl = r.rl; if(r.mx) st.mx = r.mx;   /* tools 20 */
   return st; }
 const curBlocks = () => D.stages[S.stage].blocks;
 const bIdx = () => Math.min(S.at[S.stage] || 0, curBlocks().length - 1);
@@ -578,7 +650,7 @@ function partsHTML(parts, b, prefix){
 /* a gap's words (for 🔖: kept by the words, not by the place, so a corrected line keeps its marks) */
 function gapAnswer(b, id){
   const m = id.match(/^([a-z]\d*)l(\d+)g(\d+)$/); if(!m) return id;
-  const lines = m[1] === "t" ? b.lines : m[1] === "x" ? (b.gloss || []).map(g => ({p: g.p})) : m[1] === "c" ? b.lines : m[1][0] === "m" ? b.parts[+m[1].slice(1)].lines : [];
+  const lines = m[1] === "t" ? b.lines : m[1] === "x" ? (b.gloss || []).map(g => ({p: g.p})) : m[1] === "c" ? b.lines : m[1][0] === "m" ? b.parts[+m[1].slice(1)].lines : m[1] === "i" && b.intro ? b.intro.lines : [];
   const gaps = ((lines[+m[2]] || {}).p || []).filter(x => x && typeof x === "object" && x.r != null), g = gaps[+m[3]];
   return g ? (g.f || "") + g.r : id;
 }
@@ -589,6 +661,7 @@ function allGaps(b){
   if(b.kind === "model") return b.parts.flatMap((p, pi) => gapIds(p.lines, `m${pi}`));
   if(b.kind === "calendars") return gapIds(b.lines, "c");
   if(b.kind === "game" && b.piece === "secret") return secGaps(b);   /* tools 17 */
+  if(b.kind === "game" && b.intro && b.intro.lines && ROLLS.includes(b.piece)) return rlIntro(b) ? gapIds(b.intro.lines, "i") : [];   /* tools 20 */
   return [];
 }
 function textHTML(b){
@@ -944,6 +1017,7 @@ function fixNext(b){ const F = fixPh(b); if(F.ph === 1 && b.place && !F.solved){
 const gameTasks = (b, cells) => (cells || []).map(c => ({t: b.tasks[c.i] || b.tasks[0], m: c.m || null}));
 function gameMount(b, host){
   if(!host) return; const st = bs(b);
+  if(b.piece === "wheel" || b.piece === "goose" || b.piece === "snakes" || b.piece === "dots" || b.piece === "islands"){ newGameMount(b, host); return; }   /* tools 20 */
   if(b.piece === "memo"){ st.memo = gMemo(host, b.items, {seconds: b.seconds || 30, groups: b.groups, state: st.memo || null,
     onChange: () => { keepPlace(); const sb = document.querySelector("[data-step]"); if(sb) sb.disabled = !canNext(); }}); return; }   /* tools 17 */
   if(st.ttt && st.ttt.cells && st.ttt.cells[0] && st.ttt.cells[0].i != null) st.ttt.cells = gameTasks(b, st.ttt.cells);   /* reopened on this device */
@@ -956,9 +1030,135 @@ function gameMount(b, host){
 }
 const memoPending = b => { const M = bs(b).memo; return !M || M.phase !== "check"; };
 function memoNext(b){ const M = bs(b).memo; if(!M) return; if(M.phase === "ready") M.look(); else if(M.phase === "look") M.phase = "recall"; else if(M.phase === "recall") M.phase = "check"; render(); }
-const gamePending = b => { if(b.piece === "memo") return memoPending(b); if(b.piece === "secret") return secPending(b); const T = bs(b).ttt; return !!(T && T.open > -1 && !T.shown && !T.over); };
+const gamePending = b => { if(b.piece === "memo") return memoPending(b); if(b.piece === "secret") return secPending(b);
+  if(ROLLS.includes(b.piece)) return rlPending(b); if(NEWG.includes(b.piece)) return ngPending(b);   /* tools 20 */
+  const T = bs(b).ttt; return !!(T && T.open > -1 && !T.shown && !T.over); };
 function gameOpenTask(b, t){ const T = bs(b).ttt; if(!T || T.over) return; const k = T.cells.findIndex(c => c.t === t && !c.m); if(k < 0 || (T.open > -1 && T.open !== k)) return;
   T.open = k; T.shown = false; render(); }
+/* ---------- tools 20 (B2 revision 4.11, the four fields of the 1.11 handoffs): 🎡 the wheel (f-wc), 🪿 the goose race (f-dis), 🐍 snakes
+   and ladders (f-pp), ⬚ dots and boxes (f-st) — a task on every move: Show the answer, then ✓ / ✗ by the game's rule; a "✗" counts in her
+   👥 like a card sent back and comes back in "Your hard cards once more". 🎲 one or two dice and 🏝 islands start with a guided example
+   (the game done once on its own material: the dice land on the example's faces, the chat with gaps), then Go → the real game, the
+   example pinned at the bottom. 🧩 mix: tap one in each column → the question builds above. The games come back as the room left them
+   (this device, also after a reload). ---------- */
+const NEWG = ["wheel", "goose", "snakes", "dots"], ROLLS = ["dice1", "dice2", "islands"];
+const taskQ = t => `${t.label && !/^\d+$/.test(t.label) ? `<span class="glbl">${esc(t.label)}</span>` : ""}${t.ctx ? `<span class="lctx">${mk(t.ctx)}</span>` : ""}<span class="say">${mk(t.q)}</span>`;
+const taskA = (b, t) => `${b.check ? `<span class="chk">${esc(b.check)}</span>` : ""}<span class="say fixline">${mk(t.a)}</span>${t.why ? `<span class="note">${mk(t.why)}</span>` : ""}`;
+const dotsQ = t => `<span class="say">${mk(t.q)}</span><span class="say frame">${mk(String(t.frame || "").replace(/_{2,}/g, "______"))} <b class="kw">${esc(t.key || "")}</b></span>`;
+const dotsA = (b, t) => `${b.check ? `<span class="chk">${esc(b.check)}</span>` : ""}<span class="say fixline">${mk(t.back || t.a)}</span>${t.note ? `<span class="note">${mk(t.note)}</span>` : ""}`;
+const onTask = (t, ok) => { lwDeck(t._n, ok); if(!ok && !saved.again.includes(t._n)){ saved.again.push(t._n); save(); } };
+const gameChanged = () => { keepPlace(); const sb = document.querySelector("[data-step]"); if(sb){ sb.disabled = !canNext(); sb.textContent = nextLabel(); } fitCard(); };
+const winFx = el => { if(typeof confetti === "function") confetti(el); };
+let WHEEL = null;   /* the wheel on screen (its sectors leave with an animation) */
+/* tools 21 (her 1.11 05:42): ▶ How to play — the first time a game opens on this device (nothing played yet), a few seconds of it play
+   by themselves with captions (game.js gDemo), then it grows, fades and the real board flies in; tap = skip; "▶ How to play" after the
+   instruction shows it again. Noughts and crosses, dots and boxes, the goose race, snakes and ladders (the wheel and islands explain themselves) */
+const demoKind = b => b && b.kind === "game" ? (b.piece === "dots" || b.piece === "goose" || b.piece === "snakes" ? b.piece : !b.piece || b.piece === "tictactoe" ? "ttt" : null) : null;
+let DEMO = null;
+const demoSeen = k => { try{ return !!localStorage.getItem("tool-demo-" + k); }catch(e){ return true; } };
+const demoMark = k => { try{ localStorage.setItem("tool-demo-" + k, String(Date.now())); }catch(e){} };
+function withDemo(b, host, mount, force){
+  if(!host) return; const k = demoKind(b), st = bs(b);
+  if(DEMO){ if(DEMO.api) DEMO.api.stop(); if(DEMO.k) demoMark(DEMO.k); DEMO = null; }   /* the page redrew in the middle: the game, not the demo again */
+  const fresh = !st.g && !(st.ttt && st.ttt.cells && st.ttt.cells.some(c => c.m));
+  if(!k || (!force && (demoSeen(k) || !fresh))){ mount(); return; }
+  const me = DEMO = {id: b._id, k};
+  me.api = gDemo(host, k, {onDone: () => { demoMark(k); if(DEMO === me) DEMO = null; if(!host.isConnected) return; host.style.removeProperty("--k"); mount();
+    const el = host.firstElementChild; if(el) el.classList.add("g-flyin"); fitCard(); }});
+}
+function newGameMount(b, host){
+  const st = bs(b), keep = G => { st.g = JSON.parse(JSON.stringify(G)); gameChanged(); };
+  if(b.piece === "wheel"){ const W = st.wh = st.wh || {cur: null, shown: false, got: []};
+    WHEEL = gWheel(host, b.tasks.map(t => ({t: t.label || "", short: t.label || ""})), {remove: false, label: "Spin", state: st.g,
+      onPick: (it, k) => { st.g = WHEEL.save(); W.cur = k; W.shown = false; render(); keepPlace(); } });
+    if(W.cur != null){ const d = host.querySelector(".gw-disc"); if(d) d.disabled = true; }   /* one situation at a time */
+    if(W.cur == null && !WHEEL.left()) host.querySelector(".gwheel").classList.add("empty"); return; }
+  /* the square says the kind of task in short ("in English", "more gently", "Fix it"); the card says it in full */
+  if(b.piece === "goose"){ const short = t => t.short || String(t.label || "").replace(/^Say it /i, "").replace(/^Fix the mistake$/i, "Fix it");
+    gGoose(host, b.tasks, {cols: b.cols || 6, goose: b.goose || 5, show: t => esc(short(t)), detail: () => "", state: st.g,
+      prompt: t => taskQ(t), answer: t => taskA(b, t), onResult: onTask, onWin: winFx, onChange: keep}); return; }
+  if(b.piece === "snakes"){ gSnakes(host, b.tasks, {rules: b.rules_mode || "every", revealFirst: true, state: st.g,
+      prompt: t => taskQ(t), answer: t => taskA(b, t), onResult: onTask, onWin: winFx, onChange: keep}); return; }
+  if(b.piece === "dots"){ gDots(host, b.tasks, {n: b.n || 4, revealFirst: true, state: st.g,
+      prompt: t => dotsQ(t), answer: t => dotsA(b, t), onResult: onTask, onWin: winFx, onChange: keep}); return; }
+  if(b.piece === "islands"){ gIslands(host, b.islands, {label: "⛵ Sail", state: st.g, onChange: G => { st.g = G; gameChanged(); }}); return; }
+}
+/* Next on an open task = its answer (as on the cards); then Next goes on */
+const ngPending = b => { const st = bs(b);
+  if(b.piece === "wheel") return !!(st.wh && st.wh.cur != null && !st.wh.shown);
+  const G = st.g; return !!(G && G.winner == null && ((b.piece === "goose" && G.phase === "task" && !G.shown) || (b.piece === "snakes" && G.ti != null && !G.shown) || (b.piece === "dots" && G.phase === "task" && !G.shown))); };
+function ngNext(b){ const st = bs(b); if(b.piece === "wheel"){ st.wh.shown = true; render(); return; } if(st.g){ st.g.shown = true; render(); } }
+function wheelHTML(b){
+  const W = bs(b).wh || {cur: null, shown: false, got: []}, t = W.cur != null ? b.tasks[W.cur] : null, n = b.tasks.length, left = n - (W.got || []).length;
+  const side = t ? `<div class="gt-task fw-task${W.shown ? " shown" : ""}"><span class="fw-n">${esc(t.label || "")}</span><p class="gt-q">${taskQ(Object.assign({}, t, {label: ""}))}</p>${W.shown ? `<p class="gt-a">${taskA(b, t)}</p>` : ""}
+      <div class="gt-acts">${!W.shown ? `<button class="btn primary" data-whshow>Show the answer</button>` : `<button class="btn ok" data-whyes>✓ Got it</button><button class="btn again" data-whno>↺ Not quite</button>`}</div></div>`
+    : left ? `<p class="fw-hint">Tap the wheel to spin it.</p><p class="fw-left">${left} of ${n} left</p>`
+    : `<p class="gt-turn big">All done! 🎉</p><button class="btn primary" data-whagain>↺ Again</button>`;
+  return `<div class="fgame fwheel"><div class="fw-wheel" data-game="${b._id}"></div><div class="fw-side gt-side">${side}</div></div>`;
+}
+function wireWheel(b, root){ const W = bs(b).wh; if(!W) return;
+  const on = (q, f) => root.querySelectorAll(q).forEach(x => x.addEventListener("click", f));
+  on("[data-whshow]", () => { W.shown = true; render(); keepPlace(); });
+  on("[data-whyes]", () => { const k = W.cur, t = b.tasks[k]; onTask(t, true); W.cur = null; W.shown = false; W.got = (W.got || []).concat(k);
+    const done = () => { bs(b).g = WHEEL ? WHEEL.save() : null; render(); keepPlace(); if(W.got.length === b.tasks.length){ const e = document.querySelector(".fw-side .gt-turn"); if(e) winFx(e); } };
+    if(WHEEL) WHEEL.drop(k, done); else done(); });
+  on("[data-whno]", () => { const t = b.tasks[W.cur]; onTask(t, false); W.cur = null; W.shown = false; if(WHEEL) bs(b).g = Object.assign(WHEEL.save(), {picked: -1}); render(); keepPlace(); });
+  on("[data-whagain]", () => { W.got = []; W.cur = null; W.shown = false; bs(b).g = null; render(); keepPlace(); });
+}
+/* 🎲 / 🏝 with a guided start */
+const rlSt = b => { const st = bs(b); return st.rl = st.rl || {ph: b.intro ? "intro" : "play", roll: null}; };
+const rlIntro = b => !!b.intro && rlSt(b).ph === "intro";
+const rlPending = b => rlIntro(b);
+function rlNext(b){ const st = bs(b), ids = gapIds(b.intro.lines, "i"); if(ids.length && !ids.every(id => st.open.has(id))){ ids.forEach(id => st.open.add(id)); render(); return; } rlGo(b); }
+function rlGo(b){ const R = rlSt(b); R.ph = "play"; R.roll = null; R.pinFly = true; render(); keepPlace(); }
+const dieFaces = d => d.faces || [];
+const faceOf = (d, n) => dieFaces(d).find(f => String(f.n).split(/\s*·\s*/).map(Number).includes(Number(n))) || dieFaces(d)[Number(n) - 1] || null;
+const DICE = b => b.piece === "dice2" ? b.dice : [{title: b.title || "", faces: b.faces}];
+const rollLine = (b, roll) => { if(!roll) return ""; const ds = DICE(b), fs = ds.map((d, i) => faceOf(d, roll[i]));
+  if(b.piece === "dice2") return `<p class="rl-res"><b>${mk(fs[0] ? fs[0].text : "")}</b> · ${mk(fs[1] ? fs[1].text : "")}${fs[1] && fs[1].start ? ` <span class="rl-arrow">→</span> <span class="rl-start">${mk(fs[1].start)}</span>` : ""}</p>`;
+  return `<p class="rl-res big">${mk(fs[0] ? fs[0].text : "")}</p>`; };
+const filledLine = l => `<p>${l.s ? `<b class="sp">${esc(l.s)}:</b> ` : ""}${(l.p || []).map(x => typeof x === "string" ? mk(x) : x.b != null ? `<b>${esc(x.b)}</b>` : `<b class="fill">${esc((x.f || "") + x.r)}</b>`).join("")}</p>`;
+function rollHTML(b){
+  const R = rlSt(b), I = b.intro, isl = b.piece === "islands";
+  if(I && R.ph === "intro"){
+    const top = isl ? `<p class="rl-isle">⛵ → 🏝 <b>${esc((b.islands[I.island || 0] || {}).t || "")}</b></p>`
+      : `<div class="rl-mini">${DICE(b).map((d, i) => `<span class="rl-m">${gDieHTML(Number(String(I.dice[i]).split(/\D/)[0]) || 1, "mini")}<span class="rl-face">${mk((faceOf(d, I.dice[i]) || {}).text || "")}</span></span>`).join("")}</div>`;
+    const go = `<button class="btn primary slim" data-rlgo>${isl ? "⛵ Now sail →" : DICE(b).length > 1 ? "🎲 Now roll the dice →" : "🎲 Now roll the die →"}</button>`;
+    return `<div class="rl rl-intro"><div class="rl-top"><span class="lbl ex-lbl">⭐ Example</span>${top}</div>${I.ctx ? `<p class="lctx">${mk(I.ctx)}</p>` : ""}<div class="dlg">${linesHTML(I.lines, b, "i")}</div><div class="rl-tools">${gapTools(b)}${go}</div></div>`;
+  }
+  const pin = I ? `<details class="expin-f${R.pinFly ? " fly" : ""}"${R.pinOpen ? " open" : ""} data-rlpin><summary>📌 Example</summary><div class="expin-open">${I.ctx ? `<p class="lctx">${mk(I.ctx)}</p>` : ""}${I.lines.map(filledLine).join("")}</div></details>` : "";
+  if(isl) return `<div class="rl"><div class="fgame fg-islands" data-game="${b._id}"></div>${pin}</div>`;
+  const roll = R.roll;
+  return `<div class="rl rl-play"><div class="rl-dice">${DICE(b).map((d, i) => `<div class="rl-die"><span class="rl-dt">${esc(d.title || "")}</span><span data-rldie="${i}">${gDieHTML(roll ? roll[i] : 0)}</span></div>`).join("")}
+      <button class="btn primary rl-roll" data-rlroll>🎲 Roll${roll ? " again" : ""}</button></div>
+    <div class="rl-out" aria-live="polite">${roll ? rollLine(b, roll) : `<p class="rl-hint">Tap Roll.</p>`}</div>
+    <details class="rl-all"><summary>All the faces</summary><div class="rl-lists">${DICE(b).map(d => `<div><p class="rl-dt">${esc(d.title || "")}</p><ol>${dieFaces(d).map(f => `<li><b>${esc(String(f.n))}</b> ${mk(f.text)}${f.start ? ` → ${mk(f.start)}` : ""}</li>`).join("")}</ol></div>`).join("")}</div></details>${pin}</div>`;
+}
+function wireRoll(b, root){ const R = rlSt(b);
+  const on = (q, f) => root.querySelectorAll(q).forEach(x => x.addEventListener("click", f));
+  on("[data-rlgo]", () => { const st = bs(b); gapIds(b.intro.lines, "i").forEach(id => st.open.add(id)); rlGo(b); });
+  on("[data-rlroll]", () => { if(R.busy) return; const n = DICE(b).length, roll = Array.from({length: n}, () => 1 + Math.floor(Math.random() * 6));
+    const dice = [...root.querySelectorAll("[data-rldie] .gdie")]; R.busy = true; R.pinFly = false; root.querySelector("[data-rlroll]").disabled = true;
+    let left = dice.length || 0; const done = () => { if(--left > 0) return; R.busy = false; R.roll = roll; render(); keepPlace(); };
+    if(!left){ left = 1; done(); return; } dice.forEach((el, i) => gRoll(el, roll[i], done)); });
+  root.querySelectorAll("[data-rlpin]").forEach(d => d.addEventListener("toggle", () => { R.pinOpen = d.open; R.pinFly = false; }));
+  if(b.piece === "islands" && R.ph === "play") gameMount(b, root.querySelector(`[data-game="${b._id}"]`));
+}
+/* 🧩 mix: one from each column → the question */
+const mxSt = b => { const st = bs(b); return st.mx = st.mx || {l: null, r: null}; };
+const mxPlain = s => String(s).replace(/\s*\(\(\[?[^)]*?\]?\)\)\s*/g, " ").replace(/\s+/g, " ").trim();
+function mixHTML(b){ const M = mxSt(b), L = M.l != null ? b.left[M.l] : null, Rr = M.r != null ? b.right[M.r] : null;
+  const head = String(b.left_title || "").replace(/\s*…\s*$/, "");
+  const q = `<p class="mx-q">${esc(head)} ${L ? `<b>${esc(mxPlain(L))}</b>` : `<span class="mx-slot">…</span>`} ${Rr ? `<b>${esc(mxPlain(Rr))}</b>` : `<span class="mx-slot">…?</span>`}</p>`;
+  const col = (list, side, title) => `<div class="mx-col"><p class="mx-h">${esc(title || "")}</p>${list.map((x, i) => `<button class="mx-it${M[side] === i ? " on" : ""}" data-mx="${side}${i}">${mk(x)}</button>`).join("")}</div>`;
+  return `<div class="mix">${q}<div class="mx-cols">${col(b.left, "l", b.left_title)}${col(b.right, "r", b.right_title)}</div>
+    <p class="mx-acts"><button class="btn slim" data-mxrand>🎲 Pick for us</button></p>${b.more ? `<p class="mx-more">${mk(b.more)}</p>` : ""}${b.note ? `<p class="mx-note">${mk(b.note)}</p>` : ""}</div>`; }
+function wireMix(b, root){ const M = mxSt(b);
+  root.querySelectorAll("[data-mx]").forEach(x => x.addEventListener("click", () => { const side = x.dataset.mx[0], i = +x.dataset.mx.slice(1); M[side] = M[side] === i ? null : i; render(); keepPlace(); }));
+  root.querySelectorAll("[data-mxrand]").forEach(x => x.addEventListener("click", () => { M.l = Math.floor(Math.random() * b.left.length); M.r = Math.floor(Math.random() * b.right.length); render(); keepPlace();
+    const q = document.querySelector(".mx-q"); if(q) pop(q); }));
+}
+
 
 /* ---------- tools 17 (B2 revision f-seen, handoff 31.10 13:15): 🗂 the homework sort as a field block — four boxes, the lines one by one:
    the English context (grey) and the Russian, say it, tap (or Next) → the English, then tap its box or drag the card onto it. mode auto =
@@ -1064,11 +1264,13 @@ function blockHTML(b){
     : b.kind === "picture" ? pictureHTML(b) : b.kind === "calendars" ? calendarsHTML(b) : b.kind === "tool" ? toolHTML(b)
     : b.kind === "questions" ? questionsHTML(b) : b.kind === "cards" ? groupDotsHTML(b) + `<div class="deck">${cardsHTML(b)}</div>` : b.kind === "scenes" ? scenesHTML(b)
     : b.kind === "fix" ? fixHTML(b) : b.kind === "sort" ? sortHTML(b) : b.kind === "game" && b.piece === "secret" ? secretHTML(b)
-    : b.kind === "game" ? (b.piece === "memo" ? "" : groupDotsHTML(b)) + `<div class="fgame${b.piece === "memo" ? " fmemo" : ""}" data-game="${b._id}"></div>` : "";
+    : b.kind === "mix" ? mixHTML(b) : b.kind === "game" && b.piece === "wheel" ? groupDotsHTML(b) + wheelHTML(b) : b.kind === "game" && ROLLS.includes(b.piece) ? rollHTML(b)
+    : b.kind === "game" ? (b.piece === "memo" ? "" : groupDotsHTML(b)) + (b.rule ? `<p class="g-rule">${mk(b.rule)}</p>` : "") + `<div class="fgame${b.piece === "memo" ? " fmemo" : ""} fg-${esc(b.piece || "ttt")}" data-game="${b._id}"></div>` : "";
   const instr = b.kind === "cards" || b.kind === "questions" ? (b.kind === "questions" ? b.instr : "") : b.kind === "scenes" && sceneAt(b) >= 0 ? (b.street_first === false ? [b.instr, b.task].filter(Boolean).join(" ") : b.task)
-    : b.kind === "game" && b.piece === "secret" ? secInstr(b) : b.instr;
+    : b.kind === "game" && b.piece === "secret" ? secInstr(b) : b.kind === "game" && ROLLS.includes(b.piece) && rlIntro(b) ? b.intro.instr || b.instr : b.instr;
   const tip = S.howto && b.tip ? `<p class="tip">🎓 How it works: ${mk(b.tip)}</p>` : "";
-  return `${tip}${instr ? `<p class="finstr">${mk(instr)}</p>` : ""}<section class="blk ${S.enter ? "enter" : ""}" data-blk="${b._id}">${body}</section>`;
+  const how = demoKind(b) ? ` <button class="g-howto" data-gdemo>▶ How to play</button>` : "";   /* tools 21 */
+  return `${tip}${instr ? `<p class="finstr">${mk(instr)}${how}</p>` : ""}<section class="blk ${S.enter ? "enter" : ""}" data-blk="${b._id}">${body}</section>`;
 }
 /* ---------- one control, always in the same place (her rule 30.10 12:29) ----------
    "← Back" and "Next →" at the bottom of the screen, the same words every time. The steps are ours: after a task they always look at
@@ -1134,6 +1336,8 @@ function stepNext(){
   if(b.kind === "fix" && fixPending(b)){ fixNext(b); return; }   /* tools 16: the gap's answer, then message by message */
   if(b.kind === "game" && b.piece === "memo" && memoPending(b)){ memoNext(b); return; }   /* tools 17: ▶ → hide → check */
   if(b.kind === "game" && b.piece === "secret" && secPending(b)){ secNext(b); return; }   /* the chat's answers → How it works → the game */
+  if(b.kind === "game" && ROLLS.includes(b.piece) && rlPending(b)){ rlNext(b); return; }   /* tools 20: the example → Go */
+  if(b.kind === "game" && NEWG.includes(b.piece) && ngPending(b)){ ngNext(b); return; }   /* tools 20: an open task → its answer */
   if(b.kind === "sort" && sortPending(b)){ sortNext(b); return; }
   if(b.kind === "game" && gamePending(b)){ st.ttt.shown = true; render(); return; }   /* an open square: Next shows its answer */
   if(b.kind === "cards"){ const d = deckOf(b);
@@ -1150,13 +1354,28 @@ function stepNext(){
   if(b.kind === "scenes"){ const sc = sceneState(b); if(st.peek){ st.peek = false; render(); return; } if(sc.at < sc.order.length - 1){ sc.at++; st.dealt = true; render(); st.dealt = false; scrollTo(0, 0); return; } }
   stepOn();
 }
-function stepOn(){ const bl = curBlocks(), i = bIdx(); if(i < bl.length - 1) goBlock(S.stage, i + 1); else if(S.stage < D.stages.length - 1) goStage(S.stage + 1); }
-function stepOff(){ const i = bIdx(); if(i > 0) goBlock(S.stage, i - 1); else { S.intro = true; S.enter = true; render(); scrollTo(0, 0); } }
+/* tools 19 (her test 31.10 22:38: "I go on to the next task and suddenly I'm in the middle, because I'd been there — it throws even me"):
+   on a lesson page (no Jeopardy board) a stage entered forward — Next at the end of the stage before, its button on top, "compare with
+   our lesson", her "move on to …" — opens at its start, fresh, like a slide deck: gaps closed, cards from the first, no answers shown.
+   What they wrote is never lost (it lives in saved.w, not in the blocks). Back from a stage's first screen goes straight to the last
+   screen of the stage before, as it was left (her 22:45: the usual slip is one Next too many). A reload still comes back to the same
+   screen with everything done (keepPlace). Jeopardy fields keep each stage's place: Back to the board and back in is their normal move. */
+const FLOW = !D.boardPage;
+function freshStage(i){ if(!FLOW || i === S.stage && S.view === "field") return;
+  S.at[i] = 0; S.far[i] = 0;
+  D.stages[i].blocks.forEach(b => { delete S.bs[b._id]; if(S._restore) delete S._restore[b._id]; }); }
+function stepOn(){ const bl = curBlocks(), i = bIdx(); if(i < bl.length - 1) goBlock(S.stage, i + 1); else if(S.stage < D.stages.length - 1){ freshStage(S.stage + 1); goStage(S.stage + 1); } }
+function backToStageBefore(){ const k = S.stage - 1;
+  if(k < 0){ if(boardHref()){ leftForBoard(); location.href = boardHref(); } return false; }
+  S.intro = false; const lb = D.stages[k].blocks[D.stages[k].blocks.length - 1];
+  if(lb.kind === "cards" && !deckHasList(lb)){ const d = deckOf(lb), st = bs(lb); if(!d.queue.length && d.hist.length){ st.look = d.hist[d.hist.length - 1]; st.lookBack = true; st.lookLbl = "↩ Looking back"; } }
+  goBlock(k, D.stages[k].blocks.length - 1); return true; }
+function stepOff(){ const i = bIdx(); if(i > 0){ goBlock(S.stage, i - 1); return; }
+  if(FLOW && S.stage > 0){ backToStageBefore(); return; }
+  S.intro = true; S.enter = true; render(); scrollTo(0, 0); }
 addEventListener("message", e => { const m = e.data && e.data.lwStepEnd; if(!m) return; const b = curBlock(); if(!b || b.kind !== "tool" || S.fast || S.intro || S.view !== "field") return; m === "next" ? stepOn() : stepOff(); });
 function stepBack(){
-  if(S.intro && !S.fast){ const k = S.stage - 1; if(k >= 0){ S.intro = false; const lb = D.stages[k].blocks[D.stages[k].blocks.length - 1];
-      if(lb.kind === "cards" && !deckHasList(lb)){ const d = deckOf(lb), st = bs(lb); if(!d.queue.length && d.hist.length){ st.look = d.hist[d.hist.length - 1]; st.lookBack = true; st.lookLbl = "↩ Looking back"; } }
-      goBlock(k, D.stages[k].blocks.length - 1); } else if(boardHref()){ leftForBoard(); location.href = boardHref(); } return; }
+  if(S.intro && !S.fast){ backToStageBefore(); return; }
   const b = S.fast || curBlock();
   /* in a deck Back is the card before, like the slide before (her 12:58): the answer side → its front → the card answered before (open,
      "Looking back") → … → the first card → the task before */
@@ -1172,6 +1391,7 @@ function stepBack(){
   if(b && b.kind === "fix" && fixPh(b).ph > 0){ fixPh(b).ph--; render(); return; }   /* tools 16: the screen before */
   if(b && b.kind === "sort" && sortBack(b)) return;   /* tools 17: the card before, as it was left */
   if(b && b.kind === "game" && b.piece === "secret" && secSt(b).ph > (b.intro ? 0 : 1)){ secSt(b).ph--; render(); return; }
+  if(b && b.kind === "game" && ROLLS.includes(b.piece) && b.intro && rlSt(b).ph === "play"){ rlSt(b).ph = "intro"; render(); return; }   /* tools 20: back to the example */
   if(b && b.kind === "game" && b.piece === "memo" && bs(b).memo && bs(b).memo.phase !== "ready"){ const M = bs(b).memo; M.phase = M.phase === "check" ? "recall" : "ready"; render(); return; }
   if(b && b.kind === "questions"){ const pv = document.querySelector(".speak [data-speak-prev]"); if(pv){ pv.click(); return; } }
   if(b && b.kind === "scenes"){ const st = bs(b), sc = sceneState(b); if(st.peek){ st.peek = false; render(); return; } if(sc.at > (b.street_first === false ? 0 : -1)){ sc.at--; render(); return; } }
@@ -1216,11 +1436,11 @@ function render(){
 /* tools 18 (C1 04.11: an "our sentences" card with its answer, the note and "Your turn" beside the box ran under Back / Next): a long card
    makes its type smaller, step by step, until the card and its buttons fit above them — her rule, a whole card on the shared screen. A phone scrolls as before. */
 function fitCard(){
-  const fc = document.querySelector("#main .deck .fc, #main .cn"), blk = document.querySelector("#main .blk"), bar = document.querySelector("#main .stepbar");
+  const fc = document.querySelector("#main .deck .fc, #main .cn, #main .blk > .tx, #main .blk > .mix, #main .blk > .rl, #main .blk > .fgame"), blk = document.querySelector("#main .blk"), bar = document.querySelector("#main .stepbar");   /* tools 20: a long text, the mix, the example too */
   if(!fc || !blk || !bar || innerWidth < 760) return;
   const over = () => blk.getBoundingClientRect().bottom + 2 > bar.getBoundingClientRect().top;
   fc.querySelectorAll("img").forEach(im => { if(!im.complete) im.addEventListener("load", () => { if(!fc.isConnected) return; fc.style.removeProperty("--k"); fitCard(); }, {once: true}); });   /* a picture still loading changes the card's size */
-  for(const k of [.92, .85, .78, .72]){ if(!over()) return; fc.style.setProperty("--k", k); }
+  for(const k of [.92, .85, .78, .72, .66]){ if(!over()) return; fc.style.setProperty("--k", k); }
 }
 addEventListener("resize", () => { clearTimeout(fitCard.t); fitCard.t = setTimeout(() => { const fc = document.querySelector("#main .deck .fc, #main .cn"); if(fc) fc.style.removeProperty("--k"); fitCard(); }, 150); });
 /* the box with X{{rest}}: the first letter shown, the rest hidden yellow (tap the yellow to open it; tap the line to tick it) */
@@ -1236,12 +1456,12 @@ function wireBoxHidden(root){
 function goStage(i, cloud = true){ if(S.view === "field" && S.stage === i && !S.fast && S.intro === cloud) return; S.intro = cloud; S.view = "field"; S.fast = null; S.stage = i; S.enter = true; render(); scrollTo(0, 0); lwWhere(D.stages[i].label); }
 function wire(root){
   const on = (q, fn) => root.querySelectorAll(q).forEach(x => x.addEventListener("click", e => fn(x, e)));
-  on("[data-stage]", x => { if(x.dataset.stage === "groups"){ if(S.view !== "groups"){ S.view = "groups"; S.fast = null; render(); scrollTo(0, 0); setTimeout(gwFetch, 0); } } else goStage(+x.dataset.stage); });
+  on("[data-stage]", x => { if(x.dataset.stage === "groups"){ if(S.view !== "groups"){ S.view = "groups"; S.fast = null; render(); scrollTo(0, 0); setTimeout(gwFetch, 0); } } else { freshStage(+x.dataset.stage); goStage(+x.dataset.stage); } });
   on("[data-step]", () => stepNext()); on("[data-back]", () => stepBack());
   on("[data-sdot]", x => goBlock(S.stage, +x.dataset.sdot));
   on(".board-top", () => leftForBoard());
   on("[data-howto]", () => { S.howto = !S.howto; render(); });
-  on("[data-goto]", x => goStage(+x.dataset.goto));
+  on("[data-goto]", x => { freshStage(+x.dataset.goto); goStage(+x.dataset.goto); });
   const b = S.fast || curBlock(); if(!b) return;
   /* gaps */
   on("[data-gap]", x => { const st = bs(b), id = x.dataset.gap; st.open.has(id) ? st.open.delete(id) : st.open.add(id); render(); });
@@ -1281,7 +1501,11 @@ function wire(root){
     if(sel !== pl.answer){ F.wrong = sel; F.wrongSlot = null; } else F.wrongSlot = k;
     render(); const el = root.querySelector(`[data-fxslot="${k}"]`); if(el){ el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); } });
   on("[data-fxa]", x => { const F = fixPh(b), k = +x.dataset.fxa; if(F.ph === 2 + 2 * k) F.ph++; render(); });
-  if(b.kind === "game" && b.piece !== "secret") gameMount(b, root.querySelector(`[data-game="${b._id}"]`));
+  if(b.kind === "game" && b.piece !== "secret" && !ROLLS.includes(b.piece)){ const host = root.querySelector(`[data-game="${b._id}"]`);
+    withDemo(b, host, () => gameMount(b, host)); on("[data-gdemo]", () => withDemo(b, host, () => gameMount(b, host), true)); }   /* tools 21: ▶ How to play */
+  if(b.kind === "game" && b.piece === "wheel") wireWheel(b, root);   /* tools 20 */
+  if(b.kind === "game" && ROLLS.includes(b.piece)) wireRoll(b, root);
+  if(b.kind === "mix") wireMix(b, root);
   if(b.kind === "picture" && b.lead) hgMount(b, root.querySelector(`[data-hg="${b._id}"]`));
   if(b.kind === "council") wireCouncil(b, root);
   if(b.kind === "sort") wireSort(b, root);   /* tools 17 */
@@ -1310,7 +1534,7 @@ LW.onFresh = () => { saved = {w: {}, again: []}; save(); S.bs = {}; S.far = {}; 
 /* her 🧹 Start fresh on the board, while this page is open in another tab: this tab starts fresh too (and doesn't write the old answers back) */
 addEventListener("storage", e => { if(e.key !== null && e.key !== KEY && e.key !== PLACE_KEY) return; if(e.newValue != null && e.key !== null) return;
   saved = {w: {}, again: []}; const v = S.view; newState(); S.view = v; render(); });   /* 🧹 Start fresh in 📥 Groups: her test answers on this computer go too */
-LW.onGo = label => { const i = D.stages.findIndex(s => s.label === label); if(i > -1) goStage(i); };
+LW.onGo = label => { const i = D.stages.findIndex(s => s.label === label); if(i > -1){ freshStage(i); goStage(i); } };
 LW.stages = D.stages.map((s, i) => [i, s.label]);
 LW.board = D.boardPage && D.cell ? {id: LESSON + "/" + D.boardPage, cell: D.cell} : null;
 LW.groupsView = () => !!S && S.view === "groups";

@@ -1,0 +1,89 @@
+{
+ "blocks": [
+  {
+   "pid": 0,
+   "sig": "say what would you say? then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "text remember the patterns? say the second sentence. then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "game dots and boxes: complete the second sentence (2–5 words; don't change the word in capitals), then tap to check. got it right? draw a line. close a box? it's yours — go again!",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "game sail to an island: that's your topic. say how long it's been. your partner asks two questions. then swap.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "questions round 2: your own ideas.",
+   "gone": false
+  }
+ ],
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "haven't seen paul for i haven't seen paul for three weeks. i ___ three weeks. seen я не видел пола три недели: haven't + v3 + for. the last time i saw paul was three weeks ago.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "haven't heard from i haven't heard from simona for seven months. i ___ simona for seven months. heard hear from sb — получать известия от кого-то. simona last wrote to me seven months ago.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "haven't heard from i haven't heard from my parents for a month. i ___ my parents for a month. heard они месяц не давали о себе знать. my parents last spoke to me a month ago.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "has not eaten anything since chris is hungry because he has not eaten anything since thursday evening. chris is hungry because he ___ thursday evening. not not не меняем: has not (не hasn't); since + момент. тоже верно: has not eaten since. chris is hungry because the last time he ate anything was thursday evening.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "seen tom since his wedding i haven't seen tom since his wedding day in 1995. i haven't ___ day in 1995. wedding the day he got married = his wedding day; since + день. the last time i saw tom was the day he got married in 1995.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "haven't seen him since i haven't seen him since i lived in london. i ___ i lived in london. since since + целое предложение в past simple: since i lived… the last time i saw him was when i lived in london.",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "gave up playing tennis he gave up playing tennis five years ago. he ___ five years ago. up give up + -ing — бросить; ago → past simple. тоже верно: gave up tennis. he hasn't played tennis for five years.",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "has been two years since it has been two years since i first met sarah. it ___ i first met sarah. years it has been + время + since + past simple. тоже верно: is two years since. i first met sarah two years ago.",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "been months since i saw it's been months since i saw a good film. it's ___ a good film. since haven't + v3 + for x = it's been x since + past simple. без last: since i last saw — уже 6 слов. i haven't seen a good film for months.",
+   "gone": false
+  }
+ ],
+ "write": [],
+ "questions.4": [
+  {
+   "pid": 0,
+   "sig": "1 tell your partner two things you haven't done for ages but would love to do again — and say why you haven't.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 your partner asks: when did you last…? what do you miss most about it? what would help you do it again?",
+   "gone": false
+  }
+ ]
+}

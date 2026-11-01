@@ -31,7 +31,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
   out.bar = (await p.locator('.teacher-bar').innerText()).replace(/\s+/g, ' ').trim();
   out.statusHidden = !(await p.locator('.status').first().isVisible());
   out.firstTaskChips = await p.locator(`[data-teach="${meta.tasks[0].id}"] .t-chip`).evaluateAll(xs => xs.map(x => x.textContent + (x.classList.contains('on') ? '✓' : '')));
-  out.hot = (await p.locator('section.hot:not(.wait)').innerText()).replace(/\s+/g, ' ');
+  out.hot = (await p.locator('section.hot:not(.wait):not(.unl-note)').innerText()).replace(/\s+/g, ' ');
   out.wait = (await p.locator('section.hot.wait').innerText()).replace(/\s+/g, ' ');
   // a waiting item opens its task's panel at that item
   await p.locator('section.hot.wait [data-wid]').last().click(); await p.waitForTimeout(150);

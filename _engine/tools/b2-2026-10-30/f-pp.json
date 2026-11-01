@@ -1,0 +1,388 @@
+{
+ "type": "revision-field",
+ "file": "f-pp",
+ "board": {
+  "col": "Grammar",
+  "value": 100
+ },
+ "title": "Present perfect vs past simple",
+ "boxes": {
+  "BOX": [
+   {
+    "h": "NEWS",
+    "items": [
+     "**I've been** to Italy!",
+     "**Have you** read anything good",
+     "**in the last** few weeks?",
+     "I **haven't** seen them **since** June."
+    ]
+   },
+   {
+    "h": "DETAILS",
+    "items": [
+     "**When did you go?**",
+     "— We **went** in August.",
+     "**Who did you go with?**",
+     "**How was it?**",
+     "**last** month · a week **ago**"
+    ]
+   }
+  ]
+ },
+ "stages": [
+  {
+   "label": "📝 Test yourself",
+   "blocks": [
+    {
+     "kind": "say",
+     "instr": "What would you say? Then tap “Show the answer”.",
+     "task": [
+      "**1**  (([A friend you haven't seen since June: “What have you been up to?” Your news: a new job · started: August.]))",
+      "((You:)) • • •",
+      "**2**  (([Your friend: “I've just got back from Croatia!” Ask **two** questions about the trip.]))",
+      "((You:)) • • •"
+     ],
+     "answer": [
+      "**1**  (([A friend you haven't seen since June: “What have you been up to?” Your news: a new job · started: August.]))",
+      "((You:)) I**'ve got a new job**! I **started** in August.",
+      "((Новость без времени → present perfect; деталь со временем → past simple. Тоже верно: I changed jobs in August.))",
+      "**2**  (([Your friend: “I've just got back from Croatia!” Ask **two** questions about the trip.]))",
+      "((You:)) Oh, nice! **When did you go?** **Who did you go with?**",
+      "((Детали → past simple: When did you…? Who did you go with? How was it?))"
+     ],
+     "answer_title": "Suggested answer",
+     "tip": "Say it aloud first, then tap “Show the answer”."
+    }
+   ]
+  },
+  {
+   "label": "🔁 Recall",
+   "blocks": [
+    {
+     "kind": "text",
+     "instr": "Remember Anna? Present perfect or past simple? Say the missing words. Then tap the yellow to check.",
+     "lines": [
+      {
+       "s": "A",
+       "p": [
+        "Hi Anna! It's been ages! How ",
+        {
+         "f": "",
+         "r": "have you been"
+        },
+        " (([you / be]))?"
+       ]
+      },
+      {
+       "s": "B",
+       "p": [
+        "Great, thanks! Actually, ",
+        {
+         "f": "I",
+         "r": "'ve started"
+        },
+        " (([start])) a new job!"
+       ]
+      },
+      {
+       "s": "A",
+       "p": [
+        "Congratulations! When ",
+        {
+         "f": "",
+         "r": "did you start"
+        },
+        " (([you / start]))?"
+       ]
+      },
+      {
+       "s": "B",
+       "p": [
+        "In August. The first few weeks ",
+        {
+         "f": "",
+         "r": "were"
+        },
+        " (([be])) pretty stressful, but it's OK now."
+       ]
+      },
+      {
+       "s": "A",
+       "p": [
+        {
+         "f": "",
+         "r": "Did you manage"
+        },
+        " (([you / manage])) to get away this summer?"
+       ]
+      },
+      {
+       "s": "B",
+       "p": [
+        "Yes, we ",
+        {
+         "f": "",
+         "r": "spent"
+        },
+        " (([spend])) a week in Croatia. It ",
+        {
+         "f": "",
+         "r": "was"
+        },
+        " (([be])) lovely."
+       ]
+      },
+      {
+       "s": "A",
+       "p": [
+        "Lucky you! ",
+        {
+         "f": "I",
+         "r": "'ve never been"
+        },
+        " (([never / be])) to Croatia."
+       ]
+      },
+      {
+       "s": "B",
+       "p": [
+        "Oh, you should go! And what ",
+        {
+         "f": "",
+         "r": "have you been"
+        },
+        " (([you / be])) up to?"
+       ]
+      },
+      {
+       "s": "A",
+       "p": [
+        "Not much. Work ",
+        {
+         "f": "",
+         "r": "has been"
+        },
+        " (([be])) crazy since September!"
+       ]
+      }
+     ],
+     "tip": "The verb is in brackets. Say the missing words, then tap the yellow to check."
+    }
+   ]
+  },
+  {
+   "label": "🃏 Practice",
+   "blocks": [
+    {
+     "kind": "game",
+     "piece": "snakes",
+     "instr": "Snakes and ladders: take turns to roll the dice and move. Do the task on your square, then tap to check.",
+     "rule": "Ladder + right answer = go up. Snake + wrong answer = go down. First to the top wins!",
+     "box": "BOX",
+     "check": "Check",
+     "tasks": [
+      {
+       "label": "Add the time",
+       "q": "I've been really busy. **+ since September**",
+       "a": "I've been really busy since September.",
+       "why": "No change: since September — до сих пор."
+      },
+      {
+       "label": "Add the time",
+       "q": "We've finally managed to get away for a couple of weeks. **+ in August**",
+       "a": "We finally managed to get away for a couple of weeks in August.",
+       "why": "The tense changes: in August — законченное время."
+      },
+      {
+       "label": "Add the time",
+       "q": "Work has been crazy. **+ this autumn**",
+       "a": "Work has been crazy this autumn.",
+       "why": "No change: осень ещё не закончилась."
+      },
+      {
+       "label": "Add the time",
+       "q": "I haven't had a day off. **+ for ages**",
+       "a": "I haven't had a day off for ages.",
+       "why": "No change: for ages — «сто лет», до сих пор."
+      },
+      {
+       "label": "Add the time",
+       "q": "We've had a lovely change of scenery. **+ over the summer**",
+       "a": "We had a lovely change of scenery over the summer.",
+       "why": "The tense changes: over the summer — лето закончилось."
+      },
+      {
+       "label": "Add the time",
+       "q": "I've started a new course. **+ a week ago**",
+       "a": "I started a new course a week ago.",
+       "why": "The tense changes: ago → past simple."
+      },
+      {
+       "label": "Add the time",
+       "q": "I've caught up with some old friends. **+ last weekend**",
+       "a": "I caught up with some old friends last weekend.",
+       "why": "The tense changes: last weekend — законченное время."
+      },
+      {
+       "label": "Add the time",
+       "q": "I've been to a lovely café with Anna. **+ two days ago**",
+       "a": "I went to a lovely café with Anna two days ago.",
+       "why": "The tense changes: ago — всегда past simple."
+      },
+      {
+       "label": "Add the time",
+       "q": "Have you managed to get away? **+ this summer** (([It's November now.]))",
+       "a": "Did you manage to get away this summer?",
+       "why": "The tense changes: лето закончилось → и вопрос в past simple."
+      },
+      {
+       "label": "Our sentence: say it right",
+       "q": "When ~~have you started~~ your new job?",
+       "a": "When did you start your new job?",
+       "why": "When? — конкретный момент → past simple."
+      },
+      {
+       "label": "Our sentence: say it right",
+       "q": "I ~~'ve been~~ to the museum a week ago.",
+       "a": "I went to the museum a week ago.",
+       "why": "A week ago — законченное время → past simple. Сравни: I've been to a great exhibition! (новость, без времени)."
+      },
+      {
+       "label": "Our sentence: say it right",
+       "q": "I ~~'ve given up~~ after episode three.",
+       "a": "I gave up after episode three.",
+       "why": "After episode three — законченный момент → past simple."
+      }
+     ],
+     "tip": "Roll and move. Do the task on your square and tap to check. Right at a ladder? Up! Not quite at a snake? Down!"
+    }
+   ]
+  },
+  {
+   "label": "💬 Use it",
+   "blocks": [
+    {
+     "kind": "model",
+     "instr": "Here's an example. Complete the conversation. Then tap the yellow to check.",
+     "box": "BOX",
+     "ctx": "(([From the table: Have you been to a concert or a festival + in the last few months?]))",
+     "parts": [
+      {
+       "title": "",
+       "lines": [
+        {
+         "s": "A",
+         "p": [
+          {
+           "f": "H",
+           "r": "ave you been"
+          },
+          " to a concert ",
+          {
+           "f": "i",
+           "r": "n the last"
+          },
+          " few months?"
+         ]
+        },
+        {
+         "s": "B",
+         "p": [
+          "Yes, I ",
+          {
+           "f": "h",
+           "r": "ave"
+          },
+          "! I ",
+          {
+           "f": "w",
+           "r": "ent"
+          },
+          " to a jazz concert in September."
+         ]
+        },
+        {
+         "s": "A",
+         "p": [
+          "Oh, nice! ",
+          {
+           "f": "W",
+           "r": "ho did you go with"
+          },
+          "?"
+         ]
+        },
+        {
+         "s": "B",
+         "p": [
+          "My sister. It ",
+          {
+           "f": "w",
+           "r": "as"
+          },
+          " amazing."
+         ]
+        },
+        {
+         "s": "A",
+         "p": [
+          "Lucky you! I ",
+          {
+           "f": "h",
+           "r": "aven't been"
+          },
+          " to a concert ",
+          {
+           "f": "s",
+           "r": "ince"
+          },
+          " last year."
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "kind": "mix",
+     "instr": "Make questions from the table and ask your partner.",
+     "box": "BOX",
+     "left_title": "Have you …",
+     "right_title": "in the last … / since … ?",
+     "left": [
+      "had a proper holiday (([нормальный отпуск]))",
+      "been to a concert or a festival",
+      "read any good books",
+      "seen any good films or series",
+      "tried any new food",
+      "been anywhere new",
+      "taken up a new hobby (([начал(а) заниматься]))",
+      "caught up with old friends (([повидался(-ась)]))"
+     ],
+     "right": [
+      "in the last few weeks?",
+      "in the last few months?",
+      "recently?",
+      "since the summer?",
+      "since June?",
+      "this year? (([год ещё идёт]))"
+     ],
+     "more": "Yes? → ask more in the past simple: **When did you …? Where …? Who with? What was it like?** · No? → **When did you last …?**",
+     "note": "in the last few weeks / two months (с the!) · since + момент · but: last month / a week ago / over the summer → past simple: Did you …?",
+     "tip": "Pick one from each column to make a question. Yes? Ask more in the past simple: When…? Who with? What was it like?"
+    },
+    {
+     "kind": "questions",
+     "instr": "Round 2: your real news. Then swap roles.",
+     "items": [
+      "**1**  Tell your partner **two** pieces of news from the last few weeks (present perfect: I've…).",
+      "**2**  Your partner asks **two** questions about each piece of news in the past simple, e.g. When…? Who with? How was it?",
+      "**3**  Then ask your partner one question from the table that you haven't asked yet."
+     ],
+     "box": "BOX",
+     "fast": "If you're done: go back to Anna in 🔁 Recall and say the missing words from memory. Then tell your partner about **two** things you've done for the first time this year. When did you do them? How did it go?"
+    }
+   ]
+  }
+ ]
+}

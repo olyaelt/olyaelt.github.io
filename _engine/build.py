@@ -7,6 +7,7 @@ content.js (what goes between LESSON CONTENT: START and END) + page.json (title,
 "earlier_only": [phrases] = look-back items only where the target contains one of them — what the whole group did in class; a task with core: true always fits and comes first, engine 43).
 Also writes lessons/<name>/build/preview.html for the Claude artifact preview."""
 import base64, json, mimetypes, os, re, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import site_theme
 HERE = os.path.dirname(os.path.abspath(__file__))
 lesson = sys.argv[1] if os.path.isabs(sys.argv[1]) else os.path.join(HERE, sys.argv[1]) if not os.path.isdir(sys.argv[1]) else sys.argv[1]
 site = sys.argv[2] if len(sys.argv) > 2 else os.path.dirname(HERE)
@@ -72,5 +73,5 @@ if cfg.get('listed', True) is False:   # an unlisted page: built and uploadable,
 i = t.index('<div class="wrap" id="app"></div>')
 out_dir = os.path.join(site, cfg['group']); os.makedirs(out_dir, exist_ok=True)
 out = os.path.join(out_dir, cfg['file'])
-open(out, 'w', encoding='utf-8').write(head + t[:i] + '</head>\n<body>\n' + t[i:] + '\n</body>\n</html>\n')
+open(out, 'w', encoding='utf-8').write(site_theme.add(head + t[:i] + '</head>\n<body>\n' + t[i:] + '\n</body>\n</html>\n'))   # engine 56: light by default, 🌙 at the bottom
 print('built', out, os.path.getsize(out), 'bytes')

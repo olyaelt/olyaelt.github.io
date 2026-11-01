@@ -67,7 +67,7 @@ __BASE_JS__
    the debrief). The groups' boards ask every 10 s and show it at once (it is a pointer, not a change under their eyes). No table → her voice. */
 const cellKey = c => "c" + D.cols.indexOf(c.col) + "v" + c.value;
 const cellAt = (col, v) => D.cells.find(c => c.col === col && c.value === v);
-const href = c => c && c.page ? `${c.page}${LIVE_ON ? "-live" : ""}.html` : "";
+const href = c => c && c.page && !c.closed ? `${c.page}${LIVE_ON ? "-live" : ""}.html` : "";
 const nowKey = () => { const [k, t] = String(LV.text.now || "").split("|"); return k && Date.now() - (Number(t) || 0) < 3 * 3600000 ? k : ""; };   /* the light goes out by itself after 3 hours */
 const doneAt = k => Number(LV.text["done." + k]) || 0;
 let busy = false, sureFresh = false;
@@ -96,6 +96,8 @@ function render(){
   const grid = `<div class="jb" style="--cols:${D.cols.length}">${D.cols.map(c => `<div class="colh">${esc(c)}</div>`).join("")}
     ${D.values.map(v => D.cols.map(col => { const c = cellAt(col, v), k = c ? cellKey(c) : "", isNow = k && k === nk, played = k && (isNow || doneAt(k));
       const cls = `cell ${c && c.today && mine ? "today" : ""} ${c && !c.page && mine ? "nopage" : ""} ${k && doneAt(k) && !isNow ? "done" : ""} ${isNow ? "now" : ""}`;   /* her 31.10: the colour says whether there is a page */
+      /* tools 20 (the B2 chat, 1.11: Have you seen it? was revised on 30.10 — closed on 4.11): "closed": true = a plain number, no link, also for her; the page stays */
+      if(c && c.closed) return `<span class="cell closed nolink" aria-label="${esc(col)} $${v}: not this time">$${v}</span>`;
       if(mine && c) return `<div class="cellwrap"><button class="${cls}" data-cell="${k}" ${busy ? "disabled" : ""} aria-label="${esc(col)} $${v}: ${esc(c.title || "")} — ${c.page ? "play, its page opens" : "on the slides: lights up"}">$${v}${!c.page && !played ? `<span class="ckind" aria-hidden="true">📊</span>` : ""}</button>${played ? `<button class="unplay" data-unplay="${k}" ${busy ? "disabled" : ""} title="Not played (a wrong click)" aria-label="Not played">↺</button>` : ""}</div>`;
       return c && c.page ? `<a class="${cls}" href="${href(c)}" aria-label="${esc(col)} $${v}">$${v}</a>` : `<span class="${cls} nolink">$${v}</span>`; }).join("")).join("")}</div>`;
   const note = !mine ? "" : `<p class="legend">👩‍🏫 Click the cell they choose: it lights up in every room, and its page opens. <b>Orange</b> = today's fields · <b>dark blue</b> = has a page · <b>light</b> = no page: 📊 on your slides (it only lights up), empty = not ready yet. ↺ on a played cell = not played. <span id="live-status">${esc(liveMsg)}</span></p>`;

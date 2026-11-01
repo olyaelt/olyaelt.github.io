@@ -1,0 +1,431 @@
+{
+ "type": "revision-field",
+ "file": "f-st",
+ "board": {
+  "col": "Sentence transformation",
+  "value": 100
+ },
+ "title": "It's been ages since…",
+ "boxes": {
+  "BOX": [
+   {
+    "h": "HOW LONG?",
+    "items": [
+     "I **haven't** been to the cinema",
+     "**for** ages.",
+     "I **haven't** seen her **since** June.",
+     "**It's been** two years **since**",
+     "I went on holiday."
+    ]
+   },
+   {
+    "h": "ASK",
+    "items": [
+     "**When did you last** …?",
+     "**Why not?** / **Do you miss it?**"
+    ]
+   }
+  ]
+ },
+ "stages": [
+  {
+   "label": "📝 Test yourself",
+   "blocks": [
+    {
+     "kind": "say",
+     "instr": "What would you say? Then tap “Show the answer”.",
+     "task": [
+      "**1**  (([A friend: “Do you still see your old school friends?” You last saw them at Anna's wedding in 2019.]))",
+      "((You:)) • • •",
+      "**2**  (([A colleague: “You look exhausted!” You last had a proper holiday three years ago.]))",
+      "((You:)) • • •"
+     ],
+     "answer": [
+      "**1**  (([A friend: “Do you still see your old school friends?” You last saw them at Anna's wedding in 2019.]))",
+      "((You:)) Not really. I **haven't seen them since** Anna's wedding in 2019.",
+      "((Не виделись до сих пор → haven't + V3; since + момент. Или: It's been ages since I saw them.))",
+      "**2**  (([A colleague: “You look exhausted!” You last had a proper holiday three years ago.]))",
+      "((You:)) **It's been three years since** I had a proper holiday!",
+      "((It's been + время + since + past simple. Или: I haven't had a proper holiday for three years.))"
+     ],
+     "answer_title": "Suggested answer",
+     "tip": "Say it aloud first, then tap “Show the answer”."
+    }
+   ]
+  },
+  {
+   "label": "🔁 Recall",
+   "blocks": [
+    {
+     "kind": "text",
+     "instr": "Remember the patterns? Say the second sentence. Then tap the yellow to check.",
+     "lines": [
+      {
+       "s": "",
+       "p": [
+        "I last saw Jean two months ago."
+       ]
+      },
+      {
+       "s": "",
+       "p": [
+        "→ I ",
+        {
+         "f": "h",
+         "r": "aven't"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "een"
+        },
+        " Jean ",
+        {
+         "f": "f",
+         "r": "or"
+        },
+        " two months."
+       ]
+      },
+      {
+       "s": "",
+       "p": [
+        "She last got in touch in June."
+       ]
+      },
+      {
+       "s": "",
+       "p": [
+        "→ I ",
+        {
+         "f": "h",
+         "r": "aven't"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "eard"
+        },
+        " ",
+        {
+         "f": "f",
+         "r": "rom"
+        },
+        " her ",
+        {
+         "f": "s",
+         "r": "ince"
+        },
+        " June."
+       ]
+      },
+      {
+       "s": "",
+       "p": [
+        "I applied for the job a month ago."
+       ]
+      },
+      {
+       "s": "",
+       "p": [
+        "→ It's ",
+        {
+         "f": "b",
+         "r": "een"
+        },
+        " a month ",
+        {
+         "f": "s",
+         "r": "ince"
+        },
+        " I applied for the job."
+       ]
+      },
+      {
+       "s": "",
+       "p": [
+        "I haven't had a holiday for years."
+       ]
+      },
+      {
+       "s": "",
+       "p": [
+        "→ It's ",
+        {
+         "f": "b",
+         "r": "een"
+        },
+        " years ",
+        {
+         "f": "s",
+         "r": "ince"
+        },
+        " I ",
+        {
+         "f": "h",
+         "r": "ad"
+        },
+        " a holiday."
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        {
+         "b": "for"
+        },
+        " + a period: for two months, for ages"
+       ],
+       "ru": "период: «уже два месяца»; for ages — сто лет"
+      },
+      {
+       "p": [
+        {
+         "b": "since"
+        },
+        " + a point: since June, since I moved"
+       ],
+       "ru": "момент: «с июня», «с тех пор как»"
+      },
+      {
+       "p": [
+        {
+         "b": "It's been"
+        },
+        " a month ",
+        {
+         "b": "since"
+        },
+        " I applied"
+       ],
+       "ru": "прошёл месяц с тех пор как…"
+      },
+      {
+       "p": [
+        {
+         "b": "hear from"
+        },
+        " sb"
+       ],
+       "ru": "кто-то звонит или пишет, даёт о себе знать (hear about — слышать о)"
+      },
+      {
+       "p": [
+        "since + past simple: since I ",
+        {
+         "b": "had"
+        }
+       ],
+       "ru": "не: since I haven't had"
+      }
+     ],
+     "tip": "The first letters are given; the patterns are beside. Say the second sentence, then tap the yellow to check."
+    }
+   ]
+  },
+  {
+   "label": "🃏 Practice",
+   "blocks": [
+    {
+     "kind": "game",
+     "piece": "dots",
+     "instr": "Dots and boxes: complete the second sentence (2–5 words; don't change the word in capitals), then tap to check. Got it right? Draw a line. Close a box? It's yours — go again!",
+     "box": "BOX",
+     "check": "Check",
+     "n": 4,
+     "tasks": [
+      {
+       "q": "The last time I saw Paul was three weeks ago.",
+       "key": "SEEN",
+       "frame": "I ___ three weeks.",
+       "a": "haven't seen Paul for",
+       "back": "I **haven't seen Paul for** three weeks.",
+       "note": "Я не видел Пола три недели: haven't + V3 + for."
+      },
+      {
+       "q": "Simona last wrote to me seven months ago.",
+       "key": "HEARD",
+       "frame": "I ___ Simona for seven months.",
+       "a": "haven't heard from",
+       "back": "I **haven't heard from** Simona for seven months.",
+       "note": "hear from sb — получать известия от кого-то."
+      },
+      {
+       "q": "My parents last spoke to me a month ago.",
+       "key": "HEARD",
+       "frame": "I ___ my parents for a month.",
+       "a": "haven't heard from",
+       "back": "I **haven't heard from** my parents for a month.",
+       "note": "Они месяц не давали о себе знать."
+      },
+      {
+       "q": "Chris is hungry because the last time he ate anything was Thursday evening.",
+       "key": "NOT",
+       "frame": "Chris is hungry because he ___ Thursday evening.",
+       "a": "has not eaten anything since",
+       "back": "Chris is hungry because he **has not eaten anything since** Thursday evening.",
+       "note": "NOT не меняем: has not (не hasn't); since + момент. Тоже верно: has not eaten since."
+      },
+      {
+       "q": "The last time I saw Tom was the day he got married in 1995.",
+       "key": "WEDDING",
+       "frame": "I haven't ___ day in 1995.",
+       "a": "seen Tom since his wedding",
+       "back": "I haven't **seen Tom since his wedding** day in 1995.",
+       "note": "the day he got married = his wedding day; since + день."
+      },
+      {
+       "q": "The last time I saw him was when I lived in London.",
+       "key": "SINCE",
+       "frame": "I ___ I lived in London.",
+       "a": "haven't seen him since",
+       "back": "I **haven't seen him since** I lived in London.",
+       "note": "since + целое предложение в past simple: since I lived…"
+      },
+      {
+       "q": "He hasn't played tennis for five years.",
+       "key": "UP",
+       "frame": "He ___ five years ago.",
+       "a": "gave up playing tennis",
+       "back": "He **gave up playing tennis** five years ago.",
+       "note": "give up + -ing — бросить; ago → past simple. Тоже верно: gave up tennis."
+      },
+      {
+       "q": "I first met Sarah two years ago.",
+       "key": "YEARS",
+       "frame": "It ___ I first met Sarah.",
+       "a": "has been two years since",
+       "back": "It **has been two years since** I first met Sarah.",
+       "note": "It has been + время + since + past simple. Тоже верно: is two years since."
+      },
+      {
+       "q": "I haven't seen a good film for months.",
+       "key": "SINCE",
+       "frame": "It's ___ a good film.",
+       "a": "been months since I saw",
+       "back": "It's **been months since I saw** a good film.",
+       "note": "haven't + V3 + for X = It's been X since + past simple. Без last: since I last saw — уже 6 слов."
+      }
+     ],
+     "tip": "Complete the sentence and tap to check. Right? Draw a line between two dots. Finish a box? It's yours — and you go again."
+    }
+   ]
+  },
+  {
+   "label": "💬 Use it",
+   "blocks": [
+    {
+     "kind": "game",
+     "piece": "islands",
+     "instr": "Sail to an island: that's your topic. Say how long it's been. Your partner asks two questions. Then swap.",
+     "box": "BOX",
+     "islands": [
+      {
+       "t": "the cinema",
+       "hint": "been to"
+      },
+      {
+       "t": "a proper holiday",
+       "hint": "have"
+      },
+      {
+       "t": "a concert",
+       "hint": "been to"
+      },
+      {
+       "t": "old school friends",
+       "hint": "see"
+      },
+      {
+       "t": "a really good book",
+       "hint": "read"
+      },
+      {
+       "t": "cooking for friends",
+       "hint": "cook for"
+      },
+      {
+       "t": "a phone-free day",
+       "hint": "have"
+      },
+      {
+       "t": "a long walk in the countryside",
+       "hint": "go for"
+      }
+     ],
+     "intro": {
+      "instr": "Here's an example. Complete the conversation. Then tap the yellow to check.",
+      "island": 0,
+      "ctx": "(([The boat sails to: the cinema.]))",
+      "lines": [
+       {
+        "s": "A",
+        "p": [
+         {
+          "f": "I",
+          "r": "t's been ages since"
+         },
+         " I went to the cinema."
+        ]
+       },
+       {
+        "s": "B",
+        "p": [
+         "Really? ",
+         {
+          "f": "W",
+          "r": "hen did you last"
+         },
+         " go?"
+        ]
+       },
+       {
+        "s": "A",
+        "p": [
+         {
+          "f": "T",
+          "r": "wo years ago"
+         },
+         ", I think. I ",
+         {
+          "f": "h",
+          "r": "aven't been since"
+         },
+         " we moved here!"
+        ]
+       },
+       {
+        "s": "B",
+        "p": [
+         {
+          "f": "W",
+          "r": "hy not?"
+         },
+         " Don't you miss it?"
+        ]
+       },
+       {
+        "s": "A",
+        "p": [
+         "A bit. But I watch everything at home now — it's cheaper, and I can pause it."
+        ]
+       }
+      ]
+     },
+     "tip": "Tap ⛵ Sail: the boat picks your topic. Say how long it's been; your partner asks two questions. Then swap."
+    },
+    {
+     "kind": "questions",
+     "instr": "Round 2: your own ideas.",
+     "items": [
+      "**1**  Tell your partner **two** things you haven't done for ages but would love to do again — and say why you haven't.",
+      "**2**  Your partner asks: When did you last…? What do you miss most about it? What would help you do it again?"
+     ],
+     "box": "BOX",
+     "fast": "If you're done: go back to the patterns in 🔁 Recall and say the second sentences from memory. Then think of an old friend you haven't heard from for ages. Tell your partner how long it's been and **two** things you'd like to ask them."
+    }
+   ]
+  }
+ ]
+}

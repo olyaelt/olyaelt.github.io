@@ -1,0 +1,652 @@
+{
+ "type": "revision-field",
+ "file": "f-dis",
+ "board": {
+  "col": "Everyday English",
+  "value": 300
+ },
+ "title": "Disagree and stay friends",
+ "boxes": {
+  "BOX": [
+   {
+    "h": "A QUESTION FIRST",
+    "items": [
+     "**Do you think so?** I found it…"
+    ]
+   },
+   {
+    "h": "AGREE A LITTLE, THEN YOUR POINT",
+    "items": [
+     "**Yeah, I suppose so. But** …"
+    ]
+   },
+   {
+    "h": "KEEP YOUR OPINION — GENTLY",
+    "items": [
+     "**Maybe, but I still think** …"
+    ]
+   },
+   {
+    "h": "ANOTHER VIEW",
+    "items": [
+     "**But I guess you could say** …"
+    ]
+   },
+   {
+    "h": "AGREE AND ADD · FINISH",
+    "items": [
+     "**That's true, and** … · **Exactly. And** …",
+     "**Fair enough.** / **OK, fair point.**"
+    ]
+   }
+  ]
+ },
+ "stages": [
+  {
+   "label": "📝 Test yourself",
+   "blocks": [
+    {
+     "kind": "say",
+     "instr": "Disagree and stay friends: what would you say? Then tap “Show the answer”.",
+     "task": [
+      "(([Your colleague loved the new crime series. You found it slow and a bit boring.]))",
+      "((Colleague:)) That new crime series is brilliant, isn't it?",
+      "((You:)) • • •"
+     ],
+     "answer": [
+      "(([Your colleague loved the new crime series. You found it slow and a bit boring.]))",
+      "((Colleague:)) That new crime series is brilliant, isn't it?",
+      "((You:)) **Do you think so?** **I found it a bit** slow, to be honest.",
+      "((or:)) **Yeah, I suppose so. But** the first few episodes were a bit slow.",
+      "((Сначала вопрос или «да, но…», потом своё мнение — так спорят и остаются друзьями.))"
+     ],
+     "answer_title": "Suggested answer",
+     "tip": "Say it aloud first, then tap “Show the answer”."
+    }
+   ]
+  },
+  {
+   "label": "🔁 Recall",
+   "blocks": [
+    {
+     "kind": "text",
+     "instr": "Remember Paul and Zoe? Complete what they said at the key moments. Tap the yellow and orange to check.",
+     "lines": [
+      {
+       "s": "Paul",
+       "p": [
+        "Did you see that reality crime show on TV last night?"
+       ]
+      },
+      {
+       "s": "Zoe",
+       "p": [
+        "The one about the young woman and the old man's credit card?"
+       ]
+      },
+      {
+       "s": "Paul",
+       "p": [
+        "Yeah. It made me really angry. It was like a lesson on how to commit a crime."
+       ]
+      },
+      {
+       "s": "Zoe",
+       "p": [
+        {
+         "f": "D",
+         "r": "o"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "hink"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "o"
+        },
+        "? But it showed you'll get arrested in the end."
+       ]
+      },
+      {
+       "s": "",
+       "p": [
+        "…"
+       ],
+       "scene": true
+      },
+      {
+       "s": "Paul",
+       "p": [
+        {
+         "f": "B",
+         "r": "ut"
+        },
+        " I ",
+        {
+         "f": "s",
+         "r": "till"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "hink"
+        },
+        " the programme was saying it's OK to do this."
+       ]
+      },
+      {
+       "s": "Zoe",
+       "p": [
+        {
+         "f": "T",
+         "r": "hat's"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "rue"
+        },
+        ", ",
+        {
+         "f": "a",
+         "r": "nd"
+        },
+        " they hardly spoke to the old man."
+       ]
+      },
+      {
+       "s": "Paul",
+       "p": [
+        {
+         "f": "E",
+         "r": "xactly"
+        },
+        ", ",
+        {
+         "f": "a",
+         "r": "nd"
+        },
+        " he really didn't want to be on TV."
+       ]
+      },
+      {
+       "s": "",
+       "p": [
+        "…"
+       ],
+       "scene": true
+      },
+      {
+       "s": "Zoe",
+       "p": [
+        {
+         "f": "B",
+         "r": "ut"
+        },
+        " I ",
+        {
+         "f": "g",
+         "r": "uess"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "ould"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "ay"
+        },
+        " the programme was a warning to people."
+       ]
+      },
+      {
+       "s": "Paul",
+       "p": [
+        {
+         "f": "H",
+         "r": "ardly"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Zoe",
+       "p": [
+        "But the presenter did say that at the very end."
+       ]
+      },
+      {
+       "s": "Paul",
+       "p": [
+        {
+         "f": "Y",
+         "r": "eah"
+        },
+        ", I ",
+        {
+         "f": "s",
+         "r": "uppose"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "o"
+        },
+        ". ",
+        {
+         "f": "B",
+         "r": "ut"
+        },
+        " the saddest thing — the old man still thought she was a 'nice girl'."
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        {
+         "f": "D",
+         "r": "o"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "hink"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "o"
+        },
+        {
+         "b": "?"
+        }
+       ],
+       "ru": "Думаешь? (мягкое несогласие, не вопрос)"
+      },
+      {
+       "p": [
+        {
+         "f": "B",
+         "r": "ut"
+        },
+        " ",
+        {
+         "b": "I"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "till"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "hink"
+        },
+        "…"
+       ],
+       "ru": "И всё-таки я считаю…"
+      },
+      {
+       "p": [
+        {
+         "f": "T",
+         "r": "hat's"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "rue"
+        },
+        {
+         "b": ","
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "nd"
+        },
+        "…"
+       ],
+       "ru": "Это правда, и ещё…"
+      },
+      {
+       "p": [
+        {
+         "f": "E",
+         "r": "xactly"
+        },
+        {
+         "b": ","
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "nd"
+        },
+        "…",
+        " ",
+        {
+         "f": "",
+         "r": "/ɪɡˈzæktli/",
+         "o": 1
+        }
+       ],
+       "ru": "Вот именно, и…"
+      },
+      {
+       "p": [
+        {
+         "f": "B",
+         "r": "ut"
+        },
+        " ",
+        {
+         "b": "I"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "uess"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "ould"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "ay"
+        },
+        "…",
+        " ",
+        {
+         "f": "",
+         "r": "/ɡes/",
+         "o": 1
+        }
+       ],
+       "ru": "Хотя, пожалуй, можно сказать…"
+      },
+      {
+       "p": [
+        {
+         "f": "H",
+         "r": "ardly"
+        },
+        {
+         "b": "."
+        },
+        " ",
+        {
+         "f": "",
+         "r": "/ˈhɑːdli/",
+         "o": 1
+        }
+       ],
+       "ru": "Да какое там. (очень прямо — только с близкими друзьями)"
+      },
+      {
+       "p": [
+        {
+         "f": "Y",
+         "r": "eah"
+        },
+        {
+         "b": ","
+        },
+        " ",
+        {
+         "b": "I"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "uppose"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "o"
+        },
+        {
+         "b": "."
+        },
+        " ",
+        {
+         "f": "B",
+         "r": "ut"
+        },
+        "…",
+        " ",
+        {
+         "f": "",
+         "r": "/səˈpəʊz/",
+         "o": 1
+        }
+       ],
+       "ru": "Ну да, наверное. Но…"
+      }
+     ],
+     "tip": "The first letters are given; the glossary is beside the chat. Tap the yellow (and the orange sounds) to check."
+    }
+   ]
+  },
+  {
+   "label": "🃏 Practice",
+   "blocks": [
+    {
+     "kind": "game",
+     "piece": "goose",
+     "instr": "The goose race: take turns to flip the coin and move. Do the task on your square, then tap to check. First to the finish wins!",
+     "box": "BOX",
+     "check": "Check",
+     "rule": "Flip the coin: heads = 1 step, tails = 2. Do the task on your square: right = you stay, not quite = back to where you were. 🪿 = flip again.",
+     "tasks": [
+      {
+       "label": "Say it in English",
+       "q": "Думаешь? А мне показалось немного скучно.",
+       "a": "Do you think so? I found it a bit boring.",
+       "why": "Сначала вопрос — мягкое несогласие."
+      },
+      {
+       "label": "Say it more gently",
+       "q": "((Friend: “It was so scary, wasn't it?” · Too direct:)) No, I don't think so. It wasn't scary.",
+       "a": "Do you think so? I didn't find it that scary.",
+       "why": "«No…» звучит резко. Вопрос + I didn't find it that… — мягче."
+      },
+      {
+       "label": "Say it in English",
+       "q": "Ну да, наверное. Но…",
+       "a": "Yeah, I suppose so. But…",
+       "why": "Соглашаешься чуть-чуть, потом своё."
+      },
+      {
+       "label": "Say it more gently",
+       "q": "((Friend: “That new café is great, isn't it?” · Too direct:)) No. The coffee is bad.",
+       "a": "Do you think so? I found the coffee a bit disappointing.",
+       "why": "Вопрос + I found the coffee a bit… — мягче, чем No."
+      },
+      {
+       "label": "Say it in English",
+       "q": "Может быть, но я всё-таки считаю…",
+       "a": "Maybe, but I still think…",
+       "why": "Держишься своего мнения — мягко."
+      },
+      {
+       "label": "Fix the mistake",
+       "q": "I found it a bit boring ~~for me~~.",
+       "a": "I found it a bit boring.",
+       "why": "I found it… уже значит «мне показалось»: for me лишнее."
+      },
+      {
+       "label": "Say it in English",
+       "q": "Но, пожалуй, можно сказать…",
+       "a": "But I guess you could say…",
+       "why": "Даёшь другой взгляд."
+      },
+      {
+       "label": "Say it more gently",
+       "q": "((Colleague: “Working from home is so much better.” · Too direct:)) No, it's lonely.",
+       "a": "Yeah, I suppose so. But it can get a bit lonely.",
+       "why": "Сначала чуть-чуть согласиться, потом But… и своё мнение."
+      },
+      {
+       "label": "Say it in English",
+       "q": "Вот именно. И…",
+       "a": "Exactly. And…",
+       "why": "Согласиться и добавить."
+      },
+      {
+       "label": "Fix the mistake",
+       "q": "The ending was ~~predictive~~.",
+       "a": "The ending was predictable.",
+       "why": "Predictive — о моделях и тестах; предсказуемый → predictable."
+      },
+      {
+       "label": "Say it in English",
+       "q": "Ладно, справедливо.",
+       "a": "Fair enough. / OK, fair point.",
+       "why": "Закончить спор по-дружески."
+      },
+      {
+       "label": "Say it in English",
+       "q": "Это правда, и ещё…",
+       "a": "That's true, and…",
+       "why": "Согласиться и добавить."
+      }
+     ],
+     "tip": "Flip the coin and move your counter. Do the task on your square and tap to check. Right? You stay. Not quite? Back you go."
+    }
+   ]
+  },
+  {
+   "label": "💬 Use it",
+   "blocks": [
+    {
+     "kind": "game",
+     "piece": "dice1",
+     "instr": "Roll the dice to pick a hot take (смелое мнение). A says it as a tag question. B disagrees, using three moves from the box. Then swap.",
+     "box": "BOX",
+     "title": "Roll: the hot take",
+     "faces": [
+      {
+       "n": 1,
+       "text": "Films are far too long these days."
+      },
+      {
+       "n": 2,
+       "text": "A series is best watched in one go."
+      },
+      {
+       "n": 3,
+       "text": "The book is always better than the film."
+      },
+      {
+       "n": 4,
+       "text": "Reality shows are a waste of time."
+      },
+      {
+       "n": 5,
+       "text": "Subtitles are better than dubbing."
+      },
+      {
+       "n": 6,
+       "text": "Nobody needs more than one streaming service."
+      }
+     ],
+     "intro": {
+      "instr": "Here's an example. Complete the conversation. Then tap the yellow to check.",
+      "dice": [
+       1
+      ],
+      "ctx": "(([The dice → 1: Films are far too long these days. A says it as a tag question. B disagrees, using moves from the box.]))",
+      "lines": [
+       {
+        "s": "A",
+        "p": [
+         "Films are far too long these days, aren't they?"
+        ]
+       },
+       {
+        "s": "B",
+        "p": [
+         {
+          "f": "D",
+          "r": "o you think so?"
+         },
+         " I thought the last one I saw was fine."
+        ]
+       },
+       {
+        "s": "A",
+        "p": [
+         "But what about those superhero films? They go on forever!"
+        ]
+       },
+       {
+        "s": "B",
+        "p": [
+         {
+          "f": "Y",
+          "r": "eah, I suppose so. But I still think"
+         },
+         " a good film can be any length."
+        ]
+       },
+       {
+        "s": "A",
+        "p": [
+         {
+          "f": "F",
+          "r": "air enough."
+         },
+         " Shall we watch one tonight, then?"
+        ]
+       }
+      ]
+     },
+     "tip": "Roll the dice for a hot take. A says it with a tag (…, aren't they?). B disagrees in three moves from the box."
+    },
+    {
+     "kind": "questions",
+     "instr": "Round 2: your real opinions. Your partner disagrees — gently.",
+     "items": [
+      "**1**  Think of **two** real opinions and say them as tag questions: a film or series everyone loves, working from home, social media, learning languages with apps…",
+      "**2**  Your partner disagrees, using three moves from the box. Then swap.",
+      "**3**  Finish on something you both agree on: That's true, and… / Exactly. And…"
+     ],
+     "box": "BOX",
+     "fast": "If you're done: go back to Paul and Zoe in 🔁 Recall and say the missing words from memory. Then tell your partner about a small disagreement with a friend or family member (a film, a restaurant, holiday plans…): what did each of you say, and who said “Fair enough” first?"
+    }
+   ]
+  }
+ ]
+}

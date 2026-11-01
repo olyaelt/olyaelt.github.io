@@ -292,3 +292,74 @@
 .gis-map.sailing .gis-notes{opacity:1}
 .gis-name{margin:0;font-size:1rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--label,#CF2E2E)}
 @media (prefers-reduced-motion: reduce){ .grv-tile{transition:none} }
+
+/* tools 20: the islands' small grey verb hint; the goose and snakes task labels */
+.gis-hint{margin:2px 0 0;color:var(--muted,#6B6B6B);font-size:1rem;font-style:italic}
+.gt-q .glbl{display:block;font-size:.8rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:var(--label,#CF2E2E);margin-bottom:2px}
+/* tools 21: ▶ How to play — a few seconds of the game by itself, then the real board comes in */
+.gdemo{position:relative;display:grid;justify-items:center;gap:10px;padding:16px 14px 12px;background:#FFFFFF;color:#1D1D1B;border:2px solid #1D1D1B;border-radius:16px;box-shadow:0 5px 0 #1D1D1B;cursor:pointer;transition:transform .45s ease, opacity .45s ease;max-width:34rem;margin:0 auto;min-height:15rem}
+.gdemo.out{transform:scale(1.06);opacity:0}
+.gdm-lbl{position:absolute;top:10px;left:12px;font-size:.78rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#CF2E2E}
+.gdm-skip{position:absolute;bottom:8px;right:12px;font-size:.78rem;font-weight:700;color:#6B6B6B}
+.gdm-stage{display:grid;justify-items:center;gap:8px;margin-top:12px}
+.gdm-cap{margin:0;min-height:1.6em;text-align:center;font-size:1.22rem;font-weight:800;line-height:1.35;max-width:28rem}
+.gdm-cap.in{animation:gdmCap .35s ease-out}
+@keyframes gdmCap{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.gdemo.still .gdm-cap{font-size:1rem;font-weight:700}
+.gdm-ttt{display:grid;grid-template-columns:repeat(3,3.3rem);gap:6px;transition:transform .4s}
+.gdm-ttt.won{transform:scale(1.06)}
+.gdm-c{width:3.3rem;height:3.3rem;border-radius:10px;background:#0693E3;color:#FFFFFF;display:grid;place-items:center;font-weight:900;font-size:1.15rem;border:2px solid #1D1D1B;transition:background .3s, transform .3s}
+.gdm-c.ask{background:#FFD34D;color:#1D1D1B;transform:scale(1.08)}
+.gdm-c.ask b{visibility:hidden}
+.gdm-c.ask::after{content:"?";position:absolute;font-size:1.5rem;font-weight:900}
+.gdm-c{position:relative}
+.gdm-c.m{background:#FFFFFF;transform:none}
+.gdm-c.m svg{width:2.2rem;height:2.2rem;stroke-width:6}
+.gdm-c.no{background:#FFD9D6;animation:gdmShake .45s}
+.gdm-c.win{background:#FFF3C4;box-shadow:0 0 0 4px #FFD34D}
+@keyframes gdmShake{0%,100%{transform:none}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.gdm-dots{width:12rem;height:auto;overflow:visible}
+.gdm-l{stroke:#E6E6E6;stroke-width:7;stroke-linecap:round}
+.gdm-l.on{stroke-dasharray:72;animation:gdmDraw .5s ease-out both}
+.gdm-l.p0{stroke:#0693E3}.gdm-l.p1{stroke:#FF9900}
+@keyframes gdmDraw{from{stroke-dashoffset:72}to{stroke-dashoffset:0}}
+.gdm-dot{fill:#1D1D1B}
+.gdm-box{fill:transparent;transition:fill .4s}
+.gdm-box.on.p0{fill:#0693E3}.gdm-box.on.p1{fill:#FF9900}
+.gdm-score{margin:0;font-size:1.05rem}
+.gdm-track{position:relative;display:flex;gap:6px;padding-bottom:6px}
+.gdm-sq{width:3.1rem;height:3.1rem;border-radius:10px;border:2px solid #1D1D1B;background:#DDF1FF;display:grid;place-items:center;font-weight:900;font-size:.95rem;transition:box-shadow .3s}
+.gdm-sq i{font-style:normal;color:#6B6B6B;font-size:.85rem}
+.gdm-sq.start{background:#0693E3;color:#FFFFFF;font-size:.75rem}
+.gdm-sq.fin{background:#FFD34D;font-size:1.3rem}
+.gdm-sq.goose{background:#FFFFFF;font-size:1.4rem}
+.gdm-sq.glow{box-shadow:0 0 0 4px #FFD34D}
+.gdm-pawn{position:absolute;width:1rem;height:1rem;border-radius:50%;border:2px solid #1D1D1B;transform:translate(-50%,-50%);transition:left .3s ease, top .3s ease;left:0;top:0}
+.gdm-pawn.p0{background:#0693E3}.gdm-pawn.p1{background:#FF9900}
+.gdm-coinrow{display:flex;align-items:center;gap:12px;min-height:2.8rem}
+.gdm-coin,.gdm-die{width:2.6rem;height:2.6rem;display:grid;place-items:center;font-weight:900;font-size:1.2rem;border:2px solid #1D1D1B}
+.gdm-coin{border-radius:50%;background:#FFD34D}
+.gdm-die{border-radius:9px;background:#FFFFFF;box-shadow:0 3px 0 #1D1D1B}
+.gdm-coin.flip,.gdm-die.flip{animation:gdmFlip .7s ease-in-out}
+@keyframes gdmFlip{0%{transform:none}50%{transform:translateY(-18px) rotateY(540deg)}100%{transform:rotateY(1080deg)}}
+.gdm-chip{min-width:2.3rem;height:2.3rem;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:1.2rem;color:#FFFFFF}
+.gdm-chip:empty{visibility:hidden}
+.gdm-chip.ask{background:#FFD34D;color:#1D1D1B}.gdm-chip.ok{background:#2E7D32}.gdm-chip.no{background:#CF2E2E}
+.gdm-snl{width:13rem;height:auto}
+.gdm-sn{fill:#B7E4A0;stroke:#1D1D1B;stroke-width:1.5}.gdm-sn.b{fill:#8BD17C}
+.gdm-n{font-size:11px;font-weight:800;fill:#1D1D1B}
+.gdm-lad line{stroke:#0693E3;stroke-width:4;stroke-linecap:round}
+.gdm-snake{fill:none;stroke:#E8493F;stroke-width:9;stroke-linecap:round}
+.gdm-shead{fill:#E8493F}
+.gdm-pw{stroke:#1D1D1B;stroke-width:2;transition:cx .4s ease, cy .4s ease}
+.gdm-pw.p0{fill:#0693E3}.gdm-pw.p1{fill:#FF9900}
+.g-flyin{animation:gFlyIn .55s cubic-bezier(.2,.8,.2,1) both}
+@keyframes gFlyIn{from{opacity:0;transform:translateY(26px) scale(.97)}to{opacity:1;transform:none}}
+.g-howto{font:inherit;font-size:.85rem;font-weight:800;border:2px solid var(--line,#D8D2C4);background:transparent;color:var(--muted,#6B6B6B);border-radius:99px;padding:2px 10px;cursor:pointer}
+@media (prefers-reduced-motion: reduce){ .gdemo,.gdm-cap.in,.gdm-l.on,.gdm-c.no,.gdm-coin.flip,.gdm-die.flip,.g-flyin{animation:none;transition:none} }
+.gt-board,.gdm-ttt{position:relative}
+.g-winline{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.g-winline line{stroke:#FF9900;stroke-width:.13;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0;animation:gWin .6s .95s ease-out both}   /* her 07:38: first the last X is drawn, then the line */
+.gdm-ttt .g-winline line{animation-delay:.15s}
+@keyframes gWin{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion: reduce){ .g-winline line{animation:none} }

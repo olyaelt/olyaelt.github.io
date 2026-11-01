@@ -34,7 +34,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
   // ---- the board: her ▶ Play reaches the groups' boards
   let OB = await open(L + 'jeopardy-live.html', 'teacher'); const GB = await open(L + 'jeopardy-live.html', '');
   out.boardLinks = await GB.evaluate(() => [...document.querySelectorAll('a.cell')].map(a => a.getAttribute('href')));
-  expect('board: the five fields link to their -live pages (f-seen since tools 17)', out.boardLinks.length === 5 && out.boardLinks.includes('f-seen-live.html') && out.boardLinks.every(h => /^f-[a-z]+-live\.html$/.test(h)), out.boardLinks);
+  expect('board: the eight fields link to their -live pages (f-wc, f-dis, f-pp, f-st since tools 20; f-seen closed on 4.11)', out.boardLinks.length === 8 && !out.boardLinks.includes('f-seen-live.html') && out.boardLinks.includes('f-st-live.html') && out.boardLinks.every(h => /^f-[a-z]+-live\.html$/.test(h)), out.boardLinks);
   out.today = await OB.locator('.cell.today').count(); expect('her board marks today\'s fields orange', out.today === 4, out.today);
   // her 13:24 (as on her slides): one click on a cell = ▶ Play — it lights up in every room and its page opens
   out.noActs = await OB.locator('[data-play], [data-cellwrap], [data-unplay]').count(); expect('no buttons on new cells, no Play / Now / Done bar', out.noActs === 0 && await OB.locator('[data-now], [data-done], .cellbar').count() === 0, out.noActs);
@@ -110,6 +110,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
   await T2.click('[data-fast-text]'); await T2.waitForTimeout(150);
   out.noFirst = await T2.evaluate(() => ({stage: D.stages[S.stage].label, f: document.querySelectorAll('.dlg .gp .f').length})); expect('the text again: no first letters', /Recall/.test(out.noFirst.stage) && out.noFirst.f === 0, out.noFirst);
   // the board closes the rooms: she plays the next cell (one from the slides, no page: her board stays)
+  await OB.evaluate(() => { D.cells.find(c => c.col === 'Sentence transformation' && c.value === 100).page = null; render(); });   /* tools 20: every cell has a page now — this one plays a cell from the slides */
   await OB.click('[data-cell="c0v100"]'); await OB.waitForTimeout(600);
   out.next = {url: OB.url().split('/').pop(), now: await OB.locator('.cell.now').getAttribute('data-cell'), done: await OB.locator('.cell.done').evaluateAll(xs => xs.map(x => x.dataset.cell)), msg: await OB.locator('#live-status').innerText()};
   expect('the next ▶ Play: no page → her board stays, that cell pulses, the one before turns grey by itself', /_rv_test_jeopardy-live/.test(out.next.url) && out.next.now === 'c0v100' && JSON.stringify(out.next.done) === '["c5v100"]' && /lit up/.test(out.next.msg), out.next);

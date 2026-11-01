@@ -1,6 +1,7 @@
 """Build the list of all homework for each group: python3 build_index.py [SITE_DIR]
    Reads every YYYY-MM-DD.html in SITE_DIR/b2 and SITE_DIR/c1 (unlisted ones flagged: only her teacher view shows them), writes SITE_DIR/<group>/index.html (newest first)."""
 import glob, json, os, re, shutil, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import site_theme
 HERE = os.path.dirname(os.path.abspath(__file__))
 site = sys.argv[1] if len(sys.argv) > 1 else os.path.dirname(HERE)
 NAMES = {'b2': 'Wed Fri 18.30', 'c1': 'Wed Fri 20.15'}   # what students and Olya see; folders and keys stay b2 / c1
@@ -28,7 +29,7 @@ for group in ('b2', 'c1'):
     sync = next((s for s in syncs if s), '')
     if len(set(s for s in syncs if s)) > 1: print('WARNING: pages in', group, 'have different SYNC_URL values')
     html = TPL.replace('__HW_JSON__', json.dumps(list(items), ensure_ascii=False).replace('</', '<\\/')).replace('__SYNC_URL__', sync).replace('__GROUP_NAME__', NAMES.get(group, group.upper()))
-    open(os.path.join(folder, 'index.html'), 'w', encoding='utf-8').write(html)
+    open(os.path.join(folder, 'index.html'), 'w', encoding='utf-8').write(site_theme.add(html))
     ALL[group] = (list(items), sync)
     pub = [it for it in items if not it.get('unlisted')]
     print(group, 'index:', len(pub), 'homework' + (' + %d unlisted' % (len(items) - len(pub)) if len(items) > len(pub) else ''), ', newest', pub[0]['date'] if pub else '-', '| sync', 'on' if sync else 'off')
@@ -38,7 +39,7 @@ if ALL:
     root = open(os.path.join(HERE, 'root_template.html'), encoding='utf-8').read()
     sync = next((s for _, s in ALL.values() if s), '')
     html = root.replace('__GROUPS_JSON__', json.dumps({g: v[0] for g, v in ALL.items()}, ensure_ascii=False).replace('</', '<\\/')).replace('__SYNC_URL__', sync).replace('__NAMES_JSON__', json.dumps(NAMES, ensure_ascii=False))
-    open(os.path.join(site, 'index.html'), 'w', encoding='utf-8').write(html)
+    open(os.path.join(site, 'index.html'), 'w', encoding='utf-8').write(site_theme.add(html))
     print('start page: index.html with', ', '.join(ALL))
 
 # the font lives on the site itself, so no page contacts a font service

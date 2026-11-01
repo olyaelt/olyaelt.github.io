@@ -1,0 +1,109 @@
+{
+ "blocks": [
+  {
+   "pid": 0,
+   "sig": "say disagree and stay friends: what would you say? then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "text remember paul and zoe? complete what they said at the key moments. tap the yellow and orange to check.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "game the goose race: take turns to flip the coin and move. do the task on your square, then tap to check. first to the finish wins!",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "game roll the dice to pick a hot take (смелое мнение). a says it as a tag question. b disagrees, using three moves from the box. then swap.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "questions round 2: your real opinions. your partner disagrees — gently.",
+   "gone": false
+  }
+ ],
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "do you think so? i found it a bit boring. say it in english думаешь? а мне показалось немного скучно. сначала вопрос — мягкое несогласие.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "do you think so? i didn't find it that scary. say it more gently friend: “it was so scary, wasn't it?” · too direct: no, i don't think so. it wasn't scary. «no…» звучит резко. вопрос + i didn't find it that… — мягче.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "yeah, i suppose so. but… say it in english ну да, наверное. но… соглашаешься чуть-чуть, потом своё.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "do you think so? i found the coffee a bit disappointing. say it more gently friend: “that new café is great, isn't it?” · too direct: no. the coffee is bad. вопрос + i found the coffee a bit… — мягче, чем no.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "maybe, but i still think… say it in english может быть, но я всё-таки считаю… держишься своего мнения — мягко.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "i found it a bit boring. fix the mistake i found it a bit boring for me. i found it… уже значит «мне показалось»: for me лишнее.",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "but i guess you could say… say it in english но, пожалуй, можно сказать… даёшь другой взгляд.",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "yeah, i suppose so. but it can get a bit lonely. say it more gently colleague: “working from home is so much better.” · too direct: no, it's lonely. сначала чуть-чуть согласиться, потом but… и своё мнение.",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "exactly. and… say it in english вот именно. и… согласиться и добавить.",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "the ending was predictable. fix the mistake the ending was predictive. predictive — о моделях и тестах; предсказуемый → predictable.",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "fair enough. / ok, fair point. say it in english ладно, справедливо. закончить спор по-дружески.",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "that's true, and… say it in english это правда, и ещё… согласиться и добавить.",
+   "gone": false
+  }
+ ],
+ "write": [],
+ "questions.4": [
+  {
+   "pid": 0,
+   "sig": "1 think of two real opinions and say them as tag questions: a film or series everyone loves, working from home, social media, learning languages with apps…",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 your partner disagrees, using three moves from the box. then swap.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "3 finish on something you both agree on: that's true, and… / exactly. and…",
+   "gone": false
+  }
+ ]
+}

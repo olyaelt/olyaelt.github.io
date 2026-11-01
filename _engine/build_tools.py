@@ -6,6 +6,7 @@ Types (details in ../README.md, "Lesson tools"): "dice-council" (Reasons -> Deci
 "say-it-another-way" (Cards -> Speaking; "review": {"from": "<page>", "n": 4} adds cards from an earlier part,
 switched on in Settings or with ?review=1). A new type is an engine request."""
 import base64, glob, json, os, re, shutil, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import site_theme
 HERE = os.path.dirname(os.path.abspath(__file__))
 T = os.path.join(HERE, 'tools')
 site = sys.argv[1] if len(sys.argv) > 1 else os.path.dirname(HERE)
@@ -209,7 +210,7 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
         left = [k for k in ('__BASE_CSS__', '__BASE_JS__', '__LW_CSS__', '__LW_JS__', '__DATA__', '__REVIEW__', '__STICKER__', '__PAGE_ID__', '__LIVE__', '__SYNC_URL__') if k in page]
         assert not left, 'placeholder left in %s: %s' % (path, left)
         if live and not SYNC: print('WARNING: no SYNC_URL found, %s-live works like the plain page' % name)
-        open(os.path.join(out_dir, name + suffix + '.html'), 'w', encoding='utf-8').write(page)
+        open(os.path.join(out_dir, name + suffix + '.html'), 'w', encoding='utf-8').write(site_theme.add(page))
         built.append('tools/%s/%s%s.html' % (lesson, name, suffix))
 # shared pictures of the lesson pages (tools/assets → <site>/tools/): the blue cloud of her stage slides (her 13:29)
 for f in sorted(glob.glob(os.path.join(T, 'assets', '*'))):
@@ -273,6 +274,6 @@ document.addEventListener("click", ev => {
 });
 </script></body></html>
 """.replace('__BLOCKS__', ''.join(blocks))
-open(os.path.join(site, 'tools', 'index.html'), 'w', encoding='utf-8').write(index)
+open(os.path.join(site, 'tools', 'index.html'), 'w', encoding='utf-8').write(site_theme.add(index))
 print('tools %s: built %d pages + tools/index.html (her list)' % (VERSION, len(built)))
 for b in built: print('  https://olyaelt.github.io/' + b)

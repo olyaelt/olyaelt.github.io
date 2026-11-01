@@ -1,0 +1,114 @@
+{
+ "blocks": [
+  {
+   "pid": 0,
+   "sig": "say what would you say? then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "text remember anna? present perfect or past simple? say the missing words. then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "game snakes and ladders: take turns to roll the dice and move. do the task on your square, then tap to check.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "model here's an example. complete the conversation. then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "mix make questions from the table and ask your partner.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "questions round 2: your real news. then swap roles.",
+   "gone": false
+  }
+ ],
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "i've been really busy since september. add the time i've been really busy. + since september no change: since september — до сих пор.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "we finally managed to get away for a couple of weeks in august. add the time we've finally managed to get away for a couple of weeks. + in august the tense changes: in august — законченное время.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "work has been crazy this autumn. add the time work has been crazy. + this autumn no change: осень ещё не закончилась.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "i haven't had a day off for ages. add the time i haven't had a day off. + for ages no change: for ages — «сто лет», до сих пор.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "we had a lovely change of scenery over the summer. add the time we've had a lovely change of scenery. + over the summer the tense changes: over the summer — лето закончилось.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "i started a new course a week ago. add the time i've started a new course. + a week ago the tense changes: ago → past simple.",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "i caught up with some old friends last weekend. add the time i've caught up with some old friends. + last weekend the tense changes: last weekend — законченное время.",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "i went to a lovely café with anna two days ago. add the time i've been to a lovely café with anna. + two days ago the tense changes: ago — всегда past simple.",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "did you manage to get away this summer? add the time have you managed to get away? + this summer [it's november now.] the tense changes: лето закончилось → и вопрос в past simple.",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "when did you start your new job? our sentence: say it right when have you started your new job? when? — конкретный момент → past simple.",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "i went to the museum a week ago. our sentence: say it right i 've been to the museum a week ago. a week ago — законченное время → past simple. сравни: i've been to a great exhibition! (новость, без времени).",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "i gave up after episode three. our sentence: say it right i 've given up after episode three. after episode three — законченный момент → past simple.",
+   "gone": false
+  }
+ ],
+ "write": [],
+ "questions.5": [
+  {
+   "pid": 0,
+   "sig": "1 tell your partner two pieces of news from the last few weeks (present perfect: i've…).",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 your partner asks two questions about each piece of news in the past simple, e.g. when…? who with? how was it?",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "3 then ask your partner one question from the table that you haven't asked yet.",
+   "gone": false
+  }
+ ]
+}

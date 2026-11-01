@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>/* the site theme: light unless this device chose dark (engine 56) */(function(){var t="light";try{if(localStorage.getItem("site-theme")==="dark")t="dark"}catch(e){}document.documentElement.setAttribute("data-theme",t)})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>body{margin:0}img{max-width:100%}</style>
 <meta name="hw-unlisted" content="1">
@@ -526,6 +527,8 @@ textarea{min-height:10em;resize:vertical;line-height:1.5}
 .mode{display:grid;gap:10px}
 .saved-note{margin:-4px 2px 0;color:var(--ok-ink);font-weight:700}
 .saved-note.warn{color:var(--muted);font-weight:400}
+.unsent{background:var(--no-bg);border:2px solid var(--no-chip);border-radius:var(--radius);padding:12px 14px;margin:10px 0}
+.unsent p{margin:0 0 8px}
 .rec-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .rec-btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 22px;border-radius:999px;border:2px solid var(--rec);background:var(--card);color:var(--rec);font-weight:900;cursor:pointer}
 .rec-btn .dot{width:14px;height:14px;border-radius:50%;background:var(--rec)}
@@ -2705,7 +2708,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = [];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "54";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "57";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [{"type": "rewrite", "r": {"o": "I did a course to become a yoga teacher too.", "k": "TRAINED", "pre": "I ", "post": " a yoga teacher too.", "a": "trained as", "acc": ["trained as", "trained to be"], "n": "trained as — active: I trained (I did it myself).<br><i class=\"ru\">я ещё и выучилась на преподавателя йоги<\/i><br><i class=\"ru\">or: trained to be<\/i>"}, "frm": "23.10.26"}, {"type": "sayit", "s": {"rows": [["<span class=\"en\">Nobody taught me how to talk to clients — I learned it <span class=\"trap\">in practice<\/span>.<\/span> <i class=\"ru\">(научилась в процессе работы)<\/i>", "Nobody taught me how to talk to clients — I learned it <b class=\"g\">on the job<\/b>."]], "note": "", "html": true}, "instr": "What would Dan or Ruth say instead?", "frm": "21.10.26"}, {"type": "rewrite", "r": {"pre": "I'm ", "hint": "по образованию экономист", "post": ", but I've worked in IT for years.", "a": "an economist by training", "acc": ["an economist by training", "a trained economist", "an economist by education"], "n": "economist <span class=\"ipa\">/ɪˈkɒnəmɪst/<\/span><br>X by training = what you studied or trained as.<br><i class=\"ru\">or: a trained economist / an economist by education (less common)<\/i>"}, "frm": "23.10.26"}, {"type": "rewrite", "r": {"o": "The course taught me the basics of statistics.", "k": "GROUNDING", "pre": "The course gave ", "post": " statistics.", "a": "me a good grounding in", "acc": ["me a good grounding in", "me a solid grounding in", "me a thorough grounding in", "me a basic grounding in", "me a grounding in"], "n": "<span class=\"ipa\">/ˈɡraʊndɪŋ/<\/span><br>a good grounding in + subject.<br><i class=\"ru\">дал мне хорошую базу по статистике<\/i><br><i class=\"ru\">or: me a solid / thorough / basic grounding in<\/i><br><i class=\"ru\">or: me a grounding in<\/i>"}, "frm": "23.10.26"}];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -3528,11 +3531,11 @@ function navButtons(checkLabel="Check"){
   return `<button class="btn" id="prev">Back</button>
           <button class="btn primary grow" id="go">${checked ? (last?"Finish":"Next") : checkLabel}</button>`;
 }
-function wireNav(onCheck){
+function wireNav(onCheck, guard){
   document.getElementById("prev").addEventListener("click",()=>{ if(stepIdx>0){ stepIdx--; checked=false; renderTask(); } else goHome(); });   /* engine 51 (her 31.10): Back on the first screen = back to all tasks */
   document.getElementById("go").addEventListener("click",()=>{
     if(!checked){ checked = true; onCheck(); }
-    else { stepIdx++; checked=false; renderTask(); }
+    else { if(guard && !guard()) return; stepIdx++; checked=false; renderTask(); }   /* engine 57: guard = "not sent yet?" on Over to you */
   });
 }
 let lastDone = null;
@@ -3739,7 +3742,43 @@ function moreBelow(){
 
 /* ---------- rewrite the sentence ---------- */
 /* ---------- marking a typed answer: strike only the error, mark what was good, show the change ---------- */
-const splitTok = s => String(s).replace(/[’‘]/g,"'").trim().split(/\s+/).filter(Boolean);
+/* engine 55 (31.10: a student's friend, then her decision): a typed answer is right with any apostrophe a keyboard gives (’ ` ´ ʼ …)
+   and with or without a contraction, as in TubeQuizard: it's = it is, it's been = it has been, you'd = you would / had, can't = cannot,
+   gonna = going to; hands-on = hands on; a.m. = am; learnt = learned. Not where one of the two would be wrong English: "is not it" for
+   "isn't it" (n't right before its subject: a tag, "why don't we"), "it's" closing a clause ("Yes, it is", never "Yes, it's"),
+   "it is been". Anything else one gap may also take goes in its data: {gap:"…", alt:["…"]} */
+const APOS = /[’‘`´ʼʹ′＇‛]/g;
+const SUBJ = /^(i|you|he|she|it|we|they)$/;
+const SAME_WORD = {okay:"ok", gonna:"going to", wanna:"want to", gotta:"got to", "'cause":"because", cuz:"because", cos:"because",
+  kinda:"kind of", sorta:"sort of", outta:"out of", "'em":"them", "'til":"until", till:"until",
+  learnt:"learned", spelt:"spelled", dreamt:"dreamed", burnt:"burned", spoilt:"spoiled", leapt:"leaped"};
+function answerForms(s, post){
+  const toks = String(s).toLowerCase().replace(APOS, "'").replace(/([a-z])\s*'\s*([a-z])/g, "$1'$2").replace(/[-–—]+/g, " ").trim().split(/\s+/)
+    .map(w => { let c = w.replace(/^[^a-z0-9']+|[^a-z0-9']+$/g, "").replace(/[^a-z0-9']/g, "");
+      if(!/^'(cause|em|til)$/.test(c)) c = c.replace(/^'+/, ""); c = c.replace(/'+$/, "");
+      return {w: c, end: /[.,!?;:"…]$/.test(w)}; }).filter(x => x.w);
+  const alts = toks.map((x, i) => {
+    const w = SAME_WORD[x.w] || x.w, nx = toks[i+1] ? toks[i+1].w : "", nx2 = toks[i+2] ? toks[i+2].w : "";
+    const final = x.end || (i === toks.length - 1 && !/^\s*[a-z0-9]/i.test(post || "")) || (/n't$/.test(nx) && SUBJ.test(nx2));
+    const out = [w];
+    if(/n't$/.test(w)){ if(!SUBJ.test(nx) && w !== "ain't") out.push({"won't":"will not", "can't":"can not", "shan't":"shall not"}[w] || w.slice(0, -3) + " not"); }
+    else if(w === "cannot") out.push("can not");
+    else if(final) {}                                   /* a clause doesn't end in a short form */
+    else if(w === "let's") out.push("let us");
+    else if(/'s$/.test(w)){ const b = w.slice(0, -2); if(nx === "been" || nx === "got") out.push(b + " has"); else if(/ing$/.test(nx)) out.push(b + " is"); else out.push(b + " is", b + " has"); }
+    else if(/'re$/.test(w)) out.push(w.slice(0, -3) + " are");
+    else if(/'m$/.test(w)) out.push(w.slice(0, -2) + " am");
+    else if(/'ve$/.test(w)) out.push(w.slice(0, -3) + " have");
+    else if(/'ll$/.test(w)) out.push(w.slice(0, -3) + " will");
+    else if(/'d$/.test(w)){ const b = w.slice(0, -2); if(nx === "been" || nx === "better") out.push(b + " had"); else out.push(b + " would", b + " had"); }
+    return out;
+  });
+  let forms = [""];
+  for(const a of alts){ const nf = []; forms.forEach(f => a.forEach(v => nf.push(f ? f + " " + v : v))); forms = nf.slice(0, 600); }
+  return forms;
+}
+const sameAnswer = (val, accs, post) => { const mine = new Set(answerForms(val, post)); return accs.some(a => answerForms(a, post).some(f => mine.has(f))); };
+const splitTok = s => String(s).replace(APOS,"'").trim().split(/\s+/).filter(Boolean);
 const coreOf = w => { const m = w.match(/^([^A-Za-z0-9']*)(.*?)([^A-Za-z0-9']*)$/); return {lead:m[1], core:m[2], trail:m[3]}; };
 function lev(a,b){ const d=[...Array(b.length+1).keys()]; for(let i=1;i<=a.length;i++){ let p=d[0]; d[0]=i; for(let j=1;j<=b.length;j++){ const q=d[j]; d[j]=Math.min(d[j]+1,d[j-1]+1,p+(a[i-1]===b[j-1]?0:1)); p=q; } } return d[b.length]; }
 const similar = (a,b) => a && b && lev(a,b) <= Math.max(1, Math.floor(Math.max(a.length,b.length)/3));
@@ -3796,10 +3835,8 @@ function stripFrame(val, r){
    in the sentence, green when right (nothing more to say), red when not, then → the answer, and the detailed box under it */
 function judgeRewrite(val, r){
   const core = stripFrame(val, r);
-  const expand = s => " "+String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/won't/g,"will not").replace(/can't/g,"can not").replace(/cannot/g,"can not")
-    .replace(/n't/g," not").replace(/'ve/g," have").replace(/'ll/g," will").replace(/'re/g," are").replace(/'m/g," am").replace(/'d/g," would")
-    .replace(/[.!?,;:]+/g," ").replace(/\s+/g," ").trim()+" ";
-  const sameAs = a => [expand(r.pre+val+r.post), expand(val), expand(r.pre+core+r.post)].includes(expand(r.pre+a+r.post));
+  /* engine 55: the same contractions and apostrophes as the listening gaps (sameAnswer) */
+  const sameAs = a => [r.pre+val+r.post, val, r.pre+core+r.post].some(x => sameAnswer(x, [r.pre+a+r.post]));
   return {core, m: r.acc.some(sameAs) ? {ok:true} : markAnswer(core, r.acc)};
 }
 function verdictHTML(val, r){
@@ -4142,7 +4179,10 @@ function stopPlayer(){
   ytReady = false; ytVideo = "";
 }
 /* one player for the whole listening task, as TubeQuizard does: a new player for every clip
-   counts as a new viewing for YouTube, and that is when the ads come */
+   counts as a new viewing for YouTube, and that is when the ads come.
+   engine 55 (tested 31.10 on the site): in the same player, every change of video can bring an ad again, even a video played
+   before; clips of the same video (a seek) never do. On tubequizard.com and youglish.com, with the same code and videos, YouTube
+   shows no ads at all: it decides by the site. Hiding the site from YouTube (no referrer) = Error 153, the video doesn't play. */
 /* subtitles off by default: YouTube loads its captions module when a video starts; unload it once per video
    (a student who then turns CC on keeps it) */
 const ytCcOff = {};
@@ -4261,14 +4301,15 @@ function renderListen(st, count, pct){
     app.querySelectorAll("#spd [data-rate]").forEach(x => x.setAttribute("aria-pressed", Number(x.dataset.rate) === r));
     try{ ytPlayer && ytPlayer.setPlaybackRate(r); }catch(e){}
   }));
-  const answers = lines.flatMap(l => l[3].filter(p=>typeof p!=="string").map(p=>p.gap));
+  /* engine 55: each gap with the other forms it takes (its alt) and the words after it (a short form can't close a clause) */
+  const gapsAll = lines.flatMap(l => l[3].map((p, j) => typeof p === "string" ? null : {ans: p.gap, accs: [p.gap, ...(p.alt || [])], post: typeof l[3][j+1] === "string" ? l[3][j+1] : ""}).filter(Boolean));
   /* engine 38: what they typed stays in the gap, green when right, red + → the answer when not (see judgeRewrite) */
   const judgeGap = inp => {
-      const k = +inp.dataset.k, ans = answers[k], val = inp.value.trim();
+      const k = +inp.dataset.k, g = gapsAll[k], ans = g.ans, val = inp.value.trim();
       const ck = inp.nextElementSibling; if(ck && ck.classList.contains("gap-ck")) ck.remove();
       const res = document.createElement("span");
       if(!val){ res.className = "gap-res ans"; res.textContent = ans; inp.replaceWith(res); return; }
-      const m = markAnswer(val, [ans]);
+      const m = sameAnswer(val, g.accs, g.post) ? {ok: true} : markAnswer(val, g.accs);
       if(m.ok){ res.className = "gap-res ok"; res.textContent = val + " ✓"; inp.replaceWith(res); return; }
       res.className = "gap-res no"; res.textContent = val;
       const to = document.createElement("span"); to.className = "to-ans"; to.textContent = " → ";
@@ -4394,6 +4435,17 @@ async function toWav(blob){
 const draftKey = () => "hw-draft-"+PAGE_KEY;
 const picksKey = () => "hw-picks-"+PAGE_KEY;
 const usedKey = () => "hw-used-"+PAGE_KEY;
+/* engine 57 (1.11, a student's recording was lost: Done was ticked, nothing reached Olya; her «срочно, чтобы ещё у кого-то не потерялось»):
+   a recording is kept on the device (IndexedDB) until it's sent, like the text — closing the page or the phone unloading it no longer loses it;
+   "sent" = this device sent it (to her table, or shared / copied it). Sent ones are cleared after 14 days, any after 60. */
+const sentKey = () => "hw-sent-"+PAGE_KEY+"-"+(current ? current.id : "");
+const recKey = () => PAGE_KEY+"|"+(current ? current.id : "");
+const recDB = () => new Promise((res, rej) => { try{ const r = indexedDB.open("hw-recordings", 1); r.onupgradeneeded = () => r.result.createObjectStore("rec"); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }catch(e){ rej(e); } });
+async function recPut(key, val){ try{ const db = await recDB(); await new Promise((res, rej) => { const tx = db.transaction("rec", "readwrite"); tx.objectStore("rec").put(val, key); tx.oncomplete = res; tx.onerror = () => rej(tx.error); }); return true; }catch(e){ return false; } }
+async function recGet(key){ try{ const db = await recDB(); return await new Promise((res, rej) => { const q = db.transaction("rec").objectStore("rec").get(key); q.onsuccess = () => res(q.result || null); q.onerror = () => rej(q.error); }); }catch(e){ return null; } }
+async function recSweep(){ try{ const db = await recDB(), now = Date.now(), tx = db.transaction("rec", "readwrite"), st = tx.objectStore("rec"), q = st.openCursor();
+  q.onsuccess = () => { const c = q.result; if(!c) return; const v = c.value || {}; if((v.sent && now - (v.t || 0) > 14 * 864e5) || now - (v.t || 0) > 60 * 864e5) c.delete(); c.continue(); }; }catch(e){} }
+setTimeout(recSweep, 3000);
 const getList = k => { try{ return JSON.parse(ls.get(k) || "[]"); }catch(e){ return []; } };
 function plainNext(){ checked = true; return navButtons(); }   /* nothing to check on these screens: the button is Next / Finish */
 const taskPeek = () => `<details class="task-peek"><summary><b>Your task</b> <span class="small">tap to see</span></summary><div class="task-card">${TASK_HTML}</div></details>`;
@@ -4466,6 +4518,7 @@ function renderProduce(st, count, pct){
           </div>
           <div id="rec-review" hidden class="mode">
             <audio id="rec-audio" controls preload="metadata"></audio>
+            <p class="small saved-note" id="rec-kept" hidden></p>
             <div class="row-btns"><button class="btn" id="rec-again">Record again</button></div>
             ${PRODUCE_NOTE}
           </div>
@@ -4510,9 +4563,15 @@ function renderProduce(st, count, pct){
   showSaved();
 
   /* recording */
-  const recBtn = $("rec"), label = $("rec-label"), time = $("rec-time");
-  const showReview = () => { $("rec-review").hidden = false; $("rec-row").hidden = true; $("rec-audio").src = recState.url; };
+  const recBtn = $("rec"), label = $("rec-label"), time = $("rec-time"), rk = recKey();
+  const showReview = () => { $("rec-review").hidden = false; $("rec-row").hidden = true; $("rec-audio").src = recState.url;
+    const n = $("rec-kept"); if(n && recState.note){ n.hidden = false; n.classList.toggle("warn", !!recState.noteWarn); n.textContent = recState.note; } };
+  if(recState.key && recState.key !== rk){ if(recState.url) URL.revokeObjectURL(recState.url); recState.file = null; recState.url = null; recState.note = ""; }   /* another task's recording stays with that task */
+  recState.key = rk;
   if(recState.url) showReview();
+  else recGet(rk).then(v => { if(!v || !v.blob || recState.file || recState.key !== rk || !document.getElementById("rec-review")) return;   /* engine 57: back from the device */
+    recState.file = new File([v.blob], v.name || "recording.m4a", {type: v.type || v.blob.type}); recState.url = URL.createObjectURL(recState.file);
+    recState.note = v.sent ? "✓ Saved on this device · sent" : "✓ Saved on this device — not sent yet: tap Send to Olya."; recState.noteWarn = false; showReview(); });
   recBtn.addEventListener("click", async ()=>{
     if(recState.rec){ recState.rec.stop(); return; }
     if(!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder)){
@@ -4536,6 +4595,9 @@ function renderProduce(st, count, pct){
       recState.file = file; recState.url = URL.createObjectURL(file);
       recBtn.disabled = false; label.textContent = "Start recording"; time.textContent = "";
       showReview();
+      const kept = await recPut(rk, {blob: file, name: file.name, type: file.type, t: Date.now(), sent: false});   /* engine 57 */
+      recState.note = kept ? "✓ Saved on this device" : "This browser can't keep the recording if you close the page — send it now."; recState.noteWarn = !kept; showReview();
+      ls.set(sentKey(), "");
     };
     rec.start(); recState.t0 = Date.now();
     recBtn.classList.add("on"); label.textContent = "Stop"; $("rec-msg").hidden = true;
@@ -4547,9 +4609,12 @@ function renderProduce(st, count, pct){
   const synced = () => !!myCode() && syncState!=="unknown" && !isTeacher();
   const usedPhrases = () => [...app.querySelectorAll(".check input")].filter(x=>x.checked).map(x=>{ const l=x.closest("label"); return l ? l.textContent.trim() : ""; }).filter(Boolean);
   const sentMsg = "Sent ✓ Olya's feedback will appear on the homework page — look for 💬. Now tap Finish.";
+  const markSent = () => { ls.set(sentKey(), String(Date.now())); const w = $("unsent"); if(w) w.remove();
+    if(curMode === "record" && recState.file) recGet(rk).then(v => { if(v) recPut(rk, Object.assign(v, {sent: true})); }); };
   async function toTable(type, text){
     const res = await post({action:"submit", code:myCode(), page:PAGE_KEY, date:LESSON.date, task:current.id, title:current.title, type, text, phrases:usedPhrases()});
     if(res.ok){
+      markSent();
       const list = work[current.id] = work[current.id] || [];
       const d = new Date(), p2 = n=>String(n).padStart(2,"0");
       const item = {id:res.id, sent:`${p2(d.getDate())}.${p2(d.getMonth()+1)} ${p2(d.getHours())}:${p2(d.getMinutes())}`, type:type==="recording"?"recording":"text", text, feedback:"", seen:false};
@@ -4563,7 +4628,7 @@ function renderProduce(st, count, pct){
   const done = "If you sent it to Olya, mark the task in our spreadsheet in your colour.";
   $("copy").addEventListener("click", async ()=>{
     const text = txt.value.trim(); if(!text){ say("msg","Write or dictate it first."); return; }
-    try{ await navigator.clipboard.writeText(tag()+"\n\n"+text); say("msg","Copied. Paste it into your chat with Olya or into our spreadsheet."); }
+    try{ await navigator.clipboard.writeText(tag()+"\n\n"+text); markSent(); say("msg","Copied. Paste it into your chat with Olya or into our spreadsheet."); }
     catch(e){ txt.select(); say("msg","Copying didn't work here. Select the text and copy it."); }
   });
   $("send").addEventListener("click", async ()=>{
@@ -4575,21 +4640,33 @@ function renderProduce(st, count, pct){
         say("msg", res.ok ? sentMsg : "It didn't go through — no connection right now. Your text is saved here, so try again in a minute.");
         return;
       }
-      if(navigator.share){ try{ await navigator.share({title:tag(), text:tag()+"\n\n"+text}); say("msg",done); return; }catch(e){ if(e && e.name==="AbortError") return; } }
+      if(navigator.share){ try{ await navigator.share({title:tag(), text:tag()+"\n\n"+text}); markSent(); say("msg",done); return; }catch(e){ if(e && e.name==="AbortError") return; } }
       $("copy").click(); return;
     }
     const f = recState.file; if(!f){ say("msg","Record it first."); return; }
     const named = new File([f], fileBase(who.value)+f.name.slice(f.name.lastIndexOf(".")), {type:f.type});
     if(navigator.canShare && navigator.canShare({files:[named]})){
-      try{ await navigator.share({files:[named], title:tag(), text:tag()});
+      try{ await navigator.share({files:[named], title:tag(), text:tag()}); markSent();
         if(synced()){ const res = await toTable("recording", ""); say("msg", res.ok ? sentMsg : done); } else say("msg",done);
         return; }
       catch(e){ if(e && e.name==="AbortError") return; }
     }
     say("msg", `This browser can't send the file directly. <a href="${recState.url}" download="${esc(named.name)}" id="save-rec">Save the recording</a>, then send it to Olya in Telegram.`);
-    const sv = $("save-rec"); if(sv && synced()) sv.addEventListener("click",()=>{ toTable("recording",""); });
+    const sv = $("save-rec"); if(sv) sv.addEventListener("click",()=>{ markSent(); if(synced()) toTable("recording",""); });
   });
-  wireNav(()=>{});
+  /* engine 57: Finish (Next) before anything was sent → one gentle line: send it first, or go on anyway */
+  const sentHere = () => isTeacher() || (work[current.id] || []).length > 0 || !!ls.get(sentKey());
+  const goOn = () => { stepIdx++; checked = false; renderTask(); };
+  wireNav(()=>{}, () => {
+    if(sentHere() || $("unsent")) return true;
+    const last = stepIdx === current.steps.length - 1, has = (txt.value.trim() && curMode === "write") || (recState.file && curMode === "record");
+    app.querySelector(".actions").insertAdjacentHTML("beforebegin", `<div class="unsent" id="unsent" role="alert"><p><b>${has ? "You haven't sent it to Olya yet." : "You haven't written or recorded anything yet."}</b> ${has ? "Send it first?" : ""}</p>
+      <div class="row-btns">${has ? `<button class="btn primary" id="us-send">Send to Olya</button>` : ""}<button class="btn" id="us-skip">${last ? "Finish anyway" : "Go on anyway"}</button></div></div>`);
+    const u = $("unsent"); u.scrollIntoView({block: "center", behavior: "smooth"});
+    const ss = $("us-send"); if(ss) ss.addEventListener("click", () => { $("send").click(); });
+    $("us-skip").addEventListener("click", goOn);
+    return false;
+  });
 }
 
 /* ---------- start ---------- */
@@ -4605,5 +4682,14 @@ if(!(myCode() && toOwnGroup(ls.get("hw-gid")))){
 }
 </script>
 
+<style>.theme-tg{font:inherit;font-size:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px}</style>
+<script>/* 🌙 Dark theme / ☀️ Light theme beside Impressum · Datenschutz (engine 56) */(function(){
+var H=document.documentElement,lab=function(){return H.getAttribute("data-theme")==="dark"?"☀️ Light theme":"🌙 Dark theme"};
+function paint(){document.querySelectorAll(".theme-tg").forEach(function(b){b.textContent=lab()})}
+function add(){document.querySelectorAll("footer.legal, p.legal").forEach(function(f){if(f.querySelector(".theme-tg"))return;var b=document.createElement("button");b.type="button";b.className="theme-tg";
+b.addEventListener("click",function(){var d=H.getAttribute("data-theme")==="dark"?"light":"dark";H.setAttribute("data-theme",d);try{localStorage.setItem("site-theme",d)}catch(e){}paint()});
+f.appendChild(document.createTextNode(" · "));f.appendChild(b)});paint()}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",add);else add();
+addEventListener("storage",function(e){if(e.key==="site-theme"){H.setAttribute("data-theme",e.newValue==="dark"?"dark":"light");paint()}})})();</script>
 </body>
 </html>

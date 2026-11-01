@@ -15,6 +15,7 @@ const PAGE = 'tools/b2-2026-10-30/f-late';
   const b = await chromium.launch(); const errs = []; const fail = []; const out = {};
   const expect = (n, ok, got) => { if (!ok) fail.push(n + ' ' + JSON.stringify(got)); };
   const open = async (opts = {}) => { const ctx = opts.ctx ? await b.newContext(opts.ctx) : await b.newContext({viewport: {width: 1280, height: 720}, colorScheme: opts.scheme || 'light'});
+    await ctx.addInitScript(() => { ['ttt', 'dots', 'goose', 'snakes'].forEach(k => localStorage.setItem('tool-demo-' + k, '1')); });   /* tools 21: the demo is seen (its own check: field_games4) */
     const p = await ctx.newPage(); p.on('pageerror', e => errs.push(e.message)); await p.emulateMedia({reducedMotion: 'reduce'});
     await p.goto(base + PAGE + '.html'); await p.waitForTimeout(200); return {p, ctx}; };
   const goBlock = (p, kind) => p.evaluate(k => { const si = D.stages.findIndex(s => s.blocks.some(x => x.kind === k)); S.stage = si; S.intro = false; S.view = 'field'; S.at[si] = D.stages[si].blocks.findIndex(x => x.kind === k); render(); }, kind);

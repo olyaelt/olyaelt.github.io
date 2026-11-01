@@ -39,8 +39,10 @@ function gToss(el, final, done){
 /* ---------- 🎡 the wheel: tap it, it spins and slows down to a stop; the pointer ticks over each sector; what came up can leave the
    wheel (the other sectors grow), "Put them all back" ---------- */
 const G_COLORS = [["#0693E3", "#FFFFFF"], ["#FFD34D", "#1D1D1B"], ["#FF9900", "#1D1D1B"], ["#7BDCB5", "#1D1D1B"], ["#F78DA7", "#1D1D1B"], ["#8ED1FC", "#1D1D1B"], ["#9B51E0", "#FFFFFF"], ["#FCB900", "#1D1D1B"]];
-function gWheel(host, items, {remove = true, onPick = null, label = "Spin"} = {}){
-  const W = {items: items.map((x, i) => typeof x === "string" ? {t: x, i} : Object.assign({i}, x)), w: items.map(() => 1), angle: 0, busy: false, picked: -1};
+function gWheel(host, items, {remove = true, onPick = null, label = "Spin", state = null} = {}){
+  /* tools 20 (B2 revision f-wc): state = {w, angle, picked} from save() — the wheel comes back as it was after the page redraws */
+  const W = {items: items.map((x, i) => typeof x === "string" ? {t: x, i} : Object.assign({i}, x)), w: state && state.w ? state.w.slice() : items.map(() => 1),
+    angle: state && state.angle || 0, busy: false, picked: state && state.picked != null ? state.picked : -1};
   host.innerHTML = `<div class="gwheel"><div class="gw-pointer" aria-hidden="true"></div><button class="gw-disc" aria-label="${gEsc(label)} the wheel"><svg viewBox="-112 -112 224 224"><circle class="gw-under" r="104" cx="3" cy="5"/><g class="gw-rot"></g><circle class="gw-hub" r="17"/><text class="gw-hubt" text-anchor="middle" dy="4">${gEsc(label).toUpperCase()}</text></svg></button></div>`;
   const rot = host.querySelector(".gw-rot"), ptr = host.querySelector(".gw-pointer"), disc = host.querySelector(".gw-disc");
   const pt = (r, a) => [r * Math.sin(a * Math.PI / 180), -r * Math.cos(a * Math.PI / 180)];
@@ -76,7 +78,10 @@ function gWheel(host, items, {remove = true, onPick = null, label = "Spin"} = {}
   }
   W.spin = spin;
   W.left = () => W.w.filter((w, k) => w > .5 && k !== W.picked).length;
-  W.reset = () => { gAnimate(450, t => { W.w = W.w.map(w => w + (1 - w) * gEaseOut(t, 2)); draw(); }, () => { W.w = W.items.map(() => 1); W.picked = -1; draw(); }); };
+  W.reset = (done) => { gAnimate(450, t => { W.w = W.w.map(w => w + (1 - w) * gEaseOut(t, 2)); draw(); }, () => { W.w = W.items.map(() => 1); W.picked = -1; draw(); if(done) done(); }); };
+  /* tools 20: a sector leaves the wheel when the page says so (a right answer), not on the next spin */
+  W.drop = (k, done) => { const w0 = W.w[k]; if(W.picked === k) W.picked = -1; gAnimate(gCalm() ? 0 : 450, t => { W.w[k] = w0 * (1 - gEaseOut(t, 2)); draw(); }, () => { W.w[k] = 0; draw(); if(done) done(); }); };
+  W.save = () => ({w: W.w.slice(), angle: W.angle, picked: W.picked});
   disc.addEventListener("click", spin);
   draw();
   return W;
@@ -133,6 +138,11 @@ function gRoll(el, final, done){
 /* tools 16 (the B2 revision field f-late, its first use): state = a board to carry on with (the field redraws its screen often);
    revealFirst = ✓ / ✗ only after Show the answer ("we lead the students"); labels = the two answers' words; onResult(task, ok),
    onWin(el), onChange() for the page around it */
+/* tools 21 (her 1.11 07:28): three in a row → an orange line is drawn through them, over the board (the board is position:relative) */
+function gWinLine(line, size){
+  const xy = k => [(k % size) + .5, Math.floor(k / size) + .5], [x1, y1] = xy(line[0]), [x2, y2] = xy(line[line.length - 1]), dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy) || 1, e = .32;
+  return `<svg class="g-winline" viewBox="0 0 ${size} ${size}" preserveAspectRatio="none" aria-hidden="true"><line x1="${(x1 - dx / L * e).toFixed(3)}" y1="${(y1 - dy / L * e).toFixed(3)}" x2="${(x2 + dx / L * e).toFixed(3)}" y2="${(y2 + dy / L * e).toFixed(3)}" pathLength="1"/></svg>`;
+}
 function gTicTacToe(host, tasks, {size = 3, win = 3, marks = ["X", "O"], answer = t => t.a || "", prompt = t => gEsc(t.q || t), state = null, revealFirst = false, labels = null, cellLabel = null, onResult = null, onWin = null, onChange = null} = {}){
   /* tools 18 (C1 04.11 Catching up): cellLabel(task) = a word or two on the square instead of its number ("At a wedding") */
   const T = state || {cells: gShuffle(tasks).slice(0, size * size).map(t => ({t, m: null})), turn: 0, open: -1, shown: false, over: null};
@@ -145,7 +155,7 @@ function gTicTacToe(host, tasks, {size = 3, win = 3, marks = ["X", "O"], answer 
     const winLine = T.over && T.over.line, cur = marks[T.turn], o = T.open > -1 ? T.cells[T.open] : null;
     host.innerHTML = `<div class="gttt">
       <div class="gt-board" style="--n:${size}">${T.cells.map((c, k) => `<button class="gt-cell ${c.m ? "taken m" + marks.indexOf(c.m) : ""} ${k === T.open ? "open" : ""} ${winLine && winLine.includes(k) ? "win" : ""} ${fresh === k ? "fresh" : ""}" data-gt="${k}" ${c.m || T.over || (T.open > -1 && k !== T.open) ? "disabled" : ""} aria-label="Square ${k + 1}${c.m ? ": " + c.m : ""}">
-        <span class="gt-in"><span class="gt-back">${cellLabel && cellLabel(c.t) ? `<span class="gt-lbl">${cellLabel(c.t)}</span>` : k + 1}</span><span class="gt-front">${c.m ? markSVG(c.m) : "?"}</span></span></button>`).join("")}</div>
+        <span class="gt-in"><span class="gt-back">${cellLabel && cellLabel(c.t) ? `<span class="gt-lbl">${cellLabel(c.t)}</span>` : k + 1}</span><span class="gt-front">${c.m ? markSVG(c.m) : "?"}</span></span></button>`).join("")}${winLine ? gWinLine(winLine, size) : ""}</div>
       <div class="gt-side">${T.over ? `<p class="gt-turn big">${T.over.who ? `${markSVG(T.over.who)} wins! 🎉` : "It's a draw!"}</p><button class="btn primary" data-gt-again>Play again</button>`
         : `<p class="gt-turn">${markSVG(cur)} <b>${gEsc(cur)}'s turn</b>${o ? "" : " — choose a square"}</p>
         ${o ? `<div class="gt-task${T.shown ? " shown" : ""}"><p class="gt-q">${prompt(o.t)}</p>${T.shown && answer(o.t) ? `<p class="gt-a">${answer(o.t)}</p>` : ""}
@@ -164,10 +174,16 @@ function gTicTacToe(host, tasks, {size = 3, win = 3, marks = ["X", "O"], answer 
 
 /* ---------- 🐍🪜 snakes and ladders (her 21:48, for revision): 30 squares, turns for 2–3 players; roll the die, the pawn hops square by
    square, a ladder takes it up, a snake down; then a task card from the pile; the first to reach the last square wins ---------- */
-function gSnakes(host, tasks, {cols = 6, rows = 5, ladders = [[3, 12], [8, 19], [17, 28]], snakes = [[14, 5], [22, 11], [27, 16]], players = ["Blue", "Orange"], prompt = t => gEsc(t.q || t), answer = t => t.a || ""} = {}){
+function gSnakes(host, tasks, {cols = 6, rows = 5, ladders = [[3, 12], [8, 19], [17, 28]], snakes = [[14, 5], [22, 11], [27, 16]], players = ["Blue", "Orange"], prompt = t => gEsc(t.q || t), answer = t => t.a || "",
+    rules = "classic", revealFirst = false, state = null, onResult = null, onChange = null, onWin = null} = {}){
+  /* tools 20 (B2 revision f-pp, her rules): rules "every" = a task at every stop — a ladder + right = up, a snake + not quite = down,
+     elsewhere right = stay, not quite = back to where the turn started. state = the plain G from onChange (the page redraws) */
   const N = cols * rows, S = 100, COLS = ["#0693E3", "#FF9900", "#9B51E0"];
   const cen = k => { const r = Math.floor((k - 1) / cols), i = (k - 1) % cols, c = r % 2 ? cols - 1 - i : i; return [c * S + S / 2, (rows - 1 - r) * S + S / 2]; };
-  const G = {pos: players.map(() => 1), turn: 0, busy: false, deck: gShuffle(tasks), at: -1, task: null, shown: false, winner: null, msg: ""};
+  const order = () => gShuffle(tasks.map((_, i) => i));
+  const G = state ? Object.assign({}, state, {busy: false}) : {pos: players.map(() => 1), turn: 0, busy: false, deck: order(), at: -1, ti: null, shown: false, winner: null, msg: "", ladder: null, snake: null, from: 1, lastRoll: 0};
+  const changed = () => { if(onChange) onChange(G); };
+  const cur = () => G.ti == null ? null : tasks[G.ti];
   const ladderSVG = ([a, b], k) => { const [x1, y1] = cen(a), [x2, y2] = cen(b), dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy), nx = -dy / L * 11, ny = dx / L * 11, rungs = Math.floor(L / 22);
     const col = ["#0693E3", "#FF9900", "#9B51E0"][k % 3];
     return `<g class="gs-ladder">${[1, -1].map(s => `<line x1="${x1 + s * nx}" y1="${y1 + s * ny}" x2="${x2 + s * nx}" y2="${y2 + s * ny}" class="gs-rail" stroke="${col}"/>`).join("")}${Array.from({length: rungs}, (_, i) => { const f = (i + .5) / rungs, x = x1 + dx * f, y = y1 + dy * f; return `<line x1="${x + nx}" y1="${y + ny}" x2="${x - nx}" y2="${y - ny}" class="gs-rung" stroke="${col}"/>`; }).join("")}</g>`; };
@@ -181,20 +197,25 @@ function gSnakes(host, tasks, {cols = 6, rows = 5, ladders = [[3, 12], [8, 19], 
     <div class="gs-side"></div></div>`;
   const svg = host.querySelector(".gs-board"), side = host.querySelector(".gs-side");
   const place = (i, x, y) => { const off = [[-14, 10], [14, 10], [0, -12]][i] || [0, 0]; svg.querySelector(`[data-p="${i}"]`).setAttribute("transform", `translate(${(x + off[0]).toFixed(1)} ${(y + off[1]).toFixed(1)})`); };
-  players.forEach((_, i) => place(i, ...cen(1)));
+  players.forEach((_, i) => place(i, ...cen(G.pos[i])));
   function panel(){
-    const p = G.turn, me = `<span class="gs-dot" style="background:${COLS[p]}"></span>`;
+    const p = G.turn, me = `<span class="gs-dot" style="background:${COLS[p]}"></span>`, t = cur(), every = rules === "every";
+    const yes = G.ladder ? "✓ Got it — up the ladder!" : G.snake && every ? "✓ Got it — the snake misses you" : every ? "✓ Got it — you stay" : `✓ Got it${G.ladder ? " — up the ladder!" : ""}`;
+    const no = G.snake && every ? "✗ Not quite — down the snake" : `✗ Not quite — back to ${G.from}`;
+    const acts = t ? (revealFirst && !G.shown ? `<button class="btn primary" data-gs-show>Show the answer</button>`
+      : `${answer(t) && !G.shown ? `<button class="btn" data-gs-show>Show the answer</button>` : ""}<button class="btn ok" data-gs-yes>${yes}</button><button class="btn again" data-gs-no>${no}</button>`) : "";
     side.innerHTML = G.winner != null ? `<p class="gt-turn big"><span class="gs-dot" style="background:${COLS[G.winner]}"></span> ${gEsc(players[G.winner])} wins! 🎉</p><button class="btn primary" data-gs-again>Play again</button>`
       : `<p class="gt-turn">${me} <b>${gEsc(players[p])}'s turn</b></p>${G.msg ? `<p class="gs-msg">${G.msg}</p>` : ""}
-      ${G.task ? `<div class="gt-task${G.shown ? " shown" : ""}"><p class="gt-q">${prompt(G.task)}</p>${G.shown && answer(G.task) ? `<p class="gt-a">${answer(G.task)}</p>` : ""}<div class="gt-acts">${answer(G.task) && !G.shown ? `<button class="btn" data-gs-show>Show the answer</button>` : ""}<button class="btn ok" data-gs-yes>✓ Got it${G.ladder ? " — up the ladder!" : ""}</button><button class="btn again" data-gs-no>✗ Not quite — back to ${G.from}</button></div></div>`
+      ${t ? `<div class="gt-task${G.shown ? " shown" : ""}"><p class="gt-q">${prompt(t)}</p>${G.shown && answer(t) ? `<p class="gt-a">${answer(t)}</p>` : ""}<div class="gt-acts">${acts}</div></div>`
         : `<button class="gs-diebtn" data-gs-roll aria-label="Roll the die" ${G.busy ? "disabled" : ""}>${gDieHTML(G.lastRoll || 0)}</button><p class="gs-hint">Tap the die</p>`}`;
     const on = (q, f) => { const b = side.querySelector(q); if(b) b.addEventListener("click", f); };
-    on("[data-gs-roll]", roll); on("[data-gs-show]", () => { G.shown = true; panel(); });
-    const endTurn = () => { G.busy = false; G.task = null; G.ladder = null; if(G.pos[p] >= N){ G.winner = p; panel(); return; } G.turn = (G.turn + 1) % players.length; panel(); };
-    on("[data-gs-yes]", () => { if(G.busy) return; G.busy = true; G.msg = G.ladder ? "🪜 A ladder — up you go!" : ""; const lad = G.ladder; G.task = null; panel();
+    on("[data-gs-roll]", roll); on("[data-gs-show]", () => { G.shown = true; panel(); changed(); });
+    const endTurn = () => { G.busy = false; G.ti = null; G.ladder = null; G.snake = null; G.shown = false; if(G.pos[p] >= N){ G.winner = p; panel(); if(onWin) onWin(side.querySelector(".gt-turn.big") || side); changed(); return; } G.turn = (G.turn + 1) % players.length; panel(); changed(); };
+    on("[data-gs-yes]", () => { if(G.busy) return; const t0 = cur(); G.busy = true; G.msg = G.ladder ? "🪜 A ladder — up you go!" : G.snake && every ? "Phew! The snake missed you." : ""; const lad = G.ladder; G.ti = null; panel(); if(onResult && t0) onResult(t0, true);
       if(lad){ const [x1, y1] = cen(lad[0]), [x2, y2] = cen(lad[1]), tmp = document.createElementNS("http://www.w3.org/2000/svg", "path"); tmp.setAttribute("d", `M${x1} ${y1}L${x2} ${y2}`); slide(p, tmp, lad[1], endTurn); } else endTurn(); });
-    on("[data-gs-no]", () => { if(G.busy) return; G.busy = true; G.msg = ""; G.task = null; G.ladder = null; panel(); hop(p, G.pos[p], G.from, endTurn); });
-    on("[data-gs-again]", () => { G.pos = players.map(() => 1); G.turn = 0; G.winner = null; G.task = null; G.msg = ""; players.forEach((_, i) => place(i, ...cen(1))); panel(); });
+    on("[data-gs-no]", () => { if(G.busy) return; const t0 = cur(), sn = G.snake; G.busy = true; G.msg = sn && every ? "🐍 Down the snake!" : ""; G.ti = null; G.ladder = null; panel(); if(onResult && t0) onResult(t0, false);
+      if(sn && every){ const k = snakes.findIndex(x => x[0] === sn[0] && x[1] === sn[1]); slide(p, svg.querySelector(`[data-snake="${k}"]`), sn[1], endTurn); } else hop(p, G.pos[p], G.from, endTurn); });
+    on("[data-gs-again]", () => { G.pos = players.map(() => 1); G.turn = 0; G.winner = null; G.ti = null; G.msg = ""; G.lastRoll = 0; players.forEach((_, i) => place(i, ...cen(1))); panel(); changed(); });
   }
   function hop(i, from, to, done){
     if(from === to){ done(); return; }
@@ -203,8 +224,9 @@ function gSnakes(host, tasks, {cols = 6, rows = 5, ladders = [[3, 12], [8, 19], 
   }
   function slide(i, path, to, done){
     const L = path.getTotalLength();
-    gAnimate(1100, t => { const e = 1 - Math.pow(1 - t, 2) * (1 - t) ; const p = path.getPointAtLength(L * Math.min(1, e)); place(i, p.x, p.y); }, () => { G.pos[i] = to; place(i, ...cen(to)); done(); });
+    gAnimate(gCalm() ? 0 : 1100, t => { const e = 1 - Math.pow(1 - t, 2) * (1 - t) ; const p = path.getPointAtLength(L * Math.min(1, e)); place(i, p.x, p.y); }, () => { G.pos[i] = to; place(i, ...cen(to)); done(); });
   }
+  function nextTask(){ G.at++; if(G.at >= G.deck.length){ G.deck = order(); G.at = 0; } G.ti = G.deck[G.at]; G.shown = false; }
   function roll(){
     if(G.busy) return; G.busy = true; const p = G.turn, n = 1 + Math.floor(Math.random() * 6); G.lastRoll = n; G.msg = ""; G.from = G.pos[p];
     const die = side.querySelector(".gdie"); side.querySelector("[data-gs-roll]").disabled = true;
@@ -212,10 +234,11 @@ function gSnakes(host, tasks, {cols = 6, rows = 5, ladders = [[3, 12], [8, 19], 
       const to = Math.min(N, G.pos[p] + n);
       hop(p, G.pos[p], to, () => {
         /* her rules (eltgeek, 2015): a snake's head — down to its tail, no task; any other square — a task card: right → the move stands
-           (at a ladder's foot: up the ladder), wrong → back to the square where the turn started */
+           (at a ladder's foot: up the ladder), wrong → back to the square where the turn started. rules "every": a task at the snake too */
         const lad = ladders.find(l => l[0] === to), sn = snakes.findIndex(s => s[0] === to);
-        if(sn > -1){ G.msg = "🐍 A snake — down you go!"; slide(p, svg.querySelector(`[data-snake="${sn}"]`), snakes[sn][1], () => { G.busy = false; G.turn = (G.turn + 1) % players.length; panel(); }); return; }
-        G.at = (G.at + 1) % G.deck.length; if(G.at === 0) G.deck = gShuffle(tasks); G.task = G.deck[G.at]; G.shown = false; G.ladder = lad || null; G.msg = lad ? "🪜 A ladder! Get it right to climb it." : ""; G.busy = false; panel();
+        if(sn > -1 && rules !== "every"){ G.msg = "🐍 A snake — down you go!"; slide(p, svg.querySelector(`[data-snake="${sn}"]`), snakes[sn][1], () => { G.busy = false; G.turn = (G.turn + 1) % players.length; panel(); changed(); }); return; }
+        nextTask(); G.ladder = lad || null; G.snake = sn > -1 ? snakes[sn] : null;
+        G.msg = lad ? "🪜 A ladder! Get it right to climb it." : G.snake ? "🐍 A snake! Get it right and it misses you." : ""; G.busy = false; panel(); changed();
       });
     }, gCalm() ? 0 : 250));
   }
@@ -360,8 +383,12 @@ function gHex(host, tasks, {n = 5, teams = ["Blue", "Orange"], letter = t => (St
 
 /* ---------- ▪ Dots and boxes (her blog, 2015): first the task card — right → draw one line (a closed box is yours, and you go again);
    wrong → the turn passes ---------- */
-function gDots(host, tasks, {n = 4, players = ["Blue", "Orange"], prompt = t => gEsc(t.q || t), answer = t => gEsc(t.a || "")} = {}){
-  const COL = ["#0693E3", "#FF9900"], G = {lines: {}, boxes: {}, turn: 0, phase: "task", deck: gShuffle(tasks), at: 0, shown: false};
+function gDots(host, tasks, {n = 4, players = ["Blue", "Orange"], prompt = t => gEsc(t.q || t), answer = t => gEsc(t.a || ""), revealFirst = false, state = null, onResult = null, onChange = null, onWin = null} = {}){
+  /* tools 20 (B2 revision f-st): revealFirst = ✓ / ✗ only after Show the answer; the tasks come round again in a new order; state = the plain G */
+  const order = () => gShuffle(tasks.map((_, i) => i));
+  const COL = ["#0693E3", "#FF9900"], G = state ? Object.assign({}, state) : {lines: {}, boxes: {}, turn: 0, phase: "task", deck: order(), at: 0, shown: false};
+  const changed = () => { if(onChange) onChange(G); };
+  const step = () => { G.at++; if(G.at >= G.deck.length){ G.deck = order(); G.at = 0; } G.shown = false; };
   const S = 60, P = 24, size = P * 2 + S * (n - 1), key = (a, b) => a < b ? a + "-" + b : b + "-" + a;
   const boxesOf = k => { const [a, b] = k.split("-").map(Number), out = [], r = i => Math.floor(i / n), c = i => i % n;
     if(b - a === 1){ if(r(a) > 0) out.push(a - n); if(r(a) < n - 1) out.push(a); } else { if(c(a) > 0) out.push(a - 1); if(c(a) < n - 1) out.push(a); } return out; };
@@ -369,7 +396,7 @@ function gDots(host, tasks, {n = 4, players = ["Blue", "Orange"], prompt = t => 
   const xy = i => [P + (i % n) * S, P + Math.floor(i / n) * S];
   function render(){
     const all = []; for(let i = 0; i < n * n; i++){ if(i % n < n - 1) all.push(key(i, i + 1)); if(i < n * (n - 1)) all.push(key(i, i + n)); }
-    const total = (n - 1) * (n - 1), score = [0, 1].map(p => Object.values(G.boxes).filter(o => o === p).length), over = Object.keys(G.boxes).length === total, t = G.deck[G.at % G.deck.length];
+    const total = (n - 1) * (n - 1), score = [0, 1].map(p => Object.values(G.boxes).filter(o => o === p).length), over = Object.keys(G.boxes).length === total, t = tasks[G.deck[G.at % G.deck.length]];
     host.innerHTML = `<div class="gdots"><svg viewBox="0 0 ${size} ${size}" class="gdt-board">
       ${Object.entries(G.boxes).map(([b, o]) => { const [x, y] = xy(+b); return `<rect x="${x + 4}" y="${y + 4}" width="${S - 8}" height="${S - 8}" rx="6" fill="${COL[o]}" opacity=".85"/>`; }).join("")}
       ${all.map(k => { const [a, b] = k.split("-").map(Number), [x1, y1] = xy(a), [x2, y2] = xy(b), o = G.lines[k];
@@ -377,16 +404,18 @@ function gDots(host, tasks, {n = 4, players = ["Blue", "Orange"], prompt = t => 
       ${Array.from({length: n * n}, (_, i) => { const [x, y] = xy(i); return `<circle cx="${x}" cy="${y}" r="6" class="gdt-dot"/>`; }).join("")}</svg>
       <div class="gt-side">${over ? `<p class="gt-turn big">${score[0] === score[1] ? "It's a draw!" : `<span class="gs-dot" style="background:${COL[score[0] > score[1] ? 0 : 1]}"></span> ${gEsc(players[score[0] > score[1] ? 0 : 1])} wins! 🎉`}</p>`
         : `<p class="gt-turn"><span class="gs-dot" style="background:${COL[G.turn]}"></span> <b>${gEsc(players[G.turn])}'s turn</b></p>
-        ${G.phase === "task" ? `<div class="gt-task${G.shown ? " shown" : ""}"><p class="gt-q">${prompt(t)}</p>${G.shown ? `<p class="gt-a">${answer(t)}</p>` : ""}<div class="gt-acts">${!G.shown ? `<button class="btn" data-dt-show>Show the answer</button>` : ""}<button class="btn ok" data-dt-yes>✓ Got it — draw a line</button><button class="btn again" data-dt-no>✗ Not quite</button></div></div>`
+        ${G.phase === "task" ? `<div class="gt-task${G.shown ? " shown" : ""}"><p class="gt-q">${prompt(t)}</p>${G.shown ? `<p class="gt-a">${answer(t)}</p>` : ""}<div class="gt-acts">${!G.shown ? `<button class="btn${revealFirst ? " primary" : ""}" data-dt-show>Show the answer</button>` : ""}${!revealFirst || G.shown ? `<button class="btn ok" data-dt-yes>✓ Got it — draw a line</button><button class="btn again" data-dt-no>✗ Not quite — next player</button>` : ""}</div></div>`
           : `<p class="gs-msg">Draw one line between two dots.</p>`}`}
-        <p class="gdt-score">${players.map((p, i) => `<span class="gs-dot" style="background:${COL[i]}"></span> ${score[i]}`).join(" &nbsp; ")}</p></div></div>`;
+        <p class="gdt-score">${players.map((p, i) => `<span class="gs-dot" style="background:${COL[i]}"></span> ${score[i]}`).join(" &nbsp; ")}</p>${over ? `<button class="btn primary" data-dt-again>Play again</button>` : ""}</div></div>`;
     const on = (q, f) => { const b = host.querySelector(q); if(b) b.addEventListener("click", f); };
-    on("[data-dt-show]", () => { G.shown = true; render(); });
-    on("[data-dt-yes]", () => { G.phase = "line"; render(); });
-    on("[data-dt-no]", () => { G.at++; G.shown = false; G.turn = 1 - G.turn; render(); });
+    on("[data-dt-show]", () => { G.shown = true; render(); changed(); });
+    on("[data-dt-yes]", () => { if(onResult) onResult(t, true); G.phase = "line"; render(); changed(); });
+    on("[data-dt-no]", () => { if(onResult) onResult(t, false); step(); G.turn = 1 - G.turn; render(); changed(); });
+    on("[data-dt-again]", () => { G.lines = {}; G.boxes = {}; G.turn = 0; G.phase = "task"; step(); render(); changed(); });
     host.querySelectorAll(".gdt-l.free").forEach(l => l.addEventListener("click", () => { const k = l.dataset.dl; G.lines[k] = G.turn; let closed = false;
       boxesOf(k).forEach(b => { if(G.boxes[b] == null && boxDone(b)){ G.boxes[b] = G.turn; closed = true; } });
-      G.at++; G.shown = false; G.phase = "task"; if(!closed) G.turn = 1 - G.turn; render(); }));
+      step(); G.phase = "task"; if(!closed) G.turn = 1 - G.turn; render(); changed();
+      if(onWin && Object.keys(G.boxes).length === (n - 1) * (n - 1)) onWin(host.querySelector(".gt-turn.big") || host); }));
   }
   render(); return G;
 }
@@ -441,12 +470,16 @@ function gReveal(host, {img, alt = "", cols = 4, rows = 3, tasks = null, prompt 
 
 /* ---------- 🪿 the goose track (her opinions board game, 2015): flip the coin — heads one step, tails two; the square says what to talk
    about; a goose 🪿 = flip again; the first to the finish wins ---------- */
-function gGoose(host, squares, {cols = 6, goose = 5, players = ["Blue", "Orange"], task = "", show = s => gEsc(s.t || s), detail = s => s.q ? gEsc(s.q) : ""} = {}){
+function gGoose(host, squares, {cols = 6, goose = 5, players = ["Blue", "Orange"], task = "", show = s => gEsc(s.t || s), detail = s => s.q ? gEsc(s.q) : "",
+    prompt = null, answer = null, state = null, onResult = null, onChange = null, onWin = null} = {}){
+  /* tools 20 (B2 revision f-dis): with answer(), a square is a task — Show the answer → ✓ right = you stay / ✗ not quite = back to where
+     you were; state = the plain G (the page redraws) */
   const COLS = ["#0693E3", "#FF9900", "#9B51E0"], PAL = ["#FFF3C4", "#D6F5E8", "#FFE0EA", "#DDF1FF"];
   const cells = [{start: true}]; squares.forEach(s => { if(goose && cells.length % goose === 0) cells.push({goose: true}); cells.push(s); }); cells.push({finish: true});
   /* on a phone the track folds into 4 columns */
   let C = cols; const N = cells.length, rc = k => { const r = Math.floor(k / C), i = k % C; return [r, r % 2 ? C - 1 - i : i]; };
-  const G = {pos: players.map(() => 0), turn: 0, busy: false, phase: "flip", winner: null, msg: "", face: 0};
+  const G = state ? Object.assign({}, state, {busy: false}) : {pos: players.map(() => 0), turn: 0, busy: false, phase: "flip", winner: null, msg: "", face: 0, from: 0, shown: false};
+  const changed = () => { if(onChange) onChange(G); };
   host.innerHTML = `<div class="ggo"><div class="ggo-board" style="--c:${cols}"><svg class="ggo-road" aria-hidden="true"></svg>
     ${cells.map((c, k) => { const [r, col] = rc(k);
       return `<div class="ggo-sq${c.start ? " start" : c.finish ? " finish" : c.goose ? " goose" : ""}" data-k="${k}" style="grid-row:${r + 1};grid-column:${col + 1};${c.start || c.finish || c.goose ? "" : `background:${PAL[k % PAL.length]}`}">${c.start || c.finish || c.goose ? "" : `<span class="ggo-n">${k}</span>`}<span class="ggo-t">${c.start ? "Start" : c.finish ? "🏁" : c.goose ? "🪿" : show(c)}</span></div>`; }).join("")}
@@ -471,26 +504,32 @@ function gGoose(host, squares, {cols = 6, goose = 5, players = ["Blue", "Orange"
     const p = G.turn, me = `<span class="gs-dot" style="background:${COLS[p]}"></span>`, c = cells[G.pos[p]];
     side.innerHTML = G.winner != null ? `<p class="gt-turn big"><span class="gs-dot" style="background:${COLS[G.winner]}"></span> ${gEsc(players[G.winner])} wins! 🎉</p><button class="btn primary" data-go-again>Play again</button>`
       : `<p class="gt-turn">${me} <b>${gEsc(players[p])}'s turn</b></p>${G.msg ? `<p class="gs-msg">${G.msg}</p>` : ""}
-      ${G.phase === "task" ? `<div class="gt-task"><p class="gt-q">${show(c)}</p>${detail(c) ? `<p class="ggo-d">${detail(c)}</p>` : ""}${task ? `<p class="ggo-task">${task}</p>` : ""}</div><button class="btn primary" data-go-next>Next player ▸</button>`
+      ${G.phase === "task" && answer ? `<div class="gt-task${G.shown ? " shown" : ""}"><p class="gt-q">${prompt ? prompt(c) : show(c)}</p>${G.shown ? `<p class="gt-a">${answer(c)}</p>` : ""}
+          <div class="gt-acts">${!G.shown ? `<button class="btn primary" data-go-show>Show the answer</button>` : `<button class="btn ok" data-go-yes>✓ Right — you stay</button><button class="btn again" data-go-no>✗ Not quite — back to ${G.from ? G.from : "Start"}</button>`}</div></div>`
+        : G.phase === "task" ? `<div class="gt-task"><p class="gt-q">${show(c)}</p>${detail(c) ? `<p class="ggo-d">${detail(c)}</p>` : ""}${task ? `<p class="ggo-task">${task}</p>` : ""}</div><button class="btn primary" data-go-next>Next player ▸</button>`
         : `<button class="ggo-coin" data-go-flip aria-label="Flip the coin" ${G.busy ? "disabled" : ""}>${gCoinHTML(G.face, "md")}</button><p class="gs-hint">Tap the coin: heads ${coinSm(1)} one step, tails ${coinSm(2)} two</p>`}`;
     const on = (q, f) => { const b = side.querySelector(q); if(b) b.addEventListener("click", f); };
     on("[data-go-flip]", flip);
-    on("[data-go-next]", () => { G.turn = (G.turn + 1) % players.length; G.phase = "flip"; G.msg = ""; panel(); });
-    on("[data-go-again]", () => { G.pos = players.map(() => 0); G.turn = 0; G.winner = null; G.phase = "flip"; G.msg = ""; layout(); panel(); });
+    on("[data-go-next]", () => { G.turn = (G.turn + 1) % players.length; G.phase = "flip"; G.msg = ""; panel(); changed(); });
+    on("[data-go-show]", () => { G.shown = true; panel(); changed(); });
+    const nextP = () => { G.busy = false; G.shown = false; G.turn = (G.turn + 1) % players.length; G.phase = "flip"; panel(); changed(); };
+    on("[data-go-yes]", () => { if(G.busy) return; if(onResult) onResult(c, true); G.msg = ""; nextP(); });
+    on("[data-go-no]", () => { if(G.busy) return; if(onResult) onResult(c, false); G.busy = true; G.msg = ""; G.phase = "back"; panel(); hop(p, G.pos[p], G.from, nextP); });
+    on("[data-go-again]", () => { G.pos = players.map(() => 0); G.turn = 0; G.winner = null; G.phase = "flip"; G.msg = ""; G.shown = false; layout(); panel(); changed(); });
   }
   function hop(i, from, to, done){
     if(from === to){ done(); return; }
-    const next = from + 1, [x1, y1] = foot(from), [x2, y2] = foot(next);
+    const next = from + (to > from ? 1 : -1), [x1, y1] = foot(from), [x2, y2] = foot(next);
     gAnimate(gCalm() ? 0 : 260, t => { const e = gEaseOut(t, 2); place(i, x1 + (x2 - x1) * e, y1 + (y2 - y1) * e - Math.sin(Math.PI * t) * 24); }, () => { G.pos[i] = next; hop(i, next, to, done); });
   }
   function flip(){
-    if(G.busy) return; G.busy = true; G.msg = ""; const p = G.turn, f = Math.random() < .5 ? 1 : 2, coin = side.querySelector(".gcoin");
+    if(G.busy) return; G.busy = true; G.msg = ""; const p = G.turn, f = Math.random() < .5 ? 1 : 2, coin = side.querySelector(".gcoin"); if(G.phase !== "flip2") G.from = G.pos[p];
     side.querySelector("[data-go-flip]").disabled = true; const hint = side.querySelector(".gs-hint"); if(hint) hint.style.visibility = "hidden";
     gToss(coin, f, () => { G.face = f; setTimeout(() => hop(p, G.pos[p], Math.min(N - 1, G.pos[p] + f), () => {
       G.busy = false; const c = cells[G.pos[p]];
-      if(c.finish){ G.winner = p; panel(); return; }
-      if(c.goose){ G.msg = "🪿 A goose! Flip again."; G.phase = "flip"; panel(); return; }
-      G.phase = "task"; panel(); }), gCalm() ? 0 : 350); });
+      if(c.finish){ G.winner = p; panel(); if(onWin) onWin(side.querySelector(".gt-turn.big") || side); changed(); return; }
+      if(c.goose){ G.msg = "🪿 A goose! Flip again."; G.phase = "flip2"; panel(); changed(); return; }
+      G.phase = "task"; G.shown = false; panel(); changed(); }), gCalm() ? 0 : 350); });
   }
   layout(); panel(); return G;
 }
@@ -500,26 +539,30 @@ function gGoose(host, squares, {cols = 6, goose = 5, players = ["Blue", "Orange"
 const G_ISLES = {3: [[230, 190], [770, 170], [500, 420]], 4: [[220, 170], [770, 150], [290, 420], [730, 410]],
   5: [[190, 150], [510, 110], [830, 170], [290, 410], [720, 420]], 6: [[170, 140], [500, 105], [830, 150], [180, 420], [520, 400], [840, 420]],
   7: [[160, 135], [470, 100], [800, 125], [300, 330], [640, 300], [880, 420], [140, 450]], 8: [[160, 130], [450, 95], [760, 110], [290, 320], [610, 290], [890, 330], [140, 470], [720, 470]]};
-function gIslands(host, islands, {label = "⛵ Sail", onPick = null} = {}){
+function gIslands(host, islands, {label = "⛵ Sail", onPick = null, state = null, onChange = null} = {}){
+  /* tools 20 (B2 revision f-st): an island can be {t, hint} (the topic, a small grey verb hint); state = {at, seen: [], boat} (the page redraws) */
   const W = 1000, H = 560, n = Math.min(8, Math.max(3, islands.length)), list = islands.slice(0, n), P = G_ISLES[n], R = n > 6 ? 70 : 80;
-  const I = {at: -1, seen: new Set(), busy: false, boat: null};
+  const I = {at: state && state.at != null ? state.at : -1, seen: new Set(state && state.seen || []), busy: false, boat: state && state.boat ? state.boat.slice() : null};
+  const nm = it => it.name || it.t || it.q || "";
+  I.save = () => ({at: I.at, seen: [...I.seen], boat: I.boat ? I.boat.slice() : null});
+  const changed = () => { if(onChange) onChange(I.save()); };
   const rnd = k => { const x = Math.sin(k * 12.9898 + 78.233) * 43758.5453; return x - Math.floor(x); };
   const blob = (cx, cy, r, seed) => { const m = 11, pts = Array.from({length: m}, (_, i) => { const a = i / m * Math.PI * 2, rr = r * (.86 + .26 * rnd(seed * 31 + i)); return [cx + Math.cos(a) * rr * 1.32, cy + Math.sin(a) * rr * .88]; });
     let d = `M${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
     for(let i = 0; i < m; i++){ const p0 = pts[(i - 1 + m) % m], p1 = pts[i], p2 = pts[(i + 1) % m], p3 = pts[(i + 2) % m];
       d += `C${(p1[0] + (p2[0] - p0[0]) / 6).toFixed(1)} ${(p1[1] + (p2[1] - p0[1]) / 6).toFixed(1)} ${(p2[0] - (p3[0] - p1[0]) / 6).toFixed(1)} ${(p2[1] - (p3[1] - p1[1]) / 6).toFixed(1)} ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`; }
     return d + "Z"; };
-  const lines = s => { const w = String(s).split(" "), out = [""]; w.forEach(x => { if((out[out.length - 1] + " " + x).trim().length > 10 && out[out.length - 1]) out.push(x); else out[out.length - 1] = (out[out.length - 1] + " " + x).trim(); }); return out.slice(0, 3); };
+  const lines = s => { const w = String(s).split(" "), out = [""]; w.forEach(x => { if((out[out.length - 1] + " " + x).trim().length > 10 && out[out.length - 1]) out.push(x); else out[out.length - 1] = (out[out.length - 1] + " " + x).trim(); }); return out.slice(0, 4); };   /* tools 20: 4 lines ("a long walk in the countryside"), a bit smaller */
   /* the boat starts in the open sea, as far from every island as possible */
   let best = [W / 2, H - 40], bd = 0; for(let x = 60; x <= W - 60; x += 20) for(let y = 50; y <= H - 40; y += 20){ const d = Math.min(...P.map(([a, b]) => Math.hypot(a - x, (b - y) * 1.25))); if(d > bd){ bd = d; best = [x, y]; } }
-  I.boat = best.slice();
+  if(!I.boat) I.boat = best.slice();
   const waves = Array.from({length: 26}, (_, k) => [40 + rnd(k + 3) * (W - 80), 30 + rnd(k + 50) * (H - 60)]).filter(([x, y]) => P.every(([a, b]) => Math.hypot(a - x, b - y) > R * 1.5));
   host.innerHTML = `<div class="gis"><svg class="gis-map" viewBox="0 0 ${W} ${H}" role="img" aria-label="A sea with ${n} islands">
     <rect x="3" y="3" width="${W - 6}" height="${H - 6}" rx="18" class="gis-sea"/>
     ${waves.map(([x, y]) => `<path d="M${x.toFixed(0)} ${y.toFixed(0)}q8 -7 16 0t16 0" class="gis-wave"/>`).join("")}
-    ${list.map((it, k) => { const [x, y] = P[k], d = blob(x, y, R, k + 1), g = blob(x, y - 4, R * .74, k + 9), L = lines(it.name || it.q);
-      return `<g class="gis-isle" data-is="${k}" tabindex="0" role="button" aria-label="${gEsc(it.name || it.q)}"><path d="${d}" transform="translate(0 7)" class="gis-shadow"/><path d="${d}" class="gis-sand"/><path d="${g}" class="gis-grass"/>
-        ${L.map((s, j) => `<text x="${x}" y="${(y - 4 + (j - (L.length - 1) / 2) * 32 + 10).toFixed(0)}" text-anchor="middle" class="gis-label">${gEsc(s)}</text>`).join("")}<text x="${x + R * .55}" y="${y - R * .62}" class="gis-flag">🚩</text></g>`; }).join("")}
+    ${list.map((it, k) => { const [x, y] = P[k], d = blob(x, y, R, k + 1), g = blob(x, y - 4, R * .74, k + 9), L = lines(nm(it));
+      return `<g class="gis-isle${I.seen.has(k) ? " seen" : ""}${k === I.at ? " on" : ""}" data-is="${k}" tabindex="0" role="button" aria-label="${gEsc(nm(it))}"><path d="${d}" transform="translate(0 7)" class="gis-shadow"/><path d="${d}" class="gis-sand"/><path d="${g}" class="gis-grass"/>
+        ${L.map((s, j) => `<text x="${x}" y="${(y - 4 + (j - (L.length - 1) / 2) * (L.length > 3 ? 26 : 32) + 10).toFixed(0)}" text-anchor="middle" class="gis-label"${L.length > 3 ? ` style="font-size:25px"` : ""}>${gEsc(s)}</text>`).join("")}<text x="${x + R * .55}" y="${y - R * .62}" class="gis-flag">🚩</text></g>`; }).join("")}
     <g class="gis-boat"><g class="gis-boat-in"><text class="gis-notes" x="-6" y="-40">♪ ♫</text><path d="M-24 2h48l-9 14h-30z" class="gis-hull"/><line x1="0" y1="2" x2="0" y2="-34" class="gis-mast"/><path d="M2 -32l20 28h-20z" class="gis-sail"/><path d="M-2 -28l-15 24h15z" class="gis-sail b"/></g></g>
   </svg><div class="gis-side gt-side"></div></div>`;
   const svg = host.querySelector(".gis-map"), side = host.querySelector(".gis-side"), boat = svg.querySelector(".gis-boat"), bin = svg.querySelector(".gis-boat-in");
@@ -527,11 +570,13 @@ function gIslands(host, islands, {label = "⛵ Sail", onPick = null} = {}){
   putBoat(...I.boat);
   function panel(){
     const it = I.at > -1 ? list[I.at] : null, all = I.seen.size === n;
-    side.innerHTML = `${it ? `<div class="gt-task"><p class="gis-name">🏝 ${gEsc(it.name || "")}</p><p class="gt-q">${it.q ? gEsc(it.q) : ""}</p></div>`
+    side.innerHTML = `${it ? (it.q && it.q !== nm(it) ? `<div class="gt-task"><p class="gis-name">🏝 ${gEsc(nm(it))}</p><p class="gt-q">${gEsc(it.q)}</p></div>`
+        : `<div class="gt-task"><p class="gis-name">🏝 Your topic</p><p class="gt-q">${gEsc(nm(it))}</p>${it.hint ? `<p class="gis-hint">${gEsc(it.hint)}</p>` : ""}</div>`)
         : `<p class="gs-hint" style="margin:0">Tap Sail: the boat stops at an island. Talk about its question.</p>`}
       <button class="btn primary" data-is-sail ${I.busy ? "disabled" : ""}>${all ? "↺ Sail round again" : it ? label + " on" : label}</button>
       <p class="grv-n">${I.seen.size} of ${n} islands</p>`;
     const b = side.querySelector("[data-is-sail]"); if(b) b.addEventListener("click", () => { if(all){ I.seen.clear(); svg.querySelectorAll(".gis-isle").forEach(g => g.classList.remove("seen", "on")); } sail(); });
+    I.sail = sail;
   }
   function sail(to){
     if(I.busy) return; const free = list.map((_, k) => k).filter(k => !I.seen.has(k) && k !== I.at);
@@ -546,9 +591,105 @@ function gIslands(host, islands, {label = "⛵ Sail", onPick = null} = {}){
       const x = B(e, x0, c1[0], c2[0], dock[0]), y = B(e, y0, c1[1], c2[1], dock[1]);
       putBoat(x, y + Math.sin(t * Math.PI * 7) * 3 * (1 - t), Math.sin(t * Math.PI * 5) * 6 * (1 - t), x < lastX - .01); lastX = x; },
       () => { I.boat = dock; I.busy = false; I.at = to; I.seen.add(to); svg.classList.remove("sailing");
-        const g = svg.querySelector(`[data-is="${to}"]`); g.classList.add("on", "seen"); panel(); if(onPick) onPick(list[to], to); });
+        const g = svg.querySelector(`[data-is="${to}"]`); g.classList.add("on", "seen"); panel(); changed(); if(onPick) onPick(list[to], to); });
   }
   svg.querySelectorAll(".gis-isle").forEach(g => { const go = () => { const k = +g.dataset.is; if(k !== I.at) sail(k); };
     g.addEventListener("click", go); g.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); go(); } }); });
   panel(); return I;
+}
+
+/* ---------- ▶ How to play (her 1.11 05:42: "a tiny game plays itself for a few seconds — X, O, X, the crosses win — it flies away and
+   ours flies in, so they see at once what this is"): our rules, one caption per move, slow (a shared Zoom screen is choppy, so every
+   step reads as a still frame); then it grows a little and fades, and the page brings the real board in. Tap = skip. With reduced
+   motion: a still frame with all the captions, tap to play. kind: ttt · dots · goose · snakes ---------- */
+const G_MARK = {X: `<svg viewBox="0 0 40 40" class="gt-x"><path d="M9 9L31 31M31 9L9 31"/></svg>`, O: `<svg viewBox="0 0 40 40" class="gt-o"><circle cx="20" cy="20" r="12"/></svg>`};
+const G_DEMO = {
+  ttt: {
+    html: () => `<div class="gdm-ttt">${Array.from({length: 9}, (_, k) => `<span class="gdm-c" data-c="${k}"><b>${k + 1}</b></span>`).join("")}</div>`,
+    steps: (() => { const c = (st, k) => st.querySelector(`[data-c="${k}"]`), ask = (st, k) => c(st, k).classList.add("ask"),
+        put = (st, k, m) => { const e = c(st, k); e.classList.remove("ask"); e.classList.add("m", "m" + m); e.innerHTML = G_MARK[m]; };
+      return [[0, (st, say) => { say("Choose a square: you get a question"); ask(st, 4); }],
+        [1300, (st, say) => { say("✓ Right answer → the square is yours"); put(st, 4, "X"); }],
+        [2600, (st, say) => { say("Then the other team"); ask(st, 0); }], [3300, st => put(st, 0, "O")],
+        [4100, (st, say) => { say("✗ Not quite → the square stays free"); ask(st, 2); }],
+        [4800, st => { const e = c(st, 2); e.classList.remove("ask"); e.classList.add("no"); }], [5500, st => c(st, 2).classList.remove("no")],
+        [6000, (st, say) => { say("Three in a row wins!"); put(st, 8, "O"); }], [6500, st => put(st, 2, "X")], [7000, st => put(st, 1, "O")], [7500, st => put(st, 6, "X")],
+        [8000, st => { [2, 4, 6].forEach(k => c(st, k).classList.add("win")); const g = st.querySelector(".gdm-ttt"); g.classList.add("won"); g.insertAdjacentHTML("beforeend", gWinLine([2, 4, 6], 3)); }]]; })(),
+    end: 9600, caps: ["✓ right → the square is yours", "✗ not quite → it stays free", "three in a row wins"],
+    still: st => { [[4, "X"], [0, "O"], [8, "O"], [2, "X"], [1, "O"], [6, "X"]].forEach(([k, m]) => { const e = st.querySelector(`[data-c="${k}"]`); e.classList.add("m", "m" + m); e.innerHTML = G_MARK[m]; }); [2, 4, 6].forEach(k => st.querySelector(`[data-c="${k}"]`).classList.add("win")); st.querySelector(".gdm-ttt").insertAdjacentHTML("beforeend", gWinLine([2, 4, 6], 3)); }
+  },
+  dots: {
+    /* 3 × 3 dots, 4 boxes; lines as in the real game: blue and orange */
+    html: () => { const P = 18, S = 70, xy = i => [P + (i % 3) * S, P + Math.floor(i / 3) * S], L = [[0, 1], [1, 2], [3, 4], [4, 5], [6, 7], [7, 8], [0, 3], [3, 6], [1, 4], [4, 7], [2, 5], [5, 8]];
+      return `<svg class="gdm-dots" viewBox="0 0 ${P * 2 + S * 2} ${P * 2 + S * 2}">${[0, 1, 3, 4].map(b => { const [x, y] = xy(b); return `<rect class="gdm-box" data-b="${b}" x="${x + 5}" y="${y + 5}" width="${S - 10}" height="${S - 10}" rx="6"/>`; }).join("")}
+        ${L.map(([a, b]) => { const [x1, y1] = xy(a), [x2, y2] = xy(b); return `<line class="gdm-l" data-l="${a}-${b}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`; }).join("")}
+        ${Array.from({length: 9}, (_, i) => { const [x, y] = xy(i); return `<circle cx="${x}" cy="${y}" r="5.5" class="gdm-dot"/>`; }).join("")}</svg>
+        <p class="gdm-score"><span class="gs-dot" style="background:#0693E3"></span> <b data-s="0">0</b> &nbsp; <span class="gs-dot" style="background:#FF9900"></span> <b data-s="1">0</b></p>`; },
+    steps: (() => { const line = (st, k, p) => { const e = st.querySelector(`[data-l="${k}"]`); e.classList.add("on", "p" + p); },
+        box = (st, b, p) => { st.querySelector(`[data-b="${b}"]`).classList.add("on", "p" + p); const s = st.querySelector(`[data-s="${p}"]`); s.textContent = +s.textContent + 1; };
+      return [[0, (st, say) => { say("✓ Right answer → draw one line"); line(st, "0-1", 0); }],
+        [1400, (st, say) => { say("Then the other player"); line(st, "0-3", 1); }],
+        [2800, (st, say) => say("✗ Not quite → no line: the other player's turn")],
+        [4100, (st, say) => { say("Then the other player"); line(st, "1-4", 1); }],
+        [5300, (st, say) => { say("Close a box → it's yours…"); line(st, "3-4", 0); }], [5700, st => box(st, 0, 0)],
+        [6700, (st, say) => { say("…and you go again!"); line(st, "4-5", 0); }],
+        [7900, (st, say) => { say("The most boxes wins"); line(st, "1-2", 1); line(st, "2-5", 1); box(st, 1, 1); }]]; })(),
+    end: 9400, caps: ["✓ right → draw a line", "close a box → it's yours, go again", "✗ not quite → the other player", "the most boxes wins"],
+    still: st => { ["0-1", "3-4", "4-5"].forEach(k => st.querySelector(`[data-l="${k}"]`).classList.add("on", "p0")); ["0-3", "1-4", "1-2", "2-5"].forEach(k => st.querySelector(`[data-l="${k}"]`).classList.add("on", "p1"));
+      st.querySelector('[data-b="0"]').classList.add("on", "p0"); st.querySelector('[data-b="1"]').classList.add("on", "p1"); }
+  },
+  goose: {
+    /* a short track: Start, five squares, the finish; the coin; two pawns */
+    html: () => `<div class="gdm-track">${["Start", "", "", "🪿", "", "", "🏁"].map((t, k) => `<span class="gdm-sq${k === 0 ? " start" : k === 6 ? " fin" : k === 3 ? " goose" : ""}" data-q="${k}">${t || `<i>${k}</i>`}</span>`).join("")}
+      <span class="gdm-pawn p0" data-p="0"></span><span class="gdm-pawn p1" data-p="1"></span></div><div class="gdm-coinrow"><span class="gdm-coin" data-coin>?</span><span class="gdm-chip" data-chip></span></div>`,
+    steps: (() => { const at = (st, p, k) => { const e = st.querySelector(`[data-p="${p}"]`), q = st.querySelector(`[data-q="${k}"]`); e.style.left = (q.offsetLeft + q.offsetWidth / 2 + (p ? 9 : -9)) + "px"; e.style.top = (q.offsetTop + q.offsetHeight - 8) + "px"; },
+        coin = (st, t) => { const c = st.querySelector("[data-coin]"); c.classList.remove("flip"); void c.offsetWidth; c.classList.add("flip"); setTimeout(() => { c.textContent = t; }, 350); },
+        chip = (st, t, cls) => { const c = st.querySelector("[data-chip]"); c.className = "gdm-chip " + (cls || ""); c.textContent = t; }, glow = (st, k) => { st.querySelectorAll(".gdm-sq").forEach(q => q.classList.toggle("glow", +q.dataset.q === k)); };
+      return [[0, (st, say) => { at(st, 0, 0); at(st, 1, 0); say("Flip the coin: heads = 1 step, tails = 2"); coin(st, "2"); }],
+        [900, st => at(st, 0, 1)], [1250, st => at(st, 0, 2)],
+        [1800, (st, say) => { say("Do the task on your square"); glow(st, 2); chip(st, "?", "ask"); }],
+        [2900, (st, say) => { say("✓ Right → you stay"); chip(st, "✓", "ok"); }],
+        [4000, (st, say) => { say("Then the other player"); glow(st, -1); chip(st, ""); coin(st, "1"); }], [4900, st => at(st, 1, 1)],
+        [5400, (st, say) => { say("✗ Not quite → back to where you were"); glow(st, 1); chip(st, "✗", "no"); }], [6300, st => { at(st, 1, 0); glow(st, -1); chip(st, ""); }],
+        [7100, (st, say) => { say("🪿 A goose: flip again! First to the finish wins"); glow(st, 3); }]]; })(),
+    end: 8800, caps: ["flip: heads 1 step, tails 2", "✓ right → you stay", "✗ not quite → back", "🪿 flip again"],
+    still: st => setTimeout(() => { const at = (p, k) => { const e = st.querySelector(`[data-p="${p}"]`), q = st.querySelector(`[data-q="${k}"]`); e.style.left = (q.offsetLeft + q.offsetWidth / 2 + (p ? 9 : -9)) + "px"; e.style.top = (q.offsetTop + q.offsetHeight - 8) + "px"; }; at(0, 2); at(1, 0); }, 0)
+  },
+  snakes: {
+    /* 12 squares, a ladder 2 → 9, a snake 11 → 4 */
+    html: () => { const C = 4, R = 3, S = 54, cen = k => { const r = Math.floor((k - 1) / C), i = (k - 1) % C, c = r % 2 ? C - 1 - i : i; return [c * S + S / 2, (R - 1 - r) * S + S / 2]; };
+      const [lx1, ly1] = cen(2), [lx2, ly2] = cen(9), [sx1, sy1] = cen(11), [sx2, sy2] = cen(4);
+      return `<svg class="gdm-snl" viewBox="-4 -4 ${C * S + 8} ${R * S + 8}">${Array.from({length: C * R}, (_, i) => { const [x, y] = cen(i + 1); return `<rect x="${x - S / 2 + 2}" y="${y - S / 2 + 2}" width="${S - 4}" height="${S - 4}" rx="7" class="gdm-sn ${(i + Math.floor(i / C)) % 2 ? "b" : ""}"/><text x="${x - S / 2 + 7}" y="${y - S / 2 + 15}" class="gdm-n">${i + 1}</text>`; }).join("")}
+        <g class="gdm-lad"><line x1="${lx1 - 7}" y1="${ly1}" x2="${lx2 - 7}" y2="${ly2}"/><line x1="${lx1 + 7}" y1="${ly1}" x2="${lx2 + 7}" y2="${ly2}"/>${[.2, .4, .6, .8].map(f => `<line x1="${lx1 - 7 + (lx2 - lx1) * f}" y1="${ly1 + (ly2 - ly1) * f}" x2="${lx1 + 7 + (lx2 - lx1) * f}" y2="${ly1 + (ly2 - ly1) * f}"/>`).join("")}</g>
+        <path class="gdm-snake" d="M${sx1} ${sy1} C${sx1 + 30} ${sy1 + 20} ${sx2 - 30} ${sy2 - 30} ${sx2} ${sy2}"/><circle cx="${sx1}" cy="${sy1}" r="8" class="gdm-shead"/>
+        ${[0, 1].map(p => `<circle r="9" class="gdm-pw p${p}" data-p="${p}"/>`).join("")}</svg><div class="gdm-coinrow"><span class="gdm-die" data-die>?</span><span class="gdm-chip" data-chip></span></div>`; },
+    steps: (() => { const C = 4, R = 3, S = 54, cen = k => { const r = Math.floor((k - 1) / C), i = (k - 1) % C, c = r % 2 ? C - 1 - i : i; return [c * S + S / 2, (R - 1 - r) * S + S / 2]; };
+      const at = (st, p, k) => { const [x, y] = cen(k), e = st.querySelector(`[data-p="${p}"]`); e.setAttribute("cx", x + (p ? 8 : -8)); e.setAttribute("cy", y + 10); },
+        die = (st, n) => { const d = st.querySelector("[data-die]"); d.classList.remove("flip"); void d.offsetWidth; d.classList.add("flip"); setTimeout(() => { d.textContent = n; }, 350); },
+        chip = (st, t, cls) => { const c = st.querySelector("[data-chip]"); c.className = "gdm-chip " + (cls || ""); c.textContent = t; };
+      return [[0, (st, say) => { at(st, 0, 1); at(st, 1, 7); say("Roll the die and move"); die(st, "1"); }], [900, st => at(st, 0, 2)],
+        [1500, (st, say) => { say("A ladder: answer right → up you go!"); chip(st, "?", "ask"); }], [2500, st => chip(st, "✓", "ok")], [3000, st => { at(st, 0, 9); chip(st, ""); }],
+        [4000, (st, say) => { say("Then the other player"); die(st, "4"); }], [4900, st => at(st, 1, 11)],
+        [5500, (st, say) => { say("A snake: not quite → down you go"); chip(st, "?", "ask"); }], [6400, st => chip(st, "✗", "no")], [6900, st => { at(st, 1, 4); chip(st, ""); }],
+        [7900, (st, say) => say("Anywhere else: right → stay, not quite → back")]]; })(),
+    end: 9600, caps: ["roll and move", "a ladder + right → up", "a snake + not quite → down", "elsewhere: right → stay, not quite → back"],
+    still: st => { const C = 4, R = 3, S = 54, cen = k => { const r = Math.floor((k - 1) / C), i = (k - 1) % C, c = r % 2 ? C - 1 - i : i; return [c * S + S / 2, (R - 1 - r) * S + S / 2]; };
+      [[0, 9], [1, 4]].forEach(([p, k]) => { const [x, y] = cen(k), e = st.querySelector(`[data-p="${p}"]`); e.setAttribute("cx", x + (p ? 8 : -8)); e.setAttribute("cy", y + 10); }); }
+  }
+};
+function gDemo(host, kind, {onDone = null} = {}){
+  const D = G_DEMO[kind]; if(!D){ if(onDone) onDone(); return null; }
+  const calm = gCalm();
+  host.innerHTML = `<div class="gdemo${calm ? " still" : ""}" role="button" tabindex="0" aria-label="How to play — tap to ${calm ? "play" : "skip"}"><span class="gdm-lbl">▶ How to play</span>
+    <div class="gdm-stage">${D.html()}</div><p class="gdm-cap" aria-live="polite">${calm ? D.caps.join(" · ") : ""}</p><span class="gdm-skip">${calm ? "Tap to play ▸" : "Tap to skip ▸"}</span></div>`;
+  const root = host.querySelector(".gdemo"), st = root.querySelector(".gdm-stage"), cap = root.querySelector(".gdm-cap"), timers = [];
+  let over = false;
+  const say = t => { cap.textContent = t; cap.classList.remove("in"); void cap.offsetWidth; cap.classList.add("in"); };
+  const finish = () => { if(over) return; over = true; timers.forEach(clearTimeout); root.classList.add("out"); timers.push(setTimeout(() => { if(onDone) onDone(); }, calm ? 0 : 480)); };
+  root.addEventListener("click", finish); root.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); finish(); } });
+  if(calm){ D.still(st); return {finish, stop: () => { over = true; }}; }
+  const K = .85;   /* "a few seconds": about 8 s, slow enough to read each caption */
+  D.steps.forEach(([t, fn]) => timers.push(setTimeout(() => { if(!over && root.isConnected) fn(st, say); }, t * K + 250)));
+  timers.push(setTimeout(() => { if(root.isConnected) finish(); }, D.end * K + 250));
+  return {finish, stop: () => { over = true; timers.forEach(clearTimeout); }};
 }
