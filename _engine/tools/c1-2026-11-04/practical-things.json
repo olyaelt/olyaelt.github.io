@@ -111,9 +111,13 @@
       },
       {
        "p": [
-        "❤️  ",
+        "❤️  — One thing I've never used since: those lessons on how to survive a natural disaster. But ",
         {
-         "b": "You never know when it might"
+         "b": "you never know when"
+        },
+        "… — …",
+        {
+         "b": "it might"
         },
         " ",
         {
@@ -130,7 +134,7 @@
          "f": "h",
          "r": "andy"
         },
-        ". ((two of you built this one together))"
+        "! — Yeah, you're right."
        ]
       },
       {
@@ -155,7 +159,7 @@
       },
       {
        "p": [
-        "❤️  Learning English without dancing was ",
+        "❤️  — I'd say learning English is ",
         {
          "b": "a"
         },
@@ -174,7 +178,12 @@
          "f": "c",
          "r": "urve"
         },
-        " :-)"
+        " for me. — Endless! — Let's keep it ",
+        {
+         "f": "s",
+         "r": "teep"
+        },
+        "."
        ]
       },
       {
@@ -294,12 +303,7 @@
       "p": "Yes, but practical shouldn't just mean cooking and managing money. When I started this job, it was …"
      },
      "answer": "Yes, but practical shouldn't just mean cooking and managing money. When I started this job, it was **a really steep learning curve**. I had good grades, but nobody had taught me any of the **soft skills**: how to manage my time, ask for help, or cope when things went wrong. You **pick** most of that **up on the job**, usually **the hard way**. It took me months to realise that asking for help isn't a sign of weakness. **I really wish someone had told me** that in school."
-    }
-   ]
-  },
-  {
-   "label": "✏️ Make it perfect",
-   "blocks": [
+    },
     {
      "kind": "text",
      "cols": 2,
@@ -728,7 +732,12 @@
        ]
       }
      ]
-    },
+    }
+   ]
+  },
+  {
+   "label": "✏️ Make it perfect",
+   "blocks": [
     {
      "kind": "cards",
      "style": "ours",
@@ -1180,106 +1189,90 @@
        "key": "HARD"
       },
       {
-       "front": "The walk up to the castle? It can't be far, can it?",
-       "back": "It's **a lot steeper than you'd think** — take water.",
-       "key": "STEEP"
+       "front": "Sourdough? Don't you just mix flour and water?",
+       "back": "It's **a lot more complicated than you'd think** — my first three loaves went straight in the bin.",
+       "key": "COMPLICATED"
       },
       {
-       "front": "Your neighbours? They look a bit grumpy.",
-       "back": "They're **a lot friendlier than you'd think** — they fed our cat all summer.",
+       "front": "A dog? That can't cost much — it's just food, isn't it?",
+       "back": "It's **a lot more expensive than you'd think** — the vet bills alone!",
+       "key": "EXPENSIVE"
+      },
+      {
+       "front": "Your neighbours? I bet they never even say hello.",
+       "back": "They're **a lot friendlier than you'd think** — they fed our cat the whole time we were away.",
        "key": "FRIENDLY"
       },
       {
-       "front": "Your dad has a smartphone? Does he ever actually use it?",
-       "back": "He's on it **more often than you'd think** — mostly sending me memes.",
+       "front": "Your dad? Does he even know how to use his phone?",
+       "back": "He uses it **a lot more often than you'd think** — mostly to send me memes.",
        "key": "OFTEN"
+      }
+     ]
+    },
+    {
+     "kind": "cards",
+     "style": "say",
+     "box": "YOU",
+     "instr": "Oh, come on! Read the line to your partner as if you really think so. Your partner pushes back with the frame and one example. Then give in (Fair enough!) or push back once more (Oh, come on!). Then tap the card.",
+     "cards": [
+      {
+       "front": "Housework? It takes, what, half an hour a day?",
+       "back": "It takes **a lot longer than you'd think** — and it never actually ends."
+      },
+      {
+       "front": "A year at home with a baby — that's basically a year off.",
+       "back": "It's **a lot more tiring than you'd think** — you don't even get a lunch break."
+      },
+      {
+       "front": "Working from home must be great — you can do the laundry between meetings.",
+       "back": "It's **a lot lonelier than you'd think** — some days I don't talk to anyone."
+      },
+      {
+       "front": "Living abroad? Must be like one long holiday.",
+       "back": "It's **a lot harder than you'd think** — just opening a bank account took me a month."
+      },
+      {
+       "front": "Your English is great. Why are you still taking lessons?",
+       "back": "Sounding natural is **a lot harder than you'd think** — I still sound like a textbook half the time."
+      },
+      {
+       "front": "Your parents are retired? They must be so bored.",
+       "back": "They're **a lot busier than you'd think** — I practically have to book a slot to call my mum."
+      },
+      {
+       "front": "Programmers just ask AI to write the code now, don't they?",
+       "back": "There's **a lot more to it than you'd think** — someone still has to check everything it writes."
+      },
+      {
+       "front": "Kids today have it easy — we had six lessons a day and homework every night.",
+       "back": "School's **a lot more stressful these days than you'd think** — my niece has tests every week."
       }
      ]
     },
     {
      "kind": "say",
      "box": "YOU",
-     "instr": "Something that's harder, easier or more fun than people expect: say it with the frame.",
+     "instr": "Now you: one thing people get wrong about your life. Say it with the frame. Your partner asks: Really? How so? Then swap. Tap “Show the answer” for two examples.",
      "task": [
-      "Your partner reacts: **Really? How so?** Then you give one example.",
-      "((Ideas: a dish · a place you've been to · a sport · your city · someone in your family · an app))"
-     ]
-    },
-    {
-     "kind": "model",
-     "img": "ljubljana.jpg",
-     "alt": "Ljubljana",
-     "side": true,
-     "instr": "Read the dialogue. What's under the yellow? Then tap to check.",
-     "parts": [
-      {
-       "lines": [
-        {
-         "s": "A",
-         "p": [
-          "A week in Ljubljana? What are you going to do there for a whole week?"
-         ]
-        },
-        {
-         "s": "B",
-         "p": [
-          "There's ",
-          {
-           "f": "",
-           "r": "more to do than you'd think"
-          },
-          "."
-         ]
-        },
-        {
-         "s": "A",
-         "p": [
-          "Really? Like what?"
-         ]
-        },
-        {
-         "s": "B",
-         "p": [
-          "The lakes and the mountains are an hour away, and the food alone is worth the trip."
-         ]
-        }
-       ]
-      }
-     ]
-    },
-    {
-     "kind": "say",
-     "instr": "Now your own dialogue: change the grey parts. Your city? A place you've been to? Your own idea. Take turns, then tap “Show the answer” for two examples.",
-     "task": [
-      "A: A week in [[Ljubljana]]? What are you going to do there for a whole week?",
-      "B: There's **more to do than you'd think**.",
-      "A: Really? Like what?",
-      "B: [[The lakes and the mountains are an hour away, and the food alone is worth the trip.]]"
+      "People assume …, but it's **a lot … than you'd think**.",
+      "((Ideas: your job · the country you live in · your city · being a parent · your generation · working from home · learning English as an adult · your hobby · being the oldest or the youngest in your family))"
      ],
      "answer": [
-      "A: A week in [[Ljubljana]]? What are you going to do there for a whole week?",
-      "B: There's **more to do than you'd think**.",
-      "A: Really? Like what?",
-      "B: [[The lakes and the mountains are an hour away, and the food alone is worth the trip.]]",
-      "**1**  A: Three days in Bratislava? Isn't it really small?",
-      "B: There's **more to see than you'd think**.",
-      "A: Really? Like what?",
-      "B: The old town is lovely, Vienna's only an hour away by train, and the wine is really cheap.",
-      "**2**  A: Your town? What is there to do in the evenings?",
-      "B: There's **a lot more going on than you'd think**.",
-      "A: Really? Like what?",
-      "B: There's a jazz bar round the corner, and in summer there are free concerts by the river."
+      "People assume teachers finish at three and get the whole summer off, but the job's **a lot more work than you'd think** — half of it happens at the kitchen table at night.",
+      "People assume trains in Germany are always on time, but they're late **a lot more often than you'd think** — mine was two hours late last week."
      ],
-     "answer_title": "Sample answers"
+     "answer_title": "Two examples"
     },
     {
      "kind": "postits",
      "instr": "If you're done: read a sticker to your partner. They reply with the frame, making the word in capitals a comparative, without looking. Then swap.",
      "notes": [
       "Yoga? Isn't that just stretching? **HARD**",
-      "The walk up to the castle? It can't be far, can it? **STEEP**",
-      "Your neighbours? They look a bit grumpy. **FRIENDLY**",
-      "Your dad has a smartphone? Does he ever actually use it? **OFTEN**"
+      "Sourdough? Don't you just mix flour and water? **COMPLICATED**",
+      "A dog? That can't cost much — it's just food, isn't it? **EXPENSIVE**",
+      "Your neighbours? I bet they never even say hello. **FRIENDLY**",
+      "Your dad? Does he even know how to use his phone? **OFTEN**"
      ]
     }
    ]

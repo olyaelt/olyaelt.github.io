@@ -53,7 +53,7 @@
   {
    "pid": 10,
    "sig": "say something that's harder, easier or more fun than people expect: say it with the frame.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 11,
@@ -128,12 +128,12 @@
   {
    "pid": 25,
    "sig": "model read the dialogue. what's under the yellow? then tap to check. ljubljana.jpg",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 26,
    "sig": "say now your own dialogue: change the grey parts. your city? a place you've been to? your own idea. take turns, then tap “show the answer” for two examples.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 27,
@@ -158,6 +158,16 @@
   {
    "pid": 31,
    "sig": "game tic-tac-toe in pairs: choose a square and say it in english. then tap to check. three in a row wins.",
+   "gone": false
+  },
+  {
+   "pid": 32,
+   "sig": "cards oh, come on! read the line to your partner as if you really think so. your partner pushes back with the frame and one example. then give in (fair enough!) or push back once more (oh, come on!). then tap the card.",
+   "gone": false
+  },
+  {
+   "pid": 33,
+   "sig": "say now you: one thing people get wrong about your life. say it with the frame. your partner asks: really? how so? then swap. tap “show the answer” for two examples.",
    "gone": false
   }
  ],
@@ -235,17 +245,17 @@
   {
    "pid": 14,
    "sig": "it's a lot steeper than you'd think — take water. the walk up to the castle? it can't be far, can it? steep",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 15,
-   "sig": "they're a lot friendlier than you'd think — they fed our cat all summer. your neighbours? they look a bit grumpy. friendly",
+   "sig": "they're a lot friendlier than you'd think — they fed our cat the whole time we were away. your neighbours? i bet they never even say hello. friendly",
    "gone": false
   },
   {
    "pid": 16,
    "sig": "he's on it more often than you'd think — mostly sending me memes. your dad has a smartphone? does he ever actually use it? often",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 17,
@@ -310,6 +320,61 @@
   {
    "pid": 29,
    "sig": "it was lovely to catch up with everyone! after the party the day after a reunion, a message to the group: «было так здорово со всеми повидаться!»",
+   "gone": false
+  },
+  {
+   "pid": 30,
+   "sig": "it's a lot more complicated than you'd think — my first three loaves went straight in the bin. sourdough? don't you just mix flour and water? complicated",
+   "gone": false
+  },
+  {
+   "pid": 31,
+   "sig": "it's a lot more expensive than you'd think — the vet bills alone! a dog? that can't cost much — it's just food, isn't it? expensive",
+   "gone": false
+  },
+  {
+   "pid": 32,
+   "sig": "he uses it a lot more often than you'd think — mostly to send me memes. your dad? does he even know how to use his phone? often",
+   "gone": false
+  },
+  {
+   "pid": 33,
+   "sig": "it takes a lot longer than you'd think — and it never actually ends. housework? it takes, what, half an hour a day?",
+   "gone": false
+  },
+  {
+   "pid": 34,
+   "sig": "it's a lot more tiring than you'd think — you don't even get a lunch break. a year at home with a baby — that's basically a year off.",
+   "gone": false
+  },
+  {
+   "pid": 35,
+   "sig": "it's a lot lonelier than you'd think — some days i don't talk to anyone. working from home must be great — you can do the laundry between meetings.",
+   "gone": false
+  },
+  {
+   "pid": 36,
+   "sig": "it's a lot harder than you'd think — just opening a bank account took me a month. living abroad? must be like one long holiday.",
+   "gone": false
+  },
+  {
+   "pid": 37,
+   "sig": "sounding natural is a lot harder than you'd think — i still sound like a textbook half the time. your english is great. why are you still taking lessons?",
+   "gone": false
+  },
+  {
+   "pid": 38,
+   "sig": "they're a lot busier than you'd think — i practically have to book a slot to call my mum. your parents are retired? they must be so bored.",
+   "gone": false
+  },
+  {
+   "pid": 39,
+   "sig": "there's a lot more to it than you'd think — someone still has to check everything it writes. programmers just ask ai to write the code now, don't they?",
+   "gone": false
+  },
+  {
+   "pid": 40,
+   "sig": "school's a lot more stressful these days than you'd think — my niece has tests every week. kids today have it easy — we had six lessons a day and homework every night.",
    "gone": false
   }
  ],

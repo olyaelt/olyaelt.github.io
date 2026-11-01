@@ -22,29 +22,31 @@ const LESSON = 'tools/c1-2026-11-04/practical-things', FIELD = 'tools/b2-2026-10
   await p.goto(base + LESSON + '.html'); await p.waitForTimeout(300);
   out.flow = await p.evaluate(() => FLOW);
   expect('a lesson page is FLOW', out.flow === true, out.flow);
-  /* stage 2 (Make it perfect): the box from memory, open its gaps, then the next screen */
-  await pill(1); await next(); let w = await where(); out.s1first = w;
-  expect('its button → the cloud → Next → its first screen', w.stage === 1 && !w.intro && w.i === 0, w);
+  /* a stage that opens with a text with gaps (since 1.11: 🗣 Say it naturally — the box recall moved into Revision): open its gaps, then the next screen */
+  const X = await p.evaluate(() => D.stages.findIndex((s, i) => i > 0 && i < D.stages.length - 1 && s.blocks[0] && s.blocks[0].kind === "text" && JSON.stringify(s.blocks[0].lines || []).includes('"f"')));
+  out.X = X; if (X < 1) fail.push('no stage that opens with a gapped text');
+  await pill(X); await next(); let w = await where(); out.s1first = w;
+  expect('its button → the cloud → Next → its first screen', w.stage === X && !w.intro && w.i === 0, w);
   await next(); w = await where(); out.s1opened = w;
-  expect('Next opens the gaps of the box', w.i === 0 && w.open > 0, w);
+  expect('Next opens the gaps of the text', w.i === 0 && w.open > 0, w);
   await next(); w = await where(); out.s1second = w;
-  expect('then the second screen', w.stage === 1 && w.i === 1, w);
+  expect('then the second screen', w.stage === X && w.i === 1, w);
   /* another stage, then back in by its button: from the start, fresh */
-  await pill(2); await pill(1); await next(); w = await where(); out.s1again = w;
-  expect('back in by its button: the first screen, gaps closed', w.stage === 1 && w.i === 0 && w.open === 0, w);
+  await pill(X + 1); await pill(X); await next(); w = await where(); out.s1again = w;
+  expect('back in by its button: the first screen, gaps closed', w.stage === X && w.i === 0 && w.open === 0, w);
   /* Back from the first screen → the last screen of the stage before, not this stage's cloud */
   await back(); w = await where(); out.backPrev = w;
-  const lastOf0 = await p.evaluate(() => D.stages[0].blocks.length - 1);
-  expect('Back from a first screen → the last screen of the stage before', w.stage === 0 && !w.intro && w.i === lastOf0, {w, lastOf0});
+  const lastOf0 = await p.evaluate(x => D.stages[x - 1].blocks.length - 1, X);
+  expect('Back from a first screen → the last screen of the stage before', w.stage === X - 1 && !w.intro && w.i === lastOf0, {w, lastOf0});
   /* Next at the end of a stage: the next stage from its start, fresh */
-  await pill(1); await next(); await next(); await next(); w = await where();   /* stage 2, second screen, the box's gaps open */
-  await p.evaluate(() => { S.at[1] = D.stages[1].blocks.length - 1; render(); }); w = await where();
+  await pill(X); await next(); await next(); await next(); w = await where();
+  await p.evaluate(x => { S.at[x] = D.stages[x].blocks.length - 1; render(); }, X); w = await where();
   await p.evaluate(() => stepOn()); await p.waitForTimeout(100); w = await where();
-  expect('Next at the last screen → the next stage\'s cloud', w.stage === 2 && w.intro, w);
+  expect('Next at the last screen → the next stage\'s cloud', w.stage === X + 1 && w.intro, w);
   await back(); w = await where();
-  expect('Back from that cloud → the last screen of the stage before', w.stage === 1 && w.i === await p.evaluate(() => D.stages[1].blocks.length - 1), w);
-  await pill(2); await pill(1); await next(); w = await where(); out.freshAfterEnd = w;   /* its own button while in it doesn't reset it (a slip mustn't cost the stage) */
-  expect('stage 2 entered again: from the start, gaps closed', w.stage === 1 && w.i === 0 && w.open === 0, w);
+  expect('Back from that cloud → the last screen of the stage before', w.stage === X && w.i === await p.evaluate(x => D.stages[x].blocks.length - 1, X), w);
+  await pill(X + 1); await pill(X); await next(); w = await where(); out.freshAfterEnd = w;
+  expect('the stage entered again: from the start, gaps closed', w.stage === X && w.i === 0 && w.open === 0, w);
   /* a reload comes back to the same screen, with what was done */
   await next(); await next(); w = await where(); const before = w;
   await p.reload(); await p.waitForTimeout(400); w = await where(); out.reload = {before, after: w};
