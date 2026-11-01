@@ -143,14 +143,22 @@ function gWinLine(line, size){
   const xy = k => [(k % size) + .5, Math.floor(k / size) + .5], [x1, y1] = xy(line[0]), [x2, y2] = xy(line[line.length - 1]), dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy) || 1, e = .32;
   return `<svg class="g-winline" viewBox="0 0 ${size} ${size}" preserveAspectRatio="none" aria-hidden="true"><line x1="${(x1 - dx / L * e).toFixed(3)}" y1="${(y1 - dy / L * e).toFixed(3)}" x2="${(x2 + dx / L * e).toFixed(3)}" y2="${(y2 + dy / L * e).toFixed(3)}" pathLength="1"/></svg>`;
 }
+/* tools 23 (her 1.11 18:41: a room of three): marks ["X", "O", "△"] = three players, on a 4×4 board, three in a row; when the board has more
+   squares than there are sentences, they come round again (shuffled, never the same one side by side) */
+function gFill(tasks, n){
+  let out = []; while(out.length < n) out = out.concat(gShuffle(tasks)); out = out.slice(0, n);
+  for(let k = 1; k < out.length; k++) if(out[k] === out[k - 1]){ const j = out.findIndex((x, i) => i > k && x !== out[k] && out[i - 1] !== x && (i + 1 >= out.length || out[i + 1] !== x)); if(j > -1) [out[k], out[j]] = [out[j], out[k]]; }
+  return out;
+}
 function gTicTacToe(host, tasks, {size = 3, win = 3, marks = ["X", "O"], answer = t => t.a || "", prompt = t => gEsc(t.q || t), state = null, revealFirst = false, labels = null, cellLabel = null, onResult = null, onWin = null, onChange = null} = {}){
   /* tools 18 (C1 04.11 Catching up): cellLabel(task) = a word or two on the square instead of its number ("At a wedding") */
-  const T = state || {cells: gShuffle(tasks).slice(0, size * size).map(t => ({t, m: null})), turn: 0, open: -1, shown: false, over: null};
+  const T = state || {cells: gFill(tasks, size * size).map(t => ({t, m: null})), turn: 0, open: -1, shown: false, over: null};
   const changed = () => { if(onChange) onChange(T); };
   const lines = (() => { const L = [], ok = (r, c) => r >= 0 && c >= 0 && r < size && c < size;
     for(let r = 0; r < size; r++) for(let c = 0; c < size; c++) [[0, 1], [1, 0], [1, 1], [1, -1]].forEach(([dr, dc]) => { const l = []; for(let k = 0; k < win; k++){ if(!ok(r + dr * k, c + dc * k)) return; l.push((r + dr * k) * size + c + dc * k); } L.push(l); });
     return L; })();
-  const markSVG = m => m === marks[0] ? `<svg viewBox="0 0 40 40" class="gt-x"><path d="M9 9L31 31M31 9L9 31"/></svg>` : `<svg viewBox="0 0 40 40" class="gt-o"><circle cx="20" cy="20" r="12"/></svg>`;
+  const markSVG = m => m === marks[0] ? `<svg viewBox="0 0 40 40" class="gt-x"><path d="M9 9L31 31M31 9L9 31"/></svg>` : m === marks[2] ? `<svg viewBox="0 0 40 40" class="gt-t"><path d="M20 7L33 31H7Z"/></svg>` : `<svg viewBox="0 0 40 40" class="gt-o"><circle cx="20" cy="20" r="12"/></svg>`;
+  const nextTurn = () => { T.turn = (T.turn + 1) % marks.length; };
   function render(fresh){
     const winLine = T.over && T.over.line, cur = marks[T.turn], o = T.open > -1 ? T.cells[T.open] : null;
     host.innerHTML = `<div class="gttt">
@@ -164,10 +172,10 @@ function gTicTacToe(host, tasks, {size = 3, win = 3, marks = ["X", "O"], answer 
     const on = (q, f) => { const b = host.querySelector(q); if(b) b.addEventListener("click", f); };
     on("[data-gt-show]", () => { T.shown = true; render(); changed(); });
     on("[data-gt-yes]", () => { const k = T.open; T.cells[k].m = marks[T.turn]; T.open = -1; const l = lines.find(l => l.every(i => T.cells[i].m === marks[T.turn]));
-      if(l) T.over = {who: marks[T.turn], line: l}; else if(T.cells.every(c => c.m)) T.over = {who: null}; else T.turn = 1 - T.turn; render(k);
+      if(l) T.over = {who: marks[T.turn], line: l}; else if(T.cells.every(c => c.m)) T.over = {who: null}; else nextTurn(); render(k);
       if(onResult) onResult(T.cells[k].t, true); if(T.over && T.over.who && onWin) onWin(host.querySelector(".gt-turn.big") || host); changed(); });
-    on("[data-gt-no]", () => { const t = T.cells[T.open].t; T.open = -1; T.turn = 1 - T.turn; render(); if(onResult) onResult(t, false); changed(); });
-    on("[data-gt-again]", () => { T.cells = gShuffle(tasks).slice(0, size * size).map(t => ({t, m: null})); T.turn = 0; T.open = -1; T.over = null; render(); changed(); });
+    on("[data-gt-no]", () => { const t = T.cells[T.open].t; T.open = -1; nextTurn(); render(); if(onResult) onResult(t, false); changed(); });
+    on("[data-gt-again]", () => { T.cells = gFill(tasks, size * size).map(t => ({t, m: null})); T.turn = 0; T.open = -1; T.over = null; render(); changed(); });
   }
   T.redraw = () => render(); render(); return T;
 }
@@ -386,7 +394,8 @@ function gHex(host, tasks, {n = 5, teams = ["Blue", "Orange"], letter = t => (St
 function gDots(host, tasks, {n = 4, players = ["Blue", "Orange"], prompt = t => gEsc(t.q || t), answer = t => gEsc(t.a || ""), revealFirst = false, state = null, onResult = null, onChange = null, onWin = null} = {}){
   /* tools 20 (B2 revision f-st): revealFirst = ✓ / ✗ only after Show the answer; the tasks come round again in a new order; state = the plain G */
   const order = () => gShuffle(tasks.map((_, i) => i));
-  const COL = ["#0693E3", "#FF9900"], G = state ? Object.assign({}, state) : {lines: {}, boxes: {}, turn: 0, phase: "task", deck: order(), at: 0, shown: false};
+  const COL = ["#0693E3", "#FF9900", "#9B51E0"], G = state ? Object.assign({}, state) : {lines: {}, boxes: {}, turn: 0, phase: "task", deck: order(), at: 0, shown: false};
+  const nextTurn = () => { G.turn = (G.turn + 1) % players.length; };
   const changed = () => { if(onChange) onChange(G); };
   const step = () => { G.at++; if(G.at >= G.deck.length){ G.deck = order(); G.at = 0; } G.shown = false; };
   const S = 60, P = 24, size = P * 2 + S * (n - 1), key = (a, b) => a < b ? a + "-" + b : b + "-" + a;
@@ -396,13 +405,14 @@ function gDots(host, tasks, {n = 4, players = ["Blue", "Orange"], prompt = t => 
   const xy = i => [P + (i % n) * S, P + Math.floor(i / n) * S];
   function render(){
     const all = []; for(let i = 0; i < n * n; i++){ if(i % n < n - 1) all.push(key(i, i + 1)); if(i < n * (n - 1)) all.push(key(i, i + n)); }
-    const total = (n - 1) * (n - 1), score = [0, 1].map(p => Object.values(G.boxes).filter(o => o === p).length), over = Object.keys(G.boxes).length === total, t = tasks[G.deck[G.at % G.deck.length]];
+    const total = (n - 1) * (n - 1), score = players.map((_, p) => Object.values(G.boxes).filter(o => o === p).length), over = Object.keys(G.boxes).length === total, t = tasks[G.deck[G.at % G.deck.length]];
+    const top = Math.max(...score), best = score.map((x, i) => x === top ? i : -1).filter(i => i > -1);
     host.innerHTML = `<div class="gdots"><svg viewBox="0 0 ${size} ${size}" class="gdt-board">
       ${Object.entries(G.boxes).map(([b, o]) => { const [x, y] = xy(+b); return `<rect x="${x + 4}" y="${y + 4}" width="${S - 8}" height="${S - 8}" rx="6" fill="${COL[o]}" opacity=".85"/>`; }).join("")}
       ${all.map(k => { const [a, b] = k.split("-").map(Number), [x1, y1] = xy(a), [x2, y2] = xy(b), o = G.lines[k];
         return `<g class="gdt-l ${o != null ? "on" : G.phase === "line" ? "free" : ""}" data-dl="${k}"><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="gdt-line" ${o != null ? `style="stroke:${COL[o]}"` : ""}/><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="gdt-hit"/></g>`; }).join("")}
       ${Array.from({length: n * n}, (_, i) => { const [x, y] = xy(i); return `<circle cx="${x}" cy="${y}" r="6" class="gdt-dot"/>`; }).join("")}</svg>
-      <div class="gt-side">${over ? `<p class="gt-turn big">${score[0] === score[1] ? "It's a draw!" : `<span class="gs-dot" style="background:${COL[score[0] > score[1] ? 0 : 1]}"></span> ${gEsc(players[score[0] > score[1] ? 0 : 1])} wins! 🎉`}</p>`
+      <div class="gt-side">${over ? `<p class="gt-turn big">${best.length > 1 ? (best.length === players.length ? "It's a draw!" : `${best.map(i => `<span class="gs-dot" style="background:${COL[i]}"></span> ${gEsc(players[i])}`).join(" and ")} — a draw!`) : `<span class="gs-dot" style="background:${COL[best[0]]}"></span> ${gEsc(players[best[0]])} wins! 🎉`}</p>`
         : `<p class="gt-turn"><span class="gs-dot" style="background:${COL[G.turn]}"></span> <b>${gEsc(players[G.turn])}'s turn</b></p>
         ${G.phase === "task" ? `<div class="gt-task${G.shown ? " shown" : ""}"><p class="gt-q">${prompt(t)}</p>${G.shown ? `<p class="gt-a">${answer(t)}</p>` : ""}<div class="gt-acts">${!G.shown ? `<button class="btn${revealFirst ? " primary" : ""}" data-dt-show>Show the answer</button>` : ""}${!revealFirst || G.shown ? `<button class="btn ok" data-dt-yes>✓ Got it — draw a line</button><button class="btn again" data-dt-no>✗ Not quite — next player</button>` : ""}</div></div>`
           : `<p class="gs-msg">Draw one line between two dots.</p>`}`}
@@ -410,11 +420,11 @@ function gDots(host, tasks, {n = 4, players = ["Blue", "Orange"], prompt = t => 
     const on = (q, f) => { const b = host.querySelector(q); if(b) b.addEventListener("click", f); };
     on("[data-dt-show]", () => { G.shown = true; render(); changed(); });
     on("[data-dt-yes]", () => { if(onResult) onResult(t, true); G.phase = "line"; render(); changed(); });
-    on("[data-dt-no]", () => { if(onResult) onResult(t, false); step(); G.turn = 1 - G.turn; render(); changed(); });
+    on("[data-dt-no]", () => { if(onResult) onResult(t, false); step(); nextTurn(); render(); changed(); });
     on("[data-dt-again]", () => { G.lines = {}; G.boxes = {}; G.turn = 0; G.phase = "task"; step(); render(); changed(); });
     host.querySelectorAll(".gdt-l.free").forEach(l => l.addEventListener("click", () => { const k = l.dataset.dl; G.lines[k] = G.turn; let closed = false;
       boxesOf(k).forEach(b => { if(G.boxes[b] == null && boxDone(b)){ G.boxes[b] = G.turn; closed = true; } });
-      step(); G.phase = "task"; if(!closed) G.turn = 1 - G.turn; render(); changed();
+      step(); G.phase = "task"; if(!closed) nextTurn(); render(); changed();
       if(onWin && Object.keys(G.boxes).length === (n - 1) * (n - 1)) onWin(host.querySelector(".gt-turn.big") || host); }));
   }
   render(); return G;
@@ -488,7 +498,7 @@ function gGoose(host, squares, {cols = 6, goose = 5, players = ["Blue", "Orange"
   const cen = k => { const s = board.querySelector(`[data-k="${k}"]`); return [s.offsetLeft + s.offsetWidth / 2, s.offsetTop + s.offsetHeight / 2]; };
   /* the pawns stand on the bottom edge of their square, so the words stay readable */
   const foot = k => { const s = board.querySelector(`[data-k="${k}"]`); return [s.offsetLeft + s.offsetWidth / 2, s.offsetTop + s.offsetHeight - 2]; };
-  const OFF = [[-15, 0], [15, 0], [0, 0]];
+  const OFF = [[-16, 0], [16, 0], [0, -15]];
   const place = (i, x, y) => { const p = board.querySelector(`[data-p="${i}"]`), o = OFF[i] || [0, 0]; p.style.left = (x + o[0]) + "px"; p.style.top = (y + o[1]) + "px"; };
   function layout(){
     const want = host.offsetWidth && host.offsetWidth < 560 ? Math.min(cols, 4) : cols;

@@ -2628,7 +2628,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = [];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "58";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "59";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [{"type": "rewrite", "r": {"o": "My degree is in physics.", "k": "DID", "pre": "I ", "post": " university.", "a": "did physics at", "acc": ["did physics at", "did a physics degree at"], "n": "<span class=\"ipa\">/ˈfɪzɪks/<\/span><br>do + subject, no article; at university.<br><i class=\"ru\">учился на физика<\/i><br><i class=\"ru\">or: did a physics degree at<\/i><br><i class=\"ru\">AmE: I majored in physics in college.<\/i>"}, "frm": "23.10.26"}, {"type": "sayit", "s": {"rows": [["<span class=\"en\">I studied <span class=\"trap\">at the faculty of mathematics<\/span>.<\/span> <i class=\"ru\">(учился на матфаке)<\/i>", "I studied <b class=\"g\">maths<\/b>. / I did <b class=\"g\">maths at uni<\/b>."]], "note": "", "html": true}, "instr": "What would Dan or Ruth say instead?", "frm": "21.10.26"}, {"type": "rewrite", "r": {"pre": "", "hint": "У нас часы не переводят", "post": ", so I can never remember whether our calls move earlier or later.", "a": "We don't change the clocks here", "acc": ["We don't change the clocks here", "The clocks don't change here", "We don't have daylight saving here", "We don't have daylight saving time here"], "n": "change the clocks — the clocks, plural.<br><i class=\"ru\">or: The clocks don't change here / We don't have daylight saving (time) here<\/i>"}, "frm": "23.10.26"}, {"type": "sayit", "s": {"rows": [["<span class=\"en\">Nobody taught me how to talk to clients — I learned it <span class=\"trap\">in practice<\/span>.<\/span> <i class=\"ru\">(научилась в процессе работы)<\/i>", "Nobody taught me how to talk to clients — I learned it <b class=\"g\">on the job<\/b>."]], "note": "", "html": true}, "instr": "What would Dan or Ruth say instead?", "frm": "21.10.26"}];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -3323,11 +3323,11 @@ let typedT = 0; const saveTyped = () => { clearTimeout(typedT); typedT = setTime
 const norm = s => String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/[.!?,;:]+$/,"").replace(/\s+/g," ").trim();
 
 /* ---------- home ---------- */
-const ON_SITE = /\.github\.io$/.test(location.hostname) || location.protocol === "file:";   /* the list of all homework lives next to this page on the site */
+const ON_SITE = /\.github\.io$|(^|\.)clickswith\.me$/.test(location.hostname) || location.protocol === "file:";   /* the list of all homework lives next to this page on the site */
 /* engine 35: on the site, the homework opens only with a code (her decision, 28.10). Without one — or with a code her table doesn't know —
    the page shows just the code field. A code this device already used keeps working when the table doesn't answer.
    It's a lock on the door, not a safe: the tasks are still in the page's source. Previews outside the site stay open. */
-const LOCKED = () => !!SYNC_URL && /\.github\.io$/.test(location.hostname) && (!myCode() || syncState === "unknown");
+const LOCKED = () => !!SYNC_URL && /\.github\.io$|(^|\.)clickswith\.me$/.test(location.hostname) && (!myCode() || syncState === "unknown");
 function renderGate(){
   current = null;
   app.innerHTML = `

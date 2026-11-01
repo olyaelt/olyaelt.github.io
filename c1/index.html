@@ -254,7 +254,7 @@ function gotMe(res, code){
 const meterNow = () => meStats ? meMeterHTML(meStats) : meterHTML(groupStats);
 
 /* engine 35: on the site the list opens only with a code (her decision, 28.10); see the homework page */
-const LOCKED = () => !!SYNC_URL && /\.github\.io$/.test(location.hostname) && (!myCode() || syncState === "unknown");
+const LOCKED = () => !!SYNC_URL && /\.github\.io$|(^|\.)clickswith\.me$/.test(location.hostname) && (!myCode() || syncState === "unknown");
 
 async function post(payload){
   try{

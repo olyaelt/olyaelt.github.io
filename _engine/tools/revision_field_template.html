@@ -367,6 +367,10 @@ __LW_CSS__
 @media (prefers-reduced-motion: reduce){ .fx-in,.fx-say,.fx-a,.fx-chip.shake{animation:none} }
 /* tools 20: 🎡 the wheel beside its situation, 🎲 the dice with a guided start, 🏝 the islands, 🧩 mix */
 .g-rule{margin:0 0 6px;color:var(--muted);font-size:.95rem;font-weight:600}
+/* tools 23: 👥 2 · 3 players — quiet, for the person tapping; the picked one blue ("you are here") */
+.g-np{display:inline-flex;gap:5px;align-items:center;margin-left:6px;font-size:.85rem;color:var(--muted);vertical-align:middle;white-space:nowrap}
+.g-np .np-b{border:2px solid var(--line);background:var(--card);color:var(--muted);border-radius:99px;padding:2px 10px;font-weight:800;font-size:.85rem;cursor:pointer}
+.g-np .np-b.on{border-color:var(--instr);color:var(--instr-text)}
 .fwheel{display:grid;grid-template-columns:minmax(12rem,17rem) minmax(0,1fr);gap:20px;align-items:center}
 .fwheel .gwheel{width:min(100%,17rem)}
 .fwheel .gwheel.empty{opacity:.35}
@@ -614,7 +618,7 @@ function keepPlace(){
   if(S.view !== "field" || S.fast) return;
   const bsOut = Object.assign({}, S._restore || {}); Object.entries(S.bs).forEach(([id, st]) => { if(id === "fastdeck") return; const d = st.deck;
     bsOut[id] = {open: [...st.open], shown: !!st.shown, check: st.check || "", done: !!st.done, bm: [...(st.bm || [])], spk: st.spk ? st.spk.key : null,
-      sc: st.sc || null, cn: st.cn ? Object.assign({}, st.cn, {busy: false, enter: false}) : null, fx: st.fx || null, so: st.so || null, sec: st.sec || null, memo: st.memo ? {phase: st.memo.phase, got: [...st.memo.got], end: st.memo.end || 0} : null, g: st.g || null, wh: st.wh || null, rl: st.rl ? {ph: st.rl.ph, roll: st.rl.roll} : null, mx: st.mx || null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, flipped: !!d.flipped} : (st._deck || null)}; });
+      sc: st.sc || null, cn: st.cn ? Object.assign({}, st.cn, {busy: false, enter: false}) : null, fx: st.fx || null, so: st.so || null, sec: st.sec || null, memo: st.memo ? {phase: st.memo.phase, got: [...st.memo.got], end: st.memo.end || 0} : null, g: st.g || null, np: st.np || null, wh: st.wh || null, rl: st.rl ? {ph: st.rl.ph, roll: st.rl.roll} : null, mx: st.mx || null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, flipped: !!d.flipped} : (st._deck || null)}; });
   store.set(PLACE_KEY, {stage: S.stage, at: S.at, far: S.far, intro: S.intro, bs: bsOut, t: Date.now(), shape: SHAPE});
   store.set(LEFT_KEY, {page: PAGE_ID, href: location.pathname.split("/").pop(), cell: cellName(), title: D.title, stage: String(D.stages[S.stage].label || ""), t: Date.now()});
 }
@@ -626,6 +630,7 @@ function restoreBs(id){ const r = S._restore && S._restore[id]; if(!r) return nu
   const st = {open: new Set(r.open || []), shown: !!r.shown, check: r.check || "", deck: null, look: null, done: !!r.done, bm: new Set(r.bm || []), _deck: r.deck || null};
   if(r.spk != null) st.spk = Object.assign(newCursor(), {key: r.spk}); if(r.sc && Array.isArray(r.sc.order)) st.sc = r.sc;
   if(r.fx) st.fx = r.fx; if(r.ttt && Array.isArray(r.ttt.cells)) st.ttt = r.ttt;   /* tools 16 */
+  if(r.np) st.np = r.np;   /* tools 23 */
   if(r.so) st.so = r.so; if(r.sec) st.sec = r.sec; if(r.memo) st.memo = r.memo;   /* tools 17 */
   if(r.cn && Array.isArray(r.cn.subs)) st.cn = r.cn;   /* tools 18 */
   if(r.g) st.g = r.g; if(r.wh) st.wh = r.wh; if(r.rl) st.rl = r.rl; if(r.mx) st.mx = r.mx;   /* tools 20 */
@@ -1021,13 +1026,31 @@ function gameMount(b, host){
   if(b.piece === "memo"){ st.memo = gMemo(host, b.items, {seconds: b.seconds || 30, groups: b.groups, state: st.memo || null,
     onChange: () => { keepPlace(); const sb = document.querySelector("[data-step]"); if(sb) sb.disabled = !canNext(); }}); return; }   /* tools 17 */
   if(st.ttt && st.ttt.cells && st.ttt.cells[0] && st.ttt.cells[0].i != null) st.ttt.cells = gameTasks(b, st.ttt.cells);   /* reopened on this device */
-  st.ttt = gTicTacToe(host, b.tasks, {size: b.size || 3, state: st.ttt || null, revealFirst: true, labels: {yes: "✓ Correct", no: "✗ Not quite"}, cellLabel: t => t.label ? esc(t.label) : "",
+  const three = npOf(b) === 3;
+  st.ttt = gTicTacToe(host, b.tasks, {size: three ? Math.max(4, b.size || 3) : b.size || 3, marks: three ? ["X", "O", "△"] : undefined, state: st.ttt || null, revealFirst: true, labels: {yes: "✓ Correct", no: "✗ Not quite"}, cellLabel: t => t.label ? esc(t.label) : "",
     prompt: t => `${t.ctx ? `<span class="lctx">${mk(t.ctx)}</span>` : ""}<span class="say">${mk(t.q)}</span>`,
     answer: t => `${b.check ? `<span class="chk">${esc(b.check)}</span>` : ""}<span class="say fixline">${mk(t.a)}</span>${t.why ? `<span class="note">${mk(t.why)}</span>` : ""}`,
     onResult: (t, ok) => { lwDeck(t._n, ok); if(!ok && !saved.again.includes(t._n)){ saved.again.push(t._n); save(); } },
     onWin: el => { if(typeof confetti === "function") confetti(el); },
     onChange: () => { keepPlace(); const sb = document.querySelector("[data-step]"); if(sb) sb.disabled = !canNext(); }});
 }
+/* tools 23 (her 1.11 18:41: «а что делать группам, в которых 3 студента?» — «если их двое, пусть играют 3 на 3»): 👥 2 · 3 players above
+   the game. Three: snakes and ladders, the goose race and dots and boxes get a purple player; noughts and crosses gets △ on a 4×4 board,
+   three in a row (the sentences come round again if there are fewer than 16). Switching in the middle of a game starts a new one — a
+   second tap confirms. Kept with the board on this device. */
+const npGame = b => b.kind === "game" && (["snakes", "goose", "dots"].includes(b.piece) || !b.piece || b.piece === "tictactoe");
+const npOf = b => bs(b).np === 3 ? 3 : 2;
+const npPlayers = b => npOf(b) === 3 ? ["Blue", "Orange", "Purple"] : undefined;
+function npHTML(b){ if(!npGame(b)) return ""; const n = npOf(b);
+  return ` <span class="g-np" data-np="${b._id}"><span aria-hidden="true">👥</span>${[2, 3].map(k => `<button class="np-b${k === n ? " on" : ""}" data-npv="${k}" aria-pressed="${k === n}">${k} players</button>`).join("")}</span>`; }
+function npStarted(b){ const st = bs(b), T = st.ttt, G = st.g;
+  if(T && T.cells) return T.cells.some(c => c.m) || T.open > -1;
+  if(!G) return false; if(b.piece === "dots") return Object.keys(G.lines || {}).length > 0 || !!G.shown;
+  return (G.pos || []).some(p => p > (b.piece === "goose" ? 0 : 1)) || G.ti != null || G.phase === "task" || G.winner != null; }
+function wireNp(root){ root.querySelectorAll("[data-np] [data-npv]").forEach(btn => btn.addEventListener("click", () => {
+  const b = BLOCKS.find(x => x._id === btn.closest("[data-np]").dataset.np), st = bs(b), k = +btn.dataset.npv; if(!b || npOf(b) === k) return;
+  if(npStarted(b) && !btn.dataset.sure){ btn.dataset.sure = "1"; btn.textContent = `New game for ${k}? Tap again`; return; }
+  st.np = k; st.g = null; st.ttt = null; render(); keepPlace(); })); }
 const memoPending = b => { const M = bs(b).memo; return !M || M.phase !== "check"; };
 function memoNext(b){ const M = bs(b).memo; if(!M) return; if(M.phase === "ready") M.look(); else if(M.phase === "look") M.phase = "recall"; else if(M.phase === "recall") M.phase = "check"; render(); }
 const gamePending = b => { if(b.piece === "memo") return memoPending(b); if(b.piece === "secret") return secPending(b);
@@ -1075,11 +1098,11 @@ function newGameMount(b, host){
     if(W.cur == null && !WHEEL.left()) host.querySelector(".gwheel").classList.add("empty"); return; }
   /* the square says the kind of task in short ("in English", "more gently", "Fix it"); the card says it in full */
   if(b.piece === "goose"){ const short = t => t.short || String(t.label || "").replace(/^Say it /i, "").replace(/^Fix the mistake$/i, "Fix it");
-    gGoose(host, b.tasks, {cols: b.cols || 6, goose: b.goose || 5, show: t => esc(short(t)), detail: () => "", state: st.g,
+    gGoose(host, b.tasks, {cols: b.cols || 6, goose: b.goose || 5, show: t => esc(short(t)), detail: () => "", state: st.g, players: npPlayers(b),
       prompt: t => taskQ(t), answer: t => taskA(b, t), onResult: onTask, onWin: winFx, onChange: keep}); return; }
-  if(b.piece === "snakes"){ gSnakes(host, b.tasks, {rules: b.rules_mode || "every", revealFirst: true, state: st.g,
+  if(b.piece === "snakes"){ gSnakes(host, b.tasks, {rules: b.rules_mode || "every", revealFirst: true, state: st.g, players: npPlayers(b),
       prompt: t => taskQ(t), answer: t => taskA(b, t), onResult: onTask, onWin: winFx, onChange: keep}); return; }
-  if(b.piece === "dots"){ gDots(host, b.tasks, {n: b.n || 4, revealFirst: true, state: st.g,
+  if(b.piece === "dots"){ gDots(host, b.tasks, {n: b.n || 4, revealFirst: true, state: st.g, players: npPlayers(b),
       prompt: t => dotsQ(t), answer: t => dotsA(b, t), onResult: onTask, onWin: winFx, onChange: keep}); return; }
   if(b.piece === "islands"){ gIslands(host, b.islands, {label: "⛵ Sail", state: st.g, onChange: G => { st.g = G; gameChanged(); }}); return; }
 }
@@ -1270,7 +1293,7 @@ function blockHTML(b){
     : b.kind === "game" && b.piece === "secret" ? secInstr(b) : b.kind === "game" && ROLLS.includes(b.piece) && rlIntro(b) ? b.intro.instr || b.instr : b.instr;
   const tip = S.howto && b.tip ? `<p class="tip">🎓 How it works: ${mk(b.tip)}</p>` : "";
   const how = demoKind(b) ? ` <button class="g-howto" data-gdemo>▶ How to play</button>` : "";   /* tools 21 */
-  return `${tip}${instr ? `<p class="finstr">${mk(instr)}${how}</p>` : ""}<section class="blk ${S.enter ? "enter" : ""}" data-blk="${b._id}">${body}</section>`;
+  return `${tip}${instr ? `<p class="finstr">${mk(instr)}${how}${npHTML(b)}</p>` : npHTML(b)}<section class="blk ${S.enter ? "enter" : ""}" data-blk="${b._id}">${body}</section>`;
 }
 /* ---------- one control, always in the same place (her rule 30.10 12:29) ----------
    "← Back" and "Next →" at the bottom of the screen, the same words every time. The steps are ours: after a task they always look at
@@ -1502,7 +1525,7 @@ function wire(root){
     render(); const el = root.querySelector(`[data-fxslot="${k}"]`); if(el){ el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); } });
   on("[data-fxa]", x => { const F = fixPh(b), k = +x.dataset.fxa; if(F.ph === 2 + 2 * k) F.ph++; render(); });
   if(b.kind === "game" && b.piece !== "secret" && !ROLLS.includes(b.piece)){ const host = root.querySelector(`[data-game="${b._id}"]`);
-    withDemo(b, host, () => gameMount(b, host)); on("[data-gdemo]", () => withDemo(b, host, () => gameMount(b, host), true)); }   /* tools 21: ▶ How to play */
+    withDemo(b, host, () => gameMount(b, host)); on("[data-gdemo]", () => withDemo(b, host, () => gameMount(b, host), true)); wireNp(root); }   /* tools 21: ▶ How to play; tools 23: 👥 2 · 3 */
   if(b.kind === "game" && b.piece === "wheel") wireWheel(b, root);   /* tools 20 */
   if(b.kind === "game" && ROLLS.includes(b.piece)) wireRoll(b, root);
   if(b.kind === "mix") wireMix(b, root);

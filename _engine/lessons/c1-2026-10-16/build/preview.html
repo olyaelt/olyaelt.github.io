@@ -3174,7 +3174,7 @@ const TASKS = [
    steps:[{type:"task"},{type:"plan"},{type:"produce"}]}
 ];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "58";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "59";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -3869,11 +3869,11 @@ let typedT = 0; const saveTyped = () => { clearTimeout(typedT); typedT = setTime
 const norm = s => String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/[.!?,;:]+$/,"").replace(/\s+/g," ").trim();
 
 /* ---------- home ---------- */
-const ON_SITE = /\.github\.io$/.test(location.hostname) || location.protocol === "file:";   /* the list of all homework lives next to this page on the site */
+const ON_SITE = /\.github\.io$|(^|\.)clickswith\.me$/.test(location.hostname) || location.protocol === "file:";   /* the list of all homework lives next to this page on the site */
 /* engine 35: on the site, the homework opens only with a code (her decision, 28.10). Without one — or with a code her table doesn't know —
    the page shows just the code field. A code this device already used keeps working when the table doesn't answer.
    It's a lock on the door, not a safe: the tasks are still in the page's source. Previews outside the site stay open. */
-const LOCKED = () => !!SYNC_URL && /\.github\.io$/.test(location.hostname) && (!myCode() || syncState === "unknown");
+const LOCKED = () => !!SYNC_URL && /\.github\.io$|(^|\.)clickswith\.me$/.test(location.hostname) && (!myCode() || syncState === "unknown");
 function renderGate(){
   current = null;
   app.innerHTML = `
