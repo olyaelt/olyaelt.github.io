@@ -129,15 +129,39 @@ const gwRows = () => GW.rows.filter(r => r.ts >= gwCut());
 const gwRooms = () => GW.rooms.filter(r => r.ts >= gwCut() && (GW.showOld || (r.first || r.ts) >= gwSince()));
 const toolOf = id => LW.tools.find(t => t.id === id) || {id, title: id, chat: i => `Chat ${i + 1}`};
 const chatName = (tool, i) => toolOf(tool).chat(i);
+/* tools 22 (her 1.11 11:29): every screen that opens the page is a card; she drags one card onto another → one group. The card she drops
+   ON is the shared screen (its work shows); the other screen joins it (its names go into the group). Kept on her computer for this lesson
+   (the board and all its fields), gone with 🧹 Start fresh or 3 hours after her last change. A joined screen that starts working on its own
+   (typing, sending, cards ✓/✗ — not just looking around) makes "🔀 New groups" pulse; it never splits by itself. */
+const MERGE_KEY = "tool-merge-" + String(PAGE_ID).split("/")[0];
+function mergeGet(){ const m = store.get(MERGE_KEY); return m && m.into && Date.now() - (Number(m.ts) || 0) < RECENT ? m : {ts: 0, into: {}, at: {}}; }
+function mergeSet(m){ m.ts = Date.now(); store.set(MERGE_KEY, m); }
+let GW_ALL = [];                                    /* every screen, joined ones too (her roster works on the screen a name belongs to) */
+const devsOf = dev => [dev].concat(GW_ALL.filter(x => x.into === dev).map(x => x.dev));   /* a group's screens: "move on", 📢 go to all */
 function gwDevices(){
   const by = {}, get = dev => by[dev] = by[dev] || {dev, rows: [], first: Infinity, name: "", room: null};
   gwRows().forEach(r => { const d = get(r.dev); d.rows.push(r); d.first = Math.min(d.first, r.started || r.ts); if(r.name) d.name = r.name; });
   gwRooms().forEach(r => { const d = get(r.dev); d.room = r; d.first = Math.min(d.first, r.first || r.ts); if(r.name) d.name = r.name; });
-  const list = Object.values(by).sort((a, b) => a.first - b.first);
-  list.forEach((d, k) => { d.n = k + 1; d.rows.sort((a, b) => b.ts - a.ts); d.cur = d.rows[0] || null;
-    d.people = d.room && d.room.names && d.room.names.length ? d.room.names : d.name ? [d.name] : [];
+  const all = Object.values(by).sort((a, b) => a.first - b.first), m = mergeGet(), here = Object.fromEntries(all.map(d => [d.dev, d]));
+  all.forEach(d => { d.rows.sort((a, b) => b.ts - a.ts); d.cur = d.rows[0] || null; d.joined = []; d.into = null;
+    d.own = d.room && d.room.names && d.room.names.length ? d.room.names : d.name ? [d.name] : []; });
+  const root = dev => { let x = dev, k = 0; while(m.into[x] && here[m.into[x]] && m.into[x] !== dev && k++ < 12) x = m.into[x]; return x; };
+  all.forEach(d => { const r = root(d.dev); if(r !== d.dev){ d.into = r; d.joinedAt = Number(m.at[d.dev]) || 0; here[r].joined.push(d); } });
+  /* a joined screen working by itself: their own text, card taps or ✓/✗ after she joined them (looking around doesn't count) */
+  all.forEach(d => { if(!d.into) return; const t = d.joinedAt;
+    d.solo = d.rows.some(r => r.ts > t && String(r.text || "").trim()) || (GW.signals || []).some(x => x.dev === d.dev && x.kind !== "reply" && x.ts > t) || (GW.decks || []).some(x => x.dev === d.dev && x.ts > t); });
+  GW_ALL = all;
+  const list = all.filter(d => !d.into);
+  list.forEach((d, k) => { d.n = k + 1;
+    d.people = d.own.concat(...d.joined.map(j => j.own.length ? j.own : ["?"])).filter((x, i, a) => x !== "?" ? a.indexOf(x) === i : true);
     d.label = `Group ${d.n}` + (d.people.length ? ` — ${d.people.join(" + ")}` : ""); d.short = `Group ${d.n}`; });
   return list;
+}
+/* the joined screens of a group, under its name: 🖥 who shares the screen; tap another name → that screen shows; ✕ → back to its own card */
+function gwMembersHTML(d){
+  if(!d.joined.length) return "";
+  const nm = x => esc(x.own.length ? x.own.join(" + ") : "a screen without a name");
+  return `<div class="gw-mem">🖥 <b>${nm(d)}</b> shares the screen · with ${d.joined.map(j => `<span class="gw-j ${j.solo ? "solo" : ""}"><button class="linklike" data-host="${esc(j.dev)}" title="Show this screen instead">${nm(j)}</button><button class="gw-x" data-split="${esc(j.dev)}" aria-label="${nm(j)} is not in this group" title="Not in this group">✕</button>${j.solo ? `<small> ✍️ working on their own screen</small>` : ""}</span>`).join(" ")}</div>`;
 }
 const ago = ts => { const s = Math.max(0, Math.round((gwNow() - ts) / 1000)); return s < 60 ? `${s} s ago` : s < 3600 ? `${Math.round(s / 60)} min ago` : new Date(ts).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit", hour12: false}); };
 const hm = ts => new Date(ts).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit", hour12: false});
@@ -179,7 +203,8 @@ function rosterHTML(d, devs){
 }
 function gwCardHTML(d){
   return `<article class="gw-card" data-dev="${esc(d.dev)}" ${d.cur ? `data-tool="${esc(d.cur.tool)}" data-chat="${d.cur.chat}"` : ""}>
-    <div class="gw-who" data-who></div>
+    <div class="gw-head" draggable="true" title="Same screen as another card? Drag this one onto it"><span class="gw-grip" aria-hidden="true">⠿</span><div class="gw-who" data-who></div></div>
+    <div data-mem></div>
     <div data-roster-box></div>
     <div class="gw-nudges" data-nudge></div>
     <div class="gw-text" data-text></div>
@@ -227,9 +252,10 @@ function pcStash(){ const m = {}; document.querySelectorAll(".pc[data-pc]").forE
 function pcRestore(m){ document.querySelectorAll(".pc[data-pc]").forEach(pc => { const old = m[pc.dataset.pc]; if(old && old !== pc) pc.replaceWith(old); }); pcPaint(); }
 function groupsHTML(){
   return `<section class="gw ${S && S.enter ? "enter" : ""}"><div class="gw-rooms" id="gw-rooms"></div><div class="gw-top"><b>📥 What the groups are doing</b><span class="gw-meta" id="gw-meta"></span><span class="grow"></span>
-    ${LW.stages.length ? `<button class="btn slim" data-say-all>📢 To all rooms</button>` : ""}<button class="btn slim" data-gw-copy="names">📋 Copy all</button><button class="btn slim" data-gw-copy="">📋 Without names</button><button class="btn slim" data-gw-fresh>🧹 Start fresh</button></div>
+    ${LW.stages.length ? `<button class="btn slim" data-say-all>📢 To all rooms</button>` : ""}<button class="btn slim" data-gw-copy="names">📋 Copy all</button><button class="btn slim" data-gw-copy="">📋 Without names</button><button class="btn slim" id="gw-new" data-gw-new hidden>🔀 New groups</button><button class="btn slim" data-gw-fresh>🧹 Start fresh</button></div>
     <div class="gw-sayall" id="gw-sayall" hidden><input maxlength="200" placeholder="A message to every room, e.g. 2 minutes left!" aria-label="Message to all rooms"><button class="btn slim primary" data-say-send>Send to all</button>
       ${["⏰ 2 minutes left!", "🙌 Finish this card, then come back to the main room."].map(t => `<button class="chipq" data-say-quick="${esc(t)}">${esc(t)}</button>`).join("")}</div>
+    <p class="gw-hint" id="gw-hint" hidden>🖐 Two cards from one room? Drag the second card (by its name) onto the card of the screen they share.</p>
     <div class="gw-grid" id="gw-grid"></div><div class="gw-history" id="gw-history"></div></section>`;
 }
 function gwMetaText(){
@@ -268,6 +294,10 @@ function gwPaint(){
   if(!LW.groupsView()) return;
   const meta = document.getElementById("gw-meta"); if(meta){ meta.innerHTML = gwMetaText(); const all = meta.querySelector("[data-gw-all]"); if(all) all.addEventListener("click", () => { if(!GW.showOld && gwSince() > gwNow() - RECENT) store.set(SINCE_KEY, 0); GW.showOld = !GW.showOld; gwRebuild(); }); }
   const rooms = document.getElementById("gw-rooms"); if(rooms){ const h = roomsHTML(); if(rooms.innerHTML !== h) rooms.innerHTML = h; rooms.hidden = !h; }
+  const ng = document.getElementById("gw-new"); if(ng && !ng.dataset.undo){ const any = GW_ALL.some(x => x.into), solo = GW_ALL.filter(x => x.solo);
+    ng.hidden = !any; ng.classList.toggle("pulse", solo.length > 0);
+    ng.title = solo.length ? `${solo.map(x => x.own.join(" + ") || "A joined screen").join(", ")}: working on their own screen — new groups?` : "The rooms have changed? Every screen gets its own card again, then drag them together";
+    const hint = document.getElementById("gw-hint"); if(hint) hint.hidden = devs.length < 2 || any; }
   const grid = document.getElementById("gw-grid"); if(!grid) return;
   if(!devs.length){ grid.innerHTML = `<div class="gw-empty">${GW.loaded ? "Nothing yet. When a group opens this -live page, its card appears here (every 10 s)." : "Loading…"}</div>`; return; }
   const empty = grid.querySelector(".gw-empty"); if(empty) empty.remove();
@@ -281,6 +311,7 @@ function gwPaint(){
     c.classList.toggle("sent", !!row && row.status === "sent"); c.classList.toggle("typing", typingNow(row)); c.classList.toggle("notext", !row);
     const set = (sel, h) => { const el = c.querySelector(sel); if(el.dataset.h !== h){ el.innerHTML = h; el.dataset.h = h; return el; } return null; };
     set("[data-who]", gwWhoHTML(d, row));
+    const mb = set("[data-mem]", gwMembersHTML(d)); if(mb) wireMembers(mb, d);
     const rb = set("[data-roster-box]", rosterHTML(d, devs)); if(rb) wireRoster(rb, d);
     set("[data-nudge]", gwNudgesHTML(d));
     const tx = c.querySelector("[data-text]"), sel = getSelection(), inside = sel && sel.rangeCount && !sel.isCollapsed && tx.contains(sel.anchorNode) && Date.now() - selAt < 8000;   /* their new text waits while she is selecting */
@@ -344,13 +375,36 @@ function wireCard(c){
   own.addEventListener("submit", e => { e.preventDefault(); if(inp.value.trim()) sendNote(c, inp.value.trim(), c.dataset.mode === "fix" ? "fix" : "note"); });
   c.addEventListener("click", e => { if(!e.target.closest("[data-roster]")) return; rosterOpen = rosterOpen === c.dataset.dev ? null : c.dataset.dev; gwPaint(); });
   const go = c.querySelector("[data-go]"); if(go) go.addEventListener("change", () => { if(go.value) sendNote(c, go.value, "go", {noTarget: true}); go.value = ""; });
+  wireDrag(c);
+}
+function wireMembers(box, d){
+  box.querySelectorAll("[data-split]").forEach(b => b.addEventListener("click", () => { const m = mergeGet(); delete m.into[b.dataset.split]; delete m.at[b.dataset.split]; mergeSet(m); gwRebuild(); }));
+  box.querySelectorAll("[data-host]").forEach(b => b.addEventListener("click", () => {   /* that screen shows now: the group stays, the host changes */
+    const m = mergeGet(), nh = b.dataset.host, now = Date.now();
+    Object.keys(m.into).forEach(k => { if(m.into[k] === d.dev) m.into[k] = nh; }); delete m.into[nh]; m.into[d.dev] = nh; m.at[d.dev] = now; delete m.at[nh];
+    mergeSet(m); gwRebuild(); }));
+}
+function joinScreens(from, into){
+  if(!from || !into || from === into) return;
+  const m = mergeGet(), now = Date.now();
+  Object.keys(m.into).forEach(k => { if(m.into[k] === from) m.into[k] = into; });   /* whoever had joined "from" comes along */
+  delete m.into[into]; m.into[from] = into; m.at[from] = now; mergeSet(m);
+  gwRebuild(); const c = document.querySelector(`.gw-grid .gw-card[data-dev="${into}"]`); if(c){ c.classList.add("joined"); setTimeout(() => c.classList.remove("joined"), 900); }
+}
+function wireDrag(c){
+  const head = c.querySelector(".gw-head"); if(!head || c.classList.contains("pc-card")) return;
+  head.addEventListener("dragstart", e => { e.dataTransfer.setData("text/x-dev", c.dataset.dev); e.dataTransfer.setData("text/plain", c.dataset.dev); e.dataTransfer.effectAllowed = "move"; c.classList.add("dragging"); });
+  head.addEventListener("dragend", () => { c.classList.remove("dragging"); document.querySelectorAll(".gw-card.drop").forEach(x => x.classList.remove("drop")); });
+  c.addEventListener("dragover", e => { if(document.querySelector(".gw-card.dragging") === c) return; e.preventDefault(); e.dataTransfer.dropEffect = "move"; c.classList.add("drop"); });
+  c.addEventListener("dragleave", e => { if(!c.contains(e.relatedTarget)) c.classList.remove("drop"); });
+  c.addEventListener("drop", e => { e.preventDefault(); c.classList.remove("drop"); joinScreens(e.dataTransfer.getData("text/x-dev") || e.dataTransfer.getData("text/plain"), c.dataset.dev); });
 }
 function wireRoster(box, d){
   box.querySelectorAll("[data-rn]").forEach(b => b.addEventListener("click", async () => {
-    const name = b.dataset.rn, devs = gwDevices(), from = devs.find(x => x.people.includes(name)), to = devs.find(x => x.dev === d.dev);
+    const name = b.dataset.rn, devs = gwDevices(), from = GW_ALL.find(x => x.own.includes(name)), to = GW_ALL.find(x => x.dev === d.dev), grp = devs.find(x => x.dev === d.dev);
     const code = localStorage.getItem("hw-code") || "", t = hm(gwNow());
-    if(from && from.dev !== to.dev) await livePost({action: "toolRoster", tool: PAGE_ID, code, dev: from.dev, names: from.people.filter(x => x !== name)});
-    const here = to.people.includes(name), names = here ? to.people.filter(x => x !== name) : to.people.concat([name]);
+    if(from && from.dev !== to.dev) await livePost({action: "toolRoster", tool: PAGE_ID, code, dev: from.dev, names: from.own.filter(x => x !== name)});
+    const here = to.own.includes(name) || (from && grp && devsOf(grp.dev).includes(from.dev)), names = here ? to.own.filter(x => x !== name) : to.own.concat([name]);
     const move = here ? `${t} ${name} left ${to.short}` : from && from.dev !== to.dev ? `${t} ${name}: ${from.short} → ${to.short}` : `${t} ${name} → ${to.short}`;
     const res = await livePost({action: "toolRoster", tool: PAGE_ID, code, dev: to.dev, names, move});
     if(res.ok && Array.isArray(res.rooms)){ GW.rooms = res.rooms; GW.at = Date.now(); } gwPaint(); }));
@@ -359,7 +413,9 @@ async function sendNote(c, note, mark = "note", opts = {}){
   const said = c.querySelector("[data-said]"), [tool, chat] = opts.noTarget ? [PAGE_ID, 0] : String(c.dataset.target || (c.dataset.tool + "|" + c.dataset.chat)).split("|");
   if(!opts.noTarget && (!tool || tool === "undefined")){ said.textContent = "nothing typed yet — your note needs their text"; return; }
   said.textContent = "sending…";
-  const res = await livePost({action: "toolNote", tool, code: localStorage.getItem("hw-code") || "", dev: c.dataset.dev, chat: +chat || 0, quote: opts.noTarget ? "" : (c.dataset.quote || ""), note, mark});
+  const code0 = localStorage.getItem("hw-code") || "";
+  if(mark === "go" || mark === "say") for(const dv of devsOf(c.dataset.dev).slice(1)) await livePost({action: "toolNote", tool, code: code0, dev: dv, chat: 0, quote: "", note, mark});   /* tools 22: the joined screens too */
+  const res = await livePost({action: "toolNote", tool, code: code0, dev: c.dataset.dev, chat: +chat || 0, quote: opts.noTarget ? "" : (c.dataset.quote || ""), note, mark});
   if(res.ok && Array.isArray(res.rows)){
     const sel = getSelection(); if(sel && sel.rangeCount && c.contains(sel.anchorNode)) sel.removeAllRanges();
     if(tool === PAGE_ID || !opts.noTarget){ res.rows.forEach(r => r.tool = tool); GW.rows = GW.rows.filter(r => r.tool !== tool).concat(res.rows); }
@@ -394,12 +450,18 @@ function wireGroups(root){
     b.textContent = !t ? "Nothing to copy yet" : (await copyText(t)) ? "Copied ✓" : "Couldn't copy"; setTimeout(() => { b.textContent = was; }, 2200); }));
   root.querySelectorAll("[data-gw-fresh]").forEach(b => b.addEventListener("click", () => {
     if(!b.dataset.sure){ b.dataset.sure = "1"; b.textContent = "Hide what's here now? Tap again"; return; }
-    store.set(SINCE_KEY, gwNow()); if(LW.onFresh) LW.onFresh(); delete b.dataset.sure; b.textContent = "🧹 Start fresh"; gwRebuild(); }));   /* her 15:31: her own test answers on this page go too */
+    store.set(SINCE_KEY, gwNow()); store.set(MERGE_KEY, null); if(LW.onFresh) LW.onFresh(); delete b.dataset.sure; b.textContent = "🧹 Start fresh"; gwRebuild(); }));
+  /* 🔀 New groups: every screen its own card again (they fly apart), ↩ Undo for 10 s; then she drags them together */
+  root.querySelectorAll("[data-gw-new]").forEach(b => b.addEventListener("click", () => {
+    if(b.dataset.undo){ store.set(MERGE_KEY, JSON.parse(b.dataset.undo)); delete b.dataset.undo; clearTimeout(b._t); b.textContent = "🔀 New groups"; gwRebuild(); return; }
+    b.dataset.undo = JSON.stringify(mergeGet()); store.set(MERGE_KEY, null); b.classList.remove("pulse"); b.textContent = "↩ Undo";
+    gwRebuild(); document.querySelectorAll(".gw-grid .gw-card").forEach((c, i) => { c.style.setProperty("--i", i); c.classList.add("fly"); });
+    b._t = setTimeout(() => { delete b.dataset.undo; b.textContent = "🔀 New groups"; gwPaint(); }, 10000); }));   /* her 15:31: her own test answers on this page go too */
   /* 📢 to all rooms: the same strip on every screen of this page, with OK */
   const box = root.querySelector("#gw-sayall");
   root.querySelectorAll("[data-say-all]").forEach(b => b.addEventListener("click", () => { box.hidden = !box.hidden; if(!box.hidden) box.querySelector("input").focus(); }));
   const sayAll = async t => { t = String(t || "").trim(); if(!t) return; const devs = gwDevices().filter(d => !d.room || hereNow(d.room)), code = localStorage.getItem("hw-code") || "";
-    for(const d of devs) await livePost({action: "toolNote", tool: PAGE_ID, code, dev: d.dev, chat: 0, note: t, mark: "say"});
+    for(const d of devs) for(const dv of devsOf(d.dev)) await livePost({action: "toolNote", tool: PAGE_ID, code, dev: dv, chat: 0, note: t, mark: "say"});
     box.querySelector("input").value = ""; box.hidden = true; gwFetch(); };
   root.querySelectorAll("[data-say-send]").forEach(b => b.addEventListener("click", () => sayAll(box.querySelector("input").value)));
   root.querySelectorAll("[data-say-quick]").forEach(b => b.addEventListener("click", () => sayAll(b.dataset.sayQuick)));

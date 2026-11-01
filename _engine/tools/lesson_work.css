@@ -91,3 +91,23 @@
 .pc-top{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
 .pc-meta{color:var(--muted);font-size:.88rem}
 .pc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(20rem,1fr));gap:10px}
+/* tools 22 (her 1.11 11:29): drag a card onto another → one group; 🔀 New groups pulses when a joined screen works on its own */
+.gw-head{display:flex;gap:6px;align-items:baseline;cursor:grab}
+.gw-head:active{cursor:grabbing}
+.gw-grip{color:var(--muted);font-size:1.1rem;line-height:1;user-select:none}
+.pc-card .gw-head{cursor:default}.pc-card .gw-grip{display:none}
+.gw-card.dragging{opacity:.45}
+.gw-card.drop{outline:3px dashed var(--instr-text);outline-offset:3px}
+.gw-card.joined{animation:gwJoin .8s cubic-bezier(.2,.8,.2,1)}
+@keyframes gwJoin{0%{transform:scale(.97)}45%{transform:scale(1.03)}100%{transform:none}}
+.gw-card.fly{animation:gwFly .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0) * 60ms)}
+@keyframes gwFly{0%{opacity:0;transform:translateY(-14px) scale(.94)}100%{opacity:1;transform:none}}
+.gw-mem{font-size:.92rem;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline}
+.gw-mem .linklike{font:inherit;font-weight:800;color:var(--instr-text);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+.gw-j{display:inline-flex;gap:2px;align-items:baseline}
+.gw-j.solo .linklike{color:var(--no-ink)}
+.gw-x{border:0;background:none;color:var(--muted);cursor:pointer;font-weight:900;padding:0 4px}
+.gw-hint{margin:0;color:var(--muted);font-size:.92rem}
+#gw-new.pulse{animation:gwPulse 1.4s ease-in-out infinite;border-color:#E8B800;background:#FFFBE6;color:#111111}
+@keyframes gwPulse{0%,100%{box-shadow:0 0 0 0 rgba(232,184,0,.55)}50%{box-shadow:0 0 0 7px rgba(232,184,0,0)}}
+@media (prefers-reduced-motion:reduce){ .gw-card.joined,.gw-card.fly,#gw-new.pulse{animation:none} }
