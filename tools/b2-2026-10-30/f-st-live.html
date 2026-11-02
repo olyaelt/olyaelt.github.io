@@ -711,6 +711,11 @@ details.all[open] summary{color:var(--ink)}
 .lis-msg a{color:#9BD3FF}
 .lis-n{margin:0 0 6px;color:var(--muted);font-weight:700}
 .lis-line{font-size:1.45rem;line-height:1.6;margin:0 0 14px}
+.lis-lines{display:grid;gap:4px;margin:0 0 14px}
+.lis-ln{display:flex;gap:8px;align-items:baseline;margin:0;font-size:1.08rem;line-height:1.4;padding:3px 6px;border-radius:8px}
+.lis-ln.gapl{font-size:1.3rem;background:var(--ground)} .lis-ln.gapl .lis-line{font-size:inherit;margin:0}
+.lis-ln.playing{outline:2px solid var(--instr)}
+.lis-pl{flex:none;border:2px solid var(--line);background:var(--card);color:var(--instr-text);border-radius:99px;width:1.9rem;height:1.9rem;font-size:.8rem;cursor:pointer;align-self:center}
 .lis-in{font:inherit;font-size:1.25rem;padding:1px 8px;border:2px solid var(--instr);border-radius:8px;background:var(--card);color:var(--ink);max-width:100%}
 .lis-ok{color:var(--ok)} .lis-no{color:var(--no)} .lis-to{color:var(--muted)}
 .lis-ans{background:var(--hl);color:var(--hl-ink);padding:0 .25em;border-radius:4px}
@@ -2808,9 +2813,9 @@ D.stages.forEach((st, si) => st.blocks.forEach((b, bi) => {
       _lbl: b.piece === "wheel" ? "How would you start the chat?" : t.label && !/^\d+$/.test(t.label) ? t.label : "How would you make it perfect English?"}); });
   /* tools 26: 🎧 a listen block's clips are numbered with the cards too: a missed one comes back in "Your hard cards once more" (the line
      with its gap, then the whole line) */
-  if(b.kind === "listen") b._clips = (b.clips || []).map(([vid, start, dur, parts]) => { const n = (P.cards || [])[cardN] != null ? P.cards[cardN] : cardN; cardN++;
-    parts = Array.isArray(parts) ? parts : [String(parts || "")];
-    return {vid, start: Number(start) || 0, dur: Number(dur) || 4, parts, _n: n, _lbl: "🎧 What was missing?", _b: {style: "say", box: null},
+  if(b.kind === "listen") b._clips = (b.clips || []).map(([vid, start, dur, parts, cx]) => { const n = (P.cards || [])[cardN] != null ? P.cards[cardN] : cardN; cardN++;
+    parts = Array.isArray(parts) ? parts : [String(parts || "")]; cx = cx || {};
+    return {vid, start: Number(start) || 0, dur: Number(dur) || 4, parts, _n: n, pre: cx.pre || [], post: cx.post || [], _lbl: "🎧 What was missing?", _b: {style: "say", box: null},
       front: parts.map(x => typeof x === "string" ? x : "______").join(""), back: parts.map(x => typeof x === "string" ? x : `**${x.gap}**`).join("")}; });
 }));
 /* ---------- tools 24 (her 1.11 21:55: «мне было бы спокойнее, если бы я могла сама перетащить куски урока… на карточку кликнуть и поменять
@@ -3585,9 +3590,14 @@ function listenHTML(b){
   const vid = ytYes() ? `<div class="lis-vid" data-lisvid></div>`
     : `<div class="lis-vid consent" data-lisvid><div><p>The clips play from <b>YouTube</b>. When you load them, YouTube (Google) gets your IP address and may store cookies. <a href="../../datenschutz.html#youtube" target="_blank" rel="noopener">More</a></p>
       <button class="btn primary" data-lisok>Load the videos</button><p class="lis-small">Just once on this device.</p></div></div>`;
+  /* her 14:45 («вытащить чуть-чуть больше субтитров… иначе тяжело сориентироваться»): the subtitle lines around it, as in her homework
+     listening — each line its own ▶, the gap line bigger */
+  const ln = (l, k) => `<p class="lis-ln" data-lisln="${k}"><button class="lis-pl" data-lisline="${k}" aria-label="Play this line">▶</button><span>${esc(l[2])}</span></p>`;
+  const lines = c.pre.length || c.post.length ? `<div class="lis-lines">${c.pre.map((l, i) => ln(l, "p" + i)).join("")}<p class="lis-ln gapl" data-lisln="g"><button class="lis-pl" data-lisline="g" aria-label="Play this line">▶</button><span class="lis-line">${line}</span></p>${c.post.map((l, i) => ln(l, "a" + i)).join("")}</div>`
+    : `<p class="lis-line">${line}</p>`;
   return `<div class="lis">${vid}<div class="lis-side"><p class="lis-n">${esc(b.title || "🎧")} · <b>${L.at + 1}</b> of ${n}</p>
-      <p class="lis-line">${line}</p>
-      <div class="lis-acts"><button class="btn primary" data-lisplay>▶ Play</button>${done ? "" : `<button class="btn" data-lischeck>Check</button>`}</div>
+      ${lines}
+      <div class="lis-acts"><button class="btn primary" data-lisplay>${c.pre.length || c.post.length ? "▶ Whole clip" : "▶ Play"}</button>${done ? "" : `<button class="btn" data-lischeck>Check</button>`}</div>
       <div class="lis-spd" role="group" aria-label="Speed"><span>🐢</span>${LIS_RATES.map(r => `<button data-lisrate="${r}" aria-pressed="${lisRate() === r}">${r === 1 ? "normal" : r}</button>`).join("")}</div>
       <p class="lis-src">${b.source ? esc(b.source) + " · " : ""}<a href="${lisOut(c)}" target="_blank" rel="noopener">on YouTube ↗</a></p></div></div>`;
 }
@@ -3602,6 +3612,7 @@ function wireListen(b, root){ const L = lisSt(b), c = b._clips[L.at];
     x.addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); lisCheck(b); } }); });
   root.querySelectorAll("[data-lischeck]").forEach(x => x.addEventListener("click", () => lisCheck(b)));
   root.querySelectorAll("[data-lisplay]").forEach(x => x.addEventListener("click", () => lisPlay(c)));
+  root.querySelectorAll("[data-lisline]").forEach(x => x.addEventListener("click", () => lisPlay(c, x.dataset.lisline)));
   root.querySelectorAll("[data-lisok]").forEach(x => x.addEventListener("click", () => { try{ localStorage.setItem("hw-yt-ok", "1"); }catch(e){} render(); }));
   root.querySelectorAll("[data-lisrate]").forEach(x => x.addEventListener("click", () => { const r = Number(x.dataset.lisrate); try{ localStorage.setItem("hw-rate", String(r)); localStorage.setItem("hw-slow", ""); }catch(e){}
     root.querySelectorAll("[data-lisrate]").forEach(y => y.setAttribute("aria-pressed", Number(y.dataset.lisrate) === r)); try{ LIS.player && LIS.player.setPlaybackRate(r); }catch(e){} }));
@@ -3633,22 +3644,30 @@ function lisPlace(){
   const r = ph.getBoundingClientRect();
   Object.assign(LIS.holder.style, {display: "block", left: (r.left + scrollX) + "px", top: (r.top + scrollY) + "px", width: r.width + "px", height: r.height + "px"});
   if(window.ResizeObserver){ if(LIS.ro) LIS.ro.disconnect(); LIS.ro = new ResizeObserver(() => { if(ph.isConnected){ const q = ph.getBoundingClientRect(); Object.assign(LIS.holder.style, {left: (q.left + scrollX) + "px", top: (q.top + scrollY) + "px", width: q.width + "px", height: q.height + "px"}); } }); LIS.ro.observe(ph); }
-  if(LIS.player){ if(LIS.ready){ if(LIS.autoplay){ LIS.autoplay = false; lisPlay(c); } else if(LIS.vid !== c.vid){ LIS.vid = c.vid; try{ LIS.player.cueVideoById({videoId: c.vid, startSeconds: Math.floor(Math.max(0, c.start - LIS_LEAD))}); }catch(e){} } } return; }
+  if(LIS.player){ if(LIS.ready){ if(LIS.autoplay){ LIS.autoplay = false; lisPlay(c); } else if(LIS.vid !== c.vid){ LIS.vid = c.vid; try{ LIS.player.cueVideoById({videoId: c.vid, startSeconds: Math.floor(lisRange(c)[0])}); }catch(e){} } } return; }
   if(LIS.failed){ lisMsg("fail", c); return; }
   LIS.vid = c.vid; LIS.ready = false; lisMsg("Loading the video…");
   loadYT().then(() => { if(LIS.player || !document.getElementById("lis-yt")) return;
     LIS.player = new YT.Player("lis-yt", {videoId: c.vid, width: "100%", height: "100%",
-      playerVars: {playsinline: 1, rel: 0, modestbranding: 1, cc_load_policy: 0, iv_load_policy: 3, start: Math.floor(Math.max(0, c.start - LIS_LEAD))},
-      events: {onReady: () => { LIS.ready = true; clearTimeout(LIS.wait); lisMsg(""); const cur = lisCur(); if(cur && LIS.autoplay){ LIS.autoplay = false; lisPlay(cur); } else if(cur && cur.vid !== LIS.vid){ LIS.vid = cur.vid; try{ LIS.player.cueVideoById({videoId: cur.vid, startSeconds: Math.floor(Math.max(0, cur.start - LIS_LEAD))}); }catch(e){} } }}});
+      playerVars: {playsinline: 1, rel: 0, modestbranding: 1, cc_load_policy: 0, iv_load_policy: 3, start: Math.floor(lisRange(c)[0])},
+      events: {onReady: () => { LIS.ready = true; clearTimeout(LIS.wait); lisMsg(""); const cur = lisCur(); if(cur && LIS.autoplay){ LIS.autoplay = false; lisPlay(cur); } else if(cur && cur.vid !== LIS.vid){ LIS.vid = cur.vid; try{ LIS.player.cueVideoById({videoId: cur.vid, startSeconds: Math.floor(lisRange(cur)[0])}); }catch(e){} } }}});
     clearTimeout(LIS.wait); LIS.wait = setTimeout(() => { if(!LIS.ready){ LIS.failed = true; lisMsg("fail", lisCur()); } }, 15000);
   }).catch(() => { LIS.failed = true; lisMsg("fail", lisCur()); });
 }
 function lisPause(){ clearInterval(LIS.timer); try{ LIS.player && LIS.ready && LIS.player.pauseVideo(); }catch(e){} }
-function lisPlay(c){
+/* the whole clip: with the lines around, from a second before the first to a second after the last; a line alone (▶ next to it): a second
+   before it, a little after; a clip without lines around: 3 s either side (YouGlish times are rough) */
+function lisRange(c, k){
+  const all = c.pre.concat([[c.start, c.dur]], c.post), wide = c.pre.length || c.post.length;
+  if(k){ const l = k === "g" ? [c.start, c.dur] : k[0] === "p" ? c.pre[+k.slice(1)] : c.post[+k.slice(1)]; if(l) return [Math.max(0, l[0] - 1), l[0] + l[1] + .6]; }
+  return wide ? [Math.max(0, all[0][0] - 1), all[all.length - 1][0] + all[all.length - 1][1] + 1] : [Math.max(0, c.start - LIS_LEAD), c.start + c.dur + LIS_TAIL];
+}
+function lisPlay(c, k){
   if(!c) return; if(!LIS.player || !LIS.ready){ LIS.autoplay = true; if(!LIS.player && !LIS.failed) lisPlace(); return; }
-  clearInterval(LIS.timer); const from = Math.max(0, c.start - LIS_LEAD), to = c.start + c.dur + LIS_TAIL;
+  clearInterval(LIS.timer); const [from, to] = lisRange(c, k);
+  document.querySelectorAll("#main [data-lisln]").forEach(x => x.classList.toggle("playing", !!k && x.dataset.lisln === k));
   try{ if(LIS.vid !== c.vid){ LIS.vid = c.vid; LIS.player.loadVideoById({videoId: c.vid, startSeconds: from}); } else { LIS.player.seekTo(from, true); LIS.player.playVideo(); } LIS.player.setPlaybackRate(lisRate()); }catch(e){}
-  LIS.timer = setInterval(() => { let t = 0; try{ t = LIS.player.getCurrentTime(); }catch(e){} if(t >= to){ lisPause(); } }, 100);
+  LIS.timer = setInterval(() => { let t = 0; try{ t = LIS.player.getCurrentTime(); }catch(e){} if(t >= to){ lisPause(); document.querySelectorAll("#main [data-lisln].playing").forEach(x => x.classList.remove("playing")); } }, 100);
 }
 
 /* ---------- tools 26 (her German page, R2: «чтобы за них тоже начислялись бы баллы мне, потому что я хочу копить баллы»; the groups'

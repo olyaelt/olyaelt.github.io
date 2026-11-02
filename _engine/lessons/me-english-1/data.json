@@ -1,0 +1,1928 @@
+{
+ "box": [
+  {
+   "h": "REACTING TO ANSWERS",
+   "items": [
+    {
+     "n": 1,
+     "en": "<b class=\"g\">Exactly right.</b> / <b class=\"g\">Spot on.</b> / <b class=\"g\">That's it!</b>",
+     "ru": "точно! / в точку! / вот!"
+    },
+    {
+     "n": 2,
+     "en": "<b class=\"g\">You'll also hear</b> … / … <b class=\"g\">also works.</b>",
+     "ru": "ещё говорят… / …тоже подходит"
+    },
+    {
+     "n": 3,
+     "en": "<b class=\"g\">Close!</b> / <b class=\"g\">Nearly!</b> / <b class=\"g\">Not quite.</b>",
+     "ru": "почти! (2 варианта) / не совсем"
+    },
+    {
+     "n": 4,
+     "en": "<b class=\"g\">You've got the verb,</b> <b class=\"g\">just not the little word.</b>",
+     "ru": "глагол верный, а вот частица — нет"
+    },
+    {
+     "n": 5,
+     "en": "X <b class=\"g\">is fine — it's just that</b> Y <b class=\"g\">is what most people say.</b>",
+     "ru": "так можно, просто чаще говорят…"
+    },
+    {
+     "n": 6,
+     "en": "<b class=\"g\">In Russian it's</b> X, <b class=\"g\">isn't it?</b> <b class=\"g\">In English it's</b> Y.",
+     "ru": "по-русски ведь X, да? А по-английски Y"
+    },
+    {
+     "n": 7,
+     "en": "<b class=\"g\">Don't worry, you're in good company.</b>",
+     "ru": "не переживай, ты не один такой"
+    }
+   ]
+  },
+  {
+   "h": "RUNNING THE DISCUSSION",
+   "items": [
+    {
+     "n": 8,
+     "en": "<b class=\"g\">That's a really good point.</b>",
+     "ru": "очень дельная мысль"
+    },
+    {
+     "n": 9,
+     "en": "<b class=\"g\">So you're saying</b> …?",
+     "ru": "то есть ты имеешь в виду, что…?"
+    },
+    {
+     "n": 10,
+     "en": "Anna, <b class=\"g\">you're nodding.</b> / <b class=\"g\">Who agrees?</b>",
+     "ru": "Аня, ты киваешь / кто согласен?"
+    },
+    {
+     "n": 11,
+     "en": "<b class=\"g\">Hold that thought</b>, Pavel.",
+     "ru": "погоди, Паша, к этому мы ещё вернёмся"
+    },
+    {
+     "n": 12,
+     "en": "<b class=\"g\">Good question. I'm not 100% sure.</b> <b class=\"g\">Let me double-check and get back to you.</b>",
+     "ru": "хороший вопрос, не уверена на все сто; проверю и вернусь к вам с ответом"
+    }
+   ]
+  }
+ ],
+ "test1": [
+  {
+   "n": 1,
+   "label": "C1 · 23.10",
+   "sit": "A student gives exactly the right answer."
+  },
+  {
+   "n": 2,
+   "label": "B2",
+   "sit": "A student calls a true crime series a “mockumentary”. Wrong word, but close: both look like documentaries."
+  },
+  {
+   "n": 3,
+   "label": "C1 · 30.10 · breakout room",
+   "sit": "Alena starts giving her opinion. There's a speaking question on exactly that later; right now the group should be working through the slides."
+  },
+  {
+   "n": 4,
+   "label": "C1 · 28.10",
+   "sit": "Ksenia points out that “stubborn” sounds a bit negative. She's right."
+  },
+  {
+   "n": 5,
+   "label": "C1 · 30.10",
+   "sit": "A student explains an expression: “It's about experiencing a really bad situation.” In fact, it's about something going wrong and you learning your lesson."
+  },
+  {
+   "n": 6,
+   "label": "B2",
+   "sit": "A student says “I made my homework”, the classic Russian-speaker slip."
+  }
+ ],
+ "part1_text": [
+  {
+   "label": "Part 1 · Diego",
+   "lines": [
+    {
+     "s": "Kate",
+     "t": "Okay, let's check. Number one. Diego?"
+    },
+    {
+     "s": "Diego",
+     "t": "“We had to put off the meeting until Friday.”"
+    },
+    {
+     "s": "Kate",
+     "t": "Exactly right. “Put off.” You'll also hear “push back”: “We had to push the meeting back.” Same thing."
+    }
+   ],
+   "questions": [
+    {
+     "q": "Diego's answer is right. What does Kate say? What does she add?",
+     "a": "“Exactly right.” Then another way to say it: “You'll also hear ‘push back’.”"
+    }
+   ]
+  },
+  {
+   "label": "Part 1 · Aiko",
+   "lines": [
+    {
+     "s": "Kate",
+     "t": "Number two. Aiko?"
+    },
+    {
+     "s": "Aiko",
+     "t": "“Could you look after my report before I send it?”"
+    },
+    {
+     "s": "Kate",
+     "t": "Ooh, close! You've got the verb, just not the little word. Look…?"
+    },
+    {
+     "s": "Aiko",
+     "t": "Look… over?"
+    },
+    {
+     "s": "Kate",
+     "t": "That's it! “Could you look over my report?”"
+    }
+   ],
+   "questions": [
+    {
+     "q": "Aiko's answer is nearly right. What does Kate praise first?",
+     "a": "The verb: “You've got the verb, just not the little word.”"
+    },
+    {
+     "q": "Does Kate give Aiko the answer?",
+     "a": "No: “Look…?” Aiko finds “over” herself."
+    }
+   ]
+  },
+  {
+   "label": "Part 1 · Marco",
+   "lines": [
+    {
+     "s": "Kate",
+     "t": "Number three. Marco?"
+    },
+    {
+     "s": "Marco",
+     "t": "“I'm making a photo of the board.”"
+    },
+    {
+     "s": "Kate",
+     "t": "Mm, not quite. In Italian it's “fare”, isn't it? In English it's “take”: “I'm taking a photo.”"
+    },
+    {
+     "s": "Marco",
+     "t": "I've been saying “make a photo” for ten years."
+    },
+    {
+     "s": "Kate",
+     "t": "Don't worry, you're in good company. Half my students say it."
+    }
+   ],
+   "questions": [
+    {
+     "q": "Why does Kate mention <b>Italian</b>?",
+     "a": "She names the reason for the mistake: in Italian it's “fare”. The mistake makes sense."
+    },
+    {
+     "q": "Marco feels a bit silly. What does Kate say?",
+     "a": "“Don't worry, you're in good company.” Lots of people say it."
+    }
+   ]
+  },
+  {
+   "label": "Part 1 · Marco",
+   "lines": [
+    {
+     "s": "Marco",
+     "t": "But why “take”?"
+    },
+    {
+     "s": "Kate",
+     "t": "Good question! Honestly, there's no real logic. It's just what goes together. We're doing make, do and take next week."
+    }
+   ],
+   "questions": [
+    {
+     "q": "Can Kate explain why it's <b>take</b>? What does she say?",
+     "a": "Not really, and she's honest about it: “Good question! Honestly, there's no real logic.”"
+    }
+   ]
+  },
+  {
+   "label": "Part 1 · Ewa",
+   "lines": [
+    {
+     "s": "Kate",
+     "t": "Number four. Ewa?"
+    },
+    {
+     "s": "Ewa",
+     "t": "“Sorry, something came out, so I can't make it.”"
+    },
+    {
+     "s": "Kate",
+     "t": "Nearly! Like Aiko: you've got the verb, just not the little word. Something came…?"
+    },
+    {
+     "s": "Ewa",
+     "t": "Up! Something came up."
+    },
+    {
+     "s": "Kate",
+     "t": "Spot on. And it's a great one: you don't have to say what came up."
+    }
+   ],
+   "questions": [
+    {
+     "q": "What does Kate say before <b>Something came…?</b>",
+     "a": "“Nearly!” and, as with Aiko, she credits the verb. Then Ewa finishes it herself."
+    },
+    {
+     "q": "Ewa gets it. What does Kate say?",
+     "a": "“Spot on.” And she adds why it's a useful phrase."
+    }
+   ]
+  },
+  {
+   "label": "Part 1 · Diego, Selin",
+   "lines": [
+    {
+     "s": "Diego",
+     "t": "Sorry, quick question about emails…"
+    },
+    {
+     "s": "Kate",
+     "t": "Hold that thought, Diego. Let's just finish number five. Selin?"
+    },
+    {
+     "s": "Selin",
+     "t": "“We need to take a decision by Monday.”"
+    },
+    {
+     "s": "Kate",
+     "t": "“Take a decision” is fine, you'll hear it, especially in British English. It's just that “make a decision” is what most people say."
+    },
+    {
+     "s": "Selin",
+     "t": "So both are correct?"
+    },
+    {
+     "s": "Kate",
+     "t": "Yep, both work. Okay, Diego, your question."
+    }
+   ],
+   "questions": [
+    {
+     "q": "Diego interrupts. What does Kate say? Does she forget his question?",
+     "a": "“Hold that thought, Diego.” No: “Okay, Diego, your question.”"
+    },
+    {
+     "q": "Is <b>take a decision</b> wrong? How does Kate put it?",
+     "a": "No: “It's fine… It's just that ‘make a decision’ is what most people say.”"
+    }
+   ]
+  },
+  {
+   "label": "Part 1 · Diego",
+   "lines": [
+    {
+     "s": "Diego",
+     "t": "I wrote “I did a mistake” in an email today. Is that okay?"
+    },
+    {
+     "s": "Kate",
+     "t": "Ah, tricky one. “Fazer” is both “make” and “do” in Portuguese, isn't it? With mistakes, it's “make”: “I made a mistake.”"
+    },
+    {
+     "s": "Diego",
+     "t": "Oh no. I think I've written that in a lot of emails."
+    },
+    {
+     "s": "Kate",
+     "t": "Then you're in very good company. It's one of the most common ones. Last one, Aiko?"
+    }
+   ],
+   "questions": [
+    {
+     "q": "How does Kate make Diego feel better about his emails?",
+     "a": "The reason (Portuguese “fazer”) and “Then you're in very good company.”"
+    }
+   ]
+  },
+  {
+   "label": "Part 1 · Aiko",
+   "lines": [
+    {
+     "s": "Aiko",
+     "t": "“Can you get back to me about the invoice tomorrow?”"
+    },
+    {
+     "s": "Kate",
+     "t": "Spot on. “Get back to me” works for anything: email, phone, whatever. “Can you let me know about the invoice tomorrow?” also works."
+    }
+   ],
+   "questions": [
+    {
+     "q": "Aiko's last answer is right. What two things does Kate do?",
+     "a": "She confirms (“Spot on.”) and adds another way: “‘Can you let me know…?’ also works.”"
+    }
+   ]
+  }
+ ],
+ "part1_moves": [
+  {
+   "move": "Correct? Confirm + add",
+   "example": "Exactly right. You'll also hear…"
+  },
+  {
+   "move": "Close? Credit what's right",
+   "example": "You've got the verb, just not the little word."
+  },
+  {
+   "move": "Name the reason",
+   "example": "In Italian it's “fare”, isn't it?"
+  },
+  {
+   "move": "Reassure",
+   "example": "You're in good company."
+  }
+ ],
+ "part1_memo": [
+  {
+   "title": "Part 1: the key moments",
+   "lines": [
+    {
+     "s": "Kate",
+     "p": [
+      {
+       "f": "",
+       "r": "Exactly"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "right"
+      },
+      ". “Put off.” ",
+      {
+       "f": "",
+       "r": "You'll"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "also"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "hear"
+      },
+      " “push back”. Same thing."
+     ]
+    },
+    {
+     "s": "",
+     "p": [
+      "…"
+     ]
+    },
+    {
+     "s": "Kate",
+     "p": [
+      "Ooh, ",
+      {
+       "f": "",
+       "r": "close"
+      },
+      "! ",
+      {
+       "f": "",
+       "r": "You've"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "got"
+      },
+      " the ",
+      {
+       "f": "",
+       "r": "verb"
+      },
+      ", ",
+      {
+       "f": "",
+       "r": "just"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "not"
+      },
+      " the ",
+      {
+       "f": "",
+       "r": "little"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "word"
+      },
+      ". Look…?"
+     ]
+    },
+    {
+     "s": "Aiko",
+     "p": [
+      "Look… over?"
+     ]
+    },
+    {
+     "s": "Kate",
+     "p": [
+      {
+       "f": "",
+       "r": "That's"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "it"
+      },
+      "!"
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      {
+       "f": "",
+       "r": "Exactly"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "right"
+      },
+      ". / ",
+      {
+       "f": "",
+       "r": "That's"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "it"
+      },
+      "!"
+     ],
+     "m": "",
+     "ru": "точно! / вот!"
+    },
+    {
+     "p": [
+      {
+       "f": "",
+       "r": "You'll"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "also"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "hear"
+      },
+      " X."
+     ],
+     "m": "",
+     "ru": "ещё говорят X"
+    },
+    {
+     "p": [
+      {
+       "f": "",
+       "r": "Close"
+      },
+      "! ",
+      {
+       "f": "",
+       "r": "You've"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "got"
+      },
+      " the ",
+      {
+       "f": "",
+       "r": "verb"
+      },
+      ", ",
+      {
+       "f": "",
+       "r": "just"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "not"
+      },
+      " the ",
+      {
+       "f": "",
+       "r": "little"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "word"
+      },
+      "."
+     ],
+     "m": "",
+     "ru": "почти! Глагол верный, а вот частица — нет"
+    }
+   ]
+  },
+  {
+   "title": "Part 1: more key moments",
+   "lines": [
+    {
+     "s": "Kate",
+     "p": [
+      "Mm, ",
+      {
+       "f": "",
+       "r": "not"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "quite"
+      },
+      ". ",
+      {
+       "f": "",
+       "r": "In"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "Italian"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "it's"
+      },
+      " “fare”, ",
+      {
+       "f": "",
+       "r": "isn't"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "it"
+      },
+      "? ",
+      {
+       "f": "",
+       "r": "In"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "English"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "it's"
+      },
+      " “take”."
+     ]
+    },
+    {
+     "s": "Marco",
+     "p": [
+      "I've been saying “make a photo” for ten years."
+     ]
+    },
+    {
+     "s": "Kate",
+     "p": [
+      {
+       "f": "",
+       "r": "Don't"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "worry"
+      },
+      ", ",
+      {
+       "f": "",
+       "r": "you're"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "in"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "good"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "company"
+      },
+      ". Half my students say it."
+     ]
+    },
+    {
+     "s": "",
+     "p": [
+      "…"
+     ]
+    },
+    {
+     "s": "Kate",
+     "p": [
+      {
+       "f": "",
+       "r": "Nearly"
+      },
+      "! Like Aiko… Something came…?"
+     ]
+    },
+    {
+     "s": "Ewa",
+     "p": [
+      "Up! Something came up."
+     ]
+    },
+    {
+     "s": "Kate",
+     "p": [
+      {
+       "f": "",
+       "r": "Spot"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "on"
+      },
+      "."
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      {
+       "f": "",
+       "r": "Not"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "quite"
+      },
+      ". / ",
+      {
+       "f": "",
+       "r": "Nearly"
+      },
+      "! / ",
+      {
+       "f": "",
+       "r": "Spot"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "on"
+      },
+      "."
+     ],
+     "m": "",
+     "ru": "не совсем / почти! / в точку"
+    },
+    {
+     "p": [
+      {
+       "f": "",
+       "r": "In"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "Italian"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "it's"
+      },
+      " X, ",
+      {
+       "f": "",
+       "r": "isn't"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "it"
+      },
+      "? ",
+      {
+       "f": "",
+       "r": "In"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "English"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "it's"
+      },
+      " Y."
+     ],
+     "m": "",
+     "ru": "по-итальянски ведь X, да? А по-английски Y"
+    },
+    {
+     "p": [
+      {
+       "f": "",
+       "r": "Don't"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "worry"
+      },
+      ", ",
+      {
+       "f": "",
+       "r": "you're"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "in"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "good"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "company"
+      },
+      "."
+     ],
+     "m": "",
+     "ru": "не переживай, ты не один такой"
+    }
+   ]
+  },
+  {
+   "title": "Part 1: more key moments",
+   "lines": [
+    {
+     "s": "Kate",
+     "p": [
+      "“Take a decision” ",
+      {
+       "f": "",
+       "r": "is"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "fine"
+      },
+      ", you'll hear it. ",
+      {
+       "f": "",
+       "r": "It's"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "just"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "that"
+      },
+      " “make a decision” ",
+      {
+       "f": "",
+       "r": "is"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "what"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "most"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "people"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "say"
+      },
+      "."
+     ]
+    },
+    {
+     "s": "",
+     "p": [
+      "…"
+     ]
+    },
+    {
+     "s": "Diego",
+     "p": [
+      "Oh no. I think I've written that in a lot of emails."
+     ]
+    },
+    {
+     "s": "Kate",
+     "p": [
+      "Then ",
+      {
+       "f": "",
+       "r": "you're"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "in"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "very"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "good"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "company"
+      },
+      "."
+     ]
+    },
+    {
+     "s": "",
+     "p": [
+      "…"
+     ]
+    },
+    {
+     "s": "Kate",
+     "p": [
+      "Spot on. “Can you let me know about the invoice tomorrow?” ",
+      {
+       "f": "",
+       "r": "also"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "works"
+      },
+      "."
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      "X ",
+      {
+       "f": "",
+       "r": "is"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "fine"
+      },
+      ", ",
+      {
+       "f": "",
+       "r": "it's"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "just"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "that"
+      },
+      " Y ",
+      {
+       "f": "",
+       "r": "is"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "what"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "most"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "people"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "say"
+      },
+      "."
+     ],
+     "m": "",
+     "ru": "так можно, просто чаще говорят Y"
+    },
+    {
+     "p": [
+      {
+       "f": "",
+       "r": "you're"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "in"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "very"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "good"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "company"
+      }
+     ],
+     "m": "",
+     "ru": "ты точно не один такой"
+    },
+    {
+     "p": [
+      "X ",
+      {
+       "f": "",
+       "r": "also"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "works"
+      },
+      "."
+     ],
+     "m": "",
+     "ru": "X тоже подходит"
+    }
+   ]
+  }
+ ],
+ "part1_rewrite": [
+  {
+   "ctx": "Diego: “We had to put off the meeting.”",
+   "o": "<b class=\"hl\">That's completely right. People say</b> “push back” <b class=\"hl\">too.</b>",
+   "k": "SPOT",
+   "a": "<b class=\"g\">Spot on.</b> <b class=\"g\">You'll also hear</b> “push back”.",
+   "ru": "в точку · ещё говорят…"
+  },
+  {
+   "ctx": "Aiko: “Could you look after my report?”",
+   "o": "<b class=\"hl\">Almost. The verb is right, but the particle is wrong.</b>",
+   "k": "LITTLE",
+   "a": "<b class=\"g\">Close! You've got the verb, just not the little word.</b>",
+   "ru": "почти! глагол верный, а вот частица — нет"
+  },
+  {
+   "ctx": "Selin: “We need to take a decision.”",
+   "o": "<b class=\"hl\">That's correct, but most people say</b> “make a decision”.",
+   "k": "JUST",
+   "a": "“Take a decision” <b class=\"g\">is fine</b> — <b class=\"g\">it's just that</b> “make a decision” <b class=\"g\">is what most people say.</b>",
+   "ru": "так можно, просто чаще говорят…"
+  },
+  {
+   "ctx": "Marco: “I've been saying it wrong for years!”",
+   "o": "<b class=\"hl\">Lots of people make this mistake, so don't worry.</b>",
+   "k": "COMPANY",
+   "a": "<b class=\"g\">Don't worry, you're in good company.</b>",
+   "ru": "не переживай, ты не один такой"
+  },
+  {
+   "ctx": "B2: “I'm agree.”",
+   "o": "<b class=\"hl\">This probably comes from Russian: «я согласен». In English we just say</b> “I agree”.",
+   "k": "ISN'T",
+   "a": "<b class=\"g\">In Russian it's</b> «я согласен», <b class=\"g\">isn't it?</b> <b class=\"g\">In English it's</b> just “I agree”.",
+   "ru": "по-русски ведь «я согласен», да? А по-английски…"
+  },
+  {
+   "ctx": "Aiko: “Can you get back to me about it?”",
+   "o": "<b class=\"hl\">That's correct.</b> “Let me know” <b class=\"hl\">is correct too.</b>",
+   "k": "WORKS",
+   "a": "<b class=\"g\">Spot on.</b> “Let me know” <b class=\"g\">also works.</b>",
+   "ru": "…тоже подходит"
+  }
+ ],
+ "part1_say": [
+  {
+   "ctx": "B2 · speaking",
+   "line": "I'm agree with Anna.",
+   "a": "Just “I agree”, no “am”. <b class=\"g\">In Russian it's</b> «я согласен», <b class=\"g\">isn't it?</b>",
+   "alt": "or: …no “am”. You're in good company: half my students say it."
+  },
+  {
+   "ctx": "B2 · checking an exercise",
+   "line": "It depends from the weather.",
+   "a": "<b class=\"g\">Close! You've got the verb, just not the little word.</b> It depends…?",
+   "alt": "or: Nearly! It depends…?"
+  },
+  {
+   "ctx": "B2 · speaking",
+   "line": "It's raining cats and dogs today!",
+   "a": "“Raining cats and dogs” <b class=\"g\">is fine</b>, you'll hear it. <b class=\"g\">It's just that</b> “It's pouring” <b class=\"g\">is what most people say.</b>",
+   "alt": null
+  },
+  {
+   "ctx": "B2 · speaking",
+   "line": "Yesterday I made my homework.",
+   "a": "<b class=\"g\">Not quite.</b> <b class=\"g\">In Russian it's</b> «делать» for both make and do, <b class=\"g\">isn't it?</b> <b class=\"g\">In English it's</b> “do”: I did my homework.",
+   "alt": null
+  },
+  {
+   "ctx": "C1 · checking an exercise",
+   "line": "I've been living here for three years.",
+   "a": "<b class=\"g\">Exactly right.</b> “I've lived here for three years” <b class=\"g\">also works.</b>",
+   "alt": "or: Spot on. You'll also hear “I've lived here…”"
+  },
+  {
+   "ctx": "B2 · speaking",
+   "line": "Can you give me some informations?",
+   "a": "Just “information”, no “s”: some information. <b class=\"g\">You're in good company</b>, half my students say it.",
+   "alt": null
+  }
+ ],
+ "part2_text": [
+  {
+   "label": "Part 2 · Ewa",
+   "lines": [
+    {
+     "s": "Kate",
+     "t": "Okay. Working from home four days a week: good idea or not? Ewa?"
+    },
+    {
+     "s": "Ewa",
+     "t": "I think it's bad for new people. You learn so much just by sitting next to someone."
+    },
+    {
+     "s": "Kate",
+     "t": "That's a really good point. So you're saying it's fine if you already know the job, but not when you're new?"
+    },
+    {
+     "s": "Ewa",
+     "t": "Exactly."
+    }
+   ],
+   "questions": [
+    {
+     "q": "Ewa makes her point. What are Kate's two reactions?",
+     "a": "She praises the point (“That's a really good point.”), then checks she's got it: “So you're saying…?”"
+    }
+   ]
+  },
+  {
+   "label": "Part 2 · Marco",
+   "lines": [
+    {
+     "s": "Kate",
+     "t": "Marco, you're nodding."
+    },
+    {
+     "s": "Marco",
+     "t": "In my first job, I learned everything from the guy at the next desk. Everything. Including how to fix the coffee machine."
+    },
+    {
+     "s": "Kate",
+     "t": "Ha! The most important skill of all. Diego, do you agree?"
+    }
+   ],
+   "questions": [
+    {
+     "q": "Marco hasn't said anything yet. How does Kate bring him in?",
+     "a": "She notices he's agreeing: “Marco, you're nodding.”"
+    }
+   ]
+  },
+  {
+   "label": "Part 2 · Diego",
+   "lines": [
+    {
+     "s": "Diego",
+     "t": "Not really. It depends on the company. And what about money? If I work from a village, should they pay me less?"
+    },
+    {
+     "s": "Kate",
+     "t": "Oh, hold that thought, Diego. That's our next question. Let's just finish this one first."
+    }
+   ],
+   "questions": [
+    {
+     "q": "Diego jumps to the next question. What does Kate say? Is she being rude?",
+     "a": "“Hold that thought, Diego. That's our next question.” Not rude: she says why, and she comes back to it."
+    }
+   ]
+  },
+  {
+   "label": "Part 2 · Ewa",
+   "lines": [
+    {
+     "s": "Ewa",
+     "t": "Is it true that people who work from home actually work longer hours?"
+    },
+    {
+     "s": "Kate",
+     "t": "Good question. I've read that, but I'm not a hundred percent sure how they measured it. Let me double-check and get back to you next week."
+    }
+   ],
+   "questions": [
+    {
+     "q": "Kate isn't sure about the research. What does she do?",
+     "a": "She's honest (“I'm not a hundred percent sure…”) and says when she'll get back to them: “…get back to you next week.”"
+    }
+   ]
+  },
+  {
+   "label": "Part 2 · Selin",
+   "lines": [
+    {
+     "s": "Selin",
+     "t": "My cousin's company tried four days at home last year!"
+    },
+    {
+     "s": "Kate",
+     "t": "Oh, go on! How did it go?"
+    },
+    {
+     "s": "Selin",
+     "t": "Everyone loved it for a month. Then nobody knew who was working on what."
+    },
+    {
+     "s": "Kate",
+     "t": "Ha! So you're saying the problem wasn't working from home, it was the organisation?"
+    },
+    {
+     "s": "Selin",
+     "t": "Yes, exactly."
+    }
+   ],
+   "questions": [
+    {
+     "q": "Selin starts a story. How does Kate encourage her?",
+     "a": "“Oh, go on! How did it go?”"
+    },
+    {
+     "q": "What does Kate do after Selin's story?",
+     "a": "She sums it up: “So you're saying the problem wasn't working from home, it was the organisation?”"
+    }
+   ]
+  },
+  {
+   "label": "Part 2 · Diego, Aiko",
+   "lines": [
+    {
+     "s": "Kate",
+     "t": "Okay, Diego, your question. Should they pay you less if you live in a village?"
+    },
+    {
+     "s": "Diego",
+     "t": "No!"
+    },
+    {
+     "s": "Aiko",
+     "t": "Maybe they should. Rent's cheaper in a village."
+    },
+    {
+     "s": "Kate",
+     "t": "Well, that's a point! Probably not a very popular one, though. Who agrees with Aiko?"
+    },
+    {
+     "s": "Diego",
+     "t": "Nobody! Next question."
+    },
+    {
+     "s": "Kate",
+     "t": "Ha! Okay, next question. Oh, and Ewa: I'll get back to you on the longer hours, I promise."
+    }
+   ],
+   "questions": [
+    {
+     "q": "Does Kate forget her promises to Diego and Ewa?",
+     "a": "No: she comes back to Diego's question, and she reminds Ewa: “I'll get back to you on the longer hours, I promise.”"
+    },
+    {
+     "q": "Aiko's idea is not very popular. How does Kate react?",
+     "a": "She credits it (“Well, that's a point!”), adds a joke, then asks the group: “Who agrees with Aiko?”"
+    }
+   ]
+  }
+ ],
+ "part2_moves": [
+  {
+   "move": "Bring people in",
+   "example": "Marco, you're nodding."
+  },
+  {
+   "move": "Praise it, then check",
+   "example": "That's a really good point. So you're saying…?"
+  },
+  {
+   "move": "Park it, come back to it",
+   "example": "Hold that thought, Diego."
+  },
+  {
+   "move": "Not sure? Say so",
+   "example": "Let me double-check and get back to you."
+  }
+ ],
+ "part2_memo": [
+  {
+   "title": "Part 2: the key moments",
+   "lines": [
+    {
+     "s": "Ewa",
+     "p": [
+      "I think it's bad for new people. You learn so much just by sitting next to someone."
+     ]
+    },
+    {
+     "s": "Kate",
+     "p": [
+      {
+       "f": "",
+       "r": "That's"
+      },
+      " a ",
+      {
+       "f": "",
+       "r": "really"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "good"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "point"
+      },
+      ". ",
+      {
+       "f": "",
+       "r": "So"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "you're"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "saying"
+      },
+      " it's fine if you already know the job, but not when you're new?"
+     ]
+    },
+    {
+     "s": "Ewa",
+     "p": [
+      "Exactly."
+     ]
+    },
+    {
+     "s": "Kate",
+     "p": [
+      "Marco, ",
+      {
+       "f": "",
+       "r": "you're"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "nodding"
+      },
+      "."
+     ]
+    },
+    {
+     "s": "",
+     "p": [
+      "…"
+     ]
+    },
+    {
+     "s": "Kate",
+     "p": [
+      "Oh, ",
+      {
+       "f": "",
+       "r": "hold"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "that"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "thought"
+      },
+      ", Diego. That's our next question."
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      {
+       "f": "",
+       "r": "That's"
+      },
+      " a ",
+      {
+       "f": "",
+       "r": "really"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "good"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "point"
+      },
+      "."
+     ],
+     "m": "",
+     "ru": "очень дельная мысль"
+    },
+    {
+     "p": [
+      {
+       "f": "",
+       "r": "So"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "you're"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "saying"
+      },
+      " …?"
+     ],
+     "m": "",
+     "ru": "то есть ты имеешь в виду, что…?"
+    },
+    {
+     "p": [
+      "Marco, ",
+      {
+       "f": "",
+       "r": "you're"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "nodding"
+      },
+      "."
+     ],
+     "m": "",
+     "ru": "Марко, ты киваешь (= согласен?)"
+    },
+    {
+     "p": [
+      {
+       "f": "",
+       "r": "Hold"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "that"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "thought"
+      },
+      ", Diego."
+     ],
+     "m": "",
+     "ru": "погоди, к этому мы ещё вернёмся"
+    }
+   ]
+  },
+  {
+   "title": "Part 2: more key moments",
+   "lines": [
+    {
+     "s": "Ewa",
+     "p": [
+      "Is it true that people who work from home actually work longer hours?"
+     ]
+    },
+    {
+     "s": "Kate",
+     "p": [
+      {
+       "f": "",
+       "r": "Good"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "question"
+      },
+      ". I've read that, but ",
+      {
+       "f": "",
+       "r": "I'm"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "not"
+      },
+      " a ",
+      {
+       "f": "",
+       "r": "hundred"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "percent"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "sure"
+      },
+      " how they measured it. ",
+      {
+       "f": "",
+       "r": "Let"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "me"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "double-check"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "and"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "get"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "back"
+      },
+      " to ",
+      {
+       "f": "",
+       "r": "you"
+      },
+      " next week."
+     ]
+    },
+    {
+     "s": "",
+     "p": [
+      "…"
+     ]
+    },
+    {
+     "s": "Kate",
+     "p": [
+      "Probably not a very popular one, though. ",
+      {
+       "f": "",
+       "r": "Who"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "agrees"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "with"
+      },
+      " Aiko?"
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      {
+       "f": "",
+       "r": "Good"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "question"
+      },
+      ". ",
+      {
+       "f": "",
+       "r": "I'm"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "not"
+      },
+      " a ",
+      {
+       "f": "",
+       "r": "hundred"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "percent"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "sure"
+      },
+      " …"
+     ],
+     "m": "",
+     "ru": "хороший вопрос; не уверена на все сто"
+    },
+    {
+     "p": [
+      {
+       "f": "",
+       "r": "Let"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "me"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "double-check"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "and"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "get"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "back"
+      },
+      " to ",
+      {
+       "f": "",
+       "r": "you"
+      },
+      " next week."
+     ],
+     "m": "",
+     "ru": "проверю и вернусь к вам с ответом"
+    },
+    {
+     "p": [
+      {
+       "f": "",
+       "r": "Who"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "agrees"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "with"
+      },
+      " Aiko?"
+     ],
+     "m": "",
+     "ru": "кто согласен с Айко?"
+    }
+   ]
+  }
+ ],
+ "part2_rewrite": [
+  {
+   "ctx": "Ewa: “New people learn so much from the person at the next desk.”",
+   "o": "<b class=\"hl\">I really like that argument</b>, Ewa.",
+   "k": "POINT",
+   "a": "<b class=\"g\">That's a really good point</b>, Ewa.",
+   "ru": "очень дельная мысль"
+  },
+  {
+   "ctx": "Diego: “It depends on the company, the manager, the team…”",
+   "o": "<b class=\"hl\">Do you mean</b> it's not really about working from home?",
+   "k": "SAYING",
+   "a": "<b class=\"g\">So you're saying</b> it's not really about working from home?",
+   "ru": "то есть ты имеешь в виду, что…?"
+  },
+  {
+   "ctx": "Marco hasn't said a word, but he clearly agrees.",
+   "o": "Marco, <b class=\"hl\">I can see you agree.</b>",
+   "k": "NODDING",
+   "a": "Marco, <b class=\"g\">you're nodding.</b>",
+   "ru": "Марко, ты киваешь"
+  },
+  {
+   "ctx": "Diego jumps to the next question.",
+   "o": "<b class=\"hl\">Remember that, Diego, we'll come back to it.</b> It's our next question.",
+   "k": "THOUGHT",
+   "a": "<b class=\"g\">Hold that thought</b>, Diego. It's our next question.",
+   "ru": "погоди, к этому мы ещё вернёмся"
+  },
+  {
+   "ctx": "Ewa asks about research you've only heard of.",
+   "o": "<b class=\"hl\">I'm not completely sure. I'll find out and tell you</b> next week.",
+   "k": "DOUBLE-CHECK",
+   "a": "<b class=\"g\">I'm not a hundred percent sure. Let me double-check and get back to you</b> next week.",
+   "ru": "не уверена на все сто; проверю и вернусь с ответом"
+  },
+  {
+   "ctx": "Aiko's idea is clearly not popular.",
+   "o": "<b class=\"hl\">Does anyone else think so?</b>",
+   "k": "AGREES",
+   "a": "<b class=\"g\">Who agrees with</b> Aiko?",
+   "ru": "кто согласен с Айко?"
+  }
+ ],
+ "part2_say": [
+  {
+   "ctx": "C1 · discussion: online or face-to-face lessons?",
+   "line": "Online is great for adults, but not for kids. Kids need to move.",
+   "a": "<b class=\"g\">That's a really good point.</b> <b class=\"g\">So you're saying</b> it depends on age?",
+   "alt": null
+  },
+  {
+   "ctx": "Pavel finishes his point. Anna hasn't said anything yet, but she's nodding.",
+   "line": "Honestly, I'd never go back to the office.",
+   "a": "Anna, <b class=\"g\">you're nodding.</b> Do you agree with Pavel?",
+   "alt": "or: Who agrees with Pavel?"
+  },
+  {
+   "ctx": "You're on question 1. Pavel jumps to question 3.",
+   "line": "And what about AI? Will we even need teachers?",
+   "a": "Ooh, <b class=\"g\">hold that thought</b>, Pavel. That's question three. Let's finish this one first.",
+   "alt": null
+  },
+  {
+   "ctx": "C1 · a question you can't answer for sure",
+   "line": "Is it true that British people say “sorry” eight times a day?",
+   "a": "<b class=\"g\">Good question!</b> I've heard that too, but <b class=\"g\">I'm not a hundred percent sure.</b> <b class=\"g\">Let me double-check and get back to you</b> on Friday.",
+   "alt": null
+  },
+  {
+   "ctx": "B2 · a long, confusing point",
+   "line": "For me the commute is… the time is not lost, because podcasts, but the money is lost.",
+   "a": "<b class=\"g\">So you're saying</b> the time isn't wasted, it's the money that hurts?",
+   "alt": null
+  },
+  {
+   "ctx": "Marina's opinion gets a laugh.",
+   "line": "Honestly? Summer holidays should be shorter.",
+   "a": "Ooh, that's a bold one! <b class=\"g\">Who agrees with</b> Marina?",
+   "alt": null
+  }
+ ],
+ "then_now": [
+  {
+   "n": 1,
+   "sit": "A student gives exactly the right answer.",
+   "a": "<b class=\"g\">Spot on!</b> / <b class=\"g\">Exactly right.</b>"
+  },
+  {
+   "n": 2,
+   "sit": "A student calls a true crime series a “mockumentary”. Wrong word, but close: both look like documentaries.",
+   "a": "<b class=\"g\">Close!</b> Right idea, wrong word: a mockumentary is a comedy that pretends to be a documentary. This one's real: it's true crime."
+  },
+  {
+   "n": 3,
+   "sit": "Alena starts giving her opinion. There's a speaking question on exactly that later; right now the group should be working through the slides.",
+   "a": "<b class=\"g\">Hold that thought</b>, Alena. There's a speaking question on exactly that later. Let's do the slides first."
+  },
+  {
+   "n": 4,
+   "sit": "Ksenia points out that “stubborn” sounds a bit negative. She's right.",
+   "a": "<b class=\"g\">That's a really good point</b>. It does have a slightly negative ring to it."
+  },
+  {
+   "n": 5,
+   "sit": "A student explains an expression: “It's about experiencing a really bad situation.” In fact, it's about something going wrong and you learning your lesson.",
+   "a": "<b class=\"g\">Not quite.</b> It's more about something going wrong and you learning your lesson."
+  },
+  {
+   "n": 6,
+   "sit": "A student says “I made my homework”, the classic Russian-speaker slip.",
+   "a": "<b class=\"g\">Not quite.</b> <b class=\"g\">In Russian it's</b> «делать» for both make and do, <b class=\"g\">isn't it?</b> <b class=\"g\">In English it's</b> “do”: I did my homework."
+  }
+ ],
+ "little_words_rule": [
+  "<b>too</b> at the end: the usual choice in conversation — I've got a one-year-old <b class=\"g\">too</b>.",
+  "<b>also</b> before the main verb, but after <b>be</b> and after the first auxiliary or modal — I <b class=\"g\">also</b> wanted to talk about… · It's <b class=\"g\">also</b> pretty lonely. · I've <b class=\"g\">also</b> seen it. · I'll <b class=\"g\">also</b> post it.",
+  "a negative → <b>either</b> at the end — It wasn't on my radar <b class=\"g\">either</b>.",
+  "<span class=\"ru\">В разговоре also встречается примерно раз на 4 500 слов; «тоже» чаще всего — too в конце фразы (в британском разговоре ещё и as well).</span>"
+ ],
+ "little_words": [
+  {
+   "ru": "У меня тоже годовалый ребёнок.",
+   "a": "I've got a one-year-old <b class=\"g\">too</b>.",
+   "n": "or: I [[also]] have a one-year-old. (too в конце — разговорнее)"
+  },
+  {
+   "ru": "Я тоже об этом как-то не задумывалась.",
+   "a": "It wasn't on my radar <b class=\"g\">either</b>.",
+   "n": "or: I hadn't thought about it [[either]]. Отрицание → either в конце"
+  },
+  {
+   "ru": "Можешь и для меня это отметить (флажком)?",
+   "a": "Can you flag that for me <b class=\"g\">too</b>?",
+   "n": "flag = отметить флажком (например, карточку в Brainscape)"
+  },
+  {
+   "ru": "Последнее я тоже туда выложу.",
+   "a": "I'll post the last one there <b class=\"g\">too</b>.",
+   "n": "too — в самом конце, после there"
+  },
+  {
+   "ru": "Ещё я хотела поговорить о том, что тебе нужно.",
+   "a": "I <b class=\"g\">also</b> wanted to talk about what you need.",
+   "n": "also — перед смысловым глаголом"
+  },
+  {
+   "ru": "Но здесь ещё и довольно одиноко.",
+   "a": "But it's <b class=\"g\">also</b> pretty lonely here.",
+   "n": "also — после be"
+  }
+ ],
+ "little_words_your_turn": [
+  "Something you did this week, and someone else did <b>too</b>.",
+  "Two things you need to do this week. Say the second one with <b>also</b>.",
+  "Something you haven't done yet, and someone else hasn't <b>either</b>."
+ ],
+ "sticker": [
+  "Spot on!",
+  "Close! / Not quite.",
+  "Hold that thought, …",
+  "So you're saying…?"
+ ],
+ "chat_stops": {
+  "chat1": {
+   "word": "Живой класс, часть 1",
+   "body": [
+    "Я буду твоими студентами из B2: проверяем упражнение. Ответы будут верные, почти верные и с типичными ошибками русскоязычных.",
+    "Ты реагируешь голосовыми, как на уроке, — фразами из коробки.",
+    "Потом я дам короткий фидбэк по твоим реакциям, и ты возвращаешься сюда, к части 2."
+   ],
+   "url": "https://claude.ai/code/session_014Nm4MXpYjJ5VUsYHJxZRFT",
+   "cta": "Открыть чат «My English»",
+   "first": "Иди в наш чат «My English» (кнопка ниже) и напиши:"
+  },
+  "chat2": {
+   "word": "Живой класс, часть 2",
+   "body": [
+    "Я буду группой на обсуждении: кто-то забегает вперёд, кто-то кивает и молчит, кто-то спрашивает то, чего ты точно не знаешь, кто-то говорит длинно и путано.",
+    "Ты ведёшь обсуждение голосовыми — фразами из коробки.",
+    "Потом — короткий фидбэк, и ты возвращаешься сюда, к финалу."
+   ],
+   "url": "https://claude.ai/code/session_014Nm4MXpYjJ5VUsYHJxZRFT",
+   "cta": "Открыть чат «My English»",
+   "first": "Иди в наш чат «My English» (кнопка ниже) и напиши:"
+  },
+  "chat3": {
+   "word": "Живой класс: финал",
+   "body": [
+    "Главное задание урока, два раунда. Раунд 1: коробка открыта. Я — твой класс: проверка упражнения, потом короткое обсуждение.",
+    "Раунд 2: новые студенты, новые ответы — коробку закрой и говори по памяти.",
+    "Между раундами — мой фидбэк. Потом возвращаешься сюда: then & now."
+   ],
+   "url": "https://claude.ai/code/session_014Nm4MXpYjJ5VUsYHJxZRFT",
+   "cta": "Открыть чат «My English»",
+   "first": "Иди в наш чат «My English» (кнопка ниже) и напиши:"
+  },
+  "chat4": {
+   "word": "Транскрипты, урок 1",
+   "body": [
+    "После уроков в среду (04.11) пришли в чат транскрипты Zoom обеих групп.",
+    "Я посчитаю, какие фразы из коробки прозвучали, и покажу 3–4 момента, где они бы пригодились. Это следующий шаг арки."
+   ],
+   "url": "https://claude.ai/code/session_014Nm4MXpYjJ5VUsYHJxZRFT",
+   "cta": "Открыть чат «My English»",
+   "first": "Иди в наш чат «My English» (кнопка ниже) и напиши:"
+  }
+ }
+}

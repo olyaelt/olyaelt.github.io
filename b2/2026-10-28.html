@@ -677,6 +677,7 @@ audio{width:100%}
 .fx-tag{margin-left:auto;font-weight:900}
 @media (prefers-reduced-motion: reduce){ .fx-slot.shake,.fx-ans .fx-in.pop{animation:none} }
 /* ===== /fixit ===== */
+.task-row.stop{outline:3px solid var(--hl);outline-offset:-3px;border-radius:var(--radius)}   /* engine 60: «иди в чат» stops on her own pages */
 </style>
 
 </head>
@@ -2048,7 +2049,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = [];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "59";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "60";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -2067,7 +2068,14 @@ const minutesOf = t => t.min || (t.kind==="gaps" ? 5 : t.kind==="link" ? 10 : Ma
 const lsMem = {};   /* if the browser blocks storage (private mode), remember things for this visit at least */
 /* can this browser keep things after the page is closed? (engine 28: "✓ Saved on this device" under her text) */
 const lsKeeps = (()=>{ try{ localStorage.setItem("hw-test","1"); localStorage.removeItem("hw-test"); return true; }catch(e){ return false; } })();
-const ls = { get:k=>{ try{ const v = localStorage.getItem(k); if(v != null) return v; }catch(e){} return lsMem[k] || ""; }, set:(k,v)=>{ lsMem[k] = v; try{ localStorage.setItem(k,v); }catch(e){} } };
+/* engine 60 (her own pages, 2.11 15:15: «код такой же… чтобы у меня и туда был доступ к одному и тому же коду, который я ввела»): a page of
+   the group "me" (her own lessons, in /me/) keeps who-is-here apart from the groups' pages — the code is her Self code, the same key as
+   🎬 on her German page (tool-self-code), and the page never turns into her teacher view, whatever this device uses on the B2 / C1 pages */
+const SELF = GROUP_ID === "me";
+const SELF_KEYS = {"hw-code": "tool-self-code", "hw-role": "self-role", "hw-who": "self-who", "hw-gid": "self-gid", "hw-as-student": "self-as-student"};
+const lsKey = k => SELF && SELF_KEYS[k] || k;
+const ls = { get:k=>{ k = lsKey(k); try{ const v = localStorage.getItem(k); if(v != null) return v; }catch(e){} return lsMem[k] || ""; },
+  set:(k,v)=>{ if(SELF && k === "hw-role") v = ""; k = lsKey(k); lsMem[k] = v; try{ localStorage.setItem(k,v); }catch(e){} } };
 /* ---------- progress: kept on this device, and in Olya's table once the student enters their code ---------- */
 const SYNC_URL = "https://script.google.com/macros/s/AKfycbwHqzwA-2z09POg7JSqiMhqglOKbD8bxs-UG-NcFKZPzTyzmdEW79ct3zHGktUGyLM_/exec";   /* the address of Olya's progress table; empty = ticks stay on this device only */
 function loadDone(){ try{ return new Set(JSON.parse(localStorage.getItem(PAGE_KEY)||"[]")); }catch(e){ return new Set(); } }
@@ -2157,10 +2165,10 @@ function syncHTML(){
       <span>✓ ${who?`Hi, ${esc(who)}! `:""}${meStats ? "Your progress is saved" : "Olya can see your progress"}${syncState==="offline"?" — <b>not sent yet</b>: no connection right now. Your ticks are saved here and will go to her later.":"."}</span>
       <button class="linklike" id="code-change">Not you?</button></div>`;
   return `<div class="sync sync-card">
-      <label for="code"><b>Your code from Olya</b></label>
+      <label for="code"><b>${SELF ? "My code for my own lessons (Self)" : "Your code from Olya"}</b></label>
       <div class="sync-row"><input id="code" type="text" inputmode="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="e.g. lemon42" value="${esc(code)}">
         <button class="btn primary" id="code-go">Save</button></div>
-      <p class="small">Olya will see your progress, and your ticks will be the same on your phone and computer.</p>
+      <p class="small">${SELF ? "My ticks and my film 🎞 will be the same on my phone and computer." : "Olya will see your progress, and your ticks will be the same on your phone and computer."}</p>
       <p class="small sync-msg" id="sync-msg" aria-live="polite">${syncState==="unknown"?"Hmm, Olya's list doesn't have this code. Check it with her.":""}</p>
     </div>`;
 }
@@ -2379,7 +2387,7 @@ function checkMilestone(gs, groupId){
 }
 /* engine 35: someone studying on their own (Group = Self in her table) has their own film instead of the group's:
    it grows with every task, and every 100 frames gets a small celebration (her choice, 28.10). Each code has its own. */
-let meStats = (()=>{ try{ const c = localStorage.getItem("hw-code"); return c ? JSON.parse(localStorage.getItem("hw-me-"+c)||"null") : null; }catch(e){ return null; } })();
+let meStats = (()=>{ try{ const c = ls.get("hw-code"); return c ? JSON.parse(localStorage.getItem("hw-me-"+c)||"null") : null; }catch(e){ return null; } })();
 function meMeterHTML(me){
   const n = 20, part = me.total % 100, filled = Math.round(part / 100 * n), next = (Math.floor(me.total / 100) + 1) * 100;
   return `<section class="meter meter-me" aria-label="Your film">
@@ -2700,6 +2708,7 @@ function renderTeacherTask(id, wid){
 }
 function refreshMeter(){ const m = document.getElementById("meter-slot"); if(m && !current) m.innerHTML = (myCode() && syncState!=="unknown") ? meterNow() : ""; }
 function footHTML(){
+  if(SELF) return myCode() && syncState!=="unknown" ? `<span>My ticks are saved with my code, on all my devices.</span>` : `<span>The ticks on this page are saved on this device only until I enter my code.</span>`;   /* engine 60 */
   return myCode() && syncState!=="unknown"
     ? `<span>When you finish a task, mark it in our spreadsheet in your colour.</span><span>Your ticks are saved for Olya and on all your devices.</span>`
     : `<span>When you finish a task, mark it in our spreadsheet in your colour.</span><span>The ticks on this page are saved on this phone only.</span>`;
@@ -2752,20 +2761,24 @@ function renderGate(){
   current = null;
   app.innerHTML = `
     <header class="lesson-head" id="gate">
-      <a class="all-hw" href="index.html">← All homework</a>
+      <a class="all-hw" href="index.html">${SELF ? "← My lessons" : "← All homework"}</a>
       <span class="date">${LESSON.date}</span>
-      <h1>Homework</h1>
+      <h1>${SELF ? esc(document.title) : "Homework"}</h1>
     </header>
     <div id="sync-slot">${syncHTML()}</div>
-    <p class="small gate-note">The homework opens with your code. No code yet? Ask Olya — she'll send you one.</p>`;
+    <p class="small gate-note">${SELF ? "The same code as on «My lessons» and the German page (Students → Group = Self). The teacher code isn't touched." : "The homework opens with your code. No code yet? Ask Olya — she'll send you one."}</p>`;
   wireSync();
   const i = document.getElementById("code"); if(i && !("ontouchstart" in window)) i.focus({preventScroll: true});
 }
+/* engine 60: the sections of a topic — the three of the homework pages in their order, then any other a page uses (her own pages: none,
+   the tasks in their order) */
+const SECS = ["Revision", "Extension", "Over to you!"];
+const secsOf = tp => { const own = [...new Set(TASKS.filter(t => t.topic === tp.id).map(t => t.sec || ""))]; return SECS.filter(x => own.includes(x)).concat(own.filter(x => !SECS.includes(x))); };
 function renderHome(justDone){
   if(LOCKED()) return renderGate();
   current = null;
   const taskBtn = t => `
-          <div class="task-wrap"><div class="task-row ${done.has(t.id)?"is-done":""}">
+          <div class="task-wrap"><div class="task-row ${done.has(t.id)?"is-done":""} ${t.stop?"stop":""}">
             <button class="task-btn" data-open="${t.id}">
               <span><div class="t">${esc(t.title)}${t.later?` <span class="later-tag">for later</span>`:""}</div><div class="m">${esc(t.meta)} · ≈ ${minutesOf(t)} min</div>${t.alt?`<div class="alt">${esc(t.alt)}</div>`:""}</span>
             </button>
@@ -2774,9 +2787,9 @@ function renderHome(justDone){
   app.innerHTML = `
     ${justDone?`<div class="done-banner" role="status">✓ Done!${isTeacher() ? " Teacher view: nothing was sent and nothing counts for the group." : lastDone && myCode() && syncState!=="unknown" ? ` +${framesOf(lastDone)} 🎞 for ${meStats ? "your film" : "our group"}.` : " Mark it in our spreadsheet in your colour."}${reactHTML()}</div>`:""}
     <header class="lesson-head">
-      ${ON_SITE?`<a class="all-hw" href="index.html">← All homework</a>`:""}
+      ${ON_SITE?`<a class="all-hw" href="index.html">${SELF ? "← My lessons" : "← All homework"}</a>`:""}
       <span class="date">${LESSON.date}</span>
-      <h1>Homework</h1>
+      <h1>${SELF ? esc(document.title) : "Homework"}</h1>
       ${LESSON.sub?`<p>${LESSON.sub}</p>`:""}
       <p class="total">About ${Math.round(TASKS.filter(t=>!t.later).reduce((s,t)=>s+minutesOf(t),0)/5)*5} minutes in total — you don't have to do it all in one go.${TASKS.some(t=>t.later)?" Tasks marked <b>for later</b> aren't in that time: come back to them when you like.":""}</p>
     </header>
@@ -2789,8 +2802,8 @@ function renderHome(justDone){
         <div class="topic-head"><span class="topic-n">${tp.id==="earlier"?"Look back":"Topic "+(ti+1)}</span><h2>${esc(tp.title)}</h2><p>${esc(tp.sub)}</p></div>
         ${tp.box?`<details class="ul-peek"><summary><img class="sticker-sm" src="${STICKER}" alt="Useful language"><span class="ul-hint">Tap to see the phrases</span></summary>
           <aside class="box box-home" aria-label="Useful language">${tp.box()}</aside></details>`:""}
-        ${["Revision","Extension","Over to you!"].map(sec=>{ const ts = TASKS.filter(t=>t.topic===tp.id && t.sec===sec);
-          return ts.length ? `<div class="sec"><h3 class="sec-label">${sec}</h3>${ts.map(taskBtn).join("")}</div>` : ""; }).join("")}
+        ${secsOf(tp).map(sec=>{ const ts = TASKS.filter(t=>t.topic===tp.id && (t.sec||"")===sec);
+          return ts.length ? `<div class="sec">${sec ? `<h3 class="sec-label">${sec}</h3>` : ""}${ts.map(taskBtn).join("")}</div>` : ""; }).join("")}
       </section>`).join("")}
     <div class="foot" id="foot">${footHTML()}</div>`;
   app.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>openTask(b.dataset.open)));
@@ -3764,9 +3777,9 @@ function renderLink(t){
   if(t.body){   /* any other site: what to do there, the button, and a question to think about */
     shell({instr: t.instr || "",
       stageHTML:`<div class="panel">${t.body}
-        <a class="cta" href="${t.url}" ${t.same?"":`target="_blank" rel="noopener"`}>${esc(t.cta || "Open")}</a>
+        ${t.url ? `<a class="cta" href="${t.url}" ${t.same?"":`target="_blank" rel="noopener"`}>${esc(t.cta || "Open")}</a>` : ""}
         ${t.after?`<p class="small">${t.after}</p>`:""}</div>`,
-      actionsHTML:`<button class="btn primary grow" id="fin">I've done it</button>`});
+      actionsHTML:`<button class="btn primary grow" id="fin">${t.fin || (t.url ? "I've done it" : "Got it")}</button>`});   /* engine 60: a card without a link; t.fin = its own words */
     document.getElementById("fin").addEventListener("click",()=>{ finish(t); goHome(true); });
     window.scrollTo(0,0); return;
   }

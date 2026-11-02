@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>/* the site theme: light unless this device chose dark (engine 56) */(function(){var t="light";try{if(localStorage.getItem("site-theme")==="dark")t="dark"}catch(e){}document.documentElement.setAttribute("data-theme",t)})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F6F1DC">
+<title>My lessons</title>
+<link rel="stylesheet" href="../fonts/homework-sans.css">
+<style>
+/* engine 60 (her 2.11 15:15: «отдельную страничку, не тулз, где всё это будет лежать… код такой же»): her own lessons in one place —
+   the English arc and her German page — opened with her Self code (the same key as 🎬 on the German page), with her film 🎞 */
+:root{
+  --ground:#F6F1DC; --card:#FFFFFF; --ink:#1D1D1B; --muted:#6B6B6B; --line:#D9D2B8; --instr:#0693E3; --instr-ink:#FFFFFF;
+  --label:#E00000; --done:#2E8B3E; --no:#C0392B; --hl:#FFFF00; --hl-ink:#1D1D1B;
+  --font-body:"Homework Sans","Calibri","Carlito","Segoe UI",system-ui,sans-serif; --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D; --instr:#1578C0; --label:#FF7A7A; --done:#62C774; --no:#FF8A80; color-scheme:dark; }
+}
+:root[data-theme="dark"]{ --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D; --instr:#1578C0; --label:#FF7A7A; --done:#62C774; --no:#FF8A80; color-scheme:dark; }
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font-body);font-size:1.08rem;line-height:1.45}
+.wrap{max-width:46rem;margin:0 auto;padding:24px 16px 40px}
+h1{font-size:1.9rem;margin:0 0 4px;line-height:1.15}
+.sub{color:var(--muted);margin:0 0 18px}
+.film{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:12px 16px;margin:0 0 18px}
+.film p{margin:0 0 6px} .film .big{font-size:1.35rem;font-weight:900}
+.film .small,.small{color:var(--muted);font-size:.92rem}
+.film .err{color:var(--no);font-weight:700}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input{font:inherit;padding:8px 12px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);width:13rem;max-width:100%}
+button{font:inherit;cursor:pointer}
+.btn{border:2px solid var(--instr);background:var(--card);color:var(--instr);border-radius:12px;padding:8px 16px;font-weight:800}
+.btn.primary{background:var(--instr);color:var(--instr-ink)}
+.link{border:0;background:none;color:var(--muted);text-decoration:underline;padding:0;font-size:.92rem}
+.lessons{display:grid;gap:12px;margin:0;padding:0;list-style:none}
+.lesson{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:14px 16px;text-decoration:none;color:inherit}
+.lesson:hover{border-color:var(--instr)}
+.flag{font-size:2rem;line-height:1}
+.lesson .t{font-weight:900;font-size:1.15rem;margin:0}
+.lesson .p{color:var(--muted);margin:0;font-size:.95rem}
+.lesson .st{color:var(--done);font-weight:800;white-space:nowrap}
+.legal{margin-top:28px;color:var(--muted);font-size:.85rem}
+.legal a{color:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>My lessons</h1>
+  <p class="sub">My own English and German · only for me</p>
+  <section class="film" id="film"></section>
+  <ul class="lessons" id="list"></ul>
+  <footer class="legal"><a href="../impressum.html">Impressum</a> · <a href="../datenschutz.html">Datenschutz</a></footer>
+</div>
+<script>
+const LESSONS = [{"flag": "🇬🇧", "title": "My English · Lesson 1: Reacting to answers", "part": "Arc 1 «Разговорное вместо книжного» · ~2 hours, 4 stops in the chat", "href": "english-1.html", "page": "hw-ge-me-english-1"}, {"flag": "🇩🇪", "title": "In der Krabbelgruppe", "part": "Deutsch · Lektion 1 · 12 Teile, Spiele, Hören", "href": "../tools/de-krabbelgruppe/krabbelgruppe.html", "page": "de-krabbelgruppe/krabbelgruppe"}];
+const SYNC_URL = "https://script.google.com/macros/s/AKfycbwHqzwA-2z09POg7JSqiMhqglOKbD8bxs-UG-NcFKZPzTyzmdEW79ct3zHGktUGyLM_/exec";
+const KEY = "tool-self-code";   /* the same code as 🎬 on her German page and on her English pages */
+const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const get = k => { try{ return localStorage.getItem(k) || ""; }catch(e){ return ""; } };
+const set = (k, v) => { try{ if(v) localStorage.setItem(k, v); else localStorage.removeItem(k); }catch(e){} };
+let S = (() => { try{ return JSON.parse(localStorage.getItem("me-hub") || "null"); }catch(e){ return null; } })() || {me: null, pages: {}};
+let err = "";
+function paint(){
+  const code = get(KEY), f = document.getElementById("film");
+  f.innerHTML = code
+    ? `<p class="big">🎬 My film: ${S.me ? esc(S.me.total) : "…"} 🎞</p><p class="small">${S.me && S.me.week ? `This week: ${esc(S.me.week)} 🎞 · ` : ""}every part I finish adds its minutes.</p>${err ? `<p class="err">${esc(err)}</p>` : ""}<p><button class="link" id="other">Another code</button></p>`
+    : `<p><b>My code</b> (a row in Students with Group = <b>Self</b>). It stays on this device, for my own pages only: the teacher code isn't touched.</p>
+       <p class="row"><input id="code" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="My Self code"><button class="btn primary" id="save">Save</button></p>${err ? `<p class="err">${esc(err)}</p>` : ""}`;
+  document.getElementById("list").innerHTML = LESSONS.map(l => { const p = S.pages[l.page], n = p && p.done ? p.done.length : 0;
+    return `<li><a class="lesson" href="${esc(l.href)}"><span class="flag" aria-hidden="true">${esc(l.flag || "📘")}</span><span><p class="t">${esc(l.title)}</p><p class="p">${esc(l.part || "")}</p></span><span class="st">${code && n ? `✓ ${n}` : ""}</span></a></li>`; }).join("");
+  const sv = document.getElementById("save"); if(sv) sv.addEventListener("click", () => { const v = document.getElementById("code").value.trim(); if(!v) return; set(KEY, v); err = ""; paint(); load(); });
+  const inp = document.getElementById("code"); if(inp) inp.addEventListener("keydown", e => { if(e.key === "Enter") sv.click(); });
+  const ot = document.getElementById("other"); if(ot) ot.addEventListener("click", () => { set(KEY, ""); S = {me: null, pages: {}}; err = ""; paint(); });
+}
+async function load(){
+  const code = get(KEY); if(!code || !SYNC_URL) return;
+  try{ const r = await fetch(SYNC_URL, {method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, body: JSON.stringify({action: "summary", code, pages: LESSONS.map(l => l.page)})});
+    const res = await r.json();
+    if(res.ok && res.me){ S = {me: res.me, pages: res.pages || {}}; err = ""; try{ localStorage.setItem("me-hub", JSON.stringify(S)); }catch(e){} }
+    else err = res.error === "unknown-code" ? "This code isn't in the table." : res.ok ? "That's not a Self code (Group = Self)." : "No connection right now.";
+  }catch(e){ err = "No connection right now."; }
+  paint();
+}
+paint(); load();
+</script>
+<style>.theme-tg{font:inherit;font-size:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px}</style>
+<script>/* 🌙 Dark theme / ☀️ Light theme beside Impressum · Datenschutz (engine 56) */(function(){
+var H=document.documentElement,lab=function(){return H.getAttribute("data-theme")==="dark"?"☀️ Light theme":"🌙 Dark theme"};
+function paint(){document.querySelectorAll(".theme-tg").forEach(function(b){b.textContent=lab()})}
+function add(){document.querySelectorAll("footer.legal, p.legal").forEach(function(f){if(f.querySelector(".theme-tg"))return;var b=document.createElement("button");b.type="button";b.className="theme-tg";
+b.addEventListener("click",function(){var d=H.getAttribute("data-theme")==="dark"?"light":"dark";H.setAttribute("data-theme",d);try{localStorage.setItem("site-theme",d)}catch(e){}paint()});
+f.appendChild(document.createTextNode(" · "));f.appendChild(b)});paint()}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",add);else add();
+addEventListener("storage",function(e){if(e.key==="site-theme"){H.setAttribute("data-theme",e.newValue==="dark"?"dark":"light");paint()}})})();</script>
+</body>
+</html>

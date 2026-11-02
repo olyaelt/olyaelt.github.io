@@ -1,5 +1,6 @@
 // tools 26 (her German page «In der Krabbelgruppe», the handoff of 2.11 and her answers): 🎧 a listen block — "Load the videos" once,
-// one player for the page on top of the block's place (hidden on other screens), ▶ Play from 3 s before to 3 s after, ä = ae / ß = ss
+// one player for the page on top of the block's place (hidden on other screens), the subtitle lines around each clip (her 14:45), each with
+// its own ▶ (a second before it); ▶ Play = the whole stretch (no lines around: 3 s either side); ä = ae / ß = ss
 // accepted, a wrong gap → the answer and the clip in "Your hard cards once more", Next = check, then the next clip (it plays at once),
 // Back = the clip before; a text with a meaning answer; her move colours; 12 parts as signs in one row; 🎬 her film: a Self code kept
 // apart from the teacher code, a finished part sends its frames to her table, the film shows the total; every screen fits 1280×720.
@@ -53,14 +54,19 @@ const PAGE = 'tools/de-krabbelgruppe/krabbelgruppe.html';
   expect('🎧 first: "Load the videos", nothing from YouTube yet', out.consent === 1 && out.noPlayer === 0, {c: out.consent, yt: out.noPlayer});
   if (shots) await p.screenshot({path: path.join(shots, 'de-lis-consent.png')});
   await p.click('[data-lisok]'); await p.waitForTimeout(400);
-  const c0 = await p.evaluate(() => { const c = curBlock()._clips[0]; return {vid: c.vid, start: c.start, dur: c.dur, n: c._n, gap: c.parts.find(x => typeof x !== 'string').gap}; });
+  const c0 = await p.evaluate(() => { const c = curBlock()._clips[0]; return {vid: c.vid, start: c.start, dur: c.dur, n: c._n, gap: c.parts.find(x => typeof x !== 'string').gap, from: lisRange(c)[0], around: c.pre.length + c.post.length}; });
   out.made = (await yt()).find(x => x[0] === 'new');
   out.holder = await p.evaluate(() => { const h = document.querySelector('.lis-holder'), ph = document.querySelector('[data-lisvid]'); const a = h.getBoundingClientRect(), z = ph.getBoundingClientRect();
     return {shown: getComputedStyle(h).display === 'block', over: Math.abs(a.left - z.left) < 2 && Math.abs(a.top - z.top) < 2 && Math.abs(a.width - z.width) < 2}; });
-  expect('one player, on the first clip from 3 s before, on top of the block\'s place', out.made && out.made[1] === c0.vid && out.made[2] === Math.floor(c0.start - 3) && out.holder.shown && out.holder.over, {made: out.made, c0, holder: out.holder});
+  expect('one player, on the first clip from where its stretch starts, on top of the block\'s place', out.made && out.made[1] === c0.vid && out.made[2] === Math.floor(c0.from) && out.holder.shown && out.holder.over, {made: out.made, c0, holder: out.holder});
+  out.lines = await p.locator('#main .lis-ln').count();
+  expect('the subtitle lines around it: each a ▶, the gap line among them', c0.around >= 2 && out.lines === c0.around + 1 && (await p.locator('#main .lis-ln.gapl [data-lisin]').count()) === 1, {lines: out.lines, around: c0.around});
   await p.click('[data-lisplay]'); await p.waitForTimeout(200);
   out.play = (await yt()).filter(x => x[0] === 'seek' || x[0] === 'play');
-  expect('▶ Play: from 3 s before the line', out.play.some(x => x[0] === 'seek' && x[1] === Math.max(0, c0.start - 3)) && out.play.some(x => x[0] === 'play'), out.play);
+  expect('▶ Play: the whole stretch, from a second before its first line', out.play.some(x => x[0] === 'seek' && Math.abs(x[1] - c0.from) < .01) && out.play.some(x => x[0] === 'play'), {play: out.play, from: c0.from});
+  await p.click('#main .lis-ln.gapl .lis-pl'); await p.waitForTimeout(150);
+  out.linePlay = (await yt()).filter(x => x[0] === 'seek').pop();
+  expect('▶ next to the gap line: that line, from a second before', out.linePlay && Math.abs(out.linePlay[1] - (c0.start - 1)) < .01, {linePlay: out.linePlay, start: c0.start});
   // a wrong answer
   await p.fill('[data-lisin]', 'das weiß ich'); await p.press('[data-lisin]', 'Enter'); await p.waitForTimeout(250);
   out.wrong = {no: await p.locator('.lis-no').innerText().catch(() => ''), ans: await p.locator('.lis-ans').innerText().catch(() => ''), again: await p.evaluate(n => saved.again.includes(n), c0.n)};
@@ -69,9 +75,9 @@ const PAGE = 'tools/de-krabbelgruppe/krabbelgruppe.html';
   expect('the listen screen fits 1280×720', await fits(), 'scrolls');
   // Next → the next clip, and it plays
   const before = (await yt()).length; await p.click('[data-step]'); await p.waitForTimeout(400);
-  const c1 = await p.evaluate(() => { const c = curBlock()._clips[1]; return {vid: c.vid, start: c.start}; });
+  const c1 = await p.evaluate(() => { const c = curBlock()._clips[1]; return {vid: c.vid, start: c.start, from: lisRange(c)[0]}; });
   out.next = {at: await p.evaluate(() => lisSt(curBlock()).at), calls: (await yt()).slice(before)};
-  expect('Next on a checked clip → clip 2, and it plays from 3 s before', out.next.at === 1 && out.next.calls.some(x => (x[0] === 'load' && x[1] === c1.vid && x[2] === Math.max(0, c1.start - 3)) || (x[0] === 'seek' && x[1] === Math.max(0, c1.start - 3))), {next: out.next, c1});
+  expect('Next on a checked clip → clip 2, and it plays (its whole stretch)', out.next.at === 1 && out.next.calls.some(x => (x[0] === 'load' && x[1] === c1.vid && Math.abs(x[2] - c1.from) < .01) || (x[0] === 'seek' && Math.abs(x[1] - c1.from) < .01)), {next: out.next, c1});
   // Next with a gap not checked = check it (empty → the answer shown)
   await p.click('[data-step]'); await p.waitForTimeout(250);
   out.emptyCheck = {ans: await p.locator('.lis-ans').count(), at: await p.evaluate(() => lisSt(curBlock()).at)};

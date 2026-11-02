@@ -42,6 +42,16 @@ if ALL:
     open(os.path.join(site, 'index.html'), 'w', encoding='utf-8').write(site_theme.add(html))
     print('start page: index.html with', ', '.join(ALL))
 
+# engine 60 (her 2.11 15:15): her own lessons in one place, /me/index.html — me.json lists them (her English pages in /me/, her German page
+# in /tools/); opened with her Self code; linked from nowhere, noindex
+if os.path.exists(os.path.join(HERE, 'me.json')):
+    me = json.load(open(os.path.join(HERE, 'me.json'), encoding='utf-8'))
+    sync_me = re.search(r'const SYNC_URL = "([^"]*)"', open(os.path.join(HERE, 'engine', 'page_template.html'), encoding='utf-8').read()).group(1)
+    os.makedirs(os.path.join(site, 'me'), exist_ok=True)
+    tpl = open(os.path.join(HERE, 'me_template.html'), encoding='utf-8').read()
+    open(os.path.join(site, 'me', 'index.html'), 'w', encoding='utf-8').write(site_theme.add(tpl.replace('__ME_JSON__', json.dumps(me, ensure_ascii=False).replace('</', '<\\/')).replace('__SYNC_URL__', sync_me)))
+    print('her own lessons: me/index.html with', len(me), 'pages')
+
 # the font lives on the site itself, so no page contacts a font service
 fdir = os.path.join(site, 'fonts'); os.makedirs(fdir, exist_ok=True)
 for f in ('homework-sans.css', 'OFL.txt'): shutil.copyfile(os.path.join(HERE, 'fonts', f), os.path.join(fdir, f))

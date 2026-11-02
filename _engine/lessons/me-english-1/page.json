@@ -1,0 +1,11 @@
+{
+ "title": "My English · Lesson 1: Reacting to answers",
+ "group": "me",
+ "file": "english-1.html",
+ "assets": {
+  "STICKER": "sticker.png",
+  "DATA": "data.json"
+ },
+ "earlier": false,
+ "listed": false
+}
