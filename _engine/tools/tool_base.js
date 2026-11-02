@@ -12,7 +12,8 @@ if(EMBED) document.documentElement.classList.add("embed");
 if(EMBED) addEventListener("message", e => { const m = e.data && e.data.lwStep; if(!m) return;
   const end = typeof embNext !== "function" || (m === "next" ? embNext() : embBack()); if(end) try{ window.parent.postMessage({lwStepEnd: m}, "*"); }catch(err){} });
 /* **box phrase** in a speaking task or a follow-up = shown like the box phrases in the examples (checklist 8.07) */
-const boxMarks = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>');
+const boxMarks = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>').replace(/\(\((.+?)\)\)/g, '<span class="bx-ctx">$1</span>')
+  .replace(/&lt;m([123])&gt;(.+?)&lt;\/m\1&gt;/g, '<span class="mv m$1">$2</span>');   /* tools 25 (the German page): grey extras, her move colours */
 const calm = () => !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
 /* a small burst of confetti from an element (the end of a deck): brand colours, falls and fades in about a second; none with reduced motion */
 function confetti(from){
@@ -106,7 +107,8 @@ function wireAll(root){ root.querySelectorAll("details.all").forEach(d => d.addE
 
 /* the box: tap a phrase when you've said it (it lights up green); "clickable:false" = a plain list.
    A line may carry a short Russian gloss after " – " (as on her slides: grey italics) and **bold** key words. */
-const phHTML = t => { const k = t.indexOf(" – "), en = k < 0 ? t : t.slice(0, k), ru = k < 0 ? "" : t.slice(k + 3);
+const phHTML = t => { if(/^\(\(.*\)\)$/.test(t)) return `<span class="bx-ctx">${boxMarks(t.slice(2, -2))}</span>`;   /* tools 25: a whole grey line ("auch: …") */
+  const k = t.indexOf(" – "), en = k < 0 ? t : t.slice(0, k), ru = k < 0 ? "" : t.slice(k + 3);
   return boxMarks(en) + (ru ? ` <span class="gloss">– ${esc(ru)}</span>` : ""); };
 const usedPhrases = new Set();
 function boxHTML(box, {clickable = true, collapsible = false, open = true} = {}){

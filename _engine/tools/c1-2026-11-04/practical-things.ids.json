@@ -32,7 +32,7 @@
   },
   {
    "pid": 6,
-   "sig": "cards what might they say? use the box. then tap the card.",
+   "sig": "cards what might they say? use the box — and … than you'd think. then tap the card.",
    "gone": false
   },
   {
@@ -102,17 +102,17 @@
   },
   {
    "pid": 20,
-   "sig": "council in pairs: the dice tells you how many reasons to give, for and against. use the box. then decide together.",
+   "sig": "council in pairs: the dice tells you how many reasons to give, for and against. use the box — and … than you'd think. then decide together.",
    "gone": false
   },
   {
    "pid": 21,
-   "sig": "questions after you decide: follow-up questions. use the box.",
+   "sig": "questions after you decide: follow-up questions. use the box — and … than you'd think.",
    "gone": false
   },
   {
    "pid": 22,
-   "sig": "questions extra speaking. use the box.",
+   "sig": "questions extra speaking. use the box — and … than you'd think.",
    "gone": false
   },
   {
@@ -168,6 +168,11 @@
   {
    "pid": 33,
    "sig": "say now you: one thing people get wrong about your life. say it with the frame. your partner asks: really? how so? then swap. tap “show the answer” for two examples.",
+   "gone": false
+  },
+  {
+   "pid": 34,
+   "sig": "text read both lines. what would most people expect — and what's it really like? tell your partner, then tap to check.",
    "gone": false
   }
  ],

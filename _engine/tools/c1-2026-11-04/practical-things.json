@@ -846,6 +846,185 @@
    ]
   },
   {
+   "label": "🗣 Say it naturally",
+   "blocks": [
+    {
+     "kind": "text",
+     "instr": "Read both lines. What would most people expect — and what's it really like? Tell your partner, then tap to check.",
+     "lines": [
+      {
+       "p": [
+        "One thing I learned at school that's come in handy… I use it more than you'd think."
+       ]
+      },
+      {
+       "p": [
+        "((Your homework:)) Cooking dinner for twelve? It was a lot harder than you'd think."
+       ]
+      }
+     ],
+     "answer": [
+      "1  Most people expect you'll never use school stuff again — but the speaker uses it a lot.",
+      "2  Cooking for twelve sounds doable — but it was really hard."
+     ]
+    },
+    {
+     "kind": "text",
+     "instr": "What's under the yellow? It's the same in both lines. Then tap to check.",
+     "lines": [
+      {
+       "p": [
+        "One thing I learned at school that's come in handy… I use it more ",
+        {
+         "f": "",
+         "r": "than you'd think"
+        },
+        "."
+       ]
+      },
+      {
+       "p": [
+        "((Your homework:)) Cooking dinner for twelve? It was a lot harder ",
+        {
+         "f": "",
+         "r": "than you'd think"
+        },
+        "."
+       ]
+      }
+     ]
+    },
+    {
+     "kind": "text",
+     "box": "YOU",
+     "instr": "And what comes before than you'd think?",
+     "lines": [
+      {
+       "p": [
+        "One thing I learned at school that's come in handy… I use it ^^more^^ ",
+        {
+         "b": "than you'd think"
+        },
+        "."
+       ]
+      },
+      {
+       "p": [
+        "((Your homework:)) Cooking dinner for twelve? It was ^^a lot harder^^ ",
+        {
+         "b": "than you'd think"
+        },
+        "."
+       ]
+      },
+      {
+       "p": [
+        "→ ^^a comparative^^: more, harder, longer · stronger: a lot harder, a lot more"
+       ]
+      }
+     ]
+    },
+    {
+     "kind": "cards",
+     "style": "say",
+     "box": "YOU",
+     "instr": "Take turns: read the line. Your partner replies with the frame, making the word in red a comparative (hard → harder). Then tap the card.",
+     "cards": [
+      {
+       "front": "Yoga? Isn't that just stretching?",
+       "back": "It's **a lot harder than you'd think** — I couldn't walk the next day.",
+       "key": "HARD"
+      },
+      {
+       "front": "Sourdough? Don't you just mix flour and water?",
+       "back": "It's **a lot more complicated than you'd think** — my first three loaves went straight in the bin.",
+       "key": "COMPLICATED"
+      },
+      {
+       "front": "A dog? That can't cost much — it's just food, isn't it?",
+       "back": "It's **a lot more expensive than you'd think** — the vet bills alone!",
+       "key": "EXPENSIVE"
+      },
+      {
+       "front": "Your neighbours? I bet they never even say hello.",
+       "back": "They're **a lot friendlier than you'd think** — they fed our cat the whole time we were away.",
+       "key": "FRIENDLY"
+      },
+      {
+       "front": "Your dad? Does he even know how to use his phone?",
+       "back": "He uses it **a lot more often than you'd think** — mostly to send me memes.",
+       "key": "OFTEN"
+      }
+     ]
+    },
+    {
+     "kind": "cards",
+     "style": "say",
+     "box": "YOU",
+     "instr": "Oh, come on! Read the line to your partner as if you really think so. Your partner pushes back with the frame and one example. Then give in (Fair enough!) or push back once more (Oh, come on!). Then tap the card.",
+     "cards": [
+      {
+       "front": "Housework? It takes, what, half an hour a day?",
+       "back": "It takes **a lot longer than you'd think** — and it never actually ends."
+      },
+      {
+       "front": "A year at home with a baby — that's basically a year off.",
+       "back": "It's **a lot more tiring than you'd think** — you don't even get a lunch break."
+      },
+      {
+       "front": "Working from home must be great — you can do the laundry between meetings.",
+       "back": "It's **a lot lonelier than you'd think** — some days I don't talk to anyone."
+      },
+      {
+       "front": "Living abroad? Must be like one long holiday.",
+       "back": "It's **a lot harder than you'd think** — just opening a bank account took me a month."
+      },
+      {
+       "front": "Your English is great. Why are you still taking lessons?",
+       "back": "Sounding natural is **a lot harder than you'd think** — I still sound like a textbook half the time."
+      },
+      {
+       "front": "Your parents are retired? They must be so bored.",
+       "back": "They're **a lot busier than you'd think** — I practically have to book a slot to call my mum."
+      },
+      {
+       "front": "Programmers just ask AI to write the code now, don't they?",
+       "back": "There's **a lot more to it than you'd think** — someone still has to check everything it writes."
+      },
+      {
+       "front": "Kids today have it easy — we had six lessons a day and homework every night.",
+       "back": "School's **a lot more stressful these days than you'd think** — my niece has tests every week."
+      }
+     ]
+    },
+    {
+     "kind": "say",
+     "box": "YOU",
+     "instr": "Now you: one thing people get wrong about your life. Say it with the frame. Your partner asks: Really? How so? Then swap. Tap “Show the answer” for two examples.",
+     "task": [
+      "People assume …, but it's **a lot … than you'd think**.",
+      "((Ideas: your job · the country you live in · your city · being a parent · your generation · working from home · learning English as an adult · your hobby · being the oldest or the youngest in your family))"
+     ],
+     "answer": [
+      "People assume teachers finish at three and get the whole summer off, but the job's **a lot more work than you'd think** — half of it happens at the kitchen table at night.",
+      "People assume trains in Germany are always on time, but they're late **a lot more often than you'd think** — mine was two hours late last week."
+     ],
+     "answer_title": "Two examples"
+    },
+    {
+     "kind": "postits",
+     "instr": "If you're done: read a sticker to your partner. They reply with the frame, making the word in capitals a comparative, without looking. Then swap.",
+     "notes": [
+      "Yoga? Isn't that just stretching? **HARD**",
+      "Sourdough? Don't you just mix flour and water? **COMPLICATED**",
+      "A dog? That can't cost much — it's just food, isn't it? **EXPENSIVE**",
+      "Your neighbours? I bet they never even say hello. **FRIENDLY**",
+      "Your dad? Does he even know how to use his phone? **OFTEN**"
+     ]
+    }
+   ]
+  },
+  {
    "label": "🎲 School council",
    "blocks": [
     {
@@ -922,10 +1101,10 @@
      "kind": "cards",
      "style": "bubble",
      "box": "BOX",
-     "instr": "What might they say? Use the box. Then tap the card.",
+     "instr": "What might they say? Use the box — and … than you'd think. Then tap the card.",
      "cards": [
       {
-       "instr": "At the school meeting: what might they say? Use the box. Then tap the card.",
+       "instr": "At the school meeting: what might they say? Use the box — and … than you'd think. Then tap the card.",
        "ctx": "**Finn, 17,** student. Wants to cut coding.",
        "back": "**What's the point of** learning to code? A lot of tech companies have **stopped hiring juniors**. They're **handing all that work over to AI**. Whatever we learn now will be **out of date** by the time we graduate from university."
       },
@@ -942,7 +1121,7 @@
     {
      "kind": "council",
      "box": "BOX",
-     "instr": "In pairs: the dice tells you how many reasons to give, for and against. Use the box. Then decide together.",
+     "instr": "In pairs: the dice tells you how many reasons to give, for and against. Use the box — and … than you'd think. Then decide together.",
      "lists": [
       {
        "kind": "cut",
@@ -1096,7 +1275,7 @@
     {
      "kind": "questions",
      "box": "BOX",
-     "instr": "After you decide: follow-up questions. Use the box.",
+     "instr": "After you decide: follow-up questions. Use the box — and … than you'd think.",
      "items": [
       "**1**  What did you decide about coding and essay writing? Give the head teacher (AmE: principal) two reasons.",
       "**2**  A student says: \"Why learn to write essays if AI does it better?\" Do you agree? Agree on two things you'd say to this student.",
@@ -1106,7 +1285,7 @@
     {
      "kind": "questions",
      "box": "BOX",
-     "instr": "Extra speaking. Use the box.",
+     "instr": "Extra speaking. Use the box — and … than you'd think.",
      "items": [
       "**1**  A friend's son wants to drop maths: \"I've got a calculator.\" What do you tell him? Two reasons.",
       "**2**  Each of you: two skills you think will stay valuable as AI develops, and one that's already **out of date**. Then agree on the one you'd most recommend learning, and why.",
@@ -1114,165 +1293,6 @@
       "**4**  Each of you: something you **learned the hard way** — at work or anywhere else. Your partner asks one question.",
       "**5**  **They've stopped hiring juniors.** Agree on three ways a young person can still get experience.",
       "**6**  A 20-year-old relative asks: “What should I study, now that AI can do half the jobs out there?” Agree on three pieces of advice."
-     ]
-    }
-   ]
-  },
-  {
-   "label": "🗣 Say it naturally",
-   "blocks": [
-    {
-     "kind": "text",
-     "instr": "What's under the yellow? It's the same in both lines. Then tap to check.",
-     "lines": [
-      {
-       "p": [
-        "One thing I learned at school that's come in handy… I use it more ",
-        {
-         "f": "",
-         "r": "than you'd think"
-        },
-        "."
-       ]
-      },
-      {
-       "p": [
-        "((Your homework:)) Cooking dinner for twelve? It was a lot harder ",
-        {
-         "f": "",
-         "r": "than you'd think"
-        },
-        "."
-       ]
-      }
-     ]
-    },
-    {
-     "kind": "text",
-     "box": "YOU",
-     "instr": "And what comes before than you'd think?",
-     "lines": [
-      {
-       "p": [
-        "One thing I learned at school that's come in handy… I use it ^^more^^ ",
-        {
-         "b": "than you'd think"
-        },
-        "."
-       ]
-      },
-      {
-       "p": [
-        "((Your homework:)) Cooking dinner for twelve? It was ^^a lot harder^^ ",
-        {
-         "b": "than you'd think"
-        },
-        "."
-       ]
-      },
-      {
-       "p": [
-        "→ ^^a comparative^^: more, harder, longer · stronger: a lot harder, a lot more"
-       ]
-      }
-     ]
-    },
-    {
-     "kind": "cards",
-     "style": "say",
-     "box": "YOU",
-     "instr": "Take turns: read the line. Your partner replies with the frame, making the word in red a comparative (hard → harder). Then tap the card.",
-     "cards": [
-      {
-       "front": "Yoga? Isn't that just stretching?",
-       "back": "It's **a lot harder than you'd think** — I couldn't walk the next day.",
-       "key": "HARD"
-      },
-      {
-       "front": "Sourdough? Don't you just mix flour and water?",
-       "back": "It's **a lot more complicated than you'd think** — my first three loaves went straight in the bin.",
-       "key": "COMPLICATED"
-      },
-      {
-       "front": "A dog? That can't cost much — it's just food, isn't it?",
-       "back": "It's **a lot more expensive than you'd think** — the vet bills alone!",
-       "key": "EXPENSIVE"
-      },
-      {
-       "front": "Your neighbours? I bet they never even say hello.",
-       "back": "They're **a lot friendlier than you'd think** — they fed our cat the whole time we were away.",
-       "key": "FRIENDLY"
-      },
-      {
-       "front": "Your dad? Does he even know how to use his phone?",
-       "back": "He uses it **a lot more often than you'd think** — mostly to send me memes.",
-       "key": "OFTEN"
-      }
-     ]
-    },
-    {
-     "kind": "cards",
-     "style": "say",
-     "box": "YOU",
-     "instr": "Oh, come on! Read the line to your partner as if you really think so. Your partner pushes back with the frame and one example. Then give in (Fair enough!) or push back once more (Oh, come on!). Then tap the card.",
-     "cards": [
-      {
-       "front": "Housework? It takes, what, half an hour a day?",
-       "back": "It takes **a lot longer than you'd think** — and it never actually ends."
-      },
-      {
-       "front": "A year at home with a baby — that's basically a year off.",
-       "back": "It's **a lot more tiring than you'd think** — you don't even get a lunch break."
-      },
-      {
-       "front": "Working from home must be great — you can do the laundry between meetings.",
-       "back": "It's **a lot lonelier than you'd think** — some days I don't talk to anyone."
-      },
-      {
-       "front": "Living abroad? Must be like one long holiday.",
-       "back": "It's **a lot harder than you'd think** — just opening a bank account took me a month."
-      },
-      {
-       "front": "Your English is great. Why are you still taking lessons?",
-       "back": "Sounding natural is **a lot harder than you'd think** — I still sound like a textbook half the time."
-      },
-      {
-       "front": "Your parents are retired? They must be so bored.",
-       "back": "They're **a lot busier than you'd think** — I practically have to book a slot to call my mum."
-      },
-      {
-       "front": "Programmers just ask AI to write the code now, don't they?",
-       "back": "There's **a lot more to it than you'd think** — someone still has to check everything it writes."
-      },
-      {
-       "front": "Kids today have it easy — we had six lessons a day and homework every night.",
-       "back": "School's **a lot more stressful these days than you'd think** — my niece has tests every week."
-      }
-     ]
-    },
-    {
-     "kind": "say",
-     "box": "YOU",
-     "instr": "Now you: one thing people get wrong about your life. Say it with the frame. Your partner asks: Really? How so? Then swap. Tap “Show the answer” for two examples.",
-     "task": [
-      "People assume …, but it's **a lot … than you'd think**.",
-      "((Ideas: your job · the country you live in · your city · being a parent · your generation · working from home · learning English as an adult · your hobby · being the oldest or the youngest in your family))"
-     ],
-     "answer": [
-      "People assume teachers finish at three and get the whole summer off, but the job's **a lot more work than you'd think** — half of it happens at the kitchen table at night.",
-      "People assume trains in Germany are always on time, but they're late **a lot more often than you'd think** — mine was two hours late last week."
-     ],
-     "answer_title": "Two examples"
-    },
-    {
-     "kind": "postits",
-     "instr": "If you're done: read a sticker to your partner. They reply with the frame, making the word in capitals a comparative, without looking. Then swap.",
-     "notes": [
-      "Yoga? Isn't that just stretching? **HARD**",
-      "Sourdough? Don't you just mix flour and water? **COMPLICATED**",
-      "A dog? That can't cost much — it's just food, isn't it? **EXPENSIVE**",
-      "Your neighbours? I bet they never even say hello. **FRIENDLY**",
-      "Your dad? Does he even know how to use his phone? **OFTEN**"
      ]
     }
    ]

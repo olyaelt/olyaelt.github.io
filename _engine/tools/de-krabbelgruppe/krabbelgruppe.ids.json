@@ -1,0 +1,1166 @@
+{
+ "blocks": [
+  {
+   "pid": 0,
+   "sig": "postits sprich laut, zu jeder karte etwa eine minute:",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "say test 1 noch einmal: was sagst du? sag es laut, ohne nachzuschauen.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "text lies teil 1. was haben mira und jule gemeinsam? sag deine antwort laut.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "say teil 1: wie halten sie das gespräch am laufen?",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "say teil 1: wie halten sie das gespräch am laufen?",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "say teil 1: wie halten sie das gespräch am laufen?",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "say teil 1: wie halten sie das gespräch am laufen?",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "text jetzt mit dem glossar. lies noch einmal.",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "text erinnere dich an die fehlenden wörter und sag sie laut. tippe auf gelb zum prüfen.",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "text jetzt ohne glossar.",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "questions sprich laut.",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "game das rad der neuigkeiten: dreh, lies den satz und reagiere laut. dann tippe zum prüfen.",
+   "gone": false
+  },
+  {
+   "pid": 12,
+   "sig": "cards lies den satz der anderen person. sag deine antwort auf deutsch. tippe auf die karte.",
+   "gone": false
+  },
+  {
+   "pid": 13,
+   "sig": "questions sprich laut. benutze den kasten.",
+   "gone": false
+  },
+  {
+   "pid": 14,
+   "sig": "text lies teil 2. wie geht es ida in der kita – und wie geht es jule? sag deine antwort laut.",
+   "gone": false
+  },
+  {
+   "pid": 15,
+   "sig": "say teil 2: wie halten sie das gespräch am laufen?",
+   "gone": false
+  },
+  {
+   "pid": 16,
+   "sig": "say teil 2: wie halten sie das gespräch am laufen?",
+   "gone": false
+  },
+  {
+   "pid": 17,
+   "sig": "say teil 2: wie halten sie das gespräch am laufen?",
+   "gone": false
+  },
+  {
+   "pid": 18,
+   "sig": "say teil 2: wie halten sie das gespräch am laufen?",
+   "gone": false
+  },
+  {
+   "pid": 19,
+   "sig": "text jetzt mit dem glossar. lies noch einmal.",
+   "gone": false
+  },
+  {
+   "pid": 20,
+   "sig": "text erinnere dich an die fehlenden wörter und sag sie laut. tippe auf gelb zum prüfen.",
+   "gone": false
+  },
+  {
+   "pid": 21,
+   "sig": "text jetzt ohne glossar.",
+   "gone": false
+  },
+  {
+   "pid": 22,
+   "sig": "say das ballspiel: so geht der ball zurück",
+   "gone": false
+  },
+  {
+   "pid": 23,
+   "sig": "game tic-tac-toe: wähl ein feld, lies den satz und stell eine frage zurück. dann tippe zum prüfen. drei in einer reihe gewinnt!",
+   "gone": false
+  },
+  {
+   "pid": 24,
+   "sig": "cards lies den satz der anderen person. frag auf deutsch nach. tippe auf die karte.",
+   "gone": false
+  },
+  {
+   "pid": 25,
+   "sig": "questions sprich laut.",
+   "gone": false
+  },
+  {
+   "pid": 26,
+   "sig": "say gut zu wissen: smalltalk in der krabbelgruppe",
+   "gone": false
+  },
+  {
+   "pid": 27,
+   "sig": "model die kita-stelle aus teil 2: sag miras sätze laut. tippe auf gelb zum prüfen.",
+   "gone": false
+  },
+  {
+   "pid": 28,
+   "sig": "cards lies den satz der anderen person. sag deine antwort auf deutsch. tippe auf die karte.",
+   "gone": false
+  },
+  {
+   "pid": 29,
+   "sig": "cards sag es anders. benutze das wort in rot, ohne es zu ändern. der graue teil ändert sich.",
+   "gone": false
+  },
+  {
+   "pid": 30,
+   "sig": "tool die kita-frage: zieh eine karte und wirf die münze. antworte kurz, ohne begründung – dann eine rückfrage oder ein neues thema. kita-coin",
+   "gone": false
+  },
+  {
+   "pid": 31,
+   "sig": "cards gesprächs-pingpong: antworte laut.",
+   "gone": false
+  },
+  {
+   "pid": 32,
+   "sig": "questions sprich laut.",
+   "gone": false
+  },
+  {
+   "pid": 33,
+   "sig": "cards deine sätze aus test 1 (17.10.). grün = gut, grau durchgestrichen = das kannst du ändern. wie sagst du es jetzt?",
+   "gone": false
+  },
+  {
+   "pid": 34,
+   "sig": "text was ist jule am wochenende passiert – und was läuft jetzt besser? sag deine antwort laut.",
+   "gone": false
+  },
+  {
+   "pid": 35,
+   "sig": "model was sagt mira? sag ihre sätze laut. tippe auf gelb zum prüfen.",
+   "gone": false
+  },
+  {
+   "pid": 36,
+   "sig": "model noch einmal – jetzt nur mit den anfangsbuchstaben und ohne kasten.",
+   "gone": false
+  },
+  {
+   "pid": 37,
+   "sig": "text wovor hat tarek angst – und wer kann ihm helfen? sag deine antwort laut.",
+   "gone": false
+  },
+  {
+   "pid": 38,
+   "sig": "model was sagt mira? sag ihre sätze laut. tippe auf gelb zum prüfen.",
+   "gone": false
+  },
+  {
+   "pid": 39,
+   "sig": "model noch einmal – jetzt nur mit den anfangsbuchstaben und ohne kasten.",
+   "gone": false
+  },
+  {
+   "pid": 40,
+   "sig": "questions sprich laut.",
+   "gone": false
+  },
+  {
+   "pid": 41,
+   "sig": "listen hör zu und schreib, was fehlt: oje! · das kenn ich. · nicht so toll · das wird schon.",
+   "gone": false
+  },
+  {
+   "pid": 42,
+   "sig": "listen hör zu und schreib, was fehlt: wie alt ist er denn? · seid ihr schon länger dabei? · und bei euch / dir? · wie läuft's?",
+   "gone": false
+  },
+  {
+   "pid": 43,
+   "sig": "listen hör zu und schreib, was fehlt: noch ein bisschen warten · passt für uns / für uns passt",
+   "gone": false
+  },
+  {
+   "pid": 44,
+   "sig": "listen hör zu und schreib, was fehlt: durchschlafen · eingewöhnung · zahnen",
+   "gone": false
+  },
+  {
+   "pid": 45,
+   "sig": "cards was passt zuerst: reaktion, trost oder eine kurze antwort? am ende immer eine rückfrage.",
+   "gone": false
+  },
+  {
+   "pid": 46,
+   "sig": "cards was würdest du sagen? die russische zeile ist deine idee – sag sie auf deutsch.",
+   "gone": false
+  },
+  {
+   "pid": 47,
+   "sig": "cards jetzt du: reagieren und zurückfragen.",
+   "gone": false
+  },
+  {
+   "pid": 48,
+   "sig": "picture runde 1: antworte auf alle drei sätze in 60 sekunden – jedes mal mit einer rückfrage am ende. krabbelgruppe-scene.png",
+   "gone": false
+  },
+  {
+   "pid": 49,
+   "sig": "picture runde 2: dieselben drei sätze in 45 sekunden. krabbelgruppe-scene.png",
+   "gone": false
+  },
+  {
+   "pid": 50,
+   "sig": "picture runde 3: noch einmal in 30 sekunden – flüssig, ohne pause. krabbelgruppe-scene.png",
+   "gone": false
+  },
+  {
+   "pid": 51,
+   "sig": "game memo: schau dir den kasten 40 sekunden an. dann verschwindet er – sag alle ausdrücke, die du noch weißt.",
+   "gone": false
+  },
+  {
+   "pid": 52,
+   "sig": "cards russischer hinweis + anfangsbuchstaben: sag den ganzen ausdruck.",
+   "gone": false
+  },
+  {
+   "pid": 53,
+   "sig": "questions vorbereitung, 1 minute: eine mama setzt sich neben dich.",
+   "gone": false
+  },
+  {
+   "pid": 54,
+   "sig": "say runde 1 im chat mit claude",
+   "gone": false
+  },
+  {
+   "pid": 55,
+   "sig": "say runde 2 – ohne kasten",
+   "gone": false
+  },
+  {
+   "pid": 56,
+   "sig": "say test 2: dieselben situationen wie in test 1. was sagst du jetzt? sag es laut.",
+   "gone": false
+  },
+  {
+   "pid": 57,
+   "sig": "game das gänsespiel: alles aus der lektion gemischt. kommst du ins ziel, bist du fit für die gruppe!",
+   "gone": false
+  },
+  {
+   "pid": 58,
+   "sig": "cards schlüsselwörter + russisch → der ganze satz.",
+   "gone": false
+  },
+  {
+   "pid": 59,
+   "sig": "questions für die gruppe diese woche",
+   "gone": false
+  }
+ ],
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "ach, schön! wie alt ist er denn? 1 „paul hat heute nacht zum ersten mal durchgeschlafen!“ хорошая новость → ach, schön! + вопрос.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "oje, um halb fünf? das kenn ich. 2 „wir waren heute schon um halb fünf wach.“ повтори главное (um halb fünf?) — видно, что слушаешь.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "oje, du arme! das wird schon wieder. 3 eine mama: „ich hab seit drei nächten kaum geschlafen. ich kann nicht mehr.“ человеку тяжело → сначала сочувствие, потом утешение. папе: du armer.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "ach, schön! wie alt ist sie denn? 4 „mia läuft seit gestern!“ о девочке → sie; denn — живой интерес.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "oje. sind's die zähne? 5 „sie sabbert die ganze zeit und beißt auf alles.“ слюни и всё в рот → зубы.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "(lacht) das kenn ich! 6 „unser kleiner isst gerade nur nudeln.“ узнаёшь себя → das kenn ich!",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "oje, drei wochen? das ist ja heftig. 7 „mein mann ist drei wochen auf dienstreise. ich bin allein mit beiden kindern.“ ты такого не переживала → не «das kenn ich», а «das ist ja heftig».",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "oje, ab halb fünf? das kenn ich. mama: „mia war heute ab halb fünf wach.“ du: «ой-ой, с полпятого? знакомо.»",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "oje, die ganze nacht? das kenn ich. papa: „er hat die ganze nacht nur geweint.“ du: «ой, всю ночь? знакомо.»",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "oje, drei wochen? das kenn ich. mama: „bei uns ging drei wochen lang magen-darm rum. einer nach dem anderen.“ du: «ой-ой, три недели? знакомо.»",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "(lacht) nur nudeln? das kenn ich. papa: „sie isst gerade nur nudeln. sonst nichts.“ du, lachend: «только макароны? знакомо.»",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "oje, ohne küche? das ist ja heftig. mama: „wir sind gerade umgezogen. zwei kinder und noch keine küche.“ ты такого не переживала. das kenn ich — только если правда знаешь.",
+   "gone": false
+  },
+  {
+   "pid": 12,
+   "sig": "bei uns ist es gerade auch nicht so toll. mama: „die nächte sind gerade echt schlimm.“ du: «у нас сейчас тоже так себе.»",
+   "gone": false
+  },
+  {
+   "pid": 13,
+   "sig": "bei uns ist es gerade auch ziemlich anstrengend. papa: „seit der kita ist bei uns alles total anstrengend.“ du: «у нас сейчас тоже довольно тяжело.»",
+   "gone": false
+  },
+  {
+   "pid": 14,
+   "sig": "bei uns ist es gerade auch ziemlich chaotisch. mama: „mit dem essen ist es gerade total chaotisch.“ du: «у нас сейчас тоже полный хаос.»",
+   "gone": false
+  },
+  {
+   "pid": 15,
+   "sig": "ach, schön! bei uns ist es gerade auch ganz okay, zum glück. papa: „sie schläft jetzt endlich besser. es ist ganz okay gerade.“ du: «о, здорово! у нас сейчас тоже нормально, слава богу.»",
+   "gone": false
+  },
+  {
+   "pid": 16,
+   "sig": "hallo, emma! wie alt ist sie denn? ein papa mit tochter „das ist emma.“ о девочке — sie; denn = живой интерес",
+   "gone": false
+  },
+  {
+   "pid": 17,
+   "sig": "klar! wie alt ist er denn? eine mama mit einem kleinen jungen „darf ich mich zu euch setzen?“ о мальчике — er",
+   "gone": false
+  },
+  {
+   "pid": 18,
+   "sig": "oje. sind's die zähne? eine mama „er ist seit tagen total quengelig und sabbert die ganze zeit.“ sind's = sind es",
+   "gone": false
+  },
+  {
+   "pid": 19,
+   "sig": "oje. sind's die zähne? ein papa „sie war heute nacht dreimal wach und hat geweint. keine ahnung, warum.“ короткий вопрос — проще, чем длинное объяснение",
+   "gone": false
+  },
+  {
+   "pid": 20,
+   "sig": "ja, wir sind erst zum zweiten mal hier. seid ihr schon länger dabei? eine mama „ihr seid neu hier, oder?“ erst zum zweiten mal = только второй раз; ответ + встречный вопрос",
+   "gone": false
+  },
+  {
+   "pid": 21,
+   "sig": "ja, wir sind ja auch erst zum zweiten mal hier. seid ihr schon länger dabei? ein papa „euch hab ich hier noch nie gesehen.“ ja auch = ну так мы ведь только…",
+   "gone": false
+  },
+  {
+   "pid": 22,
+   "sig": "nee, noch nicht. und bei euch? eine mama „und, geht deine kleine schon in die kita?“ коротко + мяч обратно",
+   "gone": false
+  },
+  {
+   "pid": 23,
+   "sig": "ganz okay, zum glück. und bei euch? ein papa „wie sind eure nächte gerade?“ zum glück = к счастью",
+   "gone": false
+  },
+  {
+   "pid": 24,
+   "sig": "oh, und wie läuft's? eine mama „wir sind seit zwei wochen in der eingewöhnung.“ wie läuft's? — подходит ко всему, что сейчас идёт: адаптация, работа, отлучение от груди",
+   "gone": false
+  },
+  {
+   "pid": 25,
+   "sig": "und wie läuft's mit der eingewöhnung? mama: „wir sind seit zwei wochen in der kita.“ du: «а как проходит адаптация?»",
+   "gone": false
+  },
+  {
+   "pid": 26,
+   "sig": "oh! und wie läuft's mit dem wiedereinstieg? papa: „ich arbeite seit montag wieder.“ du: «о! и как, втягиваешься?» – der wiedereinstieg",
+   "gone": false
+  },
+  {
+   "pid": 27,
+   "sig": "oh! und wie läuft's mit der tagesmutter? mama: „wir haben jetzt eine tagesmutter.“ du: «о! и как вам с ней?»",
+   "gone": false
+  },
+  {
+   "pid": 28,
+   "sig": "und wie läuft's mit dem abstillen? mama: „wir sind gerade am abstillen.“ du: «и как, получается?» – das abstillen",
+   "gone": false
+  },
+  {
+   "pid": 29,
+   "sig": "nee, wir wollten mit der kita noch ein bisschen warten. mama: „geht sie schon in die kita?“ du: «нет, мы решили с садиком ещё немного подождать.»",
+   "gone": false
+  },
+  {
+   "pid": 30,
+   "sig": "nee, wir wollten mit dem babyschwimmen noch ein bisschen warten. papa: „macht ihr schon babyschwimmen?“ du: «нет, с бассейном мы решили ещё немного подождать.»",
+   "gone": false
+  },
+  {
+   "pid": 31,
+   "sig": "nee, wir wollten mit dem verreisen noch ein bisschen warten. papa: „fahrt ihr dieses jahr noch weg?“ du: «нет, с поездками мы решили ещё немного подождать.»",
+   "gone": false
+  },
+  {
+   "pid": 32,
+   "sig": "nee, wir wollten mit 'nem babysitter noch ein bisschen warten. mama: „hattet ihr schon mal 'nen babysitter?“ du: «нет, с няней мы решили ещё немного подождать.»",
+   "gone": false
+  },
+  {
+   "pid": 33,
+   "sig": "sind's die zähne sind's die zähne? ___? [[zahnt er vielleicht gerade?]] zähne ≈ «зубки, да?» sind's = sind es. auch: sind's vielleicht die zähne? · kriegt er gerade zähne?",
+   "gone": false
+  },
+  {
+   "pid": 34,
+   "sig": "schon länger dabei seid ihr schon länger dabei? seid ihr ___? [[wart ihr schon öfter hier]]? länger schon länger = уже какое-то время · dabei sein = ходить, участвовать. auch: seid ihr schon länger in der gruppe? · kommt ihr schon länger her?",
+   "gone": false
+  },
+  {
+   "pid": 35,
+   "sig": "wollten mit der kita noch ein bisschen warten wir wollten mit der kita noch ein bisschen warten. wir ___. wir [[haben uns entschieden, mit der kita noch zu warten]]. wollten wollten — «мы хотели, решили»; причина не нужна. auch: mit der kita wollten wir noch ein bisschen warten.",
+   "gone": false
+  },
+  {
+   "pid": 36,
+   "sig": "passt das so besser für uns passt das so besser. für uns ___. [[so ist es für uns einfacher.]] passt нам так удобнее — вежливо закрывает тему. auch: so passt das für uns besser.",
+   "gone": false
+  },
+  {
+   "pid": 37,
+   "sig": "boah, paul war heute schon um fünf wach. oje, um fünf? das kenn ich. bei uns ist es gerade auch nicht so toll. sind's die zähne? krabbelgruppe. eine mama aus der gruppe. ich glaub schon. die backenzähne. none",
+   "gone": false
+  },
+  {
+   "pid": 38,
+   "sig": "ich glaub schon. die backenzähne. oje, die sind echt fies. das wird schon. wie alt ist er denn? krabbelgruppe. eine mama aus der gruppe. ihr redet schon: mama: „boah, paul war heute schon um fünf wach.“ – du: „oje, um fünf? das kenn ich. bei uns ist es gerade auch nicht so toll. sind's die zähne?“ none none",
+   "gone": false
+  },
+  {
+   "pid": 39,
+   "sig": "und, geht sie schon in die kita? nee, noch nicht. wir wollten noch ein bisschen warten. und bei euch? krabbelgruppe. ein papa aus der gruppe. wir sind gerade in der eingewöhnung. none",
+   "gone": false
+  },
+  {
+   "pid": 40,
+   "sig": "wir sind gerade in der eingewöhnung. oh, und wie läuft's? krabbelgruppe. ein papa aus der gruppe. ihr redet schon: papa: „und, geht sie schon in die kita?“ – du: „nee, noch nicht. wir wollten noch ein bisschen warten. und bei euch?“ none none",
+   "gone": false
+  },
+  {
+   "pid": 41,
+   "sig": "geht deine kleine schon in die kita? nee, wir wollten noch ein bisschen warten. und bei euch? krabbelgruppe. eine mama aus der gruppe. wir fangen im januar an. wieso wartet ihr denn noch? none",
+   "gone": false
+  },
+  {
+   "pid": 42,
+   "sig": "wir fangen im januar an. wieso wartet ihr denn noch? ach, für uns passt das so besser. seid ihr eigentlich schon länger dabei? krabbelgruppe. eine mama aus der gruppe. ihr redet schon: mama: „geht deine kleine schon in die kita?“ – du: „nee, wir wollten noch ein bisschen warten. und bei euch?“ none „warum denn?“ → kurz antworten, ohne begründung – und gleich eine rückfrage.",
+   "gone": false
+  },
+  {
+   "pid": 43,
+   "sig": "„oje, ab vier? das kenn ich. bei uns sind die nächte gerade auch ziemlich schlecht. sind's die zähne?“ eine mutter seufzt: „boah, die nacht war wieder heftig. der kleine war ab vier wach.“ „ja, schwierig. bei uns sind die nächte auch ziemlich schlecht.“ «у нас тоже» — отлично, это уже часть разговора. „ja, schwierig“ звучит суховато, „oje, das kenn ich“ — тепло. а вопрос в конце не даёт разговору замереть.",
+   "gone": false
+  },
+  {
+   "pid": 44,
+   "sig": "„hallo! wie alt ist sie denn?“ · „seid ihr schon länger dabei?“ deine tochter spielt mit einem mädchen. du möchtest mit dem vater ins gespräch kommen. „wie läuft's in der kita?“ „wie läuft's“ — хорошая форма! но вопрос про сад предполагает, что ребёнок туда ходит. для начала проще спросить о том, что видно: возраст, давно ли они в группе. „wie läuft's mit der kita?“ — потом, когда узнаешь про сад. auch möglich: „die zwei verstehen sich ja gut!“ (они так хорошо ладят!)",
+   "gone": false
+  },
+  {
+   "pid": 45,
+   "sig": "„katja kommt erst mit zwei in die kita, wir wollten noch ein bisschen warten. und bei euch?“ jemand fragt: „und, habt ihr schon einen kitaplatz?“ „katja kommt erst mit zwei in die kita, wir wollten ein bisschen warten.“ короткий ответ без лишних объяснений — отлично! noch = «ещё» (решили ещё подождать). и добавь «und bei euch?» — теперь рассказывает собеседник. и erst mit zwei — верно: «только» о времени = erst, не nur.",
+   "gone": false
+  },
+  {
+   "pid": 46,
+   "sig": "trost + frage → oje, du arme! das wird schon. sind's die zähne? mama: „ich kann nicht mehr. seit wochen keine nacht durchgeschlafen.“",
+   "gone": false
+  },
+  {
+   "pid": 47,
+   "sig": "reaktion + frage → oje. sind's die zähne? papa: „er weint seit drei tagen beim essen und sabbert die ganze zeit.“",
+   "gone": false
+  },
+  {
+   "pid": 48,
+   "sig": "reaktion + frage → ach, schön! wie alt ist er denn? mama (neu, mit ihrem kleinen sohn): „hallo! wir sind heute zum ersten mal hier.“",
+   "gone": false
+  },
+  {
+   "pid": 49,
+   "sig": "kurz + frage → ja, wir sind erst zum zweiten mal hier. seid ihr schon länger dabei? mama: „ihr seid neu, oder?“",
+   "gone": false
+  },
+  {
+   "pid": 50,
+   "sig": "reaktion + frage → oje, um drei? das kenn ich. wie alt ist sie denn? papa: „sie wacht jede nacht um drei auf und will spielen.“",
+   "gone": false
+  },
+  {
+   "pid": 51,
+   "sig": "reaktion + frage → (lacht) typisch! wohnt die oma in der nähe? mama: „wir waren am wochenende bei oma, und da hat sie super geschlafen. zu hause: keine chance.“",
+   "gone": false
+  },
+  {
+   "pid": 52,
+   "sig": "oje, das kenn ich. bei uns ist es gerade auch nicht so toll. sind's die zähne? eine mutter: „paul war heute ab fünf wach. ich bin total kaputt.“ ох, знакомо. у нас сейчас тоже так себе. это зубы?",
+   "gone": false
+  },
+  {
+   "pid": 53,
+   "sig": "hallo! ach, schön! wie alt ist sie denn? ein vater (neu, mit tochter): „hallo! wir sind heute zum ersten mal hier.“ о, привет! как здорово! а сколько ей?",
+   "gone": false
+  },
+  {
+   "pid": 54,
+   "sig": "oh, und wie läuft's? eine mutter: „wir sind gerade in der eingewöhnung.“ о, ну и как?",
+   "gone": false
+  },
+  {
+   "pid": 55,
+   "sig": "nee, noch nicht. wir wollten noch ein bisschen warten. und bei euch? eine mutter: „und, geht deine kleine schon in die kita?“ нет, пока нет. мы решили ещё немного подождать. а у вас?",
+   "gone": false
+  },
+  {
+   "pid": 56,
+   "sig": "oje. das wird schon, echt. wie alt ist sie denn? eine mutter: „lotta hat noch nie durchgeschlafen. ich kann nicht mehr.“ ох. всё наладится, правда. а сколько ей?",
+   "gone": false
+  },
+  {
+   "pid": 57,
+   "sig": "oje, das kenn ich. aber sonst war's schön? eine mutter: „wir sind gerade aus dem urlaub zurück. die fahrt war eine katastrophe.“ ой-ой, знакомо! а так-то как съездили?",
+   "gone": false
+  },
+  {
+   "pid": 58,
+   "sig": "ja, wir sind zum zweiten mal hier. und ihr, seid ihr schon länger dabei? eine mutter: „seid ihr neu hier?“ да, мы здесь второй раз. а вы уже давно ходите?",
+   "gone": false
+  },
+  {
+   "pid": 59,
+   "sig": "ach, für uns passt das so besser. und wie läuft's bei euch mit der kita? eine mutter: „warum geht sie denn noch nicht in die kita?“ да нам так удобнее. а у вас как с садиком?",
+   "gone": false
+  },
+  {
+   "pid": 60,
+   "sig": "„oje! (lacht) das kenn ich. aber sonst war's schön?“ eine mama kommt zurück aus dem urlaub: „zwei wochen spanien mit einem einjährigen. nie wieder!“",
+   "gone": false
+  },
+  {
+   "pid": 61,
+   "sig": "„echt? super! wie alt ist sie denn?“ ein vater sagt: „emma hat heute nacht zum ersten mal durchgeschlafen!“",
+   "gone": false
+  },
+  {
+   "pid": 62,
+   "sig": "„hallo! wie alt ist er denn?“ … „seid ihr schon länger dabei?“ du bist neu in der gruppe. neben dir sitzt eine mama mit einem kleinen jungen. fang du an.",
+   "gone": false
+  },
+  {
+   "pid": 63,
+   "sig": "oje! ой-ой! ох! o…!",
+   "gone": false
+  },
+  {
+   "pid": 64,
+   "sig": "das kenn ich. знакомо! d… k… i…",
+   "gone": false
+  },
+  {
+   "pid": 65,
+   "sig": "ach, schön! о, как здорово! a…, s…!",
+   "gone": false
+  },
+  {
+   "pid": 66,
+   "sig": "bei uns ist es gerade auch [nicht so toll]. у нас сейчас тоже [так себе] b… u… i… e… g… a…",
+   "gone": false
+  },
+  {
+   "pid": 67,
+   "sig": "das wird schon (wieder). всё наладится d… w… s…",
+   "gone": false
+  },
+  {
+   "pid": 68,
+   "sig": "wie alt ist er / sie denn? а сколько ему / ей? w… a… i… e… s… d…?",
+   "gone": false
+  },
+  {
+   "pid": 69,
+   "sig": "sind's die zähne? зубки, да? s… d… z…?",
+   "gone": false
+  },
+  {
+   "pid": 70,
+   "sig": "seid ihr schon länger dabei? вы уже давно ходите? s… i… s… l… d…?",
+   "gone": false
+  },
+  {
+   "pid": 71,
+   "sig": "und bei euch? а у вас? u… b… e…?",
+   "gone": false
+  },
+  {
+   "pid": 72,
+   "sig": "wie läuft's (mit …)? ну и как? w… l…?",
+   "gone": false
+  },
+  {
+   "pid": 73,
+   "sig": "wir wollten noch ein bisschen warten. мы решили ещё немного подождать w… w… n… e… b… w…",
+   "gone": false
+  },
+  {
+   "pid": 74,
+   "sig": "für uns passt das so besser. нам так удобнее f… u… p… d… s… b…",
+   "gone": false
+  },
+  {
+   "pid": 75,
+   "sig": "sag mal, … seid ihr eigentlich …? слушай, а вы …? s… m…, … s… i… e… …?",
+   "gone": false
+  },
+  {
+   "pid": 76,
+   "sig": "oje, um halb fünf? das kenn ich. reagieren „wir waren heute schon um halb fünf wach.“",
+   "gone": false
+  },
+  {
+   "pid": 77,
+   "sig": "hallo, emma! wie alt ist sie denn? zurückfragen „das ist emma.“",
+   "gone": false
+  },
+  {
+   "pid": 78,
+   "sig": "nee, wir wollten noch ein bisschen warten. und bei euch? kurz antworten „geht deine kleine schon in die kita?“",
+   "gone": false
+  },
+  {
+   "pid": 79,
+   "sig": "ach, schön! wie alt ist sie denn? reagieren „mia läuft seit gestern!“",
+   "gone": false
+  },
+  {
+   "pid": 80,
+   "sig": "ach, für uns passt das so besser. sag mal, seid ihr eigentlich schon länger dabei? kurz antworten nach der kita-frage „warum denn?“",
+   "gone": false
+  },
+  {
+   "pid": 81,
+   "sig": "oh, und wie läuft's? zurückfragen „wir sind seit zwei wochen in der eingewöhnung.“",
+   "gone": false
+  },
+  {
+   "pid": 82,
+   "sig": "oje, du arme! das wird schon wieder. reagieren „ich hab seit drei nächten kaum geschlafen.“",
+   "gone": false
+  },
+  {
+   "pid": 83,
+   "sig": "oje. sind's die zähne? zurückfragen „er sabbert die ganze zeit.“",
+   "gone": false
+  },
+  {
+   "pid": 84,
+   "sig": "doch, doch – ab zwei. für uns passt das so besser. und bei euch? kurz antworten „habt ihr keinen platz bekommen?“ doch = «да нет же, есть» (ответ на отрицательный вопрос)",
+   "gone": false
+  },
+  {
+   "pid": 85,
+   "sig": "ja, wir sind erst zum zweiten mal hier. seid ihr schon länger dabei? zurückfragen „ihr seid neu hier, oder?“",
+   "gone": false
+  },
+  {
+   "pid": 86,
+   "sig": "das kenn ich. bei uns ist es gerade auch nicht so toll. kenn · auch nicht so toll знакомо. у нас сейчас тоже так себе.",
+   "gone": false
+  },
+  {
+   "pid": 87,
+   "sig": "oje. sind's die zähne? oje · zähne ой-ой. зубки, да?",
+   "gone": false
+  },
+  {
+   "pid": 88,
+   "sig": "wir wollten noch ein bisschen warten, für uns passt das so besser. warten · passt мы решили ещё немного подождать, нам так удобнее.",
+   "gone": false
+  },
+  {
+   "pid": 89,
+   "sig": "seid ihr schon länger dabei? länger · dabei а вы уже давно ходите в группу?",
+   "gone": false
+  },
+  {
+   "pid": 90,
+   "sig": "und wie läuft's mit der eingewöhnung? läuft's · eingewöhnung а как идёт адаптация?",
+   "gone": false
+  },
+  {
+   "pid": 91,
+   "sig": "das wird schon. wie alt ist er denn? wird schon · denn всё наладится. а сколько ему?",
+   "gone": false
+  },
+  {
+   "pid": 92,
+   "sig": "xibg6kqxbzy 510 7 das kenne ich das kenn ich , wenn man knoten in den haaren hat und dann bürstet,",
+   "gone": false
+  },
+  {
+   "pid": 93,
+   "sig": "uo4b3fxuzve 380 6 aber das kenne ich das kenn ich auch, das problem mit den stützrädern",
+   "gone": false
+  },
+  {
+   "pid": 94,
+   "sig": "uky73oy5-ws 61 7 das kenne ich das kenn ich , ich teil mir auch mit zwei schwestern das zimmer.",
+   "gone": false
+  },
+  {
+   "pid": 95,
+   "sig": "4q071ah5z5a 255 8 oder er merkt es sich nicht. - das kenne ich das kenn ich auch von meinen freunden.",
+   "gone": false
+  },
+  {
+   "pid": 96,
+   "sig": "rk_h57rnipa 112 7 ich werde dann auch manchmal rot. das kenne ich das kenn ich auch ganz schlimm.",
+   "gone": false
+  },
+  {
+   "pid": 97,
+   "sig": "3ss_1tqo9f4 323 6 jetzt gehen wir pommes essen. ach, das kenne ich das kenn ich .",
+   "gone": false
+  },
+  {
+   "pid": 98,
+   "sig": "1vzgahuwhpo 934 6 „ oje “, denkt sich wohl der affe. „das wird nie was.“",
+   "gone": false
+  },
+  {
+   "pid": 99,
+   "sig": "hcpiatoakmw 146 7 oje , das klingt ja schon so ein bisschen nach folter, finde ich.",
+   "gone": false
+  },
+  {
+   "pid": 100,
+   "sig": "fptvlubcjqk 608 5 oje ! uns filmen? wir sind doch nicht zurechtgemacht!",
+   "gone": false
+  },
+  {
+   "pid": 101,
+   "sig": "r84_ofwkl20 4334 5 oje , wir hätten auch aussenrum gehen können.",
+   "gone": false
+  },
+  {
+   "pid": 102,
+   "sig": "fh3subj7w_s 1334 5 oje , du kleiner kerl, das ist nicht lustig.",
+   "gone": false
+  },
+  {
+   "pid": 103,
+   "sig": "8-g5odqsmlm 229 6 oje , oje, oje! du hast heute zu wenig gegessen.",
+   "gone": false
+  },
+  {
+   "pid": 104,
+   "sig": "ejyglmqvvwa 580 8 was für die liste der sachen, die ich nicht so toll finde beim essen.",
+   "gone": false
+  },
+  {
+   "pid": 105,
+   "sig": "j-dovrtc2ky 181 7 ich habe heute schon einiges gehört, was du nicht so toll findest.",
+   "gone": false
+  },
+  {
+   "pid": 106,
+   "sig": "jrfvjr8oqbk 87 6 aber die welt hatte sich nicht so toll entwickelt.",
+   "gone": false
+  },
+  {
+   "pid": 107,
+   "sig": "szitpv7-k5e 483 6 das ist nicht so toll , denn dann ist die wahrscheinlichkeit,",
+   "gone": false
+  },
+  {
+   "pid": 108,
+   "sig": "5jsvtepg2m0 168 5 bodennahes ozon, was auch nicht so toll ist.",
+   "gone": false
+  },
+  {
+   "pid": 109,
+   "sig": "tdep4efjvw4 665 8 „mach dir keinen kopf, das wird schon wieder“, weil das ist manchmal schwierig anzunehmen,",
+   "gone": false
+  },
+  {
+   "pid": 110,
+   "sig": "czk3sv7j8qs 1235 7 wir wissen schon, wie wir das machen, und das wird schon irgendwie.",
+   "gone": false
+  },
+  {
+   "pid": 111,
+   "sig": "w6mcekuhu94 455 6 die erfahrung ist noch nicht so da. aber das wird schon .",
+   "gone": false
+  },
+  {
+   "pid": 112,
+   "sig": "orbihanoj_e 435 6 „ das wird schon wieder.“ oder „da kommst du durch.“",
+   "gone": false
+  },
+  {
+   "pid": 113,
+   "sig": "cpsvoxtpz4e 552 8 wie alt ist er denn ? - der ist jetzt 10 bis 12 tage alt.",
+   "gone": false
+  },
+  {
+   "pid": 114,
+   "sig": "vfem6tfvafo 172 6 wie alt ist er denn jetzt? - drei monate.",
+   "gone": false
+  },
+  {
+   "pid": 115,
+   "sig": "ipzc7bt1ep0 567 6 kannst du sagen, wie alt der oder die kleine ist?",
+   "gone": false
+  },
+  {
+   "pid": 116,
+   "sig": "aqdcjuau2fe 137 8 aber diejenigen, die schon länger dabei sind, dürften schon in einer sehr guten verfassung sein.",
+   "gone": false
+  },
+  {
+   "pid": 117,
+   "sig": "qvqud3dsvki 487 5 „warum seid ihr nicht schon länger dabei ?“",
+   "gone": false
+  },
+  {
+   "pid": 118,
+   "sig": "6mzw02ywroq 19 6 und wenn du schon länger dabei bist, kennst du das alles.",
+   "gone": false
+  },
+  {
+   "pid": 119,
+   "sig": "aeo5d1eenka 206 7 gerade von denen, die schon länger dabei sind, habe ich oft das feedback",
+   "gone": false
+  },
+  {
+   "pid": 120,
+   "sig": "bxq0kxpb13w 589 7 schon länger dabei sind und ein riesen dankeschön für das tolle feedback",
+   "gone": false
+  },
+  {
+   "pid": 121,
+   "sig": "vt-2fc9dbne 2345 5 und bei euch ? wochenende? feierabend? - ja.",
+   "gone": false
+  },
+  {
+   "pid": 122,
+   "sig": "idi0t1ggrlw 13 6 hallo firas, na, alles gut? ja, und bei dir ?",
+   "gone": false
+  },
+  {
+   "pid": 123,
+   "sig": "sysbwulkaae 160 5 und bei dir ? seid ihr schon am zeichnen?",
+   "gone": false
+  },
+  {
+   "pid": 124,
+   "sig": "diwgjhlcrge 766 5 wir hätten gesagt: „alles cool, und bei dir ?“",
+   "gone": false
+  },
+  {
+   "pid": 125,
+   "sig": "p4utm5hiqok 2171 6 meine erste frage ist natürlich: wie geht's dir? wie läufts wie läuft es wie läuft's ?",
+   "gone": false
+  },
+  {
+   "pid": 126,
+   "sig": "urxr1vxamyg 1824 5 wie läufts wie läuft es wie läuft's ? außer dass er mich angesprungen hat.",
+   "gone": false
+  },
+  {
+   "pid": 127,
+   "sig": "i1mtxuibkoi 204 4 hey! na, wie läufts wie läuft es wie läuft's ?",
+   "gone": false
+  },
+  {
+   "pid": 128,
+   "sig": "tfaz8fawvj4 1563 6 und fragen: wie geht's, wie läufts wie läuft es wie läuft's ? und das finde ich wunderbar.",
+   "gone": false
+  },
+  {
+   "pid": 129,
+   "sig": "dkzc1ggycrc 115 5 wie läufts wie läuft es wie läuft's denn so in der familie?",
+   "gone": false
+  },
+  {
+   "pid": 130,
+   "sig": "p4utm5hiqok 1845 4 wie läufts wie läuft es wie läuft's ? ich bin so neugierig.",
+   "gone": false
+  },
+  {
+   "pid": 131,
+   "sig": "7mqdvcvvij8 189 7 um was muss ich mich jetzt kümmern, was kann noch ein bisschen warten ?",
+   "gone": false
+  },
+  {
+   "pid": 132,
+   "sig": "qta93ntcm-q 161 8 das duftet schon mega. ich muss aber leider noch ein bisschen warten , bis es abgekühlt ist.",
+   "gone": false
+  },
+  {
+   "pid": 133,
+   "sig": "gkgv_oy7ypu 442 7 sie soll nicht solche hohen erwartungen haben und noch ein bisschen warten ,",
+   "gone": false
+  },
+  {
+   "pid": 134,
+   "sig": "weqwupwg3uy 5006 5 also müssen wir noch ein bisschen warten .",
+   "gone": false
+  },
+  {
+   "pid": 135,
+   "sig": "podxrgz0tlw 129 8 und deshalb müssen die leute noch ein bisschen warten , weil ich es perfekt haben mag.",
+   "gone": false
+  },
+  {
+   "pid": 136,
+   "sig": "xtygxtjbyvm 1378 8 ich muss jetzt noch ein bisschen warten , bis die anderen dann auch da sind.",
+   "gone": false
+  },
+  {
+   "pid": 137,
+   "sig": "qrdrdbqzfjk 575 4 das passt für uns .",
+   "gone": false
+  },
+  {
+   "pid": 138,
+   "sig": "d3xq2zjpxue 1133 6 wir haben einfach selber umgebaut, dass es für uns passt .",
+   "gone": false
+  },
+  {
+   "pid": 139,
+   "sig": "x9cv_mowgy4 770 6 passt für mich, passt für uns , in unsere beziehung?",
+   "gone": false
+  },
+  {
+   "pid": 140,
+   "sig": "juqzpg9jcs4 1715 6 ja, passt für uns , und das ist einfach irre,",
+   "gone": false
+  },
+  {
+   "pid": 141,
+   "sig": "uq1vlrdeca4 1368 6 das durchschlafen ist immer ein großes thema. klar, klar, klar.",
+   "gone": false
+  },
+  {
+   "pid": 142,
+   "sig": "tdlfmnrijpu 1908 6 und nicht durchschlafen zu können, war schon sehr anstrengend.",
+   "gone": false
+  },
+  {
+   "pid": 143,
+   "sig": "gomwqs9fsjk 85 5 durchschlafen , weil es nachts noch ernährung braucht.",
+   "gone": false
+  },
+  {
+   "pid": 144,
+   "sig": "gyhqgc9ma2e 107 6 endlich wieder durchschlafen und furchtlos nachts aufs klo gehen.",
+   "gone": false
+  },
+  {
+   "pid": 145,
+   "sig": "xkks_mprgto 381 8 eingewöhnung bei einer tagesmutter sind. läuft zur zeit zwar sehr gut, aber man weiß ja nie,",
+   "gone": false
+  },
+  {
+   "pid": 146,
+   "sig": "_p_rmblod-u 31 8 das zwar schon hinter uns, mit einer eingewöhnung bei einer tagesmutter, aber so ein kindergarten,",
+   "gone": false
+  },
+  {
+   "pid": 147,
+   "sig": "h9q1untwwe8 65 8 wenn ein baby neu in die krippe kommt, gibt es eine phase der eingewöhnung .",
+   "gone": false
+  },
+  {
+   "pid": 148,
+   "sig": "utakfufcr9e 43 7 gebt dem tapsigen fellbündel also ein bis zwei wochen zeit zur eingewöhnung ,",
+   "gone": false
+  },
+  {
+   "pid": 149,
+   "sig": "htxa8udr6m8 29 8 testen meine grenzen aus, ohne ende. dann zahnen sie auch noch und jammern ständig.",
+   "gone": false
+  },
+  {
+   "pid": 150,
+   "sig": "gomwqs9fsjk 237 6 vielleicht lassen auch schnupfen, zahnen oder verdauungsprobleme ihr kind",
+   "gone": false
+  }
+ ],
+ "write": [],
+ "questions.10": [
+  {
+   "pid": 0,
+   "sig": "1 jule sagt: „ida war ab vier wach.“ antworte wie mira, aber mit zwei sätzen über eure nächte – und frag zurück.",
+   "gone": false
+  }
+ ],
+ "questions.13": [
+  {
+   "pid": 0,
+   "sig": "1 eine mama erzählt: „wir waren um fünf wach.“ reagiere zweimal: einmal so, als ob du das kennst, und einmal so, als ob du es nicht kennst.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 eine mama sagt: „unsere nächte sind gerade furchtbar.“ antworte in zwei sätzen mit „bei uns ist es gerade auch …“ – und stell eine frage.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "3 was ist bei euch gerade schwierig – schlaf, zähne oder essen? erzähl es in zwei sätzen wie in der gruppe – und frag zurück.",
+   "gone": false
+  }
+ ],
+ "questions.25": [
+  {
+   "pid": 0,
+   "sig": "1 welche zwei fragen stellst du einem papa, den du noch nicht kennst? sag beide laut.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 eine mama erzählt: „wir sind seit zwei wochen in der eingewöhnung.“ stell zwei fragen nacheinander.",
+   "gone": false
+  }
+ ],
+ "questions.32": [
+  {
+   "pid": 0,
+   "sig": "1 jemand fragt: „geht deine kleine schon in die kita?“ antworte ehrlich, so wie es bei euch ist – kurz – und spiel den ball zurück.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 und dann: „warum denn?“ antworte wieder kurz und wechsle das thema mit sag mal, … – probier zwei verschiedene themen.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "3 welche zwei fragen zur kita stellst du anderen eltern gern? sag beide laut.",
+   "gone": false
+  }
+ ],
+ "questions.40": [
+  {
+   "pid": 0,
+   "sig": "1 jule erzählt von der rückfahrt. erzähl in zwei sätzen von einer langen fahrt mit deinen kindern – und frag zurück.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 tarek hat angst vor der eingewöhnung. was sagst du ihm? zwei sätze und eine rückfrage.",
+   "gone": false
+  }
+ ],
+ "questions.53": [
+  {
+   "pid": 0,
+   "sig": "wähle drei ausdrücke aus dem kasten, die du auf jeden fall benutzen willst.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "mach dir nur stichpunkte, keine ganzen sätze.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "fehlt dir ein wort? sag es einfacher.",
+   "gone": false
+  }
+ ],
+ "questions.59": [
+  {
+   "pid": 0,
+   "sig": "pflicht: ich habe einmal reagiert und zurückgefragt.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "bonus: ich habe selbst ein gespräch angefangen.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "die kita-frage (falls sie kam) habe ich kurz beantwortet – mit „und bei euch?“.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "ohren auf: merk dir drei sätze, mit denen andere eltern reagieren oder zurückfragen. schreib sie danach auf und schick sie mir.",
+   "gone": false
+  }
+ ]
+}

@@ -1,0 +1,4370 @@
+{
+ "type": "revision-field",
+ "file": "krabbelgruppe",
+ "title": "In der Krabbelgruppe",
+ "part": "Deutsch · Lektion 1 · für mich",
+ "sketch": true,
+ "lang": "de",
+ "points": true,
+ "boxes": {
+  "BOX": [
+   {
+    "h": "REAGIEREN",
+    "items": [
+     "**Oje!** – ой-ой! ох!",
+     "**Das kenn ich.** – знакомо! (только если правда знаешь)",
+     "**Ach, schön!** – о, как здорово!",
+     "**Bei uns ist es gerade auch** [nicht so toll]. – у нас сейчас тоже [так себе]",
+     "**Das wird schon (wieder).** – всё наладится",
+     "((auch: Oje, du Arme! / zu einem Papa: du Armer! – ой, бедняжка · Das ist ja heftig. – ого, тяжело!))"
+    ]
+   },
+   {
+    "h": "ZURÜCKFRAGEN",
+    "items": [
+     "**Wie alt ist er / sie denn?** – а сколько ему / ей?",
+     "**Sind's die Zähne?** – зубки, да?",
+     "**Seid ihr schon länger dabei?** – вы уже давно ходите (в группу)?",
+     "**Und bei euch?** – а у вас?",
+     "**Wie läuft's** (mit …)? – ну и как? (как идёт …?)"
+    ]
+   },
+   {
+    "h": "KURZ ANTWORTEN",
+    "items": [
+     "**Wir wollten noch ein bisschen warten.** – мы решили ещё немного подождать",
+     "**Für uns passt das so besser.** – нам так удобнее",
+     "**Sag mal, …** seid ihr **eigentlich** …? – слушай, а вы …? (сменить тему)"
+    ]
+   }
+  ],
+  "REACT": [
+   {
+    "h": "REAGIEREN",
+    "items": [
+     "**Oje!** – ой-ой! ох!",
+     "**Das kenn ich.** – знакомо! (только если правда знаешь)",
+     "**Ach, schön!** – о, как здорово!",
+     "**Bei uns ist es gerade auch** [nicht so toll]. – у нас сейчас тоже [так себе]",
+     "**Das wird schon (wieder).** – всё наладится",
+     "((auch: Oje, du Arme! / zu einem Papa: du Armer! – ой, бедняжка · Das ist ja heftig. – ого, тяжело!))"
+    ]
+   },
+   {
+    "h": "ZURÜCKFRAGEN",
+    "items": [
+     "**Wie alt ist er / sie denn?** – а сколько ему / ей?",
+     "**Sind's die Zähne?** – зубки, да?",
+     "**Seid ihr schon länger dabei?** – вы уже давно ходите (в группу)?",
+     "**Und bei euch?** – а у вас?",
+     "**Wie läuft's** (mit …)? – ну и как? (как идёт …?)"
+    ]
+   }
+  ],
+  "SHORT": [
+   {
+    "h": "KURZ ANTWORTEN",
+    "items": [
+     "**Wir wollten noch ein bisschen warten.** – мы решили ещё немного подождать",
+     "**Für uns passt das so besser.** – нам так удобнее",
+     "**Sag mal, …** seid ihr **eigentlich** …? – слушай, а вы …? (сменить тему)"
+    ]
+   }
+  ],
+  "STRIP": [
+   {
+    "h": "DER BALL GEHT ZURÜCK",
+    "items": [
+     "<m1>Reaktion</m1> + <m2>kurz von dir</m2> + <m3>Rückfrage</m3>"
+    ]
+   }
+  ]
+ },
+ "stages": [
+  {
+   "label": "👋 Los geht's",
+   "blocks": [
+    {
+     "kind": "postits",
+     "instr": "Sprich laut, zu jeder Karte etwa eine Minute:",
+     "notes": [
+      "Wie war's beim letzten Mal in der Krabbelgruppe? Erzähl **zwei Dinge**: was gut lief und was schwierig war.",
+      "Worüber reden die anderen Eltern dort meistens? Nenn **drei Themen**.",
+      "Fragen stellen oder auf Fragen antworten – was fällt dir leichter? Erzähl von **zwei Situationen** und sag, warum.",
+      "Stell dir vor: Du hast fünf Minuten mit einer anderen Mama allein. Über welche **zwei Themen** redest du gern – und worüber lieber nicht?"
+     ]
+    },
+    {
+     "kind": "say",
+     "instr": "Test 1 noch einmal: Was sagst du? Sag es laut, ohne nachzuschauen.",
+     "task": [
+      "**1**  Eine Mutter setzt sich neben dich und seufzt: „Boah, die Nacht war wieder heftig. Der Kleine war ab vier wach.“",
+      "**2**  Deine Tochter spielt mit einem kleinen Mädchen. Du möchtest mit dessen Vater ins Gespräch kommen.",
+      "**3**  Jemand fragt dich: „Und, habt ihr schon einen Kitaplatz?“"
+     ],
+     "later": "Deine Antworten vom 17.10. und bessere Versionen kommen in ✏️ Noch besser sagen."
+    }
+   ]
+  },
+  {
+   "label": "📖 Teil 1",
+   "blocks": [
+    {
+     "kind": "text",
+     "instr": "Lies Teil 1. Was haben Mira und Jule gemeinsam? Sag deine Antwort laut.",
+     "lines": [
+      {
+       "s": "",
+       "p": [
+        "(Krabbelgruppe am Nachmittag. Jule setzt sich mit Ida neben Mira auf die Matte.)"
+       ],
+       "scene": true
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Hallo! Boah, die Nacht war wieder heftig. Ida war ab vier wach."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Oje, ab vier? Das kenn ich. Bei uns ist es gerade auch nicht so toll. Sind's die Zähne?"
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Ich glaub schon. Sie zahnt seit Tagen. Und heute um vier hat sie beschlossen: Die Nacht ist vorbei."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "(lacht) Leo findet auch, dass der Tag um fünf anfängt. Er hat noch nie durchgeschlafen."
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Echt? Noch nie? Wie alt ist er denn?"
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Dreizehn Monate."
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Ach, das wird schon. Bei Ida wurde es erst mit anderthalb besser. Also … bis auf Nächte wie heute."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "(lacht) Na, das macht ja Hoffnung."
+       ]
+      }
+     ],
+     "tip": "Erst nur lesen und verstehen. Die Antwort kommt mit Next.",
+     "answer": [
+      "Beide haben gerade schlechte Nächte: Die Kinder sind um vier oder fünf wach."
+     ]
+    },
+    {
+     "kind": "say",
+     "instr": "Teil 1: Wie halten sie das Gespräch am Laufen?",
+     "task": [
+      "Mira: Oje, ab vier? Das kenn ich. Bei uns ist es gerade auch nicht so toll. Sind's die Zähne?",
+      "",
+      "**Jule erzählt von ihrer Nacht. Was macht Mira zuerst?**"
+     ],
+     "answer": [
+      "Mira: <m1>Oje, ab vier? Das kenn ich.</m1> <m2>Bei uns ist es gerade auch nicht so toll.</m2> <m3>Sind's die Zähne?</m3>",
+      "",
+      "Sie reagiert: „Oje, ab vier? Das kenn ich.“"
+     ],
+     "tip": "Lies die Stelle, antworte laut, dann Next. Grün = Reaktion · gelb = kurz von dir · blau = Rückfrage."
+    },
+    {
+     "kind": "say",
+     "instr": "Teil 1: Wie halten sie das Gespräch am Laufen?",
+     "task": [
+      "Mira: Oje, ab vier? Das kenn ich. Bei uns ist es gerade auch nicht so toll. Sind's die Zähne?",
+      "",
+      "**Was erzählt Mira dann von sich?**"
+     ],
+     "answer": [
+      "Mira: <m1>Oje, ab vier? Das kenn ich.</m1> <m2>Bei uns ist es gerade auch nicht so toll.</m2> <m3>Sind's die Zähne?</m3>",
+      "",
+      "Etwas Ähnliches: „Bei uns ist es gerade auch nicht so toll.“"
+     ],
+     "tip": "Lies die Stelle, antworte laut, dann Next. Grün = Reaktion · gelb = kurz von dir · blau = Rückfrage."
+    },
+    {
+     "kind": "say",
+     "instr": "Teil 1: Wie halten sie das Gespräch am Laufen?",
+     "task": [
+      "Mira: Oje, ab vier? Das kenn ich. Bei uns ist es gerade auch nicht so toll. Sind's die Zähne?",
+      "",
+      "**Wie endet ihre Antwort?**"
+     ],
+     "answer": [
+      "Mira: <m1>Oje, ab vier? Das kenn ich.</m1> <m2>Bei uns ist es gerade auch nicht so toll.</m2> <m3>Sind's die Zähne?</m3>",
+      "",
+      "Mit einer Frage: „Sind's die Zähne?“ Der Ball geht zurück zu Jule."
+     ],
+     "tip": "Lies die Stelle, antworte laut, dann Next. Grün = Reaktion · gelb = kurz von dir · blau = Rückfrage."
+    },
+    {
+     "kind": "say",
+     "instr": "Teil 1: Wie halten sie das Gespräch am Laufen?",
+     "task": [
+      "Mira: (lacht) Leo findet auch, dass der Tag um fünf anfängt. Er hat noch nie durchgeschlafen.",
+      "Jule: Echt? Noch nie? Wie alt ist er denn?",
+      "",
+      "**Und was macht Jule genauso?**"
+     ],
+     "answer": [
+      "Mira: (lacht) <m2>Leo findet auch, dass der Tag um fünf anfängt. Er hat noch nie durchgeschlafen.</m2>",
+      "Jule: <m1>Echt? Noch nie?</m1> <m3>Wie alt ist er denn?</m3>",
+      "",
+      "Sie reagiert und fragt zurück: „Echt? Noch nie? Wie alt ist er denn?“"
+     ],
+     "tip": "Lies die Stelle, antworte laut, dann Next. Grün = Reaktion · gelb = kurz von dir · blau = Rückfrage."
+    },
+    {
+     "kind": "text",
+     "instr": "Jetzt mit dem Glossar. Lies noch einmal.",
+     "lines": [
+      {
+       "s": "",
+       "p": [
+        "(Krabbelgruppe am Nachmittag. Jule setzt sich mit Ida neben Mira auf die Matte.)"
+       ],
+       "scene": true
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Hallo! Boah, die Nacht war wieder ",
+        {
+         "b": "heftig"
+        },
+        ". Ida war ab vier wach."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        {
+         "b": "Oje"
+        },
+        ", ab vier? ",
+        {
+         "b": "Das kenn ich."
+        },
+        " ",
+        {
+         "b": "Bei uns ist es gerade auch nicht so toll."
+        },
+        " ",
+        {
+         "b": "Sind's die Zähne?"
+        }
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Ich glaub schon. Sie ",
+        {
+         "b": "zahnt"
+        },
+        " seit Tagen. Und heute um vier hat sie beschlossen: Die Nacht ist vorbei."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "(lacht) Leo findet auch, dass der Tag um fünf anfängt. Er hat noch nie ",
+        {
+         "b": "durchgeschlafen"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Echt? Noch nie? ",
+        {
+         "b": "Wie alt ist er denn?"
+        }
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Dreizehn Monate."
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Ach, ",
+        {
+         "b": "das wird schon"
+        },
+        ". Bei Ida wurde es erst mit anderthalb besser. Also … bis auf Nächte wie heute."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "(lacht) Na, das macht ja Hoffnung."
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        "die Nacht war ",
+        {
+         "b": "heftig"
+        }
+       ],
+       "ru": "ночка была та ещё"
+      },
+      {
+       "p": [
+        {
+         "b": "Oje!"
+        }
+       ],
+       "ru": "ой-ой! ох!"
+      },
+      {
+       "p": [
+        {
+         "b": "Das kenn ich."
+        }
+       ],
+       "ru": "знакомо!"
+      },
+      {
+       "p": [
+        {
+         "b": "Bei uns ist es gerade auch nicht so toll."
+        }
+       ],
+       "ru": "у нас сейчас тоже так себе"
+      },
+      {
+       "p": [
+        {
+         "b": "Sind's die Zähne?"
+        }
+       ],
+       "ru": "зубки, да?",
+       "m": "sind's = sind es"
+      },
+      {
+       "p": [
+        "sie ",
+        {
+         "b": "zahnt"
+        }
+       ],
+       "ru": "у неё режутся зубы"
+      },
+      {
+       "p": [
+        {
+         "b": "durchschlafen"
+        }
+       ],
+       "ru": "спать всю ночь, не просыпаясь"
+      },
+      {
+       "p": [
+        {
+         "b": "Wie alt ist er denn?"
+        }
+       ],
+       "ru": "а сколько ему?"
+      },
+      {
+       "p": [
+        {
+         "b": "Das wird schon."
+        }
+       ],
+       "ru": "всё наладится"
+      }
+     ]
+    },
+    {
+     "kind": "text",
+     "instr": "Erinnere dich an die fehlenden Wörter und sag sie laut. Tippe auf Gelb zum Prüfen.",
+     "lines": [
+      {
+       "s": "",
+       "p": [
+        "(Krabbelgruppe am Nachmittag. Jule setzt sich mit Ida neben Mira auf die Matte.)"
+       ],
+       "scene": true
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Hallo! Boah, die Nacht war wieder ",
+        {
+         "f": "h",
+         "r": "eftig"
+        },
+        ". Ida war ab vier wach."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        {
+         "f": "O",
+         "r": "je"
+        },
+        ", ab vier? ",
+        {
+         "f": "D",
+         "r": "as"
+        },
+        " ",
+        {
+         "f": "k",
+         "r": "enn"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "ch"
+        },
+        ". ",
+        {
+         "f": "B",
+         "r": "ei"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "ns"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "st"
+        },
+        " ",
+        {
+         "f": "e",
+         "r": "s"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "erade"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "uch"
+        },
+        " ",
+        {
+         "f": "n",
+         "r": "icht"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "o"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "oll"
+        },
+        ". ",
+        {
+         "f": "S",
+         "r": "ind's"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "ie"
+        },
+        " ",
+        {
+         "f": "Z",
+         "r": "ähne"
+        },
+        "?"
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Ich glaub schon. Sie ",
+        {
+         "f": "z",
+         "r": "ahnt"
+        },
+        " seit Tagen. Und heute um vier hat sie beschlossen: Die Nacht ist vorbei."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "(lacht) Leo findet auch, dass der Tag um fünf anfängt. Er hat noch nie ",
+        {
+         "f": "d",
+         "r": "urchgeschlafen"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Echt? Noch nie? ",
+        {
+         "f": "W",
+         "r": "ie"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "lt"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "st"
+        },
+        " ",
+        {
+         "f": "e",
+         "r": "r"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "enn"
+        },
+        "?"
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Dreizehn Monate."
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Ach, ",
+        {
+         "f": "d",
+         "r": "as"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "ird"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "chon"
+        },
+        ". Bei Ida wurde es erst mit anderthalb besser. Also … bis auf Nächte wie heute."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "(lacht) Na, das macht ja Hoffnung."
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        "die Nacht war ",
+        {
+         "f": "h",
+         "r": "eftig"
+        }
+       ],
+       "ru": "ночка была та ещё"
+      },
+      {
+       "p": [
+        {
+         "f": "O",
+         "r": "je"
+        },
+        "!"
+       ],
+       "ru": "ой-ой! ох!"
+      },
+      {
+       "p": [
+        {
+         "f": "D",
+         "r": "as"
+        },
+        " ",
+        {
+         "f": "k",
+         "r": "enn"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "ch"
+        },
+        "."
+       ],
+       "ru": "знакомо!"
+      },
+      {
+       "p": [
+        {
+         "f": "B",
+         "r": "ei"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "ns"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "st"
+        },
+        " ",
+        {
+         "f": "e",
+         "r": "s"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "erade"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "uch"
+        },
+        " ",
+        {
+         "f": "n",
+         "r": "icht"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "o"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "oll"
+        },
+        "."
+       ],
+       "ru": "у нас сейчас тоже так себе"
+      },
+      {
+       "p": [
+        {
+         "f": "S",
+         "r": "ind's"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "ie"
+        },
+        " ",
+        {
+         "f": "Z",
+         "r": "ähne"
+        },
+        "?"
+       ],
+       "ru": "зубки, да?",
+       "m": "sind's = sind es"
+      },
+      {
+       "p": [
+        "sie ",
+        {
+         "f": "z",
+         "r": "ahnt"
+        }
+       ],
+       "ru": "у неё режутся зубы"
+      },
+      {
+       "p": [
+        {
+         "f": "d",
+         "r": "urchschlafen"
+        }
+       ],
+       "ru": "спать всю ночь, не просыпаясь"
+      },
+      {
+       "p": [
+        {
+         "f": "W",
+         "r": "ie"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "lt"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "st"
+        },
+        " ",
+        {
+         "f": "e",
+         "r": "r"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "enn"
+        },
+        "?"
+       ],
+       "ru": "а сколько ему?"
+      },
+      {
+       "p": [
+        {
+         "f": "D",
+         "r": "as"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "ird"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "chon"
+        },
+        "."
+       ],
+       "ru": "всё наладится"
+      }
+     ]
+    },
+    {
+     "kind": "text",
+     "instr": "Jetzt ohne Glossar.",
+     "lines": [
+      {
+       "s": "",
+       "p": [
+        "(Krabbelgruppe am Nachmittag. Jule setzt sich mit Ida neben Mira auf die Matte.)"
+       ],
+       "scene": true
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Hallo! Boah, die Nacht war wieder ",
+        {
+         "f": "h",
+         "r": "eftig"
+        },
+        ". Ida war ab vier wach."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        {
+         "f": "O",
+         "r": "je"
+        },
+        ", ab vier? ",
+        {
+         "f": "D",
+         "r": "as"
+        },
+        " ",
+        {
+         "f": "k",
+         "r": "enn"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "ch"
+        },
+        ". ",
+        {
+         "f": "B",
+         "r": "ei"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "ns"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "st"
+        },
+        " ",
+        {
+         "f": "e",
+         "r": "s"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "erade"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "uch"
+        },
+        " ",
+        {
+         "f": "n",
+         "r": "icht"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "o"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "oll"
+        },
+        ". ",
+        {
+         "f": "S",
+         "r": "ind's"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "ie"
+        },
+        " ",
+        {
+         "f": "Z",
+         "r": "ähne"
+        },
+        "?"
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Ich glaub schon. Sie ",
+        {
+         "f": "z",
+         "r": "ahnt"
+        },
+        " seit Tagen. Und heute um vier hat sie beschlossen: Die Nacht ist vorbei."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "(lacht) Leo findet auch, dass der Tag um fünf anfängt. Er hat noch nie ",
+        {
+         "f": "d",
+         "r": "urchgeschlafen"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Echt? Noch nie? ",
+        {
+         "f": "W",
+         "r": "ie"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "lt"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "st"
+        },
+        " ",
+        {
+         "f": "e",
+         "r": "r"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "enn"
+        },
+        "?"
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Dreizehn Monate."
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Ach, ",
+        {
+         "f": "d",
+         "r": "as"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "ird"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "chon"
+        },
+        ". Bei Ida wurde es erst mit anderthalb besser. Also … bis auf Nächte wie heute."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "(lacht) Na, das macht ja Hoffnung."
+       ]
+      }
+     ]
+    },
+    {
+     "kind": "questions",
+     "instr": "Sprich laut.",
+     "items": [
+      "**1**  Jule sagt: „Ida war ab vier wach.“ Antworte wie Mira, aber mit **zwei** Sätzen über eure Nächte – und frag zurück."
+     ],
+     "fast": "Noch Zeit? Sag die fehlenden Wörter in Teil 1 noch einmal – ohne Glossar."
+    }
+   ]
+  },
+  {
+   "label": "🎡 Reagieren",
+   "blocks": [
+    {
+     "kind": "game",
+     "piece": "wheel",
+     "box": "REACT",
+     "check": "Check",
+     "instr": "Das Rad der Neuigkeiten: Dreh, lies den Satz und reagiere laut. Dann tippe zum Prüfen.",
+     "tasks": [
+      {
+       "label": "1",
+       "q": "„Paul hat heute Nacht zum ersten Mal durchgeschlafen!“",
+       "a": "Ach, schön! Wie alt ist er denn?",
+       "why": "Хорошая новость → Ach, schön! + вопрос."
+      },
+      {
+       "label": "2",
+       "q": "„Wir waren heute schon um halb fünf wach.“",
+       "a": "Oje, um halb fünf? Das kenn ich.",
+       "why": "Повтори главное (um halb fünf?) — видно, что слушаешь."
+      },
+      {
+       "label": "3",
+       "q": "Eine Mama: „Ich hab seit drei Nächten kaum geschlafen. Ich kann nicht mehr.“",
+       "a": "Oje, du Arme! Das wird schon wieder.",
+       "why": "Человеку тяжело → сначала сочувствие, потом утешение. Папе: du Armer."
+      },
+      {
+       "label": "4",
+       "q": "„Mia läuft seit gestern!“",
+       "a": "Ach, schön! Wie alt ist sie denn?",
+       "why": "о девочке → sie; denn — живой интерес."
+      },
+      {
+       "label": "5",
+       "q": "„Sie sabbert die ganze Zeit und beißt auf alles.“",
+       "a": "Oje. Sind's die Zähne?",
+       "why": "Слюни и всё в рот → зубы."
+      },
+      {
+       "label": "6",
+       "q": "„Unser Kleiner isst gerade nur Nudeln.“",
+       "a": "(lacht) Das kenn ich!",
+       "why": "Узнаёшь себя → Das kenn ich!"
+      },
+      {
+       "label": "7",
+       "q": "„Mein Mann ist drei Wochen auf Dienstreise. Ich bin allein mit beiden Kindern.“",
+       "a": "Oje, drei Wochen? Das ist ja heftig.",
+       "why": "Ты такого не переживала → не «Das kenn ich», а «Das ist ja heftig»."
+      }
+     ],
+     "tip": "Dreh das Rad, lies den Satz und reagiere laut. Richtig = der Sektor verschwindet."
+    },
+    {
+     "kind": "cards",
+     "style": "say",
+     "box": "REACT",
+     "instr": "Lies den Satz der anderen Person. Sag deine Antwort auf Deutsch. Tippe auf die Karte.",
+     "cards": [
+      {
+       "front": "Mama: „Mia war heute ab halb fünf wach.“\n((Du: «Ой-ой, с полпятого? Знакомо.»))",
+       "back": "Oje, ab halb fünf? Das kenn ich."
+      },
+      {
+       "front": "Papa: „Er hat die ganze Nacht nur geweint.“\n((Du: «Ой, всю ночь? Знакомо.»))",
+       "back": "Oje, die ganze Nacht? Das kenn ich."
+      },
+      {
+       "front": "Mama: „Bei uns ging drei Wochen lang Magen-Darm rum. Einer nach dem anderen.“\n((Du: «Ой-ой, три недели? Знакомо.»))",
+       "back": "Oje, drei Wochen? Das kenn ich."
+      },
+      {
+       "front": "Papa: „Sie isst gerade nur Nudeln. Sonst nichts.“\n((Du, lachend: «Только макароны? Знакомо.»))",
+       "back": "(lacht) Nur Nudeln? Das kenn ich."
+      },
+      {
+       "front": "Mama: „Wir sind gerade umgezogen. Zwei Kinder und noch keine Küche.“\n((Ты такого не переживала.))",
+       "back": "Oje, ohne Küche? Das ist ja heftig.",
+       "note": "Das kenn ich — только если правда знаешь."
+      },
+      {
+       "front": "Mama: „Die Nächte sind gerade echt schlimm.“\n((Du: «У нас сейчас тоже так себе.»))",
+       "back": "Bei uns ist es gerade auch nicht so toll."
+      },
+      {
+       "front": "Papa: „Seit der Kita ist bei uns alles total anstrengend.“\n((Du: «У нас сейчас тоже довольно тяжело.»))",
+       "back": "Bei uns ist es gerade auch ziemlich anstrengend."
+      },
+      {
+       "front": "Mama: „Mit dem Essen ist es gerade total chaotisch.“\n((Du: «У нас сейчас тоже полный хаос.»))",
+       "back": "Bei uns ist es gerade auch ziemlich chaotisch."
+      },
+      {
+       "front": "Papa: „Sie schläft jetzt endlich besser. Es ist ganz okay gerade.“\n((Du: «О, здорово! У нас сейчас тоже нормально, слава богу.»))",
+       "back": "Ach, schön! Bei uns ist es gerade auch ganz okay, zum Glück."
+      }
+     ],
+     "note_after": "Wiederhole das Wichtigste aus dem Satz – das zeigt: Ich höre zu. Kennst du es nicht? → Oje, du Arme! / Das ist ja heftig."
+    },
+    {
+     "kind": "questions",
+     "instr": "Sprich laut. Benutze den Kasten.",
+     "box": "REACT",
+     "items": [
+      "**1**  Eine Mama erzählt: „Wir waren um fünf wach.“ Reagiere **zweimal**: einmal so, als ob du das kennst, und einmal so, als ob du es nicht kennst.",
+      "**2**  Eine Mama sagt: „Unsere Nächte sind gerade furchtbar.“ Antworte in **zwei Sätzen** mit „Bei uns ist es gerade auch …“ – und stell eine Frage.",
+      "**3**  Was ist bei euch gerade schwierig – Schlaf, Zähne oder Essen? Erzähl es in **zwei** Sätzen wie in der Gruppe – und frag zurück."
+     ],
+     "fast": "Noch Zeit? Dreh das Rad noch einmal – diesmal ohne den Kasten."
+    }
+   ]
+  },
+  {
+   "label": "📖 Teil 2",
+   "blocks": [
+    {
+     "kind": "text",
+     "instr": "Lies Teil 2. Wie geht es Ida in der Kita – und wie geht es Jule? Sag deine Antwort laut.",
+     "lines": [
+      {
+       "s": "Mira",
+       "p": [
+        "Sag mal, seid ihr schon länger dabei?"
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Seit dem Sommer. Ihr seid neu, oder?"
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Ja, wir sind zum zweiten Mal hier. Vorher waren wir in der Babygruppe."
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Und, geht Leo schon in die Kita?"
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Nee, noch nicht. Wir wollten noch ein bisschen warten, für uns passt das so besser. Und bei euch?"
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Wir sind gerade in der Eingewöhnung."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Oh, und wie läuft's?"
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Ida findet's super. Und ich sitz jeden Morgen im Flur und trink kalten Kaffee."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "(lacht) Kalten Kaffee kenn ich auch. Ganz ohne Kita."
+       ]
+      }
+     ],
+     "tip": "Erst nur lesen und verstehen. Die Antwort kommt mit Next.",
+     "answer": [
+      "Ida findet die Kita super. Jule sitzt jeden Morgen im Flur und wartet, ihr Kaffee wird kalt. Für sie ist es eher anstrengend."
+     ]
+    },
+    {
+     "kind": "say",
+     "instr": "Teil 2: Wie halten sie das Gespräch am Laufen?",
+     "task": [
+      "Mira: Sag mal, seid ihr schon länger dabei?",
+      "",
+      "**Wie wechselt Mira das Thema?**"
+     ],
+     "answer": [
+      "Mira: Sag mal, <m3>seid ihr schon länger dabei?</m3>",
+      "",
+      "Mit „Sag mal, …“ und einer Frage: „Seid ihr schon länger dabei?“"
+     ],
+     "tip": "Lies die Stelle, antworte laut, dann Next. Grün = Reaktion · gelb = kurz von dir · blau = Rückfrage."
+    },
+    {
+     "kind": "say",
+     "instr": "Teil 2: Wie halten sie das Gespräch am Laufen?",
+     "task": [
+      "Jule: Und, geht Leo schon in die Kita?",
+      "Mira: Nee, noch nicht. Wir wollten noch ein bisschen warten, für uns passt das so besser. Und bei euch?",
+      "",
+      "**Erklärt Mira, warum Leo noch nicht in die Kita geht?**"
+     ],
+     "answer": [
+      "Jule: <m3>Und, geht Leo schon in die Kita?</m3>",
+      "Mira: <m2>Nee, noch nicht. Wir wollten noch ein bisschen warten, für uns passt das so besser.</m2> <m3>Und bei euch?</m3>",
+      "",
+      "Nein. Nur kurz: „Wir wollten noch ein bisschen warten, für uns passt das so besser.“"
+     ],
+     "tip": "Lies die Stelle, antworte laut, dann Next. Grün = Reaktion · gelb = kurz von dir · blau = Rückfrage."
+    },
+    {
+     "kind": "say",
+     "instr": "Teil 2: Wie halten sie das Gespräch am Laufen?",
+     "task": [
+      "Mira: Nee, noch nicht. Wir wollten noch ein bisschen warten, für uns passt das so besser. Und bei euch?",
+      "",
+      "**Was macht sie direkt danach?**"
+     ],
+     "answer": [
+      "Mira: <m2>Nee, noch nicht. Wir wollten noch ein bisschen warten, für uns passt das so besser.</m2> <m3>Und bei euch?</m3>",
+      "",
+      "Sie fragt zurück: „Und bei euch?“ Jetzt erzählt Jule."
+     ],
+     "tip": "Lies die Stelle, antworte laut, dann Next. Grün = Reaktion · gelb = kurz von dir · blau = Rückfrage."
+    },
+    {
+     "kind": "say",
+     "instr": "Teil 2: Wie halten sie das Gespräch am Laufen?",
+     "task": [
+      "Jule: Ida findet's super. Und ich sitz jeden Morgen im Flur und trink kalten Kaffee.",
+      "Mira: (lacht) Kalten Kaffee kenn ich auch. Ganz ohne Kita.",
+      "",
+      "**Wie reagiert Mira auf den kalten Kaffee?**"
+     ],
+     "answer": [
+      "Jule: Ida findet's super. Und ich sitz jeden Morgen im Flur und trink kalten Kaffee.",
+      "Mira: <m1>(lacht) Kalten Kaffee kenn ich auch.</m1> <m2>Ganz ohne Kita.</m2>",
+      "",
+      "Sie lacht und findet etwas Gemeinsames: „Kalten Kaffee kenn ich auch.“"
+     ],
+     "tip": "Lies die Stelle, antworte laut, dann Next. Grün = Reaktion · gelb = kurz von dir · blau = Rückfrage."
+    },
+    {
+     "kind": "text",
+     "instr": "Jetzt mit dem Glossar. Lies noch einmal.",
+     "lines": [
+      {
+       "s": "Mira",
+       "p": [
+        "Sag mal, ",
+        {
+         "b": "seid ihr schon länger dabei?"
+        }
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Seit dem Sommer. Ihr seid neu, oder?"
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Ja, wir sind zum zweiten Mal hier. Vorher waren wir in der Babygruppe."
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Und, geht Leo schon in die Kita?"
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Nee, noch nicht. ",
+        {
+         "b": "Wir wollten noch ein bisschen warten"
+        },
+        ", ",
+        {
+         "b": "für uns passt das so besser"
+        },
+        ". ",
+        {
+         "b": "Und bei euch?"
+        }
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Wir sind gerade in der ",
+        {
+         "b": "Eingewöhnung"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Oh, und ",
+        {
+         "b": "wie läuft's?"
+        }
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Ida findet's super. Und ich sitz jeden Morgen im Flur und trink kalten Kaffee."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "(lacht) Kalten Kaffee kenn ich auch. Ganz ohne Kita."
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        {
+         "b": "Seid ihr schon länger dabei?"
+        }
+       ],
+       "ru": "вы уже давно ходите (в группу)?"
+      },
+      {
+       "p": [
+        {
+         "b": "Wir wollten noch ein bisschen warten."
+        }
+       ],
+       "ru": "мы решили ещё немного подождать"
+      },
+      {
+       "p": [
+        {
+         "b": "Für uns passt das so besser."
+        }
+       ],
+       "ru": "нам так удобнее"
+      },
+      {
+       "p": [
+        {
+         "b": "Und bei euch?"
+        }
+       ],
+       "ru": "а у вас?"
+      },
+      {
+       "p": [
+        "die ",
+        {
+         "b": "Eingewöhnung"
+        }
+       ],
+       "ru": "адаптация в садике"
+      },
+      {
+       "p": [
+        {
+         "b": "Wie läuft's?"
+        }
+       ],
+       "ru": "ну и как? как идёт?"
+      }
+     ]
+    },
+    {
+     "kind": "text",
+     "instr": "Erinnere dich an die fehlenden Wörter und sag sie laut. Tippe auf Gelb zum Prüfen.",
+     "lines": [
+      {
+       "s": "Mira",
+       "p": [
+        "Sag mal, ",
+        {
+         "f": "s",
+         "r": "eid"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "hr"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "chon"
+        },
+        " ",
+        {
+         "f": "l",
+         "r": "änger"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "abei"
+        },
+        "?"
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Seit dem Sommer. Ihr seid neu, oder?"
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Ja, wir sind zum zweiten Mal hier. Vorher waren wir in der Babygruppe."
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Und, geht Leo schon in die Kita?"
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Nee, noch nicht. ",
+        {
+         "f": "W",
+         "r": "ir"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "ollten"
+        },
+        " ",
+        {
+         "f": "n",
+         "r": "och"
+        },
+        " ",
+        {
+         "f": "e",
+         "r": "in"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "isschen"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "arten"
+        },
+        ", ",
+        {
+         "f": "f",
+         "r": "ür"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "ns"
+        },
+        " ",
+        {
+         "f": "p",
+         "r": "asst"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "as"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "o"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "esser"
+        },
+        ". ",
+        {
+         "f": "U",
+         "r": "nd"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "ei"
+        },
+        " ",
+        {
+         "f": "e",
+         "r": "uch"
+        },
+        "?"
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Wir sind gerade in der ",
+        {
+         "f": "E",
+         "r": "ingewöhnung"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Oh, und ",
+        {
+         "f": "w",
+         "r": "ie"
+        },
+        " ",
+        {
+         "f": "l",
+         "r": "äuft's"
+        },
+        "?"
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Ida findet's super. Und ich sitz jeden Morgen im Flur und trink kalten Kaffee."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "(lacht) Kalten Kaffee kenn ich auch. Ganz ohne Kita."
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        {
+         "f": "S",
+         "r": "eid"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "hr"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "chon"
+        },
+        " ",
+        {
+         "f": "l",
+         "r": "änger"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "abei"
+        },
+        "?"
+       ],
+       "ru": "вы уже давно ходите (в группу)?"
+      },
+      {
+       "p": [
+        {
+         "f": "W",
+         "r": "ir"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "ollten"
+        },
+        " ",
+        {
+         "f": "n",
+         "r": "och"
+        },
+        " ",
+        {
+         "f": "e",
+         "r": "in"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "isschen"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "arten"
+        },
+        "."
+       ],
+       "ru": "мы решили ещё немного подождать"
+      },
+      {
+       "p": [
+        {
+         "f": "F",
+         "r": "ür"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "ns"
+        },
+        " ",
+        {
+         "f": "p",
+         "r": "asst"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "as"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "o"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "esser"
+        },
+        "."
+       ],
+       "ru": "нам так удобнее"
+      },
+      {
+       "p": [
+        {
+         "f": "U",
+         "r": "nd"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "ei"
+        },
+        " ",
+        {
+         "f": "e",
+         "r": "uch"
+        },
+        "?"
+       ],
+       "ru": "а у вас?"
+      },
+      {
+       "p": [
+        "die ",
+        {
+         "f": "E",
+         "r": "ingewöhnung"
+        }
+       ],
+       "ru": "адаптация в садике"
+      },
+      {
+       "p": [
+        {
+         "f": "W",
+         "r": "ie"
+        },
+        " ",
+        {
+         "f": "l",
+         "r": "äuft's"
+        },
+        "?"
+       ],
+       "ru": "ну и как? как идёт?"
+      }
+     ]
+    },
+    {
+     "kind": "text",
+     "instr": "Jetzt ohne Glossar.",
+     "lines": [
+      {
+       "s": "Mira",
+       "p": [
+        "Sag mal, ",
+        {
+         "f": "s",
+         "r": "eid"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "hr"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "chon"
+        },
+        " ",
+        {
+         "f": "l",
+         "r": "änger"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "abei"
+        },
+        "?"
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Seit dem Sommer. Ihr seid neu, oder?"
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Ja, wir sind zum zweiten Mal hier. Vorher waren wir in der Babygruppe."
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Und, geht Leo schon in die Kita?"
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Nee, noch nicht. ",
+        {
+         "f": "W",
+         "r": "ir"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "ollten"
+        },
+        " ",
+        {
+         "f": "n",
+         "r": "och"
+        },
+        " ",
+        {
+         "f": "e",
+         "r": "in"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "isschen"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "arten"
+        },
+        ", ",
+        {
+         "f": "f",
+         "r": "ür"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "ns"
+        },
+        " ",
+        {
+         "f": "p",
+         "r": "asst"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "as"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "o"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "esser"
+        },
+        ". ",
+        {
+         "f": "U",
+         "r": "nd"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "ei"
+        },
+        " ",
+        {
+         "f": "e",
+         "r": "uch"
+        },
+        "?"
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Wir sind gerade in der ",
+        {
+         "f": "E",
+         "r": "ingewöhnung"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Oh, und ",
+        {
+         "f": "w",
+         "r": "ie"
+        },
+        " ",
+        {
+         "f": "l",
+         "r": "äuft's"
+        },
+        "?"
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Ida findet's super. Und ich sitz jeden Morgen im Flur und trink kalten Kaffee."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "(lacht) Kalten Kaffee kenn ich auch. Ganz ohne Kita."
+       ]
+      }
+     ]
+    },
+    {
+     "kind": "say",
+     "instr": "Das Ballspiel: So geht der Ball zurück",
+     "task": [
+      "<m1>Reaktion</m1> + <m2>kurz von dir</m2> + <m3>Rückfrage</m3>",
+      "Jule: Boah, die Nacht war wieder heftig. Ida war ab vier wach.",
+      "Mira: <m1>Oje, ab vier? Das kenn ich.</m1> <m2>Bei uns ist es gerade auch nicht so toll.</m2> <m3>Sind's die Zähne?</m3>",
+      "Jule: Und, geht Leo schon in die Kita?",
+      "Mira: <m2>Nee, noch nicht. Wir wollten noch ein bisschen warten.</m2> <m3>Und bei euch?</m3>",
+      "((Без вопроса в конце разговор замирает: собеседнику приходится придумывать новую тему. С вопросом мяч снова у него.))",
+      "((Причину объяснять не обязательно: короткий ответ + вопрос — это вежливо и совершенно нормально.))"
+     ]
+    }
+   ]
+  },
+  {
+   "label": "❓ Zurückfragen",
+   "blocks": [
+    {
+     "kind": "game",
+     "piece": "tictactoe",
+     "size": 3,
+     "box": "BOX",
+     "check": "Check",
+     "instr": "Tic-Tac-Toe: Wähl ein Feld, lies den Satz und stell eine Frage zurück. Dann tippe zum Prüfen. Drei in einer Reihe gewinnt!",
+     "tasks": [
+      {
+       "ctx": "Ein Papa mit Tochter",
+       "q": "„Das ist Emma.“",
+       "a": "Hallo, Emma! **Wie alt ist sie denn?**",
+       "why": "о девочке — sie; denn = живой интерес"
+      },
+      {
+       "ctx": "Eine Mama mit einem kleinen Jungen",
+       "q": "„Darf ich mich zu euch setzen?“",
+       "a": "Klar! **Wie alt ist er denn?**",
+       "why": "о мальчике — er"
+      },
+      {
+       "ctx": "Eine Mama",
+       "q": "„Er ist seit Tagen total quengelig und sabbert die ganze Zeit.“",
+       "a": "Oje. **Sind's die Zähne?**",
+       "why": "Sind's = Sind es"
+      },
+      {
+       "ctx": "Ein Papa",
+       "q": "„Sie war heute Nacht dreimal wach und hat geweint. Keine Ahnung, warum.“",
+       "a": "Oje. **Sind's die Zähne?**",
+       "why": "короткий вопрос — проще, чем длинное объяснение"
+      },
+      {
+       "ctx": "Eine Mama",
+       "q": "„Ihr seid neu hier, oder?“",
+       "a": "Ja, wir sind erst zum zweiten Mal hier. **Seid ihr schon länger dabei?**",
+       "why": "erst zum zweiten Mal = только второй раз; ответ + встречный вопрос"
+      },
+      {
+       "ctx": "Ein Papa",
+       "q": "„Euch hab ich hier noch nie gesehen.“",
+       "a": "Ja, wir sind ja auch erst zum zweiten Mal hier. **Seid ihr schon länger dabei?**",
+       "why": "ja auch = ну так мы ведь только…"
+      },
+      {
+       "ctx": "Eine Mama",
+       "q": "„Und, geht deine Kleine schon in die Kita?“",
+       "a": "Nee, noch nicht. **Und bei euch?**",
+       "why": "коротко + мяч обратно"
+      },
+      {
+       "ctx": "Ein Papa",
+       "q": "„Wie sind eure Nächte gerade?“",
+       "a": "Ganz okay, zum Glück. **Und bei euch?**",
+       "why": "zum Glück = к счастью"
+      },
+      {
+       "ctx": "Eine Mama",
+       "q": "„Wir sind seit zwei Wochen in der Eingewöhnung.“",
+       "a": "Oh, **und wie läuft's?**",
+       "why": "Wie läuft's? — подходит ко всему, что сейчас идёт: адаптация, работа, отлучение от груди"
+      }
+     ]
+    },
+    {
+     "kind": "cards",
+     "style": "say",
+     "box": "BOX",
+     "instr": "Lies den Satz der anderen Person. Frag auf Deutsch nach. Tippe auf die Karte.",
+     "cards": [
+      {
+       "front": "Mama: „Wir sind seit zwei Wochen in der Kita.“\n((Du: «А как проходит адаптация?»))",
+       "back": "Und wie läuft's mit der Eingewöhnung?"
+      },
+      {
+       "front": "Papa: „Ich arbeite seit Montag wieder.“\n((Du: «О! И как, втягиваешься?» – der Wiedereinstieg))",
+       "back": "Oh! Und wie läuft's mit dem Wiedereinstieg?"
+      },
+      {
+       "front": "Mama: „Wir haben jetzt eine Tagesmutter.“\n((Du: «О! И как вам с ней?»))",
+       "back": "Oh! Und wie läuft's mit der Tagesmutter?"
+      },
+      {
+       "front": "Mama: „Wir sind gerade am Abstillen.“\n((Du: «И как, получается?» – das Abstillen))",
+       "back": "Und wie läuft's mit dem Abstillen?"
+      }
+     ],
+     "note_after": "Wiedereinstieg = выход на работу после декрета · Tagesmutter = дневная няня: смотрит за несколькими детьми у себя дома · Abstillen = отлучение от груди. mit + Dativ."
+    },
+    {
+     "kind": "questions",
+     "instr": "Sprich laut.",
+     "box": "BOX",
+     "items": [
+      "**1**  Welche **zwei Fragen** stellst du einem Papa, den du noch nicht kennst? Sag beide laut.",
+      "**2**  Eine Mama erzählt: „Wir sind seit zwei Wochen in der Eingewöhnung.“ Stell **zwei** Fragen nacheinander."
+     ],
+     "fast": "Noch Zeit? Spiel Tic-Tac-Toe noch einmal."
+    }
+   ]
+  },
+  {
+   "label": "🪙 Kurz antworten",
+   "blocks": [
+    {
+     "kind": "say",
+     "instr": "Gut zu wissen: Smalltalk in der Krabbelgruppe",
+     "task": [
+      "**Unter Eltern duzt man sich meistens sofort.** „Seid ihr schon länger dabei?“ · „Und bei dir?“",
+      "((В группе обычно сразу на «ты». Сомневаешься — послушай, как обратятся к тебе.))",
+      "**Mit „denn“ klingt eine Frage interessierter.** Wie alt ist er? → Wie alt ist er **denn**?",
+      "((denn ≈ «а» в «А сколько ему?» — живой интерес. Но «Warum … denn?» может звучать удивлённо или с лёгким нажимом.))",
+      "**Eine kurze Antwort reicht meistens.** „Wir wollten noch ein bisschen warten.“ – dann: „Und bei euch?“",
+      "((Причину обычно не ждут. А если спросят «Warum denn?» — снова коротко: «Für uns passt das so besser» и сразу вопрос или новая тема: «Sag mal, …»))",
+      "**Typische Themen:** Schlaf, Zähne, Essen, Kita, Urlaub."
+     ]
+    },
+    {
+     "kind": "model",
+     "instr": "Die Kita-Stelle aus Teil 2: Sag Miras Sätze laut. Tippe auf Gelb zum Prüfen.",
+     "box": "SHORT",
+     "parts": [
+      {
+       "title": "",
+       "lines": [
+        {
+         "s": "Jule",
+         "p": [
+          "Und, geht Leo schon in die Kita?"
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "Nee, noch nicht. ",
+          {
+           "f": "W",
+           "r": "ir"
+          },
+          " ",
+          {
+           "f": "w",
+           "r": "ollten"
+          },
+          " ",
+          {
+           "f": "n",
+           "r": "och"
+          },
+          " ",
+          {
+           "f": "e",
+           "r": "in"
+          },
+          " ",
+          {
+           "f": "b",
+           "r": "isschen"
+          },
+          " ",
+          {
+           "f": "w",
+           "r": "arten"
+          },
+          ", ",
+          {
+           "f": "f",
+           "r": "ür"
+          },
+          " ",
+          {
+           "f": "u",
+           "r": "ns"
+          },
+          " ",
+          {
+           "f": "p",
+           "r": "asst"
+          },
+          " ",
+          {
+           "f": "d",
+           "r": "as"
+          },
+          " ",
+          {
+           "f": "s",
+           "r": "o"
+          },
+          " ",
+          {
+           "f": "b",
+           "r": "esser"
+          },
+          ". ",
+          {
+           "f": "U",
+           "r": "nd"
+          },
+          " ",
+          {
+           "f": "b",
+           "r": "ei"
+          },
+          " ",
+          {
+           "f": "e",
+           "r": "uch"
+          },
+          "?"
+         ]
+        },
+        {
+         "s": "Jule",
+         "p": [
+          "Wir sind gerade in der ",
+          {
+           "f": "E",
+           "r": "ingewöhnung"
+          },
+          "."
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "Oh, und ",
+          {
+           "f": "w",
+           "r": "ie"
+          },
+          " ",
+          {
+           "f": "l",
+           "r": "äuft's"
+          },
+          "?"
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "kind": "cards",
+     "style": "say",
+     "box": "SHORT",
+     "instr": "Lies den Satz der anderen Person. Sag deine Antwort auf Deutsch. Tippe auf die Karte.",
+     "cards": [
+      {
+       "front": "Mama: „Geht sie schon in die Kita?“\n((Du: «Нет, мы решили с садиком ещё немного подождать.»))",
+       "back": "Nee, wir wollten mit der Kita noch ein bisschen warten."
+      },
+      {
+       "front": "Papa: „Macht ihr schon Babyschwimmen?“\n((Du: «Нет, с бассейном мы решили ещё немного подождать.»))",
+       "back": "Nee, wir wollten mit dem Babyschwimmen noch ein bisschen warten."
+      },
+      {
+       "front": "Papa: „Fahrt ihr dieses Jahr noch weg?“\n((Du: «Нет, с поездками мы решили ещё немного подождать.»))",
+       "back": "Nee, wir wollten mit dem Verreisen noch ein bisschen warten."
+      },
+      {
+       "front": "Mama: „Hattet ihr schon mal 'nen Babysitter?“\n((Du: «Нет, с няней мы решили ещё немного подождать.»))",
+       "back": "Nee, wir wollten mit 'nem Babysitter noch ein bisschen warten."
+      }
+     ],
+     "note_after": "Auch möglich: „Nee, damit wollten wir noch ein bisschen warten.“ (damit = с этим)"
+    },
+    {
+     "kind": "cards",
+     "style": "kwt",
+     "box": "BOX",
+     "instr": "Sag es anders. Benutze das Wort in Rot, ohne es zu ändern. Der graue Teil ändert sich.",
+     "cards": [
+      {
+       "front": "[[Zahnt er vielleicht gerade?]]",
+       "key": "ZÄHNE",
+       "frame": "___?",
+       "answer": "Sind's die Zähne",
+       "back": "**Sind's die Zähne?**",
+       "note": "≈ «Зубки, да?» Sind's = Sind es. Auch: Sind's vielleicht die Zähne? · Kriegt er gerade Zähne?"
+      },
+      {
+       "front": "[[Wart ihr schon öfter hier]]?",
+       "key": "LÄNGER",
+       "frame": "Seid ihr ___?",
+       "answer": "schon länger dabei",
+       "back": "Seid ihr **schon länger dabei**?",
+       "note": "schon länger = уже какое-то время · dabei sein = ходить, участвовать. Auch: Seid ihr schon länger in der Gruppe? · Kommt ihr schon länger her?"
+      },
+      {
+       "front": "Wir [[haben uns entschieden, mit der Kita noch zu warten]].",
+       "key": "WOLLTEN",
+       "frame": "Wir ___.",
+       "answer": "wollten mit der Kita noch ein bisschen warten",
+       "back": "Wir **wollten** mit der Kita **noch ein bisschen warten**.",
+       "note": "wollten — «мы хотели, решили»; причина не нужна. Auch: Mit der Kita wollten wir noch ein bisschen warten."
+      },
+      {
+       "front": "[[So ist es für uns einfacher.]]",
+       "key": "PASST",
+       "frame": "Für uns ___.",
+       "answer": "passt das so besser",
+       "back": "Für uns **passt das so besser**.",
+       "note": "нам так удобнее — вежливо закрывает тему. Auch: So passt das für uns besser."
+      }
+     ]
+    },
+    {
+     "kind": "tool",
+     "page": "kita-coin",
+     "instr": "Die Kita-Frage: Zieh eine Karte und wirf die Münze. Antworte kurz, ohne Begründung – dann eine Rückfrage oder ein neues Thema.",
+     "tip": "Kopf = die Person fragt nicht weiter. Zahl = sie fragt nach."
+    },
+    {
+     "kind": "cards",
+     "style": "share",
+     "box": "BOX",
+     "instr": "Gesprächs-Pingpong: antworte laut.",
+     "instr_next": "Gesprächs-Pingpong",
+     "cards": [
+      {
+       "ctx": "Krabbelgruppe. Eine Mama aus der Gruppe.",
+       "a": "Boah, Paul war heute schon um fünf wach.",
+       "hint": "<m1>[Reaktion]</m1> <m2>[kurz von dir]</m2> <m3>[Rückfrage]</m3>",
+       "back": "Oje, um fünf? Das kenn ich. Bei uns ist es gerade auch nicht so toll. **Sind's die Zähne?**",
+       "next": "Ich glaub schon. Die Backenzähne.",
+       "note": null,
+       "support": "box",
+       "instr": "Antworte laut, so wie die Farben zeigen."
+      },
+      {
+       "ctx": "Krabbelgruppe. Eine Mama aus der Gruppe. Ihr redet schon: Mama: „Boah, Paul war heute schon um fünf wach.“ – Du: „Oje, um fünf? Das kenn ich. Bei uns ist es gerade auch nicht so toll. Sind's die Zähne?“",
+       "a": "Ich glaub schon. Die Backenzähne.",
+       "hint": "<m1>[Reaktion]</m1> <m3>[Rückfrage]</m3>",
+       "back": "Oje, die sind echt fies. Das wird schon. **Wie alt ist er denn?**",
+       "next": null,
+       "note": null,
+       "support": "box",
+       "instr": "Antworte laut, so wie die Farben zeigen."
+      },
+      {
+       "ctx": "Krabbelgruppe. Ein Papa aus der Gruppe.",
+       "a": "Und, geht sie schon in die Kita?",
+       "hint": null,
+       "back": "Nee, noch nicht. Wir wollten noch ein bisschen warten. **Und bei euch?**",
+       "next": "Wir sind gerade in der Eingewöhnung.",
+       "note": null,
+       "support": "strip",
+       "instr": "Jetzt ohne Kasten – nur Reaktion + kurz von dir + Rückfrage."
+      },
+      {
+       "ctx": "Krabbelgruppe. Ein Papa aus der Gruppe. Ihr redet schon: Papa: „Und, geht sie schon in die Kita?“ – Du: „Nee, noch nicht. Wir wollten noch ein bisschen warten. Und bei euch?“",
+       "a": "Wir sind gerade in der Eingewöhnung.",
+       "hint": null,
+       "back": "Oh, **und wie läuft's?**",
+       "next": null,
+       "note": null,
+       "support": "strip",
+       "instr": "Jetzt ohne Kasten – nur Reaktion + kurz von dir + Rückfrage."
+      },
+      {
+       "ctx": "Krabbelgruppe. Eine Mama aus der Gruppe.",
+       "a": "Geht deine Kleine schon in die Kita?",
+       "hint": null,
+       "back": "Nee, wir wollten noch ein bisschen warten. **Und bei euch?**",
+       "next": "Wir fangen im Januar an. Wieso wartet ihr denn noch?",
+       "note": null,
+       "support": "none",
+       "instr": "Jetzt ganz ohne Hilfe."
+      },
+      {
+       "ctx": "Krabbelgruppe. Eine Mama aus der Gruppe. Ihr redet schon: Mama: „Geht deine Kleine schon in die Kita?“ – Du: „Nee, wir wollten noch ein bisschen warten. Und bei euch?“",
+       "a": "Wir fangen im Januar an. Wieso wartet ihr denn noch?",
+       "hint": null,
+       "back": "Ach, für uns passt das so besser. **Seid ihr eigentlich schon länger dabei?**",
+       "next": null,
+       "note": "„Warum denn?“ → kurz antworten, ohne Begründung – und gleich eine Rückfrage.",
+       "support": "none",
+       "instr": "Jetzt ganz ohne Hilfe."
+      }
+     ]
+    },
+    {
+     "kind": "questions",
+     "instr": "Sprich laut.",
+     "box": "BOX",
+     "items": [
+      "**1**  Jemand fragt: „Geht deine Kleine schon in die Kita?“ Antworte ehrlich, so wie es bei euch ist – **kurz** – und spiel den Ball zurück.",
+      "**2**  Und dann: „Warum denn?“ Antworte wieder kurz und wechsle das Thema mit **Sag mal, …** – probier **zwei** verschiedene Themen.",
+      "**3**  Welche **zwei** Fragen zur Kita stellst du anderen Eltern gern? Sag beide laut."
+     ],
+     "fast": "Noch Zeit? Wirf die Münze noch dreimal – diesmal mit einer anderen Rückfrage."
+    }
+   ]
+  },
+  {
+   "label": "✏️ Noch besser sagen",
+   "blocks": [
+    {
+     "kind": "cards",
+     "style": "ours",
+     "pic": "check",
+     "check": "Check",
+     "box": "BOX",
+     "instr": "Deine Sätze aus Test 1 (17.10.). Grün = gut, grau durchgestrichen = das kannst du ändern. Wie sagst du es jetzt?",
+     "cards": [
+      {
+       "ctx": "Eine Mutter seufzt: „Boah, die Nacht war wieder heftig. Der Kleine war ab vier wach.“",
+       "front": "„~~Ja, schwierig.~~ <g>Bei uns sind die Nächte auch ziemlich schlecht.</g>“",
+       "back": "„**Oje, ab vier? Das kenn ich.** Bei uns sind die Nächte **gerade** auch ziemlich schlecht. **Sind's die Zähne?**“",
+       "why": "«У нас тоже» — отлично, это уже часть разговора. „Ja, schwierig“ звучит суховато, „Oje, das kenn ich“ — тепло. А вопрос в конце не даёт разговору замереть."
+      },
+      {
+       "ctx": "Deine Tochter spielt mit einem Mädchen. Du möchtest mit dem Vater ins Gespräch kommen.",
+       "front": "„<g>Wie läuft's</g> ~~in der Kita~~?“",
+       "back": "„Hallo! **Wie alt ist sie denn?**“ · „**Seid ihr schon länger dabei?**“",
+       "why": "„Wie läuft's“ — хорошая форма! Но вопрос про сад предполагает, что ребёнок туда ходит. Для начала проще спросить о том, что видно: возраст, давно ли они в группе. „Wie läuft's mit der Kita?“ — потом, когда узнаешь про сад. Auch möglich: „Die zwei verstehen sich ja gut!“ (они так хорошо ладят!)"
+      },
+      {
+       "ctx": "Jemand fragt: „Und, habt ihr schon einen Kitaplatz?“",
+       "front": "„<g>Katja kommt erst mit zwei in die Kita, wir wollten ein bisschen warten.</g>“",
+       "back": "„Katja kommt erst mit zwei in die Kita, wir wollten **noch** ein bisschen warten. **Und bei euch?**“",
+       "why": "Короткий ответ без лишних объяснений — отлично! noch = «ещё» (решили ещё подождать). И добавь «Und bei euch?» — теперь рассказывает собеседник. И **erst** mit zwei — верно: «только» о времени = erst, не nur."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "📅 Eine Woche später",
+   "blocks": [
+    {
+     "kind": "text",
+     "instr": "Was ist Jule am Wochenende passiert – und was läuft jetzt besser? Sag deine Antwort laut.",
+     "lines": [
+      {
+       "s": "Mira",
+       "p": [
+        "Hallo! Na, wie war euer Wochenende?"
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Schön! Wir waren an der Ostsee. Nur die Rückfahrt … Sechs Stunden, fast nur Stau, und Ida hat vier davon durchgeschrien."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Oje! Sechs Stunden? Das kenn ich – Leo hält im Auto auch keine zehn Minuten durch."
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Echt? … Und seit der Fahrt schläft Ida wieder total schlecht. Wie sind eure Nächte gerade?"
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Ach, bei uns ist es gerade auch nicht so toll. Er zahnt wieder."
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Die Backenzähne, oder? Die sind die schlimmsten. Aber danach ist Ruhe. Angeblich."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "(lacht) Angeblich. Und Ida? Wie läuft's mit der Kita?"
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Viel besser! Morgens winkt sie mir nur noch kurz zu. Ich bin fast ein bisschen beleidigt."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "(lacht) Und dein Kaffee? Endlich warm?"
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "Jeden Morgen. Mein neuer Luxus."
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        "Ida hat vier Stunden ",
+        {
+         "b": "durchgeschrien"
+        }
+       ],
+       "ru": "проорала четыре часа подряд"
+      },
+      {
+       "p": [
+        {
+         "b": "die Backenzähne"
+        }
+       ],
+       "ru": "коренные зубы"
+      },
+      {
+       "p": [
+        {
+         "b": "angeblich"
+        }
+       ],
+       "ru": "якобы, говорят"
+      },
+      {
+       "p": [
+        "ich bin fast ein bisschen ",
+        {
+         "b": "beleidigt"
+        }
+       ],
+       "ru": "я даже немного обижена"
+      }
+     ],
+     "answer": [
+      "Die Rückfahrt von der Ostsee: sechs Stunden, fast nur Stau – Ida hat vier davon durchgeschrien. Besser läuft's in der Kita: Ida winkt morgens nur noch kurz. Und Jules Kaffee ist jetzt warm."
+     ]
+    },
+    {
+     "kind": "model",
+     "instr": "Was sagt Mira? Sag ihre Sätze laut. Tippe auf Gelb zum Prüfen.",
+     "box": "BOX",
+     "parts": [
+      {
+       "title": "",
+       "lines": [
+        {
+         "s": "Mira",
+         "p": [
+          "Hallo! Na, wie war euer Wochenende?"
+         ]
+        },
+        {
+         "s": "Jule",
+         "p": [
+          "Schön! Wir waren an der Ostsee. Nur die Rückfahrt … Sechs Stunden, fast nur Stau, und Ida hat vier davon durchgeschrien."
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          {
+           "f": "",
+           "r": "Oje!"
+          },
+          " ((ой-ой)) Sechs Stunden? ",
+          {
+           "f": "",
+           "r": "Das kenn ich"
+          },
+          " ((знакомо)) – Leo hält im Auto auch keine zehn Minuten durch."
+         ]
+        },
+        {
+         "s": "Jule",
+         "p": [
+          "Echt? … Und seit der Fahrt schläft Ida wieder total schlecht. Wie sind eure Nächte gerade?"
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "Ach, ",
+          {
+           "f": "",
+           "r": "bei uns ist es gerade auch nicht so toll"
+          },
+          " ((у нас сейчас тоже так себе)). Er zahnt wieder."
+         ]
+        },
+        {
+         "s": "Jule",
+         "p": [
+          "Die Backenzähne, oder? Die sind die schlimmsten. Aber danach ist Ruhe. Angeblich."
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "(lacht) Angeblich. Und Ida? ",
+          {
+           "f": "",
+           "r": "Wie läuft's mit der Kita"
+          },
+          " ((как дела с садиком))?"
+         ]
+        },
+        {
+         "s": "Jule",
+         "p": [
+          "Viel besser! Morgens winkt sie mir nur noch kurz zu. Ich bin fast ein bisschen beleidigt."
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "(lacht) Und dein Kaffee? Endlich warm?"
+         ]
+        },
+        {
+         "s": "Jule",
+         "p": [
+          "Jeden Morgen. Mein neuer Luxus."
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "kind": "model",
+     "instr": "Noch einmal – jetzt nur mit den Anfangsbuchstaben und ohne Kasten.",
+     "parts": [
+      {
+       "title": "",
+       "lines": [
+        {
+         "s": "Mira",
+         "p": [
+          "Hallo! Na, wie war euer Wochenende?"
+         ]
+        },
+        {
+         "s": "Jule",
+         "p": [
+          "Schön! Wir waren an der Ostsee. Nur die Rückfahrt … Sechs Stunden, fast nur Stau, und Ida hat vier davon durchgeschrien."
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          {
+           "f": "O",
+           "r": "je"
+          },
+          "! Sechs Stunden? ",
+          {
+           "f": "D",
+           "r": "as"
+          },
+          " ",
+          {
+           "f": "k",
+           "r": "enn"
+          },
+          " ",
+          {
+           "f": "i",
+           "r": "ch"
+          },
+          " – Leo hält im Auto auch keine zehn Minuten durch."
+         ]
+        },
+        {
+         "s": "Jule",
+         "p": [
+          "Echt? … Und seit der Fahrt schläft Ida wieder total schlecht. Wie sind eure Nächte gerade?"
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "Ach, ",
+          {
+           "f": "b",
+           "r": "ei"
+          },
+          " ",
+          {
+           "f": "u",
+           "r": "ns"
+          },
+          " ",
+          {
+           "f": "i",
+           "r": "st"
+          },
+          " ",
+          {
+           "f": "e",
+           "r": "s"
+          },
+          " ",
+          {
+           "f": "g",
+           "r": "erade"
+          },
+          " ",
+          {
+           "f": "a",
+           "r": "uch"
+          },
+          " ",
+          {
+           "f": "n",
+           "r": "icht"
+          },
+          " ",
+          {
+           "f": "s",
+           "r": "o"
+          },
+          " ",
+          {
+           "f": "t",
+           "r": "oll"
+          },
+          ". Er zahnt wieder."
+         ]
+        },
+        {
+         "s": "Jule",
+         "p": [
+          "Die Backenzähne, oder? Die sind die schlimmsten. Aber danach ist Ruhe. Angeblich."
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "(lacht) Angeblich. Und Ida? ",
+          {
+           "f": "W",
+           "r": "ie"
+          },
+          " ",
+          {
+           "f": "l",
+           "r": "äuft's"
+          },
+          " ",
+          {
+           "f": "m",
+           "r": "it"
+          },
+          " ",
+          {
+           "f": "d",
+           "r": "er"
+          },
+          " ",
+          {
+           "f": "K",
+           "r": "ita"
+          },
+          "?"
+         ]
+        },
+        {
+         "s": "Jule",
+         "p": [
+          "Viel besser! Morgens winkt sie mir nur noch kurz zu. Ich bin fast ein bisschen beleidigt."
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "(lacht) Und dein Kaffee? Endlich warm?"
+         ]
+        },
+        {
+         "s": "Jule",
+         "p": [
+          "Jeden Morgen. Mein neuer Luxus."
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "kind": "text",
+     "instr": "Wovor hat Tarek Angst – und wer kann ihm helfen? Sag deine Antwort laut.",
+     "lines": [
+      {
+       "s": "",
+       "p": [
+        "(Ein Vater setzt sich mit seiner Tochter neben Mira. Jule sitzt auch da.)"
+       ],
+       "scene": true
+      },
+      {
+       "s": "Tarek",
+       "p": [
+        "Hallo! Kann ich mich dazusetzen?"
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Hallo! Klar. Wie alt ist sie denn?"
+       ]
+      },
+      {
+       "s": "Tarek",
+       "p": [
+        "Sechzehn Monate. Und deiner?"
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Dreizehn. Seid ihr schon länger dabei?"
+       ]
+      },
+      {
+       "s": "Tarek",
+       "p": [
+        "Nee, heute zum ersten Mal. In unserer alten Gruppe waren immer zwanzig Kinder – zu viel Chaos."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Oh, das kenn ich. Hier ist es viel entspannter."
+       ]
+      },
+      {
+       "s": "Tarek",
+       "p": [
+        "Gut zu wissen. Und, geht er schon in die Kita?"
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Nee, noch nicht. Wir wollten noch ein bisschen warten."
+       ]
+      },
+      {
+       "s": "Tarek",
+       "p": [
+        "Ah, okay. Wie kommt's?"
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Ach, für uns passt das so besser. Und bei euch?"
+       ]
+      },
+      {
+       "s": "Tarek",
+       "p": [
+        "Ab Januar. Ich hab jetzt schon Angst vor der Eingewöhnung."
+       ]
+      },
+      {
+       "s": "Mira",
+       "p": [
+        "Ach, das wird schon. Frag mal Jule hier, die ist gerade mittendrin."
+       ]
+      },
+      {
+       "s": "Jule",
+       "p": [
+        "(lacht) Stimmt, ich bin inzwischen Expertin. Erster Tipp: Nimm 'ne Thermoskanne Kaffee mit."
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        {
+         "b": "Kann ich mich dazusetzen?"
+        }
+       ],
+       "ru": "можно к вам подсесть?"
+      },
+      {
+       "p": [
+        "sie ist gerade ",
+        {
+         "b": "mittendrin"
+        }
+       ],
+       "ru": "у неё сейчас как раз самый разгар"
+      },
+      {
+       "p": [
+        {
+         "b": "'ne Thermoskanne"
+        }
+       ],
+       "ru": "термос"
+      }
+     ],
+     "answer": [
+      "Vor der Eingewöhnung im Januar. Jule kann helfen – sie ist gerade mittendrin. Ihr Tipp: eine Thermoskanne Kaffee."
+     ]
+    },
+    {
+     "kind": "model",
+     "instr": "Was sagt Mira? Sag ihre Sätze laut. Tippe auf Gelb zum Prüfen.",
+     "box": "BOX",
+     "parts": [
+      {
+       "title": "",
+       "lines": [
+        {
+         "s": "",
+         "p": [
+          "(Ein Vater setzt sich mit seiner Tochter neben Mira. Jule sitzt auch da.)"
+         ],
+         "scene": true
+        },
+        {
+         "s": "Tarek",
+         "p": [
+          "Hallo! Kann ich mich dazusetzen?"
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "Hallo! Klar. ",
+          {
+           "f": "",
+           "r": "Wie alt ist sie denn"
+          },
+          " ((а сколько ей))?"
+         ]
+        },
+        {
+         "s": "Tarek",
+         "p": [
+          "Sechzehn Monate. Und deiner?"
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "Dreizehn. ",
+          {
+           "f": "",
+           "r": "Seid ihr schon länger dabei"
+          },
+          " ((вы давно ходите))?"
+         ]
+        },
+        {
+         "s": "Tarek",
+         "p": [
+          "Nee, heute zum ersten Mal. In unserer alten Gruppe waren immer zwanzig Kinder – zu viel Chaos."
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "Oh, ",
+          {
+           "f": "",
+           "r": "das kenn ich"
+          },
+          " ((знакомо)). Hier ist es viel entspannter."
+         ]
+        },
+        {
+         "s": "Tarek",
+         "p": [
+          "Gut zu wissen. Und, geht er schon in die Kita?"
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "Nee, noch nicht. ",
+          {
+           "f": "",
+           "r": "Wir wollten noch ein bisschen warten"
+          },
+          " ((решили подождать))."
+         ]
+        },
+        {
+         "s": "Tarek",
+         "p": [
+          "Ah, okay. Wie kommt's?"
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "Ach, ",
+          {
+           "f": "",
+           "r": "für uns passt das so besser"
+          },
+          " ((нам так удобнее)). ",
+          {
+           "f": "",
+           "r": "Und bei euch"
+          },
+          " ((а у вас))?"
+         ]
+        },
+        {
+         "s": "Tarek",
+         "p": [
+          "Ab Januar. Ich hab jetzt schon Angst vor der Eingewöhnung."
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "Ach, ",
+          {
+           "f": "",
+           "r": "das wird schon"
+          },
+          " ((всё наладится)). Frag mal Jule hier, die ist gerade mittendrin."
+         ]
+        },
+        {
+         "s": "Jule",
+         "p": [
+          "(lacht) Stimmt, ich bin inzwischen Expertin. Erster Tipp: Nimm 'ne Thermoskanne Kaffee mit."
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "kind": "model",
+     "instr": "Noch einmal – jetzt nur mit den Anfangsbuchstaben und ohne Kasten.",
+     "parts": [
+      {
+       "title": "",
+       "lines": [
+        {
+         "s": "",
+         "p": [
+          "(Ein Vater setzt sich mit seiner Tochter neben Mira. Jule sitzt auch da.)"
+         ],
+         "scene": true
+        },
+        {
+         "s": "Tarek",
+         "p": [
+          "Hallo! Kann ich mich dazusetzen?"
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "Hallo! Klar. ",
+          {
+           "f": "W",
+           "r": "ie"
+          },
+          " ",
+          {
+           "f": "a",
+           "r": "lt"
+          },
+          " ",
+          {
+           "f": "i",
+           "r": "st"
+          },
+          " ",
+          {
+           "f": "s",
+           "r": "ie"
+          },
+          " ",
+          {
+           "f": "d",
+           "r": "enn"
+          },
+          "?"
+         ]
+        },
+        {
+         "s": "Tarek",
+         "p": [
+          "Sechzehn Monate. Und deiner?"
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "Dreizehn. ",
+          {
+           "f": "S",
+           "r": "eid"
+          },
+          " ",
+          {
+           "f": "i",
+           "r": "hr"
+          },
+          " ",
+          {
+           "f": "s",
+           "r": "chon"
+          },
+          " ",
+          {
+           "f": "l",
+           "r": "änger"
+          },
+          " ",
+          {
+           "f": "d",
+           "r": "abei"
+          },
+          "?"
+         ]
+        },
+        {
+         "s": "Tarek",
+         "p": [
+          "Nee, heute zum ersten Mal. In unserer alten Gruppe waren immer zwanzig Kinder – zu viel Chaos."
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "Oh, ",
+          {
+           "f": "d",
+           "r": "as"
+          },
+          " ",
+          {
+           "f": "k",
+           "r": "enn"
+          },
+          " ",
+          {
+           "f": "i",
+           "r": "ch"
+          },
+          ". Hier ist es viel entspannter."
+         ]
+        },
+        {
+         "s": "Tarek",
+         "p": [
+          "Gut zu wissen. Und, geht er schon in die Kita?"
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "Nee, noch nicht. ",
+          {
+           "f": "W",
+           "r": "ir"
+          },
+          " ",
+          {
+           "f": "w",
+           "r": "ollten"
+          },
+          " ",
+          {
+           "f": "n",
+           "r": "och"
+          },
+          " ",
+          {
+           "f": "e",
+           "r": "in"
+          },
+          " ",
+          {
+           "f": "b",
+           "r": "isschen"
+          },
+          " ",
+          {
+           "f": "w",
+           "r": "arten"
+          },
+          "."
+         ]
+        },
+        {
+         "s": "Tarek",
+         "p": [
+          "Ah, okay. Wie kommt's?"
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "Ach, ",
+          {
+           "f": "f",
+           "r": "ür"
+          },
+          " ",
+          {
+           "f": "u",
+           "r": "ns"
+          },
+          " ",
+          {
+           "f": "p",
+           "r": "asst"
+          },
+          " ",
+          {
+           "f": "d",
+           "r": "as"
+          },
+          " ",
+          {
+           "f": "s",
+           "r": "o"
+          },
+          " ",
+          {
+           "f": "b",
+           "r": "esser"
+          },
+          ". ",
+          {
+           "f": "U",
+           "r": "nd"
+          },
+          " ",
+          {
+           "f": "b",
+           "r": "ei"
+          },
+          " ",
+          {
+           "f": "e",
+           "r": "uch"
+          },
+          "?"
+         ]
+        },
+        {
+         "s": "Tarek",
+         "p": [
+          "Ab Januar. Ich hab jetzt schon Angst vor der Eingewöhnung."
+         ]
+        },
+        {
+         "s": "Mira",
+         "p": [
+          "Ach, ",
+          {
+           "f": "d",
+           "r": "as"
+          },
+          " ",
+          {
+           "f": "w",
+           "r": "ird"
+          },
+          " ",
+          {
+           "f": "s",
+           "r": "chon"
+          },
+          ". Frag mal Jule hier, die ist gerade mittendrin."
+         ]
+        },
+        {
+         "s": "Jule",
+         "p": [
+          "(lacht) Stimmt, ich bin inzwischen Expertin. Erster Tipp: Nimm 'ne Thermoskanne Kaffee mit."
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "kind": "questions",
+     "instr": "Sprich laut.",
+     "box": "BOX",
+     "items": [
+      "**1**  Jule erzählt von der Rückfahrt. Erzähl in **zwei** Sätzen von einer langen Fahrt mit deinen Kindern – und frag zurück.",
+      "**2**  Tarek hat Angst vor der Eingewöhnung. Was sagst du ihm? **Zwei** Sätze und eine Rückfrage."
+     ],
+     "fast": "Noch Zeit? Sag Miras Sätze aus beiden Gesprächen noch einmal – nur mit den Anfangsbuchstaben."
+    }
+   ]
+  },
+  {
+   "label": "🎧 Hören",
+   "blocks": [
+    {
+     "kind": "listen",
+     "title": "🎧 Reagieren",
+     "instr": "Hör zu und schreib, was fehlt: Oje! · Das kenn ich. · nicht so toll · Das wird schon.",
+     "source": "YouGlish (German)",
+     "clips": [
+      [
+       "xIbg6KqxBZY",
+       510,
+       7,
+       [
+        {
+         "gap": "Das kenn ich",
+         "acc": [
+          "Das kenne ich"
+         ]
+        },
+        ", wenn man Knoten in den Haaren hat und dann bürstet,"
+       ]
+      ],
+      [
+       "uO4b3fxUZVE",
+       380,
+       6,
+       [
+        "Aber ",
+        {
+         "gap": "das kenn ich",
+         "acc": [
+          "das kenne ich"
+         ]
+        },
+        " auch, das Problem mit den Stützrädern"
+       ]
+      ],
+      [
+       "uKy73OY5-ws",
+       61,
+       7,
+       [
+        {
+         "gap": "Das kenn ich",
+         "acc": [
+          "Das kenne ich"
+         ]
+        },
+        ", ich teil mir auch mit zwei Schwestern das Zimmer."
+       ]
+      ],
+      [
+       "4Q071aH5z5A",
+       255,
+       8,
+       [
+        "Oder er merkt es sich nicht. - ",
+        {
+         "gap": "Das kenn ich",
+         "acc": [
+          "Das kenne ich"
+         ]
+        },
+        " auch von meinen Freunden."
+       ]
+      ],
+      [
+       "rK_H57rNipA",
+       112,
+       7,
+       [
+        "Ich werde dann auch manchmal rot. ",
+        {
+         "gap": "Das kenn ich",
+         "acc": [
+          "Das kenne ich"
+         ]
+        },
+        " auch ganz schlimm."
+       ]
+      ],
+      [
+       "3ss_1Tqo9f4",
+       323,
+       6,
+       [
+        "Jetzt gehen wir Pommes essen. Ach, ",
+        {
+         "gap": "das kenn ich",
+         "acc": [
+          "das kenne ich"
+         ]
+        },
+        "."
+       ]
+      ],
+      [
+       "1VZGAhUwhPo",
+       934,
+       6,
+       [
+        "„",
+        {
+         "gap": "Oje"
+        },
+        "“, denkt sich wohl der Affe. „Das wird nie was.“"
+       ]
+      ],
+      [
+       "HcpIatoakmw",
+       146,
+       7,
+       [
+        {
+         "gap": "Oje"
+        },
+        ", das klingt ja schon so ein bisschen nach Folter, finde ich."
+       ]
+      ],
+      [
+       "fptvlubCJqk",
+       608,
+       5,
+       [
+        {
+         "gap": "Oje"
+        },
+        "! Uns filmen? Wir sind doch nicht zurechtgemacht!"
+       ]
+      ],
+      [
+       "r84_OfwkL20",
+       4334,
+       5,
+       [
+        {
+         "gap": "Oje"
+        },
+        ", wir hätten auch aussenrum gehen können."
+       ]
+      ],
+      [
+       "Fh3SUbJ7w_s",
+       1334,
+       5,
+       [
+        {
+         "gap": "Oje"
+        },
+        ", du kleiner Kerl, das ist nicht lustig."
+       ]
+      ],
+      [
+       "8-G5ODqsmlM",
+       229,
+       6,
+       [
+        {
+         "gap": "Oje"
+        },
+        ", oje, oje! Du hast heute zu wenig gegessen."
+       ]
+      ],
+      [
+       "ejyglMQVvWA",
+       580,
+       8,
+       [
+        "was für die Liste der Sachen, die ich ",
+        {
+         "gap": "nicht so toll"
+        },
+        " finde beim Essen."
+       ]
+      ],
+      [
+       "J-DovRTc2kY",
+       181,
+       7,
+       [
+        "Ich habe heute schon einiges gehört, was du ",
+        {
+         "gap": "nicht so toll"
+        },
+        " findest."
+       ]
+      ],
+      [
+       "JRFvJR8oQBk",
+       87,
+       6,
+       [
+        "Aber die Welt hatte sich ",
+        {
+         "gap": "nicht so toll"
+        },
+        " entwickelt."
+       ]
+      ],
+      [
+       "SzITpv7-K5E",
+       483,
+       6,
+       [
+        "Das ist ",
+        {
+         "gap": "nicht so toll"
+        },
+        ", denn dann ist die Wahrscheinlichkeit,"
+       ]
+      ],
+      [
+       "5jsvTepG2m0",
+       168,
+       5,
+       [
+        "bodennahes Ozon, was auch ",
+        {
+         "gap": "nicht so toll"
+        },
+        " ist."
+       ]
+      ],
+      [
+       "Tdep4Efjvw4",
+       665,
+       8,
+       [
+        "„Mach dir keinen Kopf, ",
+        {
+         "gap": "das wird schon"
+        },
+        " wieder“, weil das ist manchmal schwierig anzunehmen,"
+       ]
+      ],
+      [
+       "cZk3Sv7j8qs",
+       1235,
+       7,
+       [
+        "Wir wissen schon, wie wir das machen, und ",
+        {
+         "gap": "das wird schon"
+        },
+        " irgendwie."
+       ]
+      ],
+      [
+       "w6MCEKuhu94",
+       455,
+       6,
+       [
+        "Die Erfahrung ist noch nicht so da. Aber ",
+        {
+         "gap": "das wird schon"
+        },
+        "."
+       ]
+      ],
+      [
+       "oRBIHANoJ_E",
+       435,
+       6,
+       [
+        "„",
+        {
+         "gap": "Das wird schon"
+        },
+        " wieder.“ oder „Da kommst du durch.“"
+       ]
+      ]
+     ]
+    },
+    {
+     "kind": "listen",
+     "title": "🎧 Zurückfragen",
+     "instr": "Hör zu und schreib, was fehlt: Wie alt ist er denn? · Seid ihr schon länger dabei? · Und bei euch / dir? · Wie läuft's?",
+     "source": "YouGlish (German)",
+     "clips": [
+      [
+       "cpSVOxTPZ4E",
+       552,
+       8,
+       [
+        {
+         "gap": "Wie alt ist er denn"
+        },
+        "? - Der ist jetzt 10 bis 12 Tage alt."
+       ]
+      ],
+      [
+       "VfEm6tFVaFo",
+       172,
+       6,
+       [
+        {
+         "gap": "Wie alt ist er denn"
+        },
+        " jetzt? - Drei Monate."
+       ]
+      ],
+      [
+       "iPZc7bT1ep0",
+       567,
+       6,
+       [
+        "Kannst du sagen, ",
+        {
+         "gap": "wie alt"
+        },
+        " der oder die Kleine ist?"
+       ]
+      ],
+      [
+       "aqDcJUaU2fE",
+       137,
+       8,
+       [
+        "aber diejenigen, die ",
+        {
+         "gap": "schon länger dabei"
+        },
+        " sind, dürften schon in einer sehr guten Verfassung sein."
+       ]
+      ],
+      [
+       "qVQud3dSVkI",
+       487,
+       5,
+       [
+        "„Warum seid ihr nicht ",
+        {
+         "gap": "schon länger dabei"
+        },
+        "?“"
+       ]
+      ],
+      [
+       "6mZW02yWRoQ",
+       19,
+       6,
+       [
+        "Und wenn du ",
+        {
+         "gap": "schon länger dabei"
+        },
+        " bist, kennst du das alles."
+       ]
+      ],
+      [
+       "AEO5D1eeNKA",
+       206,
+       7,
+       [
+        "Gerade von denen, die ",
+        {
+         "gap": "schon länger dabei"
+        },
+        " sind, habe ich oft das Feedback"
+       ]
+      ],
+      [
+       "bxq0KXPB13w",
+       589,
+       7,
+       [
+        {
+         "gap": "schon länger dabei"
+        },
+        " sind und ein riesen Dankeschön für das tolle Feedback"
+       ]
+      ],
+      [
+       "vt-2fC9DbNE",
+       2345,
+       5,
+       [
+        {
+         "gap": "Und bei euch"
+        },
+        "? Wochenende? Feierabend? - Ja."
+       ]
+      ],
+      [
+       "idi0t1GGrLw",
+       13,
+       6,
+       [
+        "Hallo Firas, na, alles gut? Ja, ",
+        {
+         "gap": "und bei dir"
+        },
+        "?"
+       ]
+      ],
+      [
+       "SySBWUlKaAE",
+       160,
+       5,
+       [
+        {
+         "gap": "Und bei dir"
+        },
+        "? Seid ihr schon am Zeichnen?"
+       ]
+      ],
+      [
+       "DiWGJHLCrgE",
+       766,
+       5,
+       [
+        "Wir hätten gesagt: „Alles cool, ",
+        {
+         "gap": "und bei dir"
+        },
+        "?“"
+       ]
+      ],
+      [
+       "P4uTM5HIQok",
+       2171,
+       6,
+       [
+        "Meine erste Frage ist natürlich: Wie geht's dir? ",
+        {
+         "gap": "Wie läuft's",
+         "acc": [
+          "Wie läufts",
+          "Wie läuft es"
+         ]
+        },
+        "?"
+       ]
+      ],
+      [
+       "urxr1VxaMyg",
+       1824,
+       5,
+       [
+        {
+         "gap": "Wie läuft's",
+         "acc": [
+          "Wie läufts",
+          "Wie läuft es"
+         ]
+        },
+        "? Außer dass er mich angesprungen hat."
+       ]
+      ],
+      [
+       "i1mTxuibKoI",
+       204,
+       4,
+       [
+        "Hey! Na, ",
+        {
+         "gap": "wie läuft's",
+         "acc": [
+          "wie läufts",
+          "wie läuft es"
+         ]
+        },
+        "?"
+       ]
+      ],
+      [
+       "TFaZ8FaWVJ4",
+       1563,
+       6,
+       [
+        "und fragen: Wie geht's, ",
+        {
+         "gap": "wie läuft's",
+         "acc": [
+          "wie läufts",
+          "wie läuft es"
+         ]
+        },
+        "? Und das finde ich wunderbar."
+       ]
+      ],
+      [
+       "dkzc1GgYcrc",
+       115,
+       5,
+       [
+        {
+         "gap": "Wie läuft's",
+         "acc": [
+          "Wie läufts",
+          "Wie läuft es"
+         ]
+        },
+        " denn so in der Familie?"
+       ]
+      ],
+      [
+       "P4uTM5HIQok",
+       1845,
+       4,
+       [
+        {
+         "gap": "Wie läuft's",
+         "acc": [
+          "Wie läufts",
+          "Wie läuft es"
+         ]
+        },
+        "? Ich bin so neugierig."
+       ]
+      ]
+     ]
+    },
+    {
+     "kind": "listen",
+     "title": "🎧 Kurz antworten",
+     "instr": "Hör zu und schreib, was fehlt: noch ein bisschen warten · passt für uns / für uns passt",
+     "source": "YouGlish (German)",
+     "clips": [
+      [
+       "7MQdvcvVij8",
+       189,
+       7,
+       [
+        "Um was muss ich mich jetzt kümmern, was kann ",
+        {
+         "gap": "noch ein bisschen warten"
+        },
+        "?"
+       ]
+      ],
+      [
+       "QTa93ntCM-Q",
+       161,
+       8,
+       [
+        "Das duftet schon mega. Ich muss aber leider ",
+        {
+         "gap": "noch ein bisschen warten"
+        },
+        ", bis es abgekühlt ist."
+       ]
+      ],
+      [
+       "gkgv_oY7yPU",
+       442,
+       7,
+       [
+        "Sie soll nicht solche hohen Erwartungen haben und ",
+        {
+         "gap": "noch ein bisschen warten"
+        },
+        ","
+       ]
+      ],
+      [
+       "WeQwupwg3uY",
+       5006,
+       5,
+       [
+        "Also müssen wir ",
+        {
+         "gap": "noch ein bisschen warten"
+        },
+        "."
+       ]
+      ],
+      [
+       "pODXRGZ0tlw",
+       129,
+       8,
+       [
+        "Und deshalb müssen die Leute ",
+        {
+         "gap": "noch ein bisschen warten"
+        },
+        ", weil ich es perfekt haben mag."
+       ]
+      ],
+      [
+       "XTygXTJByVM",
+       1378,
+       8,
+       [
+        "Ich muss jetzt ",
+        {
+         "gap": "noch ein bisschen warten"
+        },
+        ", bis die anderen dann auch da sind."
+       ]
+      ],
+      [
+       "qRdRDBqZFjk",
+       575,
+       4,
+       [
+        "Das ",
+        {
+         "gap": "passt für uns"
+        },
+        "."
+       ]
+      ],
+      [
+       "D3XQ2zJPxuE",
+       1133,
+       6,
+       [
+        "Wir haben einfach selber umgebaut, dass es ",
+        {
+         "gap": "für uns passt"
+        },
+        "."
+       ]
+      ],
+      [
+       "X9cV_mOwGY4",
+       770,
+       6,
+       [
+        "Passt für mich, ",
+        {
+         "gap": "passt für uns"
+        },
+        ", in unsere Beziehung?"
+       ]
+      ],
+      [
+       "jUQZPG9jcs4",
+       1715,
+       6,
+       [
+        "Ja, ",
+        {
+         "gap": "passt für uns"
+        },
+        ", und das ist einfach irre,"
+       ]
+      ]
+     ]
+    },
+    {
+     "kind": "listen",
+     "title": "🎧 Wörter aus der Krabbelgruppe",
+     "instr": "Hör zu und schreib, was fehlt: durchschlafen · Eingewöhnung · zahnen",
+     "source": "YouGlish (German)",
+     "clips": [
+      [
+       "UQ1VLrdeCA4",
+       1368,
+       6,
+       [
+        "Das ",
+        {
+         "gap": "Durchschlafen"
+        },
+        " ist immer ein großes Thema. Klar, klar, klar."
+       ]
+      ],
+      [
+       "TdLfMnRIJPU",
+       1908,
+       6,
+       [
+        "und nicht ",
+        {
+         "gap": "durchschlafen"
+        },
+        " zu können, war schon sehr anstrengend."
+       ]
+      ],
+      [
+       "GoMWQS9FsJk",
+       85,
+       5,
+       [
+        {
+         "gap": "durchschlafen"
+        },
+        ", weil es nachts noch Ernährung braucht."
+       ]
+      ],
+      [
+       "GYHQgc9mA2E",
+       107,
+       6,
+       [
+        "Endlich wieder ",
+        {
+         "gap": "durchschlafen"
+        },
+        " und furchtlos nachts aufs Klo gehen."
+       ]
+      ],
+      [
+       "xkKS_MPrGto",
+       381,
+       8,
+       [
+        {
+         "gap": "Eingewöhnung"
+        },
+        " bei einer Tagesmutter sind. Läuft zur Zeit zwar sehr gut, aber man weiß ja nie,"
+       ]
+      ],
+      [
+       "_P_rMbLOd-U",
+       31,
+       8,
+       [
+        "das zwar schon hinter uns, mit einer ",
+        {
+         "gap": "Eingewöhnung"
+        },
+        " bei einer Tagesmutter, aber so ein Kindergarten,"
+       ]
+      ],
+      [
+       "H9Q1untWwE8",
+       65,
+       8,
+       [
+        "Wenn ein Baby neu in die Krippe kommt, gibt es eine Phase der ",
+        {
+         "gap": "Eingewöhnung"
+        },
+        "."
+       ]
+      ],
+      [
+       "uTaKFufcR9E",
+       43,
+       7,
+       [
+        "Gebt dem tapsigen Fellbündel also ein bis zwei Wochen Zeit zur ",
+        {
+         "gap": "Eingewöhnung"
+        },
+        ","
+       ]
+      ],
+      [
+       "HTXA8uDr6M8",
+       29,
+       8,
+       [
+        "testen meine Grenzen aus, ohne Ende. Dann ",
+        {
+         "gap": "zahnen"
+        },
+        " sie auch noch und jammern ständig."
+       ]
+      ],
+      [
+       "GoMWQS9FsJk",
+       237,
+       6,
+       [
+        "Vielleicht lassen auch Schnupfen, ",
+        {
+         "gap": "Zahnen"
+        },
+        " oder Verdauungsprobleme Ihr Kind"
+       ]
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "label": "🎲 Situationen",
+   "blocks": [
+    {
+     "kind": "cards",
+     "style": "say",
+     "box": "BOX",
+     "instr": "Was passt zuerst: Reaktion, Trost oder eine kurze Antwort? Am Ende immer eine Rückfrage.",
+     "cards": [
+      {
+       "front": "Mama: „Ich kann nicht mehr. Seit Wochen keine Nacht durchgeschlafen.“",
+       "back": "Trost + Frage → Oje, du Arme! Das wird schon. **Sind's die Zähne?**"
+      },
+      {
+       "front": "Papa: „Er weint seit drei Tagen beim Essen und sabbert die ganze Zeit.“",
+       "back": "Reaktion + Frage → Oje. **Sind's die Zähne?**"
+      },
+      {
+       "front": "Mama (neu, mit ihrem kleinen Sohn): „Hallo! Wir sind heute zum ersten Mal hier.“",
+       "back": "Reaktion + Frage → Ach, schön! **Wie alt ist er denn?**"
+      },
+      {
+       "front": "Mama: „Ihr seid neu, oder?“",
+       "back": "kurz + Frage → Ja, wir sind erst zum zweiten Mal hier. **Seid ihr schon länger dabei?**"
+      },
+      {
+       "front": "Papa: „Sie wacht jede Nacht um drei auf und will spielen.“",
+       "back": "Reaktion + Frage → Oje, um drei? Das kenn ich. **Wie alt ist sie denn?**"
+      },
+      {
+       "front": "Mama: „Wir waren am Wochenende bei Oma, und da hat sie super geschlafen. Zu Hause: keine Chance.“",
+       "back": "Reaktion + Frage → (lacht) Typisch! **Wohnt die Oma in der Nähe?**"
+      }
+     ]
+    },
+    {
+     "kind": "cards",
+     "style": "say",
+     "box": "BOX",
+     "instr": "Was würdest du sagen? Die russische Zeile ist deine Idee – sag sie auf Deutsch.",
+     "cards": [
+      {
+       "front": "**Eine Mutter:** „Paul war heute ab fünf wach. Ich bin total kaputt.“\n((Ох, знакомо. У нас сейчас тоже так себе. Это зубы?))",
+       "back": "Oje, das kenn ich. Bei uns ist es gerade auch nicht so toll. Sind's die Zähne?"
+      },
+      {
+       "front": "**Ein Vater** (neu, mit Tochter): „Hallo! Wir sind heute zum ersten Mal hier.“\n((О, привет! Как здорово! А сколько ей?))",
+       "back": "Hallo! Ach, schön! Wie alt ist sie denn?"
+      },
+      {
+       "front": "**Eine Mutter:** „Wir sind gerade in der Eingewöhnung.“\n((О, ну и как?))",
+       "back": "Oh, und wie läuft's?"
+      },
+      {
+       "front": "**Eine Mutter:** „Und, geht deine Kleine schon in die Kita?“\n((Нет, пока нет. Мы решили ещё немного подождать. А у вас?))",
+       "back": "Nee, noch nicht. Wir wollten noch ein bisschen warten. Und bei euch?"
+      },
+      {
+       "front": "**Eine Mutter:** „Lotta hat noch nie durchgeschlafen. Ich kann nicht mehr.“\n((Ох. Всё наладится, правда. А сколько ей?))",
+       "back": "Oje. Das wird schon, echt. Wie alt ist sie denn?"
+      },
+      {
+       "front": "**Eine Mutter:** „Wir sind gerade aus dem Urlaub zurück. Die Fahrt war eine Katastrophe.“\n((Ой-ой, знакомо! А так-то как съездили?))",
+       "back": "Oje, das kenn ich. Aber sonst war's schön?"
+      },
+      {
+       "front": "**Eine Mutter:** „Seid ihr neu hier?“\n((Да, мы здесь второй раз. А вы уже давно ходите?))",
+       "back": "Ja, wir sind zum zweiten Mal hier. Und ihr, seid ihr schon länger dabei?"
+      },
+      {
+       "front": "**Eine Mutter:** „Warum geht sie denn noch nicht in die Kita?“\n((Да нам так удобнее. А у вас как с садиком?))",
+       "back": "Ach, für uns passt das so besser. Und wie läuft's bei euch mit der Kita?"
+      }
+     ]
+    },
+    {
+     "kind": "cards",
+     "style": "say",
+     "box": "BOX",
+     "instr": "Jetzt du: reagieren und zurückfragen.",
+     "cards": [
+      {
+       "front": "Eine Mama kommt zurück aus dem Urlaub: „Zwei Wochen Spanien mit einem Einjährigen. Nie wieder!“",
+       "back": "„Oje! (lacht) Das kenn ich. Aber sonst war's schön?“"
+      },
+      {
+       "front": "Ein Vater sagt: „Emma hat heute Nacht zum ersten Mal durchgeschlafen!“",
+       "back": "„Echt? Super! Wie alt ist sie denn?“"
+      },
+      {
+       "front": "Du bist neu in der Gruppe. Neben dir sitzt eine Mama mit einem kleinen Jungen. Fang du an.",
+       "back": "„Hallo! Wie alt ist er denn?“ … „Seid ihr schon länger dabei?“"
+      }
+     ]
+    },
+    {
+     "kind": "picture",
+     "img": "krabbelgruppe-scene.png",
+     "alt": "Eine Krabbelgruppe: Eltern auf der Matte, Kinder spielen",
+     "timer": 60,
+     "instr": "Runde 1: Antworte auf alle drei Sätze in 60 Sekunden – jedes Mal mit einer Rückfrage am Ende.",
+     "lead": {
+      "s": "Die drei Sätze",
+      "p": "„Boah, die Nacht war wieder heftig.“ · „Und, geht deine Kleine schon in die Kita?“ · „Wir sind seit Montag in der Eingewöhnung.“"
+     },
+     "answer": "„Oje, das kenn ich. Bei uns ist es gerade auch nicht so toll. Sind's die Zähne?“\n„Nee, noch nicht. Wir wollten noch ein bisschen warten. Und bei euch?“\n„Oh, und wie läuft's?“"
+    },
+    {
+     "kind": "picture",
+     "img": "krabbelgruppe-scene.png",
+     "alt": "Eine Krabbelgruppe: Eltern auf der Matte, Kinder spielen",
+     "timer": 45,
+     "instr": "Runde 2: dieselben drei Sätze in 45 Sekunden.",
+     "lead": {
+      "s": "Die drei Sätze",
+      "p": "„Boah, die Nacht war wieder heftig.“ · „Und, geht deine Kleine schon in die Kita?“ · „Wir sind seit Montag in der Eingewöhnung.“"
+     },
+     "answer": "„Oje, das kenn ich. Bei uns ist es gerade auch nicht so toll. Sind's die Zähne?“\n„Nee, noch nicht. Wir wollten noch ein bisschen warten. Und bei euch?“\n„Oh, und wie läuft's?“"
+    },
+    {
+     "kind": "picture",
+     "img": "krabbelgruppe-scene.png",
+     "alt": "Eine Krabbelgruppe: Eltern auf der Matte, Kinder spielen",
+     "timer": 30,
+     "instr": "Runde 3: noch einmal in 30 Sekunden – flüssig, ohne Pause.",
+     "lead": {
+      "s": "Die drei Sätze",
+      "p": "„Boah, die Nacht war wieder heftig.“ · „Und, geht deine Kleine schon in die Kita?“ · „Wir sind seit Montag in der Eingewöhnung.“"
+     },
+     "answer": "„Oje, das kenn ich. Bei uns ist es gerade auch nicht so toll. Sind's die Zähne?“\n„Nee, noch nicht. Wir wollten noch ein bisschen warten. Und bei euch?“\n„Oh, und wie läuft's?“"
+    }
+   ]
+  },
+  {
+   "label": "💬 Rollenspiel",
+   "blocks": [
+    {
+     "kind": "game",
+     "piece": "memo",
+     "seconds": 40,
+     "instr": "Memo: Schau dir den Kasten 40 Sekunden an. Dann verschwindet er – sag alle Ausdrücke, die du noch weißt.",
+     "groups": [
+      {
+       "h": "REAGIEREN",
+       "items": [
+        "Oje!",
+        "Das kenn ich.",
+        "Ach, schön!",
+        "Bei uns ist es gerade auch [nicht so toll].",
+        "Das wird schon (wieder)."
+       ]
+      },
+      {
+       "h": "ZURÜCKFRAGEN",
+       "items": [
+        "Wie alt ist er / sie denn?",
+        "Sind's die Zähne?",
+        "Seid ihr schon länger dabei?",
+        "Und bei euch?",
+        "Wie läuft's (mit …)?"
+       ]
+      },
+      {
+       "h": "KURZ ANTWORTEN",
+       "items": [
+        "Wir wollten noch ein bisschen warten.",
+        "Für uns passt das so besser.",
+        "Sag mal, … seid ihr eigentlich …?"
+       ]
+      }
+     ],
+     "items": [
+      "Oje!",
+      "Das kenn ich.",
+      "Ach, schön!",
+      "Bei uns ist es gerade auch [nicht so toll].",
+      "Das wird schon (wieder).",
+      "Wie alt ist er / sie denn?",
+      "Sind's die Zähne?",
+      "Seid ihr schon länger dabei?",
+      "Und bei euch?",
+      "Wie läuft's (mit …)?",
+      "Wir wollten noch ein bisschen warten.",
+      "Für uns passt das so besser.",
+      "Sag mal, … seid ihr eigentlich …?"
+     ]
+    },
+    {
+     "kind": "cards",
+     "style": "say",
+     "instr": "Russischer Hinweis + Anfangsbuchstaben: Sag den ganzen Ausdruck.",
+     "cards": [
+      {
+       "front": "((ой-ой! ох!))\nO…!",
+       "back": "Oje!"
+      },
+      {
+       "front": "((знакомо!))\nD… k… i…",
+       "back": "Das kenn ich."
+      },
+      {
+       "front": "((о, как здорово!))\nA…, s…!",
+       "back": "Ach, schön!"
+      },
+      {
+       "front": "((у нас сейчас тоже [так себе]))\nB… u… i… e… g… a…",
+       "back": "Bei uns ist es gerade auch [nicht so toll]."
+      },
+      {
+       "front": "((всё наладится))\nD… w… s…",
+       "back": "Das wird schon (wieder)."
+      },
+      {
+       "front": "((а сколько ему / ей?))\nW… a… i… e… s… d…?",
+       "back": "Wie alt ist er / sie denn?"
+      },
+      {
+       "front": "((зубки, да?))\nS… d… Z…?",
+       "back": "Sind's die Zähne?"
+      },
+      {
+       "front": "((вы уже давно ходите?))\nS… i… s… l… d…?",
+       "back": "Seid ihr schon länger dabei?"
+      },
+      {
+       "front": "((а у вас?))\nU… b… e…?",
+       "back": "Und bei euch?"
+      },
+      {
+       "front": "((ну и как?))\nW… l…?",
+       "back": "Wie läuft's (mit …)?"
+      },
+      {
+       "front": "((мы решили ещё немного подождать))\nW… w… n… e… b… w…",
+       "back": "Wir wollten noch ein bisschen warten."
+      },
+      {
+       "front": "((нам так удобнее))\nF… u… p… d… s… b…",
+       "back": "Für uns passt das so besser."
+      },
+      {
+       "front": "((слушай, а вы …?))\nS… m…, … s… i… e… …?",
+       "back": "Sag mal, … seid ihr eigentlich …?"
+      }
+     ]
+    },
+    {
+     "kind": "questions",
+     "instr": "Vorbereitung, 1 Minute: Eine Mama setzt sich neben dich.",
+     "box": "BOX",
+     "items": [
+      "Wähle **drei Ausdrücke** aus dem Kasten, die du auf jeden Fall benutzen willst.",
+      "Mach dir nur Stichpunkte, keine ganzen Sätze.",
+      "Fehlt dir ein Wort? Sag es einfacher."
+     ]
+    },
+    {
+     "kind": "say",
+     "instr": "Runde 1 im Chat mit Claude",
+     "task": [
+      "**1.** Schreib in unseren Deutsch-Chat: **„Rollenspiel Runde 1“**.",
+      "**2.** Ich bin eine Mama aus der Gruppe und fange an. Antworte per Diktat – sprechen, nicht tippen.",
+      "**3.** Ziel: mindestens **sechs** Antworten, jede endet mit einer Rückfrage. Irgendwann frage ich nach der Kita – vielleicht auch „Warum denn?“.",
+      "**4.** Danach bekommst du Feedback: grün = gut, grau = das kannst du ändern, blau = so klingt es noch besser."
+     ]
+    },
+    {
+     "kind": "say",
+     "instr": "Runde 2 – ohne Kasten",
+     "task": [
+      "**1.** Schreib: **„Rollenspiel Runde 2“**. Jetzt bin ich ein Papa aus der Gruppe, den du noch nicht kennst.",
+      "**2.** **Diesmal fängst du an.** Du weißt nicht, wie alt sein Kind ist.",
+      "**3.** Benutze **zwei** Ausdrücke, die du in Runde 1 nicht benutzt hast. Nicht in den Kasten schauen!"
+     ]
+    },
+    {
+     "kind": "say",
+     "instr": "Test 2: dieselben Situationen wie in Test 1. Was sagst du jetzt? Sag es laut.",
+     "task": [
+      "Eine Mutter setzt sich neben dich und seufzt: „Boah, die Nacht war wieder heftig. Der Kleine war ab vier wach.“",
+      "Deine Tochter spielt mit einem kleinen Mädchen. Du möchtest mit dessen Vater ins Gespräch kommen.",
+      "Jemand fragt dich: „Und, habt ihr schon einen Kitaplatz?“",
+      "**Neu:** Ein Papa erzählt: „Wir saßen gestern zwei Stunden beim Kinderarzt im Wartezimmer.“"
+     ],
+     "answer_title": "Zum Vergleich",
+     "answer": [
+      "((Test 1: „Ja, schwierig. Bei uns sind die Nächte auch ziemlich schlecht.“))\nZum Beispiel: „Oje, ab vier? Das kenn ich. Bei uns sind die Nächte gerade auch ziemlich schlecht. Sind's die Zähne?“",
+      "((Test 1: „Wie läuft's in der Kita?“))\nZum Beispiel: „Hallo! Wie alt ist sie denn? … Seid ihr schon länger dabei?“",
+      "((Test 1: „Katja kommt erst mit zwei in die Kita, wir wollten ein bisschen warten.“))\nZum Beispiel: „Katja kommt erst mit zwei in die Kita, wir wollten noch ein bisschen warten. Und bei euch?“",
+      "Zum Beispiel: „Oje, zwei Stunden? Das ist ja heftig. Ist alles okay bei euch?“"
+     ]
+    }
+   ]
+  },
+  {
+   "label": "🏃 Vor der Gruppe",
+   "blocks": [
+    {
+     "kind": "game",
+     "piece": "goose",
+     "box": "BOX",
+     "check": "Check",
+     "rule": "Wirf die Münze: Kopf = 1 Feld vor, Zahl = 2 Felder vor. Richtig = du bleibst, nicht ganz = zurück auf dein altes Feld. 🪿 = noch einmal werfen.",
+     "instr": "Das Gänsespiel: alles aus der Lektion gemischt. Kommst du ins Ziel, bist du fit für die Gruppe!",
+     "tasks": [
+      {
+       "label": "Reagieren",
+       "q": "„Wir waren heute schon um halb fünf wach.“",
+       "a": "Oje, um halb fünf? Das kenn ich.",
+       "why": ""
+      },
+      {
+       "label": "Zurückfragen",
+       "q": "„Das ist Emma.“",
+       "a": "Hallo, Emma! Wie alt ist sie denn?",
+       "why": ""
+      },
+      {
+       "label": "Kurz antworten",
+       "q": "„Geht deine Kleine schon in die Kita?“",
+       "a": "Nee, wir wollten noch ein bisschen warten. Und bei euch?",
+       "why": ""
+      },
+      {
+       "label": "Reagieren",
+       "q": "„Mia läuft seit gestern!“",
+       "a": "Ach, schön! Wie alt ist sie denn?",
+       "why": ""
+      },
+      {
+       "label": "Kurz antworten",
+       "q": "((nach der Kita-Frage)) „Warum denn?“",
+       "a": "Ach, für uns passt das so besser. Sag mal, seid ihr eigentlich schon länger dabei?",
+       "why": ""
+      },
+      {
+       "label": "Zurückfragen",
+       "q": "„Wir sind seit zwei Wochen in der Eingewöhnung.“",
+       "a": "Oh, und wie läuft's?",
+       "why": ""
+      },
+      {
+       "label": "Reagieren",
+       "q": "„Ich hab seit drei Nächten kaum geschlafen.“",
+       "a": "Oje, du Arme! Das wird schon wieder.",
+       "why": ""
+      },
+      {
+       "label": "Zurückfragen",
+       "q": "„Er sabbert die ganze Zeit.“",
+       "a": "Oje. Sind's die Zähne?",
+       "why": ""
+      },
+      {
+       "label": "Kurz antworten",
+       "q": "„Habt ihr keinen Platz bekommen?“",
+       "a": "Doch, doch – ab zwei. Für uns passt das so besser. Und bei euch?",
+       "why": "Doch = «да нет же, есть» (ответ на отрицательный вопрос)"
+      },
+      {
+       "label": "Zurückfragen",
+       "q": "„Ihr seid neu hier, oder?“",
+       "a": "Ja, wir sind erst zum zweiten Mal hier. Seid ihr schon länger dabei?",
+       "why": ""
+      }
+     ]
+    },
+    {
+     "kind": "cards",
+     "style": "say",
+     "instr": "Schlüsselwörter + Russisch → der ganze Satz.",
+     "cards": [
+      {
+       "front": "**kenn · auch nicht so toll**\n((Знакомо. У нас сейчас тоже так себе.))",
+       "back": "Das kenn ich. Bei uns ist es gerade auch nicht so toll."
+      },
+      {
+       "front": "**Oje · Zähne**\n((Ой-ой. Зубки, да?))",
+       "back": "Oje. Sind's die Zähne?"
+      },
+      {
+       "front": "**warten · passt**\n((Мы решили ещё немного подождать, нам так удобнее.))",
+       "back": "Wir wollten noch ein bisschen warten, für uns passt das so besser."
+      },
+      {
+       "front": "**länger · dabei**\n((А вы уже давно ходите в группу?))",
+       "back": "Seid ihr schon länger dabei?"
+      },
+      {
+       "front": "**läuft's · Eingewöhnung**\n((А как идёт адаптация?))",
+       "back": "Und wie läuft's mit der Eingewöhnung?"
+      },
+      {
+       "front": "**wird schon · denn**\n((Всё наладится. А сколько ему?))",
+       "back": "Das wird schon. Wie alt ist er denn?"
+      }
+     ]
+    },
+    {
+     "kind": "questions",
+     "instr": "Für die Gruppe diese Woche",
+     "items": [
+      "**Pflicht:** Ich habe einmal reagiert und zurückgefragt.",
+      "**Bonus:** Ich habe selbst ein Gespräch angefangen.",
+      "Die Kita-Frage (falls sie kam) habe ich kurz beantwortet – mit „Und bei euch?“.",
+      "**Ohren auf:** Merk dir drei Sätze, mit denen andere Eltern reagieren oder zurückfragen. Schreib sie danach auf und schick sie mir."
+     ],
+     "fast": "Welche **zwei** Sätze sagst du nächste Woche bestimmt – und welcher fällt dir noch schwer? Üb ihn noch einmal: 🪿 Gänsespiel oder 🎲 Situationen mit 30 Sekunden."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,41 @@
+{
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "ja, sie fängt mit zwei an. wir wollten noch ein bisschen warten. und bei euch? papa: „echt, erst mit zwei?“ ja, für uns passt das so besser. und wie sieht's bei euch aus? „habt ihr schon einen kitaplatz?“ ein papa",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "mit zwei. wir wollten noch ein bisschen warten. und ihr? mama: „oh, so spät?“ ja, für uns passt das so besser. sag mal, wie alt ist er eigentlich? „wann fängt sie denn mit der kita an?“ eine mama",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "nee, noch nicht. und bei euch? papa: „habt ihr keinen platz bekommen?“ doch, doch – ab zwei. für uns passt das so besser. und bei euch? „und, geht sie schon in die kita?“ ein papa",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "nee, wir wollten noch ein bisschen warten. seid ihr schon in der eingewöhnung? mama: „wieso wartet ihr denn noch?“ ach, für uns passt das so besser. sag mal, wie läuft's eigentlich bei euch mit dem schlafen? „ist sie schon in der kita?“ eine mama",
+   "gone": false
+  }
+ ],
+ "speaking": [
+  {
+   "pid": 0,
+   "sig": "welche zwei nachfragen zur kita sind für dich am unangenehmsten? antworte auf beide kurz – und wechsle das thema.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "wie würdest du reagieren, wenn eine mama sagt: „wir wollten auch noch warten“? sag zwei sätze und frag zurück.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "mit welchen zwei fragen kannst du nach der kita-frage das thema wechseln? sag beide mit „sag mal, …“.",
+   "gone": false
+  }
+ ]
+}

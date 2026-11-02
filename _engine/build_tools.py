@@ -143,7 +143,7 @@ def page_ids(lesson, name, d, save=True):
     if t == 'revision-field':
         blocks = [b for st in d['stages'] for b in st['blocks']]
         pids['blocks'] = assign_ids(reg, 'blocks', blocks, report, sig=lambda b: _plain([b.get('kind', ''), b.get('instr', ''), b.get('page', ''), b.get('img', '')]))
-        pids['cards'] = assign_ids(reg, 'cards', [c for b in blocks for c in (b['cards'] if b.get('kind') == 'cards' else b.get('tasks', []) if b.get('kind') == 'game' else [])], report)   # tools 16: a game's squares count as cards
+        pids['cards'] = assign_ids(reg, 'cards', [c for b in blocks for c in (b['cards'] if b.get('kind') == 'cards' else b.get('tasks', []) if b.get('kind') == 'game' else b.get('clips', []) if b.get('kind') == 'listen' else [])], report)   # tools 16: a game's squares count as cards
         pids['write'] = assign_ids(reg, 'write', [it for b in blocks if b.get('kind') == 'write' for it in b['items']], report)
         for b, bp in zip(blocks, pids['blocks']):
             if b.get('kind') == 'questions': pids['questions.%d' % bp] = assign_ids(reg, 'questions.%d' % bp, b['items'], report)
@@ -205,9 +205,10 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
                  ('__DATA__', js({k: v for k, v in d.items() if k != 'parked'})), ('__REVIEW__', js(review)), ('__STICKER__', sticker), ('__TOOLS_VERSION__', VERSION),
                  ('__PAGE_ID__', lesson + '/' + name)]:
         html = html.replace(k, v)
+    if d.get('lang') and re.match(r'^[a-z]{2}(-[A-Z]{2})?$', d['lang']): html = html.replace('<html lang="en">', '<html lang="%s">' % d['lang'], 1)   # tools 25: the German page
     pages.append({'lesson': lesson, 'name': name, 'title': d['title'], 'part': d.get('part', ''), 'type': d['type']})
     for suffix, live in (('', False), ('-live', True)):
-        page = html.replace('__LIVE__', 'true' if live else 'false').replace('__SYNC_URL__', SYNC if live else '')
+        page = html.replace('__LIVE__', 'true' if live else 'false').replace('__SYNC_URL__', SYNC if live or d.get('points') else '')   # tools 26: her own page with points talks to her table
         left = [k for k in ('__BASE_CSS__', '__BASE_JS__', '__LW_CSS__', '__LW_JS__', '__DATA__', '__REVIEW__', '__STICKER__', '__PAGE_ID__', '__LIVE__', '__SYNC_URL__') if k in page]
         assert not left, 'placeholder left in %s: %s' % (path, left)
         if live and not SYNC: print('WARNING: no SYNC_URL found, %s-live works like the plain page' % name)

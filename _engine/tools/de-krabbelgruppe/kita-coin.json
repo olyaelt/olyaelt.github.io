@@ -1,0 +1,91 @@
+{
+ "type": "situation-cards",
+ "file": "kita-coin",
+ "title": "Die Kita-Frage",
+ "die": {
+  "label": "🪙 Fragt sie / er nach – oder nicht?",
+  "map": [
+   {
+    "faces": "heads",
+    "type": "A"
+   },
+   {
+    "faces": "tails",
+    "type": "N"
+   }
+  ],
+  "coin": true
+ },
+ "answers": {
+  "A": "Kopf: Sie / er fragt nicht weiter → kurz antworten + Rückfrage",
+  "N": "Zahl: Sie / er fragt nach → wieder kurz, ohne Begründung + Rückfrage oder neues Thema (Sag mal, …)"
+ },
+ "model": {
+  "who": "Eine Mama",
+  "says": "„Geht deine Kleine schon in die Kita?“",
+  "A": "Nee, wir wollten noch ein bisschen warten. **Und bei euch?**",
+  "N": "((Mama: „Warum denn?“))\nAch, für uns passt das so besser. **Sag mal, seid ihr eigentlich schon länger dabei?**"
+ },
+ "cards": [
+  {
+   "who": "Ein Papa",
+   "says": "„Habt ihr schon einen Kitaplatz?“",
+   "A": "Ja, sie fängt mit zwei an. Wir wollten noch ein bisschen warten. **Und bei euch?**",
+   "N": "((Papa: „Echt, erst mit zwei?“))\nJa, für uns passt das so besser. **Und wie sieht's bei euch aus?**"
+  },
+  {
+   "who": "Eine Mama",
+   "says": "„Wann fängt sie denn mit der Kita an?“",
+   "A": "Mit zwei. Wir wollten noch ein bisschen warten. **Und ihr?**",
+   "N": "((Mama: „Oh, so spät?“))\nJa, für uns passt das so besser. **Sag mal, wie alt ist er eigentlich?**"
+  },
+  {
+   "who": "Ein Papa",
+   "says": "„Und, geht sie schon in die Kita?“",
+   "A": "Nee, noch nicht. **Und bei euch?**",
+   "N": "((Papa: „Habt ihr keinen Platz bekommen?“))\nDoch, doch – ab zwei. Für uns passt das so besser. **Und bei euch?**"
+  },
+  {
+   "who": "Eine Mama",
+   "says": "„Ist sie schon in der Kita?“",
+   "A": "Nee, wir wollten noch ein bisschen warten. **Seid ihr schon in der Eingewöhnung?**",
+   "N": "((Mama: „Wieso wartet ihr denn noch?“))\nAch, für uns passt das so besser. **Sag mal, wie läuft's eigentlich bei euch mit dem Schlafen?**"
+  }
+ ],
+ "box": [
+  {
+   "h": "REAGIEREN",
+   "items": [
+    "**Oje!** – ой-ой! ох!",
+    "**Das kenn ich.** – знакомо! (только если правда знаешь)",
+    "**Ach, schön!** – о, как здорово!",
+    "**Bei uns ist es gerade auch** [nicht so toll]. – у нас сейчас тоже [так себе]",
+    "**Das wird schon (wieder).** – всё наладится",
+    "((auch: Oje, du Arme! / zu einem Papa: du Armer! – ой, бедняжка · Das ist ja heftig. – ого, тяжело!))"
+   ]
+  },
+  {
+   "h": "ZURÜCKFRAGEN",
+   "items": [
+    "**Wie alt ist er / sie denn?** – а сколько ему / ей?",
+    "**Sind's die Zähne?** – зубки, да?",
+    "**Seid ihr schon länger dabei?** – вы уже давно ходите (в группу)?",
+    "**Und bei euch?** – а у вас?",
+    "**Wie läuft's** (mit …)? – ну и как? (как идёт …?)"
+   ]
+  },
+  {
+   "h": "KURZ ANTWORTEN",
+   "items": [
+    "**Wir wollten noch ein bisschen warten.** – мы решили ещё немного подождать",
+    "**Für uns passt das so besser.** – нам так удобнее",
+    "**Sag mal, …** seid ihr **eigentlich** …? – слушай, а вы …? (сменить тему)"
+   ]
+  }
+ ],
+ "speaking": [
+  "Welche **zwei** Nachfragen zur Kita sind für dich am unangenehmsten? Antworte auf beide kurz – und wechsle das Thema.",
+  "Wie würdest du reagieren, wenn eine Mama sagt: „Wir wollten auch noch warten“? Sag **zwei** Sätze und frag zurück.",
+  "Mit welchen **zwei** Fragen kannst du nach der Kita-Frage das Thema wechseln? Sag beide mit „Sag mal, …“."
+ ]
+}

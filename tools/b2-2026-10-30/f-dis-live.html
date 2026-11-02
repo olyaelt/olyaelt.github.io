@@ -196,6 +196,12 @@ details.all[open] summary{color:var(--ink)}
 /* ↺ Again later: "Back in 2–3 cards", once per device (handoff 30.10 15:15) */
 .again-hint{position:fixed;transform:translateX(-50%);z-index:60;background:var(--card);color:var(--again);border:2px solid var(--again);font-weight:900;border-radius:99px;padding:6px 18px;font-size:1.1rem;box-shadow:var(--shadow);pointer-events:none;white-space:nowrap}
 
+/* tools 25 (the German page): her move colours as on her slides — <m1> green = reaction, <m2> yellow = a little about you, <m3> cyan = the
+   question back (highlighter colours with dark ink: readable in both themes); a grey extra line in the box */
+.mv{border-radius:4px;padding:0 .12em;color:#111111;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.mv.m1{background:#BFF2B8} .mv.m2{background:#FFF07A} .mv.m3{background:#A8E8FA}
+.bx-ctx{color:var(--muted);font-size:.9em}
+
 /* ---------- game pieces (tools 14): coin, wheel, deck — the flat look of her slides: dark outline, solid offset shadow ---------- */
 .gcoin{position:relative;display:inline-grid;place-items:center;width:4.6rem;height:4.6rem;perspective:420px;flex:none;vertical-align:middle}
 .gc-body{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
@@ -577,6 +583,8 @@ details.all[open] summary{color:var(--ink)}
 .head .howto{order:1;margin-left:0}
 .head .stages{order:2}
 .head .stage-btn{padding:3px 10px;font-size:.96rem}
+.stages.many{gap:3px} .stages.many .stage-arrow{display:none} .stages.many .stage-btn{padding:3px 8px}
+.stages.many .stage-btn:not([aria-current]) .s-nm{display:none}   /* tools 25: many parts — signs, the current one named */
 .head .stage-arrow{font-size:.85rem}
 .blk{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 18px;display:grid;gap:12px;align-content:start}
 .blk.enter{animation:enterR .45s cubic-bezier(.2,.8,.2,1)}
@@ -642,6 +650,7 @@ details.all[open] summary{color:var(--ink)}
 .gloss{background:var(--ground);border-radius:12px;padding:8px 12px;display:grid;gap:4px;font-size:calc(1.02rem * var(--k, 1))}
 .gloss .gl{margin:0;line-height:1.35}
 .gloss .ru{color:var(--muted);font-style:italic}
+.box .ph .gloss{display:inline;background:none;padding:0;border-radius:0;font-size:.86em}   /* tools 25: a box line's Russian stays on its line (not the glossary's card) */
 .tx-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .tx-tools .hint{color:var(--muted);font-size:.9rem}
 .parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr));gap:14px}
@@ -688,6 +697,46 @@ details.all[open] summary{color:var(--ink)}
 @media (min-width:861px){ .mdl-pic.has-side > .pic{display:none} }
 @media (max-width:860px){ .side-pic{display:none} }
 @media (prefers-reduced-motion: reduce){ .stepbar [data-step].ready{animation:none;box-shadow:0 0 0 5px rgba(6,147,227,.3)} }
+.tx-ans{margin:10px 0 0;padding:10px 14px;border-left:5px solid var(--ok);background:var(--card);border-radius:8px}
+.tx-ans p{margin:4px 0;font-size:1.1rem}
+/* tools 26: 🎧 the listen block; 🎬 her film */
+.lis{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:760px){ .lis{grid-template-columns:1fr} }
+.lis-vid{aspect-ratio:16/9;background:#111111;border-radius:12px;overflow:hidden}
+.lis-vid.consent{background:var(--ground);display:grid;place-items:center;padding:14px;text-align:center}
+.lis-vid.consent p{margin:0 0 8px} .lis-small{font-size:.85rem;color:var(--muted)}
+.lis-holder{position:absolute;z-index:5;border-radius:12px;overflow:hidden;background:#111111;display:none}
+.lis-yt-box,.lis-yt-box iframe,.lis-holder iframe{width:100%;height:100%;display:block;border:0}
+.lis-msg{position:absolute;inset:0;margin:0;display:grid;place-items:center;text-align:center;color:#FFFFFF;background:rgba(17,17,17,.85);padding:12px}
+.lis-msg a{color:#9BD3FF}
+.lis-n{margin:0 0 6px;color:var(--muted);font-weight:700}
+.lis-line{font-size:1.45rem;line-height:1.6;margin:0 0 14px}
+.lis-in{font:inherit;font-size:1.25rem;padding:1px 8px;border:2px solid var(--instr);border-radius:8px;background:var(--card);color:var(--ink);max-width:100%}
+.lis-ok{color:var(--ok)} .lis-no{color:var(--no)} .lis-to{color:var(--muted)}
+.lis-ans{background:var(--hl);color:var(--hl-ink);padding:0 .25em;border-radius:4px}
+.lis-acts{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 12px}
+.lis-spd{display:flex;gap:6px;align-items:center;margin:0 0 10px;color:var(--muted);font-weight:700}
+.lis-spd button{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:2px 10px;font:inherit;font-size:.9rem;cursor:pointer}
+.lis-spd button[aria-pressed="true"]{border-color:var(--instr);color:var(--instr-text)}
+.lis-src{margin:0;font-size:.85rem;color:var(--muted)} .lis-src a{color:inherit}
+.btn.film{white-space:nowrap}
+.film-p{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px 14px;margin:0 0 12px}
+.film-p p{margin:0 0 6px} .film-s{color:var(--muted);font-size:.95rem} .film-e{color:var(--no);font-weight:700}
+.film-row{display:flex;gap:8px;align-items:center} .film-in{font:inherit;padding:6px 10px;border:2px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);width:12rem}
+/* tools 25: 🏁 Finish the game beside Next; Next points at the room's own choice (✓ / ✗, a square, a line) instead of making it */
+.stepbar .btn.gfin{min-width:0;font-weight:800;border-width:2px;border-color:var(--ink)}
+.stepbar .btn.gfin.back{border-color:var(--line);font-weight:700}
+.blk.g-ended .fgame,.blk.g-ended .rl{opacity:.5;filter:saturate(.5);transition:opacity .35s,filter .35s}
+.btn.nudge{animation:gNudge .55s ease-in-out 3}
+@keyframes gNudge{50%{box-shadow:0 0 0 7px rgba(6,147,227,.38);transform:scale(1.05)}}
+.gt-cell.nudge .gt-back{animation:gHop .5s ease-in-out 3}
+@keyframes gHop{50%{transform:translateY(-7px);box-shadow:0 11px 0 #1D1D1B}}
+.gdt-l.free.nudge .gdt-line{animation:gNudgeL .55s ease-in-out 3}
+@keyframes gNudgeL{50%{stroke:#0693E3}}
+@media (prefers-reduced-motion: reduce){ .btn.nudge{animation:none;box-shadow:0 0 0 6px rgba(6,147,227,.38)} .gt-cell.nudge .gt-back{animation:none;outline:4px solid #0693E3;outline-offset:3px} .gdt-l.free.nudge .gdt-line{animation:none;stroke:#0693E3} .blk.g-ended .fgame,.blk.g-ended .rl{transition:none} }
+@media (max-width:560px){ .fin-long{display:none} }
+.sdots .sd-n{display:none}
+@media (max-width:560px){ .sdots.many button{display:none} .sdots.many .sd-n{display:inline;font-weight:800;color:var(--muted);font-size:1rem} }   /* tools 25: 9 screens on a phone squeezed Back and Next — "2 / 9" instead */
 /* 🃏 cards */
 .deck{display:grid;gap:12px}
 .fdots{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
@@ -1231,7 +1280,7 @@ details.all[open] summary{color:var(--ink)}
 <script>
 const D = {"type": "revision-field", "file": "f-dis", "board": {"col": "Everyday English", "value": 300}, "title": "Disagree and stay friends", "boxes": {"BOX": [{"h": "A QUESTION FIRST", "items": ["**Do you think so?** I found it…"]}, {"h": "AGREE A LITTLE, THEN YOUR POINT", "items": ["**Yeah, I suppose so. But** …"]}, {"h": "KEEP YOUR OPINION — GENTLY", "items": ["**Maybe, but I still think** …"]}, {"h": "ANOTHER VIEW", "items": ["**But I guess you could say** …"]}, {"h": "AGREE AND ADD · FINISH", "items": ["**That's true, and** … · **Exactly. And** …", "**Fair enough.** / **OK, fair point.**"]}]}, "stages": [{"label": "📝 Test yourself", "blocks": [{"kind": "say", "instr": "Disagree and stay friends: what would you say? Then tap “Show the answer”.", "task": ["(([Your colleague loved the new crime series. You found it slow and a bit boring.]))", "((Colleague:)) That new crime series is brilliant, isn't it?", "((You:)) • • •"], "answer": ["(([Your colleague loved the new crime series. You found it slow and a bit boring.]))", "((Colleague:)) That new crime series is brilliant, isn't it?", "((You:)) **Do you think so?** **I found it a bit** slow, to be honest.", "((or:)) **Yeah, I suppose so. But** the first few episodes were a bit slow.", "((Сначала вопрос или «да, но…», потом своё мнение — так спорят и остаются друзьями.))"], "answer_title": "Suggested answer", "tip": "Say it aloud first, then tap “Show the answer”."}]}, {"label": "🔁 Recall", "blocks": [{"kind": "text", "instr": "Remember Paul and Zoe? Complete what they said at the key moments. Tap the yellow and orange to check.", "lines": [{"s": "Paul", "p": ["Did you see that reality crime show on TV last night?"]}, {"s": "Zoe", "p": ["The one about the young woman and the old man's credit card?"]}, {"s": "Paul", "p": ["Yeah. It made me really angry. It was like a lesson on how to commit a crime."]}, {"s": "Zoe", "p": [{"f": "D", "r": "o"}, " ", {"f": "y", "r": "ou"}, " ", {"f": "t", "r": "hink"}, " ", {"f": "s", "r": "o"}, "? But it showed you'll get arrested in the end."]}, {"s": "", "p": ["…"], "scene": true}, {"s": "Paul", "p": [{"f": "B", "r": "ut"}, " I ", {"f": "s", "r": "till"}, " ", {"f": "t", "r": "hink"}, " the programme was saying it's OK to do this."]}, {"s": "Zoe", "p": [{"f": "T", "r": "hat's"}, " ", {"f": "t", "r": "rue"}, ", ", {"f": "a", "r": "nd"}, " they hardly spoke to the old man."]}, {"s": "Paul", "p": [{"f": "E", "r": "xactly"}, ", ", {"f": "a", "r": "nd"}, " he really didn't want to be on TV."]}, {"s": "", "p": ["…"], "scene": true}, {"s": "Zoe", "p": [{"f": "B", "r": "ut"}, " I ", {"f": "g", "r": "uess"}, " ", {"f": "y", "r": "ou"}, " ", {"f": "c", "r": "ould"}, " ", {"f": "s", "r": "ay"}, " the programme was a warning to people."]}, {"s": "Paul", "p": [{"f": "H", "r": "ardly"}, "."]}, {"s": "Zoe", "p": ["But the presenter did say that at the very end."]}, {"s": "Paul", "p": [{"f": "Y", "r": "eah"}, ", I ", {"f": "s", "r": "uppose"}, " ", {"f": "s", "r": "o"}, ". ", {"f": "B", "r": "ut"}, " the saddest thing — the old man still thought she was a 'nice girl'."]}], "gloss": [{"p": [{"f": "D", "r": "o"}, " ", {"f": "y", "r": "ou"}, " ", {"f": "t", "r": "hink"}, " ", {"f": "s", "r": "o"}, {"b": "?"}], "ru": "Думаешь? (мягкое несогласие, не вопрос)"}, {"p": [{"f": "B", "r": "ut"}, " ", {"b": "I"}, " ", {"f": "s", "r": "till"}, " ", {"f": "t", "r": "hink"}, "…"], "ru": "И всё-таки я считаю…"}, {"p": [{"f": "T", "r": "hat's"}, " ", {"f": "t", "r": "rue"}, {"b": ","}, " ", {"f": "a", "r": "nd"}, "…"], "ru": "Это правда, и ещё…"}, {"p": [{"f": "E", "r": "xactly"}, {"b": ","}, " ", {"f": "a", "r": "nd"}, "…", " ", {"f": "", "r": "/ɪɡˈzæktli/", "o": 1}], "ru": "Вот именно, и…"}, {"p": [{"f": "B", "r": "ut"}, " ", {"b": "I"}, " ", {"f": "g", "r": "uess"}, " ", {"f": "y", "r": "ou"}, " ", {"f": "c", "r": "ould"}, " ", {"f": "s", "r": "ay"}, "…", " ", {"f": "", "r": "/ɡes/", "o": 1}], "ru": "Хотя, пожалуй, можно сказать…"}, {"p": [{"f": "H", "r": "ardly"}, {"b": "."}, " ", {"f": "", "r": "/ˈhɑːdli/", "o": 1}], "ru": "Да какое там. (очень прямо — только с близкими друзьями)"}, {"p": [{"f": "Y", "r": "eah"}, {"b": ","}, " ", {"b": "I"}, " ", {"f": "s", "r": "uppose"}, " ", {"f": "s", "r": "o"}, {"b": "."}, " ", {"f": "B", "r": "ut"}, "…", " ", {"f": "", "r": "/səˈpəʊz/", "o": 1}], "ru": "Ну да, наверное. Но…"}], "tip": "The first letters are given; the glossary is beside the chat. Tap the yellow (and the orange sounds) to check."}]}, {"label": "🃏 Practice", "blocks": [{"kind": "game", "piece": "goose", "instr": "The goose race: take turns to flip the coin and move. Do the task on your square, then tap to check. First to the finish wins!", "box": "BOX", "check": "Check", "rule": "Flip the coin: heads = 1 step, tails = 2. Do the task on your square: right = you stay, not quite = back to where you were. 🪿 = flip again.", "tasks": [{"label": "Say it in English", "q": "Думаешь? А мне показалось немного скучно.", "a": "Do you think so? I found it a bit boring.", "why": "Сначала вопрос — мягкое несогласие."}, {"label": "Say it more gently", "q": "((Friend: “It was so scary, wasn't it?” · Too direct:)) No, I don't think so. It wasn't scary.", "a": "Do you think so? I didn't find it that scary.", "why": "«No…» звучит резко. Вопрос + I didn't find it that… — мягче."}, {"label": "Say it in English", "q": "Ну да, наверное. Но…", "a": "Yeah, I suppose so. But…", "why": "Соглашаешься чуть-чуть, потом своё."}, {"label": "Say it more gently", "q": "((Friend: “That new café is great, isn't it?” · Too direct:)) No. The coffee is bad.", "a": "Do you think so? I found the coffee a bit disappointing.", "why": "Вопрос + I found the coffee a bit… — мягче, чем No."}, {"label": "Say it in English", "q": "Может быть, но я всё-таки считаю…", "a": "Maybe, but I still think…", "why": "Держишься своего мнения — мягко."}, {"label": "Fix the mistake", "q": "I found it a bit boring ~~for me~~.", "a": "I found it a bit boring.", "why": "I found it… уже значит «мне показалось»: for me лишнее."}, {"label": "Say it in English", "q": "Но, пожалуй, можно сказать…", "a": "But I guess you could say…", "why": "Даёшь другой взгляд."}, {"label": "Say it more gently", "q": "((Colleague: “Working from home is so much better.” · Too direct:)) No, it's lonely.", "a": "Yeah, I suppose so. But it can get a bit lonely.", "why": "Сначала чуть-чуть согласиться, потом But… и своё мнение."}, {"label": "Say it in English", "q": "Вот именно. И…", "a": "Exactly. And…", "why": "Согласиться и добавить."}, {"label": "Fix the mistake", "q": "The ending was ~~predictive~~.", "a": "The ending was predictable.", "why": "Predictive — о моделях и тестах; предсказуемый → predictable."}, {"label": "Say it in English", "q": "Ладно, справедливо.", "a": "Fair enough. / OK, fair point.", "why": "Закончить спор по-дружески."}, {"label": "Say it in English", "q": "Это правда, и ещё…", "a": "That's true, and…", "why": "Согласиться и добавить."}], "tip": "Flip the coin and move your counter. Do the task on your square and tap to check. Right? You stay. Not quite? Back you go."}]}, {"label": "💬 Use it", "blocks": [{"kind": "game", "piece": "dice1", "instr": "Roll the dice to pick a hot take (смелое мнение). A says it as a tag question. B disagrees, using three moves from the box. Then swap.", "box": "BOX", "title": "Roll: the hot take", "faces": [{"n": 1, "text": "Films are far too long these days."}, {"n": 2, "text": "A series is best watched in one go."}, {"n": 3, "text": "The book is always better than the film."}, {"n": 4, "text": "Reality shows are a waste of time."}, {"n": 5, "text": "Subtitles are better than dubbing."}, {"n": 6, "text": "Nobody needs more than one streaming service."}], "intro": {"instr": "Here's an example. Complete the conversation. Then tap the yellow to check.", "dice": [1], "ctx": "(([The dice → 1: Films are far too long these days. A says it as a tag question. B disagrees, using moves from the box.]))", "lines": [{"s": "A", "p": ["Films are far too long these days, aren't they?"]}, {"s": "B", "p": [{"f": "D", "r": "o you think so?"}, " I thought the last one I saw was fine."]}, {"s": "A", "p": ["But what about those superhero films? They go on forever!"]}, {"s": "B", "p": [{"f": "Y", "r": "eah, I suppose so. But I still think"}, " a good film can be any length."]}, {"s": "A", "p": [{"f": "F", "r": "air enough."}, " Shall we watch one tonight, then?"]}]}, "tip": "Roll the dice for a hot take. A says it with a tag (…, aren't they?). B disagrees in three moves from the box."}, {"kind": "questions", "instr": "Round 2: your real opinions. Your partner disagrees — gently.", "items": ["**1**  Think of **two** real opinions and say them as tag questions: a film or series everyone loves, working from home, social media, learning languages with apps…", "**2**  Your partner disagrees, using three moves from the box. Then swap.", "**3**  Finish on something you both agree on: That's true, and… / Exactly. And…"], "box": "BOX", "fast": "If you're done: go back to Paul and Zoe in 🔁 Recall and say the missing words from memory. Then tell your partner about a small disagreement with a friend or family member (a film, a restaurant, holiday plans…): what did each of you say, and who said “Fair enough” first?"}]}], "_pids": {"blocks": [0, 1, 2, 3, 4], "cards": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "write": [], "questions.4": [0, 1, 2]}, "boardPage": "jeopardy", "cell": "c5v300", "embeds": {}};
 const STICKER = "data:image/png;base64,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";
-const TOOLS_VERSION = "24";
+const TOOLS_VERSION = "26";
 const PAGE_ID = "b2-2026-10-30/f-dis";
 const LIVE_ON = true, LIVE_URL = "https://script.google.com/macros/s/AKfycbwHqzwA-2z09POg7JSqiMhqglOKbD8bxs-UG-NcFKZPzTyzmdEW79ct3zHGktUGyLM_/exec";
 /* shared by the lesson tools: the Useful language box, shuffling, small helpers */
@@ -1248,7 +1297,8 @@ if(EMBED) document.documentElement.classList.add("embed");
 if(EMBED) addEventListener("message", e => { const m = e.data && e.data.lwStep; if(!m) return;
   const end = typeof embNext !== "function" || (m === "next" ? embNext() : embBack()); if(end) try{ window.parent.postMessage({lwStepEnd: m}, "*"); }catch(err){} });
 /* **box phrase** in a speaking task or a follow-up = shown like the box phrases in the examples (checklist 8.07) */
-const boxMarks = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>');
+const boxMarks = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>').replace(/\(\((.+?)\)\)/g, '<span class="bx-ctx">$1</span>')
+  .replace(/&lt;m([123])&gt;(.+?)&lt;\/m\1&gt;/g, '<span class="mv m$1">$2</span>');   /* tools 25 (the German page): grey extras, her move colours */
 const calm = () => !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
 /* a small burst of confetti from an element (the end of a deck): brand colours, falls and fades in about a second; none with reduced motion */
 function confetti(from){
@@ -1342,7 +1392,8 @@ function wireAll(root){ root.querySelectorAll("details.all").forEach(d => d.addE
 
 /* the box: tap a phrase when you've said it (it lights up green); "clickable:false" = a plain list.
    A line may carry a short Russian gloss after " – " (as on her slides: grey italics) and **bold** key words. */
-const phHTML = t => { const k = t.indexOf(" – "), en = k < 0 ? t : t.slice(0, k), ru = k < 0 ? "" : t.slice(k + 3);
+const phHTML = t => { if(/^\(\(.*\)\)$/.test(t)) return `<span class="bx-ctx">${boxMarks(t.slice(2, -2))}</span>`;   /* tools 25: a whole grey line ("auch: …") */
+  const k = t.indexOf(" – "), en = k < 0 ? t : t.slice(0, k), ru = k < 0 ? "" : t.slice(k + 3);
   return boxMarks(en) + (ru ? ` <span class="gloss">– ${esc(ru)}</span>` : ""); };
 const usedPhrases = new Set();
 function boxHTML(box, {clickable = true, collapsible = false, open = true} = {}){
@@ -2727,6 +2778,7 @@ const mk = s => esc(s == null ? "" : s)
   .replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>')
   .replace(/\(\((.+?)\)\)/g, '<span class="ctx">$1</span>')
   .replace(/&lt;g&gt;(.+?)&lt;\/g&gt;/g, '<span class="m-good">$1</span>')
+  .replace(/&lt;m([123])&gt;(.+?)&lt;\/m\1&gt;/g, '<span class="mv m$1">$2</span>')   /* tools 25: her move colours (the German page) */
   .replace(/~~(.+?)~~/g, '<span class="m-del">$1</span>')
   .replace(/\^\^(.+?)\^\^/g, '<span class="m-red">$1</span>')
   .replace(/\[\[(.+?)\]\]/g, '<span class="m-chg">$1</span>')   /* tools 18 (her 20:03): grey = the part to change in your own version */   /* tools 18: her red words on the slides (yesterday, a week ago — why it's past simple) */
@@ -2754,6 +2806,12 @@ D.stages.forEach((st, si) => st.blocks.forEach((b, bi) => {
     if(b.piece === "dots") Object.assign(t, {front: t.q, _b: {style: "kwt", check: b.check || "", box: b.box || null}, _lbl: "Complete the second sentence."});
     else Object.assign(t, {front: t.q, back: t.a, _b: {style: "ours", check: b.check || "", box: b.box || null},
       _lbl: b.piece === "wheel" ? "How would you start the chat?" : t.label && !/^\d+$/.test(t.label) ? t.label : "How would you make it perfect English?"}); });
+  /* tools 26: 🎧 a listen block's clips are numbered with the cards too: a missed one comes back in "Your hard cards once more" (the line
+     with its gap, then the whole line) */
+  if(b.kind === "listen") b._clips = (b.clips || []).map(([vid, start, dur, parts]) => { const n = (P.cards || [])[cardN] != null ? P.cards[cardN] : cardN; cardN++;
+    parts = Array.isArray(parts) ? parts : [String(parts || "")];
+    return {vid, start: Number(start) || 0, dur: Number(dur) || 4, parts, _n: n, _lbl: "🎧 What was missing?", _b: {style: "say", box: null},
+      front: parts.map(x => typeof x === "string" ? x : "______").join(""), back: parts.map(x => typeof x === "string" ? x : `**${x.gap}**`).join("")}; });
 }));
 /* ---------- tools 24 (her 1.11 21:55: «мне было бы спокойнее, если бы я могла сама перетащить куски урока… на карточку кликнуть и поменять
    текст»; 21:58 «все заранее не предусмотришь»): on her -live page ✏️ on the cards (sentence, answer, red word, context…), the instructions,
@@ -2766,6 +2824,7 @@ const CARD_FIELDS = ["instr", "ctx", "front", "a", "key", "frame", "back", "next
 BLOCKS.forEach((b, pos) => { const bp = "blocks." + pos; b._pos = pos;
   ledAdd(bp + ".instr", b, "instr"); ledAdd(bp + ".instr_next", b, "instr_next");
   if(b.kind === "text") (b.lines || []).forEach((l, i) => { if(l && Array.isArray(l.p)) ledAdd(bp + ".lines." + i, b.lines, i, "line"); });
+  if(b.kind === "text") (b.answer || []).forEach((n, i) => ledAdd(bp + ".answer." + i, b.answer, i));   /* tools 25 */
   if(b.kind === "model") (b.parts || []).forEach((pt, pi) => (pt.lines || []).forEach((l, i) => { if(l && Array.isArray(l.p)) ledAdd(`${bp}.parts.${pi}.lines.${i}`, pt.lines, i, "line"); }));
   if(b.kind === "postits") (b.notes || []).forEach((n, i) => ledAdd(bp + ".notes." + i, b.notes, i));
   if(b.kind === "say"){ (b.task || []).forEach((n, i) => ledAdd(bp + ".task." + i, b.task, i)); (b.answer || []).forEach((n, i) => ledAdd(bp + ".answer." + i, b.answer, i)); }
@@ -2825,7 +2884,7 @@ function keepPlace(){
   if(S.view !== "field" || S.fast) return;
   const bsOut = Object.assign({}, S._restore || {}); Object.entries(S.bs).forEach(([id, st]) => { if(id === "fastdeck") return; const d = st.deck;
     bsOut[id] = {open: [...st.open], shown: !!st.shown, check: st.check || "", done: !!st.done, bm: [...(st.bm || [])], spk: st.spk ? st.spk.key : null,
-      sc: st.sc || null, cn: st.cn ? Object.assign({}, st.cn, {busy: false, enter: false}) : null, fx: st.fx || null, so: st.so || null, sec: st.sec || null, memo: st.memo ? {phase: st.memo.phase, got: [...st.memo.got], end: st.memo.end || 0} : null, g: st.g || null, np: st.np || null, wh: st.wh || null, rl: st.rl ? {ph: st.rl.ph, roll: st.rl.roll} : null, mx: st.mx || null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, flipped: !!d.flipped} : (st._deck || null)}; });
+      sc: st.sc || null, cn: st.cn ? Object.assign({}, st.cn, {busy: false, enter: false}) : null, fx: st.fx || null, so: st.so || null, sec: st.sec || null, memo: st.memo ? {phase: st.memo.phase, got: [...st.memo.got], end: st.memo.end || 0} : null, g: st.g || null, np: st.np || null, ended: !!st.ended, lis: st.lis || null, wh: st.wh || null, rl: st.rl ? {ph: st.rl.ph, roll: st.rl.roll} : null, mx: st.mx || null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, flipped: !!d.flipped} : (st._deck || null)}; });
   store.set(PLACE_KEY, {stage: S.stage, at: S.at, far: S.far, intro: S.intro, bs: bsOut, t: Date.now(), shape: SHAPE});
   store.set(LEFT_KEY, {page: PAGE_ID, href: location.pathname.split("/").pop(), cell: cellName(), title: D.title, stage: String(D.stages[S.stage].label || ""), t: Date.now()});
 }
@@ -2839,6 +2898,8 @@ function restoreBs(id){ const r = S._restore && S._restore[id]; if(!r) return nu
   if(r.spk != null) st.spk = Object.assign(newCursor(), {key: r.spk}); if(r.sc && Array.isArray(r.sc.order)) st.sc = r.sc;
   if(r.fx) st.fx = r.fx; if(r.ttt && Array.isArray(r.ttt.cells)) st.ttt = r.ttt;   /* tools 16 */
   if(r.np) st.np = r.np;   /* tools 23 */
+  if(r.ended) st.ended = true;   /* tools 25: 🏁 Finish the game */
+  if(r.lis && r.lis.typed) st.lis = r.lis;   /* tools 26 */
   if(r.so) st.so = r.so; if(r.sec) st.sec = r.sec; if(r.memo) st.memo = r.memo;   /* tools 17 */
   if(r.cn && Array.isArray(r.cn.subs)) st.cn = r.cn;   /* tools 18 */
   if(r.g) st.g = r.g; if(r.wh) st.wh = r.wh; if(r.rl) st.rl = r.rl; if(r.mx) st.mx = r.mx;   /* tools 20 */
@@ -2881,8 +2942,12 @@ function allGaps(b){
 }
 function textHTML(b){
   const gl = b.gloss && b.gloss.length ? `<aside class="gloss${D.sketch ? " sk" : ""}" aria-label="Glossary">${D.sketch ? `<img class="sticker" src="../sk-glossary.png" alt="Glossary">` : ""}${b.gloss.map((g, gi) => `<p class="gl">${partsHTML(g.p, b, `xl${gi}g`)} <span class="ru">– ${esc(g.ru)}</span></p>`).join("")}</aside>` : "";
-  return `<div class="tx ${gl ? "" : "single"}"><div class="dlg${b.cols ? " cols" : ""}">${linesHTML(b.lines, b, "t")}</div>${gl}</div>${gapTools(b)}`;
+  return `<div class="tx ${gl ? "" : "single"}"><div class="dlg${b.cols ? " cols" : ""}">${linesHTML(b.lines, b, "t")}</div>${gl}</div>${gapTools(b)}${txAnsHTML(b)}`;
 }
+/* tools 25 (the C1 chat 1.11 21:50 and the German page 2.11: «always meaning first»): a text can carry an answer to a meaning question —
+   "Show the answer" (or Next) opens it under the lines */
+const txAnsHTML = b => !b.answer || !b.answer.length ? "" : bs(b).shown ? `<div class="tx-ans">${b.answer.map((l, i) => { const lp = `blocks.${b._pos}.answer.${i}`, lb = LEDP[lp] ? ledBtn(lp) : ""; return `<p${lb ? " data-live-host" : ""}>${mk(l)}${lb}</p>`; }).join("")}</div>`
+  : `<div class="row-actions"><button class="btn primary" data-txshow>Show the answer</button></div>`;
 function gapTools(b){
   const ids = allGaps(b), st = bs(b), all = ids.length && ids.every(id => st.open.has(id));
   return ids.length ? `<div class="tx-tools"><button class="btn slim" data-showall="${b._id}">${all ? "Hide all" : "Show all"}</button>${S.noFirst && b.kind === "text" ? `<span class="hint">⚡ No first letters this time.</span>` : sharing() ? `<span class="hint">🔖 next to an opened gap = we didn't know this</span>` : ""}</div>` : "";
@@ -3093,7 +3158,7 @@ function frontHTML(b, c, i, open){
   if(b.style === "mix") b = c._b; const st = b.style;
   if(st === "kwt") return `<p class="sm">${mk(c.front)}</p><p class="frame">${open ? kwtFill(c) : mk(c.frame)}<span class="kw">${esc(c.key)}</span></p>`;
   if(st === "ours") return `${c.ctx ? `<p class="lctx">${esc(c.ctx)}</p>` : ""}<p class="say orig">${mk(c.front)}${c.key ? `<span class="kw">${esc(c.key)}</span>` : ""}</p>`;
-  if(st === "share") return `${c.ctx ? `<p class="lctx">${mk(c.ctx)}</p>` : ""}<p class="say">A: ${mk(c.a)}</p>${c.hint ? `<p class="hintline">${esc(c.hint)}</p>` : ""}`;
+  if(st === "share") return `${c.ctx ? `<p class="lctx">${mk(c.ctx)}</p>` : ""}<p class="say">A: ${mk(c.a)}</p>${c.hint ? `<p class="hintline">${mk(c.hint)}</p>` : ""}`;
   if(st === "bubble") return `<p class="sit">${mk(c.ctx)}</p><div class="scene"><img class="skimg fig" src="../sk-listen.png" alt="">
     <div class="bub ${open ? "said" : ""}">${open ? `<span>${mk(c.back)}</span>` : `<span class="dots" aria-label="What might they say?">•••</span>`}${TAIL}</div><img class="skimg fig" src="../sk-talk.png" alt=""></div>`;
   return `<p class="say">${mk(c.front)}${c.key ? `<span class="kw">${esc(c.key)}</span>` : ""}</p>${picHTML(b, open)}`;   /* tools 18: a key word in red (reformulation) */
@@ -3188,7 +3253,7 @@ function fastHTML(){
     <div class="row-actions">${again ? `<button class="btn slim" data-fast-cards>↺ Your ${again} hard card${again === 1 ? "" : "s"} once more</button>` : ""}${text ? `<button class="btn slim" data-fast-text>📖 The text again — no first letters</button>` : ""}</div></section>`;
 }
 function fastDeckBlock(){
-  const cards = saved.again.map(n => BLOCKS.filter(b => b.kind === "cards").flatMap(b => b.cards).concat(BLOCKS.filter(b => b.kind === "game").flatMap(b => b.tasks)).find(c => c._n === n)).filter(Boolean);
+  const cards = saved.again.map(n => BLOCKS.filter(b => b.kind === "cards").flatMap(b => b.cards).concat(BLOCKS.filter(b => b.kind === "game").flatMap(b => b.tasks || []), BLOCKS.filter(b => b.kind === "listen").flatMap(b => b._clips || [])).find(c => c && c._n === n)).filter(Boolean);
   return {kind: "cards", style: "mix", _id: "fastdeck", instr: "Your hard cards once more", cards};
 }
 
@@ -3237,7 +3302,7 @@ function gameMount(b, host){
   if(!host) return; const st = bs(b);
   if(b.piece === "wheel" || b.piece === "goose" || b.piece === "snakes" || b.piece === "dots" || b.piece === "islands"){ newGameMount(b, host); return; }   /* tools 20 */
   if(b.piece === "memo"){ st.memo = gMemo(host, b.items, {seconds: b.seconds || 30, groups: b.groups, state: st.memo || null,
-    onChange: () => { keepPlace(); const sb = document.querySelector("[data-step]"); if(sb) sb.disabled = !canNext(); }}); return; }   /* tools 17 */
+    onChange: () => { keepPlace(); stepSync(); }}); return; }   /* tools 17 */
   if(st.ttt && st.ttt.cells && st.ttt.cells[0] && st.ttt.cells[0].i != null) st.ttt.cells = gameTasks(b, st.ttt.cells);   /* reopened on this device */
   const three = npOf(b) === 3;
   st.ttt = gTicTacToe(host, b.tasks, {size: three ? Math.max(4, b.size || 3) : b.size || 3, marks: three ? ["X", "O", "△"] : undefined, state: st.ttt || null, revealFirst: true, labels: {yes: "✓ Correct", no: "✗ Not quite"}, cellLabel: t => t.label ? esc(t.label) : "",
@@ -3245,7 +3310,7 @@ function gameMount(b, host){
     answer: t => `${b.check ? `<span class="chk">${esc(b.check)}</span>` : ""}<span class="say fixline">${mk(t.a)}</span>${t.why ? `<span class="note">${mk(t.why)}</span>` : ""}`,
     onResult: (t, ok) => { lwDeck(t._n, ok); if(!ok && !saved.again.includes(t._n)){ saved.again.push(t._n); save(); } },
     onWin: el => { if(typeof confetti === "function") confetti(el); },
-    onChange: () => { keepPlace(); const sb = document.querySelector("[data-step]"); if(sb) sb.disabled = !canNext(); }});
+    onChange: () => { keepPlace(); stepSync(); }});
 }
 /* tools 23 (her 1.11 18:41: «а что делать группам, в которых 3 студента?» — «если их двое, пусть играют 3 на 3»): 👥 2 · 3 players above
    the game. Three: snakes and ladders, the goose race and dots and boxes get a purple player; noughts and crosses gets △ on a 4×4 board,
@@ -3283,7 +3348,7 @@ const taskA = (b, t) => `${b.check ? `<span class="chk">${esc(b.check)}</span>` 
 const dotsQ = t => `<span class="say">${mk(t.q)}</span><span class="say frame">${mk(String(t.frame || "").replace(/_{2,}/g, "______"))} <b class="kw">${esc(t.key || "")}</b></span>`;
 const dotsA = (b, t) => `${b.check ? `<span class="chk">${esc(b.check)}</span>` : ""}<span class="say fixline">${mk(t.back || t.a)}</span>${t.note ? `<span class="note">${mk(t.note)}</span>` : ""}`;
 const onTask = (t, ok) => { lwDeck(t._n, ok); if(!ok && !saved.again.includes(t._n)){ saved.again.push(t._n); save(); } };
-const gameChanged = () => { keepPlace(); const sb = document.querySelector("[data-step]"); if(sb){ sb.disabled = !canNext(); sb.textContent = nextLabel(); } fitCard(); };
+const gameChanged = () => { keepPlace(); stepSync(); fitCard(); };
 const winFx = el => { if(typeof confetti === "function") confetti(el); };
 let WHEEL = null;   /* the wheel on screen (its sectors leave with an animation) */
 /* tools 21 (her 1.11 05:42): ▶ How to play — the first time a game opens on this device (nothing played yet), a few seconds of it play
@@ -3494,13 +3559,137 @@ function wireSecret(b, root){ const X = secSt(b);
   const ph = root.querySelector("[data-secphone]"); if(ph) ph.addEventListener("click", () => { X.phone = !X.phone; render(); });
 }
 
+/* ---------- tools 26 (her German page, R1; her 2.11: «что-то типа TubeQuiz, только на немецком… побольше примеров»; the clip times
+   from YouGlish are ± 1–2 s, her answer: «вытащить чуть-чуть побольше контекста, и тогда сразу попадёт»): 🎧 a listen block — real
+   clips from YouTube, one at a time ("3 of 21"): ▶ Play plays the line from 3 s before to 3 s after, type what's missing (ä = ae, ß = ss,
+   ' optional, `acc` = other forms), Check / Enter / Next → ✓ or the answer; a missed clip comes back in "Your hard cards once more".
+   Next on a checked clip = the next clip (it plays at once). One player for the whole page, kept on top of the block's place (a new
+   player for every clip = a new view for YouTube, more ads); nothing loads from YouTube until "Load the videos" (once on this device,
+   the same choice as on the homework pages). ---------- */
+const LIS_LEAD = 3, LIS_TAIL = 3, LIS_RATES = [1, 0.75, 0.5];
+const lisSt = b => { const st = bs(b); if(!st.lis || !st.lis.typed) st.lis = {at: 0, typed: {}, res: {}}; if(st.lis.at >= b._clips.length) st.lis.at = 0; return st.lis; };
+const lisGaps = c => c.parts.map((p, gi) => typeof p === "string" ? -1 : gi).filter(gi => gi > -1);
+const lisChecked = (b, at) => { const L = lisSt(b); return lisGaps(b._clips[at]).every(gi => L.res[at + "-" + gi]); };
+const lisPending = b => { const L = lisSt(b); return !lisChecked(b, L.at) || L.at < b._clips.length - 1; };
+const deFold = s => String(s || "").normalize("NFC").toLowerCase().replace(/[’‘`´ʼ′]/g, "'").replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss")
+  .replace(/'/g, "").replace(/[.,!?;:„“”"«»()…–—-]/g, " ").replace(/\s+/g, " ").trim();
+const lisOk = (val, g) => [g.gap].concat(g.acc || []).some(a => deFold(a) === deFold(val));
+const ytYes = () => { try{ return !!localStorage.getItem("hw-yt-ok"); }catch(e){ return false; } };
+const lisRate = () => { let r = 1; try{ r = Number(localStorage.getItem("hw-rate")) || 1; }catch(e){} return LIS_RATES.includes(r) ? r : 1; };
+const lisOut = c => `https://www.youtube.com/watch?v=${encodeURIComponent(c.vid)}&t=${Math.floor(Math.max(0, c.start - LIS_LEAD))}s`;
+function listenHTML(b){
+  const L = lisSt(b), n = b._clips.length, c = b._clips[L.at], done = lisChecked(b, L.at);
+  const line = c.parts.map((p, gi) => { if(typeof p === "string") return esc(p); const R = L.res[L.at + "-" + gi];
+    if(R) return R.ok ? `<b class="lis-ok">${esc(R.v)} ✓</b>` : `${R.v ? `<s class="lis-no">${esc(R.v)}</s> <span class="lis-to">→</span> ` : ""}<b class="lis-ans">${esc(p.gap)}</b>`;
+    return `<input class="lis-in" data-lisin="${gi}" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" lang="de" enterkeyhint="done" aria-label="What's missing" style="width:${Math.max(7, p.gap.length + 3)}ch" value="${esc(L.typed[L.at + "-" + gi] || "")}">`; }).join("");
+  const vid = ytYes() ? `<div class="lis-vid" data-lisvid></div>`
+    : `<div class="lis-vid consent" data-lisvid><div><p>The clips play from <b>YouTube</b>. When you load them, YouTube (Google) gets your IP address and may store cookies. <a href="../../datenschutz.html#youtube" target="_blank" rel="noopener">More</a></p>
+      <button class="btn primary" data-lisok>Load the videos</button><p class="lis-small">Just once on this device.</p></div></div>`;
+  return `<div class="lis">${vid}<div class="lis-side"><p class="lis-n">${esc(b.title || "🎧")} · <b>${L.at + 1}</b> of ${n}</p>
+      <p class="lis-line">${line}</p>
+      <div class="lis-acts"><button class="btn primary" data-lisplay>▶ Play</button>${done ? "" : `<button class="btn" data-lischeck>Check</button>`}</div>
+      <div class="lis-spd" role="group" aria-label="Speed"><span>🐢</span>${LIS_RATES.map(r => `<button data-lisrate="${r}" aria-pressed="${lisRate() === r}">${r === 1 ? "normal" : r}</button>`).join("")}</div>
+      <p class="lis-src">${b.source ? esc(b.source) + " · " : ""}<a href="${lisOut(c)}" target="_blank" rel="noopener">on YouTube ↗</a></p></div></div>`;
+}
+function lisCheck(b){ const L = lisSt(b), c = b._clips[L.at]; let miss = false;
+  document.querySelectorAll("#main [data-lisin]").forEach(x => { L.typed[L.at + "-" + x.dataset.lisin] = x.value; });
+  lisGaps(c).forEach(gi => { const k = L.at + "-" + gi, v = String(L.typed[k] || "").trim(), ok = !!v && lisOk(v, c.parts[gi]); L.res[k] = {v, ok}; if(!ok) miss = true; });
+  if(miss && !saved.again.includes(c._n)){ saved.again.push(c._n); save(); }
+  render(); keepPlace(); }
+function lisNext(b){ const L = lisSt(b); if(!lisChecked(b, L.at)){ lisCheck(b); return; } L.at++; render(); keepPlace(); LIS.autoplay = true; }
+function wireListen(b, root){ const L = lisSt(b), c = b._clips[L.at];
+  root.querySelectorAll("[data-lisin]").forEach(x => { x.addEventListener("input", () => { L.typed[L.at + "-" + x.dataset.lisin] = x.value; keepPlace(); });
+    x.addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); lisCheck(b); } }); });
+  root.querySelectorAll("[data-lischeck]").forEach(x => x.addEventListener("click", () => lisCheck(b)));
+  root.querySelectorAll("[data-lisplay]").forEach(x => x.addEventListener("click", () => lisPlay(c)));
+  root.querySelectorAll("[data-lisok]").forEach(x => x.addEventListener("click", () => { try{ localStorage.setItem("hw-yt-ok", "1"); }catch(e){} render(); }));
+  root.querySelectorAll("[data-lisrate]").forEach(x => x.addEventListener("click", () => { const r = Number(x.dataset.lisrate); try{ localStorage.setItem("hw-rate", String(r)); localStorage.setItem("hw-slow", ""); }catch(e){}
+    root.querySelectorAll("[data-lisrate]").forEach(y => y.setAttribute("aria-pressed", Number(y.dataset.lisrate) === r)); try{ LIS.player && LIS.player.setPlaybackRate(r); }catch(e){} }));
+}
+/* the one player: a holder on top of the block's place, moved there after every redraw, hidden on other screens */
+const LIS = {player: null, ready: false, holder: null, vid: "", timer: 0, autoplay: false, failed: false, ro: null};
+const ytApiOk = () => !!(window.YT && typeof window.YT.Player === "function");
+let ytPromise = null;
+function loadYT(){
+  if(ytApiOk()) return Promise.resolve();
+  if(!ytPromise) ytPromise = new Promise((res, rej) => { let done = false;
+    const finish = err => { if(done) return; done = true; clearInterval(poll); clearTimeout(stop); if(err){ ytPromise = null; rej(err); } else res(); };
+    const prev = window.onYouTubeIframeAPIReady; window.onYouTubeIframeAPIReady = function(){ try{ if(typeof prev === "function") prev.apply(this, arguments); }catch(e){} if(ytApiOk()) finish(); };
+    const poll = setInterval(() => { if(ytApiOk()) finish(); }, 250), stop = setTimeout(() => finish(new Error("timeout")), 20000);
+    if(!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')){ const sc = document.createElement("script"); sc.src = "https://www.youtube.com/iframe_api"; sc.async = true;
+      sc.onerror = () => { sc.remove(); finish(new Error("blocked")); }; document.head.appendChild(sc); } });
+  return ytPromise;
+}
+const lisCur = () => { const b = !S.intro && !S.fast && S.view === "field" ? curBlock() : null; return b && b.kind === "listen" ? b._clips[lisSt(b).at] : null; };
+function lisMsg(t, c){ const h = LIS.holder; if(!h) return; const m = h.querySelector(".lis-msg"); if(!m) return; m.hidden = !t;
+  m.innerHTML = !t ? "" : t === "fail" ? `<span>The video isn't loading here.<br><button class="btn slim" data-lisretry>Try again</button> · <a href="${c ? lisOut(c) : "#"}" target="_blank" rel="noopener">watch it on YouTube ↗</a></span>` : esc(t);
+  const r = m.querySelector("[data-lisretry]"); if(r) r.addEventListener("click", () => { LIS.failed = false; if(LIS.player){ try{ LIS.player.destroy(); }catch(e){} LIS.player = null; } LIS.ready = false;
+    LIS.holder.querySelector(".lis-yt-box").innerHTML = '<div id="lis-yt"></div>'; lisPlace(); }); }
+function lisPlace(){
+  const ph = document.querySelector("#main [data-lisvid]:not(.consent)"), c = lisCur();
+  if(!ph || !c){ if(LIS.holder){ LIS.holder.style.display = "none"; lisPause(); } return; }
+  if(!LIS.holder){ const h = document.createElement("div"); h.className = "lis-holder"; h.innerHTML = '<div class="lis-yt-box"><div id="lis-yt"></div></div><p class="lis-msg" hidden></p>'; document.body.appendChild(h); LIS.holder = h;
+    addEventListener("resize", () => requestAnimationFrame(lisPlace)); }
+  const r = ph.getBoundingClientRect();
+  Object.assign(LIS.holder.style, {display: "block", left: (r.left + scrollX) + "px", top: (r.top + scrollY) + "px", width: r.width + "px", height: r.height + "px"});
+  if(window.ResizeObserver){ if(LIS.ro) LIS.ro.disconnect(); LIS.ro = new ResizeObserver(() => { if(ph.isConnected){ const q = ph.getBoundingClientRect(); Object.assign(LIS.holder.style, {left: (q.left + scrollX) + "px", top: (q.top + scrollY) + "px", width: q.width + "px", height: q.height + "px"}); } }); LIS.ro.observe(ph); }
+  if(LIS.player){ if(LIS.ready){ if(LIS.autoplay){ LIS.autoplay = false; lisPlay(c); } else if(LIS.vid !== c.vid){ LIS.vid = c.vid; try{ LIS.player.cueVideoById({videoId: c.vid, startSeconds: Math.floor(Math.max(0, c.start - LIS_LEAD))}); }catch(e){} } } return; }
+  if(LIS.failed){ lisMsg("fail", c); return; }
+  LIS.vid = c.vid; LIS.ready = false; lisMsg("Loading the video…");
+  loadYT().then(() => { if(LIS.player || !document.getElementById("lis-yt")) return;
+    LIS.player = new YT.Player("lis-yt", {videoId: c.vid, width: "100%", height: "100%",
+      playerVars: {playsinline: 1, rel: 0, modestbranding: 1, cc_load_policy: 0, iv_load_policy: 3, start: Math.floor(Math.max(0, c.start - LIS_LEAD))},
+      events: {onReady: () => { LIS.ready = true; clearTimeout(LIS.wait); lisMsg(""); const cur = lisCur(); if(cur && LIS.autoplay){ LIS.autoplay = false; lisPlay(cur); } else if(cur && cur.vid !== LIS.vid){ LIS.vid = cur.vid; try{ LIS.player.cueVideoById({videoId: cur.vid, startSeconds: Math.floor(Math.max(0, cur.start - LIS_LEAD))}); }catch(e){} } }}});
+    clearTimeout(LIS.wait); LIS.wait = setTimeout(() => { if(!LIS.ready){ LIS.failed = true; lisMsg("fail", lisCur()); } }, 15000);
+  }).catch(() => { LIS.failed = true; lisMsg("fail", lisCur()); });
+}
+function lisPause(){ clearInterval(LIS.timer); try{ LIS.player && LIS.ready && LIS.player.pauseVideo(); }catch(e){} }
+function lisPlay(c){
+  if(!c) return; if(!LIS.player || !LIS.ready){ LIS.autoplay = true; if(!LIS.player && !LIS.failed) lisPlace(); return; }
+  clearInterval(LIS.timer); const from = Math.max(0, c.start - LIS_LEAD), to = c.start + c.dur + LIS_TAIL;
+  try{ if(LIS.vid !== c.vid){ LIS.vid = c.vid; LIS.player.loadVideoById({videoId: c.vid, startSeconds: from}); } else { LIS.player.seekTo(from, true); LIS.player.playVideo(); } LIS.player.setPlaybackRate(lisRate()); }catch(e){}
+  LIS.timer = setInterval(() => { let t = 0; try{ t = LIS.player.getCurrentTime(); }catch(e){} if(t >= to){ lisPause(); } }, 100);
+}
+
+/* ---------- tools 26 (her German page, R2: «чтобы за них тоже начислялись бы баллы мне, потому что я хочу копить баллы»; the groups'
+   lesson pages have no scores — only a page with "points": true): 🎬 Your film in the head. With her own code (a Students row with
+   Group = Self, kept on this device apart from her teacher code) every part she finishes adds its minutes as frames 🎞 to her film in
+   her table, a won game 3 more. A part counts when Next leaves it from its last screen (the last part: its last screen reached). ---------- */
+const PTS = !!D.points && !!LIVE_URL, SELF_KEY = "tool-self-code", FILM_KEY = "tool-film-" + PAGE_ID;
+const selfCode = () => { try{ return localStorage.getItem(SELF_KEY) || ""; }catch(e){ return ""; } };
+const FILM = Object.assign({total: null, week: null, sent: {}, queue: [], open: false, err: "", busy: false}, store.get(FILM_KEY) || {}, {open: false, busy: false, err: ""});
+const filmSave = () => store.set(FILM_KEY, {total: FILM.total, week: FILM.week, sent: FILM.sent, queue: FILM.queue});
+const partId = i => "part-" + String(D.stages[i].label || i).replace(/^\S+\s+/, "").toLowerCase().replace(/[^a-z0-9äöüß]+/g, "-").replace(/^-|-$/g, "").slice(0, 40);
+const partMin = st => Number(st.min) > 0 ? Number(st.min) : Math.max(3, Math.round(st.blocks.reduce((a, b) => a + (b.kind === "listen" ? (b.clips || []).length * .5 : b.kind === "game" ? 6 : b.kind === "cards" ? (b.cards || []).length * .5 : b.kind === "tool" ? 6 : 2), 0)));
+function filmTasks(){ return D.stages.map((st, i) => ({id: partId(i), title: st.label, frames: partMin(st)}))
+  .concat(BLOCKS.filter(isPlay).map(b => ({id: "win-" + b._pid, title: "🏆 " + (D.stages[b._si].label || ""), frames: 3}))); }
+async function filmSend(events){
+  if(!PTS) return; const code = selfCode(); if(events) FILM.queue = FILM.queue.concat(events); filmSave(); if(!code || FILM.busy) return;
+  FILM.busy = true; const q = FILM.queue.slice();
+  const res = await livePost({code, page: PAGE_ID, date: new Date().toISOString().slice(0, 10), tasks: filmTasks(), events: q}); FILM.busy = false;
+  if(res && res.ok && res.me){ FILM.total = res.me.total; FILM.week = res.me.week; FILM.err = ""; FILM.queue = FILM.queue.slice(q.length); q.forEach(e => { FILM.sent[e.task] = e.ts; }); }
+  else FILM.err = res && res.error === "unknown-code" ? "This code isn't in your table." : res && res.ok ? "That's not a Self code (Group = Self)." : "No connection — it's kept and sent later.";
+  filmSave(); filmPaint(); }
+function filmDone(task){ if(!PTS || FILM.sent[task] || FILM.queue.some(e => e.task === task)) return; filmSend([{task, ts: Date.now(), done: true}]); }
+const filmBtnHTML = () => !PTS ? "" : `<button class="btn slim film" data-film aria-expanded="${FILM.open}">🎬 ${FILM.total != null && selfCode() ? `<b>${FILM.total}</b> 🎞` : "Your film"}</button>`;
+const filmPanelHTML = () => !PTS || !FILM.open ? "" : `<section class="film-p" aria-label="Your film">${selfCode()
+  ? `<p><b>🎬 Your film: ${FILM.total != null ? FILM.total : "…"} 🎞</b>${FILM.week ? ` · this week ${FILM.week} 🎞` : ""}</p><p class="film-s">Every part you finish adds its minutes (${filmTasks().filter(t => t.id.startsWith("part-")).reduce((a, t) => a + t.frames, 0)} 🎞 for the whole page), a won game 3 more.${FILM.queue.length ? ` Waiting to be sent: ${FILM.queue.length}.` : ""}</p>${FILM.err ? `<p class="film-e">${esc(FILM.err)}</p>` : ""}<p class="film-s"><button class="btn slim" data-film-change>Another code</button></p>`
+  : `<p><b>🎬 Your film</b> — your own code (a row in Students with Group = <b>Self</b>). It stays on this device for this page; your teacher code isn't touched.</p>
+     <p class="film-row"><input class="film-in" data-film-in type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Your Self code"><button class="btn primary slim" data-film-save>Save</button></p>${FILM.err ? `<p class="film-e">${esc(FILM.err)}</p>` : ""}`}</section>`;
+function filmPaint(){ const b = document.querySelector("[data-film]"); if(b) b.outerHTML = filmBtnHTML(); const p = document.querySelector(".film-p"); if(p) p.outerHTML = filmPanelHTML() || ""; wireFilm(document); }
+function wireFilm(root){ if(!PTS) return;
+  root.querySelectorAll("[data-film]").forEach(x => { if(x._w) return; x._w = 1; x.addEventListener("click", () => { FILM.open = !FILM.open; render(); if(FILM.open && selfCode()) filmSend(); }); });
+  root.querySelectorAll("[data-film-save]").forEach(x => { if(x._w) return; x._w = 1; x.addEventListener("click", () => { const v = String((document.querySelector("[data-film-in]") || {}).value || "").trim(); if(!v) return;
+    try{ localStorage.setItem(SELF_KEY, v); }catch(e){} FILM.total = null; FILM.err = ""; filmPaint(); filmSend(); }); });
+  root.querySelectorAll("[data-film-change]").forEach(x => { if(x._w) return; x._w = 1; x.addEventListener("click", () => { try{ localStorage.removeItem(SELF_KEY); }catch(e){} FILM.total = null; FILM.err = ""; filmPaint(); }); });
+}
 /* ---------- the page ---------- */
 function blockHTML(b){
   const body = b.kind === "text" ? textHTML(b) : b.kind === "model" ? modelHTML(b) : b.kind === "write" ? writeHTML(b) : b.kind === "say" ? sayHTML(b) : b.kind === "postits" ? postitsHTML(b) : b.kind === "council" ? councilHTML(b)
     : b.kind === "picture" ? pictureHTML(b) : b.kind === "calendars" ? calendarsHTML(b) : b.kind === "tool" ? toolHTML(b)
     : b.kind === "questions" ? questionsHTML(b) : b.kind === "cards" ? groupDotsHTML(b) + `<div class="deck">${cardsHTML(b)}</div>` : b.kind === "scenes" ? scenesHTML(b)
     : b.kind === "fix" ? fixHTML(b) : b.kind === "sort" ? sortHTML(b) : b.kind === "game" && b.piece === "secret" ? secretHTML(b)
-    : b.kind === "mix" ? mixHTML(b) : b.kind === "game" && b.piece === "wheel" ? groupDotsHTML(b) + wheelHTML(b) : b.kind === "game" && ROLLS.includes(b.piece) ? rollHTML(b)
+    : b.kind === "listen" ? listenHTML(b) : b.kind === "mix" ? mixHTML(b) : b.kind === "game" && b.piece === "wheel" ? groupDotsHTML(b) + wheelHTML(b) : b.kind === "game" && ROLLS.includes(b.piece) ? rollHTML(b)
     : b.kind === "game" ? (b.piece === "memo" ? "" : groupDotsHTML(b)) + (b.rule ? `<p class="g-rule">${mk(b.rule)}</p>` : "") + `<div class="fgame${b.piece === "memo" ? " fmemo" : ""} fg-${esc(b.piece || "ttt")}" data-game="${b._id}"></div>` : "";
   const instr = b.kind === "cards" || b.kind === "questions" ? (b.kind === "questions" ? b.instr : "") : b.kind === "scenes" && sceneAt(b) >= 0 ? (b.street_first === false ? [b.instr, b.task].filter(Boolean).join(" ") : b.task)
     : b.kind === "game" && b.piece === "secret" ? secInstr(b) : b.kind === "game" && ROLLS.includes(b.piece) && rlIntro(b) ? b.intro.instr || b.instr : b.instr;
@@ -3509,18 +3698,62 @@ function blockHTML(b){
   const ledI = instr && instr === b.instr && LEDP["blocks." + b._pos + ".instr"] ? ledBtn("blocks." + b._pos + ".instr") : "";   /* tools 24 */
   return `${tip}${instr ? `<p class="finstr"${ledI ? " data-live-host" : ""}>${mk(instr)}${how}${npHTML(b)}${ledI}</p>` : npHTML(b)}<section class="blk ${S.enter ? "enter" : ""}" data-blk="${b._id}">${body}</section>`;
 }
+/* ---------- tools 25 (her 2.11 06:56, the wheel on «At the water cooler»: one spin, one answer, the hand goes to Next — and the game was
+   gone; «не полагаемся на поведение студентов»): in a game Next is the game's next move — spin, roll, flip, sail, show the answer — until
+   somebody wins (or the wheel / the islands are all done). Where the room has to decide (✓ or ✗, which square, which line) Next doesn't
+   decide for them: those buttons pulse, with a word in the middle of the bar. 🏁 Finish the game (beside Next) ends it whenever they like;
+   then Next says "Next task →" and goes on (↩ Keep playing, any tap in the game or Play again bring the game back). Not for 🧠 memo and
+   🤫 secret: they have their own steps. ---------- */
+const PLAY = ["wheel", "goose", "snakes", "dots", "tictactoe", "dice1", "dice2", "islands"];
+function isPlay(b){ return !!b && b.kind === "game" && PLAY.includes(b.piece || "tictactoe"); }
+function gameOver(b){ const st = bs(b), G = st.g, T = st.ttt, p = b.piece || "tictactoe";
+  if(p === "wheel"){ const W = st.wh; return !!W && W.cur == null && (W.got || []).length >= b.tasks.length; }
+  if(p === "snakes" || p === "goose") return !!G && G.winner != null;
+  if(p === "dots"){ const n = b.n || 4; return !!G && Object.keys(G.boxes || {}).length >= (n - 1) * (n - 1); }
+  if(p === "tictactoe") return !!(T && T.over);
+  if(p === "islands") return !!G && (G.seen || []).length >= Math.min(8, (b.islands || []).length);
+  return false; }   /* the dice: a game nobody wins — they finish it */
+function gameLive(b){ return isPlay(b) && !bs(b).ended && !gameOver(b) && !(ROLLS.includes(b.piece) && rlIntro(b)); }
+function finMode(b){ if(!isPlay(b) || S.fast || S.intro || S.view !== "field" || gameOver(b) || (ROLLS.includes(b.piece) && rlIntro(b))) return null; return bs(b).ended ? "back" : "fin"; }
+const finLbl = m => m === "back" ? "↩ Keep playing" : `🏁 Finish<span class="fin-long"> the game</span>`;
+function finBtnHTML(){ const b = !S.intro && !S.fast && S.view === "field" ? curBlock() : null; if(!isPlay(b)) return ""; const m = finMode(b);
+  return `<button class="btn gfin${m === "back" ? " back" : ""}" data-gfin${m ? "" : " hidden"}>${finLbl(m)}</button>`; }
+/* the bar follows the game: Next on / off and its words, the finish button, the board quieter once finished */
+function stepSync(){ const b = !S.intro && !S.fast && S.view === "field" ? curBlock() : null;
+  const sb = document.querySelector("[data-step]"); if(sb){ sb.disabled = !canNext(); sb.textContent = nextLabel(); }
+  const f = document.querySelector("[data-gfin]"); if(f && b){ const m = finMode(b); f.hidden = !m; if(m && f.dataset.m !== m){ f.dataset.m = m; f.innerHTML = finLbl(m); f.classList.toggle("back", m === "back"); } }
+  const blk = document.querySelector("#main .blk"); if(blk) blk.classList.toggle("g-ended", !!(b && isPlay(b) && bs(b).ended && !gameOver(b)));
+  if(PTS && b && isPlay(b) && gameOver(b)) filmDone("win-" + b._pid); }   /* tools 26: a won game → 3 frames (once) */
+function gameFinish(){ const b = curBlock(); if(!isPlay(b)) return; const st = bs(b), m = finMode(b); if(!m) return;
+  st.ended = m === "fin"; keepPlace(); stepSync();
+  const nx = document.querySelector("[data-step]"); if(nx){ nx.classList.remove("ready", "ready-still"); if(st.ended){ void nx.offsetWidth; nx.classList.add("ready"); } } }
+function nudge(sel, msg){ const xs = [...document.querySelectorAll("#main " + sel.split(/\s*,\s*/).join(", #main "))];
+  xs.forEach(x => { x.classList.remove("nudge"); void x.getBoundingClientRect(); x.classList.add("nudge"); clearTimeout(x._nudge); x._nudge = setTimeout(() => x.classList.remove("nudge"), 1900); });
+  if(msg) stepMsg(msg); }
+const VERDICT = "[data-whyes], [data-whno], [data-gs-yes], [data-gs-no], [data-go-yes], [data-go-no], [data-dt-yes], [data-dt-no], [data-gt-yes], [data-gt-no]";
+function gameStep(b){
+  if(DEMO && DEMO.id === b._id && DEMO.api){ DEMO.api.finish(); return; }   /* ▶ How to play running: Next = skip it */
+  const R = document.getElementById("main") || document, q = s => R.querySelector(s);
+  const press = s => { const x = q(s); if(!x) return false; if(!x.disabled) x.click(); return true; };   /* found but busy (the die rolling, the wheel turning): wait */
+  if(q(VERDICT)){ nudge(VERDICT, "First: right or not?"); return; }
+  if(press("[data-whshow], [data-gs-show], [data-go-show], [data-dt-show], [data-gt-show]")) return;
+  if(q(".gdt-l.free")){ nudge(".gdt-l.free", "First draw a line"); return; }
+  const T = bs(b).ttt; if((b.piece || "tictactoe") === "tictactoe"){ if(T && T.open < 0) nudge(".gt-cell:not(.taken)", "First pick a square"); return; }
+  if(press("[data-go-next]") || press("[data-go-flip]") || press("[data-gs-roll]") || press("[data-rlroll]") || press("[data-is-sail]")) return;
+  if(b.piece === "wheel") press(".gw-disc");
+}
 /* ---------- one control, always in the same place (her rule 30.10 12:29) ----------
    "← Back" and "Next →" at the bottom of the screen, the same words every time. The steps are ours: after a task they always look at
    the answers — Next first shows them (the gaps, the answer, the card's back, the time on the calendars), the next Next goes on. There is
    no way to jump ahead past the answers; only the stage bubbles on top move freely (for her "move on"). */
-const stepbarHTML = () => `<nav class="stepbar" aria-label="Back and next"><button class="btn" data-back ${canBack() ? "" : "disabled"}>← Back</button><span class="step-mid">${screenDotsHTML()}<span class="step-msg" id="step-msg" aria-live="polite"></span></span><button class="btn primary" data-step ${canNext() ? "" : "disabled"}>${nextLabel()}</button></nav>`;
-const nextLabel = () => { const b = !S.intro && !S.fast && S.view === "field" ? curBlock() : null; return b && b.kind === "picture" && b.answer && !bs(b).shown ? "Look at the answers →" : "Next →"; };
+const stepbarHTML = () => `<nav class="stepbar" aria-label="Back and next"><button class="btn" data-back ${canBack() ? "" : "disabled"}>← Back</button><span class="step-mid">${screenDotsHTML()}<span class="step-msg" id="step-msg" aria-live="polite"></span></span>${finBtnHTML()}<button class="btn primary" data-step ${canNext() ? "" : "disabled"}>${nextLabel()}</button></nav>`;
+const nextLabel = () => { const b = !S.intro && !S.fast && S.view === "field" ? curBlock() : null; return b && b.kind === "picture" && b.answer && !bs(b).shown ? "Look at the answers →" : b && isPlay(b) && !gameLive(b) && !(ROLLS.includes(b.piece) && rlIntro(b)) && !isLast() ? "Next task →" : "Next →"; };
 /* her 15:17: where you are in a stage and how much is left — one numbered circle per screen, between Back and Next; the screens
    already seen can be tapped to go back to them */
 function screenDotsHTML(){
   const n = curBlocks().length; if(S.view !== "field" || S.intro || S.fast || n < 2) return "";
   const i = bIdx(), far = Math.max(S.far[S.stage] || 0, i);
-  return `<span class="sdots" role="group" aria-label="Screen ${i + 1} of ${n}">${Array.from({length: n}, (_, k) => `<button class="${k === i ? "on" : k <= far ? "was" : ""}" data-sdot="${k}" ${k <= far && k !== i ? "" : "disabled"} aria-label="Screen ${k + 1} of ${n}" ${k === i ? `aria-current="step"` : ""}>${k + 1}</button>`).join("")}</span>`;
+  return `<span class="sdots${n > 5 ? " many" : ""}" role="group" aria-label="Screen ${i + 1} of ${n}"><span class="sd-n" aria-hidden="true">${i + 1} / ${n}</span>${Array.from({length: n}, (_, k) => `<button class="${k === i ? "on" : k <= far ? "was" : ""}" data-sdot="${k}" ${k <= far && k !== i ? "" : "disabled"} aria-label="Screen ${k + 1} of ${n}" ${k === i ? `aria-current="step"` : ""}>${k + 1}</button>`).join("")}</span>`;
 }
 const canBack = () => !!S.fast || !S.intro || stagePos(S.stage) > 0 || !!boardHref();
 const canNext = () => !!S.fast || !isLast() || stepPending(curBlock());
@@ -3533,10 +3766,11 @@ function stepPending(b){
   if(b.kind === "picture" && b.answer) return !st.shown;   /* tools 18: the retell's whole text */
   if(b.kind === "council") return cnPending(b);   /* tools 18: the next subject, then Decide */
   if(b.kind === "fix") return fixPending(b);   /* tools 16 */
-  if(b.kind === "game") return gamePending(b);
+  if(b.kind === "game") return gamePending(b) || gameLive(b);
+  if(b.kind === "listen") return lisPending(b);   /* tools 26 */   /* tools 25: a game being played is never "done" */
   if(b.kind === "cards") return deckOf(b).queue.length > 0 || deckOf(b).turn != null || (st.look != null && (!!st.lookBack || !st.lookOpen));
   if(b.kind === "calendars" && b.done && !st.done) return true;
-  if(["text", "model", "calendars"].includes(b.kind)){ const ids = allGaps(b); return ids.length > 0 && !ids.every(id => st.open.has(id)); }
+  if(["text", "model", "calendars"].includes(b.kind)){ const ids = allGaps(b); if(ids.length > 0 && !ids.every(id => st.open.has(id))) return true; return b.kind === "text" && !!(b.answer && b.answer.length) && !st.shown; }
   if(b.kind === "questions") return !!document.querySelector(".speak [data-speak-next]");
   if(b.kind === "scenes"){ const sc = sceneState(b); return sc.at < sc.order.length - 1 || !!st.peek; }
   return false;
@@ -3577,6 +3811,8 @@ function stepNext(){
   if(b.kind === "game" && NEWG.includes(b.piece) && ngPending(b)){ ngNext(b); return; }   /* tools 20: an open task → its answer */
   if(b.kind === "sort" && sortPending(b)){ sortNext(b); return; }
   if(b.kind === "game" && gamePending(b)){ st.ttt.shown = true; render(); return; }   /* an open square: Next shows its answer */
+  if(b.kind === "game" && gameLive(b)){ gameStep(b); return; }
+  if(b.kind === "listen" && lisPending(b)){ lisNext(b); return; }   /* tools 26: check the clip, then the next clip */   /* tools 25: Next is the game's next move until it is won or finished */
   if(b.kind === "cards"){ const d = deckOf(b);
     if(d.turn != null && st.look == null){ turnDone(b); return; }   /* tools 18: talked → the next card */
     if(st.look != null && !st.lookBack && !st.lookOpen){ st.lookOpen = true; render(); return; }   /* her 👥 dot: the front first, Next shows the answer */
@@ -3587,6 +3823,7 @@ function stepNext(){
     if(S.fast){ S.fast = null; render(); return; } }
   if(b.kind === "calendars" && b.done && !st.done){ st.done = true; if(b.hidden && b.common != null) b.cals.forEach((_, ci) => st.open.add(ci + "-" + b.common)); render(); return; }
   if(["text", "model", "calendars"].includes(b.kind)){ const ids = allGaps(b); if(ids.length && !ids.every(id => st.open.has(id))){ ids.forEach(id => st.open.add(id)); render(); return; } }
+  if(b.kind === "text" && b.answer && b.answer.length && !st.shown){ st.shown = true; render(); return; }   /* tools 25 */
   if(b.kind === "questions"){ const nx = document.querySelector(".speak [data-speak-next]"); if(nx){ nx.click(); return; } }
   if(b.kind === "scenes"){ const sc = sceneState(b); if(st.peek){ st.peek = false; render(); return; } if(sc.at < sc.order.length - 1){ sc.at++; st.dealt = true; render(); st.dealt = false; scrollTo(0, 0); return; } }
   stepOn();
@@ -3601,7 +3838,7 @@ const FLOW = !D.boardPage;
 function freshStage(i){ if(!FLOW || i === S.stage && S.view === "field") return;
   S.at[i] = 0; S.far[i] = 0;
   D.stages[i].blocks.forEach(b => { delete S.bs[b._id]; if(S._restore) delete S._restore[b._id]; }); }
-function stepOn(){ const bl = curBlocks(), i = bIdx(); if(i < bl.length - 1) goBlock(S.stage, i + 1); else { const n = nextStage(S.stage); if(n != null){ freshStage(n); goStage(n); } } }   /* tools 24: in her order */
+function stepOn(){ const bl = curBlocks(), i = bIdx(); if(i < bl.length - 1) goBlock(S.stage, i + 1); else { const n = nextStage(S.stage); filmDone(partId(S.stage)); if(n != null){ freshStage(n); goStage(n); } } }   /* tools 26: a part finished → its frames */   /* tools 24: in her order */
 function backToStageBefore(){ const k = prevStage(S.stage);
   if(k == null){ if(boardHref()){ leftForBoard(); location.href = boardHref(); } return false; }
   S.intro = false; const lb = D.stages[k].blocks[D.stages[k].blocks.length - 1];
@@ -3624,6 +3861,8 @@ function stepBack(){
   if(S.fast){ S.fast = null; render(); return; }
   if(b && b.kind === "say" && bs(b).shown){ bs(b).shown = false; render(); return; }
   if(b && b.kind === "picture" && b.answer && bs(b).shown){ bs(b).shown = false; render(); return; }
+  if(b && b.kind === "text" && b.answer && b.answer.length && bs(b).shown){ bs(b).shown = false; render(); return; }   /* tools 25 */
+  if(b && b.kind === "listen" && lisSt(b).at > 0){ lisSt(b).at--; render(); keepPlace(); return; }   /* tools 26: the clip before */
   if(b && b.kind === "council" && cnBack(b)) return;   /* the answer → the question, like the slide before */
   if(b && b.kind === "fix" && fixPh(b).ph > 0){ fixPh(b).ph--; render(); return; }   /* tools 16: the screen before */
   if(b && b.kind === "sort" && sortBack(b)) return;   /* tools 17: the card before, as it was left */
@@ -3643,11 +3882,16 @@ function headHTML(){
   const st = SORD.map(i => [String(i), D.stages[i].label]).concat(liveTeacher() ? [["groups", "📥 Groups"]] : []);
   const howto = !D.demo && BLOCKS.some(b => b.tip) && S.view === "field" ? `<button class="btn slim howto" data-howto aria-pressed="${S.howto}" title="Show how each part of this page works (for the screen you share)">🎓 How it works</button>` : "";
   const board = boardHref() ? `<a class="board-top" href="${boardHref()}" title="Back to the game board">⬅ Board</a>` : "";   /* on top: the bottom is Back / Next only */
-  return `<header class="head">${board}${cellName() ? `<span class="part">${esc(cellName())}</span>` : ""}<h1>${esc(D.title)}</h1>${stagesHTML(st, S.view === "groups" ? "groups" : String(S.stage))}${howto}</header>`;
+  /* tools 25 (the German page: twelve parts took three rows and pushed the task off the screen): more than 8 parts → each button shows
+     its sign, the current one its name too (the name on hover) */
+  const many = SORD.length > 8, lbl = l => { const m = String(l).match(/^(\S+)\s+(.+)$/); return many && m ? `<span class="s-ic">${esc(m[1])}</span><span class="s-nm"> ${esc(m[2])}</span>` : l; };
+  const nav = stagesHTML(st.map(([id, l]) => [id, lbl(l)]), S.view === "groups" ? "groups" : String(S.stage)).replace('<nav class="stages ', many ? '<nav class="stages many ' : '<nav class="stages ');
+  return `<header class="head">${board}${cellName() ? `<span class="part">${esc(cellName())}</span>` : ""}<h1>${esc(D.title)}</h1>${nav}${howto}${filmBtnHTML()}</header>${filmPanelHTML()}`;
 }
 function render(){
   liveApply();
   if(S.view === "field" && !S.intro && !S.fast) S.far[S.stage] = Math.max(S.far[S.stage] || 0, bIdx());
+  if(PTS && S.view === "field" && !S.intro && !S.fast && stagePos(S.stage) === SORD.length - 1 && bIdx() === curBlocks().length - 1) filmDone(partId(S.stage));   /* tools 26: the last part */
   keepPlace();
   const main = document.getElementById("main"), side = document.getElementById("side"), wrap = document.getElementById("wrap");
   let b = S.fast ? S.fast : curBlock(), box = S.view === "field" && !S.intro ? boxFor(b) : null;
@@ -3674,7 +3918,7 @@ function render(){
 /* tools 18 (C1 04.11: an "our sentences" card with its answer, the note and "Your turn" beside the box ran under Back / Next): a long card
    makes its type smaller, step by step, until the card and its buttons fit above them — her rule, a whole card on the shared screen. A phone scrolls as before. */
 function fitCard(){
-  const fc = document.querySelector("#main .deck .fc, #main .cn, #main .blk > .tx, #main .blk > .mix, #main .blk > .rl, #main .blk > .fgame"), blk = document.querySelector("#main .blk"), bar = document.querySelector("#main .stepbar");   /* tools 20: a long text, the mix, the example too */
+  const fc = document.querySelector("#main .deck .fc, #main .cn, #main .blk > .tx, #main .blk > .mix, #main .blk > .rl, #main .blk > .fgame, #main .blk .parts"), blk = document.querySelector("#main .blk"), bar = document.querySelector("#main .stepbar");   /* tools 20: a long text, the mix, the example too */
   if(!fc || !blk || !bar || innerWidth < 760) return;
   const over = () => blk.getBoundingClientRect().bottom + 2 > bar.getBoundingClientRect().top;
   fc.querySelectorAll("img").forEach(im => { if(!im.complete) im.addEventListener("load", () => { if(!fc.isConnected) return; fc.style.removeProperty("--k"); fitCard(); }, {once: true}); });   /* a picture still loading changes the card's size */
@@ -3710,6 +3954,10 @@ function wire(root){
   const on = (q, fn) => root.querySelectorAll(q).forEach(x => x.addEventListener("click", e => fn(x, e)));
   on("[data-stage]", x => { if(x.dataset.stage === "groups"){ if(S.view !== "groups"){ S.view = "groups"; S.fast = null; render(); scrollTo(0, 0); setTimeout(gwFetch, 0); } } else { freshStage(+x.dataset.stage); goStage(+x.dataset.stage); } });
   on("[data-step]", () => stepNext()); on("[data-back]", () => stepBack());
+  on("[data-gfin]", () => gameFinish());   /* tools 25 */
+  requestAnimationFrame(lisPlace);   /* tools 26: the video stays where its block is (or hides) */
+  wireFilm(root);
+  root.querySelectorAll(".stages.many .stage-btn").forEach(x => { x.title = x.textContent.trim(); });
   on("[data-sdot]", x => goBlock(S.stage, +x.dataset.sdot));
   on(".board-top", () => leftForBoard());
   on("[data-howto]", () => { S.howto = !S.howto; render(); });
@@ -3721,6 +3969,7 @@ function wire(root){
   on("[data-bm]", (x, e) => { e.stopPropagation(); const st = bs(b), id = x.dataset.bm, onNow = !st.bm.has(id); onNow ? st.bm.add(id) : st.bm.delete(id); lwSignal("gap", `b${b._pid}:${gapAnswer(b, id)}`, onNow ? 1 : 0); render(); });
   /* say */
   on("[data-sayshow]", () => { bs(b).shown = true; render(); });
+  on("[data-txshow]", () => { bs(b).shown = true; render(); keepPlace(); });   /* tools 25 */
   on("[data-check]", x => { const st = bs(b); st.check = x.dataset.check; lwSignal("check", "b" + b._pid, st.check); render(); });
   /* calendars */
   on("[data-caldone]", () => { bs(b).done = true; render(); });
@@ -3762,6 +4011,11 @@ function wire(root){
   if(b.kind === "council") wireCouncil(b, root);
   if(b.kind === "sort") wireSort(b, root);   /* tools 17 */
   if(b.kind === "game" && b.piece === "secret") wireSecret(b, root);
+  if(b.kind === "listen") wireListen(b, root);   /* tools 26 */
+  if(isPlay(b)){   /* tools 25: finished, then a tap in the game = playing again */
+    root.querySelectorAll(".fgame, .rl").forEach(g => g.addEventListener("click", e => { const st = bs(b); if(!st.ended || !e.target.closest("button, .gdt-l, .gis-isle")) return;
+      st.ended = false; keepPlace(); setTimeout(stepSync, 0); }, true));
+    stepSync(); }
   on("[data-lookflip]", () => { bs(b).lookOpen = true; render(); });
   wireGroupDots();
   /* questions */
@@ -3794,6 +4048,7 @@ LW.groupsView = () => !!S && S.view === "groups";
 liveRerender = () => render();
 render();
 lwWhere(D.stages[0].label);
+if(PTS && selfCode()) filmSend();   /* tools 26: what waited (offline) goes now, and her film's number */
 </script>
 <style>.theme-tg{font:inherit;font-size:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px}</style>
 <script>/* 🌙 Dark theme / ☀️ Light theme beside Impressum · Datenschutz (engine 56) */(function(){

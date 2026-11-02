@@ -185,3 +185,9 @@ details.all[open] summary{color:var(--ink)}
 
 /* ↺ Again later: "Back in 2–3 cards", once per device (handoff 30.10 15:15) */
 .again-hint{position:fixed;transform:translateX(-50%);z-index:60;background:var(--card);color:var(--again);border:2px solid var(--again);font-weight:900;border-radius:99px;padding:6px 18px;font-size:1.1rem;box-shadow:var(--shadow);pointer-events:none;white-space:nowrap}
+
+/* tools 25 (the German page): her move colours as on her slides — <m1> green = reaction, <m2> yellow = a little about you, <m3> cyan = the
+   question back (highlighter colours with dark ink: readable in both themes); a grey extra line in the box */
+.mv{border-radius:4px;padding:0 .12em;color:#111111;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.mv.m1{background:#BFF2B8} .mv.m2{background:#FFF07A} .mv.m3{background:#A8E8FA}
+.bx-ctx{color:var(--muted);font-size:.9em}
