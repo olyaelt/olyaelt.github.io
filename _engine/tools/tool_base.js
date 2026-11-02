@@ -288,11 +288,15 @@ function wireLive(root, current){
   root.querySelectorAll("[data-live-edit]").forEach(b => b.addEventListener("click", e => { e.stopPropagation();
     const paths = b.dataset.liveEdit.split("|"), labels = ["", "Answer", "Key word"], host = b.closest("[data-live-host]") || b.parentElement.parentElement;
     const form = document.createElement("div"); form.className = "live-edit";
-    form.innerHTML = paths.map((p, i) => `<label>${paths.length > 1 ? `<span>${i ? labels[i] : "Sentence"}</span>` : ""}<textarea data-p="${p}" rows="${paths.length > 1 ? 2 : 3}">${esc(liveText(p, current(p)))}</textarea></label>`).join("")
-      + `<div class="row-actions"><button class="btn primary slim" data-live-save>Save for the groups</button><button class="btn slim" data-live-cancel>Cancel</button></div>`;
+    const lab = (p, i) => typeof liveFieldLabel === "function" ? liveFieldLabel(p, i, paths.length) : paths.length > 1 ? (i ? labels[i] : "Sentence") : "";   /* tools 24 */
+    const changed = paths.filter(p => Object.prototype.hasOwnProperty.call(LV.text, toStore(p)));
+    form.innerHTML = paths.map((p, i) => `<label>${lab(p, i) ? `<span>${esc(lab(p, i))}</span>` : ""}<textarea data-p="${p}" rows="${paths.length > 1 ? 2 : 3}">${esc(liveText(p, current(p)))}</textarea></label>`).join("")
+      + (typeof liveEditHint === "function" ? liveEditHint(paths) : "")
+      + `<div class="row-actions"><button class="btn primary slim" data-live-save>Save for the groups</button><button class="btn slim" data-live-cancel>Cancel</button>${changed.length ? `<button class="btn slim" data-live-orig title="Back to the text the page was built with">↩ Original</button>` : ""}</div>`;
     host.replaceWith(form); const t = form.querySelector("textarea"); if(t){ t.focus(); t.setSelectionRange(t.value.length, t.value.length); }
     form.addEventListener("click", ev => ev.stopPropagation());
     form.querySelector("[data-live-cancel]").addEventListener("click", () => liveRerender());
+    const orig = form.querySelector("[data-live-orig]"); if(orig) orig.addEventListener("click", async () => { for(const p of changed) await liveOp("untext", p, ""); liveRerender(); });
     form.querySelector("[data-live-save]").addEventListener("click", async () => {
       for(const ta of form.querySelectorAll("textarea")){ const p = ta.dataset.p, v = ta.value.trim(); if(v !== liveText(p, current(p))) await liveOp("text", p, v); }
       liveRerender(); });

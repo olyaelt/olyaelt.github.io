@@ -3,7 +3,7 @@
 // pulse (never splits by itself); New groups → every screen its own card again, ↩ Undo brings the groups back; tapping Boris's name makes his
 // screen the shown one; ✕ takes him out; 🧹 Start fresh forgets the groups.
 //   node tests/groups_merge_check.js SITE_DIR [shots_dir]
-const {chromium} = require('playwright'); const fs = require('fs'); const path = require('path');
+const {chromium} = require('playwright'); const fs = require('fs'); const path = require('path'); const http = require('http');
 const {makeEnv} = require('./mock');
 const URL_ = 'https://script.google.com/macros/s/TEST/exec', PAGE = 'tools/b2-2026-10-30/late';
 (async () => {
@@ -12,6 +12,10 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', PAGE = 'tools/b2-20
   const expect = (n, ok, got) => { if (!ok) fail.push(n + ' ' + JSON.stringify(got)); };
   const env = makeEnv(); env.ctx.setUp(); const T = String(env.sheets.Students.d[1][0]);
   env.sheets.Students.appendRow(['abc123', 'Anna', 'B2', '']); env.sheets.Students.appendRow(['bbb111', 'Boris', 'B2', '']);
+  /* over http, not file:// — Chromium sometimes drops a file:// page's storage on reload, and the groups live in her browser storage */
+  const srv = http.createServer((q, r) => { const f = path.join(site, decodeURIComponent(q.url.split('?')[0])); fs.readFile(f, (e, d) => { if (e) { r.writeHead(404); r.end(); return; }
+    r.writeHead(200, {'Content-Type': f.endsWith('.html') ? 'text/html; charset=utf-8' : 'application/octet-stream'}); r.end(d); }); }).listen(0);
+  const base = `http://localhost:${srv.address().port}/`;
   const b = await chromium.launch();
   const open = async (who) => {
     const c = await b.newContext({viewport: {width: 1280, height: 720}, reducedMotion: 'reduce'});
@@ -20,7 +24,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', PAGE = 'tools/b2-20
     const p = await c.newPage(); p.on('pageerror', e => errs.push((who || 'anon') + ': ' + e.message));
     const rel = PAGE + '-live.html', src = fs.readFileSync(path.join(site, rel), 'utf8').replace(/LIVE_URL = "https:\/\/script\.google\.com[^"]*"/, `LIVE_URL = "${URL_}"`);
     const tmp = path.join(site, 'tools/b2-2026-10-30', '_gm_' + (who || 'anon') + '_' + path.basename(rel)); fs.writeFileSync(tmp, src);
-    await p.goto('file://' + tmp); await p.waitForTimeout(300); p._tmp = tmp; return p;
+    await p.goto(base + path.relative(site, tmp)); await p.waitForTimeout(300); p._tmp = tmp; return p;
   };
   const flush = p => p.evaluate(() => shareFlush()).then(() => p.waitForTimeout(150));
   const A = await open('abc123'), B = await open('bbb111'), C = await open('');
@@ -33,8 +37,16 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', PAGE = 'tools/b2-20
   out.start = await cards(); out.hint = await O.locator('#gw-hint').isVisible();
   expect('three screens, three cards; the hint shows', out.start.length === 3 && /Anna/.test(out.start[0]) && /Boris/.test(out.start[1]) && out.hint, out);
   if (shots) await O.screenshot({path: path.join(shots, 'gm-1-three.png')});
+  /* HTML5 drag in a headless browser is sometimes dropped by Playwright: if the first dragTo didn't land, the same events by hand */
+  const dragCard = async (from, onto) => {
+    await O.locator(`.gw-card[data-dev="${from}"] .gw-head`).dragTo(O.locator(`.gw-card[data-dev="${onto}"]`)); await O.waitForTimeout(300);
+    if (await O.evaluate(f => !!(JSON.parse(localStorage.getItem(MERGE_KEY) || 'null') || {into: {}}).into[f], from)) return;
+    await O.evaluate(([f, o]) => { const dt = new DataTransfer(), h = document.querySelector(`.gw-card[data-dev="${f}"] .gw-head`), c = document.querySelector(`.gw-card[data-dev="${o}"]`);
+      h.dispatchEvent(new DragEvent('dragstart', {bubbles: true, dataTransfer: dt})); c.dispatchEvent(new DragEvent('dragover', {bubbles: true, cancelable: true, dataTransfer: dt}));
+      c.dispatchEvent(new DragEvent('drop', {bubbles: true, cancelable: true, dataTransfer: dt})); h.dispatchEvent(new DragEvent('dragend', {bubbles: true, dataTransfer: dt})); }, [from, onto]);
+    await O.waitForTimeout(300); };
   // drag Boris's card onto Anna's
-  await O.locator(`.gw-card[data-dev="${devB}"] .gw-head`).dragTo(O.locator(`.gw-card[data-dev="${devA}"]`)); await O.waitForTimeout(400);
+  await dragCard(devB, devA); await O.waitForTimeout(100);
   out.merged = await cards(); out.mem = await O.locator(`.gw-card[data-dev="${devA}"] .gw-mem`).innerText().then(t => t.replace(/\s+/g, ' ')).catch(() => '');
   out.newBtn = {shown: await O.locator('#gw-new').isVisible(), pulse: await O.locator('#gw-new.pulse').count()};
   expect('Boris dropped on Anna → "Group 1 — Anna + Boris", Anna shares the screen, New groups shown (quiet)',
@@ -49,6 +61,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', PAGE = 'tools/b2-20
   // Boris types on his own screen → New groups pulses, his name says so
   await B.fill('#msg', 'Sorry Sarah, I am stuck in traffic, start without me'); await flush(B);
   await O.evaluate(() => gwFetch()); await O.waitForTimeout(500);
+  await O.waitForSelector(`.gw-card[data-dev="${devA}"] .gw-j.solo`, {timeout: 10000}).catch(() => {});   /* the next paint, however slow */
   out.solo = {pulse: await O.locator('#gw-new.pulse').count(), mem: (await O.locator(`.gw-card[data-dev="${devA}"] .gw-mem`).innerText()).replace(/\s+/g, ' '), cards: (await cards()).length};
   expect('Boris works on his own screen → 🔀 New groups pulses, nothing splits by itself', out.solo.pulse === 1 && /working on their own screen/.test(out.solo.mem) && out.solo.cards === 2, out.solo);
   if (shots) await O.screenshot({path: path.join(shots, 'gm-3-pulse.png')});
@@ -65,10 +78,10 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', PAGE = 'tools/b2-20
   await O.click(`[data-split="${devA}"]`); await O.waitForTimeout(300);
   out.x = (await cards()).length; expect('✕ → back to three cards', out.x === 3, out.x);
   // Start fresh forgets the groups
-  await O.locator(`.gw-card[data-dev="${devB}"] .gw-head`).dragTo(O.locator(`.gw-card[data-dev="${devA}"]`)); await O.waitForTimeout(300);
+  await dragCard(devB, devA);
   await O.click('[data-gw-fresh]'); await O.click('[data-gw-fresh]'); await O.waitForTimeout(200);
   out.fresh = await O.evaluate(() => localStorage.getItem(MERGE_KEY)); expect('🧹 Start fresh forgets the groups', !out.fresh || out.fresh === 'null', out.fresh);
   for (const p of [A, B, C, O]) { try { fs.unlinkSync(p._tmp); } catch (e) {} }
   console.log(JSON.stringify(out, null, 1)); if (errs.length) fail.push('page errors: ' + errs.join(' | '));
-  console.log(fail.length ? 'FAILED:\n' + fail.join('\n') : 'OK groups merge'); await b.close(); process.exit(fail.length ? 1 : 0);
+  console.log(fail.length ? 'FAILED:\n' + fail.join('\n') : 'OK groups merge'); await b.close(); srv.close(); process.exit(fail.length ? 1 : 0);
 })();
