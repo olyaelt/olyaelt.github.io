@@ -251,6 +251,7 @@ __BASE_CSS__
 .cn-meta{color:var(--muted);font-size:1rem}
 .cn-right{display:grid;gap:6px;justify-items:end}
 .cn-count{border:2px solid var(--line);border-radius:99px;padding:2px 12px;font-weight:700;font-size:.95rem}
+.cn-count button{border:0;background:none;color:var(--instr-text);font:inherit;font-weight:900;font-size:1.1rem;padding:0 6px;cursor:pointer} .cn-count button:disabled{color:var(--line);cursor:default}   /* tools 27: her ‹ › */
 .cn-seg{display:flex;gap:4px;align-items:center;color:var(--muted);font-size:.85rem}
 .cn-seg button{border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:8px;padding:1px 7px;font-size:.8rem;font-weight:700}
 .cn-seg button[aria-pressed="true"]{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
@@ -275,8 +276,10 @@ __BASE_CSS__
 .cn-ex-hide{float:right;margin:0 0 0 14px}
 .cn-ex p{margin:0 0 4px;line-height:1.35;font-size:calc(1.02rem * var(--k, 1))} .cn-ex p:last-child{margin:0}
 .cn-ex .bx{color:var(--flip-ink)}
-.cn-die{width:calc(2.6rem * var(--k, 1));height:calc(2.6rem * var(--k, 1));border-radius:11px;background:#FFFFFF;border:3px solid #1D1D1B;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:.42rem;box-shadow:0 4px 0 #1D1D1B;will-change:transform}
-.cn-die i{width:.5rem;height:.5rem;border-radius:50%;background:#1D1D1B;place-self:center;visibility:hidden}
+/* tools 27 (her 2.11 21:34: with an example open the dice got smaller but the dots didn't — «кубик становится некрасивым»): the whole die
+   scales together (size, padding, dots, corners), and never below 80 % */
+.cn-die{--dk:max(var(--k, 1), .8);width:calc(2.6rem * var(--dk));height:calc(2.6rem * var(--dk));border-radius:calc(11px * var(--dk));background:#FFFFFF;border:3px solid #1D1D1B;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:calc(.36rem * var(--dk));box-shadow:0 4px 0 #1D1D1B;will-change:transform;box-sizing:border-box}
+.cn-die i{width:calc(.46rem * var(--dk));height:calc(.46rem * var(--dk));border-radius:50%;background:#1D1D1B;place-self:center;visibility:hidden}
 .cn-die i.p{visibility:visible}
 .cn-dw{display:flex;align-items:center}
 .cn-dec{grid-template-columns:2.1rem minmax(0,1fr);row-gap:6px}
@@ -842,6 +845,9 @@ function sayHTML(b){
    screen, as on the council page — roll → that many reasons to keep (add), then to cut (not add), the example after each row, then Keep /
    Cut / 🤝 Agree to disagree; the field's Next goes to the next subject, after the last one to "Decide together" (two to cut, two to add,
    the decision frame); the follow-ups and extra speaking are the blocks after it ---------- */
+/* tools 27 (her 2.11 21:34: «мне как учителю не перейти между кружками 1–5, не прокликав всё задание… не могу вычитывать»): on her own
+   device (her code, teacher) every screen dot can be tapped, and the council's subjects have ‹ › — to read everything through */
+const meTeacher = () => { try{ return localStorage.getItem("hw-role") === "teacher" && !!localStorage.getItem("hw-code"); }catch(e){ return false; } };
 const CN_W = {cut: {keep: "Reasons to keep", drop: "Reasons to cut", q: "Keep or cut?", yes: "Keep", no: "Cut", yesTag: "keep", noTag: "cut"},
   add: {keep: "Reasons to add", drop: "Reasons not to add", q: "Add or not?", yes: "Add", no: "Don't add", yesTag: "add", noTag: "don't add"}};
 const CN_PIPS = {1: [5], 2: [1, 9], 3: [1, 5, 9], 4: [1, 3, 7, 9], 5: [1, 3, 5, 7, 9], 6: [1, 3, 4, 6, 7, 9]};
@@ -876,7 +882,7 @@ function councilHTML(b){
   const S0 = subs[C.at], l = b.lists[S0.li], it = l.items[S0.i], w = CN_W[l.kind], R = C.subs[C.at], ready = cnRowDone(R.r[1]) || R.dec !== null;
   const done = C.subs.map((x, k) => ({x, k})).filter(o => o.x.dec !== null && o.k !== C.at);
   return `<div class="cn ${C.enter ? "enter" : ""}"><div class="cn-top"><div><span class="cn-label">${esc(l.label)}</span><h3 class="cn-subj">${esc(it.t)}</h3>${it.ru || it.note ? `<span class="cn-meta">${esc([it.note, it.ru].filter(Boolean).join(" · "))}</span>` : ""}</div>
-      <div class="cn-right"><span class="cn-count">${C.at + 1} of ${subs.length}</span><span class="cn-seg" role="group" aria-label="Dice">🎲 ${[3, 4, 6].map(n => `<button data-cn-faces="${n}" aria-pressed="${C.faces === n}">1–${n}</button>`).join("")}</span></div></div>
+      <div class="cn-right"><span class="cn-count">${meTeacher() ? `<button data-cn-browse="-1" ${C.at > 0 ? "" : "disabled"} title="The subject before" aria-label="The subject before">‹</button>` : ""}${C.at + 1} of ${subs.length}${meTeacher() ? `<button data-cn-browse="1" ${C.at < subs.length - 1 ? "" : "disabled"} title="The next subject" aria-label="The next subject">›</button>` : ""}</span><span class="cn-seg" role="group" aria-label="Dice">🎲 ${[3, 4, 6].map(n => `<button data-cn-faces="${n}" aria-pressed="${C.faces === n}">1–${n}</button>`).join("")}</span></div></div>
     <div class="cn-steps">${cnStepHTML(b, R, w, 0, it.ex && it.ex.for)}${cnStepHTML(b, R, w, 1, it.ex && it.ex.against)}
       <div class="cn-st cn-dec ${ready ? "" : "off"} ${R.dec !== null ? "done" : ""}"><span class="n">${R.dec !== null ? "✓" : 3}</span><div class="cn-t">Together: ${w.q}</div>
         <div class="cn-choice"><button class="btn ok ${R.dec === true ? "on" : ""}" data-cn-dec="1" ${ready ? "" : "disabled"}>${w.yes}</button><button class="btn no ${R.dec === false ? "on" : ""}" data-cn-dec="0" ${ready ? "" : "disabled"}>${w.no}</button>
@@ -910,6 +916,7 @@ function wireCouncil(b, root){
   on("[data-cn-exhide]", x => { R().ex[+x.dataset.cnExhide] = false; render(); });
   on("[data-cn-dec]", x => { R().dec = x.dataset.cnDec === "agree" ? "agree" : x.dataset.cnDec === "1"; render(); const nx = document.querySelector("[data-step]"); if(nx) nx.classList.add("ready"); });
   on("[data-cn-faces]", x => { C.faces = +x.dataset.cnFaces; render(); });
+  on("[data-cn-browse]", x => { C.at = Math.max(0, Math.min(cnSubs(b).length - 1, C.at + +x.dataset.cnBrowse)); C.enter = true; render(); C.enter = false; });   /* tools 27: hers only */
   on("[data-cn-pick]", x => { const [li, i] = x.dataset.cnPick.split(".").map(Number), a = C.picks[li] = C.picks[li] || []; const k = a.indexOf(i); if(k > -1) a.splice(k, 1); else a.push(i); render(); });
 }
 /* ---------- 🗒 sticky notes (tools 18, her slide "Share with your partner": three coloured notes, all on the screen at once) ---------- */
@@ -1612,8 +1619,8 @@ const nextLabel = () => { const b = !S.intro && !S.fast && S.view === "field" ? 
    already seen can be tapped to go back to them */
 function screenDotsHTML(){
   const n = curBlocks().length; if(S.view !== "field" || S.intro || S.fast || n < 2) return "";
-  const i = bIdx(), far = Math.max(S.far[S.stage] || 0, i);
-  return `<span class="sdots${n > 5 ? " many" : ""}" role="group" aria-label="Screen ${i + 1} of ${n}"><span class="sd-n" aria-hidden="true">${i + 1} / ${n}</span>${Array.from({length: n}, (_, k) => `<button class="${k === i ? "on" : k <= far ? "was" : ""}" data-sdot="${k}" ${k <= far && k !== i ? "" : "disabled"} aria-label="Screen ${k + 1} of ${n}" ${k === i ? `aria-current="step"` : ""}>${k + 1}</button>`).join("")}</span>`;
+  const i = bIdx(), far = Math.max(S.far[S.stage] || 0, i), meT = meTeacher();   /* tools 27: her device — every dot */
+  return `<span class="sdots${n > 5 ? " many" : ""}" role="group" aria-label="Screen ${i + 1} of ${n}"><span class="sd-n" aria-hidden="true">${i + 1} / ${n}</span>${Array.from({length: n}, (_, k) => `<button class="${k === i ? "on" : k <= far || meT ? "was" : ""}" data-sdot="${k}" ${(k <= far || meT) && k !== i ? "" : "disabled"} aria-label="Screen ${k + 1} of ${n}" ${k === i ? `aria-current="step"` : ""}>${k + 1}</button>`).join("")}</span>`;
 }
 const canBack = () => !!S.fast || !S.intro || stagePos(S.stage) > 0 || !!boardHref();
 const canNext = () => !!S.fast || !isLast() || stepPending(curBlock());
@@ -1663,7 +1670,11 @@ function stepNext(){
   if(b.kind === "tool"){ const f = document.querySelector(".tool-frame"); if(f && f.contentWindow){ f.contentWindow.postMessage({lwStep: "next"}, "*"); return; } }
   if(b.kind === "say" && b.answer && !st.shown){ st.shown = true; render(); return; }
   if(b.kind === "picture" && b.answer && !st.shown){ st.shown = true; render(); return; }
-  if(b.kind === "council" && cnPending(b)){ cnNext(b); return; }
+  if(b.kind === "council" && cnPending(b)){ const C = cnSt(b), R = C.subs[C.at], w = CN_W[b.lists[cnSubs(b)[C.at].li].kind];
+    /* tools 27 (her 2.11 21:34): Next waits until the pair has decided — Keep / Cut / 🤝 (her ‹ › on the counter browse freely) */
+    if(!C.decide && R.dec === null){ if(cnRowDone(R.r[1])) nudge("[data-cn-dec]", `First decide together: ${w.q.replace(/\?$/, "")} — or 🤝 Agree to disagree`);
+      else nudge("[data-cn-roll]:not([disabled])", "First the reasons — roll, tick them, or 🙈 We give up"); return; }
+    cnNext(b); return; }
   if(b.kind === "fix" && fixPending(b)){ fixNext(b); return; }   /* tools 16: the gap's answer, then message by message */
   if(b.kind === "game" && b.piece === "memo" && memoPending(b)){ memoNext(b); return; }   /* tools 17: ▶ → hide → check */
   if(b.kind === "game" && b.piece === "secret" && secPending(b)){ secNext(b); return; }   /* the chat's answers → How it works → the game */

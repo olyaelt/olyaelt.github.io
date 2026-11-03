@@ -22,12 +22,12 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
     out.sent = (await phone.locator('.lesson-head').count()) && (await phone.evaluate(id => (work[id] || []).length, prodTask)) ? 'Sent ✓ (Finish and send → the list)' : 'not sent';
     env.sheets.Work.set(2, 10, 'A **test** ~~text~~ {line}.');
   }
-  // finish the first task through its own button → the banner asks how it was
+  // engine 61 (her 2.11 18:11): the task's last screen asks how it was, right above Finish (not the banner after it)
   await phone.goto('file://' + tmp); await phone.waitForTimeout(300);
   await phone.click(`[data-open="${ids[1]}"]`);
-  for (let i = 0; i < 80 && !(await phone.locator('.lesson-head').count()); i++) { await phone.locator('#go, #fin').first().click(); await phone.waitForTimeout(40); }
-  await phone.waitForTimeout(900);
-  out.reactShown = await phone.locator('#react').count() === 1;
+  for (let i = 0; i < 80 && !(await phone.locator('.lesson-head').count()) && !(await phone.locator('.actions #react').count()); i++) { await phone.locator('#go, #fin').first().click(); await phone.waitForTimeout(40); }
+  out.reactShown = await phone.locator('.actions #react').count() === 1;
+  out.reactAboveFinish = out.reactShown && /^Finish/.test((await phone.locator('#go, #fin').first().innerText()).trim());
   if (out.reactShown) {
     await phone.click('[data-react="hard"]'); await phone.waitForTimeout(200);
     if (process.env.SHOT) { await phone.click('#ask'); await phone.screenshot({path: process.env.SHOT}); await phone.click('#ask').catch(()=>{}); }
@@ -36,6 +36,8 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
     const W = env.sheets.Work; const qRow = W.d.findIndex(r => String(r[6]).includes('question')) + 1;
     out.questionRow = qRow > 0; if (qRow > 0) W.set(qRow, 10, 'Because it is a {finished} action.');
     out.reactionsTab = (env.sheets.Reactions.d[1] || []).slice(1, 6).join(' | ');
+    await phone.locator('#go, #fin').first().click(); await phone.waitForTimeout(900);
+    out.bannerNoRow = (await phone.locator('.done-banner').count()) === 1 && (await phone.locator('#react').count()) === 0;
   }
   const laptop = await open({viewport: {width: 1100, height: 900}});
   out.questionAnswered = (await laptop.locator(`.fb-line[data-fb="${ids[1]}"]`).count()) === 1 ? (await laptop.locator(`.fb-line[data-fb="${ids[1]}"]`).innerText()) : 'no';
@@ -45,4 +47,6 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
     await laptop.locator('[data-read]').first().click(); await laptop.waitForTimeout(100); out.seen = !!env.sheets.Work.get(2, 11); }
   out.progressCell = (env.sheets['Progress ' + G].d[3] || []).filter(Boolean).join(' | ');
   out.errors = errs; console.log(JSON.stringify(out, null, 1)); await b.close();
+  const bad = ['reactShown', 'reactAboveFinish', 'bannerNoRow', 'questionRow'].filter(k => !out[k]);
+  console.log(bad.length || errs.length ? 'FAILED: ' + bad.join(', ') + (errs.length ? ' errors' : '') : 'OK sync (how was it: above Finish)');
 })();

@@ -25,12 +25,12 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
   const walk = async (p, onChecked) => {
     for (let guard = 0; guard < 80; guard++) {
       if (!(await p.locator('#go').count())) return;
-      const t = (await goText(p)).trim();
-      if (!/^(Next|Finish)$/.test(t)) { await p.click('#go'); await p.waitForTimeout(80); continue; }
+      const t = (await goText(p)).replace(/\s+/g, ' ').trim();   /* engine 61 also: the last screen before the bookmarks says "Next: 🔖 your bookmarks" */
+      if (!/^(Next|Finish|Next: your bookmarks)$/.test(t)) { await p.click('#go'); await p.waitForTimeout(80); continue; }
       const info = await p.evaluate(() => ({s: stepIdx, type: current.steps[stepIdx].type, once: !!current._once}));
       if (onChecked) await onChecked(info);
       await p.click('#go'); await p.waitForTimeout(100);
-      if (t === 'Finish') return;
+      if (t === 'Finish' || t === 'Next: your bookmarks') return;
     }
   };
   // ---- rewrite + say it (b2 23.10, "Rewrite and say it")

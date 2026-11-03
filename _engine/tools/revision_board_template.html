@@ -21,7 +21,11 @@ button.cell{font-family:inherit;cursor:pointer}
 .cell.today{background:#FF9900;color:#1D1D1B}
 .cell.done{background:color-mix(in srgb, var(--line) 70%, var(--card));color:var(--muted)}
 .cell.done::after{content:"✓";position:absolute;right:8px;top:4px;font-size:1rem}
-.cell.now{border-color:#0693E3;box-shadow:0 0 0 4px #9FD3FF;animation:nowPulse 1.6s ease-in-out infinite}
+.cell.now{border:5px solid #0693E3;box-shadow:0 0 0 4px #9FD3FF;animation:nowPulse 1.6s ease-in-out infinite}
+/* tools 27 (her 3.11): "▶ Now" under the number — clear also when Zoom makes the pulse jerky; her frame before ▶ */
+.cell .v{display:block;line-height:1} .cell.now{align-content:center;gap:2px}
+.nowtag{display:block;font-size:.8rem;font-weight:900;line-height:1;background:#0693E3;color:#FFFFFF;border-radius:99px;padding:3px 10px;letter-spacing:.02em}
+.cellwrap .cell.sel{outline:5px solid #FFFFFF;outline-offset:-9px;box-shadow:0 0 0 4px #1D1D1B;transform:translateY(-2px)}
 @keyframes nowPulse{0%,100%{box-shadow:0 0 0 3px #9FD3FF}50%{box-shadow:0 0 0 10px rgba(6,147,227,.25)}}
 .cell.sel{outline:4px dashed var(--instr);outline-offset:2px}
 div.cell.sel{align-content:center;gap:4px;padding:4px}
@@ -31,8 +35,6 @@ div.cell.sel .v{font-size:1rem;line-height:1}
 .cellacts button{font:inherit;font-size:.95rem;font-weight:900;border-radius:99px;padding:3px 12px;cursor:pointer;border:2px solid #FFFFFF;background:#FFFFFF;color:#0B5394}
 .cellacts button.ghost{background:transparent;color:inherit;border-color:currentColor;font-size:.8rem;padding:2px 8px}
 .cellacts button:disabled{opacity:.6;cursor:wait}
-.nowstrip{display:flex;align-items:center;gap:12px;background:#0693E3;color:#FFFFFF;border-radius:14px;padding:10px 16px;font-weight:900;font-size:1.2rem;text-decoration:none}
-.nowstrip .go{margin-left:auto;background:#FFFFFF;color:#0693E3;border-radius:99px;padding:4px 14px}
 /* her 15:17: ⬅ Board tapped by mistake — the way back to where they were */
 .backstrip{display:flex;align-items:center;gap:12px;border:3px solid #0693E3;color:var(--instr-text);background:var(--card);border-radius:14px;padding:8px 16px;font-weight:900;font-size:1.15rem;text-decoration:none}
 .backstrip .go{margin-left:auto;background:#0693E3;color:#FFFFFF;border-radius:99px;padding:4px 14px}
@@ -40,13 +42,17 @@ div.cell.sel .v{font-size:1rem;line-height:1}
 .head .howgame{margin-left:auto}
 .cellwrap{position:relative;display:grid}
 .cellwrap .cell{width:100%;border:3px solid transparent}
-.cellwrap .unplay{position:absolute;left:6px;top:4px;width:1.7rem;height:1.7rem;border-radius:50%;border:0;background:rgba(0,0,0,.28);color:#FFFFFF;font-weight:900;font-size:.95rem;cursor:pointer;display:grid;place-items:center;padding:0}
-.cellwrap .unplay:hover{background:rgba(0,0,0,.5)}
+.cellwrap .cell.now{border:5px solid #0693E3}
+/* tools 27: her ▶ / ✓ / ↺ on the cell (left: ▶ while new, ↺ once lit or played; right: ✓ until played) */
+.cellwrap .cb{position:absolute;top:5px;width:1.8rem;height:1.8rem;border-radius:50%;border:0;background:rgba(255,255,255,.94);color:#0B5394;font-family:inherit;font-weight:900;font-size:.95rem;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0;box-shadow:0 1px 3px rgba(0,0,0,.3);z-index:1}
+.cellwrap .cb.l{left:5px} .cellwrap .cb.r{right:5px}
+.cellwrap .cb:hover{background:#FFFFFF;transform:scale(1.1)}
+.cellwrap .cb.tick{color:#2E8B3E} .cellwrap .cb.back{color:#555555}
 .legend{color:var(--muted);font-size:.92rem;margin:0}
 .legend b{color:var(--ink)}
 .onslides{font-weight:700;opacity:.85}
 .ckind{position:absolute;right:5px;bottom:3px;font-size:.8rem;line-height:1;opacity:.9}
-@media (max-width:700px){ .cellacts button{font-size:.78rem;padding:2px 7px} .cell{font-size:1.15rem;min-height:3.4rem} .jb .colh{font-size:.72rem;min-height:3rem;padding:4px 2px} .jb{gap:5px} }
+@media (max-width:700px){ .nowtag{font-size:.6rem;padding:2px 5px} .cellwrap .cb{width:1.35rem;height:1.35rem;font-size:.72rem;top:2px} .cellwrap .cb.l{left:2px} .cellwrap .cb.r{right:2px} .cellacts button{font-size:.78rem;padding:2px 7px} .cell{font-size:1.15rem;min-height:3.4rem} .jb .colh{font-size:.72rem;min-height:3rem;padding:4px 2px} .jb{gap:5px} }
 </style>
 </head>
 <body>
@@ -59,57 +65,87 @@ const TOOLS_VERSION = "__TOOLS_VERSION__";
 const PAGE_ID = "__PAGE_ID__";
 const LIVE_ON = __LIVE__, LIVE_URL = "__SYNC_URL__";
 __BASE_JS__
-/* The board: columns × values; a cell with a page links to it (the -live board to the -live pages). On the -live board Olya (her code)
-   taps a cell and ▶ Play appears on it (her wish 30.10 09:04: one button, not Now + Open): it lights the cell up on every room's board
-   (pulsing, a strip "▶ Now playing … Open →") and opens its page for her. The cell played before turns grey by itself; a played or
-   pulsing cell tapped again offers ↺ Not played (a wrong tap). 🧹 Start fresh (bottom) clears it all before the lesson.
-   Her taps go to her table (sheet Live, as every live page: text "now" = cell|time, "done.<cell>" = time; Live log keeps the times for
-   the debrief). The groups' boards ask every 10 s and show it at once (it is a pointer, not a change under their eyes). No table → her voice. */
+/* The board: columns × values; a cell with a page links to it (the -live board to the -live pages).
+   Her board (tools 27, her 2.11 21:32: «я захожу туда просто, чтобы проверить и вычитать, а оно серым делает… не знаю, как откатить…
+   Not Played перекрашивается секунды через 4… давай: play — начинает светиться для студентов, tick — played, всё своими руками»):
+   (her 3.11 08:22, as in her lesson: they choose «Vocabulary 200» → she clicks it → a frame, only on her shared screen, while she gives
+   the instructions → ▶ → it pulses in every room → she clicks it again → its page opens): the first click on a cell only frames it,
+   a click on the framed or the lit cell opens its page (nothing changes for the groups); three small buttons on the cell do the rest,
+   by hand: ▶ = it lights up in every room (a thick blue frame, "▶ Now" under the number, pulsing); ✓ = played (grey; a lit cell goes
+   out); ↺ = back to new (a wrong click). No blue strip on top any more (her 08:23: it repeated the cell and pushed the board down).
+   The groups' boards: a click anywhere on a cell opens its task. Nothing turns grey by itself any more. Every tap shows on her board at once; the table is told in the background,
+   one change after another, and if it doesn't take it, the cell goes back to what the table has and the line under the title says so.
+   🧹 Start fresh (bottom) clears it all before the lesson. Her taps go to her table (sheet Live: text "now" = cell|time, "done.<cell>" =
+   time; Live log keeps the times for the debrief). The groups' boards ask every 10 s and show it at once. No table → her voice. */
 const cellKey = c => "c" + D.cols.indexOf(c.col) + "v" + c.value;
 const cellAt = (col, v) => D.cells.find(c => c.col === col && c.value === v);
 const href = c => c && c.page && !c.closed ? `${c.page}${LIVE_ON ? "-live" : ""}.html` : "";
-const nowKey = () => { const [k, t] = String(LV.text.now || "").split("|"); return k && Date.now() - (Number(t) || 0) < 3 * 3600000 ? k : ""; };   /* the light goes out by itself after 3 hours */
-const doneAt = k => Number(LV.text["done." + k]) || 0;
-let busy = false, sureFresh = false;
-/* her board (her 13:24, as on her slides): one click on a cell = ▶ Play — it lights up in every room and its page opens (a cell without a
-   page only lights up); the cell played before turns grey by itself; a small ↺ on a played cell = not played (a wrong click) */
-async function play(k){
-  const c = D.cells.find(x => cellKey(x) === k), prev = nowKey(), t = Date.now(); busy = true; liveMsg = "…"; render();
-  await liveOp("text", "now", k + "|" + t);                                   /* first the light, so the rooms see it at once */
-  if(prev && prev !== k && !doneAt(prev)) await liveOp("text", "done." + prev, String(t));   /* the one played before turns grey */
-  busy = false; const lit = nowKey() === k;
-  if(lit && href(c)) { location.href = href(c); return; }
-  if(lit) liveMsg = "✓ lit up in every room — this one is on your slides (no page)"; render();   /* tools 17 (her 31.10, phone: "nothing opens") */
+const OPT = {};   /* her taps not yet confirmed by the table: path → value (null = removed) */
+const tx = p => Object.prototype.hasOwnProperty.call(OPT, p) ? OPT[p] : LV.text[p];
+const nowKey = () => { const [k, t] = String(tx("now") || "").split("|"); return k && Date.now() - (Number(t) || 0) < 3 * 3600000 ? k : ""; };   /* the light goes out by itself after 3 hours */
+const doneAt = k => Number(tx("done." + k)) || 0;
+let SEL = "", sureFresh = false, boardQ = Promise.resolve(), pendingOps = 0;
+async function boardPost(body){   /* keepalive: a change on its way still arrives when she opens a page right after */
+  try{ const r = await fetch(LIVE_URL, {method: "POST", body: JSON.stringify(body), headers: {"Content-Type": "text/plain;charset=utf-8"}, keepalive: true}); return await r.json(); }
+  catch(e){ return {ok: false, error: "offline"}; }
 }
-async function unplay(k){
-  busy = true; render();
-  if(nowKey() === k) await liveOp("untext", "now");
-  if(doneAt(k)) await liveOp("untext", "done." + k);
-  busy = false; if(!/^not saved/.test(liveMsg)) liveMsg = "✓ back to new"; render();
+function boardDo(changes){   /* [[path, value | null]]: on her board at once, then to the table in the background, in order */
+  changes.forEach(([p, v]) => { OPT[p] = v; });
+  pendingOps++; liveMsg = "saving…"; render();
+  boardQ = boardQ.then(async () => {
+    let bad = "";
+    for(const [p, v] of changes){
+      const res = await boardPost({action: "liveOp", code: localStorage.getItem("hw-code") || "", tool: PAGE_ID, op: v == null ? {kind: "untext", path: toStore(p)} : {kind: "text", path: toStore(p), text: v}});
+      if(res.ok && res.live){ LV = liveNorm(res.live); livePending = null; store.set(liveCacheKey, LV); }
+      else bad = res.error === "offline" ? "no connection" : res.error === "unknown-code" ? "your code isn't in the table" : (res.error || "error");
+      if(OPT[p] === v) delete OPT[p];   /* confirmed, or refused: the table's state shows again (a newer tap on it stays) */
+    }
+    pendingOps--;
+    liveMsg = bad ? `not saved: ${bad} — the board shows what the table has` : pendingOps ? "saving…" : "saved ✓ — the rooms see it within 10 seconds";
+    render();
+  });
+  return boardQ;
 }
+const play = k => boardDo([["now", k + "|" + Date.now()]]);
+function tick(k){ const ch = [["done." + k, String(Date.now())]]; if(nowKey() === k) ch.push(["now", null]); boardDo(ch); }
+function unplay(k){ const ch = []; if(nowKey() === k) ch.push(["now", null]); if(doneAt(k)) ch.push(["done." + k, null]); if(ch.length) boardDo(ch); }
 function render(){
   liveApply();
-  const mine = liveTeacher(), nk = nowKey(), nowC = D.cells.find(c => cellKey(c) === nk);
-  const strip = nowC ? (href(nowC) ? `<a class="nowstrip" href="${href(nowC)}">▶ Now playing: ${esc(nowC.col)} · $${nowC.value}<span class="go">Open →</span></a>` : `<div class="nowstrip">▶ Now playing: ${esc(nowC.col)} · $${nowC.value}${mine ? `<span class="onslides"> · on your slides</span>` : ""}</div>`) : "";
+  const mine = liveTeacher(), nk = nowKey();
   const left = store.get("tool-place-" + PAGE_ID.split("/")[0] + "/_left");   /* the last field this device had open (handoff 15:15) */
   const backTo = left && Date.now() - left.t < 3 * 3600e3 && left.href ? `<a class="backstrip" href="${esc(left.href)}">↩ Back to ${esc(left.title || "")}${left.stage ? " · " + esc(left.stage) : ""}<span class="go">Where you were →</span></a>` : "";
   const grid = `<div class="jb" style="--cols:${D.cols.length}">${D.cols.map(c => `<div class="colh">${esc(c)}</div>`).join("")}
     ${D.values.map(v => D.cols.map(col => { const c = cellAt(col, v), k = c ? cellKey(c) : "", isNow = k && k === nk, played = k && (isNow || doneAt(k));
-      const cls = `cell ${c && c.today && mine ? "today" : ""} ${c && !c.page && mine ? "nopage" : ""} ${k && doneAt(k) && !isNow ? "done" : ""} ${isNow ? "now" : ""}`;   /* her 31.10: the colour says whether there is a page */
+      const cls = `cell ${c && c.today && mine ? "today" : ""} ${c && !c.page && mine ? "nopage" : ""} ${k && doneAt(k) && !isNow ? "done" : ""} ${isNow ? "now" : ""} ${mine && k === SEL && !isNow ? "sel" : ""}`, tag = isNow ? `<span class="nowtag">▶ Now</span>` : "";   /* her 31.10: the colour says whether there is a page */
       /* tools 20 (the B2 chat, 1.11: Have you seen it? was revised on 30.10 — closed on 4.11): "closed": true = a plain number, no link, also for her; the page stays */
       if(c && c.closed) return `<span class="cell closed nolink" aria-label="${esc(col)} $${v}: not this time">$${v}</span>`;
-      if(mine && c) return `<div class="cellwrap"><button class="${cls}" data-cell="${k}" ${busy ? "disabled" : ""} aria-label="${esc(col)} $${v}: ${esc(c.title || "")} — ${c.page ? "play, its page opens" : "on the slides: lights up"}">$${v}${!c.page && !played ? `<span class="ckind" aria-hidden="true">📊</span>` : ""}</button>${played ? `<button class="unplay" data-unplay="${k}" ${busy ? "disabled" : ""} title="Not played (a wrong click)" aria-label="Not played">↺</button>` : ""}</div>`;
-      return c && c.page ? `<a class="${cls}" href="${href(c)}" aria-label="${esc(col)} $${v}">$${v}</a>` : `<span class="${cls} nolink">$${v}</span>`; }).join("")).join("")}</div>`;
-  const note = !mine ? "" : `<p class="legend">👩‍🏫 Click the cell they choose: it lights up in every room, and its page opens. <b>Orange</b> = today's fields · <b>dark blue</b> = has a page · <b>light</b> = no page: 📊 on your slides (it only lights up), empty = not ready yet. ↺ on a played cell = not played. <span id="live-status">${esc(liveMsg)}</span></p>`;
+      if(mine && c){ const inner = `$${v}${!c.page && !played ? `<span class="ckind" aria-hidden="true">📊</span>` : ""}`, lbl = `${esc(col)} $${v}: ${esc(c.title || "")}`;
+        const el = `<button class="${cls}" data-cell="${k}" ${href(c) ? `data-href="${href(c)}"` : ""} aria-label="${lbl} — ${k === SEL || isNow ? (href(c) ? "open its page" : "on your slides") : "frame it"}"><span class="v">${inner}</span>${tag}</button>`;
+        const l = !isNow && !doneAt(k) ? `<button class="cb l" data-play="${k}" title="Play: it lights up in every room" aria-label="Play: light it up in every room">▶\uFE0E</button>`
+          : `<button class="cb l back" data-unplay="${k}" title="Not played (a wrong click)" aria-label="Not played">↺</button>`;
+        const r = !doneAt(k) ? `<button class="cb r tick" data-tick="${k}" title="Played" aria-label="Played">✓</button>` : "";
+        return `<div class="cellwrap">${el}${l}${r}</div>`; }
+      return c && c.page ? `<a class="${cls}" href="${href(c)}" aria-label="${esc(col)} $${v}${isNow ? ", now playing" : ""}"><span class="v">$${v}</span>${tag}</a>` : `<span class="${cls} nolink"><span class="v">$${v}</span>${tag}</span>`; }).join("")).join("")}</div>`;
+  const note = !mine ? "" : `<p class="legend">👩‍🏫 Click a cell: a frame, only on your screen. Click it again: its page opens. <b>▶</b> lights it up in every room · <b>✓</b> = played (grey) · <b>↺</b> = back to new. <b>Orange</b> = today's fields · <b>dark blue</b> = has a page · <b>light</b> = no page: 📊 on your slides, empty = not ready yet. <span id="live-status">${esc(liveMsg)}</span></p>`;
   const foot = !mine ? "" : `<div class="boardfoot">${sureFresh ? `<span class="legend">All cells back to new, and your test answers on this computer cleared?</span><button class="btn slim primary" data-fresh-yes>🧹 Yes, start fresh</button><button class="btn slim" data-fresh-no>Cancel</button>` : `<button class="btn slim" data-fresh>🧹 Start fresh</button>`}</div>`;
   const btns = (D.buttons || []).map(x => `<a class="btn slim primary howgame" href="${x.page}${LIVE_ON ? "-live" : ""}.html">${esc(x.label)}</a>`).join("");   /* 🎓 How the game works (f-demo) */
-  document.getElementById("main").innerHTML = `<header class="head"><h1>${esc(D.title)}</h1>${btns}</header>${backTo}${strip}${note}${grid}${foot}`;
+  document.getElementById("main").innerHTML = `<header class="head"><h1>${esc(D.title)}</h1>${btns}</header>${backTo}${note}${grid}${foot}`;
   const on = (q, fn) => document.querySelectorAll(q).forEach(b => b.addEventListener("click", e => fn(b, e)));
-  on("[data-cell]", b => { if(!busy){ sureFresh = false; play(b.dataset.cell); } });
-  on("[data-unplay]", (b, e) => { e.stopPropagation(); if(!busy) unplay(b.dataset.unplay); });
+  on("[data-play]", (b, e) => { e.preventDefault(); sureFresh = false; play(b.dataset.play); });
+  on("[data-tick]", (b, e) => { e.preventDefault(); sureFresh = false; tick(b.dataset.tick); });
+  on("[data-unplay]", (b, e) => { e.preventDefault(); sureFresh = false; unplay(b.dataset.unplay); });
+  on("button[data-cell]", b => { const k = b.dataset.cell; sureFresh = false;
+    if(k !== SEL && k !== nowKey()){ SEL = k; liveMsg = ""; render(); return; }   /* the first click: a frame on her screen only */
+    if(!b.dataset.href){ liveMsg = "this one is on your slides (no page)"; liveStatus(); return; }
+    if(!pendingOps){ location.href = b.dataset.href; return; }
+    liveMsg = "saving… then it opens"; liveStatus();   /* her last tap reaches the table first */
+    Promise.race([boardQ, new Promise(r => setTimeout(r, 8000))]).then(() => { location.href = b.dataset.href; }); });
   on("[data-fresh]", () => { sureFresh = true; render(); });
   on("[data-fresh-no]", () => { sureFresh = false; render(); });
-  on("[data-fresh-yes]", async () => { sureFresh = false; const n = clearTraces(); await liveOp("reset", ""); if(!/^not saved/.test(liveMsg)) liveMsg = `✓ all cells back to new · your test answers cleared${n ? "" : ""}`; render(); });
+  on("[data-fresh-yes]", () => { sureFresh = false; clearTraces(); Object.keys(OPT).forEach(p => delete OPT[p]); Object.keys(LV.text).forEach(p => { OPT[p] = null; });
+    pendingOps++; liveMsg = "saving…"; render();
+    boardQ = boardQ.then(async () => { await liveOp("reset", ""); Object.keys(OPT).forEach(p => delete OPT[p]); pendingOps--;
+      if(!/^not saved/.test(liveMsg)) liveMsg = "✓ all cells back to new · your test answers cleared"; render(); }); });
 }
 /* her 15:31: 🧹 Start fresh before the lesson also clears what she typed and tapped while testing on this computer (every page of this
    lesson: messages, cards sent back, her notes' read marks, where she was), and starts her 📥 Groups / 👥 panels from now on every page */

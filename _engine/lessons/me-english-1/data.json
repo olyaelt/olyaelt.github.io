@@ -360,6 +360,12 @@
    "title": "Part 1: the key moments",
    "lines": [
     {
+     "s": "Diego",
+     "p": [
+      "“We had to put off the meeting until Friday.”"
+     ]
+    },
+    {
      "s": "Kate",
      "p": [
       {
@@ -393,6 +399,12 @@
      "s": "",
      "p": [
       "…"
+     ]
+    },
+    {
+     "s": "Aiko",
+     "p": [
+      "“Could you look after my report before I send it?”"
      ]
     },
     {
@@ -459,7 +471,7 @@
        "f": "",
        "r": "it"
       },
-      "!"
+      "! “Could you look over my report?”"
      ]
     }
    ],
@@ -563,6 +575,12 @@
    "title": "Part 1: more key moments",
    "lines": [
     {
+     "s": "Marco",
+     "p": [
+      "“I'm making a photo of the board.”"
+     ]
+    },
+    {
      "s": "Kate",
      "p": [
       "Mm, ",
@@ -615,7 +633,7 @@
        "f": "",
        "r": "it's"
       },
-      " “take”."
+      " “take”: “I'm taking a photo.”"
      ]
     },
     {
@@ -658,43 +676,6 @@
       },
       ". Half my students say it."
      ]
-    },
-    {
-     "s": "",
-     "p": [
-      "…"
-     ]
-    },
-    {
-     "s": "Kate",
-     "p": [
-      {
-       "f": "",
-       "r": "Nearly"
-      },
-      "! Like Aiko… Something came…?"
-     ]
-    },
-    {
-     "s": "Ewa",
-     "p": [
-      "Up! Something came up."
-     ]
-    },
-    {
-     "s": "Kate",
-     "p": [
-      {
-       "f": "",
-       "r": "Spot"
-      },
-      " ",
-      {
-       "f": "",
-       "r": "on"
-      },
-      "."
-     ]
     }
    ],
    "gloss": [
@@ -709,25 +690,10 @@
        "f": "",
        "r": "quite"
       },
-      ". / ",
-      {
-       "f": "",
-       "r": "Nearly"
-      },
-      "! / ",
-      {
-       "f": "",
-       "r": "Spot"
-      },
-      " ",
-      {
-       "f": "",
-       "r": "on"
-      },
       "."
      ],
      "m": "",
-     "ru": "не совсем / почти! / в точку"
+     "ru": "не совсем"
     },
     {
      "p": [
@@ -817,6 +783,55 @@
    "title": "Part 1: more key moments",
    "lines": [
     {
+     "s": "Ewa",
+     "p": [
+      "“Sorry, something came out, so I can't make it.”"
+     ]
+    },
+    {
+     "s": "Kate",
+     "p": [
+      {
+       "f": "",
+       "r": "Nearly"
+      },
+      "! Like Aiko: you've got the verb, just not the little word. Something came…?"
+     ]
+    },
+    {
+     "s": "Ewa",
+     "p": [
+      "Up! Something came up."
+     ]
+    },
+    {
+     "s": "Kate",
+     "p": [
+      {
+       "f": "",
+       "r": "Spot"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "on"
+      },
+      "."
+     ]
+    },
+    {
+     "s": "",
+     "p": [
+      "…"
+     ]
+    },
+    {
+     "s": "Selin",
+     "p": [
+      "“We need to take a decision by Monday.”"
+     ]
+    },
+    {
      "s": "Kate",
      "p": [
       "“Take a decision” ",
@@ -871,74 +886,30 @@
       },
       "."
      ]
-    },
-    {
-     "s": "",
-     "p": [
-      "…"
-     ]
-    },
-    {
-     "s": "Diego",
-     "p": [
-      "Oh no. I think I've written that in a lot of emails."
-     ]
-    },
-    {
-     "s": "Kate",
-     "p": [
-      "Then ",
-      {
-       "f": "",
-       "r": "you're"
-      },
-      " ",
-      {
-       "f": "",
-       "r": "in"
-      },
-      " ",
-      {
-       "f": "",
-       "r": "very"
-      },
-      " ",
-      {
-       "f": "",
-       "r": "good"
-      },
-      " ",
-      {
-       "f": "",
-       "r": "company"
-      },
-      "."
-     ]
-    },
-    {
-     "s": "",
-     "p": [
-      "…"
-     ]
-    },
-    {
-     "s": "Kate",
-     "p": [
-      "Spot on. “Can you let me know about the invoice tomorrow?” ",
-      {
-       "f": "",
-       "r": "also"
-      },
-      " ",
-      {
-       "f": "",
-       "r": "works"
-      },
-      "."
-     ]
     }
    ],
    "gloss": [
+    {
+     "p": [
+      {
+       "f": "",
+       "r": "Nearly"
+      },
+      "! / ",
+      {
+       "f": "",
+       "r": "Spot"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "on"
+      },
+      "."
+     ],
+     "m": "",
+     "ru": "почти! / в точку"
+    },
     {
      "p": [
       "X ",
@@ -995,7 +966,91 @@
      ],
      "m": "",
      "ru": "так можно, просто чаще говорят Y"
+    }
+   ]
+  },
+  {
+   "title": "Part 1: more key moments",
+   "lines": [
+    {
+     "s": "Diego",
+     "p": [
+      "I wrote “I did a mistake” in an email today. Is that okay?"
+     ]
     },
+    {
+     "s": "Kate",
+     "p": [
+      "Ah, tricky one. “Fazer” is both “make” and “do” in Portuguese, isn't it? With mistakes, it's “make”."
+     ]
+    },
+    {
+     "s": "Diego",
+     "p": [
+      "Oh no. I think I've written that in a lot of emails."
+     ]
+    },
+    {
+     "s": "Kate",
+     "p": [
+      "Then ",
+      {
+       "f": "",
+       "r": "you're"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "in"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "very"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "good"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "company"
+      },
+      "."
+     ]
+    },
+    {
+     "s": "",
+     "p": [
+      "…"
+     ]
+    },
+    {
+     "s": "Aiko",
+     "p": [
+      "“Can you get back to me about the invoice tomorrow?”"
+     ]
+    },
+    {
+     "s": "Kate",
+     "p": [
+      "Spot on. “Can you let me know about the invoice tomorrow?” ",
+      {
+       "f": "",
+       "r": "also"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "works"
+      },
+      "."
+     ]
+    }
+   ],
+   "gloss": [
     {
      "p": [
       {
@@ -1389,6 +1444,12 @@
      ]
     },
     {
+     "s": "Diego",
+     "p": [
+      "…And what about money? If I work from a village, should they pay me less?"
+     ]
+    },
+    {
      "s": "Kate",
      "p": [
       "Oh, ",
@@ -1591,7 +1652,19 @@
     {
      "s": "Kate",
      "p": [
-      "Probably not a very popular one, though. ",
+      "…Should they pay you less if you live in a village?"
+     ]
+    },
+    {
+     "s": "Aiko",
+     "p": [
+      "Maybe they should. Rent's cheaper in a village."
+     ]
+    },
+    {
+     "s": "Kate",
+     "p": [
+      "Well, that's a point! Probably not a very popular one, though. ",
       {
        "f": "",
        "r": "Who"

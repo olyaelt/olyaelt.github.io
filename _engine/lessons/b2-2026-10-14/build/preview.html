@@ -294,6 +294,7 @@ details.summary[open] summary::after{content:"Hide"}
 .rev{display:inline-grid;place-items:center;width:1.25em;height:1.5em;margin:0 1px 0 2px;padding:0;border:0;border-radius:4px;background:none;color:var(--done);vertical-align:-.3em;cursor:pointer}
 .rev svg{width:.78em;height:1.05em;overflow:visible}
 .rev path{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round}
+.bm-ic svg{width:.72em;height:.98em;vertical-align:-.1em;margin:0 .1em;overflow:visible} .bm-ic path{fill:currentColor;stroke:currentColor;stroke-width:1.2;stroke-linejoin:round}   /* engine 61 also: Next: 🔖 your bookmarks */
 .rev.on path{fill:currentColor}
 .rev:hover{background:color-mix(in srgb, var(--done) 14%, transparent)}
 .rev.demo{cursor:default;height:1.2em}
@@ -669,6 +670,11 @@ audio{width:100%}
 @media (prefers-reduced-motion: reduce){ .fx-slot.shake,.fx-ans .fx-in.pop{animation:none} }
 /* ===== /fixit ===== */
 .task-row.stop{outline:3px solid var(--hl);outline-offset:-3px;border-radius:var(--radius)}   /* engine 60: «иди в чат» stops on her own pages */
+.actions.has-react{flex-wrap:wrap}
+.actions .react-wrap{flex-basis:100%;order:-1;display:grid;gap:6px}
+.react-pre{margin:0;padding:8px 12px;background:var(--card);border:2px solid var(--line);border-radius:12px;font-size:var(--step-0)}
+.react-pre .react-msg{color:var(--done);font-weight:700}
+.actions .ask-box{display:grid;gap:6px} .actions .ask-box[hidden]{display:none}
 </style>
 
 <div class="wrap" id="app"></div>
@@ -797,7 +803,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = ["click on the top line to hear the context","click on the line with the gap and try to catch what's in the gap","check","listen again — how did the expression sound?","optional: pronounce the expression like the speaker"];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "60";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "61";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -1051,19 +1057,74 @@ function reactHTML(){
       ${lastFlagged.map((f,i)=>`<div class="fl"><span class="fl-s">${esc(f.s.length>90?f.s.slice(0,88)+"…":f.s)}</span>
         <button class="linklike" data-note="${i}">add a note</button>
         <span class="note-box" data-nb="${i}" hidden><input type="text" placeholder="What's unclear? (optional)" data-ni="${i}"><button class="btn" data-ng="${i}">Add</button></span></div>`).join("")}</div>` : "";
-  return fl + `<div class="react" id="react">
-      <span>How was it?</span>
-      <span class="chips">${["easy","ok","hard"].map(l=>`<button class="chip" data-react="${l}">${l==="ok"?"OK":l[0].toUpperCase()+l.slice(1)}</button>`).join("")}</span>
+  return fl;   /* engine 61: "How was it?" is asked on the task's last screen, before Finish (reactPre) */
+}
+/* engine 61 (her 2.11 18:11: «вопрос, насколько сложно было задание, появляется вверху страницы уже после того, как задание ушло… я его
+   сама еле заметила… непонятно, что оно относится к только что сделанному упражнению… студенты не пользуются… должно появляться перед
+   последним финишем»): on the last screen of a task, right above Finish: "How was this task? Easy · OK · Hard · I have a question" —
+   optional, Finish works without it; the answer goes to her table at once (as before) */
+const REACTED = {};
+const reactRowHTML = t => `<div class="react react-pre" id="react">
+      <span>How was <b>this task</b>?</span>
+      <span class="chips">${["easy","ok","hard"].map(l=>`<button class="chip${REACTED[t.id]===l?" on":""}" data-react="${l}">${l==="ok"?"OK":l[0].toUpperCase()+l.slice(1)}</button>`).join("")}</span>
       <button class="linklike" id="ask">I have a question</button>
+      <span class="react-msg" id="react-msg" aria-live="polite">${REACTED[t.id] ? "Thanks! Olya will see it." : ""}</span>
     </div>
     <div class="ask-box" id="ask-box" hidden>
       <textarea id="ask-txt" rows="3" placeholder="Your question for Olya — in English or Russian"></textarea>
       <button class="btn primary" id="ask-go">Send to Olya</button>
-    </div>
-    <p class="react-msg" id="react-msg" aria-live="polite"></p>`;
+    </div>`;
+/* engine 61 also (her 2.11 18:30: «мы пишем Finish, и когда нажимаешь на Finish, дальше проходится ещё раз по bookmarked questions… Finish
+   немножко сбивает с толку»): when the task's bookmarks come next, the last button says "Next: 🔖 your bookmarks" (Finish and send →
+   Send and go on); a bookmark set or taken off on that screen changes it at once. Finish (and "How was this task?") is at the end of the
+   bookmarks, where the task really ends. */
+const BM_NEXT = () => `Next: <span class="bm-ic">${BOOKMARK}</span> your bookmarks`;   /* the page's own bookmark, filled, white on blue */
+function bmAhead(){
+  if(!current || current._once || current._review || isTeacher() || app.querySelector(".panel.once")) return 0;
+  if(current.kind === "gaps") return getRev(current.id).size;
+  const m = onceMoreTask(TASKS.find(x => x.id === current.id) || current); return m ? m.steps.length : 0;
+}
+function finLabel(act){
+  [act.querySelector("#go"), act.querySelector("#fin")].forEach(b => { if(!b) return;
+    const txt = b.textContent.trim();
+    if(b.dataset.fin0 && txt !== b.dataset.finNow){ delete b.dataset.fin0; delete b.dataset.finNow; }   /* the page set a new label itself */
+    const was = b.dataset.fin0 || txt; if(!/^Finish( and send)?$/.test(was)) return;
+    if(bmAhead()){ if(!b.dataset.fin0){ b.innerHTML = was === "Finish" ? BM_NEXT() : "Send and go on"; b.dataset.fin0 = was; b.dataset.finNow = b.textContent.trim(); } }
+    else if(b.dataset.fin0){ b.textContent = was; delete b.dataset.fin0; delete b.dataset.finNow; }
+  });
+}
+function reactPre(){
+  const act = app.querySelector(".actions"); if(!act || !current) return;
+  finLabel(act);   /* engine 61 also */
+  const go = act.querySelector("#go"), fin = act.querySelector("#fin"), old = act.querySelector(".react-wrap");
+  const final = !!(fin && !fin.dataset.fin0) || !!(go && /^Finish/.test(go.textContent.trim()));
+  const want = final && !!myCode() && syncState !== "unknown" && !isTeacher();
+  if(!want){ if(old){ old.remove(); act.classList.remove("has-react"); } return; }
+  if(old) return;
+  act.insertAdjacentHTML("afterbegin", `<div class="react-wrap">${reactRowHTML(current)}</div>`); act.classList.add("has-react");
+  wireReactRow(current, act);
+}
+function wireReactRow(t, root){
+  const msg = root.querySelector("#react-msg");
+  root.querySelectorAll("[data-react]").forEach(b=>b.addEventListener("click", async ()=>{
+    root.querySelectorAll("[data-react]").forEach(x=>x.classList.toggle("on", x===b)); REACTED[t.id] = b.dataset.react;
+    const res = await post({action:"react", code:myCode(), page:PAGE_KEY, date:LESSON.date, task:t.id, title:t.title, level:b.dataset.react});
+    if(msg) msg.textContent = res.ok ? "Thanks! Olya will see it." : "It didn't go through — no connection right now.";
+  }));
+  const ask = root.querySelector("#ask"), box = root.querySelector("#ask-box");
+  if(ask) ask.addEventListener("click",()=>{ box.hidden = !box.hidden; if(!box.hidden) root.querySelector("#ask-txt").focus(); });
+  const go = root.querySelector("#ask-go"); if(go) go.addEventListener("click", async ()=>{
+    const q = root.querySelector("#ask-txt").value.trim(); if(!q){ msg.textContent = "Type your question first."; return; }
+    const res = await post({action:"submit", code:myCode(), page:PAGE_KEY, date:LESSON.date, task:t.id, title:t.title, type:"question", text:q});
+    if(res.ok){
+      const d = new Date(), p2 = n=>String(n).padStart(2,"0");
+      (work[t.id] = work[t.id] || []).push({id:res.id, sent:`${p2(d.getDate())}.${p2(d.getMonth()+1)} ${p2(d.getHours())}:${p2(d.getMinutes())}`, type:"question", text:q, feedback:"", seen:false});
+      saveWork(); box.hidden = true; msg.textContent = "Sent ✓ Olya's answer will appear under the task (💬).";
+    } else msg.textContent = "It didn't go through — no connection right now. Try again in a minute.";
+  });
 }
 function wireReact(){
-  const t = lastDone; if(!t || !document.getElementById("react")) return;
+  const t = lastDone; if(!t) return;
   const msg = document.getElementById("react-msg");
   document.querySelectorAll("[data-note]").forEach(b=>b.addEventListener("click",()=>{ const nb = document.querySelector(`[data-nb="${b.dataset.note}"]`); nb.hidden = false; b.hidden = true; nb.querySelector("input").focus(); }));
   document.querySelectorAll("[data-ng]").forEach(b=>b.addEventListener("click", async ()=>{
@@ -1077,6 +1138,7 @@ function wireReact(){
     const res = await post({action:"react", code:myCode(), page:PAGE_KEY, date:LESSON.date, task:t.id, title:t.title, level:b.dataset.react});
     msg.textContent = res.ok ? "Thanks! Olya will see it." : "It didn't go through — no connection right now.";
   }));
+  if(!document.getElementById("ask") || !document.getElementById("ask-go")) return;
   document.getElementById("ask").addEventListener("click",()=>{ const box = document.getElementById("ask-box"); box.hidden = false; document.getElementById("ask-txt").focus(); });
   document.getElementById("ask-go").addEventListener("click", async ()=>{
     const q = document.getElementById("ask-txt").value.trim(); if(!q){ msg.textContent = "Type your question first."; return; }
@@ -1613,6 +1675,7 @@ function shell({count, pct, instr, stageHTML, withBox, actionsHTML, panel}){
     <div class="stage ${withBox?"with-box":""}">${stageHTML}</div>
     <div class="actions">${actionsHTML}</div>`;
   placeRevHint(app.querySelector(".stage .rev-hint"));
+  reactPre();   /* engine 61 */
   document.getElementById("home").addEventListener("click",goHome);
   const da = document.getElementById("do-again"); if(da) da.addEventListener("click", () => openTask(current.id, null, "fresh"));
   const db = document.getElementById("do-bm"); if(db) db.addEventListener("click", () => { const base = TASKS.find(x=>x.id===current.id), again = onceMoreTask(base); if(again){ current = again; stepIdx = 0; checked = false; renderTask(); } });
@@ -1711,7 +1774,7 @@ document.addEventListener("click", ev => {
   const [s, r] = b.dataset.bm.split(".").map(Number), revs = getRev(current.id, s);
   revs.has(r) ? revs.delete(r) : revs.add(r);
   ls.set(revKey(current.id, s), JSON.stringify([...revs].sort((x, y) => x - y))); if(revs.size) ls.set("hw-rev-used", "1");
-  b.classList.toggle("on", revs.has(r)); b.setAttribute("aria-pressed", revs.has(r));
+  b.classList.toggle("on", revs.has(r)); b.setAttribute("aria-pressed", revs.has(r)); reactPre();   /* engine 61 also: Finish ↔ Next: your bookmarks */
 }, true);
 /* "Once more" for a steps task: the bookmarked steps again, each with only its bookmarked items to do */
 const REV_TYPES = new Set(["dlg", "rewrite", "fix", "sayit", "share", "listen", "lookback", "sort"]);
@@ -1758,7 +1821,7 @@ function addRevButtons(chunks, id, s, only){
     const b = document.createElement("button"); b.type = "button"; b.className = "rev" + (revs.has(k) ? " on" : ""); b.innerHTML = BOOKMARK;
     b.title = "Bookmark: practise this again"; b.setAttribute("aria-label", "Bookmark: practise this again"); b.setAttribute("aria-pressed", revs.has(k));
     b.addEventListener("click", () => { revs.has(k) ? revs.delete(k) : revs.add(k); b.classList.toggle("on", revs.has(k)); b.setAttribute("aria-pressed", revs.has(k)); if(revs.size) ls.set("hw-rev-used", "1");
-      ls.set(revKey(id, s), JSON.stringify([...revs].sort((x, y) => x - y))); });
+      ls.set(revKey(id, s), JSON.stringify([...revs].sort((x, y) => x - y))); reactPre(); });
     c.after(b);
   });
   return revs;
@@ -2472,7 +2535,7 @@ function renderListen(st, count, pct){
       const dy = after.getBoundingClientRect().top - y0; if(dy && window.scrollY > 0) window.scrollBy(0, dy); }
     document.getElementById("after").hidden = false;
     const last = stepIdx === current.steps.length-1;
-    document.getElementById("go").textContent = last ? "Finish" : "Next";
+    document.getElementById("go").textContent = last ? "Finish" : "Next"; reactPre();
   });
 }
 
@@ -2695,7 +2758,7 @@ function renderProduce(st, count, pct){
   const lastStep = stepIdx === current.steps.length - 1;
   let fresh = !sentFor(current);
   function setLabels(){ if(isTeacher()) return; const go = $("go"), ns = $("nosend"); if(!go) return;
-    go.textContent = fresh ? (lastStep ? "Finish and send" : "Send and go on") : (lastStep ? "Finish" : "Next"); if(ns) ns.hidden = !fresh; }
+    go.textContent = fresh ? (lastStep ? "Finish and send" : "Send and go on") : (lastStep ? "Finish" : "Next"); if(ns) ns.hidden = !fresh; reactPre(); }
   app.querySelectorAll(".seg-btn").forEach(b=>b.addEventListener("click",()=>{
     curMode = b.dataset.mode; ls.set("hw-mode", curMode);
     app.querySelectorAll(".seg-btn").forEach(x=>{ x.classList.toggle("on", x===b); x.setAttribute("aria-selected", x===b); });

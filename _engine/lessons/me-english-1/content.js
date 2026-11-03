@@ -31,9 +31,12 @@ const stop = (c, bx) => ({body: `<p>${esc(c.first)}</p>
   <p class="small">Когда закончишь в чате, вернись сюда и нажми «I've done it».</p>${bx ? `<div style="margin-top:12px">${bx}</div>` : ""}`, fin: "I've done it"});
 const boxed = inner => box(inner);
 
+/* her 18:02 (a question showed "<b>Something came…?</b>" as text): a dialogue line takes plain text, so <b>…</b> becomes the line's own bold
+   part ({b: …}); any other tag is dropped */
+const tagParts = t => String(t).split(/(<b[^>]*>.*?<\/b>)/).filter(Boolean).map(x => { const m = x.match(/^<b[^>]*>(.*?)<\/b>$/); return m ? {b: m[1].replace(/<[^>]+>/g, "")} : x.replace(/<[^>]+>/g, ""); });
 /* a dialogue text in parts: the lines, then each question with its answer hidden in yellow (tap to check), as on her slides */
 const readSteps = parts => parts.map((pt, i) => ({type:"dlg", intro: pt.label,
-  lines: pt.lines.map(l => ({s: l.s, p: [l.t]})).concat((pt.questions || []).map(q => ({s: "", p: ["❓ " + q.q + " ", {f: "", r: q.a}]}))),
+  lines: pt.lines.map(l => ({s: l.s, p: [l.t]})).concat((pt.questions || []).map(q => ({s: "", p: ["❓ "].concat(tagParts(q.q), [" ", {f: "", r: q.a}])}))),
   instr: i === 0 ? "Read this part. Answer the question aloud, then tap the yellow box to check." : "Read on. Answer, then tap the yellow to check.", checkLabel: "Show the answer"}));
 const movesStep = moves => [{type:"sayit", s:{html: true, rows: moves.map(m => [esc(m.move), esc(m.example)])}, box: "",
   instr: "What does Kate say for each move? Say it, then tap the yellow to check."}];

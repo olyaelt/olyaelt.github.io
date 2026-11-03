@@ -270,7 +270,7 @@
     },
     {
      "kind": "picture",
-     "img": "priya.jpg",
+     "img": "priya-hooks.jpg",
      "alt": "Priya, 35, works in logistics",
      "timer": 60,
      "instr": "What did Priya say? Tap the hourglass and say everything you remember in one minute.",
@@ -282,7 +282,7 @@
     },
     {
      "kind": "picture",
-     "img": "sam.jpg",
+     "img": "sam-hooks.jpg",
      "alt": "Sam, 24, graduated last year",
      "timer": 60,
      "instr": "What did Sam say? Tap the hourglass and say everything you remember in one minute.",
@@ -294,7 +294,7 @@
     },
     {
      "kind": "picture",
-     "img": "mark.jpg",
+     "img": "mark-hooks.jpg",
      "alt": "Mark, 26, in his first job as an engineer",
      "timer": 60,
      "instr": "What did Mark say? Tap the hourglass and say everything you remember in one minute.",
@@ -1025,7 +1025,7 @@
    ]
   },
   {
-   "label": "🎲 School council",
+   "label": "🎲 Use it",
    "blocks": [
     {
      "kind": "text",

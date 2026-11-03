@@ -1,6 +1,6 @@
 // tools 24 (her 1.11 21:55: «перетащить куски урока самой… на карточку кликнуть и поменять текст»): on a lesson page's -live version
-//  · she drags a stage button (School council back before Say it naturally — the page itself has it after since 2.11) → her order is saved
-//    in her table; a group gets it at its next tap: the buttons in the new order, Next at the end of Make it perfect goes to School council;
+//  · she drags a stage button (Use it back before Say it naturally — the page itself has it after since 2.11) → her order is saved
+//    in her table; a group gets it at its next tap: the buttons in the new order, Next at the end of Make it perfect goes to Use it;
 //    a group already in a part stays there;
 //  · ✏️ on a card (Card / Red word / Answer / Instruction) and on a line with gaps ([[…]] = the yellow gap) → the group sees the new text at
 //    its next tap; ↩ Original brings the page's own text back; 📋 My changes lists what she changed; the groups' screens show no ✏️.
@@ -28,21 +28,21 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', PAGE = 'tools/c1-20
   const O = await open('teacher'), G = await open('group');
   out.groupEdit = await G.locator('.led-b').count(); expect('the groups\' screens: no ✏️', out.groupEdit === 0, out.groupEdit);
 
-  // ---- 1. her order: School council before Say it naturally
+  // ---- 1. her order: Use it before Say it naturally
   out.before = await pills(O);
-  const council = O.locator('.stage-btn', {hasText: 'School council'}), sayNat = O.locator('.stage-btn', {hasText: 'Say it naturally'});
+  const council = O.locator('.stage-btn', {hasText: 'Use it'}), sayNat = O.locator('.stage-btn', {hasText: 'Say it naturally'});
   const box = await sayNat.boundingBox();
   await council.dragTo(sayNat, {targetPosition: {x: 4, y: box.height / 2}}); await O.waitForTimeout(500);
   out.herOrder = await pills(O); out.stored = (env.sheets.Live ? env.sheets.Live.d.slice(1) : []).map(r => r.join(' | ').slice(0, 200));
-  expect('she drags School council before Say it naturally → her buttons in the new order', out.herOrder.join(' > ').includes('Make it perfect > 🎲 School council > 🗣 Say it naturally'), out);
+  expect('she drags Use it before Say it naturally → her buttons in the new order', out.herOrder.join(' > ').includes('Make it perfect > 🎲 Use it > 🗣 Say it naturally'), out);
   // the group gets it at its next tap
   await G.evaluate(() => liveFetch(false)); await G.waitForTimeout(300);
   out.groupBeforeTap = await pills(G);
   await at(G, 1, 0); out.groupAfterTap = await pills(G);
-  expect('the group: unchanged until its next tap, then the new order', !out.groupBeforeTap.join(' > ').includes('School council > 🗣 Say it naturally') && out.groupAfterTap.join(' > ').includes('School council > 🗣 Say it naturally'), {b: out.groupBeforeTap, a: out.groupAfterTap});
+  expect('the group: unchanged until its next tap, then the new order', !out.groupBeforeTap.join(' > ').includes('Use it > 🗣 Say it naturally') && out.groupAfterTap.join(' > ').includes('Use it > 🗣 Say it naturally'), {b: out.groupBeforeTap, a: out.groupAfterTap});
   await G.evaluate(() => { S.at[1] = D.stages[1].blocks.length - 1; render(); }); await G.evaluate(() => stepOn()); await G.waitForTimeout(200);
   out.nextFromPerfect = await G.evaluate(() => D.stages[S.stage].label);
-  expect('Next at the end of Make it perfect → School council', /School council/.test(out.nextFromPerfect), out.nextFromPerfect);
+  expect('Next at the end of Make it perfect → Use it', /Use it/.test(out.nextFromPerfect), out.nextFromPerfect);
 
   // ---- 2. ✏️ a card: the first key-word card of Say it naturally
   const si = await O.evaluate(() => D.stages.findIndex(s => /naturally/.test(s.label)));
