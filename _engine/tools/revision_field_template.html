@@ -375,7 +375,7 @@ __BASE_CSS__
 .fast{background:var(--bubble);color:var(--bubble-ink);border-radius:16px;padding:12px 16px;display:grid;gap:8px}
 .fast h3{margin:0;font-size:1.1rem}
 .fast p{margin:0;font-size:1.08rem}
-.tool-frame{width:100%;height:calc(100vh - 16.8rem);min-height:22rem;border:2px solid var(--line);border-radius:14px;background:var(--ground)}
+.tool-frame{width:100%;height:calc(100vh - 16.8rem);min-height:18rem;border:0;border-radius:0;background:transparent;display:block}   /* tools 28: no frame; sizeTool() gives it the free space */
 /* 🎓 How it works (handoff 0920): a line above a block that has a tip — always on f-demo, on the other fields when the switch is on */
 .tip{margin:0;color:var(--muted);font-size:1.05rem;font-weight:600;border:2px dashed var(--line);border-radius:12px;padding:6px 12px;background:var(--card)}
 .howto{margin-left:6px}
@@ -477,6 +477,23 @@ __LW_CSS__
 .rl-all summary,.expin-f summary{cursor:pointer;font-weight:800;color:var(--muted)}
 .rl-lists{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:10px}
 .rl-lists ol{margin:4px 0 0;padding-left:0;list-style:none;display:grid;gap:2px}
+/* tools 28 (her 3.11 20:23): the faces always in view beside the dice; the rolled face lights up */
+.rl-cols{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:10px 18px;align-items:start}
+.rl-cols .rl-die{justify-items:start}
+.rl-faces{margin:2px 0 0;padding:0;list-style:none;display:grid;gap:1px;width:100%}
+.rl-faces li{border-radius:8px;padding:1px 8px;border:2px solid transparent;font-size:calc(1.05rem * var(--k, 1));line-height:1.3}
+.rl-faces li.on{background:#E8F4FD;border-color:#0693E3;font-weight:800}
+.rl-rollrow{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.rl-rollrow .rl-res{flex:1;min-width:14rem}
+@media (max-width:700px){ .rl-cols{grid-template-columns:minmax(0,1fr)} }
+.rl-deck .rl-dice{align-items:center}
+.rl-pilewrap{display:grid;justify-items:center;gap:6px;cursor:pointer}
+.rl-pilecap{font-weight:900;color:var(--instr-text, #0679BD);text-align:center;line-height:1.2} .rl-pilecap small{display:block;font-weight:700;color:var(--muted)} .rl-pilewrap .gd-left{display:none}
+.rl-slot{min-height:8.6rem;min-width:14rem;flex:1;display:grid;align-items:center}
+.rl-slot .gd-card{width:min(100%, 26rem);height:auto;min-height:8.6rem}
+.rl-cardt{display:block;font-size:calc(1.45rem * var(--k, 1));font-weight:800;line-height:1.3}
+.rl-cardm{display:flex;align-items:center;gap:10px;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:6px 12px}
+.rl-cardic{font-size:1.6rem}
 .expin-f{position:sticky;bottom:72px;z-index:3;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:6px 12px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
 .expin-f[open]{padding-bottom:10px}
 .expin-f .expin-open{display:grid;gap:2px;margin-top:6px}
@@ -733,7 +750,7 @@ function keepPlace(){
   if(S.view !== "field" || S.fast) return;
   const bsOut = Object.assign({}, S._restore || {}); Object.entries(S.bs).forEach(([id, st]) => { if(id === "fastdeck") return; const d = st.deck;
     bsOut[id] = {open: [...st.open], shown: !!st.shown, check: st.check || "", done: !!st.done, bm: [...(st.bm || [])], spk: st.spk ? st.spk.key : null,
-      sc: st.sc || null, cn: st.cn ? Object.assign({}, st.cn, {busy: false, enter: false}) : null, fx: st.fx || null, so: st.so || null, sec: st.sec || null, memo: st.memo ? {phase: st.memo.phase, got: [...st.memo.got], end: st.memo.end || 0} : null, g: st.g || null, np: st.np || null, ended: !!st.ended, lis: st.lis || null, wh: st.wh || null, rl: st.rl ? {ph: st.rl.ph, roll: st.rl.roll} : null, mx: st.mx || null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, flipped: !!d.flipped} : (st._deck || null)}; });
+      sc: st.sc || null, cn: st.cn ? Object.assign({}, st.cn, {busy: false, enter: false}) : null, fx: st.fx || null, so: st.so || null, sec: st.sec || null, memo: st.memo ? {phase: st.memo.phase, got: [...st.memo.got], end: st.memo.end || 0} : null, g: st.g || null, np: st.np || null, ended: !!st.ended, lis: st.lis || null, wh: st.wh || null, rl: st.rl ? {ph: st.rl.ph, roll: st.rl.roll, dk: st.rl.dk || null} : null, mx: st.mx || null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, flipped: !!d.flipped} : (st._deck || null)}; });
   store.set(PLACE_KEY, {stage: S.stage, at: S.at, far: S.far, intro: S.intro, bs: bsOut, t: Date.now(), shape: SHAPE});
   store.set(LEFT_KEY, {page: PAGE_ID, href: location.pathname.split("/").pop(), cell: cellName(), title: D.title, stage: String(D.stages[S.stage].label || ""), t: Date.now()});
 }
@@ -966,7 +983,8 @@ function calendarsHTML(b){
     ${b.done ? (st.done ? `<p class="cal-done">${mk(b.done)}</p>` : `<div class="row-actions"><button class="btn primary" data-caldone>✓ Done — check the time</button></div>`) : ""}`;
 }
 const toolSrc = b => `${b.page}${LIVE_ON ? "-live" : ""}.html`;
-const toolHTML = b => `<iframe class="tool-frame" src="${toolSrc(b)}?embed=1" title="${esc(b.instr || b.page)}"></iframe><p class="share-note"><a href="${toolSrc(b)}" target="_blank" rel="noopener">Open it in a new tab ↗</a></p>${liveTeacher() && SHARE ? `<div data-pchost>${embPanel()}</div>` : ""}`;
+const rootPx = () => Math.round(parseFloat(getComputedStyle(document.documentElement).fontSize) * 10) / 10;   /* tools 28: the page inside uses the field's type size */
+const toolHTML = b => `<iframe class="tool-frame" src="${toolSrc(b)}?embed=1${boxFor(b) ? "&nobox=1" : ""}&fs=${rootPx()}" title="${esc(b.instr || b.page)}"></iframe>${meTeacher() ? `<p class="share-note"><a href="${toolSrc(b)}" target="_blank" rel="noopener">Open it in a new tab ↗</a></p>` : ""}${liveTeacher() && SHARE ? `<div data-pchost>${embPanel()}</div>` : ""}`;
 /* her 👥 for the page inside (her wish 10:07: under it, as a page of its own, not squeezed into the frame): the page inside says which
    chat is open (postMessage), and the groups' cards for that chat show here, as in 📥 Groups */
 let EMB = null;
@@ -1074,6 +1092,7 @@ function boxFor(b){
   if(b.kind === "cards" && b.style === "share"){ const d = deckOf(b), i = d.queue[0], c = i != null ? b.cards[i] : null, sup = c ? c.support : "none";
     return sup === "box" ? "BOX" : sup === "strip" ? "STRIP" : null; }
   if(b.kind === "fix" && !b.box && D.boxes && D.boxes.BOX) return "BOX";   /* tools 16: Fix it sits beside the stage's box, like the other Practice blocks */
+  if(b.kind === "tool") return b.box || b._box || null;   /* tools 28: the page inside shows only its card; its box is the field's, on the right */
   return b.box || null;
 }
 
@@ -1195,7 +1214,7 @@ function gameOpenTask(b, t){ const T = bs(b).ttt; if(!T || T.over) return; const
    (the game done once on its own material: the dice land on the example's faces, the chat with gaps), then Go → the real game, the
    example pinned at the bottom. 🧩 mix: tap one in each column → the question builds above. The games come back as the room left them
    (this device, also after a reload). ---------- */
-const NEWG = ["wheel", "goose", "snakes", "dots"], ROLLS = ["dice1", "dice2", "islands"];
+const NEWG = ["wheel", "goose", "snakes", "dots"], ROLLS = ["dice1", "dice2", "islands", "deck"];   /* tools 28: deck = 🃏 Draw a card with the same guided start */
 const taskQ = t => `${t.label && !/^\d+$/.test(t.label) ? `<span class="glbl">${esc(t.label)}</span>` : ""}${t.ctx ? `<span class="lctx">${mk(t.ctx)}</span>` : ""}<span class="say">${mk(t.q)}</span>`;
 const taskA = (b, t) => `${b.check ? `<span class="chk">${esc(b.check)}</span>` : ""}<span class="say fixline">${mk(t.a)}</span>${t.why ? `<span class="note">${mk(t.why)}</span>` : ""}`;
 const dotsQ = t => `<span class="say">${mk(t.q)}</span><span class="say frame">${mk(String(t.frame || "").replace(/_{2,}/g, "______"))} <b class="kw">${esc(t.key || "")}</b></span>`;
@@ -1272,21 +1291,31 @@ const rollLine = (b, roll) => { if(!roll) return ""; const ds = DICE(b), fs = ds
   if(b.piece === "dice2") return `<p class="rl-res"><b>${mk(fs[0] ? fs[0].text : "")}</b> · ${mk(fs[1] ? fs[1].text : "")}${fs[1] && fs[1].start ? ` <span class="rl-arrow">→</span> <span class="rl-start">${mk(fs[1].start)}</span>` : ""}</p>`;
   return `<p class="rl-res big">${mk(fs[0] ? fs[0].text : "")}</p>`; };
 const filledLine = l => `<p>${l.s ? `<b class="sp">${esc(l.s)}:</b> ` : ""}${(l.p || []).map(x => typeof x === "string" ? mk(x) : x.b != null ? `<b>${esc(x.b)}</b>` : `<b class="fill">${esc((x.f || "") + x.r)}</b>`).join("")}</p>`;
+/* tools 28 (her 3.11 20:23: «кубик — только когда у него понятная роль… если мы просто достаём карточку — draw a card»): the deck — the
+   cards in a shuffled pile (the example's card comes last), tap the pile → the top card flies out and turns over; empty → shuffle */
+const dkSt = b => { const R = rlSt(b); if(!R.dk || R.dk.order.length !== b.cards.length){ const first = b.intro ? (b.intro.card || 0) : -1; let o = gShuffle(b.cards.map((_, i) => i));
+  if(first > -1) o = o.filter(i => i !== first).concat(first); R.dk = {order: o, at: -1}; } return R.dk; };
+const dkFace = (b, i) => `${b.title ? `<span class="gd-k">${esc(b.title)}</span>` : ""}<span class="rl-cardt">${mk(b.cards[i] || "")}</span>`;
 function rollHTML(b){
-  const R = rlSt(b), I = b.intro, isl = b.piece === "islands";
+  const R = rlSt(b), I = b.intro, isl = b.piece === "islands", dk = b.piece === "deck";
   if(I && R.ph === "intro"){
-    const top = isl ? `<p class="rl-isle">⛵ → 🏝 <b>${esc((b.islands[I.island || 0] || {}).t || "")}</b></p>`
+    const top = dk ? `<div class="rl-mini"><span class="rl-m rl-cardm"><span class="rl-cardic" aria-hidden="true">🃏</span><span class="rl-face">${mk(b.cards[I.card || 0] || "")}</span></span></div>` : isl ? `<p class="rl-isle">⛵ → 🏝 <b>${esc((b.islands[I.island || 0] || {}).t || "")}</b></p>`
       : `<div class="rl-mini">${DICE(b).map((d, i) => `<span class="rl-m">${gDieHTML(Number(String(I.dice[i]).split(/\D/)[0]) || 1, "mini")}<span class="rl-face">${mk((faceOf(d, I.dice[i]) || {}).text || "")}</span></span>`).join("")}</div>`;
-    const go = `<button class="btn primary slim" data-rlgo>${isl ? "⛵ Now sail →" : DICE(b).length > 1 ? "🎲 Now roll the dice →" : "🎲 Now roll the die →"}</button>`;
+    const go = `<button class="btn primary slim" data-rlgo>${dk ? "🃏 Now draw a card →" : isl ? "⛵ Now sail →" : DICE(b).length > 1 ? "🎲 Now roll the dice →" : "🎲 Now roll the die →"}</button>`;
     return `<div class="rl rl-intro"><div class="rl-top"><span class="lbl ex-lbl">⭐ Example</span>${top}</div>${I.ctx ? `<p class="lctx">${mk(I.ctx)}</p>` : ""}<div class="dlg">${linesHTML(I.lines, b, "i")}</div><div class="rl-tools">${gapTools(b)}${go}</div></div>`;
   }
   const pin = I ? `<details class="expin-f${R.pinFly ? " fly" : ""}"${R.pinOpen ? " open" : ""} data-rlpin><summary>📌 Example</summary><div class="expin-open">${I.ctx ? `<p class="lctx">${mk(I.ctx)}</p>` : ""}${I.lines.map(filledLine).join("")}</div></details>` : "";
   if(isl) return `<div class="rl"><div class="fgame fg-islands" data-game="${b._id}"></div>${pin}</div>`;
+  if(dk){ const K = dkSt(b), left = K.order.length - K.at - 1, cur = K.at > -1 ? K.order[K.at] : null;
+    return `<div class="rl rl-play rl-deck"><div class="rl-dice"><div class="rl-pilewrap" data-rlpile role="button" tabindex="0">${gPileHTML(left, "Draw a card")}<span class="rl-pilecap">${left ? `🃏 Draw a card<small>${left} left</small>` : "↺ Shuffle"}</span></div>
+      <div class="gd-slot rl-slot" data-rlslot>${cur != null ? gCardHTML(dkFace(b, cur)) : `<p class="rl-hint">Tap the pile.</p>`}</div></div>${pin}</div>`; }
   const roll = R.roll;
-  return `<div class="rl rl-play"><div class="rl-dice">${DICE(b).map((d, i) => `<div class="rl-die"><span class="rl-dt">${esc(d.title || "")}</span><span data-rldie="${i}">${gDieHTML(roll ? roll[i] : 0)}</span></div>`).join("")}
-      <button class="btn primary rl-roll" data-rlroll>🎲 Roll${roll ? " again" : ""}</button></div>
-    <div class="rl-out" aria-live="polite">${roll ? rollLine(b, roll) : `<p class="rl-hint">Tap Roll.</p>`}</div>
-    <details class="rl-all"><summary>All the faces</summary><div class="rl-lists">${DICE(b).map(d => `<div><p class="rl-dt">${esc(d.title || "")}</p><ol>${dieFaces(d).map(f => `<li><b>${esc(String(f.n))}</b> ${mk(f.text)}${f.start ? ` → ${mk(f.start)}` : ""}</li>`).join("")}</ol></div>`).join("")}</div></details>${pin}</div>`;
+  /* tools 28 (her 3.11 20:23, a die only with a real job — a choice among options in view): each die with its faces open under it, the
+     rolled face lit, as on her slide where both tables are on the screen */
+  const listOf = (d, di) => { const on = roll ? faceOf(d, roll[di]) : null;
+    return `<ol class="rl-faces">${dieFaces(d).map(f => `<li class="${f === on ? "on" : ""}"><b>${esc(String(f.n))}</b> ${mk(f.text)}${f.start ? ` → ${mk(f.start)}` : ""}</li>`).join("")}</ol>`; };
+  return `<div class="rl rl-play"><div class="rl-dice rl-cols" style="--n:${DICE(b).length}">${DICE(b).map((d, i) => `<div class="rl-die"><span class="rl-dt">${esc(d.title || "")}</span><span data-rldie="${i}">${gDieHTML(roll ? roll[i] : 0)}</span>${listOf(d, i)}</div>`).join("")}</div>
+    <div class="rl-out rl-rollrow" aria-live="polite"><button class="btn primary rl-roll" data-rlroll>🎲 Roll${roll ? " again" : ""}</button>${roll ? rollLine(b, roll) : `<p class="rl-hint">Tap Roll.</p>`}</div>${pin}</div>`;
 }
 function wireRoll(b, root){ const R = rlSt(b);
   const on = (q, f) => root.querySelectorAll(q).forEach(x => x.addEventListener("click", f));
@@ -1296,6 +1325,12 @@ function wireRoll(b, root){ const R = rlSt(b);
     let left = dice.length || 0; const done = () => { if(--left > 0) return; R.busy = false; R.roll = roll; render(); keepPlace(); };
     if(!left){ left = 1; done(); return; } dice.forEach((el, i) => gRoll(el, roll[i], done)); });
   root.querySelectorAll("[data-rlpin]").forEach(d => d.addEventListener("toggle", () => { R.pinOpen = d.open; R.pinFly = false; }));
+  root.querySelectorAll("[data-rlpile]").forEach(w => { const draw = () => { if(R.busy) return; const K = dkSt(b);
+      if(K.order.length - K.at - 1 <= 0){ R.dk = null; R.pinFly = false; dkSt(b).order = gShuffle(b.cards.map((_, i) => i)); render(); keepPlace(); return; }
+      K.at++; R.pinFly = false; const i = K.order[K.at], pile = w.querySelector(".gd-pile"), slot = root.querySelector("[data-rlslot]");
+      if(!pile || !slot || gCalm()){ render(); keepPlace(); return; }
+      R.busy = true; const h = slot.querySelector(".rl-hint"); if(h) h.remove(); gDeckFly(pile, slot, dkFace(b, i), () => { R.busy = false; render(); keepPlace(); }); };
+    w.addEventListener("click", draw); w.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); draw(); } }); });
   if(b.piece === "islands" && R.ph === "play") gameMount(b, root.querySelector(`[data-game="${b._id}"]`));
 }
 /* 🧩 mix: one from each column → the question */
@@ -1571,7 +1606,7 @@ function blockHTML(b){
    decide for them: those buttons pulse, with a word in the middle of the bar. 🏁 Finish the game (beside Next) ends it whenever they like;
    then Next says "Next task →" and goes on (↩ Keep playing, any tap in the game or Play again bring the game back). Not for 🧠 memo and
    🤫 secret: they have their own steps. ---------- */
-const PLAY = ["wheel", "goose", "snakes", "dots", "tictactoe", "dice1", "dice2", "islands"];
+const PLAY = ["wheel", "goose", "snakes", "dots", "tictactoe", "dice1", "dice2", "islands", "deck"];
 function isPlay(b){ return !!b && b.kind === "game" && PLAY.includes(b.piece || "tictactoe"); }
 function gameOver(b){ const st = bs(b), G = st.g, T = st.ttt, p = b.piece || "tictactoe";
   if(p === "wheel"){ const W = st.wh; return !!W && W.cur == null && (W.got || []).length >= b.tasks.length; }
@@ -1606,7 +1641,7 @@ function gameStep(b){
   if(press("[data-whshow], [data-gs-show], [data-go-show], [data-dt-show], [data-gt-show]")) return;
   if(q(".gdt-l.free")){ nudge(".gdt-l.free", "First draw a line"); return; }
   const T = bs(b).ttt; if((b.piece || "tictactoe") === "tictactoe"){ if(T && T.open < 0) nudge(".gt-cell:not(.taken)", "First pick a square"); return; }
-  if(press("[data-go-next]") || press("[data-go-flip]") || press("[data-gs-roll]") || press("[data-rlroll]") || press("[data-is-sail]")) return;
+  if(press("[data-go-next]") || press("[data-go-flip]") || press("[data-gs-roll]") || press("[data-rlroll]") || press("[data-rlpile]") || press("[data-is-sail]")) return;
   if(b.piece === "wheel") press(".gw-disc");
 }
 /* ---------- one control, always in the same place (her rule 30.10 12:29) ----------
@@ -1718,6 +1753,18 @@ function backToStageBefore(){ const k = prevStage(S.stage);
 function stepOff(){ const i = bIdx(); if(i > 0){ goBlock(S.stage, i - 1); return; }
   if(FLOW && stagePos(S.stage) > 0){ backToStageBefore(); return; }
   S.intro = true; S.enter = true; render(); scrollTo(0, 0); }
+/* tools 28: the page inside a tool block takes the free space between the header and Back / Next (as the field's own screens do); on a
+   phone it gets its whole height and the field page scrolls */
+let lwH = 0;
+addEventListener("message", e => { const h = e.data && e.data.lwHeight; if(!h) return; lwH = h; sizeTool(); });
+function sizeTool(){
+  const f = document.querySelector("#main .tool-frame"), bar = document.querySelector("#main .stepbar"); if(!f) return;
+  let h;
+  if(innerWidth < 760) h = lwH || Math.round(innerHeight * .8);
+  else { const r = f.getBoundingClientRect(), b = bar ? bar.getBoundingClientRect().bottom : r.bottom; h = Math.max(300, Math.floor(innerHeight - (r.top + scrollY) - (b - r.bottom) - 10), lwH ? Math.ceil(lwH * .8) : 0); }   /* a long page (a chat): 80 % and the field scrolls */
+  if(Math.abs((parseFloat(f.style.height) || 0) - h) > 2) f.style.height = h + "px";
+}
+addEventListener("resize", () => { clearTimeout(sizeTool.t); sizeTool.t = setTimeout(sizeTool, 120); });
 addEventListener("message", e => { const m = e.data && e.data.lwStepEnd; if(!m) return; const b = curBlock(); if(!b || b.kind !== "tool" || S.fast || S.intro || S.view !== "field") return; m === "next" ? stepOn() : stepOff(); });
 function stepBack(){
   if(S.intro && !S.fast){ backToStageBefore(); return; }
@@ -1767,7 +1814,7 @@ function render(){
   const main = document.getElementById("main"), side = document.getElementById("side"), wrap = document.getElementById("wrap");
   let b = S.fast ? S.fast : curBlock(), box = S.view === "field" && !S.intro ? boxFor(b) : null;
   const keepGrid = S.view === "groups" ? document.getElementById("gw-grid") : null;
-  wrap.classList.toggle("nobox", !box && S.view === "field"); wrap.classList.toggle("wide", S.view === "groups" || (b && b.kind === "tool"));
+  wrap.classList.toggle("nobox", !box && S.view === "field"); wrap.classList.toggle("wide", S.view === "groups" || (b && b.kind === "tool" && !box));
   wrap.classList.toggle("groups", S.view === "groups");
   const back = "";
   const bar = S.view === "field" ? liveBarHTML(liveLabel) : "";
@@ -1784,7 +1831,7 @@ function render(){
   wire(main); wireLive(main, p => { if(LEDP[p]) return ledShown(LEDP[p]); const m = String(p).match(/^questions\.(\d+)\.(\d+)$/); if(!m) return ""; const bl = BLOCKS.find(x => x._pid === +m[1]); return bl ? bl.items[+m[2]] || "" : ""; });
   wireStageDrag(main);
   if(S.view === "groups") wireGroups(main); else { paintWriteNotes(); gwPaint(); const sb = main.querySelector("[data-step]"); if(sb) sb.disabled = !canNext(); }
-  fitCard();
+  fitCard(); sizeTool();
 }
 /* tools 18 (C1 04.11: an "our sentences" card with its answer, the note and "Your turn" beside the box ran under Back / Next): a long card
    makes its type smaller, step by step, until the card and its buttons fit above them — her rule, a whole card on the shared screen. A phone scrolls as before. */

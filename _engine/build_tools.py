@@ -176,6 +176,8 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
             for b in st['blocks']:
                 if b.get('kind') == 'tool':
                     ed = json.load(open(os.path.join(T, lesson, b['page'] + '.json'), encoding='utf-8'))
+                    if ed.get('box') and not b.get('box'):   # tools 28 (her 3.11 19:54): the page's box beside it on the field's side, as on every other screen
+                        d.setdefault('boxes', {})['tool:' + b['page']] = ed['box']; b['_box'] = 'tool:' + b['page']
                     if ed.get('type') == 'chat-scenes':   # her 📥 Groups names its chats; their texts are kept by the chats' permanent numbers
                         ep = page_ids(lesson, b['page'], ed, save=False).get('scenes', [])
                         d['embeds'][b['page']] = {'title': ed['title'], 'chats': {str(pid): x.get('contact', '') for pid, x in zip(ep, ed['scenes'])}}

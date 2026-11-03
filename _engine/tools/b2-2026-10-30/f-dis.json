@@ -70,7 +70,7 @@
    "blocks": [
     {
      "kind": "text",
-     "instr": "Remember Paul and Zoe? Complete what they said at the key moments. Tap the yellow and orange to check.",
+     "instr": "Remember Paul and Zoe? Here's their conversation again. Say the missing words. Tap the yellow and orange to check.",
      "lines": [
       {
        "s": "Paul",
@@ -81,13 +81,13 @@
       {
        "s": "Zoe",
        "p": [
-        "The one about the young woman and the old man's credit card?"
+        "The one about the young woman using the old man's credit card to buy things for herself?"
        ]
       },
       {
        "s": "Paul",
        "p": [
-        "Yeah. It made me really angry. It was like a lesson on how to commit a crime."
+        "Yeah. It made me really angry. It was like a lesson on how to commit a crime. You know, get friendly with the old person — get them to trust you and then offer to get a credit card for them. I mean, if you show people this stuff, then other people will just copy what that young woman did."
        ]
       },
       {
@@ -116,143 +116,15 @@
        ]
       },
       {
-       "s": "",
-       "p": [
-        "…"
-       ],
-       "scene": true
-      },
-      {
        "s": "Paul",
        "p": [
-        {
-         "f": "B",
-         "r": "ut"
-        },
-        " I ",
-        {
-         "f": "s",
-         "r": "till"
-        },
-        " ",
-        {
-         "f": "t",
-         "r": "hink"
-        },
-        " the programme was saying it's OK to do this."
+        "That's only because the old man's niece happened to see the credit card statement and notice all those purchases for women's clothing."
        ]
       },
       {
        "s": "Zoe",
        "p": [
-        {
-         "f": "T",
-         "r": "hat's"
-        },
-        " ",
-        {
-         "f": "t",
-         "r": "rue"
-        },
-        ", ",
-        {
-         "f": "a",
-         "r": "nd"
-        },
-        " they hardly spoke to the old man."
-       ]
-      },
-      {
-       "s": "Paul",
-       "p": [
-        {
-         "f": "E",
-         "r": "xactly"
-        },
-        ", ",
-        {
-         "f": "a",
-         "r": "nd"
-        },
-        " he really didn't want to be on TV."
-       ]
-      },
-      {
-       "s": "",
-       "p": [
-        "…"
-       ],
-       "scene": true
-      },
-      {
-       "s": "Zoe",
-       "p": [
-        {
-         "f": "B",
-         "r": "ut"
-        },
-        " I ",
-        {
-         "f": "g",
-         "r": "uess"
-        },
-        " ",
-        {
-         "f": "y",
-         "r": "ou"
-        },
-        " ",
-        {
-         "f": "c",
-         "r": "ould"
-        },
-        " ",
-        {
-         "f": "s",
-         "r": "ay"
-        },
-        " the programme was a warning to people."
-       ]
-      },
-      {
-       "s": "Paul",
-       "p": [
-        {
-         "f": "H",
-         "r": "ardly"
-        },
-        "."
-       ]
-      },
-      {
-       "s": "Zoe",
-       "p": [
-        "But the presenter did say that at the very end."
-       ]
-      },
-      {
-       "s": "Paul",
-       "p": [
-        {
-         "f": "Y",
-         "r": "eah"
-        },
-        ", I ",
-        {
-         "f": "s",
-         "r": "uppose"
-        },
-        " ",
-        {
-         "f": "s",
-         "r": "o"
-        },
-        ". ",
-        {
-         "f": "B",
-         "r": "ut"
-        },
-        " the saddest thing — the old man still thought she was a 'nice girl'."
+        "Actually, what amazed me about that is the way the niece spoke to the young woman first. If it had been me, I'd have gone straight to the police."
        ]
       }
      ],
@@ -283,7 +155,83 @@
         }
        ],
        "ru": "Думаешь? (мягкое несогласие, не вопрос)"
+      }
+     ],
+     "tip": "The first letters are given; the glossary is beside the chat. Tap the yellow (and the orange sounds) to check."
+    },
+    {
+     "kind": "text",
+     "instr": "Part 2. Say the missing words.",
+     "lines": [
+      {
+       "s": "Paul",
+       "p": [
+        {
+         "f": "B",
+         "r": "ut"
+        },
+        " I ",
+        {
+         "f": "s",
+         "r": "till"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "hink"
+        },
+        " the whole programme was sort of saying it's OK to do this. Like, the interview with the young woman. She had all this make-up on, a beautiful dress — it was like she was some kind of star or something. I couldn't believe it!"
+       ]
       },
+      {
+       "s": "Zoe",
+       "p": [
+        {
+         "f": "T",
+         "r": "hat's"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "rue"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "nd"
+        },
+        " they hardly spoke to the old man. Poor thing, he looked terrified by the whole experience of being filmed."
+       ]
+      },
+      {
+       "s": "Paul",
+       "p": [
+        {
+         "f": "E",
+         "r": "xactly"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "nd"
+        },
+        " he really didn't want to be on TV. I thought the presenter was really pushy with him — she kept repeating the same question — 'but didn't you realise, didn't you realise?'"
+       ]
+      },
+      {
+       "s": "Zoe",
+       "p": [
+        "But he must have agreed to it all. They usually have to sign something for those TV programmes."
+       ]
+      },
+      {
+       "s": "Paul",
+       "p": [
+        "I bet it was the niece who talked him into it. She seemed to enjoy being on TV, too. That's the problem with programmes like that — all these boring, ordinary people turn into 'famous people'. Well, for about five minutes, anyway."
+       ]
+      }
+     ],
+     "gloss": [
       {
        "p": [
         {
@@ -354,7 +302,104 @@
         }
        ],
        "ru": "Вот именно, и…"
+      }
+     ]
+    },
+    {
+     "kind": "text",
+     "instr": "Part 3. Say the missing words.",
+     "lines": [
+      {
+       "s": "Zoe",
+       "p": [
+        {
+         "f": "B",
+         "r": "ut"
+        },
+        " I ",
+        {
+         "f": "g",
+         "r": "uess"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ou"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "ould"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "ay"
+        },
+        " that the programme was like a warning to people. You know, telling them to be careful, who they trust with their money, credit cards, things like that."
+       ]
       },
+      {
+       "s": "Paul",
+       "p": [
+        {
+         "f": "H",
+         "r": "ardly"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Zoe",
+       "p": [
+        "But the presenter did say that at the very end."
+       ]
+      },
+      {
+       "s": "Paul",
+       "p": [
+        {
+         "f": "Y",
+         "r": "eah"
+        },
+        ", I ",
+        {
+         "f": "s",
+         "r": "uppose"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "o"
+        },
+        ". ",
+        {
+         "f": "B",
+         "r": "ut"
+        },
+        " the saddest thing of all — the old man still thought the young woman was a 'nice girl'."
+       ]
+      },
+      {
+       "s": "Zoe",
+       "p": [
+        "And the presenter did point out that many thieves are very charming."
+       ]
+      },
+      {
+       "s": "Paul",
+       "p": [
+        "But doesn't everyone know that?"
+       ]
+      },
+      {
+       "s": "Zoe",
+       "p": [
+        "Obviously not! If I were you, I wouldn't watch that show any more."
+       ]
+      }
+     ],
+     "gloss": [
       {
        "p": [
         {
@@ -454,8 +499,7 @@
        ],
        "ru": "Ну да, наверное. Но…"
       }
-     ],
-     "tip": "The first letters are given; the glossary is beside the chat. Tap the yellow (and the orange sounds) to check."
+     ]
     }
    ]
   },
@@ -464,38 +508,38 @@
    "blocks": [
     {
      "kind": "game",
-     "piece": "goose",
-     "instr": "The goose race: take turns to flip the coin and move. Do the task on your square, then tap to check. First to the finish wins!",
+     "piece": "snakes",
+     "instr": "Snakes and ladders: take turns to roll the dice and move. Do the task on your square, then tap to check.",
+     "rule": "Ladder + right answer = go up. Snake + wrong answer = go down. First to the top wins!",
      "box": "BOX",
      "check": "Check",
-     "rule": "Flip the coin: heads = 1 step, tails = 2. Do the task on your square: right = you stay, not quite = back to where you were. 🪿 = flip again.",
      "tasks": [
       {
-       "label": "Say it in English",
+       "label": "How do you say it in English?",
        "q": "Думаешь? А мне показалось немного скучно.",
        "a": "Do you think so? I found it a bit boring.",
        "why": "Сначала вопрос — мягкое несогласие."
       },
       {
-       "label": "Say it more gently",
+       "label": "Make it gentler",
        "q": "((Friend: “It was so scary, wasn't it?” · Too direct:)) No, I don't think so. It wasn't scary.",
        "a": "Do you think so? I didn't find it that scary.",
        "why": "«No…» звучит резко. Вопрос + I didn't find it that… — мягче."
       },
       {
-       "label": "Say it in English",
+       "label": "How do you say it in English?",
        "q": "Ну да, наверное. Но…",
        "a": "Yeah, I suppose so. But…",
        "why": "Соглашаешься чуть-чуть, потом своё."
       },
       {
-       "label": "Say it more gently",
+       "label": "Make it gentler",
        "q": "((Friend: “That new café is great, isn't it?” · Too direct:)) No. The coffee is bad.",
        "a": "Do you think so? I found the coffee a bit disappointing.",
        "why": "Вопрос + I found the coffee a bit… — мягче, чем No."
       },
       {
-       "label": "Say it in English",
+       "label": "How do you say it in English?",
        "q": "Может быть, но я всё-таки считаю…",
        "a": "Maybe, but I still think…",
        "why": "Держишься своего мнения — мягко."
@@ -507,19 +551,19 @@
        "why": "I found it… уже значит «мне показалось»: for me лишнее."
       },
       {
-       "label": "Say it in English",
+       "label": "How do you say it in English?",
        "q": "Но, пожалуй, можно сказать…",
        "a": "But I guess you could say…",
        "why": "Даёшь другой взгляд."
       },
       {
-       "label": "Say it more gently",
+       "label": "Make it gentler",
        "q": "((Colleague: “Working from home is so much better.” · Too direct:)) No, it's lonely.",
        "a": "Yeah, I suppose so. But it can get a bit lonely.",
        "why": "Сначала чуть-чуть согласиться, потом But… и своё мнение."
       },
       {
-       "label": "Say it in English",
+       "label": "How do you say it in English?",
        "q": "Вот именно. И…",
        "a": "Exactly. And…",
        "why": "Согласиться и добавить."
@@ -531,19 +575,19 @@
        "why": "Predictive — о моделях и тестах; предсказуемый → predictable."
       },
       {
-       "label": "Say it in English",
+       "label": "How do you say it in English?",
        "q": "Ладно, справедливо.",
        "a": "Fair enough. / OK, fair point.",
        "why": "Закончить спор по-дружески."
       },
       {
-       "label": "Say it in English",
+       "label": "How do you say it in English?",
        "q": "Это правда, и ещё…",
        "a": "That's true, and…",
        "why": "Согласиться и добавить."
       }
      ],
-     "tip": "Flip the coin and move your counter. Do the task on your square and tap to check. Right? You stay. Not quite? Back you go."
+     "tip": "Roll and move. Do the task on your square and tap to check. Right at a ladder? Up! Not quite at a snake? Down!"
     }
    ]
   },
@@ -552,42 +596,22 @@
    "blocks": [
     {
      "kind": "game",
-     "piece": "dice1",
-     "instr": "Roll the dice to pick a hot take (смелое мнение). A says it as a tag question. B disagrees, using three moves from the box. Then swap.",
+     "piece": "deck",
+     "instr": "Take turns: draw a card with a hot take (смелое мнение). A says it as a tag question. B disagrees, using three moves from the box. Then swap.",
      "box": "BOX",
-     "title": "Roll: the hot take",
-     "faces": [
-      {
-       "n": 1,
-       "text": "Films are far too long these days."
-      },
-      {
-       "n": 2,
-       "text": "A series is best watched in one go."
-      },
-      {
-       "n": 3,
-       "text": "The book is always better than the film."
-      },
-      {
-       "n": 4,
-       "text": "Reality shows are a waste of time."
-      },
-      {
-       "n": 5,
-       "text": "Subtitles are better than dubbing."
-      },
-      {
-       "n": 6,
-       "text": "Nobody needs more than one streaming service."
-      }
+     "title": "Draw a card: a hot take",
+     "cards": [
+      "Films are far too long these days.",
+      "A series is best watched in one go.",
+      "The book is always better than the film.",
+      "Reality shows are a waste of time.",
+      "Subtitles are better than dubbing.",
+      "Nobody needs more than one streaming service."
      ],
      "intro": {
       "instr": "Here's an example. Complete the conversation. Then tap the yellow to check.",
-      "dice": [
-       1
-      ],
-      "ctx": "(([The dice → 1: Films are far too long these days. A says it as a tag question. B disagrees, using moves from the box.]))",
+      "card": 0,
+      "ctx": "(([The card: Films are far too long these days. A says it as a tag question. B disagrees, using moves from the box.]))",
       "lines": [
        {
         "s": "A",
@@ -633,7 +657,7 @@
        }
       ]
      },
-     "tip": "Roll the dice for a hot take. A says it with a tag (…, aren't they?). B disagrees in three moves from the box."
+     "tip": "Draw a card with a hot take. A says it with a tag (…, aren't they?). B disagrees in three moves from the box."
     },
     {
      "kind": "questions",

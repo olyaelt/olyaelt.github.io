@@ -48,11 +48,11 @@ const DIR = 'tools/b2-2026-10-30/';
     expect('the second tap: a new game for two', (await p.locator('.gs-pawn').count()) === 2, await p.locator('.gs-pawn').count());
   } else fail.push('no snakes game on f-pp');
 
-  // 🪿 the goose race: three pawns
-  if (await go('f-dis.html', 'x.piece === "goose"')) {
-    await three(); out.goose = await p.locator('.ggo-pawn').count(); if (shots) await p.screenshot({path: path.join(shots, 'tp-goose.png')});
-    expect('the goose race for three: 3 pawns', out.goose === 3, out.goose); expect('goose for three fits', await fits(), 'scrolls');
-  } else fail.push('no goose game on f-dis');
+  // 🐍 snakes and ladders on f-dis (tools 28: it replaced the goose race there): three pawns
+  if (await go('f-dis.html', 'x.piece === "snakes"')) {
+    await three(); out.disSnakes = await p.locator('.gs-pawn, .gsnl .pawn, [class*="pawn"]').count();
+    expect('f-dis snakes for three: 3 pawns', out.disSnakes >= 3, out.disSnakes); expect('f-dis snakes for three fits', await fits(), 'scrolls');
+  } else fail.push('no snakes game on f-dis');
 
   // ⬚ dots and boxes: three colours in the score, the turn goes round
   if (await go('f-st.html', 'x.piece === "dots"')) {

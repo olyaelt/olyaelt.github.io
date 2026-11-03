@@ -35,7 +35,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
   let OB = await open(L + 'jeopardy-live.html', 'teacher'); const GB = await open(L + 'jeopardy-live.html', '');
   out.boardLinks = await GB.evaluate(() => [...document.querySelectorAll('a.cell')].map(a => a.getAttribute('href')));
   expect('board: the eight fields link to their -live pages (f-wc, f-dis, f-pp, f-st since tools 20; f-seen closed on 4.11)', out.boardLinks.length === 8 && !out.boardLinks.includes('f-seen-live.html') && out.boardLinks.includes('f-st-live.html') && out.boardLinks.every(h => /^f-[a-z]+-live\.html$/.test(h)), out.boardLinks);
-  out.today = await OB.locator('.cell.today').count(); expect('her board marks today\'s fields orange', out.today === 4, out.today);
+  out.today = await OB.locator('.cell.today').count(); expect('her board marks today\'s fields orange (six for 4.11, the B2 handoff 03.11 20:35)', out.today === 6, out.today);
   // tools 27 (her 2.11 21:32): ▶ ✓ on a new cell, the number only opens the page — nothing lights up
   out.acts = {play: await OB.locator('[data-play]').count(), tick: await OB.locator('[data-tick]').count(), back: await OB.locator('[data-unplay]').count()};
   expect('her board: ▶ and ✓ on every cell, no ↺ on new cells', out.acts.play === 8 && out.acts.tick === 8 && out.acts.back === 0, out.acts);

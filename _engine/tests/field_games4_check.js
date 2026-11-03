@@ -1,6 +1,6 @@
 // tools 20 (B2 revision 4.11, the handoffs of 1.11 00:30–02:30): the four new fields and their games.
 //   f-wc  🎡 the wheel (✓ = the sector leaves, ↺ = it stays) · 🎲🎲 two dice with a guided start (the example, Go, Roll, 📌)
-//   f-dis 🪿 the goose race (a task on the square: ✓ stay / ✗ back) · 🎲 one die with a guided start
+//   f-dis 🐍 snakes and ladders · 🃏 a deck with a guided start (tools 28; the goose race and the one die before)
 //   f-pp  🐍 snakes and ladders (a task at every stop) · 🧩 mix (one from each column → the question; 🎲 Pick for us)
 //   f-st  ⬚ dots and boxes (✓ → draw a line) · 🏝 islands with a guided start
 // Every screen fits 1280×720 above Back / Next; a game comes back as it was after a reload; the board links the four cells and shows
@@ -77,24 +77,22 @@ const DIR = 'tools/b2-2026-10-30/';
   await click('[data-rlroll]'); r = await p.evaluate(() => ({roll: rlSt(curBlock()).roll, res: (document.querySelector('.rl-res') || {}).textContent || ''}));
   expect('Roll → both dice, the line with the start', r.roll && r.roll.length === 2 && /→/.test(r.res) && /\?/.test(r.res), r);
   await shot('wc-dice-roll');
+  r = await p.evaluate(() => ({lists: document.querySelectorAll('.rl-faces').length, lit: document.querySelectorAll('.rl-faces li.on').length, fold: document.querySelectorAll('details.rl-all').length}));
+  expect('tools 28 (her 3.11 20:23): both dice faces lists in view, the rolled faces lit, no «All the faces» fold', r.lists === 2 && r.lit === 2 && r.fold === 0, r);
   await p.click('[data-back]'); await p.waitForTimeout(100); r = await p.evaluate(() => rlSt(curBlock()).ph);
   expect('Back from the game → the example', r === 'intro', r);
-  /* 🪿 the goose race */
-  await open('f-dis'); await go('game', 'goose');
-  await click('[data-go-flip]'); let g = await p.evaluate(() => bs(curBlock()).g);
-  if (g && g.phase === 'flip2') { await click('[data-go-flip]'); g = await p.evaluate(() => bs(curBlock()).g); }
-  expect('goose: flip → a task on the square', g && g.phase === 'task' && g.pos[0] > 0 && /Show the answer/.test(await txt('.ggo-side')), g);
-  await shot('dis-goose-task');
-  await p.click('[data-step]'); await p.waitForTimeout(150); g = await p.evaluate(() => bs(curBlock()).g);
-  expect('Next on the task = its answer', g.shown && /back to Start/.test(await txt('.ggo-side')), g);
-  await shot('dis-goose-answer'); expect('the goose answer fits', await fits(), 'over');
-  await click('[data-go-no]'); g = await p.evaluate(() => bs(curBlock()).g);
-  expect('✗ Not quite → back to where you were, the next player', g.pos[0] === 0 && g.turn === 1 && g.phase === 'flip', g);
-  /* 🎲 one die */
-  await go('game', 'dice1'); await p.click('[data-rlgo]'); await p.waitForTimeout(100); await click('[data-rlroll]');
-  r = await p.evaluate(() => ({roll: rlSt(curBlock()).roll, res: (document.querySelector('.rl-res') || {}).textContent || ''}));
-  expect('dice1: Go → Roll → a hot take', r.roll && r.roll.length === 1 && r.res.length > 10, r);
-  await shot('dis-die-roll');
+  /* tools 28 (the B2 handoff 03.11 20:10): f-dis has snakes and ladders and 🃏 a deck now (the goose race and the one die are on no page) */
+  await open('f-dis'); await go('game', 'snakes');
+  await click('[data-gs-roll]'); let g = await p.evaluate(() => bs(curBlock()).g);
+  expect('f-dis snakes: roll → a task with its full label', g && g.ti != null && /How do you say it in English\?|Make it gentler|Fix the mistake/.test(await txt('.gt-task, .gsnl')), g);
+  await shot('dis-snakes-task');
+  /* 🃏 the deck: the example, Go, draw */
+  await go('game', 'deck'); r = await p.evaluate(() => ({ex: !!document.querySelector('.rl-intro'), card: (document.querySelector('.rl-cardm') || {}).textContent || ''}));
+  expect('deck: the example first, with its card', r.ex && /Films are far too long/.test(r.card), r);
+  await p.click('[data-rlgo]'); await p.waitForTimeout(100); await click('[data-rlpile]');
+  r = await p.evaluate(() => ({at: rlSt(curBlock()).dk.at, card: (document.querySelector('[data-rlslot] .rl-cardt') || {}).textContent || ''}));
+  expect('deck: Go → Draw a card → a hot take (not the example\'s card first)', r.at === 0 && r.card.length > 10 && !/Films are far too long/.test(r.card), r);
+  await shot('dis-deck-card');
   /* 🐍 snakes and ladders */
   await open('f-pp'); await go('game', 'snakes');
   await click('[data-gs-roll]'); let s = await p.evaluate(() => bs(curBlock()).g);

@@ -1,1 +1,83 @@
-{"type": "revision-board", "title": "B2 revision · Jeopardy", "cols": ["Sentence transformation", "Vocabulary", "Grammar", "The Intern", "Use of English", "Everyday English"], "values": [100, 200, 300, 400, 500, 600], "cells": [{"col": "Vocabulary", "value": 100, "page": "f-crime", "title": "Crime around us", "today": true}, {"col": "Vocabulary", "value": 200, "page": "f-clocks", "title": "The clocks go back", "today": true}, {"col": "Grammar", "value": 200, "page": "f-tags", "title": "Tags: sharing a feeling", "today": true}, {"col": "Everyday English", "value": 100, "page": "f-late", "title": "Running late", "today": true}, {"col": "Vocabulary", "value": 300, "page": "f-seen", "title": "Have you seen it?", "closed": true}, {"col": "Grammar", "value": 100, "page": "f-pp", "title": "Present perfect vs past simple"}, {"col": "Sentence transformation", "value": 100, "page": "f-st", "title": "It's been ages since…"}, {"col": "Everyday English", "value": 200, "page": "f-wc", "title": "At the water cooler"}, {"col": "Everyday English", "value": 300, "page": "f-dis", "title": "Disagree and stay friends"}]}
+{
+ "type": "revision-board",
+ "title": "B2 revision · Jeopardy",
+ "cols": [
+  "Sentence transformation",
+  "Vocabulary",
+  "Grammar",
+  "The Intern",
+  "Use of English",
+  "Everyday English"
+ ],
+ "values": [
+  100,
+  200,
+  300,
+  400,
+  500,
+  600
+ ],
+ "cells": [
+  {
+   "col": "Vocabulary",
+   "value": 100,
+   "page": "f-crime",
+   "title": "Crime around us",
+   "today": true
+  },
+  {
+   "col": "Vocabulary",
+   "value": 200,
+   "page": "f-clocks",
+   "title": "The clocks go back"
+  },
+  {
+   "col": "Grammar",
+   "value": 200,
+   "page": "f-tags",
+   "title": "Tags: sharing a feeling",
+   "today": true
+  },
+  {
+   "col": "Everyday English",
+   "value": 100,
+   "page": "f-late",
+   "title": "Running late",
+   "today": true
+  },
+  {
+   "col": "Vocabulary",
+   "value": 300,
+   "page": "f-seen",
+   "title": "Have you seen it?",
+   "closed": true
+  },
+  {
+   "col": "Grammar",
+   "value": 100,
+   "page": "f-pp",
+   "title": "Present perfect vs past simple",
+   "today": true
+  },
+  {
+   "col": "Sentence transformation",
+   "value": 100,
+   "page": "f-st",
+   "title": "It's been ages since…",
+   "today": true
+  },
+  {
+   "col": "Everyday English",
+   "value": 200,
+   "page": "f-wc",
+   "title": "At the water cooler"
+  },
+  {
+   "col": "Everyday English",
+   "value": 300,
+   "page": "f-dis",
+   "title": "Disagree and stay friends",
+   "today": true
+  }
+ ]
+}

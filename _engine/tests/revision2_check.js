@@ -66,7 +66,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
     }
     // ---- the chat page inside 💬 Use it: only its working part
     const OL = await open(L + 'f-late-live.html', 'teacher'); await bubble(OL, 3); await OL.waitForTimeout(1500);
-    out.src = await OL.locator('.tool-frame').getAttribute('src'); expect('the field loads the chat page with ?embed=1', out.src === 'late-live.html?embed=1', out.src);
+    out.src = await OL.locator('.tool-frame').getAttribute('src'); expect('the field loads the chat page with ?embed=1 (tools 28: its box on the field\'s side, the field\'s type size)', /^late-live\.html\?embed=1&nobox=1&fs=[0-9.]+$/.test(out.src), out.src);
     const fr = OL.frameLocator('.tool-frame');
     out.inner = {bar: await fr.locator('.live-bar').count(), h1: await fr.locator('.head h1').isVisible(), groups: await fr.locator('.stage-btn[data-stage="groups"]').count(), sub: await fr.locator('.stages.sub').count(), edit: await fr.locator('[data-live-edit], .live-tools').count()};
     expect('inside: no Live bar, no title, no 📥 Groups, small steps, no ✏️', out.inner.bar === 0 && !out.inner.h1 && out.inner.groups === 0 && out.inner.sub === 1 && out.inner.edit === 0, out.inner);
@@ -191,9 +191,12 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
     expect('the model on the bakery close-up (beside the chat on a computer), 6 lines; scenes start with a scene, 7, no bakery', out.crimeModel.kind === 'model' && out.crimeModel.side && !out.crimeModel.mainPicShown && out.crimeModel.lines === 6
       && !out.crimeModel.street && out.crimeModel.dots === 7 && !out.crimeModel.bakery, out.crimeModel);
     await CR.click('.sdots [data-sdot="1"]'); await CR.waitForTimeout(150); out.crimeDot = await CR.evaluate(() => bIdx()); expect('a seen screen can be tapped', out.crimeDot === 1, out.crimeDot);
-    await Promise.all([CR.waitForURL(/jeopardy-live\.html/), CR.click('.board-top')]); await CR.waitForTimeout(500); out.backstrip = await CR.locator('.backstrip').innerText().catch(() => '');
-    await Promise.all([CR.waitForURL(/f-crime-live\.html/), CR.click('.backstrip')]); await CR.waitForFunction(() => typeof S !== 'undefined' && typeof render === 'function'); await CR.waitForTimeout(500); out.resumed = await CR.evaluate(() => [location.hash, S.stage, bIdx(), S.intro]);
-    expect('⬅ Board by mistake: the board offers the way back, and it opens where they were', /Back to Crime around us · 💬 Use it/.test(out.backstrip) && JSON.stringify(out.resumed) === '["",3,1,false]', [out.backstrip, out.resumed]);
+    // tools 28 (her 3.11 20:27): no "↩ Back to …" strip on the board; the browser's Back, or a click on the cell, opens the field where they were
+    await Promise.all([CR.waitForURL(/jeopardy-live\.html/), CR.click('.board-top')]); await CR.waitForTimeout(500); out.backstrip = await CR.locator('.backstrip').count();
+    await CR.goBack(); await CR.waitForFunction(() => typeof S !== 'undefined' && typeof render === 'function' && /f-crime-live/.test(location.href)); await CR.waitForTimeout(500); out.resumed = await CR.evaluate(() => [S.stage, bIdx(), S.intro]);
+    await CR.goForward(); await CR.waitForURL(/jeopardy-live\.html/); await CR.waitForTimeout(400);
+    await Promise.all([CR.waitForURL(/f-crime-live\.html/), CR.click('a.cell[href^="f-crime"]')]); await CR.waitForFunction(() => typeof S !== 'undefined' && typeof render === 'function'); await CR.waitForTimeout(500); out.resumed2 = await CR.evaluate(() => [location.hash, S.stage, bIdx(), S.intro]);
+    expect('⬅ Board by mistake: no strip on the board; the browser\'s Back and a click on the cell both open where they were', out.backstrip === 0 && JSON.stringify(out.resumed) === '[3,1,false]' && JSON.stringify(out.resumed2) === '["",3,1,false]', [out.backstrip, out.resumed, out.resumed2]);
     // her 15:21–15:23: a rewrite's answer fills in where the gap was (the change blue on light blue, no second sentence); after the
     // last card straight on to the next cloud (no "Done!" screen); Back from that cloud = the last card, open
     const CK = await open(L + 'f-clocks-live.html', 'anna'); await bubble(CK, 2); await CK.click('[data-step]'); await CK.waitForTimeout(120);

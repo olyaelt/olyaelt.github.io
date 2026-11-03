@@ -7,8 +7,29 @@ const params = new URLSearchParams(location.search);
    has its own), and its steps as small sub-steps under the field's tabs: one row of big tabs on the screen */
 const EMBED = params.get("embed") === "1";
 if(EMBED) document.documentElement.classList.add("embed");
+/* tools 28: inside a field — its box is on the field's side (nobox=1), and the type is the field's size (fs = the field's root px; the
+   page's own size comes from the small frame's height, which made it much smaller than the field's text) */
+if(EMBED && params.get("nobox") === "1") document.documentElement.classList.add("nobox");
+if(EMBED && +params.get("fs") > 8) document.documentElement.style.fontSize = Math.min(30, +params.get("fs")) + "px";
 /* inside a field the field's Back / Next lead (her 13:24, 14:56): a page steps through its own parts with embNext / embBack and says when it has
    nothing more (lwStepEnd); a page without them hands the step straight back, so the field's Next never does nothing */
+/* tools 28 (her 3.11 19:54, the Tags field: «почему остальные задания с useful language box нормально выглядят, а это настолько не помещается…
+   и в фрейме»): inside a field the page has no frame look (no ground colour, no outer padding) and fits the space the field gives it —
+   the whole page a little smaller when it is taller than that space (never below 80 %: a longer page, like a chat, makes the frame
+   taller and the field page scrolls a little); it tells the field its natural height (on a phone the field makes room for all of it and the field page scrolls) */
+if(EMBED){
+  let fitT = 0;
+  const fitEmbed = () => { const w = document.querySelector(".wrap"); if(!w) return;
+    w.style.zoom = ""; const nat = Math.ceil(w.scrollHeight) + 4;
+    try{ window.parent.postMessage({lwHeight: nat}, "*"); }catch(e){}
+    const k = innerWidth >= 560 && nat > innerHeight ? Math.max(.8, Math.floor((innerHeight - 4) / nat * 100) / 100) : 1;
+    if(k < 1) w.style.zoom = k; };
+  const later = () => { cancelAnimationFrame(fitT); fitT = requestAnimationFrame(fitEmbed); };
+  addEventListener("load", () => { later(); const mo = new MutationObserver(later);
+    ["main", "side"].forEach(id => { const x = document.getElementById(id); if(x) mo.observe(x, {childList: true, subtree: true, characterData: true}); }); });
+  addEventListener("resize", later);
+  document.addEventListener("load", e => { if(e.target && e.target.tagName === "IMG") later(); }, true);
+}
 if(EMBED) addEventListener("message", e => { const m = e.data && e.data.lwStep; if(!m) return;
   const end = typeof embNext !== "function" || (m === "next" ? embNext() : embBack()); if(end) try{ window.parent.postMessage({lwStepEnd: m}, "*"); }catch(err){} });
 /* **box phrase** in a speaking task or a follow-up = shown like the box phrases in the examples (checklist 8.07) */

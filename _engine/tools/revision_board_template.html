@@ -35,9 +35,6 @@ div.cell.sel .v{font-size:1rem;line-height:1}
 .cellacts button{font:inherit;font-size:.95rem;font-weight:900;border-radius:99px;padding:3px 12px;cursor:pointer;border:2px solid #FFFFFF;background:#FFFFFF;color:#0B5394}
 .cellacts button.ghost{background:transparent;color:inherit;border-color:currentColor;font-size:.8rem;padding:2px 8px}
 .cellacts button:disabled{opacity:.6;cursor:wait}
-/* her 15:17: ⬅ Board tapped by mistake — the way back to where they were */
-.backstrip{display:flex;align-items:center;gap:12px;border:3px solid #0693E3;color:var(--instr-text);background:var(--card);border-radius:14px;padding:8px 16px;font-weight:900;font-size:1.15rem;text-decoration:none}
-.backstrip .go{margin-left:auto;background:#0693E3;color:#FFFFFF;border-radius:99px;padding:4px 14px}
 .boardfoot{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:flex-end}
 .head .howgame{margin-left:auto}
 .cellwrap{position:relative;display:grid}
@@ -112,8 +109,7 @@ function unplay(k){ const ch = []; if(nowKey() === k) ch.push(["now", null]); if
 function render(){
   liveApply();
   const mine = liveTeacher(), nk = nowKey();
-  const left = store.get("tool-place-" + PAGE_ID.split("/")[0] + "/_left");   /* the last field this device had open (handoff 15:15) */
-  const backTo = left && Date.now() - left.t < 3 * 3600e3 && left.href ? `<a class="backstrip" href="${esc(left.href)}">↩ Back to ${esc(left.title || "")}${left.stage ? " · " + esc(left.stage) : ""}<span class="go">Where you were →</span></a>` : "";
+  /* tools 28 (her 3.11 20:27): no "↩ Back to …" strip on top — a click on the cell (or the browser's Back) opens the field where this device left it */
   const grid = `<div class="jb" style="--cols:${D.cols.length}">${D.cols.map(c => `<div class="colh">${esc(c)}</div>`).join("")}
     ${D.values.map(v => D.cols.map(col => { const c = cellAt(col, v), k = c ? cellKey(c) : "", isNow = k && k === nk, played = k && (isNow || doneAt(k));
       const cls = `cell ${c && c.today && mine ? "today" : ""} ${c && !c.page && mine ? "nopage" : ""} ${k && doneAt(k) && !isNow ? "done" : ""} ${isNow ? "now" : ""} ${mine && k === SEL && !isNow ? "sel" : ""}`, tag = isNow ? `<span class="nowtag">▶ Now</span>` : "";   /* her 31.10: the colour says whether there is a page */
@@ -129,7 +125,7 @@ function render(){
   const note = !mine ? "" : `<p class="legend">👩‍🏫 Click a cell: a frame, only on your screen. Click it again: its page opens. <b>▶</b> lights it up in every room · <b>✓</b> = played (grey) · <b>↺</b> = back to new. <b>Orange</b> = today's fields · <b>dark blue</b> = has a page · <b>light</b> = no page: 📊 on your slides, empty = not ready yet. <span id="live-status">${esc(liveMsg)}</span></p>`;
   const foot = !mine ? "" : `<div class="boardfoot">${sureFresh ? `<span class="legend">All cells back to new, and your test answers on this computer cleared?</span><button class="btn slim primary" data-fresh-yes>🧹 Yes, start fresh</button><button class="btn slim" data-fresh-no>Cancel</button>` : `<button class="btn slim" data-fresh>🧹 Start fresh</button>`}</div>`;
   const btns = (D.buttons || []).map(x => `<a class="btn slim primary howgame" href="${x.page}${LIVE_ON ? "-live" : ""}.html">${esc(x.label)}</a>`).join("");   /* 🎓 How the game works (f-demo) */
-  document.getElementById("main").innerHTML = `<header class="head"><h1>${esc(D.title)}</h1>${btns}</header>${backTo}${note}${grid}${foot}`;
+  document.getElementById("main").innerHTML = `<header class="head"><h1>${esc(D.title)}</h1>${btns}</header>${note}${grid}${foot}`;
   const on = (q, fn) => document.querySelectorAll(q).forEach(b => b.addEventListener("click", e => fn(b, e)));
   on("[data-play]", (b, e) => { e.preventDefault(); sureFresh = false; play(b.dataset.play); });
   on("[data-tick]", (b, e) => { e.preventDefault(); sureFresh = false; tick(b.dataset.tick); });

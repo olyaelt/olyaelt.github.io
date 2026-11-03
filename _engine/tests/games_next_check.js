@@ -97,24 +97,17 @@ const DIR = 'tools/b2-2026-10-30/';
     if (shots) await p.screenshot({path: path.join(shots, 'gn-5-lines.png')});
   } else fail.push('no dots on f-st');
 
-  // 🪿 the goose race: Next flips the coin
-  if (await go('f-dis.html', 'x.piece === "goose"')) {
-    await next(700); out.go = await p.evaluate(() => { const G = bs(curBlock()).g; return G ? G.phase + '/' + G.pos.join(',') : 'none'; });
-    expect('the goose race: Next flips the coin → a pawn moves', /^(task|flip2)\//.test(out.go) || /[12]/.test(out.go.split('/')[1] || ''), out.go);
-    expect('the goose race fits', await fits(), 'scrolls / wraps');
-  } else fail.push('no goose on f-dis');
-
-  // 🎲 one die: the example first, then Next rolls; Finish → Next task
-  if (await go('f-dis.html', 'x.piece === "dice1"')) {
-    out.d0 = await bar(); expect('the die\'s example: no Finish button yet', !out.d0.fin, out.d0);
+  // 🃏 the deck (tools 28, f-dis): the example first, then Next draws a card; Finish beside Next
+  if (await go('f-dis.html', 'x.piece === "deck"')) {
+    out.d0 = await bar(); expect('the deck\'s example: no Finish button yet', !out.d0.fin, out.d0);
     for (let k = 0; k < 3 && await p.evaluate(() => rlIntro(curBlock())); k++) await next();
-    out.d1 = await bar(); await next(500);
-    out.roll = await p.evaluate(() => rlSt(curBlock()).roll);
-    expect('the die: Next rolls it, Finish beside Next', Array.isArray(out.roll) && /Finish/.test(out.d1.fin), {roll: out.roll, bar: out.d1});
-    await next(500); expect('Next again → another roll, the same screen', (await where()).piece === 'dice1', await where());
-    if (shots) await p.screenshot({path: path.join(shots, 'gn-6-dice.png')});
-    expect('the die fits', await fits(), 'scrolls / wraps');
-  } else fail.push('no die on f-dis');
+    out.d1 = await bar(); await next(1100);
+    out.drawn = await p.evaluate(() => rlSt(curBlock()).dk.at);
+    expect('the deck: Next draws a card, Finish beside Next', out.drawn === 0 && /Finish/.test(out.d1.fin), {drawn: out.drawn, bar: out.d1});
+    await next(1100); expect('Next again → the next card, the same screen', (await where()).piece === 'deck' && await p.evaluate(() => rlSt(curBlock()).dk.at) === 1, await where());
+    if (shots) await p.screenshot({path: path.join(shots, 'gn-6-deck.png')});
+    expect('the deck fits', await fits(), 'scrolls / wraps');
+  } else fail.push('no deck on f-dis');
 
   // 🏝 islands: Next sails
   if (await go('f-st.html', 'x.piece === "islands"')) {

@@ -179,6 +179,8 @@ details.all[open] summary{color:var(--ink)}
 /* inside a field page (?embed=1, tools 13): only the working part; its steps small, under the field's own tabs */
 .embed .head h1,.embed .head .part{display:none}
 .embed footer.legal{display:none}
+.embed.nobox .wrap{grid-template-columns:minmax(0,1fr)} .embed.nobox .side{display:none}   /* tools 28: the box is the field's */
+.embed,.embed body{background:transparent} .embed body{padding:0} .embed .wrap{max-width:none;padding:0 2px 2px}   /* tools 28: no frame look inside a field */
 .embed .stages.sub{margin-left:0}
 .embed .stages.sub .stage-btn{font-size:.85rem;padding:2px 10px;border-width:1px}
 .embed .stages.sub .stage-arrow{font-size:.8rem}
