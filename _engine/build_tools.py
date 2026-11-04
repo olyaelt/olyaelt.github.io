@@ -211,7 +211,9 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
                  ('__PAGE_ID__', lesson + '/' + name)]:
         html = html.replace(k, v)
     if d.get('lang') and re.match(r'^[a-z]{2}(-[A-Z]{2})?$', d['lang']): html = html.replace('<html lang="en">', '<html lang="%s">' % d['lang'], 1)   # tools 25: the German page
-    pages.append({'lesson': lesson, 'name': name, 'title': d['title'], 'part': d.get('part', ''), 'type': d['type']})
+    pages.append({'lesson': lesson, 'name': name, 'title': d['title'], 'part': d.get('part', ''), 'type': d['type'],
+                  'cells': [{'page': c.get('page'), 'today': bool(c.get('today')), 'closed': bool(c.get('closed')), 'col': c.get('col'), 'value': c.get('value')} for c in d.get('cells', [])] if d['type'] == 'revision-board' else None,
+                  'embeds': [b['page'] for st in d.get('stages', []) for b in st.get('blocks', []) if b.get('kind') == 'tool'] if d['type'] == 'revision-field' else []})
     for suffix, live in (('', False), ('-live', True)):
         page = html.replace('__LIVE__', 'true' if live else 'false').replace('__SYNC_URL__', SYNC if live or d.get('points') else '')   # tools 26: her own page with points talks to her table
         left = [k for k in ('__BASE_CSS__', '__BASE_JS__', '__LW_CSS__', '__LW_JS__', '__DATA__', '__REVIEW__', '__STICKER__', '__PAGE_ID__', '__LIVE__', '__SYNC_URL__') if k in page]
@@ -225,27 +227,58 @@ for f in sorted(glob.glob(os.path.join(T, 'assets', '*'))):
 # tools 9 (her wish 28.10): tools/index.html, a teacher's page with every lesson page, grouped by group and lesson, the live link
 # first (with Copy, for the Zoom chat) and the plain one as the fallback. Shown when her code is on this device (as on the live
 # pages: a lock on the door, the list is in the source); noindex, linked from nowhere.
-GROUPS = {'b2': 'B2 · Wed Fri 18.30', 'c1': 'C1 · Wed Fri 20.15'}
+GROUPS = {'b2': 'B2 · Wed Fri 18.30', 'c1': 'C1 · Wed Fri 20.15', 'de': '🇩🇪 My German'}
 KIND = {'dice-council': '🎲 dice council', 'say-it-another-way': '🃏 say it another way', 'dice-situations': '🎲 dice situations', 'situation-cards': '🃏 situation cards', 'chat-scenes': '💬 chat scenes',
         'revision-board': '🟦 Jeopardy board', 'revision-field': '🟨 revision field'}
+# tools 28 (her 4.11 06:51/08:05: «я каждый раз листаю, ищу, где же там Jeopardy… новые задания, чтобы появлялись сверху… в две колонки, как на
+# Homework»): B2 | C1 side by side, the newest lesson on top; a revision lesson starts with its Jeopardy board and folds its fields under it.
+# A lesson folder without a date in its name gets its date here (the day it was first used)
+LESSON_DATE = {'c1-schools': '2026-10-28', 'b2-have-you-seen-it': '2026-10-28'}
 def esc(t): return str(t).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
-blocks = []
-for g in sorted({p['lesson'].split('-')[0] for p in pages}):
-    rows = []
-    for lesson in sorted({p['lesson'] for p in pages if p['lesson'].split('-')[0] == g}):
-        rest = lesson.split('-', 1)[1] if '-' in lesson else lesson
-        dm = re.match(r'(\d{4})-(\d{2})-(\d{2})$', rest)   # tools 11: a lesson folder named by its date (b2-2026-10-30)
-        nice = 'Lesson of %s.%s.%s' % (dm.group(3), dm.group(2), dm.group(1)[2:]) if dm else rest.replace('-', ' ')
-        rows.append('<h3>%s</h3>' % esc(nice[:1].upper() + nice[1:]))
-        for p in [x for x in pages if x['lesson'] == lesson]:
-            base = SITE + 'tools/%s/%s' % (p['lesson'], p['name'])
-            rows.append('<div class="pg"><div class="pg-t"><b>%s</b>%s <span class="kind">%s · %s</span></div>'
-                        '<div class="pg-a"><a class="btn primary" href="%s/%s-live.html" target="_blank" rel="noopener">Open live</a>'
-                        '<button class="btn" data-copy="%s-live.html">Copy link</button>'
-                        '<a class="plain" href="%s/%s.html" target="_blank" rel="noopener">plain page</a></div></div>'
-                        % (esc(p['title']), (' · ' + esc(p['part'])) if p['part'] else '', esc(KIND.get(p['type'], p['type'])), esc(p['name']),
-                           p['lesson'], p['name'], base, p['lesson'], p['name']))
-    blocks.append('<section><h2>%s</h2>%s</section>' % (esc(GROUPS.get(g, g.upper())), ''.join(rows)))
+def lesson_date(lesson):
+    m = re.search(r'(\d{4}-\d{2}-\d{2})$', lesson)
+    return m.group(1) if m else LESSON_DATE.get(lesson, '0000-00-00')
+def page_row(p, small=False):
+    base = SITE + 'tools/%s/%s' % (p['lesson'], p['name'])
+    return ('<div class="pg%s"><div class="pg-t"><b>%s</b>%s <span class="kind">%s · %s</span></div>'
+            '<div class="pg-a"><a class="btn primary" href="%s/%s-live.html" target="_blank" rel="noopener">Open live</a>'
+            '<button class="btn" data-copy="%s-live.html">Copy link</button>'
+            '<a class="plain" href="%s/%s.html" target="_blank" rel="noopener">plain page</a></div></div>'
+            % (' small' if small else '', esc(p['title']), (' · ' + esc(p['part'])) if p['part'] else '', esc(KIND.get(p['type'], p['type'])), esc(p['name']),
+               p['lesson'], p['name'], base, p['lesson'], p['name']))
+def lesson_html(lesson):
+    lp = [x for x in pages if x['lesson'] == lesson]
+    rest = lesson.split('-', 1)[1] if '-' in lesson else lesson
+    dm = re.match(r'(\d{4})-(\d{2})-(\d{2})$', rest)   # tools 11: a lesson folder named by its date (b2-2026-10-30)
+    nice = 'Lesson of %s.%s.%s' % (dm.group(3), dm.group(2), dm.group(1)[2:]) if dm else rest.replace('-', ' ')
+    ld = LESSON_DATE.get(lesson)
+    if not dm and ld: nice = 'Lesson of %s.%s.%s · %s' % (ld[8:10], ld[5:7], ld[2:4], nice[:1].upper() + nice[1:])
+    rows = ['<h3>%s</h3>' % esc(nice[:1].upper() + nice[1:])]
+    boards = [x for x in lp if x['type'] == 'revision-board']
+    folded = set()
+    for bd in boards:
+        rows.append('<div class="board">' + page_row(bd))
+        by = {x['name']: x for x in lp}
+        order = [c for c in (bd['cells'] or []) if c['page'] in by]
+        fields = [by[c['page']] for c in order] + [x for x in lp if x['type'] == 'revision-field' and x['name'] not in {c['page'] for c in order}]
+        inner = sorted({e for f in fields for e in f['embeds'] if e in by})
+        folded |= {f['name'] for f in fields} | set(inner)
+        tag = {c['page']: ('<span class="tag today">today</span>' if c['today'] else '') + ('<span class="tag closed">closed</span>' if c['closed'] else '') for c in order}
+        cell = {c['page']: '%s · $%s' % (c['col'], c['value']) for c in order}
+        items = ''.join('<div class="fld"><span class="cellname">%s</span>%s%s</div>' % (esc(cell.get(f['name'], 'button on the board')), tag.get(f['name'], ''), page_row(f, True)) for f in fields)
+        items += ''.join('<div class="fld"><span class="cellname">inside a field</span>%s</div>' % page_row(by[e], True) for e in inner)
+        today = sum(1 for c in order if c['today'])
+        rows.append('<details class="fields"><summary>▸ %d fields%s</summary>%s</details></div>' % (len(fields) + len(inner), (' · %d orange today' % today) if today else '', items))
+    rows += [page_row(x) for x in lp if x['type'] != 'revision-board' and x['name'] not in folded]
+    return '<div class="lesson">%s</div>' % ''.join(rows)
+groups = {}
+for p in pages: groups.setdefault(p['lesson'].split('-')[0], set()).add(p['lesson'])
+def group_html(g):
+    ls = sorted(groups.get(g, []), key=lambda l: (lesson_date(l), l), reverse=True)   # the newest on top
+    return '<section class="col"><h2>%s</h2>%s</section>' % (esc(GROUPS.get(g, g.upper())), ''.join(lesson_html(l) for l in ls))
+blocks = ['<div class="cols">%s</div>' % ''.join(group_html(g) for g in ('b2', 'c1') if g in groups)]
+others = [g for g in sorted(groups) if g not in ('b2', 'c1')]
+if others: blocks.append('<div class="others">%s<p class="note">Your own lessons: <a href="../me/index.html">My lessons</a></p></div>' % ''.join(group_html(g) for g in others))
 index = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow"><title>Lesson pages</title>
@@ -254,10 +287,27 @@ index = """<!doctype html>
 :root{--ground:#F6F1DC;--card:#FFFFFF;--ink:#1D1D1B;--muted:#6B6B6B;--line:#D9D2B8;--instr:#0693E3;--label:#E00000}
 @media (prefers-color-scheme: dark){:root{--ground:#141517;--card:#1E2024;--ink:#ECECEC;--muted:#A4A4A4;--line:#3A3D42}}
 *{box-sizing:border-box}body{margin:0;background:var(--ground);color:var(--ink);font-family:"Homework Sans",system-ui,sans-serif;line-height:1.45}
-main{max-width:46rem;margin:0 auto;padding:20px 16px 40px}h1{margin:0 0 4px;font-size:1.6rem}
+main{max-width:82rem;margin:0 auto;padding:20px 16px 40px}h1{margin:0 0 4px;font-size:1.6rem}
 .note{color:var(--muted);margin:0 0 18px}h2{font-size:1.15rem;margin:22px 0 6px}
 h3{font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;color:var(--label);margin:14px 0 6px}
 .pg{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0 0 8px;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px;align-items:start}
+@media (max-width:860px){.cols{grid-template-columns:minmax(0,1fr)}}
+.col h2{position:sticky;top:0;background:var(--ground);padding:8px 0;margin:10px 0 4px;z-index:1}
+.lesson{margin:0 0 18px}
+.board > .pg{border:3px solid #0693E3;padding:14px 14px}
+.board > .pg b{font-size:1.15rem}
+.fields{margin:-2px 0 10px 14px}
+.fields summary{cursor:pointer;font-weight:800;color:var(--instr);padding:4px 0;list-style:none}
+.fields summary::-webkit-details-marker{display:none}
+.fields[open] summary{margin-bottom:6px}
+.fld{border-left:3px solid var(--line);padding-left:10px;margin:0 0 6px}
+.cellname{display:inline-block;font-size:.8rem;font-weight:800;color:var(--muted);margin:0 0 3px}
+.pg.small{padding:7px 10px;margin:0}
+.pg.small .btn{padding:5px 10px;font-size:.88rem}
+.tag{display:inline-block;margin:0 0 3px 6px;padding:0 8px;border-radius:99px;font-size:.75rem;font-weight:800;vertical-align:1px}
+.tag.today{background:#FF9900;color:#1D1D1B} .tag.closed{background:var(--line);color:var(--muted)}
+.others{border-top:2px solid var(--line);margin-top:18px;padding-top:4px}
 .kind{color:var(--muted);font-size:.85rem;white-space:nowrap}.pg-a{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .btn{font:inherit;font-weight:700;font-size:.95rem;border-radius:10px;padding:7px 12px;border:2px solid var(--instr);background:transparent;color:var(--instr);cursor:pointer;text-decoration:none}
 .btn.primary{background:var(--instr);color:#fff}.plain{color:var(--muted);font-size:.9rem}
