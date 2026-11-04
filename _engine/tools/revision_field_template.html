@@ -166,6 +166,7 @@ __BASE_CSS__
 .film-row{display:flex;gap:8px;align-items:center} .film-in{font:inherit;padding:6px 10px;border:2px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);width:12rem}
 /* tools 25: 🏁 Finish the game beside Next; Next points at the room's own choice (✓ / ✗, a square, a line) instead of making it */
 .stepbar .btn.gfin{min-width:0;font-weight:800;border-width:2px;border-color:var(--ink)}
+.stepbar .btn.gfin{white-space:nowrap} .stepbar:has(.gfin) .sdots{gap:4px} .stepbar:has(.gfin) .sdots button{width:1.75rem;height:1.75rem;font-size:.85rem}   /* tools 28: five screens + Finish the game on one row */
 .stepbar .btn.gfin.back{border-color:var(--line);font-weight:700}
 .blk.g-ended .fgame,.blk.g-ended .rl{opacity:.5;filter:saturate(.5);transition:opacity .35s,filter .35s}
 .btn.nudge{animation:gNudge .55s ease-in-out 3}
@@ -475,6 +476,24 @@ __LW_CSS__
 .rl-isle{margin:0;font-size:1.25rem}
 .rl-go{margin:4px 0 0}
 .rl-all summary,.expin-f summary{cursor:pointer;font-weight:800;color:var(--muted)}
+/* tools 28 (B2 03.11 22:15): a close-up with her Slide Kit bubbles beside it — yellow = the line of the one who loved it, white (its tail on
+   the right, as on her slides) = an example reply, hidden until tapped; the bubble stretched to the text, the line a steady ~1.5 px */
+.scn-pair{display:grid;grid-template-columns:minmax(0,auto) minmax(14rem,1fr);gap:14px 18px;align-items:center}
+.scn-pair .scn img{max-height:calc(52vh - 2.6rem);width:auto;max-width:100%}
+.scn-bubs{display:grid;gap:14px;align-content:center}
+.kbub{position:relative;display:block;width:100%;max-width:16.5rem;aspect-ratio:166/94;font:inherit;color:#1D1D1B;text-align:left;border:0;background:none;padding:0;isolation:isolate}
+.kbub::before{content:"";position:absolute;inset:0;z-index:-1;background:url(kit-bubble-yellow-fit.svg) center/100% 100% no-repeat}
+.kbub.w::before{background-image:url(kit-bubble-white-fit.svg);transform:scaleX(-1)}
+.kbub > span{position:absolute;left:9%;right:8%;top:10%;bottom:31%;display:flex;flex-direction:column;justify-content:center;font-size:calc(1.22rem * var(--k, 1));font-weight:700;line-height:1.25}
+.kbub.w > span{left:8%;right:9%}
+button.kbub{cursor:pointer} button.kbub small{display:block;font-size:.85rem;font-weight:700;color:var(--muted)} .kb-dots{font-size:1.6rem;letter-spacing:.2em;color:#9A9A9A}
+.kbub.w.open > span{animation:ansIn .3s ease-out}
+@media (max-width:760px){ .scn-pair{grid-template-columns:minmax(0,1fr)} }
+.rl-carda{display:block;margin-top:8px;font-size:calc(1.15rem * var(--k, 1));font-weight:700;color:#0679BD;animation:ansIn .3s ease-out}
+.rl-carda b{color:#C00000}
+.rl-cardhint{display:block;margin-top:8px;font-size:.85rem;font-weight:700;color:var(--muted)}
+[data-rlshow]{cursor:pointer}
+.ptimer-row + .pic img{max-height:calc(52vh - 3.6rem)}   /* tools 28: the picture under ⏱ fits 1280×720 */
 .rl-lists{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:10px}
 .rl-lists ol{margin:4px 0 0;padding-left:0;list-style:none;display:grid;gap:2px}
 /* tools 28 (her 3.11 20:23): the faces always in view beside the dice; the rolled face lights up */
@@ -818,7 +837,7 @@ function gapTools(b){
   const ids = allGaps(b), st = bs(b), all = ids.length && ids.every(id => st.open.has(id));
   return ids.length ? `<div class="tx-tools"><button class="btn slim" data-showall="${b._id}">${all ? "Hide all" : "Show all"}</button>${S.noFirst && b.kind === "text" ? `<span class="hint">⚡ No first letters this time.</span>` : sharing() ? `<span class="hint">🔖 next to an opened gap = we didn't know this</span>` : ""}</div>` : "";
 }
-const modelHTML = b => { const parts = `<div class="parts">${b.parts.map((p, pi) => `<div class="dlg">${p.title ? `<p class="part-h">${esc(p.title)}</p>` : ""}${linesHTML(p.lines, b, `m${pi}`)}</div>`).join("")}</div>`;
+const modelHTML = b => { const parts = `<div class="parts">${b.ctx ? `<p class="lctx">${mk(b.ctx)}</p>` : ""}${b.parts.map((p, pi) => `<div class="dlg">${p.title ? `<p class="part-h">${esc(p.title)}</p>` : ""}${linesHTML(p.lines, b, `m${pi}`)}</div>`).join("")}</div>`;
   /* handoff 30.10 21:20: the model is the task done once, on the same material — the close-up they've just seen on the street, with the chat */
   return b.img ? `<div class="mdl-pic${boxFor(b) ? " has-side" : ""}${b.side ? " sidepic" : ""}"><figure class="pic" style="margin:0"><img src="${esc(b.img)}" alt="${esc(b.alt || "")}"></figure>${parts}</div>${gapTools(b)}` : parts + gapTools(b); };
 /* the close-up and the six chat lines don't both fit 1280×720 above each other: on a computer the picture goes beside the chat, under the
@@ -1004,7 +1023,8 @@ function questionsHTML(b){
 const sceneList = b => liveList(b.scenes.map(x => x.img), "scenes." + b._pid);
 function sceneState(b){ const st = bs(b), ks = sceneList(b).filter(x => !x.hidden).map(x => x.k);
   const first = b.street_first === false ? 0 : -1;   /* handoff 30.10 21:20: straight into a scene, the street only behind 🏙 */
-  if(!st.sc) st.sc = {at: first, order: shuffle(ks)};
+  if(!st.sc) st.sc = {at: first, order: b.order === "fixed" ? ks.slice() : shuffle(ks)};
+  if(b.order === "fixed") st.sc.order = ks.slice();   /* tools 28 (B2 03.11 22:15): in the data's order — who loved it alternates */
   if(st.sc.at < first) st.sc.at = first;
   st.sc.order = st.sc.order.filter(k => ks.includes(k)).concat(ks.filter(k => !st.sc.order.includes(k)));   /* her Hide / Show during the lesson */
   if(st.sc.at >= st.sc.order.length) st.sc.at = st.sc.order.length - 1; return st.sc; }
@@ -1015,8 +1035,13 @@ function scenesHTML(b){
   const k = sc.order[sc.at], x = b.scenes[k], n = sc.order.length;
   const dots = `<span class="speak-dots scn-dots" aria-label="Scene ${sc.at + 1} of ${n}">${sc.order.map((_, i) => `<button class="${i === sc.at ? "on" : i < sc.at ? "was" : ""}" ${i < sc.at ? `data-scn="${i}"` : "disabled"} aria-label="Scene ${i + 1}"></button>`).join("")}</span>`;
   const mine = liveTeacher() ? `<div class="scn-mine">${sceneList(b).map(it => `<span class="live-host ${liveDim("scenes." + b._pid + "." + it.k)}" data-live-host>${esc(b.scenes[it.k].alt || it.t)}${liveTools("scenes." + b._pid + "." + it.k, {edit: false})}</span>`).join("")}</div>` : "";
-  return `<div class="scn-top">${dots}<button class="redo" data-peek>🏙 The whole street</button></div>
-    <figure class="scn ${S.enter || st.dealt ? "deal" : ""}" style="margin:0"><img src="${esc(x.img)}" alt="${esc(x.alt || "")}"></figure>${mine}`;
+  const fig = `<figure class="scn ${S.enter || st.dealt ? "deal" : ""}" style="margin:0"><img src="${esc(x.img)}" alt="${esc(x.alt || "")}"></figure>`;
+  /* tools 28 (B2 03.11 22:15, her Slide Kit bubbles): the line of the one who loved it in a yellow bubble beside the close-up; an example
+     reply in a white one, hidden until they tap it (or Next shows it first, then the next scene) */
+  const bubs = x.say || x.example ? `<div class="scn-bubs">${x.say ? `<div class="kbub y"><span>${mk(x.say)}</span></div>` : ""}${x.example ? (sc.ex && sc.ex[k]
+      ? `<div class="kbub w open"><span>${mk(x.example)}</span></div>` : `<button class="kbub w" data-scnex><span><span class="kb-dots">•••</span><small>Tap to see an example</small></span></button>`) : ""}</div>` : "";
+  return `<div class="scn-top">${dots}<button class="redo" data-peek>${b.street_label ? esc(b.street_label) : /maple/.test(b.street || "") ? "🏙 The whole street" : "🖼 The whole picture"}</button></div>
+    ${bubs ? `<div class="scn-pair">${fig}${bubs}</div>` : fig}${mine}`;
 }
 /* ---------- 🃏 cards: Again comes back 2–3 cards later, Got it into its dot; the end: Come back to these (+ the full list for "ours") ---------- */
 function newDeck(cards){ return {cards, queue: cards.map((_, i) => i), got: new Set(), again: new Set(), flipped: false, fresh: true, hist: []}; }
@@ -1295,11 +1320,12 @@ const filledLine = l => `<p>${l.s ? `<b class="sp">${esc(l.s)}:</b> ` : ""}${(l.
    cards in a shuffled pile (the example's card comes last), tap the pile → the top card flies out and turns over; empty → shuffle */
 const dkSt = b => { const R = rlSt(b); if(!R.dk || R.dk.order.length !== b.cards.length){ const first = b.intro ? (b.intro.card || 0) : -1; let o = gShuffle(b.cards.map((_, i) => i));
   if(first > -1) o = o.filter(i => i !== first).concat(first); R.dk = {order: o, at: -1}; } return R.dk; };
-const dkFace = (b, i) => `${b.title ? `<span class="gd-k">${esc(b.title)}</span>` : ""}<span class="rl-cardt">${mk(b.cards[i] || "")}</span>`;
+const cq = c => c && typeof c === "object" ? c.q : (c || ""), ca = c => c && typeof c === "object" ? c.a || "" : "";   /* tools 28: a card {q, a} — a = how A says it */
+const dkFace = (b, i, shown) => `${b.title ? `<span class="gd-k">${esc(b.title)}</span>` : ""}<span class="rl-cardt">${mk(cq(b.cards[i]))}</span>${ca(b.cards[i]) ? (shown ? `<span class="rl-carda">A: ${mk(ca(b.cards[i]))}</span>` : `<span class="rl-cardhint">Tap: how A says it</span>`) : ""}`;
 function rollHTML(b){
   const R = rlSt(b), I = b.intro, isl = b.piece === "islands", dk = b.piece === "deck";
   if(I && R.ph === "intro"){
-    const top = dk ? `<div class="rl-mini"><span class="rl-m rl-cardm"><span class="rl-cardic" aria-hidden="true">🃏</span><span class="rl-face">${mk(b.cards[I.card || 0] || "")}</span></span></div>` : isl ? `<p class="rl-isle">⛵ → 🏝 <b>${esc((b.islands[I.island || 0] || {}).t || "")}</b></p>`
+    const top = dk ? `<div class="rl-mini"><span class="rl-m rl-cardm"><span class="rl-cardic" aria-hidden="true">🃏</span><span class="rl-face">${mk(cq(b.cards[I.card || 0]))}</span></span></div>` : isl ? `<p class="rl-isle">⛵ → 🏝 <b>${esc((b.islands[I.island || 0] || {}).t || "")}</b></p>`
       : `<div class="rl-mini">${DICE(b).map((d, i) => `<span class="rl-m">${gDieHTML(Number(String(I.dice[i]).split(/\D/)[0]) || 1, "mini")}<span class="rl-face">${mk((faceOf(d, I.dice[i]) || {}).text || "")}</span></span>`).join("")}</div>`;
     const go = `<button class="btn primary slim" data-rlgo>${dk ? "🃏 Now draw a card →" : isl ? "⛵ Now sail →" : DICE(b).length > 1 ? "🎲 Now roll the dice →" : "🎲 Now roll the die →"}</button>`;
     return `<div class="rl rl-intro"><div class="rl-top"><span class="lbl ex-lbl">⭐ Example</span>${top}</div>${I.ctx ? `<p class="lctx">${mk(I.ctx)}</p>` : ""}<div class="dlg">${linesHTML(I.lines, b, "i")}</div><div class="rl-tools">${gapTools(b)}${go}</div></div>`;
@@ -1308,7 +1334,7 @@ function rollHTML(b){
   if(isl) return `<div class="rl"><div class="fgame fg-islands" data-game="${b._id}"></div>${pin}</div>`;
   if(dk){ const K = dkSt(b), left = K.order.length - K.at - 1, cur = K.at > -1 ? K.order[K.at] : null;
     return `<div class="rl rl-play rl-deck"><div class="rl-dice"><div class="rl-pilewrap" data-rlpile role="button" tabindex="0">${gPileHTML(left, "Draw a card")}<span class="rl-pilecap">${left ? `🃏 Draw a card<small>${left} left</small>` : "↺ Shuffle"}</span></div>
-      <div class="gd-slot rl-slot" data-rlslot>${cur != null ? gCardHTML(dkFace(b, cur)) : `<p class="rl-hint">Tap the pile.</p>`}</div></div>${pin}</div>`; }
+      <div class="gd-slot rl-slot" data-rlslot ${cur != null && ca(b.cards[cur]) && !K.shown ? "data-rlshow" : ""}>${cur != null ? gCardHTML(dkFace(b, cur, K.shown)) : `<p class="rl-hint">Tap the pile.</p>`}</div></div>${pin}</div>`; }
   const roll = R.roll;
   /* tools 28 (her 3.11 20:23, a die only with a real job — a choice among options in view): each die with its faces open under it, the
      rolled face lit, as on her slide where both tables are on the screen */
@@ -1327,10 +1353,11 @@ function wireRoll(b, root){ const R = rlSt(b);
   root.querySelectorAll("[data-rlpin]").forEach(d => d.addEventListener("toggle", () => { R.pinOpen = d.open; R.pinFly = false; }));
   root.querySelectorAll("[data-rlpile]").forEach(w => { const draw = () => { if(R.busy) return; const K = dkSt(b);
       if(K.order.length - K.at - 1 <= 0){ R.dk = null; R.pinFly = false; dkSt(b).order = gShuffle(b.cards.map((_, i) => i)); render(); keepPlace(); return; }
-      K.at++; R.pinFly = false; const i = K.order[K.at], pile = w.querySelector(".gd-pile"), slot = root.querySelector("[data-rlslot]");
+      K.at++; K.shown = false; R.pinFly = false; const i = K.order[K.at], pile = w.querySelector(".gd-pile"), slot = root.querySelector("[data-rlslot]");
       if(!pile || !slot || gCalm()){ render(); keepPlace(); return; }
-      R.busy = true; const h = slot.querySelector(".rl-hint"); if(h) h.remove(); gDeckFly(pile, slot, dkFace(b, i), () => { R.busy = false; render(); keepPlace(); }); };
+      R.busy = true; const h = slot.querySelector(".rl-hint"); if(h) h.remove(); gDeckFly(pile, slot, dkFace(b, i, false), () => { R.busy = false; render(); keepPlace(); }); };
     w.addEventListener("click", draw); w.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); draw(); } }); });
+  root.querySelectorAll("[data-rlshow]").forEach(x => x.addEventListener("click", () => { if(R.busy) return; dkSt(b).shown = true; render(); keepPlace(); }));
   if(b.piece === "islands" && R.ph === "play") gameMount(b, root.querySelector(`[data-game="${b._id}"]`));
 }
 /* 🧩 mix: one from each column → the question */
@@ -1641,7 +1668,7 @@ function gameStep(b){
   if(press("[data-whshow], [data-gs-show], [data-go-show], [data-dt-show], [data-gt-show]")) return;
   if(q(".gdt-l.free")){ nudge(".gdt-l.free", "First draw a line"); return; }
   const T = bs(b).ttt; if((b.piece || "tictactoe") === "tictactoe"){ if(T && T.open < 0) nudge(".gt-cell:not(.taken)", "First pick a square"); return; }
-  if(press("[data-go-next]") || press("[data-go-flip]") || press("[data-gs-roll]") || press("[data-rlroll]") || press("[data-rlpile]") || press("[data-is-sail]")) return;
+  if(press("[data-go-next]") || press("[data-go-flip]") || press("[data-gs-roll]") || press("[data-rlroll]") || press("[data-rlshow]") || press("[data-rlpile]") || press("[data-is-sail]")) return;
   if(b.piece === "wheel") press(".gw-disc");
 }
 /* ---------- one control, always in the same place (her rule 30.10 12:29) ----------
@@ -1674,7 +1701,7 @@ function stepPending(b){
   if(b.kind === "calendars" && b.done && !st.done) return true;
   if(["text", "model", "calendars"].includes(b.kind)){ const ids = allGaps(b); if(ids.length > 0 && !ids.every(id => st.open.has(id))) return true; return b.kind === "text" && !!(b.answer && b.answer.length) && !st.shown; }
   if(b.kind === "questions") return !!document.querySelector(".speak [data-speak-next]");
-  if(b.kind === "scenes"){ const sc = sceneState(b); return sc.at < sc.order.length - 1 || !!st.peek; }
+  if(b.kind === "scenes"){ const sc = sceneState(b), x = sc.at >= 0 ? b.scenes[sc.order[sc.at]] : null; return sc.at < sc.order.length - 1 || !!st.peek || !!(x && x.example && !(sc.ex && sc.ex[sc.order[sc.at]])); }
   return false;
 }
 function sendItem(i, v){ saved.w[i] = {text: v, sent: true}; save(); shareDraft(i, v, true); }
@@ -1731,7 +1758,9 @@ function stepNext(){
   if(["text", "model", "calendars"].includes(b.kind)){ const ids = allGaps(b); if(ids.length && !ids.every(id => st.open.has(id))){ ids.forEach(id => st.open.add(id)); render(); return; } }
   if(b.kind === "text" && b.answer && b.answer.length && !st.shown){ st.shown = true; render(); return; }   /* tools 25 */
   if(b.kind === "questions"){ const nx = document.querySelector(".speak [data-speak-next]"); if(nx){ nx.click(); return; } }
-  if(b.kind === "scenes"){ const sc = sceneState(b); if(st.peek){ st.peek = false; render(); return; } if(sc.at < sc.order.length - 1){ sc.at++; st.dealt = true; render(); st.dealt = false; scrollTo(0, 0); return; } }
+  if(b.kind === "scenes"){ const sc = sceneState(b); if(st.peek){ st.peek = false; render(); return; }
+    const xk = sc.at >= 0 ? sc.order[sc.at] : null; if(xk != null && b.scenes[xk].example && !(sc.ex && sc.ex[xk])){ sc.ex = Object.assign({}, sc.ex, {[xk]: true}); render(); keepPlace(); return; }   /* tools 28: the example first */
+    if(sc.at < sc.order.length - 1){ sc.at++; st.dealt = true; render(); st.dealt = false; scrollTo(0, 0); return; } }
   stepOn();
 }
 /* tools 19 (her test 31.10 22:38: "I go on to the next task and suddenly I'm in the middle, because I'd been there — it throws even me"):
@@ -1895,6 +1924,7 @@ function wire(root){
     const was = st.done; if(b.common != null && b.cals.every((_, ci) => st.open.has(ci + "-" + b.common))) st.done = true; render();
     if(st.done && !was){ const f = document.querySelector(".cal-done"); if(f){ pop(f); f.scrollIntoView({block: "center", behavior: calm() ? "auto" : "smooth"}); } } });
   on("[data-peek]", () => { const st = bs(b); st.peek = !st.peek; render(); });
+  on("[data-scnex]", () => { const sc = sceneState(b), k = sc.order[sc.at]; sc.ex = Object.assign({}, sc.ex, {[k]: true}); render(); keepPlace(); });   /* tools 28 */
   on("[data-ptimer]", () => { bs(b).tEnd = Date.now() + b.timer * 1000; bs(b).glowed = false; const nx = document.querySelector("[data-step]"); if(nx) nx.classList.remove("ready", "ready-still"); clearInterval(ptimerTick.h); ptimerTick.h = 0; ptimerTick(); });
   if(b.timer) ptimerTick();
   on("[data-scn]", x => { sceneState(b).at = +x.dataset.scn; render(); });

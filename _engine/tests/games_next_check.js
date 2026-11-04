@@ -104,6 +104,7 @@ const DIR = 'tools/b2-2026-10-30/';
     out.d1 = await bar(); await next(1100);
     out.drawn = await p.evaluate(() => rlSt(curBlock()).dk.at);
     expect('the deck: Next draws a card, Finish beside Next', out.drawn === 0 && /Finish/.test(out.d1.fin), {drawn: out.drawn, bar: out.d1});
+    await next(300); expect('Next again → how A says it (the card\'s answer, tools 28)', await p.evaluate(() => !!rlSt(curBlock()).dk.shown && !!document.querySelector('.rl-carda')), await where());
     await next(1100); expect('Next again → the next card, the same screen', (await where()).piece === 'deck' && await p.evaluate(() => rlSt(curBlock()).dk.at) === 1, await where());
     if (shots) await p.screenshot({path: path.join(shots, 'gn-6-deck.png')});
     expect('the deck fits', await fits(), 'scrolls / wraps');

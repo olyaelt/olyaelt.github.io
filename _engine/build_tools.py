@@ -192,6 +192,9 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
                 if b.get('kind') == 'scenes':   # Maple Road scene by scene (handoff 30.10 15:15): the street and each close-up
                     for im in [b.get('street')] + [x.get('img') for x in b.get('scenes', [])]:
                         if im: shutil.copyfile(os.path.join(T, lesson, im), os.path.join(out_dir, im))
+                    if any(x.get('say') or x.get('example') for x in b.get('scenes', [])):   # tools 28 (B2 handoff 03.11 22:15): her Slide Kit bubbles
+                        for im in ('kit-bubble-yellow-fit.svg', 'kit-bubble-white-fit.svg'):
+                            if os.path.exists(os.path.join(T, lesson, im)): shutil.copyfile(os.path.join(T, lesson, im), os.path.join(out_dir, im))
     if d['type'] == 'revision-board':
         # the lesson's pages with a button on the board (f-demo, "🎓 How the game works", handoff 0920)
         d['buttons'] = []

@@ -18,11 +18,11 @@
   {
    "pid": 3,
    "sig": "game take turns: draw a card with a hot take (смелое мнение). a says it as a tag question. b disagrees, using three moves from the box. then swap.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 4,
-   "sig": "questions round 2: your real opinions. your partner disagrees — gently.",
+   "sig": "questions round 2: your real opinions. agree or disagree — gently.",
    "gone": false
   },
   {
@@ -43,6 +43,26 @@
   {
    "pid": 8,
    "sig": "game snakes and ladders: take turns to roll the dice and move. do the task on your square, then tap to check.",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "picture look at the six pictures. in each one, who loved it and who hated it? think for a minute on your own. dis-scenes.jpg",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "model later, they talk about the film. complete the conversation. then tap the yellow to check. dis-1-cinema.jpg",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "scenes your turn: one of you is him, the other is her. talk, then tap to see an example.",
+   "gone": false
+  },
+  {
+   "pid": 12,
+   "sig": "game take turns: draw a card — a famous book or film (don't know it? draw another one). a says it as a tag question and argues for it. b disagrees, using three moves from the box. then swap.",
    "gone": false
   }
  ],
@@ -112,17 +132,22 @@
  "questions.4": [
   {
    "pid": 0,
-   "sig": "1 think of two real opinions and say them as tag questions: a film or series everyone loves, working from home, social media, learning languages with apps…",
+   "sig": "1 think of two real opinions and say them as tag questions. ideas: a film or series everyone loves, this week's news (sport, the weather, prices…), working from home, social media, learning languages with apps…",
    "gone": false
   },
   {
    "pid": 1,
    "sig": "2 your partner disagrees, using three moves from the box. then swap.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 2,
    "sig": "3 finish on something you both agree on: that's true, and… / exactly. and…",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "2 your partner says what they really think — agree or disagree, using the box. then swap.",
    "gone": false
   }
  ]

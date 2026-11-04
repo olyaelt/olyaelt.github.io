@@ -595,28 +595,165 @@
    "label": "💬 Use it",
    "blocks": [
     {
+     "kind": "picture",
+     "instr": "Look at the six pictures. In each one, who loved it and who hated it? Think for a minute on your own.",
+     "img": "dis-scenes.jpg",
+     "timer": 60,
+     "box": "BOX",
+     "tip": "One quiet minute: who loved it, who hated it? Tap ⏱ to start the minute."
+    },
+    {
+     "kind": "model",
+     "instr": "Later, they talk about the film. Complete the conversation. Then tap the yellow to check.",
+     "img": "dis-1-cinema.jpg",
+     "box": "BOX",
+     "ctx": "(([That evening. He loved the film. She hated it.]))",
+     "parts": [
+      {
+       "title": "",
+       "lines": [
+        {
+         "s": "He",
+         "p": [
+          "That film was brilliant, wasn't it?"
+         ]
+        },
+        {
+         "s": "She",
+         "p": [
+          {
+           "f": "D",
+           "r": "o you think so?"
+          },
+          " I ",
+          {
+           "f": "f",
+           "r": "ound it"
+          },
+          " a bit too scary!"
+         ]
+        },
+        {
+         "s": "He",
+         "p": [
+          "But the ending was so good!"
+         ]
+        },
+        {
+         "s": "She",
+         "p": [
+          {
+           "f": "Y",
+           "r": "eah, I suppose so. But"
+          },
+          " I had my eyes closed for half of it!"
+         ]
+        },
+        {
+         "s": "He",
+         "p": [
+          {
+           "f": "F",
+           "r": "air enough."
+          },
+          " A comedy next time?"
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "kind": "scenes",
+     "instr": "Your turn: one of you is him, the other is her. Talk, then tap to see an example.",
+     "street": "dis-scenes.jpg",
+     "street_first": false,
+     "order": "fixed",
+     "box": "BOX",
+     "task": "That evening, the one who loved it starts. The other disagrees gently, using moves from the box.",
+     "scenes": [
+      {
+       "img": "dis-2-rollercoaster.jpg",
+       "alt": "she loved it",
+       "say": "That was so much fun, wasn't it?",
+       "example": "Do you think so? I found it a bit terrifying!"
+      },
+      {
+       "img": "dis-3-concert.jpg",
+       "alt": "he loved it",
+       "say": "The concert was amazing, wasn't it?",
+       "example": "Yeah, I suppose so. But it was so loud — my ears are still ringing!"
+      },
+      {
+       "img": "dis-4-gallery.jpg",
+       "alt": "she loved it",
+       "say": "That exhibition was fascinating, wasn't it?",
+       "example": "Hmm. I guess you could say it was… interesting."
+      },
+      {
+       "img": "dis-5-rain.jpg",
+       "alt": "he loved it",
+       "say": "That walk was lovely, wasn't it?",
+       "example": "Do you think so? I found it a bit wet!"
+      },
+      {
+       "img": "dis-6-spicy.jpg",
+       "alt": "she loved it",
+       "say": "The food was delicious, wasn't it?",
+       "example": "Yeah, I suppose so. But my mouth's still on fire!"
+      }
+     ],
+     "tip": "One of you is him, one is her. The one who loved it says the yellow line; the other disagrees gently. Then tap for an example."
+    },
+    {
      "kind": "game",
      "piece": "deck",
-     "instr": "Take turns: draw a card with a hot take (смелое мнение). A says it as a tag question. B disagrees, using three moves from the box. Then swap.",
+     "instr": "Take turns: draw a card — a famous book or film (don't know it? Draw another one). A says it as a tag question and argues for it. B disagrees, using three moves from the box. Then swap.",
      "box": "BOX",
-     "title": "Draw a card: a hot take",
+     "title": "Draw a card: a famous book or film",
      "cards": [
-      "Films are far too long these days.",
-      "A series is best watched in one go.",
-      "The book is always better than the film.",
-      "Reality shows are a waste of time.",
-      "Subtitles are better than dubbing.",
-      "Nobody needs more than one streaming service."
+      {
+       "q": "Titanic has a really happy ending.",
+       "a": "Titanic has a really happy ending, **doesn't it?**"
+      },
+      {
+       "q": "War and Peace is a nice quick read.",
+       "a": "War and Peace is a nice quick read, **isn't it?**"
+      },
+      {
+       "q": "Crime and Punishment is the most cheerful book ever written.",
+       "a": "Crime and Punishment is the most cheerful book ever written, **isn't it?**"
+      },
+      {
+       "q": "The Harry Potter books are better than Shakespeare.",
+       "a": "The Harry Potter books are better than Shakespeare, **aren't they?**"
+      },
+      {
+       "q": "The Lord of the Rings films are far too short.",
+       "a": "The Lord of the Rings films are far too short, **aren't they?**"
+      },
+      {
+       "q": "The ending of Game of Thrones was perfect.",
+       "a": "The ending of Game of Thrones was perfect, **wasn't it?**"
+      },
+      {
+       "q": "Friends isn't funny at all.",
+       "a": "Friends isn't funny at all, **is it?**"
+      },
+      {
+       "q": "Shrek is just a kids' film.",
+       "a": "Shrek is just a kids' film, **isn't it?**"
+      }
      ],
      "intro": {
-      "instr": "Here's an example. Complete the conversation. Then tap the yellow to check.",
+      "instr": "Famous books and films. Complete the conversation. Then tap the yellow to check.",
       "card": 0,
-      "ctx": "(([The card: Films are far too long these days. A says it as a tag question. B disagrees, using moves from the box.]))",
+      "ctx": "(([The card: Titanic has a really happy ending. A says it as a tag question. B disagrees, using moves from the box.]))",
       "lines": [
        {
         "s": "A",
         "p": [
-         "Films are far too long these days, aren't they?"
+         "Titanic has a really happy ending, doesn't it?"
         ]
        },
        {
@@ -626,13 +763,18 @@
           "f": "D",
           "r": "o you think so?"
          },
-         " I thought the last one I saw was fine."
+         " I ",
+         {
+          "f": "f",
+          "r": "ound it"
+         },
+         " a bit sad — the ship sinks!"
         ]
        },
        {
         "s": "A",
         "p": [
-         "But what about those superhero films? They go on forever!"
+         "But Rose goes on to live a long, happy life!"
         ]
        },
        {
@@ -642,29 +784,29 @@
           "f": "Y",
           "r": "eah, I suppose so. But I still think"
          },
-         " a good film can be any length."
+         " there was room for Jack on that door."
         ]
        },
        {
         "s": "A",
         "p": [
+         "OK, ",
          {
-          "f": "F",
-          "r": "air enough."
-         },
-         " Shall we watch one tonight, then?"
+          "f": "f",
+          "r": "air point."
+         }
         ]
        }
       ]
      },
-     "tip": "Draw a card with a hot take. A says it with a tag (…, aren't they?). B disagrees in three moves from the box."
+     "tip": "Draw a card: a famous book or film. Don't know it? Draw another. A says it with a tag (…, isn't it?). B disagrees in three moves."
     },
     {
      "kind": "questions",
-     "instr": "Round 2: your real opinions. Your partner disagrees — gently.",
+     "instr": "Round 2: your real opinions. Agree or disagree — gently.",
      "items": [
-      "**1**  Think of **two** real opinions and say them as tag questions: a film or series everyone loves, working from home, social media, learning languages with apps…",
-      "**2**  Your partner disagrees, using three moves from the box. Then swap.",
+      "**1**  Think of **two** real opinions and say them as tag questions. Ideas: a film or series everyone loves, this week's news (sport, the weather, prices…), working from home, social media, learning languages with apps…",
+      "**2**  Your partner says what they really think — agree or disagree, using the box. Then swap.",
       "**3**  Finish on something you both agree on: That's true, and… / Exactly. And…"
      ],
      "box": "BOX",

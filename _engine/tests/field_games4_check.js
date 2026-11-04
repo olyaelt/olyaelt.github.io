@@ -88,11 +88,23 @@ const DIR = 'tools/b2-2026-10-30/';
   await shot('dis-snakes-task');
   /* 🃏 the deck: the example, Go, draw */
   await go('game', 'deck'); r = await p.evaluate(() => ({ex: !!document.querySelector('.rl-intro'), card: (document.querySelector('.rl-cardm') || {}).textContent || ''}));
-  expect('deck: the example first, with its card', r.ex && /Films are far too long/.test(r.card), r);
+  expect('deck: the example first, with its card', r.ex && /Titanic/.test(r.card), r);
   await p.click('[data-rlgo]'); await p.waitForTimeout(100); await click('[data-rlpile]');
   r = await p.evaluate(() => ({at: rlSt(curBlock()).dk.at, card: (document.querySelector('[data-rlslot] .rl-cardt') || {}).textContent || ''}));
-  expect('deck: Go → Draw a card → a hot take (not the example\'s card first)', r.at === 0 && r.card.length > 10 && !/Films are far too long/.test(r.card), r);
+  expect('deck: Go → Draw a card → a famous book or film (not the example\'s card first)', r.at === 0 && r.card.length > 10 && !/Titanic/.test(r.card), r);
+  await click('[data-rlshow]'); r = await p.evaluate(() => (document.querySelector('[data-rlslot] .rl-carda') || {}).textContent || '');
+  expect('deck: tap the card → how A says it, with the tag (tools 28, B2 03.11 22:15)', /^A: .+(n't it\?|n't they\?|isn't it\?|is it\?|does it\?|aren't they\?)/.test(r), r);
   await shot('dis-deck-card');
+  /* 🖼 the scenes with her kit's bubbles (tools 28, B2 03.11 22:15): fixed order, the yellow line, the white example hidden → Next shows it, then the next scene */
+  r = await p.evaluate(() => { const si = D.stages.findIndex(st => st.blocks.some(x => x.kind === 'scenes')), bi = D.stages[si].blocks.findIndex(x => x.kind === 'scenes');
+    S.stage = si; S.intro = false; S.view = 'field'; S.at[si] = bi; render(); const sc = sceneState(curBlock());
+    return {order: sc.order.join(','), yellow: (document.querySelector('.kbub.y') || {}).textContent || '', hidden: !!document.querySelector('button.kbub.w[data-scnex]')}; });
+  expect('scenes: 2 → 6 in order, the yellow line, the example hidden', r.order === '0,1,2,3,4' && /wasn't it\?/.test(r.yellow) && r.hidden, r);
+  await p.click('[data-step]'); await p.waitForTimeout(150); r = await p.evaluate(() => ({at: sceneState(curBlock()).at, ex: (document.querySelector('.kbub.w.open') || {}).textContent || ''}));
+  expect('scenes: Next shows the example first', r.at === 0 && /Do you think so\?/.test(r.ex), r);
+  await shot('dis-scene-bubbles');
+  await p.click('[data-step]'); await p.waitForTimeout(150); r = await p.evaluate(() => ({at: sceneState(curBlock()).at, hidden: !!document.querySelector('button.kbub.w[data-scnex]')}));
+  expect('scenes: the next Next → the next scene, its example hidden again', r.at === 1 && r.hidden, r);
   /* 🐍 snakes and ladders */
   await open('f-pp'); await go('game', 'snakes');
   await click('[data-gs-roll]'); let s = await p.evaluate(() => bs(curBlock()).g);
