@@ -50,5 +50,13 @@
   "trained as",
   "grounding in",
   "job came up"
- ]
+ ],
+ "class": {
+  "topics": [
+   {
+    "t": "Should schools teach more practical things?",
+    "href": "../tools/c1-2026-11-04/practical-things-class.html"
+   }
+  ]
+ }
 }

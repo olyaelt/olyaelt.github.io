@@ -3693,7 +3693,7 @@ const norm = s => String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/[.!?
 /* engine 62 (her 4.11 09:44 «кликаешь по домашке, и там появляется наверху совсем тоненькая Class materials… одна»): page.json "class":
    {"topics": [{"t": title, "href": page}], "slides": Google Slides} — the topics of that class (more than one, as in class), each to its
    lesson page when there is one; under them the same lesson on Google Slides. Folded by default; nothing at all when nothing links. */
-const CLASS_MAT = null;
+const CLASS_MAT = {"topics": [{"t": "Should schools teach more practical things?", "href": "../tools/c1-2026-11-04/practical-things-class.html"}]};
 function classHTML(){
   const c = CLASS_MAT; if(!c) return "";
   const tops = c.topics || [], safe = u => /^(https:\/\/|\.\.\/|[\w-]+\.html)/.test(u || "") ? u : "";

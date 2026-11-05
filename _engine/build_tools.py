@@ -206,11 +206,15 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
     if d.get('review'):
         src = json.load(open(os.path.join(T, lesson, d['review']['from'] + '.json'), encoding='utf-8'))
         review = {'page': lesson + '/' + d['review']['from'], 'part': src.get('part', 'last time'), 'n': d['review'].get('n', 4), 'cards': src['cards']}
-    for k, v in [('__BASE_CSS__', base_css), ('__BASE_JS__', base_js), ('__LW_CSS__', lw_css), ('__LW_JS__', lw_js), ('__TITLE__', d['title'] + (' · ' + d['part'] if d.get('part') else '')),
-                 ('__DATA__', js({k: v for k, v in d.items() if k != 'parked'})), ('__REVIEW__', js(review)), ('__STICKER__', sticker), ('__TOOLS_VERSION__', VERSION),
-                 ('__PAGE_ID__', lesson + '/' + name)]:
-        html = html.replace(k, v)
-    if d.get('lang') and re.match(r'^[a-z]{2}(-[A-Z]{2})?$', d['lang']): html = html.replace('<html lang="en">', '<html lang="%s">' % d['lang'], 1)   # tools 25: the German page
+    tpl = html
+    def fill(tpl, dd, page_id):
+        for k, v in [('__BASE_CSS__', base_css), ('__BASE_JS__', base_js), ('__LW_CSS__', lw_css), ('__LW_JS__', lw_js), ('__TITLE__', dd['title'] + (' · ' + dd['part'] if dd.get('part') else '')),
+                     ('__DATA__', js({k: v for k, v in dd.items() if k not in ('parked', 'class_view')})), ('__REVIEW__', js(review)), ('__STICKER__', sticker), ('__TOOLS_VERSION__', VERSION),
+                     ('__PAGE_ID__', page_id)]:
+            tpl = tpl.replace(k, v)
+        if dd.get('lang') and re.match(r'^[a-z]{2}(-[A-Z]{2})?$', dd['lang']): tpl = tpl.replace('<html lang="en">', '<html lang="%s">' % dd['lang'], 1)   # tools 25: the German page
+        return tpl
+    html = fill(tpl, d, lesson + '/' + name)
     pages.append({'lesson': lesson, 'name': name, 'title': d['title'], 'part': d.get('part', ''), 'type': d['type'],
                   'cells': [{'page': c.get('page'), 'today': bool(c.get('today')), 'closed': bool(c.get('closed')), 'col': c.get('col'), 'value': c.get('value')} for c in d.get('cells', [])] if d['type'] == 'revision-board' else None,
                   'embeds': [b['page'] for st in d.get('stages', []) for b in st.get('blocks', []) if b.get('kind') == 'tool'] if d['type'] == 'revision-field' else []})
@@ -221,6 +225,19 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
         if live and not SYNC: print('WARNING: no SYNC_URL found, %s-live works like the plain page' % name)
         open(os.path.join(out_dir, name + suffix + '.html'), 'w', encoding='utf-8').write(site_theme.add(page))
         built.append('tools/%s/%s%s.html' % (lesson, name, suffix))
+    # tools 28 also (her 05.11 18:45, C1 4.11: «вариант с актуальной частью… без всего, что отсутствовало на уроке»): "class_view": {"stages": [0, 1, 2]}
+    # also builds <page>-class.html — only the stages done in class, for 📂 Class materials on the homework page. Plain (never talks to her
+    # table), its own page id (its own saved place on the device). The first stages only, so every card keeps its permanent number.
+    cv = d.get('class_view')
+    if cv:
+        keep = cv.get('stages') or []
+        if d['type'] != 'revision-field' or keep != list(range(len(keep))) or not 0 < len(keep) <= len(d['stages']):
+            sys.exit('%s: class_view keeps the first stages of a revision field ([0, 1, …]); anything else is an engine request.' % path)
+        dc = dict(d); dc['stages'] = d['stages'][:len(keep)]
+        page = fill(tpl, dc, lesson + '/' + name + '-class').replace('__LIVE__', 'false').replace('__SYNC_URL__', '')
+        assert '__DATA__' not in page and '__PAGE_ID__' not in page, 'placeholder left in the class view of %s' % path
+        open(os.path.join(out_dir, name + '-class.html'), 'w', encoding='utf-8').write(site_theme.add(page))
+        built.append('tools/%s/%s-class.html' % (lesson, name))
 # shared pictures of the lesson pages (tools/assets → <site>/tools/): the blue cloud of her stage slides (her 13:29)
 for f in sorted(glob.glob(os.path.join(T, 'assets', '*'))):
     shutil.copyfile(f, os.path.join(site, 'tools', os.path.basename(f)))
