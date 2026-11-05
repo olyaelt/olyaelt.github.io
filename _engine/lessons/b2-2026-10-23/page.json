@@ -9,5 +9,15 @@
   "GAPS": "gaps.json",
   "TQ": "tq.json"
  },
- "earlier": false
+ "earlier": false,
+ "class": {
+  "topics": [
+   {
+    "t": "The clocks go back on Sunday"
+   },
+   {
+    "t": "Small talk about TV shows: extension"
+   }
+  ]
+ }
 }

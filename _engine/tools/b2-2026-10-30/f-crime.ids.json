@@ -58,6 +58,11 @@
   {
    "pid": 11,
    "sig": "scenes take turns: one scene each. tell your partner the news.",
+   "gone": true
+  },
+  {
+   "pid": 12,
+   "sig": "scenes take turns: one piece of news each.",
    "gone": false
   }
  ],

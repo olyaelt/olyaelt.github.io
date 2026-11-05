@@ -1,0 +1,999 @@
+{
+ "beach1": {
+  "intro": "Josh spent the day at the seaside with his family. In the evening, he writes to his friends' group chat.",
+  "lines": [
+   {
+    "s": "Josh",
+    "p": [
+     "Guys, someone ",
+     {
+      "f": "b",
+      "r": "roke"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " our car at the beach today 😩"
+    ]
+   },
+   {
+    "s": "Becky",
+    "p": [
+     "Oh no! Is everyone OK?"
+    ]
+   },
+   {
+    "s": "Josh",
+    "p": [
+     "Yeah, we were all on the beach at the time."
+    ]
+   },
+   {
+    "s": "Ravi",
+    "p": [
+     "Well, at least ",
+     {
+      "f": "n",
+      "r": "obody"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "ot"
+     },
+     " ",
+     {
+      "f": "h",
+      "r": "urt"
+     },
+     ". ",
+     {
+      "f": "D",
+      "r": "id"
+     },
+     {
+      "b": " they "
+     },
+     {
+      "f": "t",
+      "r": "ake"
+     },
+     " anything?"
+    ]
+   },
+   {
+    "s": "Josh",
+    "p": [
+     "Just our lunch! All the sandwiches and a bag of crisps. My wallet was right there on the seat and they didn't even touch it."
+    ]
+   },
+   {
+    "s": "Callum",
+    "p": [
+     "What kind of thief takes the sandwiches and leaves the wallet? 🤔 ",
+     {
+      "f": "W",
+      "r": "as"
+     },
+     {
+      "b": " there "
+     },
+     {
+      "f": "m",
+      "r": "uch"
+     },
+     " ",
+     {
+      "f": "d",
+      "r": "amage"
+     },
+     "?"
+    ]
+   },
+   {
+    "s": "Josh",
+    "p": [
+     "No, none at all. No broken windows, nothing."
+    ]
+   },
+   {
+    "s": "Becky",
+    "p": [
+     {
+      "f": "D",
+      "r": "id"
+     },
+     {
+      "b": " you "
+     },
+     {
+      "f": "r",
+      "r": "eport"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "it"
+     },
+     " to the police?"
+    ]
+   },
+   {
+    "s": "Josh",
+    "p": [
+     "I was just about to call them when an old man walked past, took one look at the car and burst out laughing."
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     "someone ",
+     {
+      "f": "b",
+      "r": "roke"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˌbrəʊk ˈɪntu/",
+      "o": 1
+     },
+     " our car"
+    ],
+    "ru": "кто-то залез к нам в машину (break into → broke into)"
+   },
+   {
+    "p": [
+     "at least ",
+     {
+      "f": "n",
+      "r": "obody"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "ot"
+     },
+     " ",
+     {
+      "f": "h",
+      "r": "urt"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˈnəʊbədi ɡɒt ˈhɜːt/",
+      "o": 1
+     }
+    ],
+    "ru": "хорошо хоть никто не пострадал (вопрос: Did anyone get hurt?)"
+   },
+   {
+    "p": [
+     {
+      "f": "D",
+      "r": "id"
+     },
+     {
+      "b": " they "
+     },
+     {
+      "f": "t",
+      "r": "ake"
+     },
+     " anything?"
+    ],
+    "ru": "что-нибудь взяли? (did + take, не took)"
+   },
+   {
+    "p": [
+     {
+      "f": "W",
+      "r": "as"
+     },
+     {
+      "b": " there "
+     },
+     {
+      "f": "m",
+      "r": "uch"
+     },
+     " ",
+     {
+      "f": "d",
+      "r": "amage"
+     },
+     "? ",
+     {
+      "f": "",
+      "r": "/ˈdæmɪdʒ/",
+      "o": 1
+     }
+    ],
+    "ru": "сильно повредили? (Was there…? — не Was the damage big?)"
+   },
+   {
+    "p": [
+     {
+      "f": "D",
+      "r": "id"
+     },
+     {
+      "b": " you "
+     },
+     {
+      "f": "r",
+      "r": "eport"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "it"
+     },
+     " to the police? ",
+     {
+      "f": "",
+      "r": "/rɪˈpɔːt ɪt/",
+      "o": 1
+     }
+    ],
+    "ru": "ты заявил(а) в полицию? (report it — it обязательно)"
+   },
+   {
+    "p": [
+     "crisps · took one look at · burst out laughing ",
+     {
+      "f": "",
+      "r": "/ˌbɜːst aʊt ˈlɑːfɪŋ/",
+      "o": 1
+     }
+    ],
+    "ru": "чипсы · только взглянул на · расхохотался"
+   }
+  ]
+ },
+ "beach2": {
+  "lines": [
+   {
+    "s": "Callum",
+    "p": [
+     "Laughing?! Go on, ",
+     {
+      "f": "w",
+      "r": "hat"
+     },
+     " ",
+     {
+      "f": "h",
+      "r": "appened"
+     },
+     " ",
+     {
+      "f": "n",
+      "r": "ext"
+     },
+     "?"
+    ]
+   },
+   {
+    "s": "Josh",
+    "p": [
+     "He pointed at the wall behind the car. Three seagulls were sitting on it, eating our sandwiches. Turns out I'd left the back window open 🙈"
+    ]
+   },
+   {
+    "s": "Ravi",
+    "p": [
+     "Hahaha! So your car didn't actually ",
+     {
+      "f": "g",
+      "r": "et"
+     },
+     " ",
+     {
+      "f": "b",
+      "r": "roken"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " at all!"
+    ]
+   },
+   {
+    "s": "Callum",
+    "p": [
+     "Case closed 🕵️"
+    ]
+   },
+   {
+    "s": "Josh",
+    "p": [
+     {
+      "f": "W",
+      "r": "atch"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "ut"
+     },
+     " ",
+     {
+      "f": "f",
+      "r": "or"
+     },
+     " the seagulls if you ever go there. They're the real criminals."
+    ]
+   },
+   {
+    "s": "Becky",
+    "p": [
+     {
+      "b": "Thanks for "
+     },
+     {
+      "f": "",
+      "r": "the"
+     },
+     " ",
+     {
+      "f": "h",
+      "r": "eads-up"
+     },
+     "! We're going on Saturday, so the windows are staying shut 😂"
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     "Go on, ",
+     {
+      "f": "w",
+      "r": "hat"
+     },
+     " ",
+     {
+      "f": "h",
+      "r": "appened"
+     },
+     " ",
+     {
+      "f": "n",
+      "r": "ext"
+     },
+     "? ",
+     {
+      "f": "",
+      "r": "/ˈhæpənd/",
+      "o": 1
+     }
+    ],
+    "ru": "ну, а дальше что было? (не What was next?)"
+   },
+   {
+    "p": [
+     "the car didn't ",
+     {
+      "f": "g",
+      "r": "et"
+     },
+     " ",
+     {
+      "f": "b",
+      "r": "roken"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ɡet ˈbrəʊkən ˈɪntuː/",
+      "o": 1
+     }
+    ],
+    "ru": "машину не вскрывали"
+   },
+   {
+    "p": [
+     {
+      "f": "W",
+      "r": "atch"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "ut"
+     },
+     " ",
+     {
+      "f": "f",
+      "r": "or"
+     },
+     " … ",
+     {
+      "f": "",
+      "r": "/ˌwɒtʃ ˈaʊt fə/",
+      "o": 1
+     }
+    ],
+    "ru": "осторожно с…, берегитесь…"
+   },
+   {
+    "p": [
+     {
+      "b": "Thanks for "
+     },
+     {
+      "f": "",
+      "r": "the"
+     },
+     " ",
+     {
+      "f": "h",
+      "r": "eads-up"
+     },
+     "! ",
+     {
+      "f": "",
+      "r": "/ˈhedz ʌp/",
+      "o": 1
+     }
+    ],
+    "ru": "спасибо, что предупредил(а)! (с the)"
+   },
+   {
+    "p": [
+     "seagulls ",
+     {
+      "f": "",
+      "r": "/ˈsiːɡʌlz/",
+      "o": 1
+     },
+     " · Turns out …"
+    ],
+    "ru": "чайки · оказалось, …"
+   }
+  ]
+ },
+ "linden1": {
+  "lines": [
+   {
+    "s": "Anna",
+    "p": [
+     "Heads up, everyone — two cars ",
+     {
+      "f": "g",
+      "r": "ot"
+     },
+     " ",
+     {
+      "f": "b",
+      "r": "roken"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " on our street last night."
+    ]
+   },
+   {
+    "s": "Tom",
+    "p": [
+     "Oh no! Whose cars?"
+    ]
+   },
+   {
+    "s": "Anna",
+    "p": [
+     "Mine and the van outside number 12. They took my laptop and a bag. The police say there have been a lot of ",
+     {
+      "f": "b",
+      "r": "urglaries"
+     },
+     " in the area recently."
+    ]
+   },
+   {
+    "s": "Tom",
+    "p": [
+     "Sorry to hear that, Anna!"
+    ]
+   },
+   {
+    "s": "Ben",
+    "p": [
+     "Same here, actually. Someone ",
+     {
+      "f": "b",
+      "r": "roke"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " the flat above ours last month and ",
+     {
+      "f": "s",
+      "r": "tole"
+     },
+     " some jewellery."
+    ]
+   },
+   {
+    "s": "Lucy",
+    "p": [
+     "Seriously?! Has anyone else ",
+     {
+      "f": "h",
+      "r": "ad"
+     },
+     " their bike ",
+     {
+      "f": "s",
+      "r": "tolen"
+     },
+     " from the courtyard? Mine disappeared on Saturday."
+    ]
+   },
+   {
+    "s": "Tom",
+    "p": [
+     "Not mine, luckily. But did you hear about the petrol station? It was ",
+     {
+      "f": "r",
+      "r": "obbed"
+     },
+     " on Sunday night — the guy had a knife!"
+    ]
+   },
+   {
+    "s": "Anna",
+    "p": [
+     "That's scary!"
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     "two cars ",
+     {
+      "f": "g",
+      "r": "ot"
+     },
+     " ",
+     {
+      "f": "b",
+      "r": "roken"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ɡɒt ˈbrəʊkən ˈɪntə/",
+      "o": 1
+     }
+    ],
+    "ru": "вскрыли две машины"
+   },
+   {
+    "p": [
+     {
+      "f": "b",
+      "r": "urglaries"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˈbɜːɡləriz/",
+      "o": 1
+     }
+    ],
+    "ru": "кражи со взломом"
+   },
+   {
+    "p": [
+     "someone ",
+     {
+      "f": "b",
+      "r": "roke"
+     },
+     " ",
+     {
+      "f": "i",
+      "r": "nto"
+     },
+     " the flat",
+     " ",
+     {
+      "f": "",
+      "r": "/ˌbrəʊk ˈɪntə/",
+      "o": 1
+     }
+    ],
+    "ru": "вломился в квартиру"
+   },
+   {
+    "p": [
+     {
+      "f": "s",
+      "r": "tole"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/stəʊl/",
+      "o": 1
+     }
+    ],
+    "ru": "украл"
+   },
+   {
+    "p": [
+     {
+      "f": "h",
+      "r": "ad"
+     },
+     " their bike ",
+     {
+      "f": "s",
+      "r": "tolen"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˈstəʊlən/",
+      "o": 1
+     }
+    ],
+    "ru": "у кого-то украли велосипед"
+   },
+   {
+    "p": [
+     "it ",
+     {
+      "f": "w",
+      "r": "as"
+     },
+     " ",
+     {
+      "f": "r",
+      "r": "obbed"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/rɒbd/",
+      "o": 1
+     }
+    ],
+    "ru": "её ограбили"
+   }
+  ]
+ },
+ "linden2": {
+  "lines": [
+   {
+    "s": "Ben",
+    "p": [
+     "And a teenager was ",
+     {
+      "f": "c",
+      "r": "aught"
+     },
+     " ",
+     {
+      "f": "s",
+      "r": "hoplifting"
+     },
+     " at the supermarket yesterday."
+    ]
+   },
+   {
+    "s": "Anna",
+    "p": [
+     "What's going on with this street?!"
+    ]
+   },
+   {
+    "s": "Lucy",
+    "p": [
+     "Be careful on the tram, too. My neighbour got ",
+     {
+      "f": "p",
+      "r": "ickpocketed"
+     },
+     " there last week."
+    ]
+   },
+   {
+    "s": "Tom",
+    "p": [
+     "Thanks for the ",
+     {
+      "f": "h",
+      "r": "eads-up"
+     },
+     ". My phone lives in my front pocket now."
+    ]
+   },
+   {
+    "s": "Anna",
+    "p": [
+     "And ",
+     {
+      "f": "w",
+      "r": "atch"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "ut"
+     },
+     " — there's a new ",
+     {
+      "f": "s",
+      "r": "cam"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "oing"
+     },
+     " ",
+     {
+      "f": "r",
+      "r": "ound"
+     },
+     ". Someone ",
+     {
+      "f": "p",
+      "r": "retends"
+     },
+     " to ",
+     {
+      "f": "b",
+      "r": "e"
+     },
+     " from the gas company and asks to come in and check the meter."
+    ]
+   },
+   {
+    "s": "Ben",
+    "p": [
+     {
+      "f": "G",
+      "r": "ood"
+     },
+     " to ",
+     {
+      "f": "k",
+      "r": "now"
+     },
+     ". I'm not opening the door to anyone!"
+    ]
+   },
+   {
+    "s": "Lucy",
+    "p": [
+     "UPDATE: found my bike. My son borrowed it and didn't tell me."
+    ]
+   },
+   {
+    "s": "Tom",
+    "p": [
+     "Haha! ",
+     {
+      "f": "C",
+      "r": "ase"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "losed"
+     },
+     "!"
+    ]
+   },
+   {
+    "s": "Anna",
+    "p": [
+     "So… are we ",
+     {
+      "f": "r",
+      "r": "eporting"
+     },
+     " him to the police? 😄"
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     {
+      "f": "w",
+      "r": "as"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "aught"
+     },
+     " ",
+     {
+      "f": "s",
+      "r": "hoplifting"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/kɔːt ˈʃɒplɪftɪŋ/",
+      "o": 1
+     }
+    ],
+    "ru": "поймали на краже в магазине"
+   },
+   {
+    "p": [
+     {
+      "f": "g",
+      "r": "ot"
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "ickpocketed"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˈpɪkpɒkɪtɪd/",
+      "o": 1
+     }
+    ],
+    "ru": "обокрал карманник"
+   },
+   {
+    "p": [
+     "Thanks for the ",
+     {
+      "f": "h",
+      "r": "eads-up"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˈhedz ʌp/",
+      "o": 1
+     }
+    ],
+    "ru": "спасибо, что предупредила"
+   },
+   {
+    "p": [
+     {
+      "f": "w",
+      "r": "atch"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "ut"
+     }
+    ],
+    "ru": "будьте осторожны"
+   },
+   {
+    "p": [
+     "a ",
+     {
+      "f": "s",
+      "r": "cam"
+     },
+     " ",
+     {
+      "f": "g",
+      "r": "oing"
+     },
+     " ",
+     {
+      "f": "r",
+      "r": "ound"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/skæm/",
+      "o": 1
+     }
+    ],
+    "ru": "ходит новая схема развода"
+   },
+   {
+    "p": [
+     {
+      "f": "p",
+      "r": "retends"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "o"
+     },
+     " ",
+     {
+      "f": "b",
+      "r": "e"
+     }
+    ],
+    "ru": "выдаёт себя за"
+   },
+   {
+    "p": [
+     {
+      "f": "G",
+      "r": "ood"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "o"
+     },
+     " ",
+     {
+      "f": "k",
+      "r": "now"
+     }
+    ],
+    "ru": "буду знать!"
+   },
+   {
+    "p": [
+     {
+      "f": "C",
+      "r": "ase"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "losed"
+     },
+     "!"
+    ],
+    "ru": "дело закрыто!"
+   },
+   {
+    "p": [
+     {
+      "f": "r",
+      "r": "eporting"
+     },
+     " him to the police"
+    ],
+    "ru": "заявим на него"
+   }
+  ]
+ }
+}

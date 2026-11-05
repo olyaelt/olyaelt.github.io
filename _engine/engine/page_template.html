@@ -339,6 +339,8 @@ details.summary[open] summary::after{content:"Hide"}
 .blank{color:var(--muted);letter-spacing:.1em}
 .ans{color:var(--answer);font-weight:700}
 .note{margin:0;font-size:.95rem}
+.step-pic{margin:0 0 12px}
+.step-pic img{display:block;width:100%;height:auto;max-height:44vh;object-fit:contain;border-radius:12px}
 .gap-input{font:inherit;font-weight:700;color:var(--answer);background:var(--ground);border:0;border-bottom:2px dashed var(--muted);border-radius:4px 4px 0 0;
   padding:2px 6px;width:min(100%,13em);margin-block:2px}
 .gap-input::placeholder{color:var(--muted);font-weight:400;font-style:italic}
@@ -511,7 +513,30 @@ s{color:var(--strike);text-decoration:line-through;text-decoration-thickness:2px
 .sticker-sm{width:118px;height:auto}
 .ul-hint{font-size:.9rem;color:var(--muted);font-weight:700}
 .ul-peek[open] .ul-hint{display:none}
+/* engine 62 also (TZ B2 4.11, her rule 27.10: a box seen whole on a phone): a topic with several boxes ("boxes": [{h, html}]) → one fold each */
+.ul-parts{display:grid;gap:6px;margin-top:8px}
+.ul-part summary{padding:7px 12px;border:2px solid var(--line);border-radius:10px;background:var(--card);gap:8px}
+.ul-part summary::before{content:"▸";color:var(--instr);font-weight:900}
+.ul-part[open] summary::before{content:"▾"}
+.ul-ph{font-weight:900}
+.ul-part .box-home{margin-top:6px}
 .box-home{margin-top:8px}
+/* engine 62 (her 4.11 09:44): «📂 Class materials» — a thin fold at the top of a homework page: what we did in class that day */
+.cm-peek{background:var(--card);border:2px solid var(--line);border-radius:14px;margin:0 0 16px}
+.cm-peek summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:8px;padding:8px 14px;font-weight:900;white-space:nowrap}
+.cm-peek summary::-webkit-details-marker{display:none}
+.cm-peek summary .cm-n{color:var(--muted);font-weight:400;font-size:.92rem;overflow:hidden;text-overflow:ellipsis}
+.cm-peek summary .cm-open{margin-left:auto;color:var(--instr);font-size:.95rem}
+.cm-peek[open] summary{border-bottom:1px solid var(--line)}
+.cm-peek[open] summary .cm-open{display:none}
+.cm-in{display:grid;gap:8px;padding:12px 14px 14px}
+.cm-lk{display:flex;align-items:center;gap:10px;border-radius:10px;padding:9px 12px;font-weight:900;color:var(--ink);text-decoration:none;line-height:1.3}
+a.cm-lk:hover{outline:2px solid var(--instr)}
+.cm-lk.t0{background:var(--topic-a)} .cm-lk.t1{background:var(--topic-b)}
+.cm-lk.off{background:none;border:2px dashed var(--line);color:var(--muted);font-weight:700}
+.cm-lk .go{margin-left:auto;color:var(--instr)}
+.cm-gs{font-size:.92rem;color:var(--muted);padding:0 4px}
+.cm-gs a{color:var(--instr);font-weight:700;text-underline-offset:2px}
 .sec{display:grid;gap:8px}
 .sec-label{justify-self:start;margin:4px 0 0;font-size:.78rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;background:var(--hl);color:var(--hl-ink);padding:2px 8px;border-radius:4px}
 .seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--ground);border-radius:12px;padding:4px}
@@ -1443,6 +1468,19 @@ let typedT = 0; const saveTyped = () => { clearTimeout(typedT); typedT = setTime
 const norm = s => String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/[.!?,;:]+$/,"").replace(/\s+/g," ").trim();
 
 /* ---------- home ---------- */
+/* engine 62 (her 4.11 09:44 «кликаешь по домашке, и там появляется наверху совсем тоненькая Class materials… одна»): page.json "class":
+   {"topics": [{"t": title, "href": page}], "slides": Google Slides} — the topics of that class (more than one, as in class), each to its
+   lesson page when there is one; under them the same lesson on Google Slides. Folded by default; nothing at all when nothing links. */
+const CLASS_MAT = __CLASS_MAT__;
+function classHTML(){
+  const c = CLASS_MAT; if(!c) return "";
+  const tops = c.topics || [], safe = u => /^(https:\/\/|\.\.\/|[\w-]+\.html)/.test(u || "") ? u : "";
+  if(!safe(c.slides) && !tops.some(x => safe(x.href))) return "";
+  const d = LESSON.date.slice(0, 5);
+  return `<details class="cm-peek"><summary><span>📂 Class materials</span><span class="cm-n">· ${esc(d)}</span><span class="cm-open">▸ Open</span></summary>
+    <div class="cm-in">${tops.map((x, k) => safe(x.href) ? `<a class="cm-lk t${k % 2}" href="${esc(safe(x.href))}">${esc(x.t)}<span class="go">→</span></a>` : `<div class="cm-lk off">${esc(x.t)}</div>`).join("")}
+    ${safe(c.slides) ? `<div class="cm-gs">📊 The same lesson on <a href="${esc(safe(c.slides))}" target="_blank" rel="noopener">Google Slides</a></div>` : ""}</div></details>`;
+}
 const ON_SITE = /\.github\.io$|(^|\.)clickswith\.me$/.test(location.hostname) || location.protocol === "file:";   /* the list of all homework lives next to this page on the site */
 /* engine 35: on the site, the homework opens only with a code (her decision, 28.10). Without one — or with a code her table doesn't know —
    the page shows just the code field. A code this device already used keeps working when the table doesn't answer.
@@ -1484,6 +1522,7 @@ function renderHome(justDone){
       ${LESSON.sub?`<p>${LESSON.sub}</p>`:""}
       <p class="total">About ${Math.round(TASKS.filter(t=>!t.later).reduce((s,t)=>s+minutesOf(t),0)/5)*5} minutes in total — you don't have to do it all in one go.${TASKS.some(t=>t.later)?" Tasks marked <b>for later</b> aren't in that time: come back to them when you like.":""}</p>
     </header>
+    ${classHTML()}
     <div id="sync-slot">${syncHTML()}</div>
     <div id="fbnew-slot">${newFbHTML()}</div>
     <div id="meter-slot">${(myCode() && syncState!=="unknown") ? meterNow() : ""}</div>
@@ -1491,7 +1530,9 @@ function renderHome(justDone){
     ${TOPICS.map((tp,ti)=>`
       <section class="topic ${tp.id==="earlier"?"topic-earlier":"topic-"+(ti%2)}">
         <div class="topic-head"><span class="topic-n">${tp.id==="earlier"?"Look back":"Topic "+(ti+1)}</span><h2>${esc(tp.title)}</h2><p>${esc(tp.sub)}</p></div>
-        ${tp.box?`<details class="ul-peek"><summary><img class="sticker-sm" src="${STICKER}" alt="Useful language"><span class="ul-hint">Tap to see the phrases</span></summary>
+        ${tp.boxes?`<div class="ul-parts"><img class="sticker-sm" src="${STICKER}" alt="Useful language">${tp.boxes.map(bx=>`<details class="ul-peek ul-part"><summary><span class="ul-ph">${esc(bx.h)}</span><span class="ul-hint">Tap to see the phrases</span></summary>
+          <aside class="box box-home" aria-label="Useful language: ${esc(bx.h)}">${bx.html}</aside></details>`).join("")}</div>`:
+        tp.box?`<details class="ul-peek"><summary><img class="sticker-sm" src="${STICKER}" alt="Useful language"><span class="ul-hint">Tap to see the phrases</span></summary>
           <aside class="box box-home" aria-label="Useful language">${tp.box()}</aside></details>`:""}
         ${secsOf(tp).map(sec=>{ const ts = TASKS.filter(t=>t.topic===tp.id && (t.sec||"")===sec);
           return ts.length ? `<div class="sec">${sec ? `<h3 class="sec-label">${sec}</h3>` : ""}${ts.map(taskBtn).join("")}</div>` : ""; }).join("")}
@@ -1766,7 +1807,7 @@ function renderDlg(st, count, pct){
   const side = st.box ? box(st.box)
     : st.gloss ? `<aside class="box gloss" aria-label="Glossary"><h4>GLOSSARY</h4>${st.gloss.map(g=>g.h?`<h4>${esc(g.h)}</h4>`:glossLineHTML(g)).join("")}</aside>` : "";
   shell({count, pct, instr: st.instr,
-    stageHTML:`<div class="panel">${st.intro?`<p class="situation">${esc(st.intro)}</p>`:""}<div class="dlg">${st.lines.map(gapLineHTML).join("")}</div>${checked&&st.note?`<p class="small">${st.note}</p>`:""}${checked?markHint()+revHint():""}</div>${side}`,
+    stageHTML:`<div class="panel">${picHTML(st.pic)}${st.intro?`<p class="situation">${esc(st.intro)}</p>`:""}<div class="dlg">${st.lines.map(gapLineHTML).join("")}</div>${checked&&st.note?`<p class="small">${st.note}</p>`:""}${checked?markHint()+revHint():""}</div>${side}`,
     withBox: !!side, actionsHTML: navButtons(st.checkLabel || "Show the answers")});
   const chunks = [...app.querySelectorAll(".chunk")];
   const toggle = c => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); syncGapNotes(app); allOpen(); };
@@ -2046,6 +2087,8 @@ function checkWhenAllOpen(sel){
 }
 
 /* ---------- say it in English ---------- */
+/* engine 62 also (TZ C1 4.11): a picture above a gap chat or a say-it step — "pic": the image (an asset of the page) */
+const picHTML = src => src ? `<figure class="step-pic"><img src="${src}" alt=""></figure>` : "";
 function renderSayit(st, count, pct){
   const s = st.s;
   const bx = st.box !== undefined ? st.box : (typeof BOX_CLOCKS !== "undefined" ? BOX_CLOCKS : "");
@@ -2053,6 +2096,7 @@ function renderSayit(st, count, pct){
     instr: st.instr || (st.first ? "Say it in English — aloud. Then tap the yellow box to check." : "Say it in English."),
     stageHTML: `
       <div class="panel">
+        ${picHTML(st.pic)}
         <div class="say">
           ${s.rows.map((row,i)=> st._rows && !st._rows.has(i) ? "" : `<div class="say-row"><span class="q">${row[0]}</span>
             <span class="say-a"><button class="reveal ${checked?"open":""}" data-r="${i}" aria-label="Show the English">${s.html ? row[1] : esc(row[1])}</button>${markBtn(stepIdx+"-"+i, s.html ? plainText(row[1]) : row[1])}${bmBtn(curS(), i)}</span>${checked&&row[2]?`<p class="small say-note">${strikeMd(row[2])}</p>`:""}</div>`).join("")}

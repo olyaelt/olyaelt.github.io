@@ -1,0 +1,74 @@
+[
+ {
+  "html": true,
+  "rows": [
+   [
+    "A friend: “Night train? I bet you didn't sleep a wink.” <i>(You slept for eight hours.)</i>",
+    "It was <b class=\"g\">a lot more comfortable than you'd think</b> — I slept for eight hours."
+   ]
+  ],
+  "note": "",
+  "box": "BOX_COMP",
+  "pic": "BOAT3"
+ },
+ {
+  "html": true,
+  "rows": [
+   [
+    "A colleague: “Learning to drive at forty? That must have been a nightmare.” <i>(You passed first time.)</i>",
+    "It was <b class=\"g\">a lot easier than you'd think</b> — I passed first time."
+   ]
+  ],
+  "note": "or: It wasn't as hard as you'd think. · not 'more easier'",
+  "box": "BOX_COMP",
+  "pic": "BOAT3"
+ },
+ {
+  "html": true,
+  "rows": [
+   [
+    "Your neighbour: “A week in Switzerland? That must have cost a fortune.” <i>(You stayed with friends and cooked your own meals.)</i>",
+    "It was <b class=\"g\">a lot cheaper than you'd think</b> — we stayed with friends."
+   ]
+  ],
+  "note": "or: a lot less expensive",
+  "box": "BOX_COMP",
+  "pic": "BOAT3"
+ },
+ {
+  "html": true,
+  "rows": [
+   [
+    "A friend: “Renewing your passport? That must have been a nightmare.” <i>(It took twenty minutes online.)</i>",
+    "It was <b class=\"g\">a lot simpler than you'd think</b> — it only took twenty minutes online."
+   ]
+  ],
+  "note": "or: a lot easier / quicker",
+  "box": "BOX_COMP",
+  "pic": "BOAT3"
+ },
+ {
+  "html": true,
+  "rows": [
+   [
+    "A friend: “Teenagers never talk to their parents.” <i>(Your son tells you everything — usually at midnight.)</i>",
+    "Mine's <b class=\"g\">a lot chattier than you'd think</b> — he tells me everything. Usually at midnight."
+   ]
+  ],
+  "note": "or: a lot more talkative · chatty → chattier",
+  "box": "BOX_COMP",
+  "pic": "BOAT3"
+ },
+ {
+  "html": true,
+  "rows": [
+   [
+    "A friend: “IKEA furniture? I bet that took you all weekend.” <i>(It took you an hour. One screw was left over.)</i>",
+    "It was <b class=\"g\">a lot quicker than you'd think</b> — it took me an hour. Only one screw left over!"
+   ]
+  ],
+  "note": "or: a lot faster",
+  "box": "BOX_COMP",
+  "pic": "BOAT3"
+ }
+]

@@ -166,7 +166,8 @@
        ]
       }
      ],
-     "tip": "The verb is in brackets. Say the missing words, then tap the yellow to check."
+     "tip": "The verb is in brackets. Say the missing words, then tap the yellow to check.",
+     "ctx": "(([It's November now.]))"
     }
    ]
   },
@@ -380,7 +381,8 @@
       "**3**  Then ask your partner one question from the table that you haven't asked yet."
      ],
      "box": "BOX",
-     "fast": "If you're done: go back to Anna in 🔁 Recall and say the missing words from memory. Then tell your partner about **two** things you've done for the first time this year. When did you do them? How did it go?"
+     "fast": "If you're done: go back to Anna in 🔁 Recall and say the missing words from memory. Then tell your partner about **two** things you've done for the first time this year. When did you do them? How did it go?",
+     "table": 2
     }
    ]
   }

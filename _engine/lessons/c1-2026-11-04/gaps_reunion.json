@@ -1,0 +1,991 @@
+{
+ "steps": [
+  {
+   "type": "dlg",
+   "intro": "Twenty years after university, Rachel walks through a farmers' market in Yorkshire — and the man at the cheese stall looks very familiar. Part 1: fill the gaps. The glossary is beside the text.",
+   "lines": [
+    {
+     "s": "Rachel",
+     "p": [
+      "Sorry — Tom? Tom Hale?"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "…Rachel? Rachel Price? No way!"
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      {
+       "f": "L",
+       "r": "ong"
+      },
+      " ",
+      {
+       "f": "t",
+       "r": "ime"
+      },
+      " ",
+      {
+       "f": "n",
+       "r": "o"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "ee"
+      },
+      "! It must be… twenty years?"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "At least. Last time I saw you, we were both in black gowns, throwing hats in the air."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "Don't remind me — I nearly lost an eye. So… what are you doing behind a cheese stall?"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "It's my cheese stall. I make cheese now."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "You make cheese?! ",
+      {
+       "f": "L",
+       "r": "ast"
+      },
+      " ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "f": "h",
+       "r": "eard"
+      },
+      ", you were at that huge law firm in London!"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "I was. I was a lawyer for fifteen years. Then I left."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "But you were the most serious person in our year! You wore a tie to lectures!"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "Only on Mondays."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "So how did you ",
+      {
+       "f": "g",
+       "r": "et"
+      },
+      " ",
+      {
+       "f": "i",
+       "r": "nto"
+      },
+      " cheese, of all things?"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "It's a bit of a long story. Have you got ten minutes?"
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "For this? I've got all day."
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "OK. You remember I never really wanted to do law?"
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "Vaguely. Didn't you want to be a vet?"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "I did. But I didn't get into vet school, and my mum said I'd make a great lawyer because I argued with everyone. So I ",
+      {
+       "f": "e",
+       "r": "nded"
+      },
+      " ",
+      {
+       "b": "up"
+      },
+      " ",
+      {
+       "f": "d",
+       "r": "oing"
+      },
+      " law instead. That's just what everyone did back then, wasn't it? Then I ",
+      {
+       "f": "t",
+       "r": "rained"
+      },
+      " ",
+      {
+       "f": "a",
+       "r": "s"
+      },
+      " a solicitor, worked crazy hours for fifteen years… and one day I just couldn't do it any more."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "So what happened?"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "Completely ",
+      {
+       "f": "b",
+       "r": "y"
+      },
+      " ",
+      {
+       "f": "c",
+       "r": "hance"
+      },
+      ", I saw an ad for a weekend course in cheesemaking. I signed up for a laugh — and I loved it. Then a place came up on a six-month course, so I took a break from work, and eventually a job ",
+      {
+       "f": "c",
+       "r": "ame"
+      },
+      " ",
+      {
+       "b": "up"
+      },
+      " on a farm up here. I never went back."
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      "Long time no see!"
+     ],
+     "m": "it's been a long time since we met",
+     "ru": "сто лет не виделись!"
+    },
+    {
+     "p": [
+      "Last I heard, …"
+     ],
+     "m": "the last news I had about you",
+     "ru": "насколько я слышал(а), …"
+    },
+    {
+     "p": [
+      "get into sth"
+     ],
+     "m": "start doing it, often as a job",
+     "ru": "заняться чем-то"
+    },
+    {
+     "p": [
+      "end up doing sth"
+     ],
+     "m": "do it in the end, not as planned",
+     "ru": "в итоге заняться чем-то"
+    },
+    {
+     "p": [
+      "train as a solicitor"
+     ],
+     "m": "do the training for that job",
+     "ru": "выучиться на юриста"
+    },
+    {
+     "p": [
+      "by chance"
+     ],
+     "m": "without planning it",
+     "ru": "случайно"
+    },
+    {
+     "p": [
+      "a job came up"
+     ],
+     "m": "a job became available",
+     "ru": "подвернулась работа"
+    },
+    {
+     "h": "Also in the text"
+    },
+    {
+     "p": [
+      "a cheese stall · a gown"
+     ],
+     "m": "a market table · a long graduation robe",
+     "ru": "сырный прилавок · мантия"
+    }
+   ]
+  },
+  {
+   "type": "dlg",
+   "intro": "Now Part 1 again, without the glossary.",
+   "lines": [
+    {
+     "s": "Rachel",
+     "p": [
+      "Sorry — Tom? Tom Hale?"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "…Rachel? Rachel Price? No way!"
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      {
+       "f": "L",
+       "r": "ong"
+      },
+      " ",
+      {
+       "f": "t",
+       "r": "ime"
+      },
+      " ",
+      {
+       "f": "n",
+       "r": "o"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "ee"
+      },
+      "! It must be… twenty years?"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "At least. Last time I saw you, we were both in black gowns, throwing hats in the air."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "Don't remind me — I nearly lost an eye. So… what are you doing behind a cheese stall?"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "It's my cheese stall. I make cheese now."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "You make cheese?! ",
+      {
+       "f": "L",
+       "r": "ast"
+      },
+      " ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "f": "h",
+       "r": "eard"
+      },
+      ", you were at that huge law firm in London!"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "I was. I was a lawyer for fifteen years. Then I left."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "But you were the most serious person in our year! You wore a tie to lectures!"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "Only on Mondays."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "So how did you ",
+      {
+       "f": "g",
+       "r": "et"
+      },
+      " ",
+      {
+       "f": "i",
+       "r": "nto"
+      },
+      " cheese, of all things?"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "It's a bit of a long story. Have you got ten minutes?"
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "For this? I've got all day."
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "OK. You remember I never really wanted to do law?"
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "Vaguely. Didn't you want to be a vet?"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "I did. But I didn't get into vet school, and my mum said I'd make a great lawyer because I argued with everyone. So I ",
+      {
+       "f": "e",
+       "r": "nded"
+      },
+      " ",
+      {
+       "b": "up"
+      },
+      " ",
+      {
+       "f": "d",
+       "r": "oing"
+      },
+      " law instead. That's just what everyone did back then, wasn't it? Then I ",
+      {
+       "f": "t",
+       "r": "rained"
+      },
+      " ",
+      {
+       "f": "a",
+       "r": "s"
+      },
+      " a solicitor, worked crazy hours for fifteen years… and one day I just couldn't do it any more."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "So what happened?"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "Completely ",
+      {
+       "f": "b",
+       "r": "y"
+      },
+      " ",
+      {
+       "f": "c",
+       "r": "hance"
+      },
+      ", I saw an ad for a weekend course in cheesemaking. I signed up for a laugh — and I loved it. Then a place came up on a six-month course, so I took a break from work, and eventually a job ",
+      {
+       "f": "c",
+       "r": "ame"
+      },
+      " ",
+      {
+       "b": "up"
+      },
+      " on a farm up here. I never went back."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "dlg",
+   "intro": "Part 2: fill the gaps. The glossary is beside the text.",
+   "lines": [
+    {
+     "s": "Rachel",
+     "p": [
+      "Wow. How long ",
+      {
+       "f": "h",
+       "r": "ave"
+      },
+      " ",
+      {
+       "b": "you"
+      },
+      " ",
+      {
+       "f": "b",
+       "r": "een"
+      },
+      " doing this?"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "Six years now. Well — six years making cheese. The goats came later."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "Goats?"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "Twelve of them. They're all named after judges."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "Of course they are. Was it ",
+      {
+       "f": "w",
+       "r": "orth"
+      },
+      " it, ",
+      {
+       "f": "t",
+       "r": "hough"
+      },
+      "? Leaving law, I mean."
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "Financially? Not at all. Otherwise? Absolutely. And actually, law gave me a good ",
+      {
+       "f": "g",
+       "r": "rounding"
+      },
+      " ",
+      {
+       "b": "in"
+      },
+      " contracts — very handy when supermarkets try to squeeze you. The cheese is ",
+      {
+       "b": "the"
+      },
+      " ",
+      {
+       "f": "e",
+       "r": "asy"
+      },
+      " ",
+      {
+       "f": "p",
+       "r": "art"
+      },
+      ". It's the goats I ",
+      {
+       "f": "f",
+       "r": "ind"
+      },
+      " ",
+      {
+       "f": "h",
+       "r": "ard"
+      },
+      ". Lady Justice escaped twice this week."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "Ha! I'd ",
+      {
+       "f": "n",
+       "r": "ever"
+      },
+      " ",
+      {
+       "f": "h",
+       "r": "ave"
+      },
+      " ",
+      {
+       "f": "g",
+       "r": "uessed"
+      },
+      " you'd end up here."
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "Me neither. Anyway — enough about me. What have you ",
+      {
+       "f": "b",
+       "r": "een"
+      },
+      " ",
+      {
+       "b": "up"
+      },
+      " ",
+      {
+       "b": "to"
+      },
+      "? Still in law?"
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "Still in law! Family law, in Bristol. Same firm for twelve years now. And we've started a family — two boys, eight and ten."
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "That must ",
+      {
+       "f": "k",
+       "r": "eep"
+      },
+      " ",
+      {
+       "b": "you"
+      },
+      " ",
+      {
+       "f": "b",
+       "r": "usy"
+      },
+      "!"
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "You have no idea. They're at my sister-in-law's this morning, so this is my first free morning in about ten years."
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "Then you definitely need cheese. Here — try this one."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "Mmm. Oh, that's amazing. Listen, I've ",
+      {
+       "f": "b",
+       "r": "een"
+      },
+      " ",
+      {
+       "f": "m",
+       "r": "eaning"
+      },
+      " ",
+      {
+       "b": "to"
+      },
+      " ",
+      {
+       "f": "g",
+       "r": "et"
+      },
+      " ",
+      {
+       "b": "in"
+      },
+      " ",
+      {
+       "f": "t",
+       "r": "ouch"
+      },
+      " with people from uni for ages. We should catch up properly. Are you on WhatsApp?"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "I am. The goats aren't, thankfully. Here's my number — and take this one. On the house."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "Tom, you can't just give it away!"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "Call it a business expense. I know a good lawyer."
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      "How long have you been doing this?"
+     ],
+     "m": "since when — up to now",
+     "ru": "давно ты этим занимаешься?"
+    },
+    {
+     "p": [
+      "Was it worth it, though?"
+     ],
+     "m": "but was it a good decision?",
+     "ru": "а оно того стоило?"
+    },
+    {
+     "p": [
+      "a good grounding in sth"
+     ],
+     "m": "a good basic knowledge of it",
+     "ru": "хорошая база в чём-то"
+    },
+    {
+     "p": [
+      "X is the easy part. It's Y I find hard."
+     ],
+     "m": "",
+     "ru": "X — это просто. А вот Y мне даётся тяжело."
+    },
+    {
+     "p": [
+      "I'd never have guessed"
+     ],
+     "m": "I'm really surprised",
+     "ru": "никогда бы не подумал(а)"
+    },
+    {
+     "p": [
+      "What have you been up to?"
+     ],
+     "m": "what have you been doing lately?",
+     "ru": "чем занимаешься? что нового?"
+    },
+    {
+     "p": [
+      "That must keep you busy!"
+     ],
+     "m": "you must have a lot to do",
+     "ru": "у тебя, наверное, дел по горло!"
+    },
+    {
+     "p": [
+      "I've been meaning to get in touch"
+     ],
+     "m": "I've wanted to contact you for a while",
+     "ru": "давно собирался(-ась) связаться"
+    },
+    {
+     "h": "Also in the text"
+    },
+    {
+     "p": [
+      "squeeze sb · on the house"
+     ],
+     "m": "push sb to lower prices · free",
+     "ru": "давить (на цену) · бесплатно, за счёт заведения"
+    }
+   ]
+  },
+  {
+   "type": "dlg",
+   "intro": "Now Part 2 again, without the glossary.",
+   "lines": [
+    {
+     "s": "Rachel",
+     "p": [
+      "Wow. How long ",
+      {
+       "f": "h",
+       "r": "ave"
+      },
+      " ",
+      {
+       "b": "you"
+      },
+      " ",
+      {
+       "f": "b",
+       "r": "een"
+      },
+      " doing this?"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "Six years now. Well — six years making cheese. The goats came later."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "Goats?"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "Twelve of them. They're all named after judges."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "Of course they are. Was it ",
+      {
+       "f": "w",
+       "r": "orth"
+      },
+      " it, ",
+      {
+       "f": "t",
+       "r": "hough"
+      },
+      "? Leaving law, I mean."
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "Financially? Not at all. Otherwise? Absolutely. And actually, law gave me a good ",
+      {
+       "f": "g",
+       "r": "rounding"
+      },
+      " ",
+      {
+       "b": "in"
+      },
+      " contracts — very handy when supermarkets try to squeeze you. The cheese is ",
+      {
+       "b": "the"
+      },
+      " ",
+      {
+       "f": "e",
+       "r": "asy"
+      },
+      " ",
+      {
+       "f": "p",
+       "r": "art"
+      },
+      ". It's the goats I ",
+      {
+       "f": "f",
+       "r": "ind"
+      },
+      " ",
+      {
+       "f": "h",
+       "r": "ard"
+      },
+      ". Lady Justice escaped twice this week."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "Ha! I'd ",
+      {
+       "f": "n",
+       "r": "ever"
+      },
+      " ",
+      {
+       "f": "h",
+       "r": "ave"
+      },
+      " ",
+      {
+       "f": "g",
+       "r": "uessed"
+      },
+      " you'd end up here."
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "Me neither. Anyway — enough about me. What have you ",
+      {
+       "f": "b",
+       "r": "een"
+      },
+      " ",
+      {
+       "b": "up"
+      },
+      " ",
+      {
+       "b": "to"
+      },
+      "? Still in law?"
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "Still in law! Family law, in Bristol. Same firm for twelve years now. And we've started a family — two boys, eight and ten."
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "That must ",
+      {
+       "f": "k",
+       "r": "eep"
+      },
+      " ",
+      {
+       "b": "you"
+      },
+      " ",
+      {
+       "f": "b",
+       "r": "usy"
+      },
+      "!"
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "You have no idea. They're at my sister-in-law's this morning, so this is my first free morning in about ten years."
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "Then you definitely need cheese. Here — try this one."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "Mmm. Oh, that's amazing. Listen, I've ",
+      {
+       "f": "b",
+       "r": "een"
+      },
+      " ",
+      {
+       "f": "m",
+       "r": "eaning"
+      },
+      " ",
+      {
+       "b": "to"
+      },
+      " ",
+      {
+       "f": "g",
+       "r": "et"
+      },
+      " ",
+      {
+       "b": "in"
+      },
+      " ",
+      {
+       "f": "t",
+       "r": "ouch"
+      },
+      " with people from uni for ages. We should catch up properly. Are you on WhatsApp?"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "I am. The goats aren't, thankfully. Here's my number — and take this one. On the house."
+     ]
+    },
+    {
+     "s": "Rachel",
+     "p": [
+      "Tom, you can't just give it away!"
+     ]
+    },
+    {
+     "s": "Tom",
+     "p": [
+      "Call it a business expense. I know a good lawyer."
+     ]
+    }
+   ]
+  }
+ ]
+}

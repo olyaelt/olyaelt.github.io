@@ -774,7 +774,7 @@
       },
       {
        "instr": "And this one? No red word this time.",
-       "ctx": "зачем работать на полный день, ещё учась в вузе",
+       "ctx": "context: зачем работать на полный день, ещё учась в вузе",
        "front": "~~I understood that just studying at university isn't enough for me~~, <g>so I found a full-time job</g>.",
        "back": "I **realised** that **university only gets you so far**, so I found a full-time job.",
        "why": "understood → realised (it became clear to you); isn't enough for me → only gets you so far. ((осознала · даёт базу — и не больше))",
@@ -854,12 +854,12 @@
      "lines": [
       {
        "p": [
-        "One thing I learned at school that's come in handy… I use it more than you'd think."
+        "One thing I learned at school that's come in handy is sewing. I use it more than you'd think."
        ]
       },
       {
        "p": [
-        "((Your homework:)) Cooking dinner for twelve? It was a lot harder than you'd think."
+        "Cooking dinner for twelve? It was a lot harder than you'd think."
        ]
       }
      ],
@@ -874,7 +874,7 @@
      "lines": [
       {
        "p": [
-        "One thing I learned at school that's come in handy… I use it more ",
+        "One thing I learned at school that's come in handy is sewing. I use it more ",
         {
          "f": "",
          "r": "than you'd think"
@@ -884,7 +884,7 @@
       },
       {
        "p": [
-        "((Your homework:)) Cooking dinner for twelve? It was a lot harder ",
+        "Cooking dinner for twelve? It was a lot harder ",
         {
          "f": "",
          "r": "than you'd think"
@@ -901,7 +901,7 @@
      "lines": [
       {
        "p": [
-        "One thing I learned at school that's come in handy… I use it ^^more^^ ",
+        "One thing I learned at school that's come in handy is sewing. I use it ^^more^^ ",
         {
          "b": "than you'd think"
         },
@@ -910,7 +910,7 @@
       },
       {
        "p": [
-        "((Your homework:)) Cooking dinner for twelve? It was ^^a lot harder^^ ",
+        "Cooking dinner for twelve? It was ^^a lot harder^^ ",
         {
          "b": "than you'd think"
         },

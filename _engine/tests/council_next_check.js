@@ -37,7 +37,7 @@ const path = require('path');
     expect(who + ': Next before Keep / Cut stays on the subject, "First decide together"', o.stayed && /First decide together/.test(o.msg), o);
     expect(who + ': after Keep, Next goes to the next subject', o.movedAfter, o);
     expect(who + ': every die keeps its dots inside, also scaled down (her 21:34)', o.dice.length === 2 && o.dice.every(d => d.inside && d.w >= 28), o.dice); }
-  expect('student: only the dots seen so far, no ‹ ›', out.student.dots === 2 && out.student.browse === 0, out.student);
+  expect('student: every other dot can be tapped too (her 4.11 19:33), no ‹ ›', out.student.dots === out.student.dotsAll - 1 && out.student.browse === 0, out.student);
   expect('teacher: every other dot can be tapped, ‹ › on the counter, both work', out.teacher.dots === out.teacher.dotsAll - 1 && out.teacher.browse === 2 && out.teacher.browsed === 2 && out.teacher.jumped === out.teacher.dotsAll - 1, out.teacher);
   console.log(JSON.stringify(out)); if (errs.length) fail.push('page errors: ' + errs.join(' | '));
   console.log(fail.length ? 'FAILED:\n' + fail.join('\n') : 'OK council: Next waits for the decision, her dots, the dice'); await b.close(); process.exit(fail.length ? 1 : 0);

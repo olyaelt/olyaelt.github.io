@@ -10,5 +10,16 @@
   "OTU": "otu.json"
  },
  "earlier": false,
- "listed": false
+ "listed": false,
+ "class": {
+  "topics": [
+   {
+    "t": "Revision: changing the clocks",
+    "href": "../tools/b2-2026-10-30/f-clocks.html"
+   },
+   {
+    "t": "So you wouldn't recommend it?"
+   }
+  ]
+ }
 }

@@ -184,7 +184,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', L = 'tools/b2-2026-
     const K = out.crime, Q = K.filter(x => x.q != null);
     // handoff 30.10 21:20: the street with ⏱ → the model on the bakery picture → 7 scenes, straight into a scene (the bakery is the model)
     out.scenesSeen = K.filter(x => x.b === 2).length;
-    expect('Use it: numbered screens; street ⏱ → model → 7 scenes; ⚡ only on the last question; Next goes on to question 2, also after Back', K[0].dots === 'on- - - -' && K.some(x => x.dots === 'was on- - -') && out.scenesSeen === 7
+    expect('Use it: numbered screens; street ⏱ → model → 7 scenes; ⚡ only on the last question; Next goes on to question 2, also after Back', K[0].dots === ['on-', '', '', ''].join(' ') && K.some(x => x.dots === ['was', 'on-', '', ''].join(' '))   /* tools 28 also (4.11): the screens not seen yet can be tapped too */ && out.scenesSeen === 7
       && Q[0].q === 0 && Q[0].next && !Q[0].fast && Q[1].q === 1 && !Q[1].next && Q[1].fast && Q[2].q === 0 && Q[2].next && !Q[2].fast, {K, scenes: out.scenesSeen});
     out.crimeModel = await CR.evaluate(() => { goBlock(3, 1); const m = {kind: curBlock().kind, side: !!document.querySelector('#side .side-pic img[src$="maple-4-bakery.jpg"]'), mainPicShown: getComputedStyle(document.querySelector('.mdl-pic > .pic')).display !== 'none', lines: document.querySelectorAll('.mdl-pic .dlg p').length, h: document.documentElement.scrollHeight};
       goBlock(3, 2); m.street = !!document.querySelector('.scn.street'); m.dots = document.querySelectorAll('.scn-dots button').length; m.bakery = D.stages[3].blocks[2].scenes.some(x => /bakery/.test(x.img)); return m; });

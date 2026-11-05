@@ -1,0 +1,187 @@
+[
+ {
+  "id": "f1",
+  "title": "hand sth over: don't forget the \"what\"",
+  "card": [
+   {
+    "wrong": "Why don't you just ~~hand over to AI~~?",
+    "right": "Why don't you just **hand your emails over** to AI?",
+    "good": "Why don't you just"
+   }
+  ],
+  "why_en": "hand sth over (to sb): say what you hand over · it / them always in the middle: hand it over · passive: it can be handed over.",
+  "why_ru": "передать что? — без «что» нельзя",
+  "items": [
+   {
+    "kind": "write",
+    "o": "My spreadsheets are a mess. I'd love AI to deal with them.",
+    "hint": "hand",
+    "pre": "I'd love to ",
+    "post": " to AI.",
+    "a": "hand them over",
+    "acc": [
+     "hand them over",
+     "hand them all over"
+    ],
+    "n": "them — between hand and over."
+   },
+   {
+    "kind": "write",
+    "o": "AI could do most of our translation work now.",
+    "hint": "handed",
+    "pre": "Most of our translation work could ",
+    "post": " to AI now.",
+    "a": "be handed over",
+    "acc": [
+     "be handed over"
+    ],
+    "n": "passive: be + handed (not 'be hand')."
+   },
+   {
+    "kind": "write",
+    "o": "Never let AI write your wedding speech.",
+    "hint": "hand",
+    "pre": "Never ",
+    "post": " to AI.",
+    "a": "hand your wedding speech over",
+    "acc": [
+     "hand your wedding speech over",
+     "hand over your wedding speech"
+    ],
+    "n": "With a noun both orders work. With it / them — only hand it over."
+   }
+  ]
+ },
+ {
+  "id": "f2",
+  "title": "come in handy: with in",
+  "card": [
+   {
+    "wrong": "My first-aid course ~~came handy~~ last week.",
+    "right": "My first-aid course **came in handy** last week.",
+    "good": "My first-aid course"
+   }
+  ],
+  "why_en": "come in handy = be useful when you need it — always with in.",
+  "why_ru": "пригодиться — с in",
+  "items": [
+   {
+    "kind": "write",
+    "o": "Knowing a bit of Spanish was really useful on holiday.",
+    "hint": "handy",
+    "pre": "Knowing a bit of Spanish ",
+    "post": " on holiday.",
+    "a": "came in really handy",
+    "acc": [
+     "came in really handy",
+     "really came in handy",
+     "came in handy"
+    ],
+    "n": "came in really handy: really goes before handy."
+   },
+   {
+    "kind": "write",
+    "o": "Keep the box — we might need it one day.",
+    "hint": "handy",
+    "pre": "Keep the box — it might ",
+    "post": " one day.",
+    "a": "come in handy",
+    "acc": [
+     "come in handy"
+    ],
+    "n": ""
+   }
+  ]
+ },
+ {
+  "id": "f3",
+  "title": "the hard way: no in",
+  "card": [
+   {
+    "wrong": "I learned it ~~in the hard way~~.",
+    "right": "I learned it **the hard way**.",
+    "good": "I learned it"
+   }
+  ],
+  "why_en": "learn / find out sth the hard way = through your own mistakes — no in.",
+  "why_ru": "на собственных ошибках — без in",
+  "items": [
+   {
+    "kind": "write",
+    "o": "I only understood why backups matter after I lost all my photos.",
+    "hint": "hard way",
+    "pre": "I learned ",
+    "post": " why backups matter.",
+    "a": "the hard way",
+    "acc": [
+     "the hard way"
+    ],
+    "n": "or: I learned the hard way that you should always back up your photos."
+   },
+   {
+    "kind": "write",
+    "o": "Nobody told me the last bus leaves at 11. I found out at midnight, at the bus stop.",
+    "hint": "hard way",
+    "pre": "I found out ",
+    "post": " that the last bus leaves at 11.",
+    "a": "the hard way",
+    "acc": [
+     "the hard way"
+    ],
+    "n": ""
+   }
+  ]
+ },
+ {
+  "id": "f4",
+  "title": "have to: when there's no choice",
+  "card": [
+   {
+    "wrong": "When you move abroad, you ~~should~~ start from scratch.",
+    "right": "When you move abroad, you **have to** start from scratch.",
+    "good": "start from scratch"
+   }
+  ],
+  "why_en": "have to = there's no choice · should = it's a good idea (advice).",
+  "why_ru": "have to = приходится (нет выбора) · should = стоит, лучше бы (совет)",
+  "items": [
+   {
+    "kind": "write",
+    "o": "In my job it's necessary to answer emails within an hour.",
+    "hint": "have",
+    "pre": "In my job I ",
+    "post": " answer emails within an hour.",
+    "a": "have to",
+    "acc": [
+     "have to"
+    ],
+    "n": ""
+   },
+   {
+    "kind": "write",
+    "o": "There was no lift, so the only option was to carry the sofa up five floors.",
+    "hint": "had",
+    "pre": "There was no lift, so we ",
+    "post": " carry the sofa up five floors.",
+    "a": "had to",
+    "acc": [
+     "had to"
+    ],
+    "n": ""
+   },
+   {
+    "kind": "write",
+    "o": "Is it really necessary for you to work this weekend?",
+    "hint": "have",
+    "pre": "",
+    "post": " work this weekend?",
+    "a": "Do you really have to",
+    "acc": [
+     "Do you really have to",
+     "Do you have to"
+    ],
+    "n": "A question: do + have to."
+   }
+  ]
+ }
+]

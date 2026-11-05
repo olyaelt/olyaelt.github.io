@@ -1,0 +1,27 @@
+{
+ "title": "Revision (Present perfect vs past simple · Disagree and stay friends · Crime)",
+ "group": "b2",
+ "file": "2026-11-04.html",
+ "assets": {
+  "STICKER": "sticker.png",
+  "GAPS": "gaps.json"
+ },
+ "earlier": false,
+ "listed": false,
+ "class": {
+  "topics": [
+   {
+    "t": "Revision: Present perfect vs past simple",
+    "href": "../tools/b2-2026-10-30/f-pp.html"
+   },
+   {
+    "t": "Revision: Disagree and stay friends",
+    "href": "../tools/b2-2026-10-30/f-dis.html"
+   },
+   {
+    "t": "Revision: Crime around us",
+    "href": "../tools/b2-2026-10-30/f-crime.html"
+   }
+  ]
+ }
+}

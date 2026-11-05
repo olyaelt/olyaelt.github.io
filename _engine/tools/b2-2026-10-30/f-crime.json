@@ -646,10 +646,6 @@
        "back": "Did they take anything?"
       },
       {
-       "front": "((Никто не пострадал?))",
-       "back": "Did anyone get hurt?"
-      },
-      {
        "front": "((А его поймали?))",
        "back": "Did they catch him?"
       },
@@ -660,6 +656,10 @@
       {
        "front": "((А что было потом?))",
        "back": "What happened next?"
+      },
+      {
+       "front": "((Никто не пострадал?))",
+       "back": "Did anyone get hurt?"
       },
       {
        "front": "((Ты заявил в полицию?))",
@@ -769,7 +769,7 @@
     },
     {
      "kind": "scenes",
-     "instr": "Take turns: one scene each. Tell your partner the news.",
+     "instr": "Take turns: one piece of news each.",
      "street": "maple-scene.jpg",
      "street_first": false,
      "box": "NEWS",

@@ -10,5 +10,13 @@
   "TQ": "tq.json"
  },
  "earlier": false,
- "listed": false
+ "listed": false,
+ "class": {
+  "topics": [
+   {
+    "t": "I've run out of things to watch. Any ideas?",
+    "href": "../tools/b2-2026-10-28/have-you-seen-it.html"
+   }
+  ]
+ }
 }

@@ -50,6 +50,9 @@ __BASE_CSS__
 .sdots button.was{border-color:var(--instr);color:var(--instr-text);cursor:pointer}
 .sdots button.on{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
 .sdots button:disabled{cursor:default}
+.stepbar .sd-link{min-height:0;padding:4px 10px;font-size:.85rem;border-width:1.5px;white-space:nowrap}
+.sdots button:not(.was):not(.on):not(:disabled){cursor:pointer}
+.sdots button:not(.on):not(:disabled):hover{border-color:var(--instr)}
 @media (max-width:560px){ .stepbar{gap:6px} .stepbar .btn{min-width:0;padding:10px 12px} .sdots{gap:4px} .sdots button{width:1.6rem;height:1.6rem;font-size:.8rem} }   /* four screens + Back / Next fit a phone (31.10) */
 .blk .speak .row-actions [data-speak-next],.blk .speak .row-actions [data-speak-prev]{display:none}
 .bparts{display:flex;gap:6px;align-items:center}
@@ -211,6 +214,10 @@ __BASE_CSS__
 .fc .corner{position:absolute;right:16px;bottom:8px;color:var(--muted);font-size:.88rem}
 .fc .hintline{color:var(--muted);margin:0}
 .fc.look{border-style:dashed}
+.gpeek-bg{position:fixed;inset:0;background:rgba(20,22,24,.45);z-index:60}
+.gpeek{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:61;width:min(44rem,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;display:grid;gap:12px}
+.gpeek .fc{min-height:0}
+.gpeek .glbl{font-size:.85rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
 /* tools 18 (her 17:45: the sketches of her slides "were so beautiful"): her figures in the field. A card with "pic": the thinking
    figure with "?" while the group thinks, the figure with the bulb when the card opens (her a/b and "Check" slides); "What might they
    say?" cards (style "bubble"): two people under a speech bubble, the answer appears in the bubble; the Glossary sticker ("sketch": true) */
@@ -510,6 +517,9 @@ button.kbub{cursor:pointer} button.kbub small{display:block;font-size:.85rem;fon
 .rl-pilecap{font-weight:900;color:var(--instr-text, #0679BD);text-align:center;line-height:1.2} .rl-pilecap small{display:block;font-weight:700;color:var(--muted)} .rl-pilewrap .gd-left{display:none}
 .rl-slot{min-height:8.6rem;min-width:14rem;flex:1;display:grid;align-items:center}
 .rl-slot .gd-card{width:min(100%, 26rem);height:auto;min-height:8.6rem}
+/* tools 28 also (the f-dis deck, 5.11): a card with its answer open grows with it (the face sat in a fixed box and its label went over the top) */
+.rl-slot .gd-f{position:relative;min-height:8.6rem}
+.rl-slot .gd-b{position:absolute;inset:0}
 .rl-cardt{display:block;font-size:calc(1.45rem * var(--k, 1));font-weight:800;line-height:1.3}
 .rl-cardm{display:flex;align-items:center;gap:10px;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:6px 12px}
 .rl-cardic{font-size:1.6rem}
@@ -520,6 +530,15 @@ button.kbub{cursor:pointer} button.kbub small{display:block;font-size:.85rem;fon
 .expin-f.fly{animation:flyDown .85s cubic-bezier(.2,.8,.2,1) both}
 @keyframes flyDown{from{transform:translateY(-40px);opacity:0}to{transform:none;opacity:1}}
 .mix{display:grid;gap:8px}
+.q-table{margin-top:14px;padding-top:12px;border-top:2px dashed var(--line)}
+.q-table .mx-more,.q-table .mx-note,.q-table .mx-acts{display:none}
+.q-table .mix{gap:4px}
+.q-table .mx-cols{gap:4px 14px}
+.q-table .mx-col{gap:0}
+.q-table .mx-h{margin:0 0 2px}
+.q-table .mx-it{border:0;background:none;padding:2px 6px;min-height:0;font-size:.9rem;line-height:1.3;text-align:left;border-radius:6px}
+.q-table .mx-it.on{background:var(--hl, #FFFF00);font-weight:700}
+.q-table .mx-q{display:none}
 .mx-q{margin:0;font-size:calc(1.3rem * var(--k, 1));font-weight:700;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:8px 14px}
 .mx-q b{color:#0679BD}
 .mx-slot{color:var(--muted)}
@@ -550,6 +569,14 @@ button.kbub{cursor:pointer} button.kbub small{display:block;font-size:.85rem;fon
 .fgame .gt-q .m-del{color:#6B6E72}
 .fgame .gt-a{background:none;color:#1D1D1B;padding:0;display:grid;gap:6px;justify-self:stretch}
 .fgame .gt-a .chk{justify-self:start;background:#7BC043;color:#FFFFFF;border-radius:6px;padding:1px 8px;font-size:.8rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase}
+/* tools 28 also (her 4.11 17:16, in the lesson: «шрифт в карточке мелковат»): a game card never goes below .8 of its size when the field
+   fits a long screen above Back / Next (fitCard took it to .66 — 11 px on her laptop); the snakes board gets smaller instead */
+.fgame .gt-q{font-size:calc(1.12rem * max(var(--k, 1), .8))}
+.fgame .gt-a .say{font-size:calc(1.12rem * max(var(--k, 1), .8))}
+.fgame .gt-acts .btn{font-size:calc(1rem * max(var(--k, 1), .8))}
+.fgame .gt-turn{font-size:calc(1.1rem * max(var(--k, 1), .8))}
+.fg-snakes .gs-board{max-height:calc(22rem * var(--k, 1))}
+.fg-dots .gdt-board{width:min(100%, calc(15rem * var(--k, 1)))}
 .fgame .gt-a .bx{color:#0679BD;background:#D6E6FF;border-radius:4px;padding:0 4px}
 .fgame .gt-a .note{color:#5F6368;font-size:calc(.95rem * var(--k, 1));font-weight:600}
 /* tools 17: Fix it with several ▢ */
@@ -769,13 +796,23 @@ function keepPlace(){
   if(S.view !== "field" || S.fast) return;
   const bsOut = Object.assign({}, S._restore || {}); Object.entries(S.bs).forEach(([id, st]) => { if(id === "fastdeck") return; const d = st.deck;
     bsOut[id] = {open: [...st.open], shown: !!st.shown, check: st.check || "", done: !!st.done, bm: [...(st.bm || [])], spk: st.spk ? st.spk.key : null,
-      sc: st.sc || null, cn: st.cn ? Object.assign({}, st.cn, {busy: false, enter: false}) : null, fx: st.fx || null, so: st.so || null, sec: st.sec || null, memo: st.memo ? {phase: st.memo.phase, got: [...st.memo.got], end: st.memo.end || 0} : null, g: st.g || null, np: st.np || null, ended: !!st.ended, lis: st.lis || null, wh: st.wh || null, rl: st.rl ? {ph: st.rl.ph, roll: st.rl.roll, dk: st.rl.dk || null} : null, mx: st.mx || null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, flipped: !!d.flipped} : (st._deck || null)}; });
+      sc: st.sc || null, cn: st.cn ? Object.assign({}, st.cn, {busy: false, enter: false}) : null, fx: st.fx || null, so: st.so || null, sec: st.sec || null, memo: st.memo ? {phase: st.memo.phase, got: [...st.memo.got], end: st.memo.end || 0} : null, g: st.g || null, np: st.np || null, ended: !!st.ended, lis: st.lis || null, wh: st.wh || null, rl: st.rl ? {ph: st.rl.ph, roll: st.rl.roll, dk: st.rl.dk || null} : null, mx: st.mx || null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, talked: [...(d.talked || [])], flipped: !!d.flipped} : (st._deck || null)}; });
   store.set(PLACE_KEY, {stage: S.stage, at: S.at, far: S.far, intro: S.intro, bs: bsOut, t: Date.now(), shape: SHAPE});
   store.set(LEFT_KEY, {page: PAGE_ID, href: location.pathname.split("/").pop(), cell: cellName(), title: D.title, stage: String(D.stages[S.stage].label || ""), t: Date.now()});
 }
 function leftForBoard(){ keepPlace(); }
+/* tools 28 also (her 4.11 20:11: «чтобы номер экрана прописывался в ссылке — я отправляю студентам ссылку, они открывают, и там уже нужный экран»):
+   …page.html#part-3-screen-4 opens part 3, screen 4 (#part-3 = its cloud); her 🔗 under the screen copies it. Also when the page is
+   already open (a new link in the Zoom chat). The hash goes away at once, so a reload goes on from where the room is. */
+function linkTo(h, now){ const m = String(h || "").match(/^#part-(\d+)(?:-screen-(\d+))?$/); if(!m) return false;
+  const si = +m[1] - 1; if(!D.stages[si]) return false; const n = D.stages[si].blocks.length, bi = m[2] ? Math.min(Math.max(+m[2] - 1, 0), n - 1) : 0;
+  S.stage = si; S.view = "field"; S.fast = null; S._moved = true; S.at = Object.assign({}, S.at, {[si]: bi}); S.intro = !m[2];
+  if(now){ S.enter = true; render(); scrollTo(0, 0); } return true; }
+const screenLink = () => location.href.split("#")[0] + "#part-" + (S.stage + 1) + (S.intro ? "" : "-screen-" + (bIdx() + 1));
+addEventListener("hashchange", () => { if(linkTo(location.hash, true)) try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){} });
 (() => { const p = store.get(PLACE_KEY);
   if(p && Date.now() - p.t < 3 * 3600e3 && D.stages[p.stage] && p.shape === SHAPE) Object.assign(S, {stage: p.stage, at: p.at || {}, far: p.far || {}, intro: !!p.intro, _restore: p.bs || {}});
+  linkTo(location.hash, false);
   if(location.hash) try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){} })();
 liveAdjust();   /* tools 24: her corrections and order from this device's copy, before the first screen */
 function restoreBs(id){ const r = S._restore && S._restore[id]; if(!r) return null; delete S._restore[id];
@@ -827,7 +864,7 @@ function allGaps(b){
 }
 function textHTML(b){
   const gl = b.gloss && b.gloss.length ? `<aside class="gloss${D.sketch ? " sk" : ""}" aria-label="Glossary">${D.sketch ? `<img class="sticker" src="../sk-glossary.png" alt="Glossary">` : ""}${b.gloss.map((g, gi) => `<p class="gl">${partsHTML(g.p, b, `xl${gi}g`)} <span class="ru">– ${esc(g.ru)}</span></p>`).join("")}</aside>` : "";
-  return `<div class="tx ${gl ? "" : "single"}"><div class="dlg${b.cols ? " cols" : ""}">${linesHTML(b.lines, b, "t")}</div>${gl}</div>${gapTools(b)}${txAnsHTML(b)}`;
+  return `<div class="tx ${gl ? "" : "single"}"><div class="dlg${b.cols ? " cols" : ""}">${b.ctx ? `<p class="lctx">${mk(b.ctx)}</p>` : ""}${linesHTML(b.lines, b, "t")}</div>${gl}</div>${gapTools(b)}${txAnsHTML(b)}`;
 }
 /* tools 25 (the C1 chat 1.11 21:50 and the German page 2.11: «always meaning first»): a text can carry an answer to a meaning question —
    "Show the answer" (or Next) opens it under the lines */
@@ -1011,10 +1048,15 @@ const embPanel = () => !EMB ? "" : EMB.chat == null ? `<section class="pc"><div 
 addEventListener("message", e => { const m = e.data && e.data.lwChat; if(!m || !liveTeacher()) return;
   if(EMB && EMB.tool === m.tool && EMB.chat === m.chat) return; EMB = {tool: String(m.tool), chat: m.chat == null ? null : +m.chat};
   const host = document.querySelector("[data-pchost]"); if(host){ host.innerHTML = embPanel(); pcPaint(); } });
+const qTableOf = b => curBlocks().find(x => x.kind === "mix");
 function questionsHTML(b){
   const st = bs(b); if(st.spk) spkCur = st.spk; else { spkReset(); st.spk = spkCur; }
   const base = "questions." + b._pid;   /* her ✏️ / Hide / order on these too, kept by permanent numbers */
-  return speakHTML(liveList(b.items, base), "", "Speaking", base);
+  /* tools 28 also (her 5.11 09:59: «если мы о чём-то спрашиваем, оно должно быть у них перед глазами»): "table": n → under task n
+     (0 = the first) the stage's question table again, the same table (its 🎲 too), compact */
+  const html = speakHTML(liveList(b.items, base), "", "Speaking", base);
+  b._qtab = Number.isInteger(b.table) && spkCur.key === b.table && !!qTableOf(b);   /* shown under the box (beside the task on a computer) */
+  return html;
 }
 
 /* ---------- 🏙 scenes (handoff 30.10 15:15, Maple Road as in the lesson): the whole street first, then one close-up at a time, big, in a
@@ -1044,10 +1086,10 @@ function scenesHTML(b){
     ${bubs ? `<div class="scn-pair">${fig}${bubs}</div>` : fig}${mine}`;
 }
 /* ---------- 🃏 cards: Again comes back 2–3 cards later, Got it into its dot; the end: Come back to these (+ the full list for "ours") ---------- */
-function newDeck(cards){ return {cards, queue: cards.map((_, i) => i), got: new Set(), again: new Set(), flipped: false, fresh: true, hist: []}; }
+function newDeck(cards){ return {cards, queue: cards.map((_, i) => i), got: new Set(), again: new Set(), flipped: false, fresh: true, hist: [], talked: new Set()}; }
 const deckOf = b => { const st = bs(b);
   if(!st.deck){ st.deck = newDeck(b.cards); const r = st._deck; st._deck = null;   /* reopened: where this device was in the deck */
-    if(r && r.n === b.cards.length && [].concat(r.queue, r.hist).every(i => i >= 0 && i < b.cards.length)) Object.assign(st.deck, {queue: r.queue, got: new Set(r.got), again: new Set(r.again), hist: r.hist, flipped: !!r.flipped && r.queue.length > 0, fresh: false}); }
+    if(r && r.n === b.cards.length && [].concat(r.queue, r.hist).every(i => i >= 0 && i < b.cards.length)) Object.assign(st.deck, {queue: r.queue, got: new Set(r.got), again: new Set(r.again), hist: r.hist, talked: new Set(r.talked || []), flipped: !!r.flipped && r.queue.length > 0, fresh: false}); }
   return st.deck; };
 const kwtFill = c => { const a = c.answer || ((String(c.back || "").match(/\*\*(.+?)\*\*/) || [])[1] || ""); return a ? mk(c.frame).replace(/_{2,}/, `<span class="fill">${esc(a)}</span>`) : mk(c.frame); };
 function frontHTML(b, c, i, open){
@@ -1112,9 +1154,12 @@ const cardFrontPlain = (b, c) => { const st = b.style === "mix" ? c._b.style : b
 /* the box beside a card: a "share" card says how much support (box · strip · none, her rule: support fades) */
 function boxFor(b){
   if(!b) return null;
-  if(b.kind === "cards" && b.style === "mix"){ const d = deckOf(b), i = d.queue[0], c = i != null ? b.cards[i] : null; if(!c) return null;
+  /* tools 28 also (her 4.11 19:09: «на последней карточке не показывается useful language box»): the card on screen — its Your turn, the one
+     looked back at, or the top of the deck; after the last card the deck is empty but its Your turn is still that card */
+  const onScreen = b => { const d = deckOf(b), st = bs(b), i = d.turn != null ? d.turn : st.look != null ? st.look : d.queue.length ? d.queue[0] : d.hist[d.hist.length - 1]; return i != null ? b.cards[i] : null; };
+  if(b.kind === "cards" && b.style === "mix"){ const c = onScreen(b); if(!c) return null;
     const o = c._b; if(o.style === "share") return c.support === "box" ? "BOX" : c.support === "strip" ? "STRIP" : null; return o.box || null; }
-  if(b.kind === "cards" && b.style === "share"){ const d = deckOf(b), i = d.queue[0], c = i != null ? b.cards[i] : null, sup = c ? c.support : "none";
+  if(b.kind === "cards" && b.style === "share"){ const c = onScreen(b), sup = c ? c.support : "none";
     return sup === "box" ? "BOX" : sup === "strip" ? "STRIP" : null; }
   if(b.kind === "fix" && !b.box && D.boxes && D.boxes.BOX) return "BOX";   /* tools 16: Fix it sits beside the stage's box, like the other Practice blocks */
   if(b.kind === "tool") return b.box || b._box || null;   /* tools 28: the page inside shows only its card; its box is the field's, on the right */
@@ -1133,9 +1178,19 @@ function groupDotsHTML(b){
     const tip = s.again ? `back into the deck ${s.again}× (${s.screens} screen${s.screens === 1 ? "" : "s"})` : s.got ? "got it — nobody sent it back" : "no group has answered it yet";
     return `<button class="gd ${s.again ? "gd-again" : s.got ? "gd-ok" : ""}" style="--s:${size.toFixed(2)}rem" data-gd="${i}" title="${esc(cardFrontPlain(b, c).replace(/\(\(|\)\)|\*\*/g, ""))} — ${tip}" aria-label="Card ${i + 1}: ${tip}"></button>`; }).join("")}<span class="gd-meta">${n} screen${n === 1 ? "" : "s"}</span></div>`;
 }
+/* tools 28 also: her 👥 dot on 🐍 snakes, ⬚ dots, 🎡 the wheel → that square's task as a card over the field, front first (the group says it
+   again), a tap shows the answer; ← Back to the game. Nothing in the game moves. */
+function gamePeekHTML(b){ const st = bs(b), t = st.peek != null ? (b.tasks || [])[st.peek] : null; if(!t) return ""; const MB = {style: "mix"}, open = !!st.peekOpen;
+  return `<div class="gpeek-bg" data-gpeek-x></div><div class="gpeek" role="dialog" aria-label="A card from the groups"><div class="fc look${open ? " open" : ""}"${open ? "" : ' data-gpeek-flip role="button" tabindex="0" aria-label="Show the answer"'}>
+    <span class="lbl from-groups">${esc(st.peekLbl || "")}</span>${t._lbl ? `<span class="glbl">${esc(t._lbl)}</span>` : ""}${frontHTML(MB, t, st.peek, open)}${open ? ansHTML(MB, t) : '<span class="corner">tap to check ↓</span>'}</div>
+    <div class="deck-act"><button class="btn primary" data-gpeek-x>← Back to the game</button></div></div>`; }
+function wireGamePeek(b, root){ root.querySelectorAll("[data-gpeek-x]").forEach(x => x.addEventListener("click", () => { bs(b).peek = null; render(); }));
+  root.querySelectorAll("[data-gpeek-flip]").forEach(x => { const go = () => { bs(b).peekOpen = true; render(); }; x.addEventListener("click", go); x.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); go(); } }); }); }
 function onGroupData(){ document.querySelectorAll("[data-gdots]").forEach(el => { const b = BLOCKS.find(x => x._id === el.dataset.gdots); const h = groupDotsHTML(b); if(el.outerHTML !== h){ el.outerHTML = h; wireGroupDots(); } }); }
 function wireGroupDots(){ document.querySelectorAll("[data-gdots] [data-gd]").forEach(btn => btn.addEventListener("click", () => {
   const b = BLOCKS.find(x => x._id === btn.closest("[data-gdots]").dataset.gdots), st = bs(b), i = +btn.dataset.gd;
+  if(b.kind === "game" && NEWG.includes(b.piece)){ const s = deckStats(b.tasks[i]._n); st.peek = st.peek === i ? null : i; st.peekOpen = false;   /* tools 28 also (her 4.11 17:52: «не получилось открыть сложные карточки над игрой snakes and ladders»): */
+    st.peekLbl = `👥 ${s.again ? `Back into the deck ${s.again}× · ${s.screens} screen${s.screens === 1 ? "" : "s"}` : s.got ? "Nobody sent it back" : "No group has answered it yet"}`; render(); return; }   /* the card opens over the game, the game stays as it is */
   if(b.kind === "game"){ gameOpenTask(b, b.tasks[i]); return; }   /* tools 16: her dot opens that square on the board */
   const s = deckStats(b.cards[i]._n);
   st.look = st.look === i ? null : i; st.lookOpen = false; st.lookLbl = `👥 ${s.again ? `Back into the deck ${s.again}× · ${s.screens} screen${s.screens === 1 ? "" : "s"}` : s.got ? "Nobody sent it back" : "No group has answered it yet"}`; render(); })); }
@@ -1370,8 +1425,14 @@ function mixHTML(b){ const M = mxSt(b), L = M.l != null ? b.left[M.l] : null, Rr
   return `<div class="mix">${q}<div class="mx-cols">${col(b.left, "l", b.left_title)}${col(b.right, "r", b.right_title)}</div>
     <p class="mx-acts"><button class="btn slim" data-mxrand>🎲 Pick for us</button></p>${b.more ? `<p class="mx-more">${mk(b.more)}</p>` : ""}${b.note ? `<p class="mx-note">${mk(b.note)}</p>` : ""}</div>`; }
 function wireMix(b, root){ const M = mxSt(b);
-  root.querySelectorAll("[data-mx]").forEach(x => x.addEventListener("click", () => { const side = x.dataset.mx[0], i = +x.dataset.mx.slice(1); M[side] = M[side] === i ? null : i; render(); keepPlace(); }));
-  root.querySelectorAll("[data-mxrand]").forEach(x => x.addEventListener("click", () => { M.l = Math.floor(Math.random() * b.left.length); M.r = Math.floor(Math.random() * b.right.length); render(); keepPlace();
+  root.querySelectorAll("[data-mx]").forEach(x => x.addEventListener("click", () => { const side = x.dataset.mx[0], i = +x.dataset.mx.slice(1); M[side] = M[side] === i ? null : i;
+    if(side === "l" && M.l != null){ M.seen = (M.seen || []).filter(k => k !== i).concat([i]); } render(); keepPlace(); }));
+  /* tools 28 also (her 5.11: the B2 rooms of 4.11 got a question they had already asked): 🎲 picks a "Have you …" they haven't had yet
+     (picked or tapped), the time part a new one too; all of them had → from the start again */
+  root.querySelectorAll("[data-mxrand]").forEach(x => x.addEventListener("click", () => { const seen = (M.seen || []).filter(i => i < b.left.length), left = b.left.map((_, i) => i).filter(i => !seen.includes(i) && i !== M.l);
+    const pool = left.length ? left : b.left.map((_, i) => i).filter(i => i !== M.l); M.seen = left.length ? seen : [];
+    M.l = pool.length ? pool[Math.floor(Math.random() * pool.length)] : 0; M.seen.push(M.l);
+    const rs = b.right.map((_, i) => i).filter(i => i !== M.r || b.right.length < 2); M.r = rs[Math.floor(Math.random() * rs.length)]; render(); keepPlace();
     const q = document.querySelector(".mx-q"); if(q) pop(q); }));
 }
 
@@ -1618,8 +1679,8 @@ function blockHTML(b){
     : b.kind === "picture" ? pictureHTML(b) : b.kind === "calendars" ? calendarsHTML(b) : b.kind === "tool" ? toolHTML(b)
     : b.kind === "questions" ? questionsHTML(b) : b.kind === "cards" ? groupDotsHTML(b) + `<div class="deck">${cardsHTML(b)}</div>` : b.kind === "scenes" ? scenesHTML(b)
     : b.kind === "fix" ? fixHTML(b) : b.kind === "sort" ? sortHTML(b) : b.kind === "game" && b.piece === "secret" ? secretHTML(b)
-    : b.kind === "listen" ? listenHTML(b) : b.kind === "mix" ? mixHTML(b) : b.kind === "game" && b.piece === "wheel" ? groupDotsHTML(b) + wheelHTML(b) : b.kind === "game" && ROLLS.includes(b.piece) ? rollHTML(b)
-    : b.kind === "game" ? (b.piece === "memo" ? "" : groupDotsHTML(b)) + (b.rule ? `<p class="g-rule">${mk(b.rule)}</p>` : "") + `<div class="fgame${b.piece === "memo" ? " fmemo" : ""} fg-${esc(b.piece || "ttt")}" data-game="${b._id}"></div>` : "";
+    : b.kind === "listen" ? listenHTML(b) : b.kind === "mix" ? mixHTML(b) : b.kind === "game" && b.piece === "wheel" ? groupDotsHTML(b) + gamePeekHTML(b) + wheelHTML(b) : b.kind === "game" && ROLLS.includes(b.piece) ? rollHTML(b)
+    : b.kind === "game" ? (b.piece === "memo" ? "" : groupDotsHTML(b) + (NEWG.includes(b.piece) ? gamePeekHTML(b) : "")) + (b.rule ? `<p class="g-rule">${mk(b.rule)}</p>` : "") + `<div class="fgame${b.piece === "memo" ? " fmemo" : ""} fg-${esc(b.piece || "ttt")}" data-game="${b._id}"></div>` : "";
   const instr = b.kind === "cards" || b.kind === "questions" ? (b.kind === "questions" ? b.instr : "") : b.kind === "scenes" && sceneAt(b) >= 0 ? (b.street_first === false ? [b.instr, b.task].filter(Boolean).join(" ") : b.task)
     : b.kind === "game" && b.piece === "secret" ? secInstr(b) : b.kind === "game" && ROLLS.includes(b.piece) && rlIntro(b) ? b.intro.instr || b.instr : b.instr;
   const tip = S.howto && b.tip ? `<p class="tip">🎓 How it works: ${mk(b.tip)}</p>` : "";
@@ -1675,14 +1736,16 @@ function gameStep(b){
    "← Back" and "Next →" at the bottom of the screen, the same words every time. The steps are ours: after a task they always look at
    the answers — Next first shows them (the gaps, the answer, the card's back, the time on the calendars), the next Next goes on. There is
    no way to jump ahead past the answers; only the stage bubbles on top move freely (for her "move on"). */
-const stepbarHTML = () => `<nav class="stepbar" aria-label="Back and next"><button class="btn" data-back ${canBack() ? "" : "disabled"}>← Back</button><span class="step-mid">${screenDotsHTML()}<span class="step-msg" id="step-msg" aria-live="polite"></span></span>${finBtnHTML()}<button class="btn primary" data-step ${canNext() ? "" : "disabled"}>${nextLabel()}</button></nav>`;
+const stepbarHTML = () => `<nav class="stepbar" aria-label="Back and next"><button class="btn" data-back ${canBack() ? "" : "disabled"}>← Back</button><span class="step-mid">${screenDotsHTML()}${meTeacher() && S.view === "field" && !S.fast ? `<button class="btn slim sd-link" data-sdlink title="Copy a link that opens this screen — for the Zoom chat">🔗 Link</button>` : ""}<span class="step-msg" id="step-msg" aria-live="polite"></span></span>${finBtnHTML()}<button class="btn primary" data-step ${canNext() ? "" : "disabled"}>${nextLabel()}</button></nav>`;
 const nextLabel = () => { const b = !S.intro && !S.fast && S.view === "field" ? curBlock() : null; return b && b.kind === "picture" && b.answer && !bs(b).shown ? "Look at the answers →" : b && isPlay(b) && !gameLive(b) && !(ROLLS.includes(b.piece) && rlIntro(b)) && !isLast() ? "Next task →" : "Next →"; };
 /* her 15:17: where you are in a stage and how much is left — one numbered circle per screen, between Back and Next; the screens
    already seen can be tapped to go back to them */
+/* tools 28 also (her 4.11 19:33, C1 «Say it naturally»: «первые пять экранов были в whole class, и потом студентам пришлось их прокликивать —
+   очень медленно»): every circle can be tapped, the screens not seen yet too — she says «tap 4» and the room is there. Not seen yet = grey, as before. */
 function screenDotsHTML(){
   const n = curBlocks().length; if(S.view !== "field" || S.intro || S.fast || n < 2) return "";
   const i = bIdx(), far = Math.max(S.far[S.stage] || 0, i), meT = meTeacher();   /* tools 27: her device — every dot */
-  return `<span class="sdots${n > 5 ? " many" : ""}" role="group" aria-label="Screen ${i + 1} of ${n}"><span class="sd-n" aria-hidden="true">${i + 1} / ${n}</span>${Array.from({length: n}, (_, k) => `<button class="${k === i ? "on" : k <= far || meT ? "was" : ""}" data-sdot="${k}" ${(k <= far || meT) && k !== i ? "" : "disabled"} aria-label="Screen ${k + 1} of ${n}" ${k === i ? `aria-current="step"` : ""}>${k + 1}</button>`).join("")}</span>`;
+  return `<span class="sdots${n > 5 ? " many" : ""}" role="group" aria-label="Screen ${i + 1} of ${n}"><span class="sd-n" aria-hidden="true">${i + 1} / ${n}</span>${Array.from({length: n}, (_, k) => `<button class="${k === i ? "on" : k <= far || meT ? "was" : ""}" data-sdot="${k}" ${k !== i ? "" : "disabled"} aria-label="Screen ${k + 1} of ${n}" ${k === i ? `aria-current="step"` : ""}>${k + 1}</button>`).join("")}</span>`;
 }
 const canBack = () => !!S.fast || !S.intro || stagePos(S.stage) > 0 || !!boardHref();
 const canNext = () => !!S.fast || !isLast() || stepPending(curBlock());
@@ -1712,7 +1775,8 @@ function deckAnswer(b, ok){
   if(ok && b._id === "fastdeck"){ saved.again = saved.again.filter(n => n !== c._n); save(); }
   if(b._id !== "fastdeck") lwDeck(c._n, ok);
   d.flipped = false; d.fresh = true;
-  if(c.turn && b._id !== "fastdeck"){ d.turn = i; render(); return; }   /* tools 18: its "Your turn" card first */
+  /* tools 18: its "Your turn" card first — tools 28 also (her 4.11 18:54): only the first time; a card sent back and answered again goes on */
+  if(c.turn && b._id !== "fastdeck" && !(d.talked || (d.talked = new Set())).has(i)){ d.talked.add(i); d.turn = i; render(); return; }
   if(!d.queue.length && b._id !== "fastdeck" && !deckHasList(b) && !isLast()){ stepOn(); return; }   /* her 15:23: no "Done!" screen — the next cloud says it */
   render();
 }
@@ -1854,7 +1918,8 @@ function render(){
   else main.innerHTML = bar + headHTML() + blockHTML(b) + fastHTML() + back + stepbarHTML();
   if(keepGrid){ const g = document.getElementById("gw-grid"); if(g) g.replaceWith(keepGrid); }
   pcRestore(pcs);
-  const st = side.scrollTop; side.innerHTML = box && D.boxes[box] ? fieldBoxHTML(D.boxes[box]) + sidePicHTML(b) + (b && b.kind === "game" && b.piece === "secret" && secSt(b).ph === 2 ? secAllHTML(b) : "") : ""; side.scrollTop = st;
+  const st = side.scrollTop; side.innerHTML = box && D.boxes[box] ? fieldBoxHTML(D.boxes[box]) + sidePicHTML(b) + (b && b.kind === "game" && b.piece === "secret" && secSt(b).ph === 2 ? secAllHTML(b) : "") + (b && b._qtab ? `<div class="q-table">${mixHTML(qTableOf(b))}</div>` : "") : ""; side.scrollTop = st;
+  if(b && b._qtab) wireMix(qTableOf(b), side);
   wireBox(side); wireBoxHidden(side);
   S.enter = false; if(b && b.kind === "cards") deckOf(b).fresh = false;
   wire(main); wireLive(main, p => { if(LEDP[p]) return ledShown(LEDP[p]); const m = String(p).match(/^questions\.(\d+)\.(\d+)$/); if(!m) return ""; const bl = BLOCKS.find(x => x._pid === +m[1]); return bl ? bl.items[+m[2]] || "" : ""; });
@@ -1867,6 +1932,10 @@ function render(){
 function fitCard(){
   const fc = document.querySelector("#main .deck .fc, #main .cn, #main .blk > .tx, #main .blk > .mix, #main .blk > .rl, #main .blk > .fgame, #main .blk .parts"), blk = document.querySelector("#main .blk"), bar = document.querySelector("#main .stepbar");   /* tools 20: a long text, the mix, the example too */
   if(!fc || !blk || !bar || innerWidth < 760) return;
+  /* tools 28 also (her 4.11 17:16 «шрифт в карточке мелковат»): measured afresh every time — a game first shows its ▶ How to play, which is
+     taller, and the card kept the small type after it; a game that changes in place (the task, its answer, the next roll) fits again by itself */
+  fc.style.removeProperty("--k");
+  if(window.ResizeObserver && fc.classList.contains("fgame") && !fc._ro){ fc._ro = new ResizeObserver(() => { cancelAnimationFrame(fc._rt); fc._rt = requestAnimationFrame(() => { if(fc.isConnected) fitCard(); }); }); fc._ro.observe(fc); }
   const over = () => blk.getBoundingClientRect().bottom + 2 > bar.getBoundingClientRect().top;
   fc.querySelectorAll("img").forEach(im => { if(!im.complete) im.addEventListener("load", () => { if(!fc.isConnected) return; fc.style.removeProperty("--k"); fitCard(); }, {once: true}); });   /* a picture still loading changes the card's size */
   for(const k of [.92, .85, .78, .72, .66]){ if(!over()) return; fc.style.setProperty("--k", k); }
@@ -1906,6 +1975,7 @@ function wire(root){
   wireFilm(root);
   root.querySelectorAll(".stages.many .stage-btn").forEach(x => { x.title = x.textContent.trim(); });
   on("[data-sdot]", x => goBlock(S.stage, +x.dataset.sdot));
+  on("[data-sdlink]", async x => { const was = x.textContent, ok = await copyText(screenLink()); x.textContent = ok ? "Copied ✓" : "Couldn't copy"; stepMsg(ok ? "A link to this screen — paste it in the Zoom chat" : screenLink()); setTimeout(() => { if(x.isConnected) x.textContent = was; }, 2200); });
   on(".board-top", () => leftForBoard());
   on("[data-howto]", () => { S.howto = !S.howto; render(); });
   on("[data-goto]", x => { freshStage(+x.dataset.goto); goStage(+x.dataset.goto); });
@@ -1966,6 +2036,7 @@ function wire(root){
     stepSync(); }
   on("[data-lookflip]", () => { bs(b).lookOpen = true; render(); });
   wireGroupDots();
+  if(b.kind === "game" && NEWG.includes(b.piece)) wireGamePeek(b, root);
   /* questions */
   if(b.kind === "questions") wireSpeak(root, render);
   /* fast finishers */

@@ -1166,7 +1166,7 @@ function gSnakes(host, tasks, {cols = 6, rows = 5, ladders = [[3, 12], [8, 19], 
   const N = cols * rows, S = 100, COLS = ["#0693E3", "#FF9900", "#9B51E0"];
   const cen = k => { const r = Math.floor((k - 1) / cols), i = (k - 1) % cols, c = r % 2 ? cols - 1 - i : i; return [c * S + S / 2, (rows - 1 - r) * S + S / 2]; };
   const order = () => gShuffle(tasks.map((_, i) => i));
-  const G = state ? Object.assign({}, state, {busy: false}) : {pos: players.map(() => 1), turn: 0, busy: false, deck: order(), at: -1, ti: null, shown: false, winner: null, msg: "", ladder: null, snake: null, from: 1, lastRoll: 0};
+  const G = state ? Object.assign({}, state, {busy: false}) : {pos: players.map(() => 1), turn: 0, busy: false, deck: order(), at: -1, ti: null, shown: false, winner: null, msg: "", ladder: null, snake: null, from: 1, lastRoll: 0, bad: []};
   const changed = () => { if(onChange) onChange(G); };
   const cur = () => G.ti == null ? null : tasks[G.ti];
   const ladderSVG = ([a, b], k) => { const [x1, y1] = cen(a), [x2, y2] = cen(b), dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy), nx = -dy / L * 11, ny = dx / L * 11, rungs = Math.floor(L / 22);
@@ -1196,9 +1196,9 @@ function gSnakes(host, tasks, {cols = 6, rows = 5, ladders = [[3, 12], [8, 19], 
     const on = (q, f) => { const b = side.querySelector(q); if(b) b.addEventListener("click", f); };
     on("[data-gs-roll]", roll); on("[data-gs-show]", () => { G.shown = true; panel(); changed(); });
     const endTurn = () => { G.busy = false; G.ti = null; G.ladder = null; G.snake = null; G.shown = false; if(G.pos[p] >= N){ G.winner = p; panel(); if(onWin) onWin(side.querySelector(".gt-turn.big") || side); changed(); return; } G.turn = (G.turn + 1) % players.length; panel(); changed(); };
-    on("[data-gs-yes]", () => { if(G.busy) return; const t0 = cur(); G.busy = true; G.msg = G.ladder ? "🪜 A ladder — up you go!" : G.snake && every ? "Phew! The snake missed you." : ""; const lad = G.ladder; G.ti = null; panel(); if(onResult && t0) onResult(t0, true);
+    on("[data-gs-yes]", () => { if(G.busy) return; const t0 = cur(); mark(G.ti, true); G.busy = true; G.msg = G.ladder ? "🪜 A ladder — up you go!" : G.snake && every ? "Phew! The snake missed you." : ""; const lad = G.ladder; G.ti = null; panel(); if(onResult && t0) onResult(t0, true);
       if(lad){ const [x1, y1] = cen(lad[0]), [x2, y2] = cen(lad[1]), tmp = document.createElementNS("http://www.w3.org/2000/svg", "path"); tmp.setAttribute("d", `M${x1} ${y1}L${x2} ${y2}`); slide(p, tmp, lad[1], endTurn); } else endTurn(); });
-    on("[data-gs-no]", () => { if(G.busy) return; const t0 = cur(), sn = G.snake; G.busy = true; G.msg = sn && every ? "🐍 Down the snake!" : ""; G.ti = null; G.ladder = null; panel(); if(onResult && t0) onResult(t0, false);
+    on("[data-gs-no]", () => { if(G.busy) return; const t0 = cur(), sn = G.snake; mark(G.ti, false); G.busy = true; G.msg = sn && every ? "🐍 Down the snake!" : ""; G.ti = null; G.ladder = null; panel(); if(onResult && t0) onResult(t0, false);
       if(sn && every){ const k = snakes.findIndex(x => x[0] === sn[0] && x[1] === sn[1]); slide(p, svg.querySelector(`[data-snake="${k}"]`), sn[1], endTurn); } else hop(p, G.pos[p], G.from, endTurn); });
     on("[data-gs-again]", () => { G.pos = players.map(() => 1); G.turn = 0; G.winner = null; G.ti = null; G.msg = ""; G.lastRoll = 0; players.forEach((_, i) => place(i, ...cen(1))); panel(); changed(); });
   }
@@ -1211,7 +1211,10 @@ function gSnakes(host, tasks, {cols = 6, rows = 5, ladders = [[3, 12], [8, 19], 
     const L = path.getTotalLength();
     gAnimate(gCalm() ? 0 : 1100, t => { const e = 1 - Math.pow(1 - t, 2) * (1 - t) ; const p = path.getPointAtLength(L * Math.min(1, e)); place(i, p.x, p.y); }, () => { G.pos[i] = to; place(i, ...cen(to)); done(); });
   }
-  function nextTask(){ G.at++; if(G.at >= G.deck.length){ G.deck = order(); G.at = 0; } G.ti = G.deck[G.at]; G.shown = false; }
+  /* tools 28 also (her 5.11 09:59, the B2 rooms of 4.11 «we already answered this question»): every task once; after that only the ones
+     answered ✗ come back (shuffled), until a ✓ takes them out; all of them again only when nothing is left to repeat */
+  function nextTask(){ G.at++; if(G.at >= G.deck.length){ const bad = (G.bad || []).filter(i => i < tasks.length); G.deck = bad.length ? gShuffle(bad.slice()) : order(); G.at = 0; } G.ti = G.deck[G.at]; G.shown = false; }
+  const mark = (i, ok) => { if(i == null) return; const bad = (G.bad || []).filter(x => x !== i); G.bad = ok ? bad : bad.concat([i]); };
   function roll(){
     if(G.busy) return; G.busy = true; const p = G.turn, n = 1 + Math.floor(Math.random() * 6); G.lastRoll = n; G.msg = ""; G.from = G.pos[p];
     const die = side.querySelector(".gdie"); side.querySelector("[data-gs-roll]").disabled = true;
