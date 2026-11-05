@@ -183,6 +183,11 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
                         d['embeds'][b['page']] = {'title': ed['title'], 'chats': {str(pid): x.get('contact', '') for pid, x in zip(ep, ed['scenes'])}}
                 if b.get('kind') in ('picture', 'model') and b.get('img'):   # tools 18: a model with its picture (Ljubljana) too
                     shutil.copyfile(os.path.join(T, lesson, b['img']), os.path.join(out_dir, b['img']))
+                if b.get('kind') == 'text':   # tools 28 also (B2 6.11, request 2): its pictures; a file not there yet → no picture at all
+                    for o in [b] + [l for l in b.get('lines', []) if isinstance(l, dict)]:
+                        if not o.get('img'): continue
+                        if os.path.exists(os.path.join(T, lesson, o['img'])): shutil.copyfile(os.path.join(T, lesson, o['img']), os.path.join(out_dir, o['img']))
+                        else: print('note: %s/%s — %s not there yet, the page shows no picture' % (lesson, name, o['img'])); o.pop('img')
                 if b.get('kind') == 'game' and b.get('piece') == 'secret' and b.get('phone'):   # tools 17: the phone card
                     b['_cardUrl'] = SITE + 'tools/%s/%s-card.html' % (lesson, name)
                     b['_qr'] = qr_svg(b['_cardUrl'])

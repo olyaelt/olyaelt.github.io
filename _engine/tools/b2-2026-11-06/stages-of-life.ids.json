@@ -1,0 +1,304 @@
+{
+ "blocks": [
+  {
+   "pid": 0,
+   "sig": "say in pairs: how would you say these in english? take turns. don't worry about mistakes — we'll come back to them after the conversation.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "text leo and his gran look at her old photos. read their conversation with the glossary. who are you more like — margaret or leo? tell each other why: give two reasons. photos-main.jpg",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "say look again. how do they say when? discuss together, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "say 🔁 back to the start: how would you say these now? take turns. then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "game memo: look at the phrases for 40 seconds and try to remember them. then they disappear: take turns and say one each — in a sentence about you.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "text remember the missing words and say them. tap the yellow and orange to check.",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "text now without the glossary.",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "cards margaret and leo: ask and answer about them. take turns: one asks with when did…?, the next answers from memory. then tap the card.",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "game noughts and crosses: pick a square. grey = could be better, green = good; a red word = use it. say the sentence in perfect english, then tap to check. three in a row wins!",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "game the wheel of questions: take turns to spin. make the question and ask the next person. they answer: yes, i did / no, i didn't + one detail. then tap to check the question.",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "model here's how it works. complete the chats. then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "game snakes and ladders: take turns to roll the dice and move. on your square, ask the next person: when did you…? tap to check your question. then they answer with a time phrase (from the box or your own: at 35, two years ago) + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 12,
+   "sig": "questions now your real stories.",
+   "gone": false
+  }
+ ],
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "when did margaret start playing the piano? — at school. margaret · start playing the piano?",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "when did leo try the guitar? — as a kid. he lasted about a week! leo · try the guitar?",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "when did margaret leave home? — at 18, with one suitcase and a radio. margaret · leave home?",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "when did leo leave home? — two years ago. and he still doesn't have his own place. leo · leave home?",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "when did leo get his first real job? — right out of college. leo · get his first real job?",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "when did margaret meet jean? — in her third year at university. margaret · meet jean?",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "when did margaret buy her first car? — in her early thirties. margaret · buy her first car?",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "when did leo learn to drive? — he didn't! he still can't drive. leo · learn to drive?",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "my husband and i visited it only once, about ten years ago. про одну страну: были там один раз, лет десять назад my husband and i have visited it only once, about ten years ago. when did you last go somewhere new? tell each other two things you remember about it. “ten years ago” — это «когда?», и это уже в прошлом → past simple. “only once” — отлично.",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "i went to an art museum a week ago. ходили в музей неделю назад i 've been to an art museum a week ago. when did you last go to a museum or a gallery? name one thing you remember — or one you'd like to see. с “ago” — только past simple: не have been и не was to → went.",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "did you go to a concert or a festival this summer? сейчас ноябрь: спрашиваете друга о лете did you went to a concert or a festival this summer? did you go anywhere special this summer? tell each other about one place (even a park or a café near home). после “did” — всегда базовая форма: did + go. лето закончилось → past simple.",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "yeah, i enjoyed it. друг спрашивает про ваши прошлые выходные yeah, i 've enjoyed this. how was your last weekend? say two things you did. выходные закончились → past simple, даже без даты. и “it”, а не “this”: о том, что уже было.",
+   "gone": false
+  },
+  {
+   "pid": 12,
+   "sig": "i learned to ride a bike as a kid. i learned to ride a bike when i was a child. ^^kid^^ when did you learn to swim or ride a bike? who taught you? tell each other one funny or scary moment. “as a kid” = в детстве; так говорят чаще, чем “in my childhood”. or: when i was a kid — тоже верно.",
+   "gone": false
+  },
+  {
+   "pid": 13,
+   "sig": "i left home at 18. i left home when i was eighteen. ^^at^^ when did you first live away from your parents — or do you still live with them? name one good thing and one hard thing about it. в 18 лет → “at 18”, не in 18.",
+   "gone": false
+  },
+  {
+   "pid": 14,
+   "sig": "i found a job right out of college. / i found a job straight out of university. i found a job as soon as i graduated. ^^out^^ what did you do right after high school — study, work or something else? why? сразу после вуза: “right out of college” (us) или “straight out of university” (uk) — выбирай свой вариант. or: right after university.",
+   "gone": false
+  },
+  {
+   "pid": 15,
+   "sig": "i met my best friend in my third year at university. / i met my best friend in my third year of college. i met my best friend when i was a third-year student at university. ^^my^^ where and when did you meet one of your oldest friends? say one thing you did together back then. на третьем курсе: “at university” (uk) или “of college” (us), не on the third course.",
+   "gone": false
+  },
+  {
+   "pid": 16,
+   "sig": "i still can't drive. i haven't learned to drive yet. ^^still^^ name one thing you still don't have (a car, a dog, a garden…). do you want it? why or why not? до сих пор не умею → “i still can't” — это правда и сейчас. or: i still haven't learned to drive.",
+   "gone": false
+  },
+  {
+   "pid": 17,
+   "sig": "did you learn to swim as a kid? 1 you / learn to swim — as a kid? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 18,
+   "sig": "did you study english at school? 2 you / study english — at school? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 19,
+   "sig": "did you start working after high school? / after you left school? 3 you / start working — after high school / after you left school? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 20,
+   "sig": "did you leave home at 18? 4 you / leave home — at 18? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 21,
+   "sig": "did you have a job in your third year of college? / at university? 5 you / have a job — in your third year of college / at university? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 22,
+   "sig": "did you find a job right out of college? / straight out of university? 6 you / find a job — right out of college / straight out of university? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 23,
+   "sig": "did you have a car in your early twenties? 7 you / have a car — in your early twenties? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 24,
+   "sig": "did you have a phone at school? 8 you / have a phone — at school? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 25,
+   "sig": "did you travel a lot as a kid? 9 you / travel a lot — as a kid? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 26,
+   "sig": "did you live with friends at university? / in college? 10 you / live with friends — at university / in college? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 27,
+   "sig": "when did you learn to swim? ask learn to swim answer: i learned… did + базовая форма: “when did you learn…?”, не learned.",
+   "gone": false
+  },
+  {
+   "pid": 28,
+   "sig": "when did you start learning english? ask start learning english answer: i started… did + базовая форма: “when did you start…?”, не started.",
+   "gone": false
+  },
+  {
+   "pid": 29,
+   "sig": "when did you learn to drive? ask learn to drive answer: i learned… did + базовая форма: “when did you learn…?”, не learned.",
+   "gone": false
+  },
+  {
+   "pid": 30,
+   "sig": "when did you get your first phone? ask get your first phone answer: i got… did + базовая форма: “when did you get…?”, не got.",
+   "gone": false
+  },
+  {
+   "pid": 31,
+   "sig": "when did you first earn your own money? ask first earn your own money answer: i earned… did + базовая форма: “when did you first earn…?”, не earned.",
+   "gone": false
+  },
+  {
+   "pid": 32,
+   "sig": "when did you get your first job? ask get your first job answer: i got… did + базовая форма: “when did you get…?”, не got.",
+   "gone": false
+  },
+  {
+   "pid": 33,
+   "sig": "when did you get your own place? ask get your own place answer: i got… did + базовая форма: “when did you get…?”, не got.",
+   "gone": false
+  },
+  {
+   "pid": 34,
+   "sig": "when did you learn to cook? ask learn to cook answer: i learned… did + базовая форма: “when did you learn…?”, не learned.",
+   "gone": false
+  },
+  {
+   "pid": 35,
+   "sig": "when did you learn to ride a bike? ask learn to ride a bike answer: i learned… did + базовая форма: “when did you learn…?”, не learned.",
+   "gone": false
+  },
+  {
+   "pid": 36,
+   "sig": "when did you buy your first car? ask buy your first car answer: i bought… did + базовая форма: “when did you buy…?”, не bought.",
+   "gone": false
+  },
+  {
+   "pid": 37,
+   "sig": "when did you get your first computer? ask get your first computer answer: i got… did + базовая форма: “when did you get…?”, не got.",
+   "gone": false
+  },
+  {
+   "pid": 38,
+   "sig": "when did you get your first pet? ask get your first pet answer: i got… · no pet? → i still don't have one did + базовая форма: “when did you get…?”, не got.",
+   "gone": false
+  },
+  {
+   "pid": 39,
+   "sig": "when did you meet your oldest friend? ask meet your oldest friend answer: i met… did + базовая форма: “when did you meet…?”, не met.",
+   "gone": false
+  },
+  {
+   "pid": 40,
+   "sig": "when did you go abroad for the first time? ask go abroad for the first time answer: i went… did + базовая форма: “when did you go…?”, не went.",
+   "gone": false
+  },
+  {
+   "pid": 41,
+   "sig": "when did you move into your current home? ask move into your current home answer: i moved… did + базовая форма: “when did you move…?”, не moved.",
+   "gone": false
+  },
+  {
+   "pid": 42,
+   "sig": "when did you start your current (or last) job? ask start your current (or last) job answer: i started… did + базовая форма: “when did you start…?”, не started.",
+   "gone": false
+  }
+ ],
+ "write": [],
+ "questions.12": [
+  {
+   "pid": 0,
+   "sig": "1 three big moments in your life (a first job, a move, a new skill…) — when did they happen? use the box. your partner asks one more question about each.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 what were you like as a kid? name two things you loved and one thing you hated.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "3 name two things you still can't do (swim, cook, drive…). would you like to learn them? why or why not?",
+   "gone": false
+  }
+ ]
+}

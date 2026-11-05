@@ -107,7 +107,7 @@ const chatSteps = (a, b) => [
 /* fixes-1 (TZ 2026-11-05_1745, her idea): first read the whole chat for gist, then the gaps. Her pictures (ChatGPT), 1024 × 768 */
 const BEACH_A = "__BEACH_A__", BEACH_B = "__BEACH_B__";
 const GIST = {type:"gist",
-  instr:"First read the whole chat. Don't fill in the gaps yet — just find out what happened.",
+  instr:"First read the whole chat. Skip the {cloud} clouds — you'll fill them in later. Just find out what happened.",
   q:"What really happened to Josh's car?",
   intro:GAPS.beach1.intro, lines:[...GAPS.beach1.lines, ...GAPS.beach2.lines],
   opts:[{img:BEACH_A, alt:"A thief takes the sandwiches through the car window", txt:"🦹 A thief broke into it."},

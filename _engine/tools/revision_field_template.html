@@ -89,6 +89,17 @@ __BASE_CSS__
 .gloss{background:var(--ground);border-radius:12px;padding:8px 12px;display:grid;gap:4px;font-size:calc(1.02rem * var(--k, 1))}
 .gloss .gl{margin:0;line-height:1.35}
 .gloss .ru{color:var(--muted);font-style:italic}
+/* tools 28 also: «💬 Your turn» after a noughts-and-crosses square (B2 6.11, request 1) */
+.gt-talk .lbl{display:block;font-weight:900;color:var(--instr);margin:0 0 4px}
+.gt-talk .scene.tc .fig{height:calc(96px * var(--k, 1))}
+.gt-talk .scene.tc .bub{font-size:calc(1.3rem * var(--k, 1));min-height:0;margin-bottom:40px;padding:12px 18px}
+/* tools 28 also: pictures in a text block (B2 6.11) */
+.tx-pic{margin:0 0 8px;text-align:center}
+.tx-pic img{max-height:min(26vh, 190px);max-width:100%;border-radius:10px;object-fit:contain}
+.dlg p.has-lph{display:flow-root}
+.lph{float:right;width:min(96px, 22%);margin:2px 0 4px 12px;background:#fff;padding:4px 4px 10px;border-radius:2px;box-shadow:0 1px 4px rgba(0,0,0,.25);transform:rotate(2deg)}
+.dlg p.has-lph:nth-of-type(even) .lph{transform:rotate(-2deg)}
+@media (max-width:600px){ .lph{float:none;display:block;width:120px;margin:4px 0 6px} }
 .box .ph .gloss{display:inline;background:none;padding:0;border-radius:0;font-size:.86em}   /* tools 25: a box line's Russian stays on its line (not the glossary's card) */
 .tx-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .tx-tools .hint{color:var(--muted);font-size:.9rem}
@@ -796,7 +807,7 @@ function keepPlace(){
   if(S.view !== "field" || S.fast) return;
   const bsOut = Object.assign({}, S._restore || {}); Object.entries(S.bs).forEach(([id, st]) => { if(id === "fastdeck") return; const d = st.deck;
     bsOut[id] = {open: [...st.open], shown: !!st.shown, check: st.check || "", done: !!st.done, bm: [...(st.bm || [])], spk: st.spk ? st.spk.key : null,
-      sc: st.sc || null, cn: st.cn ? Object.assign({}, st.cn, {busy: false, enter: false}) : null, fx: st.fx || null, so: st.so || null, sec: st.sec || null, memo: st.memo ? {phase: st.memo.phase, got: [...st.memo.got], end: st.memo.end || 0} : null, g: st.g || null, np: st.np || null, ended: !!st.ended, lis: st.lis || null, wh: st.wh || null, rl: st.rl ? {ph: st.rl.ph, roll: st.rl.roll, dk: st.rl.dk || null} : null, mx: st.mx || null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, talked: [...(d.talked || [])], flipped: !!d.flipped} : (st._deck || null)}; });
+      sc: st.sc || null, cn: st.cn ? Object.assign({}, st.cn, {busy: false, enter: false}) : null, fx: st.fx || null, so: st.so || null, sec: st.sec || null, memo: st.memo ? {phase: st.memo.phase, got: [...st.memo.got], end: st.memo.end || 0} : null, g: st.g || null, np: st.np || null, ended: !!st.ended, lis: st.lis || null, wh: st.wh || null, rl: st.rl ? {ph: st.rl.ph, roll: st.rl.roll, dk: st.rl.dk || null} : null, mx: st.mx || null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null, talk: st.ttt.talk != null ? st.ttt.talk : -1} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, talked: [...(d.talked || [])], flipped: !!d.flipped} : (st._deck || null)}; });
   store.set(PLACE_KEY, {stage: S.stage, at: S.at, far: S.far, intro: S.intro, bs: bsOut, t: Date.now(), shape: SHAPE});
   store.set(LEFT_KEY, {page: PAGE_ID, href: location.pathname.split("/").pop(), cell: cellName(), title: D.title, stage: String(D.stages[S.stage].label || ""), t: Date.now()});
 }
@@ -852,7 +863,9 @@ function gapAnswer(b, id){
 }
 const ledLinePath = (b, pre, li) => pre === "t" && b.kind === "text" ? `blocks.${b._pos}.lines.${li}` : /^m\d+$/.test(pre) && b.kind === "model" ? `blocks.${b._pos}.parts.${pre.slice(1)}.lines.${li}` : "";
 const ledLine = (b, pre, li) => { const p = ledLinePath(b, pre, li); return p && LEDP[p] ? ledBtn(p) : ""; };
-const linesHTML = (lines, b, pre) => (lines || []).map((l, li) => l.h != null ? `<p class="lh${l.col ? " colbreak" : ""}">${esc(l.h)}</p>` : l.ctx != null ? `<p class="lctx">${mk(l.ctx)}</p>` : `<p${l.wide ? ` class="wide"` : ""}${ledLine(b, pre, li) ? " data-live-host" : ""}>${l.s ? `<b class="sp">${esc(l.s)}:</b>` : ""}${partsHTML(l.p, b, `${pre}l${li}g`)}${ledLine(b, pre, li)}</p>`).join("");
+/* tools 28 also (B2 6.11, engine request 2): a line of a text block may carry "img" — a small old photo beside it (on a phone above it) */
+const lphHTML = (l, b) => l.img && b && b.kind === "text" ? `<img class="lph" src="${esc(l.img)}" alt="${esc(l.alt || "")}" onerror="this.remove()">` : "";
+const linesHTML = (lines, b, pre) => (lines || []).map((l, li) => l.h != null ? `<p class="lh${l.col ? " colbreak" : ""}">${esc(l.h)}</p>` : l.ctx != null ? `<p class="lctx">${mk(l.ctx)}</p>` : `<p${l.wide || lphHTML(l, b) ? ` class="${[l.wide ? "wide" : "", lphHTML(l, b) ? "has-lph" : ""].filter(Boolean).join(" ")}"` : ""}${ledLine(b, pre, li) ? " data-live-host" : ""}>${lphHTML(l, b)}${l.s ? `<b class="sp">${esc(l.s)}:</b>` : ""}${partsHTML(l.p, b, `${pre}l${li}g`)}${ledLine(b, pre, li)}</p>`).join("");
 const gapIds = (lines, pre) => (lines || []).flatMap((l, li) => (l.p || []).filter(x => x && typeof x === "object" && x.r != null).map((_, k) => `${pre}l${li}g${k}`));
 function allGaps(b){
   if(b.kind === "text") return gapIds(b.lines, "t").concat(gapIds((b.gloss || []).map(g => ({p: g.p})), "x"));
@@ -864,7 +877,9 @@ function allGaps(b){
 }
 function textHTML(b){
   const gl = b.gloss && b.gloss.length ? `<aside class="gloss${D.sketch ? " sk" : ""}" aria-label="Glossary">${D.sketch ? `<img class="sticker" src="../sk-glossary.png" alt="Glossary">` : ""}${b.gloss.map((g, gi) => `<p class="gl">${partsHTML(g.p, b, `xl${gi}g`)} <span class="ru">– ${esc(g.ru)}</span></p>`).join("")}</aside>` : "";
-  return `<div class="tx ${gl ? "" : "single"}"><div class="dlg${b.cols ? " cols" : ""}">${b.ctx ? `<p class="lctx">${mk(b.ctx)}</p>` : ""}${linesHTML(b.lines, b, "t")}</div>${gl}</div>${gapTools(b)}${txAnsHTML(b)}`;
+  /* tools 28 also (B2 6.11, engine request 2): "img" on the block = one picture above the conversation; a missing file shows nothing */
+  const pic = b.img ? `<figure class="tx-pic"><img src="${esc(b.img)}" alt="${esc(b.alt || "")}" onerror="this.parentNode.remove()"></figure>` : "";
+  return `${pic}<div class="tx ${gl ? "" : "single"}"><div class="dlg${b.cols ? " cols" : ""}">${b.ctx ? `<p class="lctx">${mk(b.ctx)}</p>` : ""}${linesHTML(b.lines, b, "t")}</div>${gl}</div>${gapTools(b)}${txAnsHTML(b)}`;
 }
 /* tools 25 (the C1 chat 1.11 21:50 and the German page 2.11: «always meaning first»): a text can carry an answer to a meaning question —
    "Show the answer" (or Next) opens it under the lines */
@@ -1262,6 +1277,7 @@ function gameMount(b, host){
     answer: t => `${b.check ? `<span class="chk">${esc(b.check)}</span>` : ""}<span class="say fixline">${mk(t.a)}</span>${t.why ? `<span class="note">${mk(t.why)}</span>` : ""}`,
     onResult: (t, ok) => { lwDeck(t._n, ok); if(!ok && !saved.again.includes(t._n)){ saved.again.push(t._n); save(); } },
     onWin: el => { if(typeof confetti === "function") confetti(el); },
+    turnHTML: t => t.turn ? `<span class="lbl">💬 Your turn</span><div class="scene tc ${/\[/.test(t.turn) ? "solo" : ""}">${/\[/.test(t.turn) ? "" : `<img class="skimg fig" src="../sk-listen.png" alt="">`}<div class="bub said ${/\[/.test(t.turn) ? "frame" : ""}"><span>${turnMk(t.turn)}</span>${TAIL}</div><img class="skimg fig" src="../sk-talk.png" alt=""></div>` : "",
     onChange: () => { keepPlace(); stepSync(); }});
 }
 /* tools 23 (her 1.11 18:41: «а что делать группам, в которых 3 студента?» — «если их двое, пусть играют 3 на 3»): 👥 2 · 3 players above
@@ -1944,7 +1960,7 @@ addEventListener("resize", () => { clearTimeout(fitCard.t); fitCard.t = setTimeo
 /* the box with X{{rest}}: the first letter shown, the rest hidden yellow (tap the yellow to open it; tap the line to tick it) */
 const boxLineHTML = t => phHTML(t).replace(/\{\{(.+?)\}\}/g, '<span class="bh" data-bh>$1</span>');
 function fieldBoxHTML(box){
-  const items = box.map((g, gi) => `<h4>${esc(g.h)}</h4>` + g.items.map((t, ti) => `<button class="ph ${usedPhrases.has(gi + "." + ti) ? "used" : ""}" data-ph="${gi}.${ti}" data-pt="${esc(t.replace(/\*\*|\{\{|\}\}/g, ""))}" aria-pressed="${usedPhrases.has(gi + "." + ti)}">${boxLineHTML(t)}</button>`).join("")).join("");
+  const items = box.map((g, gi) => boxGroupHTML(g, gi, (t, ti) => `<button class="ph ${usedPhrases.has(gi + "." + ti) ? "used" : ""}" data-ph="${gi}.${ti}" data-pt="${esc(t.replace(/\*\*|\{\{|\}\}/g, ""))}" aria-pressed="${usedPhrases.has(gi + "." + ti)}">${boxLineHTML(t)}</button>`)).join("");   /* tools 28 also: a US | UK pairs group (tool_base) */
   return `<aside class="box" aria-label="Useful language"><div class="box-top"><img class="sticker" src="${STICKER}" alt="Useful language"></div>${items}</aside>`;
 }
 function wireBoxHidden(root){

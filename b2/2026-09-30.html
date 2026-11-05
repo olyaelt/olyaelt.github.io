@@ -677,6 +677,9 @@ audio{width:100%}
 @keyframes fxShake{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
 /* engine 62 also: «read for gist» — the whole text with its gaps shut, then 2–3 pictures (or text buttons), one right */
 .dlg.shut .chunk{cursor:default}
+.dlg.shut .cloud{display:inline-block;vertical-align:-.28em;margin:0 .12em;line-height:0}
+.cloud-i{width:1.75em;height:1.1em;fill:color-mix(in srgb, var(--instr) 16%, var(--card));stroke:color-mix(in srgb, var(--instr) 55%, var(--card));stroke-width:1.6;stroke-linejoin:round}
+.instr .cloud-i{vertical-align:-.25em}
 .gist-q{margin:14px 0 8px;font-weight:700;font-size:var(--step-1)}
 .gist-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:44rem}
 .gist-opts.n3{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -2254,6 +2257,24 @@ function moreBelow(){
    and says why; the right one goes green and only then Next works. Not a gap: it counts nowhere. Any dlg data can use it:
    {type:"gist", instr, q, intro?, lines, opts:[{img?, alt, txt}], ok, right, wrong} — with img the picture alone (alt for screen
    readers), without it the txt ---------- */
+/* her 05.11 20:46: in class students selected the shut yellow boxes and saw the answers — and a box that looks like the usual task but
+   isn't one is bad UI. So here every gap (a run of gaps = one) is a small cloud, and the answer isn't on the page at all; the
+   instruction says to skip the clouds ({cloud} in instr = the same icon) */
+const CLOUD = `<svg class="cloud-i" viewBox="0 0 32 20" aria-hidden="true"><path d="M8.5 18.5h15.2a5.3 5.3 0 0 0 .6-10.6A7.4 7.4 0 0 0 10.2 6a5.9 5.9 0 0 0-1.7 12.5z"/></svg>`;
+function gistLineHTML(line){
+  if(line.scene) return `<p class="scene"><span>${esc((line.p || []).join(""))}</span></p>`;
+  const parts = line.p || []; let html = "", i = 0;
+  while(i < parts.length){
+    const x = parts[i];
+    if(typeof x === "object" && x && "r" in x){
+      while(i < parts.length && ((typeof parts[i] === "object" && parts[i] && "r" in parts[i]) || (typeof parts[i] === "string" && /^\s+$/.test(parts[i]) && typeof parts[i+1] === "object" && parts[i+1] && "r" in parts[i+1]))) i++;
+      html += `<span class="cloud" role="img" aria-label="a missing phrase">${CLOUD}</span>`;
+    } else if(typeof x === "object" && x && "b" in x){ html += `<b class="given">${esc(x.b)}</b>`; i++; }
+    else if(typeof x === "object" && x && "ipa" in x){ html += `<span class="ipa">${esc(x.ipa)}</span>`; i++; }
+    else { html += esc(x); i++; }
+  }
+  return `<p>${line.s ? `<span class="spk">${esc(line.s)}:</span> ` : ""}${html}</p>`;
+}
 const gistSt = {};
 function renderGist(st, count, pct){
   const key = current.id + "-" + curS() + (current._once ? "-again" : ""), S = gistSt[key] = gistSt[key] || {wrong: null, shake: null};
@@ -2262,11 +2283,10 @@ function renderGist(st, count, pct){
     return `<button type="button" class="gist-opt${o.img ? " pic" : ""}${ok ? " ok" : ""}${no ? " no" : ""}${S.shake === i ? " shake" : ""}" data-gist="${i}"${right ? " disabled" : ""} aria-label="${esc(o.alt || o.txt || "")}">${
       o.img ? `<img src="${o.img}" alt="${esc(o.alt || "")}">` : `<span>${esc(o.txt || "")}</span>`}${ok ? `<span class="gist-tick" aria-hidden="true">✓</span>` : ""}</button>`; };
   const msg = right ? `<p class="gist-msg ok" role="status">${esc(st.right || "")}</p>` : S.wrong != null ? `<p class="gist-msg no" role="status">${esc(st.wrong || "")}</p>` : "";
-  shell({count, pct, instr: st.instr + (st.q ? `<br><b>${esc(st.q)}</b>` : ""),
-    stageHTML: `<div class="panel gist">${picHTML(st.pic)}${st.intro ? `<p class="situation">${esc(st.intro)}</p>` : ""}<div class="dlg shut">${st.lines.map(gapLineHTML).join("")}</div>
+  shell({count, pct, instr: String(st.instr || "").replace(/\{cloud\}/g, CLOUD) + (st.q ? `<br><b>${esc(st.q)}</b>` : ""),
+    stageHTML: `<div class="panel gist">${picHTML(st.pic)}${st.intro ? `<p class="situation">${esc(st.intro)}</p>` : ""}<div class="dlg shut">${st.lines.map(gistLineHTML).join("")}</div>
       ${st.q ? `<p class="gist-q">${esc(st.q)}</p>` : ""}<div class="gist-opts n${opts.length}">${opts.map(optHTML).join("")}</div>${msg}</div>`,
     actionsHTML: navButtons("Next")});
-  app.querySelectorAll(".dlg.shut .chunk").forEach(c => ["role", "tabindex", "aria-label"].forEach(a => c.removeAttribute(a)));
   const go = document.getElementById("go"); if(!checked){ go.disabled = true; go.textContent = "Next"; }
   app.querySelectorAll("[data-gist]").forEach(b => b.addEventListener("click", () => {
     if(checked) return; const i = +b.dataset.gist, y = scrollY;

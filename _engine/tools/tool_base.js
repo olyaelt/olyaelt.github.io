@@ -33,7 +33,7 @@ if(EMBED){
 if(EMBED) addEventListener("message", e => { const m = e.data && e.data.lwStep; if(!m) return;
   const end = typeof embNext !== "function" || (m === "next" ? embNext() : embBack()); if(end) try{ window.parent.postMessage({lwStepEnd: m}, "*"); }catch(err){} });
 /* **box phrase** in a speaking task or a follow-up = shown like the box phrases in the examples (checklist 8.07) */
-const boxMarks = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>').replace(/\(\((.+?)\)\)/g, '<span class="bx-ctx">$1</span>')
+const boxMarks = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>').replace(/\(\((.+?)\)\)/g, '<span class="bx-ctx">$1</span>').replace(/##(.+?)##/g, '<span class="ipa">$1</span>')   /* tools 28 also: ##/ipa/## in a box line (B2 6.11) */
   .replace(/&lt;m([123])&gt;(.+?)&lt;\/m\1&gt;/g, '<span class="mv m$1">$2</span>');   /* tools 25 (the German page): grey extras, her move colours */
 const calm = () => !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
 /* a small burst of confetti from an element (the end of a deck): brand colours, falls and fades in about a second; none with reduced motion */
@@ -132,10 +132,26 @@ const phHTML = t => { if(/^\(\(.*\)\)$/.test(t)) return `<span class="bx-ctx">${
   const k = t.indexOf(" – "), en = k < 0 ? t : t.slice(0, k), ru = k < 0 ? "" : t.slice(k + 3);
   return boxMarks(en) + (ru ? ` <span class="gloss">– ${esc(ru)}</span>` : ""); };
 const usedPhrases = new Set();
+/* tools 28 also (B2 6.11, her choice 05.11 20:31, option B): a box group may be {h, cols: ["US", "UK"], pairs: [[us, uk, ru]]} — a header
+   row with small flags drawn here (emoji flags show as letters on Windows), both at the left edge of their column, in line with the
+   phrase; one row per pair: US on a light-blue tint, UK on a light-red one (no green: green means "good" on her pages), the Russian grey
+   under the pair; each cell ticks like any box phrase */
+const FLAGS = {
+  US: `<svg class="flag" viewBox="0 0 19 10" aria-hidden="true"><rect width="19" height="10" fill="#fff"/><g fill="#B22234">${[0, 2, 4, 6, 8].map(y => `<rect y="${y * 10 / 9}" width="19" height="${10 / 9}"/>`).join("")}</g><rect width="7.6" height="5.4" fill="#3C3B6E"/></svg>`,
+  UK: `<svg class="flag" viewBox="0 0 60 30" aria-hidden="true"><clipPath id="ukc"><path d="M0 0h60v30H0z"/></clipPath><g clip-path="url(#ukc)"><path d="M0 0h60v30H0z" fill="#012169"/><path d="M0 0l60 30M60 0L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30M60 0L0 30" stroke="#C8102E" stroke-width="2.4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg>`};
+function pairsHTML(g, gi, clickable = true){
+  const cols = g.cols || ["US", "UK"];
+  const cell = (t, key, c) => clickable
+    ? `<button class="ph pp-c c${c}${usedPhrases.has(key) ? " used" : ""}" data-ph="${key}" data-pt="${esc(phPlain(t))}" aria-pressed="${usedPhrases.has(key)}">${boxMarks("**" + t + "**")}</button>`
+    : `<p class="ph pp-c c${c}">${boxMarks("**" + t + "**")}</p>`;
+  return `<div class="ph-pairs"><div class="pp-h">${cols.map(c => `<span>${FLAGS[c] || ""}${esc(c)}</span>`).join("")}</div>${(g.pairs || []).map((pr, ti) =>
+    `<div class="pp-row">${cell(pr[0], `${gi}.${ti}.0`, 0)}${cell(pr[1], `${gi}.${ti}.1`, 1)}${pr[2] ? `<span class="pp-ru">${esc(pr[2])}</span>` : ""}</div>`).join("")}</div>`;
+}
+const boxGroupHTML = (g, gi, item, clickable = true) => `<h4>${esc(g.h)}</h4>` + (g.pairs ? pairsHTML(g, gi, clickable) : (g.items || []).map((t, ti) => item(t, ti)).join(""));
 function boxHTML(box, {clickable = true, collapsible = false, open = true} = {}){
-  const items = box.map((g, gi) => `<h4>${esc(g.h)}</h4>` + g.items.map((t, ti) => clickable
+  const items = box.map((g, gi) => boxGroupHTML(g, gi, (t, ti) => clickable
       ? `<button class="ph ${usedPhrases.has(gi + "." + ti) ? "used" : ""}" data-ph="${gi}.${ti}" data-pt="${esc(phPlain(t))}" aria-pressed="${usedPhrases.has(gi + "." + ti)}">${phHTML(t)}</button>`
-      : `<p class="ph">${phHTML(t)}</p>`).join("")).join("");
+      : `<p class="ph">${phHTML(t)}</p>`, clickable)).join("");
   return `<aside class="box ${clickable ? "" : "static"}" aria-label="Useful language">
     <div class="box-top"><img class="sticker" src="${STICKER}" alt="Useful language">${collapsible ? `<button class="linkish" data-box-toggle>Hide</button>` : ""}</div>
     ${open ? items : ""}</aside>`;

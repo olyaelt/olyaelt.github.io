@@ -150,9 +150,12 @@ function gFill(tasks, n){
   for(let k = 1; k < out.length; k++) if(out[k] === out[k - 1]){ const j = out.findIndex((x, i) => i > k && x !== out[k] && out[i - 1] !== x && (i + 1 >= out.length || out[i + 1] !== x)); if(j > -1) [out[k], out[j]] = [out[j], out[k]]; }
   return out;
 }
-function gTicTacToe(host, tasks, {size = 3, win = 3, marks = ["X", "O"], answer = t => t.a || "", prompt = t => gEsc(t.q || t), state = null, revealFirst = false, labels = null, cellLabel = null, onResult = null, onWin = null, onChange = null} = {}){
+function gTicTacToe(host, tasks, {size = 3, win = 3, marks = ["X", "O"], answer = t => t.a || "", prompt = t => gEsc(t.q || t), state = null, revealFirst = false, labels = null, cellLabel = null, onResult = null, onWin = null, onChange = null, turnHTML = null} = {}){
   /* tools 18 (C1 04.11 Catching up): cellLabel(task) = a word or two on the square instead of its number ("At a wedding") */
-  const T = state || {cells: gFill(tasks, size * size).map(t => ({t, m: null})), turn: 0, open: -1, shown: false, over: null};
+  /* tools 28 also (B2 6.11, engine request 1; her 05.11 19:29 «говорение по ходу, а не только раскрывание скобочек»): turnHTML(task) = its
+     «💬 Your turn» — after ✓ / ✗ the side shows the speaking question, Next only, and then the game goes on (a win shows after it) */
+  const T = state || {cells: gFill(tasks, size * size).map(t => ({t, m: null})), turn: 0, open: -1, shown: false, over: null, talk: -1};
+  if(T.talk == null) T.talk = -1;
   const changed = () => { if(onChange) onChange(T); };
   const lines = (() => { const L = [], ok = (r, c) => r >= 0 && c >= 0 && r < size && c < size;
     for(let r = 0; r < size; r++) for(let c = 0; c < size; c++) [[0, 1], [1, 0], [1, 1], [1, -1]].forEach(([dr, dc]) => { const l = []; for(let k = 0; k < win; k++){ if(!ok(r + dr * k, c + dc * k)) return; l.push((r + dr * k) * size + c + dc * k); } L.push(l); });
@@ -162,20 +165,23 @@ function gTicTacToe(host, tasks, {size = 3, win = 3, marks = ["X", "O"], answer 
   function render(fresh){
     const winLine = T.over && T.over.line, cur = marks[T.turn], o = T.open > -1 ? T.cells[T.open] : null;
     host.innerHTML = `<div class="gttt">
-      <div class="gt-board" style="--n:${size}">${T.cells.map((c, k) => `<button class="gt-cell ${c.m ? "taken m" + marks.indexOf(c.m) : ""} ${k === T.open ? "open" : ""} ${winLine && winLine.includes(k) ? "win" : ""} ${fresh === k ? "fresh" : ""}" data-gt="${k}" ${c.m || T.over || (T.open > -1 && k !== T.open) ? "disabled" : ""} aria-label="Square ${k + 1}${c.m ? ": " + c.m : ""}">
+      <div class="gt-board" style="--n:${size}">${T.cells.map((c, k) => `<button class="gt-cell ${c.m ? "taken m" + marks.indexOf(c.m) : ""} ${k === T.open ? "open" : ""} ${winLine && winLine.includes(k) ? "win" : ""} ${fresh === k ? "fresh" : ""}" data-gt="${k}" ${c.m || T.over || T.talk > -1 || (T.open > -1 && k !== T.open) ? "disabled" : ""} aria-label="Square ${k + 1}${c.m ? ": " + c.m : ""}">
         <span class="gt-in"><span class="gt-back">${cellLabel && cellLabel(c.t) ? `<span class="gt-lbl">${cellLabel(c.t)}</span>` : k + 1}</span><span class="gt-front">${c.m ? markSVG(c.m) : "?"}</span></span></button>`).join("")}${winLine ? gWinLine(winLine, size) : ""}</div>
-      <div class="gt-side">${T.over ? `<p class="gt-turn big">${T.over.who ? `${markSVG(T.over.who)} wins! 🎉` : "It's a draw!"}</p><button class="btn primary" data-gt-again>Play again</button>`
+      <div class="gt-side">${T.talk > -1 ? `<div class="gt-talk">${turnHTML(T.cells[T.talk].t)}<div class="gt-acts"><button class="btn primary" data-gt-talked>Next →</button></div></div>` : T.over ? `<p class="gt-turn big">${T.over.who ? `${markSVG(T.over.who)} wins! 🎉` : "It's a draw!"}</p><button class="btn primary" data-gt-again>Play again</button>`
         : `<p class="gt-turn">${markSVG(cur)} <b>${gEsc(cur)}'s turn</b>${o ? "" : " — choose a square"}</p>
         ${o ? `<div class="gt-task${T.shown ? " shown" : ""}"><p class="gt-q">${prompt(o.t)}</p>${T.shown && answer(o.t) ? `<p class="gt-a">${answer(o.t)}</p>` : ""}
           <div class="gt-acts">${answer(o.t) && !T.shown ? `<button class="btn${revealFirst ? " primary" : ""}" data-gt-show>Show the answer</button>` : ""}${!revealFirst || T.shown || !answer(o.t) ? `<button class="btn ok" data-gt-yes>${labels ? gEsc(labels.yes) : `✓ ${gEsc(cur)} takes it`}</button><button class="btn again" data-gt-no>${labels ? gEsc(labels.no) : "✗ Not this time"}</button>` : ""}</div></div>` : ""}`}</div></div>`;
     host.querySelectorAll("[data-gt]").forEach(b => b.addEventListener("click", () => { if(T.open > -1) return; T.open = +b.dataset.gt; T.shown = false; render(); changed(); }));
     const on = (q, f) => { const b = host.querySelector(q); if(b) b.addEventListener("click", f); };
     on("[data-gt-show]", () => { T.shown = true; render(); changed(); });
+    const talks = t => !!(turnHTML && turnHTML(t));
     on("[data-gt-yes]", () => { const k = T.open; T.cells[k].m = marks[T.turn]; T.open = -1; const l = lines.find(l => l.every(i => T.cells[i].m === marks[T.turn]));
-      if(l) T.over = {who: marks[T.turn], line: l}; else if(T.cells.every(c => c.m)) T.over = {who: null}; else nextTurn(); render(k);
-      if(onResult) onResult(T.cells[k].t, true); if(T.over && T.over.who && onWin) onWin(host.querySelector(".gt-turn.big") || host); changed(); });
-    on("[data-gt-no]", () => { const t = T.cells[T.open].t; T.open = -1; nextTurn(); render(); if(onResult) onResult(t, false); changed(); });
-    on("[data-gt-again]", () => { T.cells = gFill(tasks, size * size).map(t => ({t, m: null})); T.turn = 0; T.open = -1; T.over = null; render(); changed(); });
+      if(l) T.over = {who: marks[T.turn], line: l}; else if(T.cells.every(c => c.m)) T.over = {who: null}; else nextTurn();
+      if(talks(T.cells[k].t)) T.talk = k; render(k);
+      if(onResult) onResult(T.cells[k].t, true); if(T.talk < 0 && T.over && T.over.who && onWin) onWin(host.querySelector(".gt-turn.big") || host); changed(); });
+    on("[data-gt-no]", () => { const k = T.open, t = T.cells[k].t; T.open = -1; nextTurn(); if(talks(t)) T.talk = k; render(); if(onResult) onResult(t, false); changed(); });
+    on("[data-gt-talked]", () => { T.talk = -1; render(); if(T.over && T.over.who && onWin) onWin(host.querySelector(".gt-turn.big") || host); changed(); });
+    on("[data-gt-again]", () => { T.cells = gFill(tasks, size * size).map(t => ({t, m: null})); T.turn = 0; T.open = -1; T.over = null; T.talk = -1; render(); changed(); });
   }
   T.redraw = () => render(); render(); return T;
 }

@@ -1,5 +1,5 @@
 // engine 62 also (B2 4.11, TZ 2026-11-05_1745, her idea «вначале прочитайте for gist… выбрать одну из двух картинок»): a «read for gist»
-// step before the gaps — the whole chat with its gaps shut (they don't open, no notes, no bookmarks), the question, two pictures; the
+// step before the gaps — the whole chat, every gap a cloud with no answer behind it (her 20:46), no notes, no bookmarks, the question, two pictures; the
 // wrong one shakes and says why, Next stays off; the right one goes green, says so, and Next leads to the chat with the glossary.
 //   node tests/gist_check.js SITE_DIR [SHOTS_DIR]
 const {chromium, devices} = require('playwright'); const path = require('path');
@@ -14,16 +14,16 @@ const {chromium, devices} = require('playwright'); const path = require('path');
     await p.evaluate(() => openTask('beach', 0)); await p.waitForTimeout(300);
     const st = () => p.evaluate(() => { const go = document.getElementById('go');
       return {count: document.querySelector('.taskbar .count')?.textContent, instr: document.querySelector('.instr')?.innerText,
-        lines: document.querySelectorAll('.dlg.shut p').length, chunks: document.querySelectorAll('.dlg.shut .chunk').length,
+        lines: document.querySelectorAll('.dlg.shut p').length, chunks: document.querySelectorAll('.dlg.shut .cloud').length, gapsLeft: document.querySelectorAll('.dlg.shut .chunk, .dlg.shut .gap').length,
+        answers: /broke into|got hurt/.test(document.querySelector('.dlg.shut')?.textContent || ''), cloudInInstr: !!document.querySelector('.instr .cloud-i'),
         open: document.querySelectorAll('.dlg.shut .chunk.open').length, notes: [...document.querySelectorAll('.gap-n')].filter(n => !n.hidden).length,
         marks: document.querySelectorAll('.dlg .rev, .dlg .mk').length, opts: document.querySelectorAll('.gist-opt').length,
         pics: [...document.querySelectorAll('.gist-opt img')].map(i => i.naturalWidth), ok: document.querySelectorAll('.gist-opt.ok').length,
         no: document.querySelectorAll('.gist-opt.no').length, msg: document.querySelector('.gist-msg')?.textContent || '', goOff: go.disabled, go: go.textContent.trim()}; });
     let s = await st(); out[name + '0'] = s;
-    expect(name + ': the whole chat, gaps shut, nothing to open', s.lines === 15 && s.chunks >= 9 && s.open === 0 && s.notes === 0 && s.marks === 0, s);
+    expect(name + ': the whole chat, every gap a cloud, no answers on the page (her 20:46: they selected the boxes)', s.lines === 15 && s.chunks >= 9 && s.gapsLeft === 0 && !s.answers && s.notes === 0 && s.marks === 0, s);
+    expect(name + ': the instruction shows the cloud', s.cloudInInstr && /Skip the/.test(s.instr), s);
     expect(name + ': the question on top, two pictures, Next off', /First read the whole chat/.test(s.instr) && /What really happened/.test(s.instr) && s.opts === 2 && s.pics.every(w => w === 1024) && s.goOff, s);
-    await p.locator('.dlg.shut .chunk').first().click({force: true}); await p.waitForTimeout(100);
-    s = await st(); expect(name + ': a tap on a gap opens nothing', s.open === 0, s);
     if (shots) await p.screenshot({path: path.join(shots, 'gist-' + name + '-top.png')});
     await p.locator('.gist-opt').nth(0).click(); await p.waitForTimeout(120);
     s = await st(); const shake = await p.evaluate(() => !!document.querySelector('.gist-opt.shake')); out[name + 'wrong'] = s;
@@ -37,7 +37,7 @@ const {chromium, devices} = require('playwright'); const path = require('path');
     out[name + 'next'] = await p.evaluate(() => ({count: document.querySelector('.taskbar .count')?.textContent, gloss: !!document.querySelector('aside.gloss'), chunks: document.querySelectorAll('.panel .dlg .chunk').length}));
     expect(name + ': Next → the chat with the glossary', out[name + 'next'].gloss && out[name + 'next'].chunks > 0, out[name + 'next']);
     await p.click('#prev'); await p.waitForTimeout(300); s = await st();
-    expect(name + ': Back to it: the gaps still shut', s.open === 0 && s.lines === 15, s);
+    expect(name + ': Back to it: still clouds', s.gapsLeft === 0 && s.chunks >= 9 && s.lines === 15, s);
     await ctx.close();
   }
   console.log(JSON.stringify(out)); if (errs.length) fail.push('page errors: ' + errs.join(' | '));

@@ -1,0 +1,1546 @@
+{
+ "type": "revision-field",
+ "file": "stages-of-life",
+ "title": "When did it happen? Stages of life",
+ "part": "Lesson 12 · 06.11",
+ "sketch": true,
+ "boxes": {
+  "BOX": [
+   {
+    "h": "STAGES OF LIFE",
+    "items": [
+     "**as a kid** ((в детстве))",
+     "**at school** ((в школе))",
+     "**at 18** ((в 18 лет))",
+     "**in my early thirties** ((чуть за 30))"
+    ]
+   },
+   {
+    "h": "SCHOOL & UNIVERSITY: CHOOSE ONE",
+    "cols": [
+     "US",
+     "UK"
+    ],
+    "pairs": [
+     [
+      "after high school",
+      "after I left school",
+      "окончив школу"
+     ],
+     [
+      "right out of college",
+      "straight out of university",
+      "сразу после вуза"
+     ],
+     [
+      "in my third year of college",
+      "in my third year at university",
+      "на 3-м курсе"
+     ]
+    ]
+   },
+   {
+    "h": "NOT YET?",
+    "items": [
+     "**I still can't** drive (swim, cook…).",
+     "**I still don't have** my own place (a car…)."
+    ]
+   },
+   {
+    "h": "ASK AND REACT",
+    "items": [
+     "**When did you** learn to drive? → I learned ##/lɜːnd/##… ((did + базовая форма))",
+     "Oh, nice! · How old were you? · Really? Why?"
+    ]
+   }
+  ]
+ },
+ "stages": [
+  {
+   "label": "📝 Test yourself",
+   "blocks": [
+    {
+     "kind": "say",
+     "instr": "In pairs: how would you say these in English? Take turns. Don't worry about mistakes — we'll come back to them after the conversation.",
+     "task": [
+      "**1**  Я научилась плавать в детстве.",
+      "**2**  В 18 я уехала от родителей.",
+      "**3**  Сразу после вуза я нашла работу.",
+      "**4**  Я познакомилась с лучшей подругой на третьем курсе.",
+      "**5**  Когда ты научился водить?",
+      "**6**  Я до сих пор не умею водить."
+     ],
+     "later": "The answers come after the conversation: 🔁 Back to the start."
+    }
+   ]
+  },
+  {
+   "label": "📸 Old photos",
+   "blocks": [
+    {
+     "kind": "text",
+     "instr": "Leo and his gran look at her old photos. Read their conversation with the glossary. Who are you more like — Margaret or Leo? Tell each other why: give **two** reasons.",
+     "tip": "Read on your own first, then talk.",
+     "img": "photos-main.jpg",
+     "lines": [
+      {
+       "ctx": "Leo, 24, grew up in the US. He's visiting his gran Margaret, 71, in England. They're looking at her old photos."
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "Gran, is this you? With the piano?"
+       ],
+       "img": "photo-piano.jpg"
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "Yes! I started playing ",
+        {
+         "b": "at school"
+        },
+        ". Our poor neighbours!"
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "Ha! I tried the guitar ",
+        {
+         "b": "as a kid"
+        },
+        ". I lasted about a week."
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "A week? Your mum gave up after a day!"
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "And this one — with the suitcase. ",
+        {
+         "b": "When did you leave"
+        },
+        " home?"
+       ],
+       "img": "photo-suitcase.jpg"
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        {
+         "b": "At 18"
+        },
+        ". One suitcase and a radio — that was everything I had."
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "Wow. I only left home two years ago — I lived with Mom and Dad all through college. And ",
+        {
+         "b": "I still don't have my own place"
+        },
+        ". I share an apartment with two friends."
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "Well, sharing with friends can be fun! Are you still working at that pizza place?"
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "No, that was ",
+        {
+         "b": "after high school"
+        },
+        ". I got my first real job ",
+        {
+         "b": "right out of college"
+        },
+        " — writing instruction manuals for microwaves."
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "Microwave manuals? Does anyone actually read those?"
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "Nobody. But hey, it was a start. Who's this next to you?"
+       ],
+       "img": "photo-jean.jpg"
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "That's Jean, my best friend. We met ",
+        {
+         "b": "in my third year at university"
+        },
+        ". Fifty years on, we talk on the phone every Sunday."
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "That's so sweet! Oh — is that your first car?"
+       ],
+       "img": "photo-car.jpg"
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "It is! I bought it ",
+        {
+         "b": "in my early thirties"
+        },
+        ". Before that, I cycled everywhere. ",
+        {
+         "b": "When did you learn"
+        },
+        " to drive?"
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "Gran… ",
+        {
+         "b": "I still can't drive"
+        },
+        ". Mom tried to teach me once. Just once."
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "Oh dear! Well, I could always give you a lesson!"
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        {
+         "b": "at school"
+        }
+       ],
+       "ru": "в школе"
+      },
+      {
+       "p": [
+        {
+         "b": "as a kid"
+        }
+       ],
+       "ru": "в детстве (так говорят чаще, чем “in my childhood”)"
+      },
+      {
+       "p": [
+        {
+         "b": "When did you leave"
+        },
+        " home?"
+       ],
+       "ru": "когда ты уехала от родителей? (did + базовая форма)"
+      },
+      {
+       "p": [
+        {
+         "b": "at 18"
+        },
+        " ",
+        {
+         "ipa": "/ət ˌeɪˈtiːn/"
+        }
+       ],
+       "ru": "в 18 лет"
+      },
+      {
+       "p": [
+        {
+         "b": "I still don't have my own place"
+        }
+       ],
+       "ru": "у меня до сих пор нет своего жилья"
+      },
+      {
+       "p": [
+        {
+         "b": "after high school"
+        }
+       ],
+       "ru": "после окончания школы (US); в Британии — “after I left school”. Но “after school” — обычно «после уроков»!"
+      },
+      {
+       "p": [
+        {
+         "b": "right out of college"
+        },
+        " ",
+        {
+         "ipa": "/ˈkɒlɪdʒ/"
+        }
+       ],
+       "ru": "сразу после вуза (US: “college” = любой вуз); в Британии — “straight out of university”"
+      },
+      {
+       "p": [
+        {
+         "b": "in my third year at university"
+        },
+        " ",
+        {
+         "ipa": "/θɜːd ˌjuːnɪˈvɜːsəti/"
+        }
+       ],
+       "ru": "на третьем курсе (UK); в США — “in my third year of college”"
+      },
+      {
+       "p": [
+        {
+         "b": "in my early thirties"
+        },
+        " ",
+        {
+         "ipa": "/ˈɜːli ˈθɜːtiz/"
+        }
+       ],
+       "ru": "когда мне было чуть за тридцать"
+      },
+      {
+       "p": [
+        {
+         "b": "I still can't drive"
+        }
+       ],
+       "ru": "я до сих пор не умею водить"
+      },
+      {
+       "p": [
+        "I lasted about a week · instruction manuals · Jean ",
+        {
+         "ipa": "/dʒiːn/"
+        },
+        " · Fifty years on · cycled ",
+        {
+         "ipa": "/ˈsaɪkld/"
+        },
+        " everywhere"
+       ],
+       "ru": "меня хватило примерно на неделю · инструкции · Джин (женское имя) · пятьдесят лет спустя · везде ездила на велосипеде"
+      }
+     ]
+    },
+    {
+     "kind": "say",
+     "instr": "Look again. How do they say WHEN? Discuss together, then tap “Show the answer”.",
+     "task": [
+      "**as a kid · at school · after high school · at 18 · in my third year at university · right out of college · in my early thirties**",
+      "**1**  Which two phrases give an age?",
+      "**2**  Which phrases are about school or university?",
+      "**3**  Which two mean «после окончания школы»? Which one means «после уроков»? (a) I did my homework after school. (b) I got a job after I left school. (c) I worked at a pizza place after high school.",
+      "**4**  Which tense do Margaret and Leo use with all these phrases? Why?",
+      "**5**  “I still don't have my own place”, “I still can't drive”: has it happened yet? Where does “still” go?"
+     ],
+     "answer": [
+      "**1**  **at 18** · **in my early thirties** ((в 18 — “at”, не ~~in 18~~))",
+      "**2**  **at school** · **after high school** ((US)) · **in my third year at university** ((UK)) · **right out of college** ((US: “college” = любой вуз; UK: straight out of university))",
+      "**3**  (b) **after I left school** ((UK)) = (c) **after high school** ((US)) — после окончания школы. (a) **after school** — после уроков ((каждый день, после занятий))",
+      "**4**  **Past simple** — it answers “When?”, and it's over. ((это ответ на «когда?», и это уже в прошлом))",
+      "**5**  Not yet → **still** + don't have / can't ((это правда и сейчас; “still” — перед “don't” / “can't”: не I ~~don't still~~ have))"
+     ],
+     "answer_title": "Check"
+    },
+    {
+     "kind": "say",
+     "instr": "🔁 Back to the start: how would you say these now? Take turns. Then tap “Show the answer”.",
+     "task": [
+      "**1**  ((Я научилась плавать в детстве.))",
+      "• • •",
+      "**2**  ((В 18 я уехала от родителей.))",
+      "• • •",
+      "**3**  ((Сразу после вуза я нашла работу.))",
+      "• • •",
+      "**4**  ((Я познакомилась с лучшей подругой на третьем курсе.))",
+      "• • •",
+      "**5**  ((Когда ты научился водить?))",
+      "• • •",
+      "**6**  ((Я до сих пор не умею водить.))",
+      "• • •"
+     ],
+     "answer": [
+      "**1**  ((Я научилась плавать в детстве.))",
+      "I learned to swim **as a kid**.",
+      "((“in my childhood” — тоже можно, но “as a kid” / “when I was a kid” гораздо чаще))",
+      "**2**  ((В 18 я уехала от родителей.))",
+      "I left home **at 18**.",
+      "((в 18 лет → “at”, не ~~in 18~~))",
+      "**3**  ((Сразу после вуза я нашла работу.))",
+      "I got a job **right out of college**. / I got a job **straight out of university**.",
+      "((сразу после вуза: первый вариант американский, второй британский; “right after university” — тоже верно))",
+      "**4**  ((Я познакомилась с лучшей подругой на третьем курсе.))",
+      "I met my best friend **in my third year at university**.",
+      "((на третьем курсе (UK; US: “in my third year of college”) — не ~~on the third course~~))",
+      "**5**  ((Когда ты научился водить?))",
+      "**When did you learn** to drive?",
+      "((did + базовая форма: не When did you ~~learned~~))",
+      "**6**  ((Я до сих пор не умею водить.))",
+      "**I still can't** drive.",
+      "((до сих пор не умею → “still” + “can't”: не I still ~~don't can~~))"
+     ],
+     "answer_title": "Our answers",
+     "tip": "The six sentences from the start. Say them aloud first, then check."
+    },
+    {
+     "kind": "game",
+     "piece": "memo",
+     "seconds": 40,
+     "instr": "Memo: look at the phrases for 40 seconds and try to remember them. Then they disappear: take turns and say one each — in a sentence about you.",
+     "groups": [
+      {
+       "h": "STAGES OF LIFE",
+       "items": [
+        "as a kid",
+        "at school",
+        "after high school / after I left school",
+        "at 18",
+        "in my third year at university",
+        "right out of college / straight out of university",
+        "in my early thirties"
+       ]
+      },
+      {
+       "h": "NOT YET?",
+       "items": [
+        "I still can't drive.",
+        "I still don't have my own place."
+       ]
+      }
+     ],
+     "items": [
+      "as a kid",
+      "at school",
+      "after high school / after I left school",
+      "at 18",
+      "in my third year at university",
+      "right out of college / straight out of university",
+      "in my early thirties",
+      "I still can't drive.",
+      "I still don't have my own place."
+     ],
+     "tip": "Tap ▶ and look for 40 seconds. Then the phrases hide: take turns and say one each in a true sentence about you. At the end, tap the ones you remembered."
+    },
+    {
+     "kind": "text",
+     "instr": "Remember the missing words and say them. Tap the yellow and orange to check.",
+     "lines": [
+      {
+       "ctx": "Leo, 24, grew up in the US. He's visiting his gran Margaret, 71, in England. They're looking at her old photos."
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "Gran, is this you? With the piano?"
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "Yes! I started playing ",
+        {
+         "f": "",
+         "r": "at"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "chool"
+        },
+        ". Our poor neighbours!"
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "Ha! I tried the guitar ",
+        {
+         "f": "a",
+         "r": "s"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "a"
+        },
+        " ",
+        {
+         "f": "k",
+         "r": "id"
+        },
+        ". I lasted about a week."
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "A week? Your mum gave up after a day!"
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "And this one — with the suitcase. ",
+        "When did you ",
+        {
+         "f": "l",
+         "r": "eave"
+        },
+        " home?"
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        {
+         "f": "",
+         "r": "At"
+        },
+        " 18",
+        ". One suitcase and a radio — that was everything I had."
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "Wow. I only left home two years ago — I lived with Mom and Dad all through college. And ",
+        "I ",
+        {
+         "f": "s",
+         "r": "till"
+        },
+        " don't have my ",
+        {
+         "f": "o",
+         "r": "wn"
+        },
+        " ",
+        {
+         "f": "p",
+         "r": "lace"
+        },
+        ". I share an apartment with two friends."
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "Well, sharing with friends can be fun! Are you still working at that pizza place?"
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "No, that was ",
+        {
+         "f": "a",
+         "r": "fter"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "igh"
+        },
+        " school",
+        ". I got my first real job ",
+        {
+         "f": "r",
+         "r": "ight"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "ut"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "of"
+        },
+        " college",
+        " — writing instruction manuals for microwaves."
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "Microwave manuals? Does anyone actually read those?"
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "Nobody. But hey, it was a start. Who's this next to you?"
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "That's Jean, my best friend. We met ",
+        {
+         "f": "",
+         "r": "in"
+        },
+        " my ",
+        {
+         "f": "t",
+         "r": "hird"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ear"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "at"
+        },
+        " university",
+        ". Fifty years on, we talk on the phone every Sunday."
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "That's so sweet! Oh — is that your first car?"
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "It is! I bought it ",
+        {
+         "f": "",
+         "r": "in"
+        },
+        " my ",
+        {
+         "f": "e",
+         "r": "arly"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "hirties"
+        },
+        ". Before that, I cycled everywhere. ",
+        "When did you ",
+        {
+         "f": "l",
+         "r": "earn"
+        },
+        " to drive?"
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "Gran… ",
+        "I ",
+        {
+         "f": "s",
+         "r": "till"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "an't"
+        },
+        " drive",
+        ". Mom tried to teach me once. Just once."
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "Oh dear! Well, I could always give you a lesson!"
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        {
+         "f": "",
+         "r": "at"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "chool"
+        }
+       ],
+       "ru": "в школе"
+      },
+      {
+       "p": [
+        {
+         "f": "a",
+         "r": "s"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "a"
+        },
+        " ",
+        {
+         "f": "k",
+         "r": "id"
+        }
+       ],
+       "ru": "в детстве (так говорят чаще, чем “in my childhood”)"
+      },
+      {
+       "p": [
+        "When did you ",
+        {
+         "f": "l",
+         "r": "eave"
+        },
+        " home?"
+       ],
+       "ru": "когда ты уехала от родителей? (did + базовая форма)"
+      },
+      {
+       "p": [
+        {
+         "f": "",
+         "r": "at"
+        },
+        " 18",
+        " ",
+        {
+         "f": "",
+         "r": "/ət ˌeɪˈtiːn/",
+         "o": 1
+        }
+       ],
+       "ru": "в 18 лет"
+      },
+      {
+       "p": [
+        "I ",
+        {
+         "f": "s",
+         "r": "till"
+        },
+        " don't have my ",
+        {
+         "f": "o",
+         "r": "wn"
+        },
+        " ",
+        {
+         "f": "p",
+         "r": "lace"
+        }
+       ],
+       "ru": "у меня до сих пор нет своего жилья"
+      },
+      {
+       "p": [
+        {
+         "f": "a",
+         "r": "fter"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "igh"
+        },
+        " school"
+       ],
+       "ru": "после окончания школы (US); в Британии — “after I left school”. Но “after school” — обычно «после уроков»!"
+      },
+      {
+       "p": [
+        {
+         "f": "r",
+         "r": "ight"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "ut"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "of"
+        },
+        " college",
+        " ",
+        {
+         "f": "",
+         "r": "/ˈkɒlɪdʒ/",
+         "o": 1
+        }
+       ],
+       "ru": "сразу после вуза (US: “college” = любой вуз); в Британии — “straight out of university”"
+      },
+      {
+       "p": [
+        {
+         "f": "",
+         "r": "in"
+        },
+        " my ",
+        {
+         "f": "t",
+         "r": "hird"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ear"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "at"
+        },
+        " university",
+        " ",
+        {
+         "f": "",
+         "r": "/θɜːd ˌjuːnɪˈvɜːsəti/",
+         "o": 1
+        }
+       ],
+       "ru": "на третьем курсе (UK); в США — “in my third year of college”"
+      },
+      {
+       "p": [
+        {
+         "f": "",
+         "r": "in"
+        },
+        " my ",
+        {
+         "f": "e",
+         "r": "arly"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "hirties"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "/ˈɜːli ˈθɜːtiz/",
+         "o": 1
+        }
+       ],
+       "ru": "когда мне было чуть за тридцать"
+      },
+      {
+       "p": [
+        "I ",
+        {
+         "f": "s",
+         "r": "till"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "an't"
+        },
+        " drive"
+       ],
+       "ru": "я до сих пор не умею водить"
+      },
+      {
+       "p": [
+        "I lasted about a week · instruction manuals · Jean ",
+        {
+         "f": "",
+         "r": "/dʒiːn/",
+         "o": 1
+        },
+        " · Fifty years on · cycled ",
+        {
+         "f": "",
+         "r": "/ˈsaɪkld/",
+         "o": 1
+        },
+        " everywhere"
+       ],
+       "ru": "меня хватило примерно на неделю · инструкции · Джин (женское имя) · пятьдесят лет спустя · везде ездила на велосипеде"
+      }
+     ]
+    },
+    {
+     "kind": "text",
+     "instr": "Now without the glossary.",
+     "lines": [
+      {
+       "ctx": "Leo, 24, grew up in the US. He's visiting his gran Margaret, 71, in England. They're looking at her old photos."
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "Gran, is this you? With the piano?"
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "Yes! I started playing ",
+        {
+         "f": "",
+         "r": "at"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "chool"
+        },
+        ". Our poor neighbours!"
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "Ha! I tried the guitar ",
+        {
+         "f": "a",
+         "r": "s"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "a"
+        },
+        " ",
+        {
+         "f": "k",
+         "r": "id"
+        },
+        ". I lasted about a week."
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "A week? Your mum gave up after a day!"
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "And this one — with the suitcase. ",
+        "When did you ",
+        {
+         "f": "l",
+         "r": "eave"
+        },
+        " home?"
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        {
+         "f": "",
+         "r": "At"
+        },
+        " 18",
+        ". One suitcase and a radio — that was everything I had."
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "Wow. I only left home two years ago — I lived with Mom and Dad all through college. And ",
+        "I ",
+        {
+         "f": "s",
+         "r": "till"
+        },
+        " don't have my ",
+        {
+         "f": "o",
+         "r": "wn"
+        },
+        " ",
+        {
+         "f": "p",
+         "r": "lace"
+        },
+        ". I share an apartment with two friends."
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "Well, sharing with friends can be fun! Are you still working at that pizza place?"
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "No, that was ",
+        {
+         "f": "a",
+         "r": "fter"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "igh"
+        },
+        " school",
+        ". I got my first real job ",
+        {
+         "f": "r",
+         "r": "ight"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "ut"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "of"
+        },
+        " college",
+        " — writing instruction manuals for microwaves."
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "Microwave manuals? Does anyone actually read those?"
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "Nobody. But hey, it was a start. Who's this next to you?"
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "That's Jean, my best friend. We met ",
+        {
+         "f": "",
+         "r": "in"
+        },
+        " my ",
+        {
+         "f": "t",
+         "r": "hird"
+        },
+        " ",
+        {
+         "f": "y",
+         "r": "ear"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "at"
+        },
+        " university",
+        ". Fifty years on, we talk on the phone every Sunday."
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "That's so sweet! Oh — is that your first car?"
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "It is! I bought it ",
+        {
+         "f": "",
+         "r": "in"
+        },
+        " my ",
+        {
+         "f": "e",
+         "r": "arly"
+        },
+        " ",
+        {
+         "f": "t",
+         "r": "hirties"
+        },
+        ". Before that, I cycled everywhere. ",
+        "When did you ",
+        {
+         "f": "l",
+         "r": "earn"
+        },
+        " to drive?"
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "Gran… ",
+        "I ",
+        {
+         "f": "s",
+         "r": "till"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "an't"
+        },
+        " drive",
+        ". Mom tried to teach me once. Just once."
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "Oh dear! Well, I could always give you a lesson!"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "🃏 Practice",
+   "blocks": [
+    {
+     "kind": "cards",
+     "style": "say",
+     "box": "BOX",
+     "instr": "Margaret and Leo: ask and answer about them. Take turns: one asks with When did…?, the next answers from memory. Then tap the card.",
+     "tip": "Ask the question first (When did + the base form), then answer from memory: her / his, he still doesn't…",
+     "cards": [
+      {
+       "front": "((Margaret · start playing the piano?))",
+       "back": "**When did Margaret start** playing the piano? — **At school.**"
+      },
+      {
+       "front": "((Leo · try the guitar?))",
+       "back": "**When did Leo try** the guitar? — **As a kid.** He lasted about a week!"
+      },
+      {
+       "front": "((Margaret · leave home?))",
+       "back": "**When did Margaret leave** home? — **At 18**, with one suitcase and a radio."
+      },
+      {
+       "front": "((Leo · leave home?))",
+       "back": "**When did Leo leave** home? — Two years ago. And **he still doesn't have** his own place."
+      },
+      {
+       "front": "((Leo · get his first real job?))",
+       "back": "**When did Leo get** his first real job? — **Right out of college.**"
+      },
+      {
+       "front": "((Margaret · meet Jean?))",
+       "back": "**When did Margaret meet** Jean? — **In her third year at university.**"
+      },
+      {
+       "front": "((Margaret · buy her first car?))",
+       "back": "**When did Margaret buy** her first car? — **In her early thirties.**"
+      },
+      {
+       "front": "((Leo · learn to drive?))",
+       "back": "**When did Leo learn** to drive? — He didn't! **He still can't drive.**"
+      }
+     ]
+    },
+    {
+     "kind": "game",
+     "piece": "tictactoe",
+     "size": 3,
+     "box": "BOX",
+     "check": "Perfect English",
+     "instr": "Noughts and crosses: pick a square. Grey = could be better, green = good; a red word = use it. Say the sentence in perfect English, then tap to check. Three in a row wins!",
+     "tasks": [
+      {
+       "ctx": "про одну страну: были там один раз, лет десять назад",
+       "q": "My husband and I ~~have visited~~ it <g>only once</g>, about ten years ago.",
+       "a": "My husband and I **visited** it only once, about ten years ago.",
+       "why": "“Ten years ago” — это «когда?», и это уже в прошлом → past simple. “Only once” — отлично.",
+       "turn": "When did you last go somewhere new? Tell each other **two** things you remember about it."
+      },
+      {
+       "ctx": "ходили в музей неделю назад",
+       "q": "I ~~'ve been~~ to an art museum <g>a week ago</g>.",
+       "a": "I **went** to an art museum a week ago.",
+       "why": "С “ago” — только past simple: не ~~have been~~ и не ~~was to~~ → went.",
+       "turn": "When did you last go to a museum or a gallery? Name **one** thing you remember — or **one** you'd like to see."
+      },
+      {
+       "ctx": "сейчас ноябрь: спрашиваете друга о лете",
+       "q": "<g>Did you</g> ~~went~~ to a concert or a festival this summer?",
+       "a": "Did you **go** to a concert or a festival this summer?",
+       "why": "После “did” — всегда базовая форма: did + go. Лето закончилось → past simple.",
+       "turn": "Did you go anywhere special this summer? Tell each other about **one** place (even a park or a café near home)."
+      },
+      {
+       "ctx": "друг спрашивает про ваши прошлые выходные",
+       "q": "<g>Yeah,</g> I ~~'ve enjoyed this~~.",
+       "a": "Yeah, I **enjoyed it**.",
+       "why": "Выходные закончились → past simple, даже без даты. И “it”, а не “this”: о том, что уже было.",
+       "turn": "How was your last weekend? Say **two** things you did."
+      },
+      {
+       "ctx": "",
+       "q": "I learned to ride a bike when I was a child. ^^KID^^",
+       "a": "I learned to ride a bike **as a kid**.",
+       "why": "“as a kid” = в детстве; так говорят чаще, чем “in my childhood”. Or: when I was a kid — тоже верно.",
+       "turn": "When did you learn to swim or ride a bike? Who taught you? Tell each other **one** funny or scary moment."
+      },
+      {
+       "ctx": "",
+       "q": "I left home when I was eighteen. ^^AT^^",
+       "a": "I left home **at 18**.",
+       "why": "в 18 лет → “at 18”, не ~~in 18~~.",
+       "turn": "When did you first live away from your parents — or do you still live with them? Name **one** good thing and **one** hard thing about it."
+      },
+      {
+       "ctx": "",
+       "q": "I found a job as soon as I graduated. ^^OUT^^",
+       "a": "I found a job **right out of college**. / I found a job **straight out of university**.",
+       "why": "сразу после вуза: “right out of college” (US) или “straight out of university” (UK) — выбирай свой вариант. Or: right after university.",
+       "turn": "What did you do right after high school — study, work or something else? Why?"
+      },
+      {
+       "ctx": "",
+       "q": "I met my best friend when I was a third-year student at university. ^^MY^^",
+       "a": "I met my best friend **in my third year at university**. / I met my best friend **in my third year of college**.",
+       "why": "на третьем курсе: “at university” (UK) или “of college” (US), не ~~on the third course~~.",
+       "turn": "Where and when did you meet one of your oldest friends? Say **one** thing you did together back then."
+      },
+      {
+       "ctx": "",
+       "q": "I haven't learned to drive yet. ^^STILL^^",
+       "a": "**I still can't** drive.",
+       "why": "до сих пор не умею → “I still can't” — это правда и сейчас. Or: I still haven't learned to drive.",
+       "turn": "Name **one** thing you still don't have (a car, a dog, a garden…). Do you want it? Why or why not?"
+      }
+     ],
+     "tip": "Think first, then say it. Tap to check. After each square: 💬 Your turn — answer the question about you."
+    },
+    {
+     "kind": "game",
+     "piece": "wheel",
+     "box": "BOX",
+     "check": "Check",
+     "instr": "The wheel of questions: take turns to spin. Make the question and ask the next person. They answer: Yes, I did / No, I didn't + one detail. Then tap to check the question.",
+     "tasks": [
+      {
+       "label": "1",
+       "q": "you / learn to swim — as a kid?",
+       "a": "**Did you** learn to swim **as a kid**?",
+       "why": "did + базовая форма: Did you learn / study / start…? The answer: Yes, I did / No, I didn't + one detail."
+      },
+      {
+       "label": "2",
+       "q": "you / study English — at school?",
+       "a": "**Did you** study English **at school**?",
+       "why": "did + базовая форма: Did you learn / study / start…? The answer: Yes, I did / No, I didn't + one detail."
+      },
+      {
+       "label": "3",
+       "q": "you / start working — after high school / after you left school?",
+       "a": "**Did you** start working **after high school**? / **after you left school**?",
+       "why": "did + базовая форма: Did you learn / study / start…? The answer: Yes, I did / No, I didn't + one detail."
+      },
+      {
+       "label": "4",
+       "q": "you / leave home — at 18?",
+       "a": "**Did you** leave home **at 18**?",
+       "why": "did + базовая форма: Did you learn / study / start…? The answer: Yes, I did / No, I didn't + one detail."
+      },
+      {
+       "label": "5",
+       "q": "you / have a job — in your third year of college / at university?",
+       "a": "**Did you** have a job **in your third year of college**? / **at university**?",
+       "why": "did + базовая форма: Did you learn / study / start…? The answer: Yes, I did / No, I didn't + one detail."
+      },
+      {
+       "label": "6",
+       "q": "you / find a job — right out of college / straight out of university?",
+       "a": "**Did you** find a job **right out of college**? / **straight out of university**?",
+       "why": "did + базовая форма: Did you learn / study / start…? The answer: Yes, I did / No, I didn't + one detail."
+      },
+      {
+       "label": "7",
+       "q": "you / have a car — in your early twenties?",
+       "a": "**Did you** have a car **in your early twenties**?",
+       "why": "did + базовая форма: Did you learn / study / start…? The answer: Yes, I did / No, I didn't + one detail."
+      },
+      {
+       "label": "8",
+       "q": "you / have a phone — at school?",
+       "a": "**Did you** have a phone **at school**?",
+       "why": "did + базовая форма: Did you learn / study / start…? The answer: Yes, I did / No, I didn't + one detail."
+      },
+      {
+       "label": "9",
+       "q": "you / travel a lot — as a kid?",
+       "a": "**Did you** travel a lot **as a kid**?",
+       "why": "did + базовая форма: Did you learn / study / start…? The answer: Yes, I did / No, I didn't + one detail."
+      },
+      {
+       "label": "10",
+       "q": "you / live with friends — at university / in college?",
+       "a": "**Did you** live with friends **at university**? / **in college**?",
+       "why": "did + базовая форма: Did you learn / study / start…? The answer: Yes, I did / No, I didn't + one detail."
+      }
+     ],
+     "tip": "Spin, make the question, ask. The answer: Yes, I did / No, I didn't + one detail. Then tap to check the question. US or UK — choose one."
+    }
+   ]
+  },
+  {
+   "label": "💬 Use it",
+   "blocks": [
+    {
+     "kind": "model",
+     "instr": "Here's how it works. Complete the chats. Then tap the yellow to check.",
+     "box": "BOX",
+     "parts": [
+      {
+       "title": "",
+       "lines": [
+        {
+         "s": "A",
+         "p": [
+          {
+           "f": "W",
+           "r": "hen"
+          },
+          " ",
+          {
+           "f": "d",
+           "r": "id"
+          },
+          " ",
+          {
+           "f": "y",
+           "r": "ou"
+          },
+          " get your first job?"
+         ]
+        },
+        {
+         "s": "B",
+         "p": [
+          {
+           "f": "",
+           "r": "At"
+          },
+          " 18 — I worked in a café, just for the summer."
+         ]
+        },
+        {
+         "s": "A",
+         "p": [
+          "Oh, nice! Did you like it?"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "",
+       "lines": [
+        {
+         "s": "A",
+         "p": [
+          {
+           "f": "W",
+           "r": "hen"
+          },
+          " ",
+          {
+           "f": "d",
+           "r": "id"
+          },
+          " ",
+          {
+           "f": "y",
+           "r": "ou"
+          },
+          " learn to drive?"
+         ]
+        },
+        {
+         "s": "B",
+         "p": [
+          "I ",
+          {
+           "f": "s",
+           "r": "till"
+          },
+          " ",
+          {
+           "f": "c",
+           "r": "an't"
+          },
+          " drive!"
+         ]
+        },
+        {
+         "s": "A",
+         "p": [
+          "Really? Would you like to learn?"
+         ]
+        }
+       ]
+      }
+     ],
+     "tip": "Next, you'll ask each other like this."
+    },
+    {
+     "kind": "game",
+     "piece": "snakes",
+     "box": "BOX",
+     "check": "Check",
+     "instr": "Snakes and ladders: take turns to roll the dice and move. On your square, ask the next person: When did you…? Tap to check your question. Then they answer with a time phrase (from the box or your own: at 35, two years ago) + one detail.",
+     "rule": "Ladder + right question = go up. Snake + wrong question = go down. First to the top wins!",
+     "tasks": [
+      {
+       "label": "Ask",
+       "q": "learn to swim ((answer: I learned…))",
+       "a": "**When did you** learn to swim?",
+       "why": "did + базовая форма: “When did you learn…?”, не ~~learned~~."
+      },
+      {
+       "label": "Ask",
+       "q": "start learning English ((answer: I started…))",
+       "a": "**When did you** start learning English?",
+       "why": "did + базовая форма: “When did you start…?”, не ~~started~~."
+      },
+      {
+       "label": "Ask",
+       "q": "learn to drive ((answer: I learned…))",
+       "a": "**When did you** learn to drive?",
+       "why": "did + базовая форма: “When did you learn…?”, не ~~learned~~."
+      },
+      {
+       "label": "Ask",
+       "q": "get your first phone ((answer: I got…))",
+       "a": "**When did you** get your first phone?",
+       "why": "did + базовая форма: “When did you get…?”, не ~~got~~."
+      },
+      {
+       "label": "Ask",
+       "q": "first earn your own money ((answer: I earned…))",
+       "a": "**When did you** first earn your own money?",
+       "why": "did + базовая форма: “When did you first earn…?”, не ~~earned~~."
+      },
+      {
+       "label": "Ask",
+       "q": "get your first job ((answer: I got…))",
+       "a": "**When did you** get your first job?",
+       "why": "did + базовая форма: “When did you get…?”, не ~~got~~."
+      },
+      {
+       "label": "Ask",
+       "q": "get your own place ((answer: I got…))",
+       "a": "**When did you** get your own place?",
+       "why": "did + базовая форма: “When did you get…?”, не ~~got~~."
+      },
+      {
+       "label": "Ask",
+       "q": "learn to cook ((answer: I learned…))",
+       "a": "**When did you** learn to cook?",
+       "why": "did + базовая форма: “When did you learn…?”, не ~~learned~~."
+      },
+      {
+       "label": "Ask",
+       "q": "learn to ride a bike ((answer: I learned…))",
+       "a": "**When did you** learn to ride a bike?",
+       "why": "did + базовая форма: “When did you learn…?”, не ~~learned~~."
+      },
+      {
+       "label": "Ask",
+       "q": "buy your first car ((answer: I bought…))",
+       "a": "**When did you** buy your first car?",
+       "why": "did + базовая форма: “When did you buy…?”, не ~~bought~~."
+      },
+      {
+       "label": "Ask",
+       "q": "get your first computer ((answer: I got…))",
+       "a": "**When did you** get your first computer?",
+       "why": "did + базовая форма: “When did you get…?”, не ~~got~~."
+      },
+      {
+       "label": "Ask",
+       "q": "get your first pet ((answer: I got… · no pet? → I still don't have one))",
+       "a": "**When did you** get your first pet?",
+       "why": "did + базовая форма: “When did you get…?”, не ~~got~~."
+      },
+      {
+       "label": "Ask",
+       "q": "meet your oldest friend ((answer: I met…))",
+       "a": "**When did you** meet your oldest friend?",
+       "why": "did + базовая форма: “When did you meet…?”, не ~~met~~."
+      },
+      {
+       "label": "Ask",
+       "q": "go abroad for the first time ((answer: I went…))",
+       "a": "**When did you** go abroad for the first time?",
+       "why": "did + базовая форма: “When did you go…?”, не ~~went~~."
+      },
+      {
+       "label": "Ask",
+       "q": "move into your current home ((answer: I moved…))",
+       "a": "**When did you** move into your current home?",
+       "why": "did + базовая форма: “When did you move…?”, не ~~moved~~."
+      },
+      {
+       "label": "Ask",
+       "q": "start your current (or last) job ((answer: I started…))",
+       "a": "**When did you** start your current (or last) job?",
+       "why": "did + базовая форма: “When did you start…?”, не ~~started~~."
+      }
+     ]
+    },
+    {
+     "kind": "questions",
+     "instr": "Now your real stories.",
+     "box": "BOX",
+     "items": [
+      "**1**  **Three** big moments in your life (a first job, a move, a new skill…) — when did they happen? Use the box. Your partner asks **one** more question about each.",
+      "**2**  What were you like **as a kid**? Name **two** things you loved and **one** thing you hated.",
+      "**3**  Name **two** things you **still can't** do (swim, cook, drive…). Would you like to learn them? Why or why not?"
+     ],
+     "fast": "If you're done: 1. Go back to the board: ask about the squares nobody landed on. 2. Margaret and Leo: when did they leave home? When did Leo get his first real job? Who still can't drive? Say it from memory. 3. What did you want to be as a kid — and at 18? Why did it change? Tell each other."
+    }
+   ]
+  }
+ ]
+}
