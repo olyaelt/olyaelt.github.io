@@ -1,6 +1,7 @@
 const STICKER = "__STICKER__";
 const BOAT1 = "__BOAT1__", BOAT2 = "__BOAT2__", BOAT3 = "__BOAT3__";   /* Olya's pictures (ChatGPT), 1100 px JPEG */
 const BOAT = __BOAT__;          /* r1: life on a boat, two screens */
+const CARDS = __CARDS__;        /* r1: six cards — Dan answers Jess (v2 of the TZ, her decision 5.11 14:34) */
 const SAYIT = __SAYIT__;        /* r1: six situations, the whole reply from scratch */
 const FIX = __FIX__;            /* e1: Fix it, four blocks */
 const REUNION = __REUNION__;    /* e2: «Twenty years later» (23.10), part 2 */
@@ -83,13 +84,19 @@ const NAMED = {BOAT1, BOAT2, BOAT3, BOX_COMP};
 const showIpa = g => g.h ? g : Object.assign({}, g, {p: g.p.map(x => x && typeof x === "object" && x.o && "r" in x ? {ipa: x.r.trim(), o: 1} : x)});
 const withGloss = st => st.gloss ? {gloss: st.gloss.map(showIpa)} : {};
 
-/* R1: two screens of the boat chat (a picture above each, the glossary beside), then six say-it steps from scratch */
+/* R1 (v2): two short screens of the boat chat (a picture above each, the glossary beside; each gap a whole phrase), six cards (Dan answers Jess),
+   then six say-it steps from scratch (the collage above) */
 const R1_SIT = "Dan visits his sister Maya. A year ago she sold her flat — now she lives on a narrowboat. Dan expects the worst; Maya knows better.";
-const R1_INSTR = ["Say the missing words (≠ means the opposite), then tap the yellow boxes to check.", "Screen 2. The same: say the missing words, then tap to check."];
+const R1_INSTR = ["Say Maya's missing words — the whole phrase, with the word in brackets — then tap the yellow boxes to check.", "Screen 2. The same: say the whole missing phrase, then tap to check."];
+const CARD_FIRST = "That evening Dan calls his wife, Jess. She has her own doubts — and now Dan knows better. Say Dan's whole reply (≠ means the opposite), then tap the yellow box to check.";
+const CARD_NEXT = "Say Dan's whole reply, then tap to check.";
 const SAY_FIRST = "Now without any help. Someone expects the worst — you know better. Say the whole reply aloud with … than you'd think, then tap the yellow box to see one possible answer.";
 const SAY_NEXT = "Say the whole reply aloud, then tap to check.";
 const R1_STEPS = [
   ...BOAT.steps.map((st, i) => Object.assign({}, st, withGloss(st), {pic: NAMED[st.pic] || "", intro: i === 0 ? R1_SIT : st.intro, instr: R1_INSTR[i]})),
+  /* ≠ inside the italic situation came out as «⁄» (the italic face has no ≠): set upright */
+  ...CARDS.map(c => Object.assign({}, c, {rows: c.rows.map(r => r.map(x => String(x).replace(/≠/g, '<span style="font-style:normal">≠</span>')))}))
+         .map((s, i) => ({type:"sayit", s, box: NAMED[s.box] || BOX_COMP, instr: i === 0 ? CARD_FIRST : CARD_NEXT})),
   ...SAYIT.map((s, i) => ({type:"sayit", s, box: NAMED[s.box] || BOX_COMP, pic: NAMED[s.pic] || "", instr: i === 0 ? SAY_FIRST : SAY_NEXT}))];
 
 /* E1 «Fix it» (engine 49): the mechanics of 30.10 */
@@ -108,7 +115,7 @@ const R1_PLAIN = "Now without the glossary. Say the missing words, then tap the 
 const E2_STEPS = REUNION.steps.map((st, i) => Object.assign({}, st, withGloss(st), {instr: i === 0 ? R1_FIRST : st.gloss ? R1_GLOSS : R1_PLAIN}));
 
 const TASKS = [
-  {id:"r1", topic:"easier", sec:"Revision", title:"Not what you'd expect: life on a boat", meta:"2 screens + 6 situations", kind:"steps", min:10, steps:R1_STEPS},
+  {id:"r1", topic:"easier", sec:"Revision", title:"Not what you'd expect: life on a boat", meta:"2 short screens + 6 cards + 6 situations", kind:"steps", min:11, steps:R1_STEPS},
   {id:"e1", topic:"easier", sec:"Extension", title:"Fix it: one small thing", meta:"4 blocks · 10 items", kind:"steps", min:7, steps:FIX_STEPS},
   {id:"e2", topic:"easier", sec:"Extension", title:"Twenty years later: two old friends at a market", meta:"2 parts · with the glossary, then without", kind:"steps", min:10, steps:E2_STEPS},
   {id:"e3", topic:"easier", sec:"Extension", title:"Hear it: comparatives in real videos", meta:"8 clips · can wait till the weekend", kind:"steps", min:6,

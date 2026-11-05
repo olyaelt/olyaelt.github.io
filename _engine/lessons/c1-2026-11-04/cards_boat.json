@@ -1,0 +1,68 @@
+[
+ {
+  "html": true,
+  "rows": [
+   [
+    "Jess: “A narrowboat? It must be tiny inside. Where does she even put her stuff?” <i>(≠ tiny)</i>",
+    "<b class=\"g\">It's a lot more spacious than you'd think.</b> There's storage everywhere — under the seats, under the bed, even in the steps."
+   ]
+  ],
+  "note": "or: a lot bigger / roomier inside than you'd think · It's not as small as you'd think.",
+  "box": "BOX_COMP"
+ },
+ {
+  "html": true,
+  "rows": [
+   [
+    "Jess: “But living on a boat must cost a fortune.” <i>(≠ expensive)</i>",
+    "<b class=\"g\">It's a lot cheaper than you'd think</b> — no mortgage, and the bills are next to nothing."
+   ]
+  ],
+  "note": "or: a lot less expensive than you'd think · It's not as expensive as you'd think.",
+  "box": "BOX_COMP"
+ },
+ {
+  "html": true,
+  "rows": [
+   [
+    "Jess: “And the other boat people? I bet they keep themselves to themselves.” <i>(friendly)</i> <span class=\"ru\">keep themselves to themselves = держатся особняком</span>",
+    "<b class=\"g\">They're a lot friendlier than you'd think.</b> The couple on the next boat brought her a cake on her first day."
+   ]
+  ],
+  "note": "or: a lot more friendly · -y → -ier: friendlier",
+  "box": "BOX_COMP"
+ },
+ {
+  "html": true,
+  "rows": [
+   [
+    "Jess: “What about the locks? Sounds like hard work.” <i>(fun)</i> <span class=\"ru\">a lock = шлюз</span>",
+    "<b class=\"g\">They're a lot more fun than you'd think.</b> People walking past usually stop to help with the gates."
+   ]
+  ],
+  "note": "fun → more fun (funnier = смешнее)",
+  "box": "BOX_COMP"
+ },
+ {
+  "html": true,
+  "rows": [
+   [
+    "Jess: “I bet the Wi-Fi's terrible.” <i>(≠ terrible)</i>",
+    "<b class=\"g\">It's a lot better than you'd think.</b> She works from the boat three days a week."
+   ]
+  ],
+  "note": "or: It's not as bad as you'd think. · bad / terrible → better",
+  "box": "BOX_COMP"
+ },
+ {
+  "html": true,
+  "rows": [
+   [
+    "Jess: “Living in such a small space must be really stressful.” <i>(less …)</i>",
+    "<b class=\"g\">It's a lot less stressful than you'd think.</b> Honestly, she's the most relaxed I've seen her in years."
+   ]
+  ],
+  "note": "or: It's a lot more relaxing than you'd think. · less + a long adjective: less stressful ✓ · with a short adjective we usually use the opposite: not 'less hard' but 'easier'",
+  "box": "BOX_COMP"
+ }
+]

@@ -21,9 +21,14 @@
     "a": "hand them over",
     "acc": [
      "hand them over",
-     "hand them all over"
+     "hand them all over",
+     "hand all of them over",
+     "hand my spreadsheets over",
+     "hand over my spreadsheets",
+     "hand all my spreadsheets over",
+     "hand over all my spreadsheets"
     ],
-    "n": "them — between hand and over."
+    "n": "With a noun both orders work: hand my spreadsheets over / hand over my spreadsheets. With them — only in the middle: hand them over (not 'hand over them')."
    },
    {
     "kind": "write",
@@ -46,9 +51,11 @@
     "a": "hand your wedding speech over",
     "acc": [
      "hand your wedding speech over",
-     "hand over your wedding speech"
+     "hand over your wedding speech",
+     "hand your speech over",
+     "hand over your speech"
     ],
-    "n": "With a noun both orders work. With it / them — only hand it over."
+    "n": "With a noun both orders work. With it / them — only in the middle: hand it over."
    }
   ]
  },

@@ -14,7 +14,7 @@
     {
      "s": "Maya",
      "p": [
-      "Seventeen metres of pure luxury. Come in — mind your head."
+      "Fifty-seven feet of pure luxury. Come in — mind your head."
      ]
     },
     {
@@ -26,49 +26,13 @@
     {
      "s": "Maya",
      "p": [
-      "It's actually a lot ",
+      "It's actually ",
       {
        "f": "",
-       "r": "warmer"
+       "r": "a lot warmer than you'd think"
       },
-      " (≠ freezing)",
-      " than you'd think. This little stove heats the whole boat in ten minutes."
-     ]
-    },
-    {
-     "s": "Dan",
-     "p": [
-      "And it's tiny. Where do you even put your stuff?"
-     ]
-    },
-    {
-     "s": "Maya",
-     "p": [
-      "It's a lot ",
-      {
-       "f": "",
-       "r": "more spacious"
-      },
-      " (spacious)",
-      " than you'd think. There's storage everywhere — under the seats, under the bed, even in the steps."
-     ]
-    },
-    {
-     "s": "Dan",
-     "p": [
-      "Clever. But it can't be cheap. Boats cost a fortune."
-     ]
-    },
-    {
-     "s": "Maya",
-     "p": [
-      "Not this one. Living here is a lot ",
-      {
-       "f": "",
-       "r": "cheaper"
-      },
-      " (≠ expensive)",
-      " than you'd think. No rent, and the bills are tiny — just the licence and a bit of diesel."
+      " (warm)",
+      ". This little stove heats the whole boat in ten minutes."
      ]
     },
     {
@@ -80,31 +44,7 @@
     {
      "s": "Maya",
      "p": [
-      "The ducks are a lot ",
-      {
-       "f": "",
-       "r": "louder"
-      },
-      " (loud)",
-      " than you'd think, believe me. Six a.m., every day."
-     ]
-    },
-    {
-     "s": "Dan",
-     "p": [
-      "People who live on boats, though. Bet they're all a bit weird."
-     ]
-    },
-    {
-     "s": "Maya",
-     "p": [
-      "They're a lot ",
-      {
-       "f": "",
-       "r": "friendlier"
-      },
-      " (friendly)",
-      " than you'd think. The couple next door brought me a cake on my first day."
+      "Lonely? With this lot? They start quacking at six every morning."
      ]
     },
     {
@@ -116,13 +56,13 @@
     {
      "s": "Maya",
      "p": [
-      "He's a lot ",
+      "He's ",
       {
        "f": "",
-       "r": "happier"
+       "r": "a lot happier than you'd think"
       },
-      " (≠ miserable)",
-      " than you'd think. He's basically the captain now. He sits on the roof and shouts at swans."
+      " (happy)",
+      ". He's basically the captain now. He sits on the roof and yells at the swans."
      ]
     }
    ],
@@ -150,17 +90,10 @@
     },
     {
      "p": [
-      "storage"
+      "this lot"
      ],
-     "m": "places to keep your things",
-     "ru": "место для хранения"
-    },
-    {
-     "p": [
-      "a lock"
-     ],
-     "m": "gates on a canal that move boats up or down",
-     "ru": "шлюз"
+     "m": "these (people, ducks…) — informal, BrE",
+     "ru": "эти вот"
     },
     {
      "p": [
@@ -173,7 +106,7 @@
      "p": [
       "the deck"
      ],
-     "m": "the flat top of a boat",
+     "m": "the flat outside part of a boat",
      "ru": "палуба"
     },
     {
@@ -181,21 +114,21 @@
     },
     {
      "p": [
-      "a lot / much + -er: warmer, cheaper, louder"
+      "a lot / much + -er: warmer, harder, nicer"
      ],
      "m": "short adjectives",
-     "ru": "гораздо теплее, дешевле"
+     "ru": "гораздо теплее"
     },
     {
      "p": [
-      "-y → -ier: friendlier, happier"
+      "-y → -ier: happier, friendlier"
      ],
-     "m": "more friendly is also correct",
+     "m": "",
      "ru": ""
     },
     {
      "p": [
-      "more + long adjective: more spacious, more relaxing · more fun"
+      "more + long adjective: more spacious · fun → more fun"
      ],
      "m": "not 'funnier' here: funny = makes you laugh",
      "ru": ""
@@ -208,7 +141,7 @@
      "ru": ""
     }
    ],
-   "note": "Also possible: cosier (for warmer) · less expensive (for cheaper) · more friendly (for friendlier)"
+   "note": "Also possible: a lot cosier than you'd think (for warmer) · much / way happier (for happier). Not 'more happier' — just happier."
   },
   {
    "type": "dlg",
@@ -224,13 +157,13 @@
     {
      "s": "Maya",
      "p": [
-      "Ha! Steering it is a lot ",
+      "Ha! Steering it is ",
       {
        "f": "",
-       "r": "harder"
+       "r": "a lot harder than you'd think"
       },
-      " (≠ easy)",
-      " than you'd think. I've hit the same bridge three times."
+      " (hard)",
+      ". I've hit the same bridge three times."
      ]
     },
     {
@@ -248,67 +181,31 @@
     {
      "s": "Dan",
      "p": [
-      "And the locks? Sounds like hard work."
+      "Of course it did. And will you stop saying \"than you'd think\"?"
      ]
     },
     {
      "s": "Maya",
      "p": [
-      "They're a lot ",
+      "That's ",
       {
        "f": "",
-       "r": "more fun"
-      },
-      " (fun)",
-      " than you'd think. Strangers always stop to help you open the gates."
-     ]
-    },
-    {
-     "s": "Dan",
-     "p": [
-      "What about the internet? I bet you can't even send an email."
-     ]
-    },
-    {
-     "s": "Maya",
-     "p": [
-      "The Wi-Fi's a lot ",
-      {
-       "f": "",
-       "r": "better"
-      },
-      " (≠ bad)",
-      " than you'd think. I work from here three days a week."
-     ]
-    },
-    {
-     "s": "Dan",
-     "p": [
-      "Can you please stop saying \"than you'd think\"?"
-     ]
-    },
-    {
-     "s": "Maya",
-     "p": [
-      "That's a lot ",
-      {
-       "f": "",
-       "r": "harder"
+       "r": "a lot harder than you'd think"
       },
       " (hard)",
-      " than you'd think."
+      "."
      ]
     },
     {
      "s": "Dan",
      "p": [
-      "Fine. I admit it. It's a lot ",
+      "Fine. I admit it. It's ",
       {
        "f": "",
-       "r": "nicer"
+       "r": "a lot nicer than I thought"
       },
-      " (nice)",
-      " than I thought."
+      " (nice · than I…)",
+      "."
      ]
     },
     {
@@ -326,13 +223,7 @@
     {
      "s": "Maya",
      "p": [
-      "Up on the deck. It's a lot ",
-      {
-       "f": "",
-       "r": "more relaxing"
-      },
-      " (relaxing)",
-      " than you'd think."
+      "Out on the deck."
      ]
     },
     {
@@ -372,17 +263,10 @@
     },
     {
      "p": [
-      "storage"
+      "this lot"
      ],
-     "m": "places to keep your things",
-     "ru": "место для хранения"
-    },
-    {
-     "p": [
-      "a lock"
-     ],
-     "m": "gates on a canal that move boats up or down",
-     "ru": "шлюз"
+     "m": "these (people, ducks…) — informal, BrE",
+     "ru": "эти вот"
     },
     {
      "p": [
@@ -395,7 +279,7 @@
      "p": [
       "the deck"
      ],
-     "m": "the flat top of a boat",
+     "m": "the flat outside part of a boat",
      "ru": "палуба"
     },
     {
@@ -403,21 +287,21 @@
     },
     {
      "p": [
-      "a lot / much + -er: warmer, cheaper, louder"
+      "a lot / much + -er: warmer, harder, nicer"
      ],
      "m": "short adjectives",
-     "ru": "гораздо теплее, дешевле"
+     "ru": "гораздо теплее"
     },
     {
      "p": [
-      "-y → -ier: friendlier, happier"
+      "-y → -ier: happier, friendlier"
      ],
-     "m": "more friendly is also correct",
+     "m": "",
      "ru": ""
     },
     {
      "p": [
-      "more + long adjective: more spacious, more relaxing · more fun"
+      "more + long adjective: more spacious · fun → more fun"
      ],
      "m": "not 'funnier' here: funny = makes you laugh",
      "ru": ""
@@ -430,7 +314,7 @@
      "ru": ""
     }
    ],
-   "note": "Also possible: trickier / more difficult (for the first harder) · better (for Dan's nicer). About your own expectation: than I thought (Dan's line); what people in general expect: than you'd think. Not 'more harder' or 'less harder' — just harder / easier."
+   "note": "Also possible: a lot trickier / more difficult than you'd think (for the first harder) · a lot better than I thought (for Dan's nicer). About your own expectation: than I thought (Dan's line); what people in general expect: than you'd think. Not 'more harder' or 'less harder' — just harder."
   }
  ]
 }
