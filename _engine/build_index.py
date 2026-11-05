@@ -11,7 +11,9 @@ def meta(path):
     key = re.search(r'const PAGE_KEY = "([^"]+)"', t).group(1)
     date = re.search(r'const LESSON = \{ date:"([^"]+)"', t).group(1)
     tb = t[t.index('const TOPICS = ['):]; tb = tb[:tb.index('];')]
-    topics = [{'title': m.group(1), 'sub': m.group(2)} for m in re.finditer(r'title:"([^"]+)", sub:"([^"]+)"', tb)]
+    # engine 62 also (her 05.11 17:12, B2 4.11 had no title in the list): the topic may run over two lines (title, then sub)
+    topics = [{'title': m.group(1), 'sub': m.group(2)} for m in re.finditer(r'title:"([^"]+)",\s*sub:"([^"]*)"', tb)]
+    if not topics: print('WARNING', os.path.basename(path), 'no topic title found for the list')
     kb = t[t.index('const TASKS = ['):]; kb = kb[:kb.index('\n];')]
     tasks = re.findall(r'^\s*\{id:"([\w-]+)"', kb, re.M)
     sync = re.search(r'const SYNC_URL = "([^"]*)"', t).group(1)

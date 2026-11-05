@@ -27,6 +27,8 @@ const FAKE_YT = `window.YT={Player:function(id,o){const d=document.getElementByI
       /* engine 58: Over to you — Save without sending (stays on the page), then Back to the homework: not sent, not ticked */
       if (await p.locator('#nosend').count() && await p.locator('#nosend').isVisible()) { await p.click('#nosend'); await p.waitForTimeout(80);
         if (await p.locator('#to-list').count()) await p.click('#to-list'); await p.waitForTimeout(80); savedOnly = true; clicks++; continue; }
+      /* engine 62 also: a «read for gist» step — Next is off until the right picture */
+      if (await p.locator('.gist-opt').count() && await go.isDisabled()) { await p.evaluate(() => { const st = current.steps[stepIdx]; document.querySelector(`[data-gist="${st.ok}"]`).click(); }); await p.waitForTimeout(120); clicks++; continue; }
       await go.click(); clicks++; await p.waitForTimeout(60);
     }
     /* engine 58: Over to you left without sending stays unticked (her rule of 1.11) */

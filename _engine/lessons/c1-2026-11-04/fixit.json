@@ -28,7 +28,7 @@
      "hand all my spreadsheets over",
      "hand over all my spreadsheets"
     ],
-    "n": "With a noun both orders work: hand my spreadsheets over / hand over my spreadsheets. With them — only in the middle: hand them over (not 'hand over them')."
+    "n": "With a noun both orders work: hand my spreadsheets over / hand over my spreadsheets. With them — only in the middle: hand them over, not ~~hand over them~~."
    },
    {
     "kind": "write",
@@ -40,7 +40,7 @@
     "acc": [
      "be handed over"
     ],
-    "n": "passive: be + handed (not 'be hand')."
+    "n": "passive: be + handed, not ~~be hand~~."
    },
    {
     "kind": "write",
@@ -61,7 +61,7 @@
  },
  {
   "id": "f2",
-  "title": "come in handy: with in",
+  "title": "come in handy: with “in”",
   "card": [
    {
     "wrong": "My first-aid course ~~came handy~~ last week.",
@@ -69,22 +69,22 @@
     "good": "My first-aid course"
    }
   ],
-  "why_en": "come in handy = be useful when you need it — always with in.",
-  "why_ru": "пригодиться — с in",
+  "why_en": "come in handy = be useful when you need it — always with “in”.",
+  "why_ru": "пригодиться — с “in”",
   "items": [
    {
     "kind": "write",
-    "o": "Knowing a bit of Spanish was really useful on holiday.",
+    "o": "Knowing a bit of Spanish was useful on holiday.",
     "hint": "handy",
     "pre": "Knowing a bit of Spanish ",
     "post": " on holiday.",
-    "a": "came in really handy",
+    "a": "came in handy",
     "acc": [
+     "came in handy",
      "came in really handy",
-     "really came in handy",
-     "came in handy"
+     "really came in handy"
     ],
-    "n": "came in really handy: really goes before handy."
+    "n": "It helped at the time → came in handy."
    },
    {
     "kind": "write",
@@ -96,13 +96,13 @@
     "acc": [
      "come in handy"
     ],
-    "n": ""
+    "n": "It may help one day → might come in handy."
    }
   ]
  },
  {
   "id": "f3",
-  "title": "the hard way: no in",
+  "title": "the hard way: no “in”",
   "card": [
    {
     "wrong": "I learned it ~~in the hard way~~.",
@@ -110,8 +110,8 @@
     "good": "I learned it"
    }
   ],
-  "why_en": "learn / find out sth the hard way = through your own mistakes — no in.",
-  "why_ru": "на собственных ошибках — без in",
+  "why_en": "learn / find out sth the hard way = through your own mistakes — no “in”.",
+  "why_ru": "на собственных ошибках — без “in”",
   "items": [
    {
     "kind": "write",
@@ -188,6 +188,39 @@
      "Do you have to"
     ],
     "n": "A question: do + have to."
+   }
+  ]
+ },
+ {
+  "id": "f5",
+  "title": "came in handy or might come in handy?",
+  "card": [],
+  "why_en": "It helped at the time → it came in handy. · It may help one day → it might come in handy.",
+  "why_ru": "пригодилось (тогда) → came in handy · может пригодиться → might come in handy",
+  "items": [
+   {
+    "kind": "which",
+    "q": "Your phone died on the first day of your trip, but you had a power bank with you. Later you tell a friend:",
+    "opts": [
+     "My power bank came in handy.",
+     "My power bank might come in handy."
+    ],
+    "ok": [
+     0
+    ],
+    "n": "It helped at the time → came in handy."
+   },
+   {
+    "kind": "which",
+    "q": "Before your trip to Japan, a friend gives you a phrasebook. You say:",
+    "opts": [
+     "Thanks — that came in handy!",
+     "Thanks — that might come in handy!"
+    ],
+    "ok": [
+     1
+    ],
+    "n": "It may help later → might come in handy. · or: That'll come in handy!"
    }
   ]
  }

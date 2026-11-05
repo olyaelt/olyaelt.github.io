@@ -675,6 +675,24 @@ audio{width:100%}
 .fx-slot.on{background:var(--fix-bg);border-style:solid;box-shadow:0 0 0 3px rgba(6,147,227,.25)}
 .fx-slot.shake{animation:fxShake .45s ease-in-out;border-color:var(--label)}
 @keyframes fxShake{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+/* engine 62 also: «read for gist» — the whole text with its gaps shut, then 2–3 pictures (or text buttons), one right */
+.dlg.shut .chunk{cursor:default}
+.gist-q{margin:14px 0 8px;font-weight:700;font-size:var(--step-1)}
+.gist-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:44rem}
+.gist-opts.n3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.gist-opt{position:relative;font:inherit;font-weight:700;color:var(--ink);background:var(--card);border:3px solid var(--line);border-radius:14px;padding:10px 12px;min-height:56px;cursor:pointer;text-align:left;line-height:1.35}
+.gist-opt.pic{padding:0;overflow:hidden;line-height:0}
+.gist-opt.pic img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+.gist-opt:hover{border-color:var(--instr)}
+.gist-opt.ok{border-color:var(--done);box-shadow:0 0 0 3px color-mix(in srgb, var(--done) 30%, transparent);cursor:default}
+.gist-opt.no{border-color:var(--label)}
+.gist-opt.shake{animation:fxShake .45s ease-in-out}
+.gist-opt[disabled]:not(.ok){opacity:.55;cursor:default}
+.gist-tick{position:absolute;top:6px;right:6px;display:grid;place-items:center;width:1.8em;height:1.8em;border-radius:50%;background:var(--done);color:#fff;font-weight:900;line-height:1}
+.gist-msg{margin:12px 0 0;font-weight:700}
+.gist-msg.ok{color:var(--done)} .gist-msg.no{color:var(--label)}
+@media (max-width:340px){ .gist-opts,.gist-opts.n3{grid-template-columns:1fr} }
+@media (prefers-reduced-motion: reduce){ .gist-opt.shake{animation:none} }
 .fx-chips{display:flex;flex-wrap:wrap;gap:10px}
 .fx-chip{font:inherit;font-size:var(--step-1);font-weight:900;border:2px solid var(--instr);background:var(--card);color:var(--instr);border-radius:10px;padding:4px 16px;min-height:44px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
 .fx-chip.on{background:var(--instr);color:var(--instr-ink,#fff)}
@@ -2072,7 +2090,7 @@ function renderTask(){
   if(!t._once && !isTeacher()) savePos(t.id, stepIdx);
   const count = t._once ? `Once more: your bookmarks · ${stepIdx+1} of ${t.steps.length}` : `${stepIdx+1} of ${t.steps.length}`;
   const pct = Math.round((stepIdx)/t.steps.length*100);
-  ({dlg:renderDlg, rewrite:renderRewrite, fix:renderFix, sayit:renderSayit, share:renderShare, lookback:renderLookback, listen:renderListen, task:renderTaskCard, plan:renderPlan, produce:renderProduce, sort:renderSort})[st.type](st, count, pct);
+  ({dlg:renderDlg, gist:renderGist, rewrite:renderRewrite, fix:renderFix, sayit:renderSayit, share:renderShare, lookback:renderLookback, listen:renderListen, task:renderTaskCard, plan:renderPlan, produce:renderProduce, sort:renderSort})[st.type](st, count, pct);
   if(!t._once) annotateMarks();
   window.scrollTo(0,0);
 }
@@ -2288,6 +2306,37 @@ function moreBelow(){
   addEventListener("scroll", upd, {passive: true}); addEventListener("resize", upd);
   moreOff = () => { removeEventListener("scroll", upd); removeEventListener("resize", upd); };
   setTimeout(upd, 60);   /* after renderTask's scroll to the top */
+}
+
+/* ---------- engine 62 also: «read for gist» (B2 4.11, TZ 2026-11-05_1745; her idea: «вначале прочитайте for gist… выбрать одну из двух
+   картинок, а после этого они уже заполняют пропуски»). To fill a gap they often need the next line, so first the WHOLE text, its gaps
+   shut (they don't open here, no notes, no bookmarks), and a question with 2–3 pictures or text buttons, one right. A wrong one shakes
+   and says why; the right one goes green and only then Next works. Not a gap: it counts nowhere. Any dlg data can use it:
+   {type:"gist", instr, q, intro?, lines, opts:[{img?, alt, txt}], ok, right, wrong} — with img the picture alone (alt for screen
+   readers), without it the txt ---------- */
+const gistSt = {};
+function renderGist(st, count, pct){
+  const key = current.id + "-" + curS() + (current._once ? "-again" : ""), S = gistSt[key] = gistSt[key] || {wrong: null, shake: null};
+  const opts = st.opts || [], right = checked;
+  const optHTML = (o, i) => { const ok = right && i === st.ok, no = !right && S.wrong === i;
+    return `<button type="button" class="gist-opt${o.img ? " pic" : ""}${ok ? " ok" : ""}${no ? " no" : ""}${S.shake === i ? " shake" : ""}" data-gist="${i}"${right ? " disabled" : ""} aria-label="${esc(o.alt || o.txt || "")}">${
+      o.img ? `<img src="${o.img}" alt="${esc(o.alt || "")}">` : `<span>${esc(o.txt || "")}</span>`}${ok ? `<span class="gist-tick" aria-hidden="true">✓</span>` : ""}</button>`; };
+  const msg = right ? `<p class="gist-msg ok" role="status">${esc(st.right || "")}</p>` : S.wrong != null ? `<p class="gist-msg no" role="status">${esc(st.wrong || "")}</p>` : "";
+  shell({count, pct, instr: st.instr + (st.q ? `<br><b>${esc(st.q)}</b>` : ""),
+    stageHTML: `<div class="panel gist">${picHTML(st.pic)}${st.intro ? `<p class="situation">${esc(st.intro)}</p>` : ""}<div class="dlg shut">${st.lines.map(gapLineHTML).join("")}</div>
+      ${st.q ? `<p class="gist-q">${esc(st.q)}</p>` : ""}<div class="gist-opts n${opts.length}">${opts.map(optHTML).join("")}</div>${msg}</div>`,
+    actionsHTML: navButtons("Next")});
+  app.querySelectorAll(".dlg.shut .chunk").forEach(c => ["role", "tabindex", "aria-label"].forEach(a => c.removeAttribute(a)));
+  const go = document.getElementById("go"); if(!checked){ go.disabled = true; go.textContent = "Next"; }
+  app.querySelectorAll("[data-gist]").forEach(b => b.addEventListener("click", () => {
+    if(checked) return; const i = +b.dataset.gist, y = scrollY;
+    if(i === st.ok){ S.wrong = null; checked = true; }
+    else { S.wrong = i; S.shake = i; setTimeout(() => { S.shake = null; const x = app.querySelector(".gist-opt.shake"); if(x) x.classList.remove("shake"); }, 600); }
+    renderTaskKeep(); scrollTo(0, y);
+    const m = app.querySelector(".gist-msg"), a = app.querySelector(".actions");
+    if(m && a && m.getBoundingClientRect().bottom > a.getBoundingClientRect().top - 8) m.scrollIntoView({block: "center", behavior: "smooth"});
+  }));
+  wireNav(() => renderTaskKeep());
 }
 
 /* ---------- rewrite the sentence ---------- */
@@ -2738,13 +2787,20 @@ function stopPlayer(){
    shows no ads at all: it decides by the site. Hiding the site from YouTube (no referrer) = Error 153, the video doesn't play. */
 /* subtitles off by default: YouTube loads its captions module when a video starts; unload it once per video
    (a student who then turns CC on keeps it) */
-const ytCcOff = {};
+/* engine 62 also (her 05.11 17:05 «субтитры снова включаются»): "once per video" was remembered for the whole page, but a new player
+   (back to the task, Try again) or the same video cued again after another one loads the captions again — and they stayed on.
+   Now it's once per load: a new player or a new video in it starts a new load (ytLoadN). Also the track is switched off first,
+   and the check runs again a little later, when the module comes late on a slow connection. */
+let ytLoadN = 0, ytCcDone = "";
 function captionsOffOnce(){
+  if(!ytPlayer) return;
   let vid = ""; try{ vid = (ytPlayer.getVideoData() || {}).video_id || ""; }catch(e){}
-  if(!vid || ytCcOff[vid]) return;
+  const key = ytLoadN + ":" + vid;
+  if(!vid || ytCcDone === key) return;
   let mods = null; try{ mods = ytPlayer.getOptions(); }catch(e){}
   if(Array.isArray(mods) && !mods.some(m => m === "captions" || m === "cc")) return;     /* not loaded yet: wait for the next change */
-  ytCcOff[vid] = true;
+  ytCcDone = key;
+  try{ ytPlayer.setOption("captions", "track", {}); }catch(e){}
   try{ ytPlayer.unloadModule("captions"); }catch(e){}
   try{ ytPlayer.unloadModule("cc"); }catch(e){}
 }
@@ -2787,7 +2843,7 @@ function renderListen(st, count, pct){
     [...panel.children].forEach(ch=>{ if(!ch.classList.contains("video")) ch.remove(); });
     panel.insertAdjacentHTML("beforeend", rest);
     app.querySelector(".actions").innerHTML = navButtons("Check answers");
-    if(ytVideo !== lines[0][0]){ ytVideo = lines[0][0]; try{ ytPlayer.cueVideoById({videoId: lines[0][0], startSeconds: Math.floor(lines[0][1])}); }catch(e){} }
+    if(ytVideo !== lines[0][0]){ ytVideo = lines[0][0]; ytLoadN++; try{ ytPlayer.cueVideoById({videoId: lines[0][0], startSeconds: Math.floor(lines[0][1])}); }catch(e){} }
   } else {
     shell({count, pct, instr,
       stageHTML: `
@@ -2816,12 +2872,12 @@ function renderListen(st, count, pct){
     };
     const startYT = () => { loading(true); loadYT().then(()=>{
       if(!document.getElementById("yt") || !msg.isConnected) return;
-      ytVideo = lines[0][0]; ytReady = false;
+      ytVideo = lines[0][0]; ytReady = false; ytLoadN++;
       ytPlayer = new YT.Player("yt", {
         videoId: lines[0][0], width: "100%", height: "100%",
         playerVars: { playsinline: 1, rel: 0, modestbranding: 1, cc_load_policy: 0, iv_load_policy: 3, start: Math.floor(lines[0][1]) },
         events: { onReady: () => { ytReady = true; clearTimeout(ytReadyWatch); loading(false); if(msg.isConnected){ msg.hidden = true; } },
-                  onApiChange: captionsOffOnce, onStateChange: e => { if(e && e.data === 1) setTimeout(captionsOffOnce, 300); } }
+                  onApiChange: captionsOffOnce, onStateChange: e => { if(e && e.data === 1){ setTimeout(captionsOffOnce, 300); setTimeout(captionsOffOnce, 1500); } } }
       });
       clearTimeout(ytReadyWatch); ytReadyWatch = setTimeout(failed, YT_READY_WAIT);
     }).catch(failed); };

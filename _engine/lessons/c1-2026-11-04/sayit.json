@@ -9,7 +9,7 @@
   ],
   "note": "",
   "box": "BOX_COMP",
-  "pic": "BOAT3"
+  "pic": "BOAT3A"
  },
  {
   "html": true,
@@ -19,9 +19,9 @@
     "It was <b class=\"g\">a lot easier than you'd think</b> — I passed first time."
    ]
   ],
-  "note": "or: It wasn't as hard as you'd think. · not 'more easier'",
+  "note": "or: It wasn't as hard as you'd think. · easier, not <s>more easier</s>",
   "box": "BOX_COMP",
-  "pic": "BOAT3"
+  "pic": "BOAT3B"
  },
  {
   "html": true,
@@ -32,8 +32,7 @@
    ]
   ],
   "note": "or: a lot less expensive",
-  "box": "BOX_COMP",
-  "pic": "BOAT3"
+  "box": "BOX_COMP"
  },
  {
   "html": true,
@@ -44,8 +43,7 @@
    ]
   ],
   "note": "or: a lot easier / quicker",
-  "box": "BOX_COMP",
-  "pic": "BOAT3"
+  "box": "BOX_COMP"
  },
  {
   "html": true,
@@ -57,18 +55,18 @@
   ],
   "note": "or: a lot more talkative · chatty → chattier",
   "box": "BOX_COMP",
-  "pic": "BOAT3"
+  "pic": "BOAT3C"
  },
  {
   "html": true,
   "rows": [
    [
     "A friend: “IKEA furniture? I bet that took you all weekend.” <i>(It took you an hour. One screw was left over.)</i>",
-    "It was <b class=\"g\">a lot quicker than you'd think</b> — it took me an hour. Only one screw left over!"
+    "It was <b class=\"g\">a lot quicker than you'd think</b> — it took me an hour, and I only had one screw left over!"
    ]
   ],
   "note": "or: a lot faster",
   "box": "BOX_COMP",
-  "pic": "BOAT3"
+  "pic": "BOAT3D"
  }
 ]

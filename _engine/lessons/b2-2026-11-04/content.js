@@ -48,43 +48,43 @@ const BOX_PP = `
 const REWRITE = [
   {o:"Did you tell the police about it?", k:"REPORT", pre:"Did you ", post:" to the police?", a:"report it",
    acc:["report it"],
-   n:`${ru("= ты заявил(а) в полицию?")}<br>report <b>it</b> — it обязательно · report ${ipa("/rɪˈpɔːt/")}<br>or: Have you reported it…? — если это свежая новость`, box:BOX_CRIME},
+   n:`${ru("= ты заявил(а) в полицию?")}<br>report <b>it</b> — “it” обязательно · report ${ipa("/rɪˈpɔːt/")}<br>or: Have you reported it…? — если это свежая новость`, box:BOX_CRIME},
   {o:"Was anyone injured?", k:"GET", pre:"Did anyone ", post:"?", a:"get hurt",
    acc:["get hurt","get injured"],
-   n:`${ru("= кто-нибудь пострадал?")}<br>did + <b>get</b> hurt · hurt ${ipa("/hɜːt/")}<br>or: get injured — то же, но get hurt разговорнее`, box:BOX_CRIME},
+   n:`${ru("= кто-нибудь пострадал?")}<br>did + <b>get</b> hurt · “hurt” ${ipa("/hɜːt/")}<br>or: get injured — то же, но “get hurt” разговорнее`, box:BOX_CRIME},
   {o:"Someone broke into our neighbour's car last night.", k:"GOT", pre:"Our neighbour's car ", post:" last night.", a:"got broken into",
    acc:["got broken into","was broken into"],
-   n:`${ru("= машину соседа вскрыли (кто — неважно)")}<br>got broken <b>into</b> — into остаётся · broken ${ipa("/ˈbrəʊkən/")}<br>or: was broken into`, box:BOX_CRIME},
+   n:`${ru("= машину соседа вскрыли (кто — неважно)")}<br>got broken <b>into</b> — “into” остаётся · “broken” ${ipa("/ˈbrəʊkən/")}<br>or: was broken into`, box:BOX_CRIME},
   {o:"Two men stole money from the café on the corner yesterday.", k:"ROBBED", pre:"The café on the corner ", post:" yesterday.", a:"was robbed",
    acc:["was robbed","got robbed","was robbed by two men","got robbed by two men"],
-   n:`${ru("= кафе ограбили")} · robbed ${ipa("/rɒbd/")} — один слог<br>rob — место или человека (rob a café), steal — вещь (steal money)<br>не: <s>It was robbery</s> → It was robbed; существительное — с a: There was a robbery`, box:BOX_CRIME},
+   n:`${ru("= кафе ограбили")} · “robbed” ${ipa("/rɒbd/")} — один слог<br>“rob” — место или человека (rob a café), “steal” — вещь (steal money)<br>не: <s>It was robbery</s> → It was robbed; существительное — с “a”: There was a robbery`, box:BOX_CRIME},
   {o:"When was the last time you went to the cinema?", k:"LAST", pre:"When ", post:" to the cinema?", a:"did you last go",
    acc:["did you last go"],
-   n:`${ru("= когда ты последний раз ходил(а) в кино?")}<br>did + <b>go</b>, не went · or: When did you go to the cinema last?<br>for the last time — в последний раз (и больше не будет)`, box:BOX_PP},
+   n:`${ru("= когда ты последний раз ходил(а) в кино?")}<br>did + <b>go</b>, не “went” · or: When did you go to the cinema last?<br>“for the last time” — в последний раз (и больше не будет)`, box:BOX_PP},
   {o:"A: The ending was brilliant, wasn't it?  B: No. The ending was boring.", k:"FOUND", pre:"B: Do you think so? I ", post:" a bit boring.", a:"found the ending",
    acc:["found the ending","found it"],
-   n:`${ru("= правда? а мне концовка показалась скучноватой")}<br>find + что + какое: I found the ending boring (без was)<br>Do you think so? — мягкое несогласие вместо No.`, box:BOX_DIS}
+   n:`${ru("= правда? а мне концовка показалась скучноватой")}<br>find + что + какое: I found the ending boring (без “was”)<br>“Do you think so?” — мягкое несогласие вместо “No.”`, box:BOX_DIS}
 ];
 
 const SAY = [
   {html:true, rows:[["A neighbour tells you someone stole all the plants from her front garden last night. You think the police should know.",
      `Oh no! ${g("Did you report it to the police?")}`]],
    note:`<b>Crime</b> ${ru("= ты заявила в полицию?")} — report <b>it</b>`, box:BOX_CRIME},
-  {html:true, rows:[["A friend says there was a small fire in the café under his office.",
+  {html:true, rows:[["A friend says there was a small fire in the café under his office at lunchtime, when it was full. Ask about the people inside.",
      `Oh no! ${g("Did anyone get hurt?")}<br>or: I hope ${g("nobody got hurt")}.`]],
-   note:`<b>Crime</b> ${ru("= кто-нибудь пострадал? · надеюсь, никто не пострадал")} — в вопросе anyone, после I hope — nobody`, box:BOX_CRIME},
-  {html:true, rows:[["A friend says: “That new pizza place is amazing, isn't it?” You thought the pizza was nothing special.",
+   note:`<b>Crime</b> ${ru("= кто-нибудь пострадал? · надеюсь, никто не пострадал")} — в вопросе “anyone”, после “I hope” — “nobody”`, box:BOX_CRIME},
+  {html:true, rows:[["A friend says: “That new pizza place is amazing, isn't it?” You went there last week, and the pizza was worse than you'd expected.",
      `${g("Do you think so? I found it")} a bit disappointing, to be honest.`]],
-   note:`<b>Disagree and stay friends</b> ${ru("= правда? а мне она показалась так себе")} · disappointing — о пицце, disappointed — о человеке`, box:BOX_DIS},
+   note:`<b>Disagree and stay friends</b> ${ru("= правда? а мне она показалась так себе")} · “disappointing” — хуже, чем ожидал(а); о пицце — “disappointing”, о человеке — “disappointed”`, box:BOX_DIS},
   {html:true, rows:[["Your brother says: “Working from home is so lonely.” You work from home too. You partly agree, but you love having no commute.",
      `${g("Yeah, I suppose so. But")} at least we don't have to commute!<br>or: ${g("Maybe, but I still think")} it's better than commuting.`]],
-   note:`<b>Disagree and stay friends</b> ${ru("= ну, наверное… но")} — I suppose so, когда хоть немного согласен(на)`, box:BOX_DIS},
+   note:`<b>Disagree and stay friends</b> ${ru("= ну, наверное… но")} — “I suppose so”, когда хоть немного согласен(на)`, box:BOX_DIS},
   {html:true, rows:[["You're watching a series with a friend. You love the music and expect your friend to agree.",
      `This has such a good soundtrack, ${g("doesn't it?")}<br>or: The music's amazing, ${g("isn't it?")} · It's got a great soundtrack, ${g("hasn't it?")}`]],
-   note:`<b>Tags</b> ${ru("= делюсь мнением и жду согласия")} — интонация вниз · has (без got) → doesn't it · has got → hasn't it · is → isn't it`, box:BOX_DIS},
+   note:`<b>Tags</b> ${ru("= делюсь мнением и жду согласия")} — интонация вниз · “has” (без “got”) → “doesn't it” · “has got” → “hasn't it” · “is” → “isn't it”`, box:BOX_DIS},
   {html:true, rows:[["A friend you haven't seen for a month asks: “Any news?” You and your family moved to a new flat two weeks ago.",
      `${g("We've moved!")} We ${g("found")} a lovely flat and ${g("moved in two weeks ago")}.<br>or: We ${g("moved")} to a new flat two weeks ago!`]],
-   note:`<b>Present perfect vs past simple</b> ${ru("новость — present perfect, подробности (когда, как) — past simple · с ago — только past simple")}`, box:BOX_PP}
+   note:`<b>Present perfect vs past simple</b> ${ru("новость — present perfect, подробности (когда, как) — past simple · с “ago” — только past simple")}`, box:BOX_PP}
 ];
 
 const TOPICS = [
@@ -104,9 +104,20 @@ const chatSteps = (a, b) => [
   {type:"dlg", intro:GAPS[a].intro, lines:GAPS[a].lines, instr:DLG_WITHOUT},
   {type:"dlg", lines:GAPS[b].lines, gloss:GAPS[b].gloss, instr:DLG_ON},
   {type:"dlg", lines:GAPS[b].lines, instr:DLG_WITHOUT}];
+/* fixes-1 (TZ 2026-11-05_1745, her idea): first read the whole chat for gist, then the gaps. Her pictures (ChatGPT), 1024 × 768 */
+const BEACH_A = "__BEACH_A__", BEACH_B = "__BEACH_B__";
+const GIST = {type:"gist",
+  instr:"First read the whole chat. Don't fill in the gaps yet — just find out what happened.",
+  q:"What really happened to Josh's car?",
+  intro:GAPS.beach1.intro, lines:[...GAPS.beach1.lines, ...GAPS.beach2.lines],
+  opts:[{img:BEACH_A, alt:"A thief takes the sandwiches through the car window", txt:"🦹 A thief broke into it."},
+        {img:BEACH_B, alt:"Three seagulls on the wall behind the car eat the sandwiches", txt:"🐦 Seagulls got in through the open window."}],
+  ok:1,
+  right:"Yes! The “thief” was three seagulls 😂 Now read it again and fill in the gaps.",
+  wrong:"Not quite. Read the end of the chat again."};
 const TASKS = [
-  {id:"beach", topic:"rev", sec:"Revision", title:"A break-in at the beach? The missing words", meta:"9 phrases · 2 screens · with the glossary, then without", kind:"steps",
-   steps:chatSteps("beach1", "beach2")},
+  {id:"beach", topic:"rev", sec:"Revision", title:"A break-in at the beach? The missing words", meta:"Read first · 9 phrases · 2 screens · with the glossary, then without", kind:"steps",
+   steps:[GIST, ...chatSteps("beach1", "beach2")]},
   {id:"practice", topic:"rev", sec:"Extension", title:"Rewrite it, then say what you'd say", meta:"6 sentences + 6 situations", kind:"steps",
    steps:[...REWRITE.map((r,i)=>({type:"rewrite", r, box:r.box, first:i===0, instrFirst:RW_FIRST})),
           ...SAY.map((s,i)=>({type:"sayit", s, box:s.box, instr: i===0 ? "What would you say? Say it aloud, then tap the yellow box to check." : "What would you say?"}))]},

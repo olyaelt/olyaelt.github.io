@@ -1,5 +1,7 @@
 const STICKER = "__STICKER__";
-const BOAT1 = "__BOAT1__", BOAT2 = "__BOAT2__", BOAT3 = "__BOAT3__";   /* Olya's pictures (ChatGPT), 1100 px JPEG */
+const BOAT1 = "__BOAT1__", BOAT2 = "__BOAT2__";   /* Olya's pictures (ChatGPT), 1100 px JPEG */
+/* her 05.11 16:57: the collage cut into its four pictures, each above its own situation only (3a train · 3b driving · 3c teenager · 3d IKEA; Switzerland and the passport have none) */
+const BOAT3A = "__BOAT3A__", BOAT3B = "__BOAT3B__", BOAT3C = "__BOAT3C__", BOAT3D = "__BOAT3D__";
 const BOAT = __BOAT__;          /* r1: life on a boat, two screens */
 const CARDS = __CARDS__;        /* r1: six cards — Dan answers Jess (v2 of the TZ, her decision 5.11 14:34) */
 const SAYIT = __SAYIT__;        /* r1: six situations, the whole reply from scratch */
@@ -80,7 +82,7 @@ const BOX_SCHOOL2 = `
 const TOPICS = [
   {id:"easier", title:"It's a lot easier than you'd think", sub:"The last part of our school topic: comparatives, four small fixes and two old friends at a market.", box:()=>BOX_COMP}
 ];
-const NAMED = {BOAT1, BOAT2, BOAT3, BOX_COMP};
+const NAMED = {BOAT1, BOAT2, BOAT3A, BOAT3B, BOAT3C, BOAT3D, BOX_COMP};
 const showIpa = g => g.h ? g : Object.assign({}, g, {p: g.p.map(x => x && typeof x === "object" && x.o && "r" in x ? {ipa: x.r.trim(), o: 1} : x)});
 const withGloss = st => st.gloss ? {gloss: st.gloss.map(showIpa)} : {};
 
@@ -116,7 +118,7 @@ const E2_STEPS = REUNION.steps.map((st, i) => Object.assign({}, st, withGloss(st
 
 const TASKS = [
   {id:"r1", topic:"easier", sec:"Revision", title:"Not what you'd expect: life on a boat", meta:"2 short screens + 6 cards + 6 situations", kind:"steps", min:11, steps:R1_STEPS},
-  {id:"e1", topic:"easier", sec:"Extension", title:"Fix it: one small thing", meta:"4 blocks · 10 items", kind:"steps", min:7, steps:FIX_STEPS},
+  {id:"e1", topic:"easier", sec:"Extension", title:"Fix it: one small thing", meta:"5 blocks · 12 items", kind:"steps", min:8, steps:FIX_STEPS},
   {id:"e2", topic:"easier", sec:"Extension", title:"Twenty years later: two old friends at a market", meta:"2 parts · with the glossary, then without", kind:"steps", min:10, steps:E2_STEPS},
   {id:"e3", topic:"easier", sec:"Extension", title:"Hear it: comparatives in real videos", meta:"8 clips · can wait till the weekend", kind:"steps", min:6,
    takeaway:TQ.takeaway, tqLink:TQ.quiz_link, tq:TQ.quiz_link, steps:TQ.e3.map((clip,i)=>({type:"listen",clip,first:i===0}))}

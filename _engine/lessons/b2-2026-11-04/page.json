@@ -4,7 +4,9 @@
  "file": "2026-11-04.html",
  "assets": {
   "STICKER": "sticker.png",
-  "GAPS": "gaps.json"
+  "GAPS": "gaps.json",
+  "BEACH_A": "beach-a-thief.jpg",
+  "BEACH_B": "beach-b-seagulls.jpg"
  },
  "earlier": false,
  "listed": false,
