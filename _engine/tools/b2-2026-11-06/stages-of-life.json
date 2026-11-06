@@ -159,7 +159,7 @@
      "instr": "Done? Talk while the others finish.",
      "notes": [
       "Think of an old photo of you that you love. How old were you? What's happening in it — and why do you love it?",
-      "Tell your partner about a photo of you you'd rather nobody saw: the hair? the clothes? the face you're making? (No need to show it!)"
+      "Tell your partner about a photo of yourself that you'd rather nobody saw: the hair? the clothes? the face you're making? (No need to show it!)"
      ]
     }
    ]
@@ -513,8 +513,8 @@
       "**1**  Which two phrases give an age?",
       "**2**  Which phrases are about school or university?",
       "**3**  Which two mean «после окончания школы»? Which one means «после уроков»? (a) I did my homework after school. (b) I got a job after I left school. (c) I worked at a pizza place after high school.",
-      "**4**  Which tense do Margaret and Leo use with all these phrases? Why?",
-      "**5**  “I still don't have my own place”, “I still can't drive”: has it happened yet? Where does “still” go?"
+      "**4**  Which tense do Margaret and Leo use with the time phrases (at school, as a kid, at 18…)? Why?",
+      "**5**  “I still don't have my own place”, “I still can't drive”: has Leo got his own place yet? Can he drive yet? Where does “still” go?"
      ],
      "answer": [
       "**1**  **at 18** · **in my early thirties** ((в 18 — “at”, не ~~in 18~~; also: in my mid-thirties ≈ 35, in my late thirties ≈ 38–39))",
@@ -1656,7 +1656,7 @@
       },
       {
        "ctx": "давно не были в театре",
-       "q": "I haven't been <g>to the theatre</g> ~~ages~~.",
+       "q": "I haven't been <g>to the theatre</g> ‸ ages.",
        "a": "I haven't been to the theatre **for ages**.",
        "why": "давно не… → “haven't … for ages” (present perfect). А «сто лет назад» → “ages ago” (past simple): I went there ages ago.",
        "turn": "Name **one** thing you haven't done for ages but would like to do again. Why haven't you?"
@@ -2207,7 +2207,7 @@
      "items": [
       "**1**  **Three** big moments in your life (a first job, a move, a new skill…) — when did they happen? Use the box. Your partner asks **one** more question about each.",
       "**2**  What were you like **as a kid**? Name **two** things you loved and **one** thing you hated.",
-      "**3**  Name **two** things you **still can't** do (swim, cook, drive…). Would you like to learn them? Why or why not?"
+      "**3**  Name **two** things you **still can't** do (swim, cook, drive…). Would you like to learn? Why or why not?"
      ],
      "fast": "If you're done: 1. Go back to the board: ask about the squares nobody landed on. 2. Margaret and Leo: when did they leave home? When did Leo get his first real job? Who still can't drive? Say it from memory. 3. What did you want to be as a kid — and at 18? Why did it change? Tell each other.",
      "box_state": "folded"

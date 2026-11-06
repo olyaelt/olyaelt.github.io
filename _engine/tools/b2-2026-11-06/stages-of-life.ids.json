@@ -389,7 +389,7 @@
   },
   {
    "pid": 50,
-   "sig": "i haven't been to the theatre for ages. давно не были в театре i haven't been to the theatre ages. name one thing you haven't done for ages but would like to do again. why haven't you? давно не… → “haven't … for ages” (present perfect). а «сто лет назад» → “ages ago” (past simple): i went there ages ago.",
+   "sig": "i haven't been to the theatre for ages. давно не были в театре i haven't been to the theatre ‸ ages. name one thing you haven't done for ages but would like to do again. why haven't you? давно не… → “haven't … for ages” (present perfect). а «сто лет назад» → “ages ago” (past simple): i went there ages ago.",
    "gone": false
   },
   {
@@ -741,7 +741,7 @@
   },
   {
    "pid": 2,
-   "sig": "3 name two things you still can't do (swim, cook, drive…). would you like to learn them? why or why not?",
+   "sig": "3 name two things you still can't do (swim, cook, drive…). would you like to learn? why or why not?",
    "gone": false
   }
  ]
