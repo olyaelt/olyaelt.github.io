@@ -665,10 +665,17 @@ details.all[open] summary{color:var(--ink)}
 .gloss{background:var(--ground);border-radius:12px;padding:8px 12px;display:grid;gap:4px;font-size:calc(1.02rem * var(--k, 1))}
 .gloss .gl{margin:0;line-height:1.35}
 .gloss .ru{color:var(--muted);font-style:italic}
+/* tools 28 also: the side box a little smaller only when it doesn't fit (fitSideBox) */
+#side aside.box .ph{font-size:calc(1.12rem * var(--bxk, 1))}
+.box .ph .ipa{white-space:nowrap}
+#side aside.box h4{font-size:calc(.92rem * var(--bxk, 1))}
+#side aside.box .pp-ru{font-size:calc(.86rem * var(--bxk, 1))}
+#side aside.box .pp-h span{font-size:calc(.78rem * var(--bxk, 1))}
 /* tools 28 also: «💬 Your turn» after a noughts-and-crosses square (B2 6.11, request 1) */
 .gt-talk .lbl{display:block;font-weight:900;color:var(--instr);margin:0 0 4px}
 .gt-talk .scene.tc .fig{height:calc(96px * var(--k, 1))}
 .gt-talk .scene.tc .bub{font-size:calc(1.3rem * var(--k, 1));min-height:0;margin-bottom:40px;padding:12px 18px}
+.gt-talk .gt-tnext{margin:2px 0 0;color:var(--muted);font-weight:700}
 /* tools 28 also: pictures in a text block (B2 6.11) */
 .tx-pic{margin:0 0 8px;text-align:center}
 .tx-pic img{max-height:min(26vh, 190px);max-width:100%;border-radius:10px;object-fit:contain}
@@ -1876,7 +1883,8 @@ function gFill(tasks, n){
 function gTicTacToe(host, tasks, {size = 3, win = 3, marks = ["X", "O"], answer = t => t.a || "", prompt = t => gEsc(t.q || t), state = null, revealFirst = false, labels = null, cellLabel = null, onResult = null, onWin = null, onChange = null, turnHTML = null} = {}){
   /* tools 18 (C1 04.11 Catching up): cellLabel(task) = a word or two on the square instead of its number ("At a wedding") */
   /* tools 28 also (B2 6.11, engine request 1; her 05.11 19:29 «говорение по ходу, а не только раскрывание скобочек»): turnHTML(task) = its
-     «💬 Your turn» — after ✓ / ✗ the side shows the speaking question, Next only, and then the game goes on (a win shows after it) */
+     «💬 Your turn» — after ✓ / ✗ the side shows the speaking question, and then the game goes on (a win shows after it). Her 21:12: as in the
+     Jeopardy games, the page's Next moves the game on — here too ("Talk about it, then Next →", no button of its own; [data-gt-talked]) */
   const T = state || {cells: gFill(tasks, size * size).map(t => ({t, m: null})), turn: 0, open: -1, shown: false, over: null, talk: -1};
   if(T.talk == null) T.talk = -1;
   const changed = () => { if(onChange) onChange(T); };
@@ -1890,7 +1898,7 @@ function gTicTacToe(host, tasks, {size = 3, win = 3, marks = ["X", "O"], answer 
     host.innerHTML = `<div class="gttt">
       <div class="gt-board" style="--n:${size}">${T.cells.map((c, k) => `<button class="gt-cell ${c.m ? "taken m" + marks.indexOf(c.m) : ""} ${k === T.open ? "open" : ""} ${winLine && winLine.includes(k) ? "win" : ""} ${fresh === k ? "fresh" : ""}" data-gt="${k}" ${c.m || T.over || T.talk > -1 || (T.open > -1 && k !== T.open) ? "disabled" : ""} aria-label="Square ${k + 1}${c.m ? ": " + c.m : ""}">
         <span class="gt-in"><span class="gt-back">${cellLabel && cellLabel(c.t) ? `<span class="gt-lbl">${cellLabel(c.t)}</span>` : k + 1}</span><span class="gt-front">${c.m ? markSVG(c.m) : "?"}</span></span></button>`).join("")}${winLine ? gWinLine(winLine, size) : ""}</div>
-      <div class="gt-side">${T.talk > -1 ? `<div class="gt-talk">${turnHTML(T.cells[T.talk].t)}<div class="gt-acts"><button class="btn primary" data-gt-talked>Next →</button></div></div>` : T.over ? `<p class="gt-turn big">${T.over.who ? `${markSVG(T.over.who)} wins! 🎉` : "It's a draw!"}</p><button class="btn primary" data-gt-again>Play again</button>`
+      <div class="gt-side">${T.talk > -1 ? `<div class="gt-talk">${turnHTML(T.cells[T.talk].t)}<p class="gt-tnext">Talk about it, then Next →</p><button type="button" data-gt-talked hidden></button></div>` : T.over ? `<p class="gt-turn big">${T.over.who ? `${markSVG(T.over.who)} wins! 🎉` : "It's a draw!"}</p><button class="btn primary" data-gt-again>Play again</button>`
         : `<p class="gt-turn">${markSVG(cur)} <b>${gEsc(cur)}'s turn</b>${o ? "" : " — choose a square"}</p>
         ${o ? `<div class="gt-task${T.shown ? " shown" : ""}"><p class="gt-q">${prompt(o.t)}</p>${T.shown && answer(o.t) ? `<p class="gt-a">${answer(o.t)}</p>` : ""}
           <div class="gt-acts">${answer(o.t) && !T.shown ? `<button class="btn${revealFirst ? " primary" : ""}" data-gt-show>Show the answer</button>` : ""}${!revealFirst || T.shown || !answer(o.t) ? `<button class="btn ok" data-gt-yes>${labels ? gEsc(labels.yes) : `✓ ${gEsc(cur)} takes it`}</button><button class="btn again" data-gt-no>${labels ? gEsc(labels.no) : "✗ Not this time"}</button>` : ""}</div></div>` : ""}`}</div></div>`;
@@ -3958,6 +3966,7 @@ function gameStep(b){
   if(DEMO && DEMO.id === b._id && DEMO.api){ DEMO.api.finish(); return; }   /* ▶ How to play running: Next = skip it */
   const R = document.getElementById("main") || document, q = s => R.querySelector(s);
   const press = s => { const x = q(s); if(!x) return false; if(!x.disabled) x.click(); return true; };   /* found but busy (the die rolling, the wheel turning): wait */
+  if(press("[data-gt-talked]")) return;   /* her 05.11 21:04 / 21:12: a square's «💬 Your turn» — Next, as everywhere in a game, goes on */
   if(q(VERDICT)){ nudge(VERDICT, "First: right or not?"); return; }
   if(press("[data-whshow], [data-gs-show], [data-go-show], [data-dt-show], [data-gt-show]")) return;
   if(q(".gdt-l.free")){ nudge(".gdt-l.free", "First draw a line"); return; }
@@ -4153,7 +4162,8 @@ function render(){
   pcRestore(pcs);
   const st = side.scrollTop; side.innerHTML = box && D.boxes[box] ? fieldBoxHTML(D.boxes[box]) + sidePicHTML(b) + (b && b.kind === "game" && b.piece === "secret" && secSt(b).ph === 2 ? secAllHTML(b) : "") + (b && b._qtab ? `<div class="q-table">${mixHTML(qTableOf(b))}</div>` : "") : ""; side.scrollTop = st;
   if(b && b._qtab) wireMix(qTableOf(b), side);
-  wireBox(side); wireBoxHidden(side);
+  wireBox(side); wireBoxHidden(side); fitSideBox(); requestAnimationFrame(fitSideBox);
+  side.querySelectorAll("img").forEach(im => { if(!im.complete) im.addEventListener("load", fitSideBox, {once: true}); });
   S.enter = false; if(b && b.kind === "cards") deckOf(b).fresh = false;
   wire(main); wireLive(main, p => { if(LEDP[p]) return ledShown(LEDP[p]); const m = String(p).match(/^questions\.(\d+)\.(\d+)$/); if(!m) return ""; const bl = BLOCKS.find(x => x._pid === +m[1]); return bl ? bl.items[+m[2]] || "" : ""; });
   wireStageDrag(main);
@@ -4174,6 +4184,14 @@ function fitCard(){
   for(const k of [.92, .85, .78, .72, .66]){ if(!over()) return; fc.style.setProperty("--k", k); }
 }
 addEventListener("resize", () => { clearTimeout(fitCard.t); fitCard.t = setTimeout(() => { const fc = document.querySelector("#main .deck .fc, #main .cn"); if(fc) fc.style.removeProperty("--k"); fitCard(); }, 150); });
+/* tools 28 also (B2 6.11 fixes-1: the box grew to four groups and ran under the screen): on a computer the box beside a task must be seen
+   whole (her rule) — only when it doesn't fit, its type gets a little smaller, step by step, never below .72 */
+function fitSideBox(){
+  const bx = document.querySelector("#side aside.box"); if(!bx) return; bx.style.removeProperty("--bxk");
+  if(innerWidth < 900) return;
+  for(const k of [.95, .9, .85, .8, .76, .72]){ if(bx.getBoundingClientRect().bottom <= innerHeight - 6) return; bx.style.setProperty("--bxk", k); }
+}
+addEventListener("resize", () => { clearTimeout(fitSideBox.t); fitSideBox.t = setTimeout(fitSideBox, 150); });
 /* the box with X{{rest}}: the first letter shown, the rest hidden yellow (tap the yellow to open it; tap the line to tick it) */
 const boxLineHTML = t => phHTML(t).replace(/\{\{(.+?)\}\}/g, '<span class="bh" data-bh>$1</span>');
 function fieldBoxHTML(box){

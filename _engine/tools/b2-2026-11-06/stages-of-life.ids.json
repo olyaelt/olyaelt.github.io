@@ -48,7 +48,7 @@
   {
    "pid": 9,
    "sig": "game the wheel of questions: take turns to spin. make the question and ask the next person. they answer: yes, i did / no, i didn't + one detail. then tap to check the question.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 10,
@@ -57,12 +57,17 @@
   },
   {
    "pid": 11,
-   "sig": "game snakes and ladders: take turns to roll the dice and move. on your square, ask the next person: when did you…? tap to check your question. then they answer with a time phrase (from the box or your own: at 35, two years ago) + one detail.",
+   "sig": "game snakes and ladders: take turns to roll the dice and move. on your square, ask the next person: when did you…? tap to check your question. then they answer with a time phrase (from the box or your own: in my mid-twenties, two years ago; not sure? i can't remember exactly — at ten, maybe?) + one detail.",
    "gone": false
   },
   {
    "pid": 12,
    "sig": "questions now your real stories.",
+   "gone": false
+  },
+  {
+   "pid": 13,
+   "sig": "game the wheel of questions: take turns to spin. ask the next person: when did you last…? they answer (two weeks ago, last month, ages ago…) + one detail. then tap to check your question.",
    "gone": false
   }
  ],
@@ -155,52 +160,52 @@
   {
    "pid": 17,
    "sig": "did you learn to swim as a kid? 1 you / learn to swim — as a kid? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 18,
    "sig": "did you study english at school? 2 you / study english — at school? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 19,
    "sig": "did you start working after high school? / after you left school? 3 you / start working — after high school / after you left school? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 20,
    "sig": "did you leave home at 18? 4 you / leave home — at 18? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 21,
    "sig": "did you have a job in your third year of college? / at university? 5 you / have a job — in your third year of college / at university? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 22,
    "sig": "did you find a job right out of college? / straight out of university? 6 you / find a job — right out of college / straight out of university? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 23,
    "sig": "did you have a car in your early twenties? 7 you / have a car — in your early twenties? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 24,
    "sig": "did you have a phone at school? 8 you / have a phone — at school? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 25,
    "sig": "did you travel a lot as a kid? 9 you / travel a lot — as a kid? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 26,
    "sig": "did you live with friends at university? / in college? 10 you / live with friends — at university / in college? did + базовая форма: did you learn / study / start…? the answer: yes, i did / no, i didn't + one detail.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 27,
@@ -280,6 +285,191 @@
   {
    "pid": 42,
    "sig": "when did you start your current (or last) job? ask start your current (or last) job answer: i started… did + базовая форма: “when did you start…?”, не started.",
+   "gone": false
+  },
+  {
+   "pid": 43,
+   "sig": "when did margaret last see jean? — ages ago. she can't remember exactly — five years ago, maybe? margaret · last see jean?",
+   "gone": false
+  },
+  {
+   "pid": 44,
+   "sig": "where did this happen? сосед рассказывает про кражу в доме where did this happened? tell each other about one surprising thing that happened near your home. when and where did it happen? после “did” — базовая форма: did + happen.",
+   "gone": false
+  },
+  {
+   "pid": 45,
+   "sig": "did anybody get hurt? друг рассказал про аварию did anybody got hurt? tell each other about a small accident you saw or heard about (a bike, the kitchen…). did anyone get hurt? did + get, не got.",
+   "gone": false
+  },
+  {
+   "pid": 46,
+   "sig": "did they steal anything? соседку обокрали did they stole anything? tell each other about a theft you heard about (on the news or near you). what did they steal? did + steal; “stole” — только без “did”: they stole my bike.",
+   "gone": false
+  },
+  {
+   "pid": 47,
+   "sig": "i bought my first car in my late thirties. i bought my first car when i was 37. ^^late^^ what did you do in your early twenties? name two things — and one you'd do differently now. 37–39 → “in my late thirties”; 34–36 → “mid-thirties”; 30–33 → “early thirties”.",
+   "gone": false
+  },
+  {
+   "pid": 48,
+   "sig": "i moved to a new city in my mid-twenties. i moved to a new city when i was about 25. ^^mid^^ where did you live in your mid-twenties? say one thing you liked about it and one you didn't. около 25 → “in my mid-twenties” (mid- с дефисом).",
+   "gone": false
+  },
+  {
+   "pid": 49,
+   "sig": "i worked in a shop after i left school. i worked in a shop when i finished school. ^^left^^ what did you do after you left school? tell each other one good and one bad thing about it. после окончания школы: “after i left school” (uk) = “after high school” (us). не путай с “after school” — после уроков.",
+   "gone": false
+  },
+  {
+   "pid": 50,
+   "sig": "i haven't been to the theatre for ages. давно не были в театре i haven't been to the theatre ages. name one thing you haven't done for ages but would like to do again. why haven't you? давно не… → “haven't … for ages” (present perfect). а «сто лет назад» → “ages ago” (past simple): i went there ages ago.",
+   "gone": false
+  },
+  {
+   "pid": 51,
+   "sig": "i lost it a few years ago. потеряла кольцо несколько лет назад i lost it few years ago. tell each other about something you lost a few years ago. did you ever find it? “a few” = несколько; “few” без “a” = мало.",
+   "gone": false
+  },
+  {
+   "pid": 52,
+   "sig": "when did you last go to the cinema? 1 go to the cinema when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 53,
+   "sig": "when did you last cook for friends? 2 cook for friends when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 54,
+   "sig": "when did you last call an old friend? 3 call an old friend when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 55,
+   "sig": "when did you last have a proper holiday / vacation? 4 have a proper holiday / vacation when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 56,
+   "sig": "when did you last go to a concert? 5 go to a concert when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 57,
+   "sig": "when did you last read a really good book? 6 read a really good book when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 58,
+   "sig": "when did you last go out for dinner? 7 go out for dinner when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 59,
+   "sig": "when did you last take a day off? 8 take a day off when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 60,
+   "sig": "when did you last buy something you didn't really need? 9 buy something you didn't really need when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 61,
+   "sig": "when did you last go swimming? 10 go swimming when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 62,
+   "sig": "when did you last stay up really late? 11 stay up really late when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 63,
+   "sig": "when did you last travel by train? 12 travel by train when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 64,
+   "sig": "when did you last go to a museum? 13 go to a museum when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 65,
+   "sig": "when did you last try something new? 14 try something new when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 66,
+   "sig": "when did you last lose your keys? 15 lose your keys when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 67,
+   "sig": "when did you last learn something new? 16 learn something new when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
+   "gone": false
+  },
+  {
+   "pid": 68,
+   "sig": "when did you start school? ask start school answer: i started… did + базовая форма: “when did you start…?”, не started.",
+   "gone": false
+  },
+  {
+   "pid": 69,
+   "sig": "when did you get your first bike? ask get your first bike answer: i got… did + базовая форма: “when did you get…?”, не got.",
+   "gone": false
+  },
+  {
+   "pid": 70,
+   "sig": "when did you go on your first trip without your parents? ask go on your first trip without your parents answer: i went… did + базовая форма: “when did you go…?”, не went.",
+   "gone": false
+  },
+  {
+   "pid": 71,
+   "sig": "when did you go to your first concert? ask go to your first concert answer: i went… did + базовая форма: “when did you go…?”, не went.",
+   "gone": false
+  },
+  {
+   "pid": 72,
+   "sig": "when did you take your first flight? ask take your first flight answer: i took… did + базовая форма: “when did you take…?”, не took.",
+   "gone": false
+  },
+  {
+   "pid": 73,
+   "sig": "when did you open your first bank account? ask open your first bank account answer: i opened… did + базовая форма: “when did you open…?”, не opened.",
+   "gone": false
+  },
+  {
+   "pid": 74,
+   "sig": "when did you start drinking coffee? ask start drinking coffee answer: i started… did + базовая форма: “when did you start…?”, не started.",
+   "gone": false
+  },
+  {
+   "pid": 75,
+   "sig": "when did you take up your first hobby? ask take up your first hobby answer: i took… did + базовая форма: “when did you take…?”, не took.",
+   "gone": false
+  },
+  {
+   "pid": 76,
+   "sig": "when did you start cooking for yourself? ask start cooking for yourself answer: i started… did + базовая форма: “when did you start…?”, не started.",
+   "gone": false
+  },
+  {
+   "pid": 77,
+   "sig": "when did you first visit a big city? ask first visit a big city answer: i visited… did + базовая форма: “when did you first visit…?”, не visited.",
+   "gone": false
+  },
+  {
+   "pid": 78,
+   "sig": "when did you get your first email address? ask get your first email address answer: i got… did + базовая форма: “when did you get…?”, не got.",
+   "gone": false
+  },
+  {
+   "pid": 79,
+   "sig": "when did you learn to type? ask learn to type answer: i learned… did + базовая форма: “when did you learn…?”, не learned.",
    "gone": false
   }
  ],
