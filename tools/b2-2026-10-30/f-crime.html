@@ -665,6 +665,14 @@ details.all[open] summary{color:var(--ink)}
 .gloss{background:var(--ground);border-radius:12px;padding:8px 12px;display:grid;gap:4px;font-size:calc(1.02rem * var(--k, 1))}
 .gloss .gl{margin:0;line-height:1.35}
 .gloss .ru{color:var(--muted);font-style:italic}
+/* tools 28 also: alt text in frames for a picture not drawn yet (C1 6.11) */
+.alt-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:100%}
+.alt-grid .alt-f{aspect-ratio:auto;height:calc((40vh - 3.6rem - 8px) / 2);min-height:5.5rem;font-size:calc(.95rem * var(--k, 1))}
+figure.pic:has(.alt-grid),figure.scn:has(.alt-grid),figure.scn:has(.alt-f){width:100%;max-width:100%}
+.alt-f{position:relative;display:flex;align-items:center;justify-content:center;aspect-ratio:3/2;padding:10px 12px;border:2px dashed color-mix(in srgb, var(--ink) 22%, var(--card));border-radius:10px;background:color-mix(in srgb, var(--ink) 4%, var(--card));color:var(--ink);text-align:center;line-height:1.3;font-size:calc(1rem * var(--k, 1))}
+.alt-f b{position:absolute;top:6px;left:9px;font-size:1.1em}
+.alt-f.one{aspect-ratio:auto;height:min(40vh, 18rem);font-size:calc(1.25rem * var(--k, 1));font-weight:700}
+@media (max-width:600px){ .alt-grid{grid-template-columns:repeat(2,minmax(0,1fr))} .alt-grid .alt-f{height:auto;min-height:6.5rem} }
 /* tools 28 also: the side box a little smaller only when it doesn't fit (fitSideBox) */
 #side aside.box .ph{font-size:calc(1.12rem * var(--bxk, 1))}
 .box .ph .ipa{white-space:nowrap}
@@ -3246,7 +3254,12 @@ const retellHTML = b => { const st = bs(b);
 function hgMount(b, host){ if(!host) return; const st = bs(b);
   gHourglass(host, {seconds: b.timer, choices: [b.timer], onEnd: () => { st.hgDone = true; const nx = document.querySelector("[data-step]"); if(nx){ nx.classList.add(st.glowed ? "ready-still" : "ready"); st.glowed = true; } }});
   const hint = host.querySelector(".ghg-hint"); if(hint && !st.hgDone) hint.textContent = "Tap the hourglass to start"; }
-const pictureHTML = b => b.lead ? retellHTML(b) : `${b.timer ? `<div class="row-actions ptimer-row"><button class="btn ptimer" data-ptimer>${esc(ptimerText(b))}</button></div>` : ""}<figure class="pic" style="margin:0"><img src="${esc(b.img)}" alt="${esc(b.alt || b.instr || "")}"></figure>${b.task ? `<p class="task">${mk(b.task)}</p>` : ""}`;
+/* tools 28 also (C1 6.11, request 2): a picture not drawn yet → its alt text in light-grey frames of the same shape; an alt of the form
+   "1 … · 2 … · 3 …" = a numbered grid, as the six pictures would be */
+const altFramesHTML = alt => { const parts = String(alt || "").split(/\s+·\s+(?=\d+\s)/).filter(Boolean);
+  return parts.length > 1 ? `<div class="alt-grid">${parts.map(t => { const m = t.match(/^(\d+)\s+(.*)$/); return `<div class="alt-f"><b>${m ? m[1] : ""}</b><span>${esc(m ? m[2] : t)}</span></div>`; }).join("")}</div>`
+    : `<div class="alt-f one"><span>${esc(alt || "")}</span></div>`; };
+const pictureHTML = b => b.lead ? retellHTML(b) : `${b.timer ? `<div class="row-actions ptimer-row"><button class="btn ptimer" data-ptimer>${esc(ptimerText(b))}</button></div>` : ""}${b._missing ? `<figure class="pic" style="margin:0">${altFramesHTML(b.alt)}</figure>` : `<figure class="pic" style="margin:0"><img src="${esc(b.img)}" alt="${esc(b.alt || b.instr || "")}"></figure>`}${b.task ? `<p class="task">${mk(b.task)}</p>` : ""}`;
 /* ---------- ⏱ a quiet minute with the picture (handoff 30.10 21:20, as in class): tap → it counts down on the button, then "Time's up"
    and Next lights up; tap again = start again; no sound ---------- */
 const fmtT = s => Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
@@ -3313,16 +3326,16 @@ function sceneState(b){ const st = bs(b), ks = sceneList(b).filter(x => !x.hidde
 const sceneAt = b => sceneState(b).at;
 function scenesHTML(b){
   const sc = sceneState(b), st = bs(b);
-  if(sc.at < 0 || st.peek) return `<figure class="scn street" style="margin:0"><img src="${esc(b.street)}" alt="${esc(b.instr || "The street")}"></figure>${st.peek ? `<div class="row-actions"><button class="redo" data-peek>← Back to the scene</button></div>` : ""}`;
+  if(sc.at < 0 || st.peek) return `<figure class="scn street" style="margin:0">${b._streetMissing ? altFramesHTML(b.scenes.map((x, i) => (i + 1) + " " + (x.alt || "")).join(" · ")) : `<img src="${esc(b.street)}" alt="${esc(b.instr || "The street")}">`}</figure>${st.peek ? `<div class="row-actions"><button class="redo" data-peek>← Back to the scene</button></div>` : ""}`;
   const k = sc.order[sc.at], x = b.scenes[k], n = sc.order.length;
   const dots = `<span class="speak-dots scn-dots" aria-label="Scene ${sc.at + 1} of ${n}">${sc.order.map((_, i) => `<button class="${i === sc.at ? "on" : i < sc.at ? "was" : ""}" ${i < sc.at ? `data-scn="${i}"` : "disabled"} aria-label="Scene ${i + 1}"></button>`).join("")}</span>`;
   const mine = liveTeacher() ? `<div class="scn-mine">${sceneList(b).map(it => `<span class="live-host ${liveDim("scenes." + b._pid + "." + it.k)}" data-live-host>${esc(b.scenes[it.k].alt || it.t)}${liveTools("scenes." + b._pid + "." + it.k, {edit: false})}</span>`).join("")}</div>` : "";
-  const fig = `<figure class="scn ${S.enter || st.dealt ? "deal" : ""}" style="margin:0"><img src="${esc(x.img)}" alt="${esc(x.alt || "")}"></figure>`;
+  const fig = `<figure class="scn ${S.enter || st.dealt ? "deal" : ""}" style="margin:0">${x._missing ? altFramesHTML(x.alt) : `<img src="${esc(x.img)}" alt="${esc(x.alt || "")}">`}</figure>`;
   /* tools 28 (B2 03.11 22:15, her Slide Kit bubbles): the line of the one who loved it in a yellow bubble beside the close-up; an example
      reply in a white one, hidden until they tap it (or Next shows it first, then the next scene) */
   const bubs = x.say || x.example ? `<div class="scn-bubs">${x.say ? `<div class="kbub y"><span>${mk(x.say)}</span></div>` : ""}${x.example ? (sc.ex && sc.ex[k]
       ? `<div class="kbub w open"><span>${mk(x.example)}</span></div>` : `<button class="kbub w" data-scnex><span><span class="kb-dots">•••</span><small>Tap to see an example</small></span></button>`) : ""}</div>` : "";
-  return `<div class="scn-top">${dots}<button class="redo" data-peek>${b.street_label ? esc(b.street_label) : /maple/.test(b.street || "") ? "🏙 The whole street" : "🖼 The whole picture"}</button></div>
+  return `<div class="scn-top">${dots}<button class="redo" data-peek>${b.street_label ? esc(b.street_label) : /maple/.test(b.street || "") ? "🏙 The whole street" : b.scenes.length > 1 ? `🖼 All ${["", "", "two", "three", "four", "five", "six", "seven", "eight"][b.scenes.length] || b.scenes.length} pictures` : "🖼 The whole picture"}</button></div>
     ${bubs ? `<div class="scn-pair">${fig}${bubs}</div>` : fig}${mine}`;
 }
 /* ---------- 🃏 cards: Again comes back 2–3 cards later, Got it into its dot; the end: Come back to these (+ the full list for "ours") ---------- */

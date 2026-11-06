@@ -1,0 +1,576 @@
+{
+ "type": "revision-field",
+ "file": "has-it-changed",
+ "title": "Has it changed much?",
+ "part": "Lesson 8 · 06.11",
+ "sketch": true,
+ "boxes": {
+  "BOX": [
+   {
+    "h": "HAS IT CHANGED?",
+    "items": [
+     "Has it **changed much**? — **Yes, it has, actually.**",
+     "— **Not really, no.**  /  **Yes and no.**",
+     "**It's changed quite a lot.** / **It's completely changed.**",
+     "It **hasn't changed much**. It's **pretty much the same**."
+    ]
+   },
+   {
+    "h": "WHAT'S DIFFERENT?",
+    "items": [
+     "It's **got** / **gotten** a lot [busier / livelier / …].",
+     "It's **become** a lot **more** [touristy / expensive / …].",
+     "It's a lot [busier / cleaner / …] **than it used to be**.",
+     "It's **not quite as** [nice / quiet / …] **as it was**.",
+     "It's **getting** [busier and busier / …].",
+     "It's **getting** **more and more** [expensive / …]."
+    ]
+   },
+   {
+    "h": "THEN AND NOW",
+    "items": [
+     "**When I was growing up**, … **These days**, …"
+    ]
+   }
+  ],
+  "FL": [
+   {
+    "h": "HAS IT CHANGED?",
+    "items": [
+     "Has it c{{hanged}} m{{uch}}? — **Yes, it** h{{as}}, a{{ctually}}.",
+     "— **Not** r{{eally}}, **no.**  /  **Yes** a{{nd}} n{{o}}.",
+     "**It's** c{{hanged}} q{{uite}} **a** l{{ot}}. / **It's** c{{ompletely}} c{{hanged}}.",
+     "It h{{asn't}} c{{hanged}} m{{uch}}. It's p{{retty}} m{{uch}} **the** s{{ame}}."
+    ]
+   },
+   {
+    "h": "WHAT'S DIFFERENT?",
+    "items": [
+     "It's g{{ot}} / g{{otten}} a lot [busier / livelier / …].",
+     "It's b{{ecome}} a lot m{{ore}} [touristy / expensive / …].",
+     "It's a lot [busier / cleaner / …] t{{han}} **it** u{{sed}} **to be**.",
+     "It's **not** q{{uite}} a{{s}} [nice / quiet / …] a{{s}} **it** w{{as}}.",
+     "It's g{{etting}} [busier and busier / …].",
+     "It's g{{etting}} m{{ore}} **and** m{{ore}} [expensive / …]."
+    ]
+   },
+   {
+    "h": "THEN AND NOW",
+    "items": [
+     "W{{hen}} **I was** g{{rowing}} **up**, … T{{hese}} d{{ays}}, …"
+    ]
+   }
+  ],
+  "ABC": [
+   {
+    "h": "A · THE CHANGE, UP TO NOW",
+    "items": [
+     "has **got / gotten** -er",
+     "has **become** more …"
+    ]
+   },
+   {
+    "h": "B · NOW COMPARED WITH THEN",
+    "items": [
+     "… **than it used to be**",
+     "**not as** … **as**"
+    ]
+   },
+   {
+    "h": "C · STILL CHANGING",
+    "items": [
+     "is **getting** -er and -er",
+     "**more and more** …"
+    ]
+   }
+  ]
+ },
+ "stages": [
+  {
+   "label": "☕ Warm-up",
+   "blocks": [
+    {
+     "kind": "postits",
+     "instr": "Share with your partner.",
+     "notes": [
+      "Think of **a shop, café or cinema** from your childhood that **isn’t there anymore**. What was it like, and what’s there now (if you know)?",
+      "What’s **one thing** about a place you love that you **hope never changes**? Why?"
+     ]
+    },
+    {
+     "kind": "questions",
+     "instr": "If you’re done:",
+     "items": [
+      "Tell your partner about a place that has changed for the better."
+     ]
+    }
+   ]
+  },
+  {
+   "label": "💬 First chat",
+   "blocks": [
+    {
+     "kind": "questions",
+     "box": "BOX",
+     "instr": "Ask each other. Start your answer with a phrase from the box, then say the rest any way you can.",
+     "items": [
+      "**1**  **Has the place where you grew up changed much?** ((In what way? What’s one thing that’s different now? Haven’t been back in a while? Say what you’ve heard.))",
+      "**2**  **And the place where you live now — has it changed since you moved there?** ((Never moved? Talk about a place you go to a lot.))"
+     ],
+     "fast": "Think of a place you know that has hardly changed. What’s still the same there?"
+    }
+   ]
+  },
+  {
+   "label": "✏️ Make sentences",
+   "blocks": [
+    {
+     "kind": "cards",
+     "style": "say",
+     "box": "ABC",
+     "instr": "Take turns: make a sentence from the words — the grey line is a clue. Say it aloud, then tap the card to check. Then both of you talk about yourselves.",
+     "instr_next": "And this one? Then talk about yourselves.",
+     "cards": [
+      {
+       "front": "**the station · nice** ((they renovated it last year))",
+       "back": "The station **has got / gotten a lot nicer**. ((also fine: has become a lot nicer))",
+       "turn": "A place near you that has got / gotten a lot nicer — or a lot worse. What happened?"
+      },
+      {
+       "front": "**TVs · cheap** ((you pay much less now than twenty years ago))",
+       "back": "TVs **are a lot cheaper than they used to be**. ((also fine: TVs have got / gotten a lot cheaper.))",
+       "turn": "Two things that are a lot cheaper — or a lot more expensive — than they used to be. Which one do you notice most?"
+      },
+      {
+       "front": "**the summers · hot** ((every year it’s worse))",
+       "back": "The summers **are getting hotter and hotter**.",
+       "turn": "Two things that are getting better and better — or worse and worse — where you live. Which one matters most to you?"
+      },
+      {
+       "front": "**my favourite restaurant · good** ((it was better ten years ago))",
+       "back": "My favourite restaurant **isn’t as good as it used to be**. ((also fine: … isn’t as good as it was.))",
+       "turn": "A café, a shop or a TV show that isn’t as good as it used to be. What’s changed?"
+      },
+      {
+       "front": "**the old town · touristy** ((souvenir shops everywhere now))",
+       "back": "The old town **has become a lot more touristy**. ((also fine: … is a lot more touristy than it used to be.))",
+       "turn": "A place that has become a lot more touristy — or one that hasn’t changed at all. Why do you think that is?"
+      },
+      {
+       "front": "**my street · noisy** ((a new bar opens every month))",
+       "back": "My street **is getting noisier and noisier**.",
+       "turn": "What’s getting more and more popular where you live? Who’s happy about it, and who isn’t?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "🧠 Recall",
+   "blocks": [
+    {
+     "kind": "text",
+     "cols": 2,
+     "instr": "Can you remember today’s phrases? Use the first letters and the Russian. Take turns: say one phrase each, then tap the yellow to check.",
+     "lines": [
+      {
+       "h": "HAS IT CHANGED?"
+      },
+      {
+       "p": [
+        "Has it ",
+        {
+         "f": "c",
+         "r": "hanged"
+        },
+        " ",
+        {
+         "f": "m",
+         "r": "uch"
+        },
+        "? — ",
+        {
+         "b": "Yes, it"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "as"
+        },
+        ", ",
+        {
+         "f": "a",
+         "r": "ctually"
+        },
+        ".",
+        "  ((– Сильно изменилось? — Вообще-то да.))"
+       ]
+      },
+      {
+       "p": [
+        "— ",
+        {
+         "b": "Not"
+        },
+        " ",
+        {
+         "f": "r",
+         "r": "eally"
+        },
+        ", ",
+        {
+         "b": "no."
+        },
+        "  /  ",
+        {
+         "b": "Yes"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "nd"
+        },
+        " ",
+        {
+         "f": "n",
+         "r": "o"
+        },
+        ".",
+        "  ((– Да не особо. / И да, и нет.))"
+       ]
+      },
+      {
+       "p": [
+        {
+         "b": "It's"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "hanged"
+        },
+        " ",
+        {
+         "f": "q",
+         "r": "uite"
+        },
+        " ",
+        {
+         "b": "a"
+        },
+        " ",
+        {
+         "f": "l",
+         "r": "ot"
+        },
+        ". / ",
+        {
+         "b": "It's"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "ompletely"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "hanged"
+        },
+        ".",
+        "  ((– Изменилось довольно сильно. / Изменилось до неузнаваемости.))"
+       ]
+      },
+      {
+       "p": [
+        "It ",
+        {
+         "f": "h",
+         "r": "asn't"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "hanged"
+        },
+        " ",
+        {
+         "f": "m",
+         "r": "uch"
+        },
+        ". It's ",
+        {
+         "f": "p",
+         "r": "retty"
+        },
+        " ",
+        {
+         "f": "m",
+         "r": "uch"
+        },
+        " ",
+        {
+         "b": "the"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "ame"
+        },
+        ".",
+        "  ((– Почти не изменилось. Всё практически так же.))"
+       ]
+      },
+      {
+       "h": "WHAT'S DIFFERENT?",
+       "col": true
+      },
+      {
+       "p": [
+        "It's ",
+        {
+         "f": "g",
+         "r": "ot"
+        },
+        " / ",
+        {
+         "f": "g",
+         "r": "otten"
+        },
+        " a lot [busier / livelier / …].",
+        "  ((– Стало гораздо [многолюднее / оживлённее / …].))"
+       ]
+      },
+      {
+       "p": [
+        "It's ",
+        {
+         "f": "b",
+         "r": "ecome"
+        },
+        " a lot ",
+        {
+         "f": "m",
+         "r": "ore"
+        },
+        " [touristy / expensive / …].",
+        "  ((– Стало гораздо [туристичнее / дороже / …].))"
+       ]
+      },
+      {
+       "p": [
+        "It's a lot [busier / cleaner / …] ",
+        {
+         "f": "t",
+         "r": "han"
+        },
+        " ",
+        {
+         "b": "it"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "sed"
+        },
+        " ",
+        {
+         "b": "to be"
+        },
+        ".",
+        "  ((– Там гораздо [многолюднее / чище / …], чем раньше.))"
+       ]
+      },
+      {
+       "p": [
+        "It's ",
+        {
+         "b": "not"
+        },
+        " ",
+        {
+         "f": "q",
+         "r": "uite"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "s"
+        },
+        " [nice / quiet / …] ",
+        {
+         "f": "a",
+         "r": "s"
+        },
+        " ",
+        {
+         "b": "it"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "as"
+        },
+        ".",
+        "  ((– Уже не так [хорошо / тихо / …], как было.))"
+       ]
+      },
+      {
+       "p": [
+        "It's ",
+        {
+         "f": "g",
+         "r": "etting"
+        },
+        " [busier and busier / …].",
+        "  ((– Становится всё [многолюднее / …].))"
+       ]
+      },
+      {
+       "p": [
+        "It's ",
+        {
+         "f": "g",
+         "r": "etting"
+        },
+        " ",
+        {
+         "f": "m",
+         "r": "ore"
+        },
+        " ",
+        {
+         "b": "and"
+        },
+        " ",
+        {
+         "f": "m",
+         "r": "ore"
+        },
+        " [expensive / …].",
+        "  ((– Становится всё [дороже и дороже / …].))"
+       ]
+      },
+      {
+       "h": "THEN AND NOW"
+      },
+      {
+       "p": [
+        {
+         "f": "W",
+         "r": "hen"
+        },
+        " ",
+        {
+         "b": "I was"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "rowing"
+        },
+        " ",
+        {
+         "b": "up"
+        },
+        ", … ",
+        {
+         "f": "T",
+         "r": "hese"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "ays"
+        },
+        ", …",
+        "  ((– Когда я рос(ла), … А сейчас …))"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "🖼 Pictures",
+   "blocks": [
+    {
+     "kind": "picture",
+     "img": "then-now-all.jpg",
+     "timer": 60,
+     "box": "BOX",
+     "alt": "1 High street: small shops then — crowds and chain cafés now · 2 Seaside village: fishing boats then — tourists and souvenir shops now · 3 Old warehouses: empty and run-down then — loft apartments and cafés now · 4 City square: full of cars then — trees, benches and cafés now · 5 Village: fields then — rows of new houses and a supermarket now · 6 Village square: almost the same",
+     "instr": "One minute: look at the pictures and think how each place has changed. Then take turns: one of you secretly picks a picture, and the other asks: **Has it changed much?** Whoever picked answers as if it’s their hometown and says what’s different. The other guesses the picture and reacts.",
+     "task": "React: **Is that a good thing?** · **Sounds like a change for the better!** · **Oh, that’s a shame.** · **Oh, nice — some places never change.**"
+    },
+    {
+     "kind": "scenes",
+     "street_first": false,
+     "order": "fixed",
+     "street": "then-now-all.jpg",
+     "box": "BOX",
+     "task": "Picture by picture: take turns to answer **Has it changed much?** Then tap to see one way to say it.",
+     "scenes": [
+      {
+       "img": "then-now-1.jpg",
+       "alt": "High street: small shops then — crowds and chain cafés now",
+       "say": "Has it changed much?",
+       "example": "Yes, it has, actually. It’s **got** / **gotten** a lot **busier**, and rents are **getting higher and higher**."
+      },
+      {
+       "img": "then-now-2.jpg",
+       "alt": "Seaside village: fishing boats then — tourists and souvenir shops now",
+       "say": "Has it changed much?",
+       "example": "Yes, it’s **completely changed**. It’s **become** a lot **more touristy** — and a lot **pricier**."
+      },
+      {
+       "img": "then-now-3.jpg",
+       "alt": "Old warehouses: empty and run-down then — loft apartments and cafés now",
+       "say": "Has it changed much?",
+       "example": "**It’s changed quite a lot.** The old warehouses are all apartments and cafés now, so it’s **a lot livelier than it used to be**."
+      },
+      {
+       "img": "then-now-4.jpg",
+       "alt": "City square: full of cars then — trees, benches and cafés now",
+       "say": "Has it changed much?",
+       "example": "Yes, it has, actually. It’s **got** / **gotten** a lot **nicer** since they closed it to cars."
+      },
+      {
+       "img": "then-now-5.jpg",
+       "alt": "Village: fields then — rows of new houses and a supermarket now",
+       "say": "Has it changed much?",
+       "example": "Yes and no. The old village is **pretty much the same**, but it’s **not as green as it used to be**."
+      },
+      {
+       "img": "then-now-6.jpg",
+       "alt": "Village square: almost the same",
+       "say": "Has it changed much?",
+       "example": "**Not really, no.** It’s **pretty much the same** — just a new café or two."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "💬 Then & now",
+   "blocks": [
+    {
+     "kind": "say",
+     "box": "FL",
+     "instr": "At the start of the lesson, you answered this question in the chat. How would you answer it now? Take turns. Try not to look at the box.",
+     "task": [
+      "**1**  Your partner asks: **Has the place where you grew up changed much?** ((Haven’t been back in a while? Say what you’ve heard — or talk about where you live now.))",
+      "**2**  Answer, then give details: how it’s changed, how it compares with the past, and what’s still changing.",
+      "**3**  Your partner follows up:",
+      "**Is that a good thing?** Why (not)? ((— if you don’t say how you feel about it))",
+      "**Where do you hear about it — family, friends, social media?** ((— if you don’t live there now))"
+     ],
+     "fast": [
+      "Without looking at the box, take turns to say a phrase about how a place has changed. How many can you come up with together?",
+      "Think of the place where you grew up: what’s one thing from the old days you’d bring back, and why?"
+     ]
+    }
+   ]
+  }
+ ]
+}

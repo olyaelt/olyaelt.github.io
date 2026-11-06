@@ -182,7 +182,8 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
                         ep = page_ids(lesson, b['page'], ed, save=False).get('scenes', [])
                         d['embeds'][b['page']] = {'title': ed['title'], 'chats': {str(pid): x.get('contact', '') for pid, x in zip(ep, ed['scenes'])}}
                 if b.get('kind') in ('picture', 'model') and b.get('img'):   # tools 18: a model with its picture (Ljubljana) too
-                    shutil.copyfile(os.path.join(T, lesson, b['img']), os.path.join(out_dir, b['img']))
+                    if os.path.exists(os.path.join(T, lesson, b['img'])): shutil.copyfile(os.path.join(T, lesson, b['img']), os.path.join(out_dir, b['img']))
+                    else: print('note: %s/%s — %s not there yet: its alt text in frames' % (lesson, name, b['img'])); b['_missing'] = True   # tools 28 also (C1 6.11)
                 if b.get('kind') == 'text':   # tools 28 also (B2 6.11, request 2): its pictures; a file not there yet → no picture at all
                     for o in [b] + [l for l in b.get('lines', []) if isinstance(l, dict)]:
                         if not o.get('img'): continue
@@ -195,8 +196,11 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
                         CARD_PAGE.replace('__T__', b['phone']['title']).replace('__D__', js({'page': lesson + '/' + name, 'phone': b['phone'], 'cards': [c['front'] for c in b['cards']]})))
                     built.append('tools/%s/%s-card.html' % (lesson, name))
                 if b.get('kind') == 'scenes':   # Maple Road scene by scene (handoff 30.10 15:15): the street and each close-up
-                    for im in [b.get('street')] + [x.get('img') for x in b.get('scenes', [])]:
-                        if im: shutil.copyfile(os.path.join(T, lesson, im), os.path.join(out_dir, im))
+                    for o, key in [(b, 'street')] + [(x, 'img') for x in b.get('scenes', [])]:   # tools 28 also (C1 6.11): a picture not drawn yet → its alt text in a frame
+                        im = o.get(key)
+                        if not im: continue
+                        if os.path.exists(os.path.join(T, lesson, im)): shutil.copyfile(os.path.join(T, lesson, im), os.path.join(out_dir, im))
+                        else: print('note: %s/%s — %s not there yet: its alt text in a frame' % (lesson, name, im)); o['_missing' if key == 'img' else '_streetMissing'] = True
                     if any(x.get('say') or x.get('example') for x in b.get('scenes', [])):   # tools 28 (B2 handoff 03.11 22:15): her Slide Kit bubbles
                         for im in ('kit-bubble-yellow-fit.svg', 'kit-bubble-white-fit.svg'):
                             if os.path.exists(os.path.join(T, lesson, im)): shutil.copyfile(os.path.join(T, lesson, im), os.path.join(out_dir, im))

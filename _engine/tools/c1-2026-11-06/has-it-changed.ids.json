@@ -1,0 +1,96 @@
+{
+ "blocks": [
+  {
+   "pid": 0,
+   "sig": "postits share with your partner.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "questions if you’re done:",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "questions ask each other. start your answer with a phrase from the box, then say the rest any way you can.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "cards take turns: make a sentence from the words — the grey line is a clue. say it aloud, then tap the card to check. then both of you talk about yourselves.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "text can you remember today’s phrases? use the first letters and the russian. take turns: say one phrase each, then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "picture one minute: look at the pictures and think how each place has changed. then take turns: one of you secretly picks a picture, and the other asks: has it changed much? whoever picked answers as if it’s their hometown and says what’s different. the other guesses the picture and reacts. then-now-all.jpg",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "scenes",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "say at the start of the lesson, you answered this question in the chat. how would you answer it now? take turns. try not to look at the box.",
+   "gone": false
+  }
+ ],
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "the station has got / gotten a lot nicer. also fine: has become a lot nicer the station · nice they renovated it last year a place near you that has got / gotten a lot nicer — or a lot worse. what happened?",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "tvs are a lot cheaper than they used to be. also fine: tvs have got / gotten a lot cheaper. tvs · cheap you pay much less now than twenty years ago two things that are a lot cheaper — or a lot more expensive — than they used to be. which one do you notice most?",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "the summers are getting hotter and hotter. the summers · hot every year it’s worse two things that are getting better and better — or worse and worse — where you live. which one matters most to you?",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "my favourite restaurant isn’t as good as it used to be. also fine: … isn’t as good as it was. my favourite restaurant · good it was better ten years ago a café, a shop or a tv show that isn’t as good as it used to be. what’s changed?",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "the old town has become a lot more touristy. also fine: … is a lot more touristy than it used to be. the old town · touristy souvenir shops everywhere now a place that has become a lot more touristy — or one that hasn’t changed at all. why do you think that is?",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "my street is getting noisier and noisier. my street · noisy a new bar opens every month what’s getting more and more popular where you live? who’s happy about it, and who isn’t?",
+   "gone": false
+  }
+ ],
+ "write": [],
+ "questions.1": [
+  {
+   "pid": 0,
+   "sig": "tell your partner about a place that has changed for the better.",
+   "gone": false
+  }
+ ],
+ "questions.2": [
+  {
+   "pid": 0,
+   "sig": "1 has the place where you grew up changed much? in what way? what’s one thing that’s different now? haven’t been back in a while? say what you’ve heard.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 and the place where you live now — has it changed since you moved there? never moved? talk about a place you go to a lot.",
+   "gone": false
+  }
+ ]
+}
