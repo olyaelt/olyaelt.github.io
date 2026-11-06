@@ -19,7 +19,7 @@ __BASE_CSS__
 .head .howto{order:1;margin-left:0}
 .head .stages{order:2}
 .head .stage-btn{padding:3px 10px;font-size:.96rem}
-.stages.tight{gap:3px} .stages.tight .stage-arrow{display:none}
+.stages.tight{gap:3px} .stages.tight .stage-arrow{display:none} .head .stages.tight .stage-btn{padding:3px 8px;font-size:.9rem}
 .stages.many{gap:3px} .stages.many .stage-arrow{display:none} .stages.many .stage-btn{padding:3px 8px}
 .stages.many .stage-btn:not([aria-current]) .s-nm{display:none}   /* tools 25: many parts — signs, the current one named */
 .head .stage-arrow{font-size:.85rem}
@@ -166,6 +166,9 @@ aside.box.mainbox .pp-ru{font-size:calc(1rem * var(--k, 1))}
 .fgame .gt-a .note.lines .ctx{color:#5F6368}
 .fgame .gt-a .note.lines .nlab{font-weight:900;color:#1D1D1B}
 .finstr.frames b.bx{background:linear-gradient(transparent 12%, #FFF27A 12%, #FFF27A 88%, transparent 88%);color:#1D1D1B;padding:0 3px;border-radius:2px}   /* tools 30 (C1 fixes-1): the frame to use, in a marker */
+.box-fold{display:block;width:100%;margin:0;text-align:left;border:2px dashed var(--line);background:var(--card);color:var(--muted);border-radius:12px;padding:8px 14px;font:inherit;font-size:1rem;font-weight:700;cursor:pointer}
+.box-fold b{color:var(--instr-text, #0679BD)} .box-fold:hover{border-color:var(--instr)}
+.box-ctl{position:absolute;top:8px;right:10px;display:flex;gap:6px;z-index:2} .box-ctl .btn.slim{padding:2px 10px;font-size:.82rem;min-height:0}
 .say-isles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:12px;align-items:start}
 .say-isle{background:var(--ground);border-radius:12px;padding:10px 14px 6px}
 .say-lines p.new{border-left:4px solid var(--ok);padding-left:10px;margin-left:-14px;animation:ansIn .35s ease-out}
@@ -513,6 +516,7 @@ __LW_CSS__
 .fwheel{display:grid;grid-template-columns:minmax(12rem,17rem) minmax(0,1fr);gap:20px;align-items:center}
 .fwheel .gwheel{width:min(100%,17rem)}
 .fwheel.ans{grid-template-columns:minmax(0,1fr)} .fwheel.ans .fw-wheel{display:none}
+.fgame .gdemo{padding:8px 12px 6px;gap:4px} .fgame .gdm-stage{margin-top:4px;gap:4px} .fgame .gdm-cap{font-size:1.05rem;min-height:1.4em}   /* tools 30 (B2 6.11: ▶ How to play beside a 5-line task ran under Next) */
 .fwheel .gwheel.empty{opacity:.35}
 .fw-side{display:grid;gap:10px;align-content:start}
 .fw-task{position:relative}
@@ -932,8 +936,9 @@ function gapAnswer(b, id){
 const ledLinePath = (b, pre, li) => pre === "t" && b.kind === "text" ? `blocks.${b._pos}.lines.${li}` : /^m\d+$/.test(pre) && b.kind === "model" ? `blocks.${b._pos}.parts.${pre.slice(1)}.lines.${li}` : "";
 const ledLine = (b, pre, li) => { const p = ledLinePath(b, pre, li); return p && LEDP[p] ? ledBtn(p) : ""; };
 /* tools 28 also (B2 6.11, engine request 2): a line of a text block may carry "img" — a small old photo beside it (on a phone above it) */
-const lphHTML = (l, b) => l.img && b && b.kind === "text" ? `<img class="lph" src="${esc(l.img)}" alt="${esc(l.alt || "")}" onerror="this.remove()">` : "";
-const linesHTML = (lines, b, pre) => (lines || []).map((l, li) => l.h != null ? `<p class="lh${l.col ? " colbreak" : ""}">${esc(l.h)}</p>` : l.ctx != null ? `<p class="lctx">${mk(l.ctx)}</p>` : `<p${l.wide || lphHTML(l, b) ? ` class="${[l.wide ? "wide" : "", lphHTML(l, b) ? "has-lph" : ""].filter(Boolean).join(" ")}"` : ""}${ledLine(b, pre, li) ? " data-live-host" : ""}>${lphHTML(l, b)}${l.s ? `<b class="sp">${esc(l.s)}:</b>` : ""}${partsHTML(l.p, b, `${pre}l${li}g`)}${ledLine(b, pre, li)}</p>`).join("");
+/* tools 30 (her 6.11 15:19): a speaker's photo only by their first line on the screen, not again by each of their lines */
+const lphHTML = (l, b, lines, li) => l.img && b && b.kind === "text" && !(lines || []).slice(0, li || 0).some(x => x && x.img === l.img) ? `<img class="lph" src="${esc(l.img)}" alt="${esc(l.alt || "")}" onerror="this.remove()">` : "";
+const linesHTML = (lines, b, pre) => (lines || []).map((l, li) => l.h != null ? `<p class="lh${l.col ? " colbreak" : ""}">${esc(l.h)}</p>` : l.ctx != null ? `<p class="lctx">${mk(l.ctx)}</p>` : `<p${l.wide || lphHTML(l, b, lines, li) ? ` class="${[l.wide ? "wide" : "", lphHTML(l, b, lines, li) ? "has-lph" : ""].filter(Boolean).join(" ")}"` : ""}${ledLine(b, pre, li) ? " data-live-host" : ""}>${lphHTML(l, b, lines, li)}${l.s ? `<b class="sp">${esc(l.s)}:</b>` : ""}${partsHTML(l.p, b, `${pre}l${li}g`)}${ledLine(b, pre, li)}</p>`).join("");
 const gapIds = (lines, pre) => (lines || []).flatMap((l, li) => (l.p || []).filter(x => x && typeof x === "object" && x.r != null).map((_, k) => `${pre}l${li}g${k}`));
 function allGaps(b){
   if(b.kind === "text") return gapIds(b.lines, "t").concat(gapIds((b.gloss || []).map(g => ({p: g.p})), "x"));
@@ -2087,8 +2092,9 @@ function render(){
   else main.innerHTML = bar + headHTML() + blockHTML(b) + fastHTML() + back + stepbarHTML();
   if(keepGrid){ const g = document.getElementById("gw-grid"); if(g) g.replaceWith(keepGrid); }
   pcRestore(pcs);
-  const st = side.scrollTop; side.innerHTML = box && D.boxes[box] ? fieldBoxHTML(D.boxes[box]) + sidePicHTML(b) + (b && b.kind === "game" && b.piece === "secret" && secSt(b).ph === 2 ? secAllHTML(b) : "") + (b && b._qtab ? `<div class="q-table">${mixHTML(qTableOf(b))}</div>` : "") : ""; side.scrollTop = st;
+  const st = side.scrollTop; side.innerHTML = box && D.boxes[box] ? sideBoxHTML(b, box) + sidePicHTML(b) + (b && b.kind === "game" && b.piece === "secret" && secSt(b).ph === 2 ? secAllHTML(b) : "") + (b && b._qtab ? `<div class="q-table">${mixHTML(qTableOf(b))}</div>` : "") : ""; side.scrollTop = st;
   if(b && b._qtab) wireMix(qTableOf(b), side);
+  side.querySelectorAll("[data-boxst]").forEach(x => x.addEventListener("click", e => { e.stopPropagation(); boxState(b); BOXST[b._id] = x.dataset.boxst; render(); }));   /* tools 30 */
   wireBox(side); wireBoxHidden(side); fitSideBox(); requestAnimationFrame(fitSideBox);
   side.querySelectorAll("img").forEach(im => { if(!im.complete) im.addEventListener("load", fitSideBox, {once: true}); });
   S.enter = false; if(b && b.kind === "cards") deckOf(b).fresh = false;
@@ -2164,6 +2170,18 @@ function boxBlockHTML(b){
   const box = D.boxes[b.box || "BOX"] || [], hid = !!bs(b).shown, B = hid ? hideBox(box) : box;
   const groups = B.map((g, gi) => `<div class="mb-g">${boxGroupHTML(g, gi, (t, ti) => `<button class="ph ${usedPhrases.has(gi + "." + ti) ? "used" : ""}" data-ph="${gi}.${ti}" data-pt="${esc(phPlain(t))}" aria-pressed="${usedPhrases.has(gi + "." + ti)}">${boxLineHTML(t)}</button>`)}</div>`).join("");
   return `<aside class="box mainbox${hid ? " hid" : ""}" aria-label="Useful language"><div class="box-top"><img class="sticker" src="${STICKER}" alt="Useful language"></div><div class="mb-cols">${groups}</div></aside>`;
+}
+/* tools 30 (B2 6.11 fixes-5, her 15:34: «с фразой перед глазами мозг копирует, а не вспоминает» — the box opens less and less through the
+   lesson): a block's box is "open" (as before), "gapped" (the phrases hidden: first letters, Russian and IPA stay; tap the yellow) or
+   "folded" (a thin bar «Useful language · Stuck? Peek ▸»). "box_state" on the block = its default; Peek / Show all / Fold change it on this
+   screen only — the next screen opens in its own default. */
+const BOXST = {}; let boxStFor = null;
+function boxState(b){ if(!b) return "open"; if(boxStFor !== b._id){ boxStFor = b._id; for(const k in BOXST) delete BOXST[k]; } return BOXST[b._id] || b.box_state || b.boxState || "open"; }   /* "boxState" too (the C1 handoff's name) */
+function sideBoxHTML(b, box){
+  const s = boxState(b), B = D.boxes[box];
+  if(s === "folded") return `<button class="box-fold" data-boxst="gapped" aria-label="Useful language: peek">📦 Useful language · <b>Stuck? Peek ▸</b></button>`;
+  const ctl = `<div class="box-ctl">${s === "gapped" ? `<button class="btn slim" data-boxst="open">Show all</button>` : ""}<button class="btn slim" data-boxst="folded" title="Fold the box">Fold ▴</button></div>`;
+  return fieldBoxHTML(s === "gapped" ? hideBox(B) : B).replace('<div class="box-top">', ctl + '<div class="box-top">');
 }
 function fieldBoxHTML(box){
   const items = box.map((g, gi) => boxGroupHTML(g, gi, (t, ti) => `<button class="ph ${usedPhrases.has(gi + "." + ti) ? "used" : ""}" data-ph="${gi}.${ti}" data-pt="${esc(t.replace(/\*\*|\{\{|\}\}/g, ""))}" aria-pressed="${usedPhrases.has(gi + "." + ti)}">${boxLineHTML(t)}</button>`)).join("");   /* tools 28 also: a US | UK pairs group (tool_base) */

@@ -57,13 +57,13 @@
   },
   {
    "pid": 11,
-   "sig": "game snakes and ladders: take turns to roll the dice and move. on your square, ask the next person: when did you…? tap to check your question. then they answer with a time phrase (from the box or your own: in my mid-twenties, two years ago; not sure? i can't remember exactly — at ten, maybe?) + one detail.",
+   "sig": "game snakes and ladders: take turns to roll the dice and move. on your square, ask the next person: when did you…? tap to check your question. then they answer with a time phrase (from the box or your own: in my mid-twenties, two years ago; not sure? i can't remember exactly — at ten, maybe?) + one detail. try from memory first — stuck? peek at the box.",
    "gone": false
   },
   {
    "pid": 12,
    "sig": "questions now your real stories.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 13,
@@ -118,6 +118,21 @@
   {
    "pid": 23,
    "sig": "say more statements. take turns, as before.",
+   "gone": false
+  },
+  {
+   "pid": 24,
+   "sig": "postits done? talk while the others finish.",
+   "gone": false
+  },
+  {
+   "pid": 25,
+   "sig": "questions talk about the conversation — and about you.",
+   "gone": false
+  },
+  {
+   "pid": 26,
+   "sig": "questions now your real stories. get ready for a minute: peek at the box and think what you'll say. then talk from memory.",
    "gone": false
   }
  ],
@@ -685,6 +700,35 @@
  ],
  "write": [],
  "questions.12": [
+  {
+   "pid": 0,
+   "sig": "1 three big moments in your life (a first job, a move, a new skill…) — when did they happen? use the box. your partner asks one more question about each.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 what were you like as a kid? name two things you loved and one thing you hated.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "3 name two things you still can't do (swim, cook, drive…). would you like to learn them? why or why not?",
+   "gone": false
+  }
+ ],
+ "questions.25": [
+  {
+   "pid": 0,
+   "sig": "1 what's the best age to leave home — at 18, like margaret, or later, like leo? give two reasons.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 margaret met jean in her third year at university, and they still talk every sunday. who's the friend you've known the longest? when and where did you meet? tell your partner two things about them.",
+   "gone": false
+  }
+ ],
+ "questions.26": [
   {
    "pid": 0,
    "sig": "1 three big moments in your life (a first job, a move, a new skill…) — when did they happen? use the box. your partner asks one more question about each.",

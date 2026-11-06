@@ -37,6 +37,9 @@ const {chromium} = require('playwright'); const path = require('path'); const fs
   // fixes-1 (her 14:29–14:36): Video starts with the question, who says what (speaker photos), watch again; whereas in glossary 1
   out.v = await p.evaluate(() => D.stages[1].blocks.map(b => b.kind)); expect('video: 10 screens in her order', out.v.join() === 'text,text,say,text,text,text,questions,text,text,questions', out.v);
   await go(1, 1); out.sp = await p.evaluate(() => [...document.querySelectorAll('#main .dlg img')].filter(i => i.naturalWidth > 0).length); expect('who says what: the speakers\' photos beside their lines', out.sp === 3, out.sp);
+  out.once = [];
+  for (const bi of [3, 4, 5, 7, 8]) { await go(1, bi); out.once.push(await p.evaluate(() => { const src = [...document.querySelectorAll('#main .dlg img.lph')].map(i => i.getAttribute('src')); return src.length === new Set(src).size && src.length >= 1; })); }
+  expect('a speaker\'s photo once per screen, by their first line (her 15:19)', out.once.every(Boolean), out.once);
   await go(1, 3); out.wh = await p.evaluate(() => /whereas/.test(document.querySelector('#main aside.gloss').innerText) && document.querySelectorAll('#main .dlg img').length >= 1); expect('transcript 1: «whereas» in the glossary, the speaker\'s photo', out.wh, out.wh);
   // practice: input → rules → box → sort → the 6 make-sentence cards → the recall, one box (BOX) all the way
   out.pr = await p.evaluate(() => D.stages[2].blocks.map(b => b.kind + ':' + (b.box || ''))); expect('practice: input, rules, box, sort, cards, recall; only BOX', out.pr.join() === 'say:,say:,questions:BOX,sort:,cards:BOX,text:', out.pr);
@@ -67,8 +70,13 @@ const {chromium} = require('playwright'); const path = require('path'); const fs
     const f = await fits(), ib = await p.evaluate(() => { const w = document.querySelector('#main .kbub.w.open'), t = w && w.querySelector('.kb-t'); if (!w) return false; const a = w.getBoundingClientRect(), c = t.getBoundingClientRect(); return c.bottom <= a.bottom - a.height * .12 && c.left >= a.left + 8 && c.right <= a.right - 4; });
     expect(`scene ${k + 1}: with its answer open it fits, the answer inside its bubble (her 14:38)`, f.ok && ib, {f, ib}); await p.click('.stepbar [data-step]'); await p.waitForTimeout(250); }
   expect('six scenes, each with its credit and the question bubble', out.sc.every(x => x.cred.length > 3 && x.say), out.sc);
-  await go(3, 2); out.end = await p.evaluate(() => { const f = document.querySelector('#main section.fast'); return {lines: f ? f.querySelectorAll('p').length : 0, t: f ? f.innerText : '', box: boxFor(curBlock()), bh: document.querySelectorAll('#side aside.box .bh').length}; });
-  expect('then & now: box FL with first letters, ⚡ with its two lines only', out.end.box === 'FL' && out.end.bh > 20 && out.end.lines === 2 && !/hardly changed/.test(out.end.t), out.end);
+  await go(3, 2); out.end = await p.evaluate(() => { const f = document.querySelector('#main section.fast'); return {lines: f ? f.querySelectorAll('p').length : 0, t: f ? f.innerText : '', box: boxFor(curBlock()), state: boxState(curBlock()), bar: !!document.querySelector('#side .box-fold')}; });
+  expect('then & now (fixes-2): box BOX folded to its bar, ⚡ with its two lines only', out.end.box === 'BOX' && out.end.state === 'folded' && out.end.bar && out.end.lines === 2 && !/hardly changed/.test(out.end.t), out.end);
+  await p.click('#side .box-fold'); await p.waitForTimeout(150); out.peek = await p.evaluate(() => [boxState(curBlock()), document.querySelectorAll('#side .bh').length]);
+  expect('then & now: Peek → the box with first letters', out.peek[0] === 'gapped' && out.peek[1] > 20, out.peek);
+  // fixes-2: the box opens less and less — the defaults
+  out.states = await p.evaluate(() => D.stages.flatMap((s, si) => s.blocks.map((b, bi) => b.box ? `${si}.${bi}:${boxState(b)}` : null)).filter(Boolean).join(' '));
+  expect('fixes-2 defaults: the box question open, first chat gapped, find-the-comparatives open, cards gapped, pictures folded, scenes open, then & now folded', out.states === '1.6:open 1.9:gapped 2.2:open 2.4:gapped 3.0:folded 3.1:open 3.2:folded', out.states);
   console.log(JSON.stringify(out).slice(0, 1200)); if (errs.length) fail.push('page errors: ' + errs.join(' | '));
   console.log(fail.length ? 'FAILED:\n' + fail.join('\n') : 'OK C1 6.11 v2'); await b.close(); srv.close(); process.exit(fail.length ? 1 : 0);
 })();

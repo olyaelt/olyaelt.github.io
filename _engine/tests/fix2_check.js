@@ -18,7 +18,7 @@ const {chromium} = require('playwright'); const path = require('path'); const fs
   const P = 'tools/b2-2026-11-06/stages-of-life.html';
   { const p = await newPage(P);
     out.stages = await p.evaluate(() => D.stages.map(s => s.label));
-    expect('stage names: 📖 The text (her 12:42), 🔁 Back to the start after Practice', JSON.stringify(out.stages) === JSON.stringify(['📝 Test yourself', '📖 The text', '🃏 Practice', '🔁 Back to the start', '💬 Use it']), out.stages);
+    expect('stage names: 👋 Warm-up (fixes-4), 📖 The text (her 12:42), 🔁 Back to the start after Practice', JSON.stringify(out.stages) === JSON.stringify(['👋 Warm-up', '📝 Test yourself', '📖 The text', '🃏 Practice', '🔁 Back to start', '💬 Use it']), out.stages);
     // her 13:12: the warmer from her slide 2 (two stickers + her picture), first in Test yourself
     await go(p, 0, 0);
     out.warm = await p.evaluate(() => { const w = document.querySelector('#main .pi-wrap'), im = w && w.querySelector('.pi-pic img'), notes = [...document.querySelectorAll('#main .postit')];
@@ -26,22 +26,23 @@ const {chromium} = require('playwright'); const path = require('path'); const fs
     expect('the warmer: two stickers, her picture beside them', out.warm && out.warm.notes === 2 && out.warm.pic > 300 && out.warm.loaded > 0 && out.warm.right && /old photos/.test(out.warm.t) && /do you keep them online/.test(out.warm.t), out.warm);
     expect('the warmer fits', (await fits(p)).ok, await fits(p));
     expect('the stage bar on the title\'s row (its arrows dropped)', await p.evaluate(() => { const n = document.querySelector('header.head nav.stages'), t = document.querySelector('header.head h1'); return n.classList.contains('tight') && n.getBoundingClientRect().top < t.getBoundingClientRect().bottom - 8; }), 'head');
-    out.kinds0 = await p.evaluate(() => D.stages[0].blocks.map(b => b.kind)); expect('Test yourself: the warmer, three debate screens (fixes-3 §0), then the six sentences', out.kinds0.join() === 'postits,say,say,say,say', out.kinds0);
-    out.kinds = await p.evaluate(() => D.stages[1].blocks.map(b => b.kind + (b.one ? '1' : '')));
-    expect('the text stage: two reading screens, the questions, the box, two + two memorisation screens', out.kinds.join() === 'text,text,say1,box,text,text,text,text', out.kinds);
+    out.kinds0 = await p.evaluate(() => D.stages[0].blocks.map(b => b.kind)); expect('Warm-up: the warmer, three debate screens (fixes-3 §0, fixes-4)', out.kinds0.join() === 'postits,say,say,say', out.kinds0);
+    out.kinds1 = await p.evaluate(() => D.stages[1].blocks.map(b => b.kind + ':' + (b.box || ''))); expect('Test yourself: the six sentences, then «Done? Talk…» without a box (fixes-4 A)', out.kinds1.join() === 'say:,postits:', out.kinds1);
+    out.kinds = await p.evaluate(() => D.stages[2].blocks.map(b => b.kind + (b.one ? '1' : '')));
+    expect('the text stage: two reading screens, the questions, the box, two + two memorisation screens, the talk (fixes-4 B)', out.kinds.join() === 'text,text,say1,box,text,text,text,text,questions', out.kinds);
     // the text in two screens, each with its own glossary, no line pictures, no "undefined"
-    for (const bi of [0, 1, 4, 5, 6, 7]) { await go(p, 1, bi); const f = await fits(p), t = await p.evaluate(() => document.querySelector('#main').innerText);
+    for (const bi of [0, 1, 4, 5, 6, 7]) { await go(p, 2, bi); const f = await fits(p), t = await p.evaluate(() => document.querySelector('#main').innerText);
       expect(`text screen ${bi} fits 1280×720 with Back / Next`, f.ok, f); expect(`text screen ${bi}: no "undefined"`, !/undefined/.test(t), bi);
       if (bi === 0) { out.tpic = await p.evaluate(() => { const f = document.querySelector('#main .tx-pic.glpic'), im = f && f.querySelector('img'), g = document.querySelector('#main .tx-sidecol aside.gloss'), k = document.querySelector('#main .tx').style.getPropertyValue('--k');
           const shown = f && getComputedStyle(f).display !== 'none', h = im ? Math.round(im.getBoundingClientRect().height) : 0, under = im && g ? im.getBoundingClientRect().top >= g.getBoundingClientRect().bottom : false; f.style.display = 'none'; document.querySelector('#main .tx').style.removeProperty('--k'); fitCard(); const k0 = document.querySelector('#main .tx').style.getPropertyValue('--k'); f.style.removeProperty('display'); render();
           return {shown, h, under, k, k0}; });
         expect('reading 1: her picture under the glossary, the text not made smaller for it', out.tpic.shown && out.tpic.h >= 80 && out.tpic.under && out.tpic.k === out.tpic.k0, out.tpic); }
       if (bi < 2) { const ipa = await p.evaluate(() => [...document.querySelectorAll('#main .gloss .ipa')].map(x => x.textContent)); expect(`reading ${bi}: the glossary shows its IPA`, ipa.length >= 2 && ipa.every(x => /^\/.+\/$/.test(x)), ipa); } }
-    out.lpics = await p.evaluate(() => D.stages[1].blocks.flatMap(b => (b.lines || []).filter(l => l.img)).length); expect('no pictures beside the lines', out.lpics === 0, out.lpics);
-    out.part2 = await p.evaluate(() => [D.stages[1].blocks[1].lines[0].ctx, D.stages[1].blocks[1].instr]);
+    out.lpics = await p.evaluate(() => D.stages[2].blocks.flatMap(b => (b.lines || []).filter(l => l.img)).length); expect('no pictures beside the lines', out.lpics === 0, out.lpics);
+    out.part2 = await p.evaluate(() => [D.stages[2].blocks[1].lines[0].ctx, D.stages[2].blocks[1].instr]);
     expect('the second part starts with the question it answers; the speaking question is on it', /Who's this next to you/.test(out.part2[0]) && /more like/.test(out.part2[1]), out.part2);
     // the questions beside the lines from the text, one answer at a time
-    await go(p, 1, 2);
+    await go(p, 2, 2);
     out.lay = await p.evaluate(() => { const ex = document.querySelector('#main .say-ex'), qs = document.querySelector('#main .say-qs'); return ex && qs ? {exR: Math.round(ex.getBoundingClientRect().right), qsL: Math.round(qs.getBoundingClientRect().left), bold: ex.querySelectorAll('b').length, qn: qs.querySelectorAll('.say-isle.so').length, open: qs.querySelectorAll('.so.open').length} : null; });
     expect('lines from the text on the left, five questions on the right, nothing open', out.lay && out.lay.exR < out.lay.qsL && out.lay.bold >= 9 && out.lay.qn === 5 && out.lay.open === 0, out.lay);
     expect('no side box on this screen', await p.evaluate(() => !document.querySelector('#side aside.box')), 'side');
@@ -64,7 +65,7 @@ const {chromium} = require('playwright'); const path = require('path'); const fs
     expect('the hidden box fits', (await fits(p)).ok, await fits(p));
     await p.click('.stepbar [data-back]'); await p.waitForTimeout(250); expect('Back: the whole box again', !(await bx()).hid, 'back');
     // Back to the start: its own stage, one answer at a time, no "Our answers"
-    await go(p, 3, 0);
+    await go(p, 4, 0);
     out.back = await p.evaluate(() => ({cards: document.querySelectorAll('#main .say-isles .so').length, btns: document.querySelectorAll('#main [data-so-show]').length, our: /our answers/i.test(document.querySelector('#main').innerText), dots: document.querySelectorAll('#main .so-dots').length}));
     expect('Back to the start: six cards, each with its own button, the dots where the answer goes, no «Our answers»', out.back.cards === 6 && out.back.btns === 6 && !out.back.our && out.back.dots === 6, out.back);
     await p.click('[data-so-show="4"]'); await p.waitForTimeout(250);
@@ -72,7 +73,7 @@ const {chromium} = require('playwright'); const path = require('path'); const fs
     expect('its answer under the Russian, the dots gone', out.back4 && out.back4.n === '4' && /third year at university/.test(out.back4.txt) && /третьем курсе/.test(out.back4.txt) && out.back4.dots === 0, out.back4);
     expect('Back to the start fits', (await fits(p)).ok, await fits(p));
     // the wheel: the answer in lines
-    await go(p, 2, 2); await p.evaluate(() => { const st = bs(curBlock()); st.wh = {cur: 0, shown: true, got: []}; render(); }); await p.waitForTimeout(300);
+    await go(p, 3, 2); await p.evaluate(() => { const st = bs(curBlock()); st.wh = {cur: 0, shown: true, got: []}; render(); }); await p.waitForTimeout(300);
     out.wheel = await p.evaluate(() => { const n = document.querySelector('#main .gt-a .note.lines'); return n ? {lines: n.querySelectorAll('.nl').length, labs: [...n.querySelectorAll('.nlab')].map(x => x.textContent), color: getComputedStyle(n).color, bx: n.querySelectorAll('.bx').length, del: n.querySelectorAll('.m-del').length} : null; });
     expect('the wheel\'s answer: six lines in black, the labels bold, the phrases blue, the mistake struck', out.wheel && out.wheel.lines === 6 && out.wheel.labs.join('|') === 'Or:|The answer:|Not sure?' && out.wheel.color === 'rgb(29, 29, 27)' && out.wheel.bx >= 4 && out.wheel.del === 1, out.wheel);
     // fixes-3: 16 new cards, each with its own lines; the open answer takes the wheel's place, every card fits without small type
@@ -88,10 +89,10 @@ const {chromium} = require('playwright'); const path = require('path'); const fs
     expect('beside the box the stage bar keeps one row', out.oneRow === 1, out.oneRow);
     await p.context().close(); }
   // a phone: the questions under the lines
-  { const p = await newPage(P, {width: 390, height: 844}); await go(p, 1, 2);
+  { const p = await newPage(P, {width: 390, height: 844}); await go(p, 2, 2);
     out.phone = await p.evaluate(() => { const ex = document.querySelector('#main .say-ex').getBoundingClientRect(), qs = document.querySelector('#main .say-qs').getBoundingClientRect(); return {under: qs.top >= ex.bottom - 1, wide: document.documentElement.scrollWidth <= innerWidth + 1}; });
     expect('phone: the questions under the lines, no sideways scroll', out.phone.under && out.phone.wide, out.phone);
-    await go(p, 1, 3); out.phoneBox = await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1); expect('phone: the box screen, no sideways scroll', out.phoneBox, 'box');
+    await go(p, 2, 3); out.phoneBox = await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1); expect('phone: the box screen, no sideways scroll', out.phoneBox, 'box');
     await p.context().close(); }
   // "Show the answers" when there are several; memo plates; the noughts-and-crosses demo without captions
   { const p = await newPage('tools/b2-2026-10-30/f-seen.html');
@@ -111,7 +112,7 @@ const {chromium} = require('playwright'); const path = require('path'); const fs
     await p.context().close(); }
   { const p = await newPage('tools/b2-2026-11-06/stages-of-life.html', {width: 1280, height: 720}, 'no-preference');
     await p.evaluate(() => { try{ localStorage.clear(); }catch(e){} }); await p.reload(); await p.waitForTimeout(400);
-    await go(p, 2, 1); await p.waitForTimeout(1500);
+    await go(p, 3, 1); await p.waitForTimeout(1500);
     out.demo = await p.evaluate(() => ({demo: !!document.querySelector('#main .gdemo'), cap: document.querySelectorAll('#main .gdm-cap').length, marks: document.querySelectorAll('#main .gdm-c.m').length}));
     expect('noughts and crosses: ▶ How to play plays the game itself, no captions', out.demo.demo && out.demo.cap === 0 && out.demo.marks >= 1, out.demo);
     await p.context().close(); }

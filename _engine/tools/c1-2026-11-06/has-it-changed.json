@@ -508,7 +508,8 @@
      "instr": "Look at the box.",
      "items": [
       "Which of these did you note down? Which are new to you?"
-     ]
+     ],
+     "box_state": "open"
     },
     {
      "kind": "text",
@@ -808,7 +809,8 @@
       "**1**  **Has the place where you grew up changed much?** ((In what way? What’s one thing that’s different now? Haven’t been back in a while? Say what you’ve heard.))",
       "**2**  **And the place where you live now — has it changed since you moved there?** ((Never moved? Talk about a place you go to a lot.))"
      ],
-     "fast": "Think of a place you know that has hardly changed. What’s still the same there?"
+     "fast": "Think of a place you know that has hardly changed. What’s still the same there?",
+     "box_state": "gapped"
     }
    ]
   },
@@ -851,7 +853,8 @@
      "instr": "Now look at the box.",
      "items": [
       "Find the comparatives. Which ones add -er, and which use more?"
-     ]
+     ],
+     "box_state": "open"
     },
     {
      "kind": "sort",
@@ -1040,7 +1043,8 @@
        "back": "My street **is getting noisier and noisier**.",
        "turn": "What’s getting more and more popular where you live? Who’s happy about it, and who isn’t?"
       }
-     ]
+     ],
+     "box_state": "gapped"
     },
     {
      "kind": "text",
@@ -1374,9 +1378,10 @@
      "timer": 60,
      "box": "BOX",
      "alt": "1 Asakusa, Tokyo: 1981 and 2019 · 2 Lake Tjörnin, Reykjavík: 1908 and 2019 · 3 An old-town street in Cēsis, Latvia: the 1960s and today · 4 Piazza Grande, Locarno, Switzerland: 1959 and 2018 · 5 A street corner in Vienna: 1914 and 2021 · 6 Alicante, Spain: 1998 and 2021",
-     "instr": "One minute: look at the pictures and think how each place has changed. Then take turns: one of you secretly picks a picture and imagines it’s their hometown. The other asks: **Has it changed much?** The one who picked answers and says what’s changed — or what hasn’t. The other guesses the picture and reacts.",
+     "instr": "One minute: look at the pictures and think how each place has changed. Then take turns: one of you secretly picks a picture and imagines it’s their hometown. The other asks: **Has it changed much?** The one who picked answers and says what’s changed — or what hasn’t. The other guesses the picture and reacts. Try from memory first — stuck? Peek at the box.",
      "task": "React: **Is that a good thing?** · **Sounds like a change for the better!** · **Oh, that’s a shame.** · **Oh, nice — some places never change.**",
-     "credit": "Photos: FDNOL_, kkruiji, First_Experience_698 / Reddit · re.photos (CC BY-SA 4.0, CC BY 4.0) — collected by [cheery.world](https://cheery.world/discover-travel/20-photos-that-show-how-much-the-same-place-can-change-over-time-284/)"
+     "credit": "Photos: FDNOL_, kkruiji, First_Experience_698 / Reddit · re.photos (CC BY-SA 4.0, CC BY 4.0) — collected by [cheery.world](https://cheery.world/discover-travel/20-photos-that-show-how-much-the-same-place-can-change-over-time-284/)",
+     "box_state": "folded"
     },
     {
      "kind": "scenes",
@@ -1428,12 +1433,13 @@
        "say": "Has it changed much?",
        "example": "**Not really, no.** From up on the hill, it’s **pretty much the same**."
       }
-     ]
+     ],
+     "box_state": "open"
     },
     {
      "kind": "say",
-     "box": "FL",
-     "instr": "At the start of the lesson, you answered this question in the chat. How would you answer it now? Take turns. Try not to look at the box.",
+     "box": "BOX",
+     "instr": "At the start of the lesson, you answered this question in the chat. How would you answer it now? Take turns. Try from memory first — stuck? Peek at the box.",
      "task": [
       "**1**  Your partner asks: **Has the place where you grew up changed much?** ((Haven’t been back in a while? Say what you’ve heard — or talk about where you live now.))",
       "**2**  Answer, then give details: how it’s changed, how it compares with the past, and what’s still changing.",
@@ -1444,7 +1450,8 @@
      "fast": [
       "Without looking at the box, take turns to say a phrase about how a place has changed. How many can you come up with together?",
       "Think of the place where you grew up: what’s one thing from the old days you’d bring back, and why?"
-     ]
+     ],
+     "box_state": "folded"
     }
    ]
   }

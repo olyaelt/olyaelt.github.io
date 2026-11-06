@@ -9,7 +9,8 @@ const {chromium} = require('playwright'); const path = require('path');
   const b = await chromium.launch(); const ctx = await b.newContext({viewport: {width: 1280, height: 720}}); const p = await ctx.newPage();
   p.on('pageerror', e => errs.push(e.message));
   const url = 'file://' + path.join(site, 'tools/b2-2026-11-06/stages-of-life.html');
-  await p.goto(url + '#part-3-screen-1'); await p.waitForTimeout(500);
+  await p.goto(url + '#part-4-screen-1'); await p.waitForTimeout(500);
+  await p.click('#side [data-boxst="open"]'); await p.waitForTimeout(200);   /* fixes-5: Practice opens the box gapped — «Show all» first */
   out.box = await p.evaluate(() => { const g = document.querySelector('.ph-pairs'); const box = document.querySelector('aside.box').getBoundingClientRect();
     return {flags: [...g.querySelectorAll('.pp-h span')].map(s => [s.textContent.trim(), !!s.querySelector('svg.flag')]), rows: g.querySelectorAll('.pp-row').length,
       cells: [...g.querySelector('.pp-row').querySelectorAll('.ph')].map(x => x.textContent.trim()), ru: g.querySelector('.pp-ru')?.textContent, boxBottom: Math.round(box.bottom),
@@ -19,7 +20,7 @@ const {chromium} = require('playwright'); const path = require('path');
   await p.locator('.ph-pairs .ph').nth(1).click(); await p.waitForTimeout(100);
   out.tick = await p.evaluate(() => [...document.querySelectorAll('.ph-pairs .ph')].map(x => x.classList.contains('used')).slice(0, 2));
   expect('a UK cell ticks by itself', JSON.stringify(out.tick) === '[false,true]', out.tick);
-  await p.goto(url + '#part-3-screen-2'); await p.waitForTimeout(500);
+  await p.goto(url + '#part-4-screen-2'); await p.waitForTimeout(500);
   await p.locator('.gt-cell').first().click(); await p.waitForTimeout(300); await p.locator('[data-gt-show]').click(); await p.waitForTimeout(200);
   await p.locator('[data-gt-no]').click(); await p.waitForTimeout(300);
   out.talk = await p.evaluate(() => ({talk: document.querySelector('.gt-talk')?.innerText.replace(/\s+/g, ' ').slice(0, 80), off: [...document.querySelectorAll('.gt-cell')].every(c => c.disabled), next: !!document.querySelector('[data-gt-talked]'), pageNext: document.querySelector('[data-step]').classList.contains('primary'), own: [...document.querySelectorAll('.gt-talk button')].filter(x => !x.hidden).length, hint: document.querySelector('.gt-tnext')?.textContent}));
@@ -31,7 +32,7 @@ const {chromium} = require('playwright'); const path = require('path');
   out.after = await p.evaluate(() => ({talk: !!document.querySelector('.gt-talk'), turn: document.querySelector('.gt-turn')?.textContent.trim(), free: [...document.querySelectorAll('.gt-cell')].filter(c => !c.disabled).length}));
   out.after.pageNext = await p.evaluate(() => document.querySelector('[data-step]').classList.contains('primary'));
   expect('the page Next → the game goes on (the other player, the square still free), still on the game', !out.after.talk && /O's turn/.test(out.after.turn) && out.after.free === 9 && out.after.pageNext, out.after);
-  await p.goto(url + '#part-2-screen-1'); await p.waitForTimeout(500);
+  await p.goto(url + '#part-3-screen-1'); await p.waitForTimeout(500);
   out.pics = await p.evaluate(() => ({img: document.querySelectorAll('#main img.lph, #main .tx-pic img').length, broken: [...document.querySelectorAll('#main img')].filter(i => i.complete && !i.naturalWidth).length}));
   expect('her pictures (6.11 13:12): nothing broken', out.pics.broken === 0, out.pics);
   console.log(JSON.stringify(out)); if (errs.length) fail.push('page errors: ' + errs.join(' | '));

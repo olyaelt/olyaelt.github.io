@@ -93,7 +93,7 @@
  },
  "stages": [
   {
-   "label": "📝 Test yourself",
+   "label": "👋 Warm-up",
    "blocks": [
     {
      "kind": "postits",
@@ -113,7 +113,8 @@
       "**1**  Parents shouldn't post photos of their kids online, **should they?**",
       "**2**  People who post a lot about themselves online just want attention, **don't they?**",
       "**3**  Other people's holiday photos are a bit boring, **aren't they?**"
-     ]
+     ],
+     "box_state": "gapped"
     },
     {
      "kind": "say",
@@ -122,7 +123,8 @@
      "task": [
       "**1**  We take far too many photos these days, **don't we?**",
       "**2**  It's better to just enjoy the moment than spend it taking photos, **isn't it?**"
-     ]
+     ],
+     "box_state": "gapped"
     },
     {
      "kind": "say",
@@ -131,8 +133,14 @@
      "task": [
       "**1**  Printed photos are so much nicer than photos on your phone, **aren't they?**",
       "**2**  Looking at old photos is a bit sad, **isn't it?**"
-     ]
-    },
+     ],
+     "box_state": "gapped"
+    }
+   ]
+  },
+  {
+   "label": "📝 Test yourself",
+   "blocks": [
     {
      "kind": "say",
      "instr": "In pairs: how would you say these in English? Take turns. Don't worry about mistakes — we'll come back to them later.",
@@ -145,6 +153,14 @@
       "**6**  Я до сих пор не умею водить."
      ],
      "later": "The answers come after the conversation: 🔁 Back to the start."
+    },
+    {
+     "kind": "postits",
+     "instr": "Done? Talk while the others finish.",
+     "notes": [
+      "Think of an old photo of you that you love. How old were you? What's happening in it — and why do you love it?",
+      "Tell your partner about a photo of you you'd rather nobody saw: the hair? the clothes? the face you're making? (No need to show it!)"
+     ]
     }
    ]
   },
@@ -1466,6 +1482,20 @@
        ]
       }
      ]
+    },
+    {
+     "kind": "questions",
+     "instr": "Talk about the conversation — and about you.",
+     "box": "BOX",
+     "items": [
+      "**1**  What's the best age to leave home — **at 18**, like Margaret, or later, like Leo? Give **two** reasons.",
+      "**2**  Margaret met Jean **in her third year at university**, and they still talk every Sunday. Who's the friend you've known the longest? When and where did you meet? Tell your partner **two** things about them."
+     ],
+     "fast": [
+      "Go back to «Without the glossary», tap «Hide all» and say the missing words again, faster.",
+      "Margaret offers Leo a driving lesson. Good idea or bad idea? Give **two** reasons."
+     ],
+     "box_state": "gapped"
     }
    ]
   },
@@ -1515,7 +1545,8 @@
        "front": "((Leo · learn to drive?))",
        "back": "**When did Leo learn** to drive? — He didn't! **He still can't drive.**"
       }
-     ]
+     ],
+     "box_state": "gapped"
     },
     {
      "kind": "game",
@@ -1645,7 +1676,8 @@
        "turn": "Name **one** thing you still don't have (a car, a dog, a garden…). Do you want it? Why or why not?"
       }
      ],
-     "tip": "Think first, then say it. Tap to check. After each square: 💬 Your turn — answer the question about you."
+     "tip": "Think first, then say it. Tap to check. After each square: 💬 Your turn — answer the question about you.",
+     "box_state": "gapped"
     },
     {
      "kind": "game",
@@ -1839,12 +1871,13 @@
        ]
       }
      ],
-     "tip": "Spin, ask When did you last…?, the next person answers (last month, ages ago, at school…) + one detail. Then tap to check the question."
+     "tip": "Spin, ask When did you last…?, the next person answers (last month, ages ago, at school…) + one detail. Then tap to check the question.",
+     "box_state": "gapped"
     }
    ]
   },
   {
-   "label": "🔁 Back to the start",
+   "label": "🔁 Back to start",
    "blocks": [
     {
      "kind": "say",
@@ -1985,14 +2018,15 @@
        ]
       }
      ],
-     "tip": "Next, you'll ask each other like this."
+     "tip": "Next, you'll ask each other like this.",
+     "box_state": "open"
     },
     {
      "kind": "game",
      "piece": "snakes",
      "box": "BOX",
      "check": "Check",
-     "instr": "Snakes and ladders: take turns to roll the dice and move. On your square, ask the next person: When did you…? Tap to check your question. Then they answer with a time phrase (from the box or your own: in my mid-twenties, two years ago; not sure? I can't remember exactly — at ten, maybe?) + one detail.",
+     "instr": "Snakes and ladders: take turns to roll the dice and move. On your square, ask the next person: When did you…? Tap to check your question. Then they answer with a time phrase (from the box or your own: in my mid-twenties, two years ago; not sure? I can't remember exactly — at ten, maybe?) + one detail. Try from memory first — stuck? Peek at the box.",
      "rule": "Ladder + right question = go up. Snake + wrong question = go down. First to the top wins!",
      "tasks": [
       {
@@ -2163,18 +2197,20 @@
        "a": "**When did you** learn to type?",
        "why": "did + базовая форма: “When did you learn…?”, не ~~learned~~."
       }
-     ]
+     ],
+     "box_state": "folded"
     },
     {
      "kind": "questions",
-     "instr": "Now your real stories.",
+     "instr": "Now your real stories. Get ready for a minute: peek at the box and think what you'll say. Then talk from memory.",
      "box": "BOX",
      "items": [
       "**1**  **Three** big moments in your life (a first job, a move, a new skill…) — when did they happen? Use the box. Your partner asks **one** more question about each.",
       "**2**  What were you like **as a kid**? Name **two** things you loved and **one** thing you hated.",
       "**3**  Name **two** things you **still can't** do (swim, cook, drive…). Would you like to learn them? Why or why not?"
      ],
-     "fast": "If you're done: 1. Go back to the board: ask about the squares nobody landed on. 2. Margaret and Leo: when did they leave home? When did Leo get his first real job? Who still can't drive? Say it from memory. 3. What did you want to be as a kid — and at 18? Why did it change? Tell each other."
+     "fast": "If you're done: 1. Go back to the board: ask about the squares nobody landed on. 2. Margaret and Leo: when did they leave home? When did Leo get his first real job? Who still can't drive? Say it from memory. 3. What did you want to be as a kid — and at 18? Why did it change? Tell each other.",
+     "box_state": "folded"
     }
    ]
   }
