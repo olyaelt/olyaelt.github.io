@@ -184,6 +184,9 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
                 if b.get('kind') in ('picture', 'model') and b.get('img'):   # tools 18: a model with its picture (Ljubljana) too
                     if os.path.exists(os.path.join(T, lesson, b['img'])): shutil.copyfile(os.path.join(T, lesson, b['img']), os.path.join(out_dir, b['img']))
                     else: print('note: %s/%s — %s not there yet: its alt text in frames' % (lesson, name, b['img'])); b['_missing'] = True   # tools 28 also (C1 6.11)
+                if b.get('kind') == 'postits' and b.get('img'):   # tools 30 (B2 6.11 warmer): the picture beside the stickers; not there yet → none
+                    if os.path.exists(os.path.join(T, lesson, b['img'])): shutil.copyfile(os.path.join(T, lesson, b['img']), os.path.join(out_dir, b['img']))
+                    else: print('note: %s/%s — %s not there yet, the page shows no picture' % (lesson, name, b['img'])); b.pop('img')
                 if b.get('kind') == 'text':   # tools 28 also (B2 6.11, request 2): its pictures; a file not there yet → no picture at all
                     for o in [b] + [l for l in b.get('lines', []) if isinstance(l, dict)]:
                         if not o.get('img'): continue

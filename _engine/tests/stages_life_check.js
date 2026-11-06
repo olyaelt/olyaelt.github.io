@@ -33,7 +33,7 @@ const {chromium} = require('playwright'); const path = require('path');
   expect('the page Next → the game goes on (the other player, the square still free), still on the game', !out.after.talk && /O's turn/.test(out.after.turn) && out.after.free === 9 && out.after.pageNext, out.after);
   await p.goto(url + '#part-2-screen-1'); await p.waitForTimeout(500);
   out.pics = await p.evaluate(() => ({img: document.querySelectorAll('#main img.lph, #main .tx-pic img').length, broken: [...document.querySelectorAll('#main img')].filter(i => i.complete && !i.naturalWidth).length}));
-  expect('pictures not there yet: none on the page, nothing broken', out.pics.img === 0 && out.pics.broken === 0, out.pics);
+  expect('her pictures (6.11 13:12): nothing broken', out.pics.broken === 0, out.pics);
   console.log(JSON.stringify(out)); if (errs.length) fail.push('page errors: ' + errs.join(' | '));
   console.log(fail.length ? 'FAILED:\n' + fail.join('\n') : 'OK stages of life'); await b.close(); process.exit(fail.length ? 1 : 0);
 })();

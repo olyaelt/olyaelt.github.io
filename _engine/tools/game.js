@@ -320,7 +320,12 @@ function gHourglass(host, {seconds = 60, choices = [30, 60, 120], onEnd = null} 
 
 /* ---------- 🧠 Memo (Olga Akimkina; her 22:30: a warmer): look at the list for 30 seconds — it hides — say what you remember — Check:
    tap the ones you remembered ---------- */
-function gMemo(host, items, {seconds = 30, show = t => gEsc(t), state = null, groups = null, onChange = null} = {}){
+/* tools 30 (her 6.11 12:30 «Мемо выглядит clickable но оно не clickable… может нужно просто троеточия вместо выражений? те же плашки,
+   которые на скрине с таймером, такие же по длине, может даже первые буквы даны»): when the phrases hide, each one leaves its own plate —
+   the same plate and the same length as while they looked, the words as dotted lines; first: true (a block's "recall": "first") keeps
+   the first letter of every word. No shadow: nothing to press. */
+const gGhost = (t, first) => gEsc(String(t).replace(/\*\*|\(\(|\)\)|##/g, "")).replace(/[A-Za-z0-9À-ÿА-Яа-яЁё][A-Za-z0-9À-ÿА-Яа-яЁё'’]*/g, w => first ? w[0] + (w.length > 1 ? `<span class="gm-hid">${w.slice(1)}</span>` : "") : `<span class="gm-hid">${w}</span>`);
+function gMemo(host, items, {seconds = 30, show = t => gEsc(t), state = null, groups = null, onChange = null, first = false} = {}){
   /* tools 16 (B2 revision f-seen, its first use): groups = [{h, items}] → the headings over the list and as labels over the covers (they help
      recall); state = a memo to carry on with (the field redraws its screen); M.end = when the looking ends; onChange() for the page around it */
   const M = state || {phase: "ready", got: new Set(), end: 0};
@@ -334,7 +339,7 @@ function gMemo(host, items, {seconds = 30, show = t => gEsc(t), state = null, gr
     else if(M.phase === "look"){ const left = Math.max(1, Math.ceil(((M.end || Date.now() + seconds * 1000) - Date.now()) / 1000));
       host.innerHTML = `<div class="gmemo look"><div class="gm-timer"></div><div class="gm-lists">${lists(k => `<li>${show(items[k])}</li>`)}</div><button class="btn" data-gm-hide>Hide them now</button></div>`;
       gTimer(host.querySelector(".gm-timer"), {seconds: left, compact: true, autostart: true, onEnd: () => { if(!host.isConnected || M.phase !== "look") return; M.phase = "recall"; render(); changed(); }}); }
-    else if(M.phase === "recall") host.innerHTML = `<div class="gmemo"><p class="gm-big">What do you remember? Take turns: one expression each.</p><div class="gm-lists">${G.map(g => `<div class="gm-g">${g.h ? `<p class="gm-h">${gEsc(g.h)}</p>` : ""}<div class="gm-cover">${g.ks.map(() => `<span></span>`).join("")}</div></div>`).join("")}</div><button class="btn primary" data-gm-check>Check</button></div>`;
+    else if(M.phase === "recall") host.innerHTML = `<div class="gmemo"><p class="gm-big">What do you remember? Take turns: one expression each.</p><div class="gm-lists">${G.map(g => `<div class="gm-g">${g.h ? `<p class="gm-h">${gEsc(g.h)}</p>` : ""}<ul class="gm-list ghost" aria-label="${g.ks.length} hidden">${g.ks.map(k => `<li>${gGhost(items[k], first)}</li>`).join("")}</ul></div>`).join("")}</div><button class="btn primary" data-gm-check>Check</button></div>`;
     else { const cell = k => `<li><button class="${M.got.has(k) ? "on" : ""}" data-gm-k="${k}">${show(items[k])}</button></li>`; cell.check = true;
       host.innerHTML = `<div class="gmemo"><p class="gm-big">Tap the ones you remembered — <b>${M.got.size} of ${items.length}</b></p><div class="gm-lists">${lists(cell)}</div><button class="btn" data-gm-again>↺ Again</button></div>`; }
     const on = (q, f) => host.querySelectorAll(q).forEach(b => b.addEventListener("click", () => { f(b); changed(); }));
@@ -635,7 +640,7 @@ const G_DEMO = {
         [4800, st => { const e = c(st, 2); e.classList.remove("ask"); e.classList.add("no"); }], [5500, st => c(st, 2).classList.remove("no")],
         [6000, (st, say) => { say("Three in a row wins!"); put(st, 8, "O"); }], [6500, st => put(st, 2, "X")], [7000, st => put(st, 1, "O")], [7500, st => put(st, 6, "X")],
         [8000, st => { [2, 4, 6].forEach(k => c(st, k).classList.add("win")); const g = st.querySelector(".gdm-ttt"); g.classList.add("won"); g.insertAdjacentHTML("beforeend", gWinLine([2, 4, 6], 3)); }]]; })(),
-    end: 9600, caps: ["✓ right → the square is yours", "✗ not quite → it stays free", "three in a row wins"],
+    end: 9600, caps: ["✓ right → the square is yours", "✗ not quite → it stays free", "three in a row wins"], quiet: true,   /* tools 30 (her 6.11 12:30 «я бы просто сделала всё-таки гифку игры, без текста»): the game plays itself, no captions */
     still: st => { [[4, "X"], [0, "O"], [8, "O"], [2, "X"], [1, "O"], [6, "X"]].forEach(([k, m]) => { const e = st.querySelector(`[data-c="${k}"]`); e.classList.add("m", "m" + m); e.innerHTML = G_MARK[m]; }); [2, 4, 6].forEach(k => st.querySelector(`[data-c="${k}"]`).classList.add("win")); st.querySelector(".gdm-ttt").insertAdjacentHTML("beforeend", gWinLine([2, 4, 6], 3)); }
   },
   dots: {
@@ -701,10 +706,10 @@ function gDemo(host, kind, {onDone = null} = {}){
   const D = G_DEMO[kind]; if(!D){ if(onDone) onDone(); return null; }
   const calm = gCalm();
   host.innerHTML = `<div class="gdemo${calm ? " still" : ""}" role="button" tabindex="0" aria-label="How to play — tap to ${calm ? "play" : "skip"}"><span class="gdm-lbl">▶ How to play</span>
-    <div class="gdm-stage">${D.html()}</div><p class="gdm-cap" aria-live="polite">${calm ? D.caps.join(" · ") : ""}</p><span class="gdm-skip">${calm ? "Tap to play ▸" : "Tap to skip ▸"}</span></div>`;
+    <div class="gdm-stage">${D.html()}</div>${D.quiet ? "" : `<p class="gdm-cap" aria-live="polite">${calm ? D.caps.join(" · ") : ""}</p>`}<span class="gdm-skip">${calm ? "Tap to play ▸" : "Tap to skip ▸"}</span></div>`;
   const root = host.querySelector(".gdemo"), st = root.querySelector(".gdm-stage"), cap = root.querySelector(".gdm-cap"), timers = [];
   let over = false;
-  const say = t => { cap.textContent = t; cap.classList.remove("in"); void cap.offsetWidth; cap.classList.add("in"); };
+  const say = t => { if(D.quiet) return; cap.textContent = t; cap.classList.remove("in"); void cap.offsetWidth; cap.classList.add("in"); };
   const finish = () => { if(over) return; over = true; timers.forEach(clearTimeout); root.classList.add("out"); timers.push(setTimeout(() => { if(onDone) onDone(); }, calm ? 0 : 480)); };
   root.addEventListener("click", finish); root.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); finish(); } });
   if(calm){ D.still(st); return {finish, stop: () => { over = true; }}; }

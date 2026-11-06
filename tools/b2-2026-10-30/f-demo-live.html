@@ -388,6 +388,8 @@ details.all[open] summary{color:var(--ink)}
 .gm-list.check button{font:inherit;font-weight:800;font-size:1.1rem;border:3px solid #1D1D1B;border-radius:10px;padding:4px 12px;background:#FFFFFF;color:#1D1D1B;box-shadow:0 3px 0 #1D1D1B;cursor:pointer}
 .gm-list.check button.on{background:#BFF2B8}
 .gm-cover{display:flex;flex-wrap:wrap;gap:8px}
+.gm-list.ghost li{box-shadow:none;color:#1D1D1B}   /* tools 30: the hidden plates — same size, nothing to press */
+.gm-list.ghost .gm-hid{color:transparent;background-image:radial-gradient(circle, #8A8F98 1.4px, transparent 1.6px);background-size:.42em .42em;background-repeat:repeat-x;background-position:0 78%}
 .gm-cover span{width:6.5rem;height:2.2rem;border-radius:10px;border:3px solid #1D1D1B;background:#8BE2FF;box-shadow:0 3px 0 #1D1D1B}
 .gm-lists{display:grid;gap:8px}
 .gm-g{display:grid;gap:4px}
@@ -595,6 +597,7 @@ details.all[open] summary{color:var(--ink)}
 .head .howto{order:1;margin-left:0}
 .head .stages{order:2}
 .head .stage-btn{padding:3px 10px;font-size:.96rem}
+.stages.tight{gap:3px} .stages.tight .stage-arrow{display:none}
 .stages.many{gap:3px} .stages.many .stage-arrow{display:none} .stages.many .stage-btn{padding:3px 8px}
 .stages.many .stage-btn:not([aria-current]) .s-nm{display:none}   /* tools 25: many parts — signs, the current one named */
 .head .stage-arrow{font-size:.85rem}
@@ -671,6 +674,7 @@ details.all[open] summary{color:var(--ink)}
 figure.pic:has(.alt-grid),figure.scn:has(.alt-grid),figure.scn:has(.alt-f){width:100%;max-width:100%}
 .alt-f{position:relative;display:flex;align-items:center;justify-content:center;aspect-ratio:3/2;padding:10px 12px;border:2px dashed color-mix(in srgb, var(--ink) 22%, var(--card));border-radius:10px;background:color-mix(in srgb, var(--ink) 4%, var(--card));color:var(--ink);text-align:center;line-height:1.3;font-size:calc(1rem * var(--k, 1))}
 .alt-f b{position:absolute;top:6px;left:9px;font-size:1.1em}
+figure.pic.fitted img{max-height:var(--pich)} figure.pic.fitted .alt-grid .alt-f{height:calc((var(--pich) - 8px) / 2);min-height:0} figure.pic.fitted .alt-f.one{height:var(--pich)}
 .alt-f.one{aspect-ratio:auto;height:min(40vh, 18rem);font-size:calc(1.25rem * var(--k, 1));font-weight:700}
 @media (max-width:600px){ .alt-grid{grid-template-columns:repeat(2,minmax(0,1fr))} .alt-grid .alt-f{height:auto;min-height:6.5rem} }
 /* tools 28 also: the side box a little smaller only when it doesn't fit (fitSideBox) */
@@ -686,6 +690,10 @@ figure.pic:has(.alt-grid),figure.scn:has(.alt-grid),figure.scn:has(.alt-f){width
 .gt-talk .gt-tnext{margin:2px 0 0;color:var(--muted);font-weight:700}
 /* tools 28 also: pictures in a text block (B2 6.11) */
 .tx-pic{margin:0 0 8px;text-align:center}
+.tx-sidecol{display:grid;gap:10px;align-content:start}
+p.credit{margin:4px 0 0;font-size:.78rem;line-height:1.3;color:var(--muted, #5F6368)} p.credit a{color:inherit;text-decoration:underline}
+figure.scn figcaption p.credit{margin-top:4px}
+.tx-pic.glpic{margin:0} .tx-pic.glpic img{width:100%;max-height:none;height:var(--pich, 150px);object-fit:cover;object-position:50% 30%;border-radius:10px;display:block}
 .tx-pic img{max-height:min(26vh, 190px);max-width:100%;border-radius:10px;object-fit:contain}
 .dlg p.has-lph{display:flow-root}
 .lph{float:right;width:min(96px, 22%);margin:2px 0 4px 12px;background:#fff;padding:4px 4px 10px;border-radius:2px;box-shadow:0 1px 4px rgba(0,0,0,.25);transform:rotate(2deg)}
@@ -708,10 +716,33 @@ figure.pic:has(.alt-grid),figure.scn:has(.alt-grid),figure.scn:has(.alt-f){width
 .t-notes{display:grid;gap:6px}
 .t-notes:empty{display:none}
 /* 🔁 say: the task, Show the answer, one tap: how close were we */
-.say-lines p,.ans-lines p{margin:0 0 4px;font-size:1.15rem;line-height:1.45}
+.say-lines p,.ans-lines p{margin:0 0 4px;font-size:calc(1.15rem * var(--k, 1));line-height:1.45}
 .ans-lines{border-top:2px dashed var(--line);padding-top:10px}
 .ans-h{font-weight:900;color:var(--ok);letter-spacing:.06em;text-transform:uppercase;font-size:.85rem}
 /* her 14:55: each situation on its own island (two dialogues read as one sheet); no "Check" label — the answer lines simply appear, marked */
+/* tools 30: one answer at a time; the lines from the text beside the questions; the box on its own screen */
+.say-two{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:16px;align-items:start}
+.say-ex{background:var(--ground);border-radius:12px;padding:10px 14px;font-size:calc(1rem * var(--k, 1))}
+.say-two .say-ex p{font-size:calc(1.1rem * var(--k, 1))}
+.say-qs{display:grid;gap:8px}
+.say-two .say-qs p{font-size:calc(1.08rem * var(--k, 1));line-height:1.4}
+.say-isle.so{position:relative}
+.say-isle.so.open{box-shadow:0 0 0 3px var(--blue, #0094E0)}
+.say-isle.so .btn.slim{margin:2px 0 6px}
+.say-isle.so .so-q .btn.slim{margin:0 0 0 8px;padding:2px 10px;font-size:.9rem;vertical-align:baseline}
+.say-isle.so .so-ok{position:absolute;right:10px;top:6px;color:var(--ok);font-weight:900;font-size:1.1rem}
+.say-isle.so p.so-dots{color:var(--muted, #5F6368)}
+.say-isle.so-head{background:none;padding:0 2px}
+.mainbox{max-width:none}
+.mainbox .mb-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 28px;align-items:start}
+.mainbox .mb-g{display:grid;gap:2px;align-content:start}
+aside.box.mainbox .ph{font-size:calc(1.32rem * var(--k, 1))}
+aside.box.mainbox h4{font-size:calc(1rem * var(--k, 1))}
+aside.box.mainbox .pp-ru{font-size:calc(1rem * var(--k, 1))}
+@media (max-width: 760px){ .say-two,.mainbox .mb-cols{grid-template-columns:1fr} }
+.fgame .gt-a .note.lines{display:grid;gap:3px;color:#1D1D1B;font-weight:600;font-size:calc(1.02rem * var(--k, 1))}
+.fgame .gt-a .note.lines .ctx{color:#5F6368}
+.fgame .gt-a .note.lines .nlab{font-weight:900;color:#1D1D1B}
 .say-isles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:12px;align-items:start}
 .say-isle{background:var(--ground);border-radius:12px;padding:10px 14px 6px}
 .say-lines p.new{border-left:4px solid var(--ok);padding-left:10px;margin-left:-14px;animation:ansIn .35s ease-out}
@@ -726,6 +757,14 @@ figure.pic:has(.alt-grid),figure.scn:has(.alt-grid),figure.scn:has(.alt-f){width
 .pic img{width:100%;height:auto;max-height:52vh;object-fit:contain;border-radius:12px;display:block;background:var(--ground)}
 .pic .task{font-size:1.15rem;margin:0}
 .ptimer-row{margin:0 0 10px}
+.ptimer-row.pcred{margin:8px 0 0;display:flex;align-items:center;gap:14px;flex-wrap:nowrap} .ptimer-row.pcred p.credit{margin:0;flex:1 1 auto}
+figure.pic.zoomable{cursor:zoom-in}
+.pic-zoom{position:fixed;inset:0;z-index:60;background:rgba(20,20,20,.92);display:flex;align-items:center;justify-content:center;cursor:zoom-out;padding:18px}
+.pic-zoom img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px}
+.pic-zoom .pz-t{position:absolute;top:14px;right:16px;background:var(--instr);color:var(--instr-ink);border-radius:99px;padding:6px 16px;font-size:1.4rem;font-weight:900;font-variant-numeric:tabular-nums}
+.pic-zoom .pz-x{position:absolute;bottom:12px;right:16px;color:#FFFFFF;opacity:.8;font-size:.9rem;font-weight:700}
+figure.pic.zoomable{position:relative}
+figure.pic.zoomable::after{content:"🔍 Tap to see it big";position:absolute;right:8px;bottom:8px;background:rgba(255,255,255,.9);color:#1D1D1B;border-radius:99px;padding:2px 10px;font-size:.8rem;font-weight:800;pointer-events:none}
 .btn.ptimer{font-size:1.25rem;min-width:8.5rem;font-variant-numeric:tabular-nums}
 .btn.ptimer.run{background:var(--instr);color:var(--instr-ink)}
 .btn.ptimer.up{border-color:var(--ok);color:var(--ok)}
@@ -934,6 +973,10 @@ figure.pic:has(.alt-grid),figure.scn:has(.alt-grid),figure.scn:has(.alt-f){width
 @media (min-width:900px){ .dlg.cols p.wide{column-span:all;margin-bottom:10px} .dlg.cols .lh.colbreak{break-before:column;margin-top:0} }
 @media (min-width:900px){ .dlg.cols{columns:2;column-gap:40px} .dlg.cols p{break-inside:avoid;font-size:1.06rem;line-height:1.42;margin-bottom:4px} .dlg.cols p.lh{font-size:.88rem} .dlg.cols .lh{break-after:avoid} }
 .say-later{margin:6px 0 0;color:var(--muted);font-size:1rem}
+.pi-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:22px;align-items:center}
+.pi-wrap .postits{grid-template-columns:minmax(0,1fr)}
+.pi-pic{margin:0} .pi-pic img{width:100%;max-height:min(58vh, 430px);object-fit:cover;border-radius:12px;display:block}
+@media (max-width: 760px){ .pi-wrap{grid-template-columns:1fr} }
 .postits{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:26px;padding:10px 6px 16px}
 .postit{position:relative;min-height:9.5rem;padding:16px 18px 30px;font-size:1.35rem;font-weight:600;line-height:1.3;border:2px solid #1D1D1B;border-radius:3px 3px 3px 26px;box-shadow:3px 5px 0 rgba(0,0,0,.14);transform:rotate(-1.6deg)}
 .postit:nth-child(2){transform:rotate(1.2deg)} .postit:nth-child(3){transform:rotate(-.6deg)}
@@ -1157,6 +1200,7 @@ figure.pic:has(.alt-grid),figure.scn:has(.alt-grid),figure.scn:has(.alt-f){width
 .g-np .np-b.on{border-color:var(--instr);color:var(--instr-text)}
 .fwheel{display:grid;grid-template-columns:minmax(12rem,17rem) minmax(0,1fr);gap:20px;align-items:center}
 .fwheel .gwheel{width:min(100%,17rem)}
+.fwheel.ans{grid-template-columns:minmax(0,1fr)} .fwheel.ans .fw-wheel{display:none}
 .fwheel .gwheel.empty{opacity:.35}
 .fw-side{display:grid;gap:10px;align-content:start}
 .fw-task{position:relative}
@@ -1389,7 +1433,7 @@ button.kbub{cursor:pointer} button.kbub small{display:block;font-size:.85rem;fon
 <script>
 const D = {"type": "revision-field", "demo": true, "board": {"button": "🎓 How the game works"}, "title": "How the game works", "boxes": {"BOX": [{"h": "THE NEWS", "items": ["**Just a heads-up** — …", "Gary's **gone missing**!", "He's **been missing since** Friday."]}, {"h": "SHARE A FEELING ↘", "items": ["It's so weird, **isn't it?**", "— It **really is**!"]}, {"h": "REACT AND ASK", "items": ["No way! **When did you last see him?**", "**Thanks for the heads-up!**"]}]}, "stages": [{"label": "📝 Test yourself", "blocks": [{"kind": "write", "lesson_work": true, "instr": "Gary is the office goldfish. Your colleague texts you. Write a reply together, then send it.", "tip": "First you try on your own — before any help. On the real pages Olya sees what you type and can send you a note.", "items": [{"ctx": "((Your colleague, in the office chat:))", "incoming": "Have you seen Gary? His bowl is empty! 🐟", "label": "Your reply"}], "example": "No way! That's so weird. **When did you last see him?**"}]}, {"label": "🔁 Recall", "blocks": [{"kind": "text", "instr": "Complete the chat and say the words. Tap the yellow to check.", "tip": "Here comes the text from our lesson, with the first letters. 🔖 = \"we didn't know this\" — Olya sees which gaps were hard.", "lines": [{"s": "Mia", "p": ["Just a ", {"f": "h", "r": "eads-up"}, " — Gary's ", {"f": "g", "r": "one missing"}, "! 🐟"]}, {"s": "Sam", "p": ["I know! I saw the empty bowl this morning. It's so weird, ", {"f": "i", "r": "sn't it"}, "?"]}, {"s": "Mia", "p": ["It ", {"f": "r", "r": "eally is"}, ". The bowl's still here, but no Gary."]}, {"s": "Sam", "p": ["UPDATE: found him. Ken took him home for the weekend and forgot to bring him back. He said Gary looked lonely."]}], "gloss": [{"p": [{"f": "h", "r": "eads-up"}], "ru": "предупреждение"}, {"p": [{"f": "g", "r": "one"}, " ", {"f": "m", "r": "issing"}], "ru": "пропал"}]}]}, {"label": "🃏 Practice", "blocks": [{"kind": "cards", "style": "mix", "instr": "Three cards, three kinds. Say your answer, then tap the card to check.", "tip": "↺ Again later = \"we weren't sure\": the card comes back two or three cards later. ✓ Got it = done. Olya sees which cards came back.", "cards": [{"front": "Nobody knows where Gary is.", "key": "MISSING", "frame": "Gary has ___.", "answer": "gone missing", "back": "Gary has **gone missing**.", "note": "пропал → has gone missing · also fine: Gary is missing.", "style": "kwt"}, {"ctx": "в чате офиса", "front": "<g>Gary<\/g> ~~is missing~~ <g>since Friday<\/g>.", "back": "Gary **has been missing** since Friday.", "why": "С since — «с тех пор и до сих пор»: has been missing.", "style": "ours", "instr": "One of our sentences. Green = good, grey = could be better. How would you make it perfect English?", "check": "Perfect English"}, {"front": "((Спасибо, что предупредила!))", "back": "**Thanks for the heads-up!**", "style": "say", "instr": "How do you say it in English?"}]}]}, {"label": "💬 Use it", "blocks": [{"kind": "questions", "box": "BOX", "instr": "Now talk. Use the box.", "tip": "Tap a phrase in the box when you say it — it turns green. ⬅ Board takes you back to the game.", "items": ["Tell your partner about a time something went missing at work or at home (real or made up!). What was it? Did it turn up? Your partner reacts and asks **two** questions."], "fast": "If you're done: act out Mia and Sam's chat from memory."}]}], "_pids": {"blocks": [0, 1, 2, 5], "cards": [0, 1, 2], "write": [0], "questions.5": [0]}, "boardPage": "jeopardy", "embeds": {}};
 const STICKER = "data:image/png;base64,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";
-const TOOLS_VERSION = "28";
+const TOOLS_VERSION = "30";
 const PAGE_ID = "b2-2026-10-30/f-demo";
 const LIVE_ON = true, LIVE_URL = "https://script.google.com/macros/s/AKfycbwHqzwA-2z09POg7JSqiMhqglOKbD8bxs-UG-NcFKZPzTyzmdEW79ct3zHGktUGyLM_/exec";
 /* shared by the lesson tools: the Useful language box, shuffling, small helpers */
@@ -1426,8 +1470,19 @@ if(EMBED){
 }
 if(EMBED) addEventListener("message", e => { const m = e.data && e.data.lwStep; if(!m) return;
   const end = typeof embNext !== "function" || (m === "next" ? embNext() : embBack()); if(end) try{ window.parent.postMessage({lwStepEnd: m}, "*"); }catch(err){} });
+/* tools 29 (her 6.11 09:55 «чтобы next и back были доступны с клавиатуры»): Next / Back from the keyboard, as in slides — → and ←.
+   Without Ctrl / Alt / Cmd: on a Mac Ctrl + ← → moves to another desktop (the page never gets it), and Alt + ← (Windows) and Cmd + ←
+   (Mac) are the browser's Back, which would leave the page. Not while typing (the arrows move the cursor there), not on a key held
+   down, not when the page already used the key. Inside a field the keys go to the field page: its Next / Back step through this page. */
+const stepKey = e => (e.key === "ArrowRight" || e.key === "ArrowLeft") && !e.ctrlKey && !e.altKey && !e.metaKey && !e.shiftKey && !e.repeat && !e.defaultPrevented
+  && !(e.target && e.target.closest && e.target.closest('input, textarea, select, audio, video, [contenteditable]:not([contenteditable="false"]), [role="slider"]'));
+const keyBtnOk = el => !!el && !el.disabled && el.getClientRects().length > 0;
+function keySteps(next, back){ document.addEventListener("keydown", e => { if(!stepKey(e)) return;
+  const btn = document.querySelector(e.key === "ArrowRight" ? next : back); if(!keyBtnOk(btn)) return; e.preventDefault(); btn.click(); }); }
+if(EMBED && window.parent !== window) document.addEventListener("keydown", e => { if(!stepKey(e)) return; e.preventDefault();
+  try{ window.parent.postMessage({lwKey: e.key === "ArrowRight" ? "next" : "back"}, "*"); }catch(err){} });
 /* **box phrase** in a speaking task or a follow-up = shown like the box phrases in the examples (checklist 8.07) */
-const boxMarks = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>').replace(/\(\((.+?)\)\)/g, '<span class="bx-ctx">$1</span>').replace(/##(.+?)##/g, '<span class="ipa">$1</span>')   /* tools 28 also: ##/ipa/## in a box line (B2 6.11) */
+const boxMarks = s => esc(s).replace(/~~(.+?)~~/g, '<span class="m-del">$1</span>').replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>').replace(/\(\((.+?)\)\)/g, '<span class="bx-ctx">$1</span>').replace(/##(.+?)##/g, '<span class="ipa">$1</span>')   /* tools 28 also: ##/ipa/## in a box line (B2 6.11) */
   .replace(/&lt;m([123])&gt;(.+?)&lt;\/m\1&gt;/g, '<span class="mv m$1">$2</span>');   /* tools 25 (the German page): grey extras, her move colours */
 const calm = () => !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
 /* a small burst of confetti from an element (the end of a deck): brand colours, falls and fades in about a second; none with reduced motion */
@@ -1536,7 +1591,7 @@ const FLAGS = {
 function pairsHTML(g, gi, clickable = true){
   const cols = g.cols || ["US", "UK"];
   const cell = (t, key, c) => clickable
-    ? `<button class="ph pp-c c${c}${usedPhrases.has(key) ? " used" : ""}" data-ph="${key}" data-pt="${esc(phPlain(t))}" aria-pressed="${usedPhrases.has(key)}">${boxMarks("**" + t + "**")}</button>`
+    ? `<button class="ph pp-c c${c}${usedPhrases.has(key) ? " used" : ""}" data-ph="${key}" data-pt="${esc(phPlain(t))}" aria-pressed="${usedPhrases.has(key)}">${boxMarks("**" + t + "**").replace(/\{\{(.+?)\}\}/g, '<span class="bh" data-bh>$1</span>')}</button>`   /* tools 30: the box with the phrases hidden */
     : `<p class="ph pp-c c${c}">${boxMarks("**" + t + "**")}</p>`;
   return `<div class="ph-pairs"><div class="pp-h">${cols.map(c => `<span>${FLAGS[c] || ""}${esc(c)}</span>`).join("")}</div>${(g.pairs || []).map((pr, ti) =>
     `<div class="pp-row">${cell(pr[0], `${gi}.${ti}.0`, 0)}${cell(pr[1], `${gi}.${ti}.1`, 1)}${pr[2] ? `<span class="pp-ru">${esc(pr[2])}</span>` : ""}</div>`).join("")}</div>`;
@@ -2058,7 +2113,12 @@ function gHourglass(host, {seconds = 60, choices = [30, 60, 120], onEnd = null} 
 
 /* ---------- 🧠 Memo (Olga Akimkina; her 22:30: a warmer): look at the list for 30 seconds — it hides — say what you remember — Check:
    tap the ones you remembered ---------- */
-function gMemo(host, items, {seconds = 30, show = t => gEsc(t), state = null, groups = null, onChange = null} = {}){
+/* tools 30 (her 6.11 12:30 «Мемо выглядит clickable но оно не clickable… может нужно просто троеточия вместо выражений? те же плашки,
+   которые на скрине с таймером, такие же по длине, может даже первые буквы даны»): when the phrases hide, each one leaves its own plate —
+   the same plate and the same length as while they looked, the words as dotted lines; first: true (a block's "recall": "first") keeps
+   the first letter of every word. No shadow: nothing to press. */
+const gGhost = (t, first) => gEsc(String(t).replace(/\*\*|\(\(|\)\)|##/g, "")).replace(/[A-Za-z0-9À-ÿА-Яа-яЁё][A-Za-z0-9À-ÿА-Яа-яЁё'’]*/g, w => first ? w[0] + (w.length > 1 ? `<span class="gm-hid">${w.slice(1)}</span>` : "") : `<span class="gm-hid">${w}</span>`);
+function gMemo(host, items, {seconds = 30, show = t => gEsc(t), state = null, groups = null, onChange = null, first = false} = {}){
   /* tools 16 (B2 revision f-seen, its first use): groups = [{h, items}] → the headings over the list and as labels over the covers (they help
      recall); state = a memo to carry on with (the field redraws its screen); M.end = when the looking ends; onChange() for the page around it */
   const M = state || {phase: "ready", got: new Set(), end: 0};
@@ -2072,7 +2132,7 @@ function gMemo(host, items, {seconds = 30, show = t => gEsc(t), state = null, gr
     else if(M.phase === "look"){ const left = Math.max(1, Math.ceil(((M.end || Date.now() + seconds * 1000) - Date.now()) / 1000));
       host.innerHTML = `<div class="gmemo look"><div class="gm-timer"></div><div class="gm-lists">${lists(k => `<li>${show(items[k])}</li>`)}</div><button class="btn" data-gm-hide>Hide them now</button></div>`;
       gTimer(host.querySelector(".gm-timer"), {seconds: left, compact: true, autostart: true, onEnd: () => { if(!host.isConnected || M.phase !== "look") return; M.phase = "recall"; render(); changed(); }}); }
-    else if(M.phase === "recall") host.innerHTML = `<div class="gmemo"><p class="gm-big">What do you remember? Take turns: one expression each.</p><div class="gm-lists">${G.map(g => `<div class="gm-g">${g.h ? `<p class="gm-h">${gEsc(g.h)}</p>` : ""}<div class="gm-cover">${g.ks.map(() => `<span></span>`).join("")}</div></div>`).join("")}</div><button class="btn primary" data-gm-check>Check</button></div>`;
+    else if(M.phase === "recall") host.innerHTML = `<div class="gmemo"><p class="gm-big">What do you remember? Take turns: one expression each.</p><div class="gm-lists">${G.map(g => `<div class="gm-g">${g.h ? `<p class="gm-h">${gEsc(g.h)}</p>` : ""}<ul class="gm-list ghost" aria-label="${g.ks.length} hidden">${g.ks.map(k => `<li>${gGhost(items[k], first)}</li>`).join("")}</ul></div>`).join("")}</div><button class="btn primary" data-gm-check>Check</button></div>`;
     else { const cell = k => `<li><button class="${M.got.has(k) ? "on" : ""}" data-gm-k="${k}">${show(items[k])}</button></li>`; cell.check = true;
       host.innerHTML = `<div class="gmemo"><p class="gm-big">Tap the ones you remembered — <b>${M.got.size} of ${items.length}</b></p><div class="gm-lists">${lists(cell)}</div><button class="btn" data-gm-again>↺ Again</button></div>`; }
     const on = (q, f) => host.querySelectorAll(q).forEach(b => b.addEventListener("click", () => { f(b); changed(); }));
@@ -2373,7 +2433,7 @@ const G_DEMO = {
         [4800, st => { const e = c(st, 2); e.classList.remove("ask"); e.classList.add("no"); }], [5500, st => c(st, 2).classList.remove("no")],
         [6000, (st, say) => { say("Three in a row wins!"); put(st, 8, "O"); }], [6500, st => put(st, 2, "X")], [7000, st => put(st, 1, "O")], [7500, st => put(st, 6, "X")],
         [8000, st => { [2, 4, 6].forEach(k => c(st, k).classList.add("win")); const g = st.querySelector(".gdm-ttt"); g.classList.add("won"); g.insertAdjacentHTML("beforeend", gWinLine([2, 4, 6], 3)); }]]; })(),
-    end: 9600, caps: ["✓ right → the square is yours", "✗ not quite → it stays free", "three in a row wins"],
+    end: 9600, caps: ["✓ right → the square is yours", "✗ not quite → it stays free", "three in a row wins"], quiet: true,   /* tools 30 (her 6.11 12:30 «я бы просто сделала всё-таки гифку игры, без текста»): the game plays itself, no captions */
     still: st => { [[4, "X"], [0, "O"], [8, "O"], [2, "X"], [1, "O"], [6, "X"]].forEach(([k, m]) => { const e = st.querySelector(`[data-c="${k}"]`); e.classList.add("m", "m" + m); e.innerHTML = G_MARK[m]; }); [2, 4, 6].forEach(k => st.querySelector(`[data-c="${k}"]`).classList.add("win")); st.querySelector(".gdm-ttt").insertAdjacentHTML("beforeend", gWinLine([2, 4, 6], 3)); }
   },
   dots: {
@@ -2439,10 +2499,10 @@ function gDemo(host, kind, {onDone = null} = {}){
   const D = G_DEMO[kind]; if(!D){ if(onDone) onDone(); return null; }
   const calm = gCalm();
   host.innerHTML = `<div class="gdemo${calm ? " still" : ""}" role="button" tabindex="0" aria-label="How to play — tap to ${calm ? "play" : "skip"}"><span class="gdm-lbl">▶ How to play</span>
-    <div class="gdm-stage">${D.html()}</div><p class="gdm-cap" aria-live="polite">${calm ? D.caps.join(" · ") : ""}</p><span class="gdm-skip">${calm ? "Tap to play ▸" : "Tap to skip ▸"}</span></div>`;
+    <div class="gdm-stage">${D.html()}</div>${D.quiet ? "" : `<p class="gdm-cap" aria-live="polite">${calm ? D.caps.join(" · ") : ""}</p>`}<span class="gdm-skip">${calm ? "Tap to play ▸" : "Tap to skip ▸"}</span></div>`;
   const root = host.querySelector(".gdemo"), st = root.querySelector(".gdm-stage"), cap = root.querySelector(".gdm-cap"), timers = [];
   let over = false;
-  const say = t => { cap.textContent = t; cap.classList.remove("in"); void cap.offsetWidth; cap.classList.add("in"); };
+  const say = t => { if(D.quiet) return; cap.textContent = t; cap.classList.remove("in"); void cap.offsetWidth; cap.classList.add("in"); };
   const finish = () => { if(over) return; over = true; timers.forEach(clearTimeout); root.classList.add("out"); timers.push(setTimeout(() => { if(onDone) onDone(); }, calm ? 0 : 480)); };
   root.addEventListener("click", finish); root.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); finish(); } });
   if(calm){ D.still(st); return {finish, stop: () => { over = true; }}; }
@@ -3026,7 +3086,7 @@ D.stages.forEach(st => { const out = [];
 BLOCKS.length = 0;
 D.stages.forEach((st, si) => st.blocks.forEach((b, bi) => { b._id = `s${si}b${bi}`; b._si = si; b._bi = bi; BLOCKS.push(b); }));
 const writeItems = BLOCKS.filter(b => b.kind === "write").flatMap(b => b.items);
-const FAST = BLOCKS.map(b => b.fast).filter(Boolean);
+const FAST = BLOCKS.flatMap(b => [].concat(b.fast || []));   /* tools 30: "fast" may be a list */
 let S;
 function newState(){ S = {stage: 0, at: {}, far: {}, view: "field", bs: {}, noFirst: false, enter: false, fast: null, look: null, howto: !!D.demo, intro: true}; }
 newState();
@@ -3040,7 +3100,7 @@ function keepPlace(){
   if(S.view !== "field" || S.fast) return;
   const bsOut = Object.assign({}, S._restore || {}); Object.entries(S.bs).forEach(([id, st]) => { if(id === "fastdeck") return; const d = st.deck;
     bsOut[id] = {open: [...st.open], shown: !!st.shown, check: st.check || "", done: !!st.done, bm: [...(st.bm || [])], spk: st.spk ? st.spk.key : null,
-      sc: st.sc || null, cn: st.cn ? Object.assign({}, st.cn, {busy: false, enter: false}) : null, fx: st.fx || null, so: st.so || null, sec: st.sec || null, memo: st.memo ? {phase: st.memo.phase, got: [...st.memo.got], end: st.memo.end || 0} : null, g: st.g || null, np: st.np || null, ended: !!st.ended, lis: st.lis || null, wh: st.wh || null, rl: st.rl ? {ph: st.rl.ph, roll: st.rl.roll, dk: st.rl.dk || null} : null, mx: st.mx || null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null, talk: st.ttt.talk != null ? st.ttt.talk : -1} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, talked: [...(d.talked || [])], flipped: !!d.flipped} : (st._deck || null)}; });
+      sc: st.sc || null, cn: st.cn ? Object.assign({}, st.cn, {busy: false, enter: false}) : null, fx: st.fx || null, so: st.so || null, sec: st.sec || null, memo: st.memo ? {phase: st.memo.phase, got: [...st.memo.got], end: st.memo.end || 0} : null, g: st.g || null, np: st.np || null, ended: !!st.ended, lis: st.lis || null, wh: st.wh || null, so1: st.so1 || null, rl: st.rl ? {ph: st.rl.ph, roll: st.rl.roll, dk: st.rl.dk || null} : null, mx: st.mx || null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null, talk: st.ttt.talk != null ? st.ttt.talk : -1} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, talked: [...(d.talked || [])], flipped: !!d.flipped} : (st._deck || null)}; });
   store.set(PLACE_KEY, {stage: S.stage, at: S.at, far: S.far, intro: S.intro, bs: bsOut, t: Date.now(), shape: SHAPE});
   store.set(LEFT_KEY, {page: PAGE_ID, href: location.pathname.split("/").pop(), cell: cellName(), title: D.title, stage: String(D.stages[S.stage].label || ""), t: Date.now()});
 }
@@ -3066,6 +3126,7 @@ function restoreBs(id){ const r = S._restore && S._restore[id]; if(!r) return nu
   if(r.np) st.np = r.np;   /* tools 23 */
   if(r.ended) st.ended = true;   /* tools 25: 🏁 Finish the game */
   if(r.lis && r.lis.typed) st.lis = r.lis;   /* tools 26 */
+  if(r.so1 && Array.isArray(r.so1.seen)) st.so1 = r.so1;   /* tools 30 */
   if(r.so) st.so = r.so; if(r.sec) st.sec = r.sec; if(r.memo) st.memo = r.memo;   /* tools 17 */
   if(r.cn && Array.isArray(r.cn.subs)) st.cn = r.cn;   /* tools 18 */
   if(r.g) st.g = r.g; if(r.wh) st.wh = r.wh; if(r.rl) st.rl = r.rl; if(r.mx) st.mx = r.mx;   /* tools 20 */
@@ -3082,6 +3143,7 @@ function partsHTML(parts, b, prefix){
   return (parts || []).map(x => {
     if(typeof x === "string") return mk(x);
     if(x.b != null) return `<b class="bx">${esc(x.b)}</b>`;
+    if(x.ipa != null && x.r == null) return `<span class="ipa">${esc(x.ipa)}</span>`;   /* tools 30 (her 6.11 12:41: «undefined в первом глоссарии»): {"ipa"} = the transcription, shown, not a gap */
     const id = `${prefix}${k++}`, open = st.open.has(id), nf = S.noFirst && b.kind === "text";
     const bm = open && !x.o && sharing() ? `<button class="bm ${st.bm.has(id) ? "on" : ""}" data-bm="${id}" title="We didn't know this" aria-label="We didn't know this">🔖</button>` : "";
     return `<button class="gp ${open ? "open" : ""} ${x.o ? "o" : ""}" data-gap="${id}" aria-label="Show the missing part">${nf || !x.f ? "" : `<span class="f">${esc(x.f)}</span>`}<span class="r">${esc(nf ? (x.f || "") + x.r : x.r)}</span></button>${bm}`;
@@ -3109,10 +3171,12 @@ function allGaps(b){
   return [];
 }
 function textHTML(b){
-  const gl = b.gloss && b.gloss.length ? `<aside class="gloss${D.sketch ? " sk" : ""}" aria-label="Glossary">${D.sketch ? `<img class="sticker" src="../sk-glossary.png" alt="Glossary">` : ""}${b.gloss.map((g, gi) => `<p class="gl">${partsHTML(g.p, b, `xl${gi}g`)} <span class="ru">– ${esc(g.ru)}</span></p>`).join("")}</aside>` : "";
+  const gl = b.gloss && b.gloss.length ? `<aside class="gloss${D.sketch ? " sk" : ""}" aria-label="Glossary">${D.sketch ? `<img class="sticker" src="../sk-glossary.png" alt="Glossary">` : ""}${b.gloss.map((g, gi) => `<p class="gl">${partsHTML(g.p, b, `xl${gi}g`)} <span class="ru">– ${esc(g.ru).replace(/~~(.+?)~~/g, '<span class="m-del">$1</span>')}</span></p>`).join("")}</aside>` : "";
   /* tools 28 also (B2 6.11, engine request 2): "img" on the block = one picture above the conversation; a missing file shows nothing */
-  const pic = b.img ? `<figure class="tx-pic"><img src="${esc(b.img)}" alt="${esc(b.alt || "")}" onerror="this.parentNode.remove()"></figure>` : "";
-  return `${pic}<div class="tx ${gl ? "" : "single"}"><div class="dlg${b.cols ? " cols" : ""}">${b.ctx ? `<p class="lctx">${mk(b.ctx)}</p>` : ""}${linesHTML(b.lines, b, "t")}</div>${gl}</div>${gapTools(b)}${txAnsHTML(b)}`;
+  const pic = b.img ? `<figure class="tx-pic${b.img_side && gl ? " glpic" : ""}"><img src="${esc(b.img)}" alt="${esc(b.alt || "")}" onerror="this.parentNode.remove()"></figure>` : "";
+  /* tools 30 (her 6.11 13:12 «картинку для текста»): "img_side": true — the picture in the glossary's column, under it, so the text keeps its place */
+  if(b.img_side && gl) return `<div class="tx"><div class="dlg${b.cols ? " cols" : ""}">${b.ctx ? `<p class="lctx">${mk(b.ctx)}</p>` : ""}${linesHTML(b.lines, b, "t")}${creditHTML(b.credit)}</div><div class="tx-sidecol">${gl}${pic}</div></div>${gapTools(b)}${txAnsHTML(b)}`;
+  return `${pic}<div class="tx ${gl ? "" : "single"}"><div class="dlg${b.cols ? " cols" : ""}">${b.ctx ? `<p class="lctx">${mk(b.ctx)}</p>` : ""}${linesHTML(b.lines, b, "t")}${creditHTML(b.credit)}</div>${gl}</div>${gapTools(b)}${txAnsHTML(b)}`;
 }
 /* tools 25 (the C1 chat 1.11 21:50 and the German page 2.11: «always meaning first»): a text can carry an answer to a meaning question —
    "Show the answer" (or Next) opens it under the lines */
@@ -3147,7 +3211,34 @@ function paintWriteNotes(){
 }
 const recallStage = () => { const t = BLOCKS.find(x => x.kind === "text"); return t ? t._si : -1; };
 /* ---------- 🔁 say ---------- */
+/* tools 30 (her 6.11 12:30, B2 «stages of life»: «я бы давала ответы по одному, и возможно стоит держать текст перед глазами (или хотя бы
+   примеры) из текста + вопросы сбоку, там где обычно useful language box»): "one": true — every numbered question (or sentence) gets its own
+   answer, under it, one at a time: the next one opens, the one before closes to a ✓ (tap it to see it again; her design rule, one example
+   open at a time, so the page doesn't grow under the buttons). "ex": lines from the text on the left, the questions on the right, where
+   the box usually is. Next opens the next answer; Back closes the open one. A line "• • •" in a sentence = where its answer goes. */
+const sayIsles = lines => { const out = []; (lines || []).forEach((l, i) => { if(!out.length || /^\*\*\d+\*\*/.test(l)) out.push([]); out[out.length - 1].push(i); }); return out; };
+const sayNum = l => { const m = String(l).match(/^\*\*(\d+)\*\*/); return m ? m[1] : null; };
+function sayOSt(b){ const st = bs(b); if(!st.so1 || !Array.isArray(st.so1.seen)) st.so1 = {seen: [], open: null}; return st.so1; }
+const sayONums = b => sayIsles(b.task).map(is => sayNum(b.task[is[0]])).filter(n => n != null && sayIsles(b.answer).some(a => sayNum(b.answer[a[0]]) === n));
+const sayOLeft = b => { const O = sayOSt(b); return sayONums(b).filter(n => !O.seen.includes(n)); };
+function sayOOpen(b, n){ const O = sayOSt(b); O.open = n; if(n != null && !O.seen.includes(n)) O.seen.push(n); }
+function sayOneHTML(b){
+  const O = sayOSt(b), ansOf = n => { const a = sayIsles(b.answer).find(is => sayNum(b.answer[is[0]]) === n); return a ? a.filter(i => !b.task.includes(b.answer[i])) : []; };
+  const line = (arr, i, cls, strip) => { const key = arr === b.task ? "task" : "answer", lp = `blocks.${b._pos}.${key}.${i}`, lb = LEDP[lp] ? ledBtn(lp) : "";
+    const t = strip ? String(arr[i]).replace(/^\*\*\d+\*\*\s*/, "") : arr[i]; return `<p class="${cls || ""}"${lb ? " data-live-host" : ""}>${mk(t)}${lb}</p>`; };
+  const cards = sayIsles(b.task).map(is => { const n = sayNum(b.task[is[0]]), A = n != null ? ansOf(n) : [];
+    if(n == null || !A.length) return `<div class="say-isle so-head">${is.map(i => line(b.task, i)).join("")}</div>`;
+    const open = O.open === n, seen = O.seen.includes(n);
+    const btn = `<button class="btn slim" data-so-show="${n}">Show the answer</button>`, dots = i => /^[•·.\s]+$/.test(b.task[i]);
+    /* with the lines from the text beside it (ex), the button sits at the end of the question — five questions fit the screen */
+    const q = is.filter(i => !(open && dots(i))).map((i, k, arr) => b.ex && !open && k === arr.length - 1 ? line(b.task, i, "so-q").replace(/<\/p>$/, btn + "</p>") : line(b.task, i, dots(i) ? "so-dots" : "")).join("");
+    return `<div class="say-isle so${open ? " open" : ""}${seen && !open ? " seen" : ""}" data-so="${n}">${seen && !open ? '<span class="so-ok" aria-label="checked">✓</span>' : ""}${q}
+      ${open ? A.map((i, k) => line(b.answer, i, "new", k === 0)).join("") : b.ex ? "" : btn}</div>`; }).join("");
+  const qs = `<div class="${b.ex ? "say-qs" : "say-isles"}">${cards}</div>`;
+  return `<div class="say-lines${b.ex ? " say-two" : ""}">${b.ex ? `<div class="say-ex dlg">${linesHTML(b.ex, b, "e")}</div>` : ""}${qs}</div>`;
+}
 function sayHTML(b){
+  if(b.one && b.answer) return sayOneHTML(b);
   const st = bs(b), opts = [["yes", "✓ We said it like this"], ["close", "≈ Close"], ["no", "✗ Differently"]];
   /* a new island starts at a numbered line (**1**, **2** …); the answer lines that weren't in the task are marked */
   const lines = st.shown && b.answer ? b.answer : b.task, isles = [];
@@ -3160,7 +3251,7 @@ function sayHTML(b){
   const body = isles.length > 1 ? `<div class="say-isles">${isles.map(x => `<div class="say-isle">${x.join("")}</div>`).join("")}</div>` : isles.map(x => x.join("")).join("");
   return `<div class="say-lines">${body}</div>
     ${!b.answer ? (b.later ? `<p class="say-later">${mk(b.later)}</p>` : "") : st.shown ? `<div class="selfcheck"><span class="q">How close were you?</span>${opts.map(([v, l]) => `<button data-check="${v}" class="${st.check === v ? "on" : ""}" aria-pressed="${st.check === v}">${l}</button>`).join("")}</div>`
-      : `<div class="row-actions"><button class="btn primary" data-sayshow>Show the answer</button></div>`}`;
+      : `<div class="row-actions"><button class="btn primary" data-sayshow>${isles.length > 1 ? "Show the answers" : "Show the answer"}</button></div>`}`;   /* tools 30: her «show the answers если несколько» */
 }
 /* ---------- 🎲 the school council inside the field (tools 18, her 19:44: "not a frame — in our page, in our flow"): one subject per
    screen, as on the council page — roll → that many reasons to keep (add), then to cut (not add), the example after each row, then Keep /
@@ -3241,8 +3332,10 @@ function wireCouncil(b, root){
   on("[data-cn-pick]", x => { const [li, i] = x.dataset.cnPick.split(".").map(Number), a = C.picks[li] = C.picks[li] || []; const k = a.indexOf(i); if(k > -1) a.splice(k, 1); else a.push(i); render(); });
 }
 /* ---------- 🗒 sticky notes (tools 18, her slide "Share with your partner": three coloured notes, all on the screen at once) ---------- */
-const postitsHTML = b => `<div class="postits">${(b.notes || []).map((n, i) => { const lb = LEDP[`blocks.${b._pos}.notes.${i}`] ? ledBtn(`blocks.${b._pos}.notes.${i}`) : "";
+/* tools 30 (her 6.11 13:12, the B2 warmer from her slide 2): "img" = her picture beside the stickers (under them on a phone); a missing file shows nothing */
+const postitsHTML = b => { const notes = `<div class="postits">${(b.notes || []).map((n, i) => { const lb = LEDP[`blocks.${b._pos}.notes.${i}`] ? ledBtn(`blocks.${b._pos}.notes.${i}`) : "";
   return `<div class="postit c${i % 4}"${lb ? " data-live-host" : ""}>${mk(n)}${lb}</div>`; }).join("")}</div>`;
+  return b.img ? `<div class="pi-wrap">${notes}<figure class="pi-pic"><img src="${esc(b.img)}" alt="${esc(b.alt || "")}" onerror="this.parentNode.remove()"></figure></div>` : notes; };
 /* ---------- 🖼 picture, 🗓 calendars, 🔧 tool, 💬 questions ---------- */
 /* tools 18 (her 19:40, C1 04.11 Revision): retell a homework text — her picture, the text's first lines up to the first phrase, a quiet
    minute (⏱, tap to start); Next («Look at the answers», it lights up when the minute is over) shows the whole text */
@@ -3259,15 +3352,33 @@ function hgMount(b, host){ if(!host) return; const st = bs(b);
 const altFramesHTML = alt => { const parts = String(alt || "").split(/\s+·\s+(?=\d+\s)/).filter(Boolean);
   return parts.length > 1 ? `<div class="alt-grid">${parts.map(t => { const m = t.match(/^(\d+)\s+(.*)$/); return `<div class="alt-f"><b>${m ? m[1] : ""}</b><span>${esc(m ? m[2] : t)}</span></div>`; }).join("")}</div>`
     : `<div class="alt-f one"><span>${esc(alt || "")}</span></div>`; };
-const pictureHTML = b => b.lead ? retellHTML(b) : `${b.timer ? `<div class="row-actions ptimer-row"><button class="btn ptimer" data-ptimer>${esc(ptimerText(b))}</button></div>` : ""}${b._missing ? `<figure class="pic" style="margin:0">${altFramesHTML(b.alt)}</figure>` : `<figure class="pic" style="margin:0"><img src="${esc(b.img)}" alt="${esc(b.alt || b.instr || "")}"></figure>`}${b.task ? `<p class="task">${mk(b.task)}</p>` : ""}`;
+/* tools 30 (C1 6.11 v2, request 3): "credit" on a picture, a scene or a text — one small grey line under it (for the one who taps, not to
+   read aloud); [text](url) opens in a new tab */
+const creditHTML = c => c ? `<p class="credit">${esc(c).replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, (m, t, u) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`)}</p>` : "";
+/* tools 30: with a credit, ⏱ and the credit share one row under the picture (the photos keep the room); a tap on a photo shows it on
+   the whole screen, a tap closes it */
+const pictureHTML = b => { if(b.lead) return retellHTML(b);
+  const tm = b.timer ? `<button class="btn ptimer" data-ptimer>${esc(ptimerText(b))}</button>` : "", fig = b._missing ? `<figure class="pic" style="margin:0">${altFramesHTML(b.alt)}</figure>`
+    : `<figure class="pic zoomable" style="margin:0" data-zoom title="Tap to see it bigger"><img src="${esc(b.img)}" alt="${esc(b.alt || b.instr || "")}"></figure>`;
+  if(b.credit && tm) return `${fig}<div class="row-actions ptimer-row pcred">${tm}${creditHTML(b.credit)}</div>${b.task ? `<p class="task">${mk(b.task)}</p>` : ""}`;
+  return `${tm ? `<div class="row-actions ptimer-row">${tm}</div>` : ""}${fig}${creditHTML(b.credit)}${b.task ? `<p class="task">${mk(b.task)}</p>` : ""}`; };
 /* ---------- ⏱ a quiet minute with the picture (handoff 30.10 21:20, as in class): tap → it counts down on the button, then "Time's up"
    and Next lights up; tap again = start again; no sound ---------- */
+/* tools 30 (C1 6.11 v2: six photos under a long task were 167 px high): a tap on the photo — or ⏱ — shows it on the whole screen; with ⏱
+   the minute counts down in its corner and the picture closes by itself when the time is up; a tap closes it any time */
+function picZoom(fig, timed){
+  const im = fig && fig.querySelector("img"); if(!im) return; document.querySelectorAll(".pic-zoom").forEach(z => z.remove());
+  const z = document.createElement("div"); z.className = "pic-zoom"; z.dataset.blk = (curBlock() || {})._id || ""; z.setAttribute("role", "dialog"); z.setAttribute("aria-label", "The picture, big — tap to close"); if(timed) z.dataset.timed = "1";
+  z.innerHTML = `<img src="${esc(im.getAttribute("src"))}" alt="${esc(im.alt)}">${timed ? `<span class="pz-t" data-pzt></span>` : ""}<span class="pz-x">Tap to close ✕</span>`;
+  z.addEventListener("click", () => z.remove()); document.body.appendChild(z); if(timed) ptimerTick();
+}
 const fmtT = s => Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
 function ptimerText(b){ const st = bs(b); if(!st.tEnd) return "⏱ " + fmtT(b.timer); const left = Math.ceil((st.tEnd - Date.now()) / 1000); return left > 0 ? "⏱ " + fmtT(left) : "⏱ Time's up"; }
 function ptimerTick(){
   const b = S.fast || curBlock(), el = document.querySelector("[data-ptimer]");
   if(!el || !b || !b.timer){ clearInterval(ptimerTick.h); ptimerTick.h = 0; return; }
-  const st = bs(b), up = !!st.tEnd && Date.now() >= st.tEnd; el.textContent = ptimerText(b); el.classList.toggle("run", !!st.tEnd && !up); el.classList.toggle("up", up);
+  const st = bs(b), up = !!st.tEnd && Date.now() >= st.tEnd; el.textContent = ptimerText(b);
+  const pz = document.querySelector(".pic-zoom[data-timed] [data-pzt]"); if(pz) pz.textContent = ptimerText(b); if(up) document.querySelectorAll(".pic-zoom[data-timed]").forEach(z => z.remove());   /* tools 30 */ el.classList.toggle("run", !!st.tEnd && !up); el.classList.toggle("up", up);
   const nx = document.querySelector("[data-step]"); if(nx && up){ nx.classList.add(st.glowed ? "ready-still" : "ready"); st.glowed = true; }
   if(!st.tEnd || up){ clearInterval(ptimerTick.h); ptimerTick.h = 0; } else if(!ptimerTick.h) ptimerTick.h = setInterval(ptimerTick, 250);
 }
@@ -3330,7 +3441,7 @@ function scenesHTML(b){
   const k = sc.order[sc.at], x = b.scenes[k], n = sc.order.length;
   const dots = `<span class="speak-dots scn-dots" aria-label="Scene ${sc.at + 1} of ${n}">${sc.order.map((_, i) => `<button class="${i === sc.at ? "on" : i < sc.at ? "was" : ""}" ${i < sc.at ? `data-scn="${i}"` : "disabled"} aria-label="Scene ${i + 1}"></button>`).join("")}</span>`;
   const mine = liveTeacher() ? `<div class="scn-mine">${sceneList(b).map(it => `<span class="live-host ${liveDim("scenes." + b._pid + "." + it.k)}" data-live-host>${esc(b.scenes[it.k].alt || it.t)}${liveTools("scenes." + b._pid + "." + it.k, {edit: false})}</span>`).join("")}</div>` : "";
-  const fig = `<figure class="scn ${S.enter || st.dealt ? "deal" : ""}" style="margin:0">${x._missing ? altFramesHTML(x.alt) : `<img src="${esc(x.img)}" alt="${esc(x.alt || "")}">`}</figure>`;
+  const fig = `<figure class="scn ${S.enter || st.dealt ? "deal" : ""}" style="margin:0">${x._missing ? altFramesHTML(x.alt) : `<img src="${esc(x.img)}" alt="${esc(x.alt || "")}">`}${x.credit ? `<figcaption>${creditHTML(x.credit)}</figcaption>` : ""}</figure>`;
   /* tools 28 (B2 03.11 22:15, her Slide Kit bubbles): the line of the one who loved it in a yellow bubble beside the close-up; an example
      reply in a white one, hidden until they tap it (or Next shows it first, then the next scene) */
   const bubs = x.say || x.example ? `<div class="scn-bubs">${x.say ? `<div class="kbub y"><span>${mk(x.say)}</span></div>` : ""}${x.example ? (sc.ex && sc.ex[k]
@@ -3415,6 +3526,7 @@ function boxFor(b){
   if(b.kind === "cards" && b.style === "share"){ const c = onScreen(b), sup = c ? c.support : "none";
     return sup === "box" ? "BOX" : sup === "strip" ? "STRIP" : null; }
   if(b.kind === "fix" && !b.box && D.boxes && D.boxes.BOX) return "BOX";   /* tools 16: Fix it sits beside the stage's box, like the other Practice blocks */
+  if(b.kind === "box") return null;   /* tools 30: the box is the screen itself */
   if(b.kind === "tool") return b.box || b._box || null;   /* tools 28: the page inside shows only its card; its box is the field's, on the right */
   return b.box || null;
 }
@@ -3450,11 +3562,14 @@ function wireGroupDots(){ document.querySelectorAll("[data-gdots] [data-gd]").fo
 
 /* ---------- ⚡ fast finishers (the last block): the fast line, their ↺ cards once more, the text again without first letters ---------- */
 function fastHTML(){
-  if(!isLast() || S.view !== "field") return "";
+  if(S.view !== "field") return "";
   const lb = curBlock();   /* her 15:17: not before the last question, or nobody goes on to the second one */
   if(lb && lb.kind === "questions"){ const at = spkView.findIndex(x => x.k === spkCur.key); if(at < spkView.length - 1) return ""; }
+  /* tools 30 (C1 6.11 v2: the first chat has its own ⚡ in the middle of the page): a block's own "fast" shows under it, after its last
+     question; on the last screen, the page's ⚡ as before */
+  if(!isLast()) return lb && lb.fast ? `<section class="fast"><h3>⚡ If you're done</h3>${[].concat(lb.fast).map(f => `<p>${mk(f)}</p>`).join("")}</section>` : "";
   const again = saved.again.length, text = BLOCKS.find(b => b.kind === "text");
-  return `<section class="fast"><h3>⚡ If you're done</h3>${FAST.map(f => `<p>${mk(f)}</p>`).join("")}
+  return `<section class="fast"><h3>⚡ If you're done</h3>${(lb && lb.fast ? [].concat(lb.fast) : FAST).map(f => `<p>${mk(f)}</p>`).join("")}
     <div class="row-actions">${again ? `<button class="btn slim" data-fast-cards>↺ Your ${again} hard card${again === 1 ? "" : "s"} once more</button>` : ""}${text ? `<button class="btn slim" data-fast-text>📖 The text again — no first letters</button>` : ""}</div></section>`;
 }
 function fastDeckBlock(){
@@ -3506,7 +3621,7 @@ const gameTasks = (b, cells) => (cells || []).map(c => ({t: b.tasks[c.i] || b.ta
 function gameMount(b, host){
   if(!host) return; const st = bs(b);
   if(b.piece === "wheel" || b.piece === "goose" || b.piece === "snakes" || b.piece === "dots" || b.piece === "islands"){ newGameMount(b, host); return; }   /* tools 20 */
-  if(b.piece === "memo"){ st.memo = gMemo(host, b.items, {seconds: b.seconds || 30, groups: b.groups, state: st.memo || null,
+  if(b.piece === "memo"){ st.memo = gMemo(host, b.items, {seconds: b.seconds || 30, groups: b.groups, first: b.recall === "first", state: st.memo || null,
     onChange: () => { keepPlace(); stepSync(); }}); return; }   /* tools 17 */
   if(st.ttt && st.ttt.cells && st.ttt.cells[0] && st.ttt.cells[0].i != null) st.ttt.cells = gameTasks(b, st.ttt.cells);   /* reopened on this device */
   const three = npOf(b) === 3;
@@ -3550,7 +3665,11 @@ function gameOpenTask(b, t){ const T = bs(b).ttt; if(!T || T.over) return; const
    (this device, also after a reload). ---------- */
 const NEWG = ["wheel", "goose", "snakes", "dots"], ROLLS = ["dice1", "dice2", "islands", "deck"];   /* tools 28: deck = 🃏 Draw a card with the same guided start */
 const taskQ = t => `${t.label && !/^\d+$/.test(t.label) ? `<span class="glbl">${esc(t.label)}</span>` : ""}${t.ctx ? `<span class="lctx">${mk(t.ctx)}</span>` : ""}<span class="say">${mk(t.q)}</span>`;
-const taskA = (b, t) => `${b.check ? `<span class="chk">${esc(b.check)}</span>` : ""}<span class="say fixline">${mk(t.a)}</span>${t.why ? `<span class="note">${mk(t.why)}</span>` : ""}`;
+/* tools 30 (her 6.11 12:30 on the wheel: «ответы на карточке тяжело читаются. Шесть строчек текста, весь серый и одинаковый.. Может хотя
+   бы использовать цвет чтобы помочь ориентироваться?»): "why" as a list = one line each, in black; a short label at the start of a line
+   ("Or:", "Не:", "Answer:", "Not sure?") in bold; **the phrase** blue, ((Russian)) grey, ~~a mistake~~ struck. A plain "why" stays as before. */
+const noteLines = w => `<span class="note lines">${w.map(l => `<span class="nl">${mk(l).replace(/^([A-Za-zА-Яа-яЁё ]{1,14}[:?])(\s)/, '<span class="nlab">$1</span>$2')}</span>`).join("")}</span>`;
+const taskA = (b, t) => `${b.check ? `<span class="chk">${esc(b.check)}</span>` : ""}<span class="say fixline">${mk(t.a)}</span>${Array.isArray(t.why) ? noteLines(t.why) : t.why ? `<span class="note">${mk(t.why)}</span>` : ""}`;
 const dotsQ = t => `<span class="say">${mk(t.q)}</span><span class="say frame">${mk(String(t.frame || "").replace(/_{2,}/g, "______"))} <b class="kw">${esc(t.key || "")}</b></span>`;
 const dotsA = (b, t) => `${b.check ? `<span class="chk">${esc(b.check)}</span>` : ""}<span class="say fixline">${mk(t.back || t.a)}</span>${t.note ? `<span class="note">${mk(t.note)}</span>` : ""}`;
 const onTask = (t, ok) => { lwDeck(t._n, ok); if(!ok && !saved.again.includes(t._n)){ saved.again.push(t._n); save(); } };
@@ -3601,7 +3720,9 @@ function wheelHTML(b){
       <div class="gt-acts">${!W.shown ? `<button class="btn primary" data-whshow>Show the answer</button>` : `<button class="btn ok" data-whyes>✓ Got it</button><button class="btn again" data-whno>↺ Not quite</button>`}</div></div>`
     : left ? `<p class="fw-hint">Tap the wheel to spin it.</p><p class="fw-left">${left} of ${n} left</p>`
     : `<p class="gt-turn big">All done! 🎉</p><button class="btn primary" data-whagain>↺ Again</button>`;
-  return `<div class="fgame fwheel"><div class="fw-wheel" data-game="${b._id}"></div><div class="fw-side gt-side">${side}</div></div>`;
+  /* tools 30 (B2 6.11 fixes-3: answers of 4–6 lines each, beside the wheel the type fell to .66): the answer takes the wheel's place, the
+     whole width; Got it / Not quite bring the wheel back */
+  return `<div class="fgame fwheel${t && W.shown ? " ans" : ""}"><div class="fw-wheel" data-game="${b._id}"></div><div class="fw-side gt-side">${side}</div></div>`;
 }
 function wireWheel(b, root){ const W = bs(b).wh; if(!W) return;
   const on = (q, f) => root.querySelectorAll(q).forEach(x => x.addEventListener("click", f));
@@ -3843,7 +3964,14 @@ function wireListen(b, root){ const L = lisSt(b), c = b._clips[L.at];
     root.querySelectorAll("[data-lisrate]").forEach(y => y.setAttribute("aria-pressed", Number(y.dataset.lisrate) === r)); try{ LIS.player && LIS.player.setPlaybackRate(r); }catch(e){} }));
 }
 /* the one player: a holder on top of the block's place, moved there after every redraw, hidden on other screens */
-const LIS = {player: null, ready: false, holder: null, vid: "", timer: 0, autoplay: false, failed: false, ro: null};
+const LIS = {player: null, ready: false, holder: null, vid: "", timer: 0, autoplay: false, failed: false, ro: null, loadN: 0, ccDone: ""};
+/* tools 29 (her 6.11 09:55 «на странице для комнат тоже… отключаем субтитры»): as on the homework pages (engine 62) — a clip starts without
+   subtitles every time a video loads (a new player, another video, the same video again after another one); a student who turns CC on
+   keeps it for the clips of that video. YouTube loads its captions module when a video starts: unload it once per load (LIS.loadN). */
+function lisCcOff(){ const P = LIS.player; if(!P) return; let vid = ""; try{ vid = (P.getVideoData() || {}).video_id || ""; }catch(e){}
+  const key = LIS.loadN + ":" + vid; if(!vid || LIS.ccDone === key) return;
+  let mods = null; try{ mods = P.getOptions(); }catch(e){} if(Array.isArray(mods) && !mods.some(m => m === "captions" || m === "cc")) return;   /* not loaded yet */
+  LIS.ccDone = key; try{ P.setOption("captions", "track", {}); }catch(e){} try{ P.unloadModule("captions"); }catch(e){} try{ P.unloadModule("cc"); }catch(e){} }
 const ytApiOk = () => !!(window.YT && typeof window.YT.Player === "function");
 let ytPromise = null;
 function loadYT(){
@@ -3869,13 +3997,13 @@ function lisPlace(){
   const r = ph.getBoundingClientRect();
   Object.assign(LIS.holder.style, {display: "block", left: (r.left + scrollX) + "px", top: (r.top + scrollY) + "px", width: r.width + "px", height: r.height + "px"});
   if(window.ResizeObserver){ if(LIS.ro) LIS.ro.disconnect(); LIS.ro = new ResizeObserver(() => { if(ph.isConnected){ const q = ph.getBoundingClientRect(); Object.assign(LIS.holder.style, {left: (q.left + scrollX) + "px", top: (q.top + scrollY) + "px", width: q.width + "px", height: q.height + "px"}); } }); LIS.ro.observe(ph); }
-  if(LIS.player){ if(LIS.ready){ if(LIS.autoplay){ LIS.autoplay = false; lisPlay(c); } else if(LIS.vid !== c.vid){ LIS.vid = c.vid; try{ LIS.player.cueVideoById({videoId: c.vid, startSeconds: Math.floor(lisRange(c)[0])}); }catch(e){} } } return; }
+  if(LIS.player){ if(LIS.ready){ if(LIS.autoplay){ LIS.autoplay = false; lisPlay(c); } else if(LIS.vid !== c.vid){ LIS.vid = c.vid; LIS.loadN++; try{ LIS.player.cueVideoById({videoId: c.vid, startSeconds: Math.floor(lisRange(c)[0])}); }catch(e){} } } return; }
   if(LIS.failed){ lisMsg("fail", c); return; }
-  LIS.vid = c.vid; LIS.ready = false; lisMsg("Loading the video…");
+  LIS.vid = c.vid; LIS.ready = false; LIS.loadN++; lisMsg("Loading the video…");
   loadYT().then(() => { if(LIS.player || !document.getElementById("lis-yt")) return;
     LIS.player = new YT.Player("lis-yt", {videoId: c.vid, width: "100%", height: "100%",
       playerVars: {playsinline: 1, rel: 0, modestbranding: 1, cc_load_policy: 0, iv_load_policy: 3, start: Math.floor(lisRange(c)[0])},
-      events: {onReady: () => { LIS.ready = true; clearTimeout(LIS.wait); lisMsg(""); const cur = lisCur(); if(cur && LIS.autoplay){ LIS.autoplay = false; lisPlay(cur); } else if(cur && cur.vid !== LIS.vid){ LIS.vid = cur.vid; try{ LIS.player.cueVideoById({videoId: cur.vid, startSeconds: Math.floor(lisRange(cur)[0])}); }catch(e){} } }}});
+      events: {onApiChange: lisCcOff, onStateChange: e => { if(e && e.data === 1){ setTimeout(lisCcOff, 300); setTimeout(lisCcOff, 1500); } }, onReady: () => { LIS.ready = true; clearTimeout(LIS.wait); lisMsg(""); const cur = lisCur(); if(cur && LIS.autoplay){ LIS.autoplay = false; lisPlay(cur); } else if(cur && cur.vid !== LIS.vid){ LIS.vid = cur.vid; LIS.loadN++; try{ LIS.player.cueVideoById({videoId: cur.vid, startSeconds: Math.floor(lisRange(cur)[0])}); }catch(e){} } }}});
     clearTimeout(LIS.wait); LIS.wait = setTimeout(() => { if(!LIS.ready){ LIS.failed = true; lisMsg("fail", lisCur()); } }, 15000);
   }).catch(() => { LIS.failed = true; lisMsg("fail", lisCur()); });
 }
@@ -3891,7 +4019,7 @@ function lisPlay(c, k){
   if(!c) return; if(!LIS.player || !LIS.ready){ LIS.autoplay = true; if(!LIS.player && !LIS.failed) lisPlace(); return; }
   clearInterval(LIS.timer); const [from, to] = lisRange(c, k);
   document.querySelectorAll("#main [data-lisln]").forEach(x => x.classList.toggle("playing", !!k && x.dataset.lisln === k));
-  try{ if(LIS.vid !== c.vid){ LIS.vid = c.vid; LIS.player.loadVideoById({videoId: c.vid, startSeconds: from}); } else { LIS.player.seekTo(from, true); LIS.player.playVideo(); } LIS.player.setPlaybackRate(lisRate()); }catch(e){}
+  try{ if(LIS.vid !== c.vid){ LIS.vid = c.vid; LIS.loadN++; LIS.player.loadVideoById({videoId: c.vid, startSeconds: from}); } else { LIS.player.seekTo(from, true); LIS.player.playVideo(); } LIS.player.setPlaybackRate(lisRate()); }catch(e){}
   LIS.timer = setInterval(() => { let t = 0; try{ t = LIS.player.getCurrentTime(); }catch(e){} if(t >= to){ lisPause(); document.querySelectorAll("#main [data-lisln].playing").forEach(x => x.classList.remove("playing")); } }, 100);
 }
 
@@ -3933,10 +4061,10 @@ function blockHTML(b){
     : b.kind === "picture" ? pictureHTML(b) : b.kind === "calendars" ? calendarsHTML(b) : b.kind === "tool" ? toolHTML(b)
     : b.kind === "questions" ? questionsHTML(b) : b.kind === "cards" ? groupDotsHTML(b) + `<div class="deck">${cardsHTML(b)}</div>` : b.kind === "scenes" ? scenesHTML(b)
     : b.kind === "fix" ? fixHTML(b) : b.kind === "sort" ? sortHTML(b) : b.kind === "game" && b.piece === "secret" ? secretHTML(b)
-    : b.kind === "listen" ? listenHTML(b) : b.kind === "mix" ? mixHTML(b) : b.kind === "game" && b.piece === "wheel" ? groupDotsHTML(b) + gamePeekHTML(b) + wheelHTML(b) : b.kind === "game" && ROLLS.includes(b.piece) ? rollHTML(b)
+    : b.kind === "listen" ? listenHTML(b) : b.kind === "box" ? boxBlockHTML(b) : b.kind === "mix" ? mixHTML(b) : b.kind === "game" && b.piece === "wheel" ? groupDotsHTML(b) + gamePeekHTML(b) + wheelHTML(b) : b.kind === "game" && ROLLS.includes(b.piece) ? rollHTML(b)
     : b.kind === "game" ? (b.piece === "memo" ? "" : groupDotsHTML(b) + (NEWG.includes(b.piece) ? gamePeekHTML(b) : "")) + (b.rule ? `<p class="g-rule">${mk(b.rule)}</p>` : "") + `<div class="fgame${b.piece === "memo" ? " fmemo" : ""} fg-${esc(b.piece || "ttt")}" data-game="${b._id}"></div>` : "";
   const instr = b.kind === "cards" || b.kind === "questions" ? (b.kind === "questions" ? b.instr : "") : b.kind === "scenes" && sceneAt(b) >= 0 ? (b.street_first === false ? [b.instr, b.task].filter(Boolean).join(" ") : b.task)
-    : b.kind === "game" && b.piece === "secret" ? secInstr(b) : b.kind === "game" && ROLLS.includes(b.piece) && rlIntro(b) ? b.intro.instr || b.instr : b.instr;
+    : b.kind === "game" && b.piece === "secret" ? secInstr(b) : b.kind === "box" && bs(b).shown ? b.instr2 || b.instr : b.kind === "game" && ROLLS.includes(b.piece) && rlIntro(b) ? b.intro.instr || b.instr : b.instr;
   const tip = S.howto && b.tip ? `<p class="tip">🎓 How it works: ${mk(b.tip)}</p>` : "";
   const how = demoKind(b) ? ` <button class="g-howto" data-gdemo>▶ How to play</button>` : "";   /* tools 21 */
   const ledI = instr && instr === b.instr && LEDP["blocks." + b._pos + ".instr"] ? ledBtn("blocks." + b._pos + ".instr") : "";   /* tools 24 */
@@ -3991,7 +4119,7 @@ function gameStep(b){
    "← Back" and "Next →" at the bottom of the screen, the same words every time. The steps are ours: after a task they always look at
    the answers — Next first shows them (the gaps, the answer, the card's back, the time on the calendars), the next Next goes on. There is
    no way to jump ahead past the answers; only the stage bubbles on top move freely (for her "move on"). */
-const stepbarHTML = () => `<nav class="stepbar" aria-label="Back and next"><button class="btn" data-back ${canBack() ? "" : "disabled"}>← Back</button><span class="step-mid">${screenDotsHTML()}${meTeacher() && S.view === "field" && !S.fast ? `<button class="btn slim sd-link" data-sdlink title="Copy a link that opens this screen — for the Zoom chat">🔗 Link</button>` : ""}<span class="step-msg" id="step-msg" aria-live="polite"></span></span>${finBtnHTML()}<button class="btn primary" data-step ${canNext() ? "" : "disabled"}>${nextLabel()}</button></nav>`;
+const stepbarHTML = () => `<nav class="stepbar" aria-label="Back and next"><button class="btn" data-back aria-keyshortcuts="ArrowLeft" ${canBack() ? "" : "disabled"}>← Back</button><span class="step-mid">${screenDotsHTML()}${meTeacher() && S.view === "field" && !S.fast ? `<button class="btn slim sd-link" data-sdlink title="Copy a link that opens this screen — for the Zoom chat">🔗 Link</button>` : ""}<span class="step-msg" id="step-msg" aria-live="polite"></span></span>${finBtnHTML()}<button class="btn primary" data-step aria-keyshortcuts="ArrowRight" ${canNext() ? "" : "disabled"}>${nextLabel()}</button></nav>`;
 const nextLabel = () => { const b = !S.intro && !S.fast && S.view === "field" ? curBlock() : null; return b && b.kind === "picture" && b.answer && !bs(b).shown ? "Look at the answers →" : b && isPlay(b) && !gameLive(b) && !(ROLLS.includes(b.piece) && rlIntro(b)) && !isLast() ? "Next task →" : "Next →"; };
 /* her 15:17: where you are in a stage and how much is left — one numbered circle per screen, between Back and Next; the screens
    already seen can be tapped to go back to them */
@@ -4009,7 +4137,8 @@ function stepMsg(t){ const m = document.getElementById("step-msg"); if(m){ m.tex
 function stepPending(b){
   if(!b) return false; const st = bs(b);
   if(b.kind === "tool") return true;   /* the page inside says when it has nothing more (lwStepEnd) */
-  if(b.kind === "say") return !!b.answer && !st.shown;
+  if(b.kind === "say") return b.one ? sayOLeft(b).length > 0 : !!b.answer && !st.shown;   /* tools 30: one answer at a time */
+  if(b.kind === "box") return !st.shown;   /* tools 30: the box, then the box with the phrases hidden */
   if(b.kind === "picture" && b.answer) return !st.shown;   /* tools 18: the retell's whole text */
   if(b.kind === "council") return cnPending(b);   /* tools 18: the next subject, then Decide */
   if(b.kind === "fix") return fixPending(b);   /* tools 16 */
@@ -4049,7 +4178,9 @@ function stepNext(){
   if(b.kind === "write") b.items.filter(it => !(saved.w[it._chat] || {}).sent && ((saved.w[it._chat] || {}).text || "").trim()).forEach(it => sendItem(it._chat, saved.w[it._chat].text.trim()));
   /* the chat page inside (her 13:24: no Next of its own): the field's Next / Back step through its chats and its speaking */
   if(b.kind === "tool"){ const f = document.querySelector(".tool-frame"); if(f && f.contentWindow){ f.contentWindow.postMessage({lwStep: "next"}, "*"); return; } }
-  if(b.kind === "say" && b.answer && !st.shown){ st.shown = true; render(); return; }
+  if(b.kind === "say" && b.one && sayOLeft(b).length){ sayOOpen(b, sayOLeft(b)[0]); render(); return; }   /* tools 30 */
+  if(b.kind === "box" && !st.shown){ st.shown = true; render(); return; }
+  if(b.kind === "say" && !b.one && b.answer && !st.shown){ st.shown = true; render(); return; }
   if(b.kind === "picture" && b.answer && !st.shown){ st.shown = true; render(); return; }
   if(b.kind === "council" && cnPending(b)){ const C = cnSt(b), R = C.subs[C.at], w = CN_W[b.lists[cnSubs(b)[C.at].li].kind];
     /* tools 27 (her 2.11 21:34): Next waits until the pair has decided — Keep / Cut / 🤝 (her ‹ › on the counter browse freely) */
@@ -4125,6 +4256,8 @@ function stepBack(){
     else if(d.flipped){ d.flipped = false; render(); return; }
     else if(d.hist.length){ st.look = d.hist[d.hist.length - 1]; st.lookBack = true; st.lookLbl = "↩ Looking back"; render(); return; } }
   if(S.fast){ S.fast = null; render(); return; }
+  if(b && b.kind === "say" && b.one && sayOSt(b).open != null){ sayOSt(b).open = null; render(); return; }   /* tools 30 */
+  if(b && b.kind === "box" && bs(b).shown){ bs(b).shown = false; render(); return; }
   if(b && b.kind === "say" && bs(b).shown){ bs(b).shown = false; render(); return; }
   if(b && b.kind === "picture" && b.answer && bs(b).shown){ bs(b).shown = false; render(); return; }
   if(b && b.kind === "text" && b.answer && b.answer.length && bs(b).shown){ bs(b).shown = false; render(); return; }   /* tools 25 */
@@ -4154,8 +4287,12 @@ function headHTML(){
   const nav = stagesHTML(st.map(([id, l]) => [id, lbl(l)]), S.view === "groups" ? "groups" : String(S.stage)).replace('<nav class="stages ', many ? '<nav class="stages many ' : '<nav class="stages ');
   return `<header class="head">${board}${cellName() ? `<span class="part">${esc(cellName())}</span>` : ""}<h1>${esc(D.title)}</h1>${nav}${howto}${filmBtnHTML()}</header>${filmPanelHTML()}`;
 }
+/* tools 30: the big picture closes when the screen changes, and with Esc or an arrow (which then don't step on) */
+addEventListener("keydown", e => { const z = document.querySelector(".pic-zoom"); if(!z || !["Escape", "ArrowRight", "ArrowLeft", "Enter", " "].includes(e.key)) return;
+  e.preventDefault(); e.stopImmediatePropagation(); z.remove(); }, true);
 function render(){
   liveApply();
+  document.querySelectorAll(".pic-zoom").forEach(z => { if(z.dataset.blk !== ((S.fast || curBlock()) || {})._id) z.remove(); });
   if(S.view === "field" && !S.intro && !S.fast) S.far[S.stage] = Math.max(S.far[S.stage] || 0, bIdx());
   if(PTS && S.view === "field" && !S.intro && !S.fast && stagePos(S.stage) === SORD.length - 1 && bIdx() === curBlocks().length - 1) filmDone(partId(S.stage));   /* tools 26: the last part */
   keepPlace();
@@ -4181,24 +4318,56 @@ function render(){
   wire(main); wireLive(main, p => { if(LEDP[p]) return ledShown(LEDP[p]); const m = String(p).match(/^questions\.(\d+)\.(\d+)$/); if(!m) return ""; const bl = BLOCKS.find(x => x._pid === +m[1]); return bl ? bl.items[+m[2]] || "" : ""; });
   wireStageDrag(main);
   if(S.view === "groups") wireGroups(main); else { paintWriteNotes(); gwPaint(); const sb = main.querySelector("[data-step]"); if(sb) sb.disabled = !canNext(); }
-  fitCard(); sizeTool();
+  fitHead(); fitTxPic(true); fitCard(); fitTxPic(); fitPic(); sizeTool();
+}
+/* tools 30: the text's picture under the glossary fills only the room the text leaves: beside the conversation, above Back / Next (at most
+   260 px); less than 80 px → no picture on this screen. It never makes the text smaller (fitCard runs without it). A phone: 160 px. */
+function fitTxPic(before){
+  const f = document.querySelector("#main .tx-pic.glpic"); if(!f) return;
+  if(innerWidth < 760){ f.style.removeProperty("display"); f.style.setProperty("--pich", "160px"); return; }
+  if(before){ f.style.display = "none"; return; }
+  const dlg = document.querySelector("#main .tx .dlg"), gl = document.querySelector("#main .tx-sidecol aside.gloss"), bar = document.querySelector("#main .stepbar"); if(!dlg || !gl || !bar) return;
+  const room = Math.min(dlg.getBoundingClientRect().bottom, bar.getBoundingClientRect().top - 16) - gl.getBoundingClientRect().bottom - 12;   /* 10 = the gap above it */
+  if(room < 80) return; f.style.removeProperty("display"); f.style.setProperty("--pich", Math.floor(Math.min(room, 260)) + "px");
 }
 /* tools 18 (C1 04.11: an "our sentences" card with its answer, the note and "Your turn" beside the box ran under Back / Next): a long card
    makes its type smaller, step by step, until the card and its buttons fit above them — her rule, a whole card on the shared screen. A phone scrolls as before. */
 function fitCard(){
-  const fc = document.querySelector("#main .deck .fc, #main .cn, #main .blk > .tx, #main .blk > .mix, #main .blk > .rl, #main .blk > .fgame, #main .blk .parts"), blk = document.querySelector("#main .blk"), bar = document.querySelector("#main .stepbar");   /* tools 20: a long text, the mix, the example too */
+  const fc = document.querySelector("#main .deck .fc, #main .cn, #main .blk > .tx, #main .blk > .mix, #main .blk > .rl, #main .blk > .fgame, #main .blk .parts, #main .blk > .say-two, #main .blk > .mainbox, #main .blk > .say-lines"), blk = document.querySelector("#main .blk"), bar = document.querySelector("#main .stepbar");   /* tools 20: a long text, the mix, the example too */
   if(!fc || !blk || !bar || innerWidth < 760) return;
   /* tools 28 also (her 4.11 17:16 «шрифт в карточке мелковат»): measured afresh every time — a game first shows its ▶ How to play, which is
      taller, and the card kept the small type after it; a game that changes in place (the task, its answer, the next roll) fits again by itself */
   fc.style.removeProperty("--k");
+  const gp = fc.querySelector(".tx-pic.glpic"), gpd = gp ? gp.style.display : ""; if(gp) gp.style.display = "none";   /* tools 30 */
+  try{ fitCardK(fc, blk, bar); } finally { if(gp) gp.style.display = gpd; }
+}
+function fitCardK(fc, blk, bar){
   if(window.ResizeObserver && fc.classList.contains("fgame") && !fc._ro){ fc._ro = new ResizeObserver(() => { cancelAnimationFrame(fc._rt); fc._rt = requestAnimationFrame(() => { if(fc.isConnected) fitCard(); }); }); fc._ro.observe(fc); }
-  const over = () => blk.getBoundingClientRect().bottom + 2 > bar.getBoundingClientRect().top;
-  fc.querySelectorAll("img").forEach(im => { if(!im.complete) im.addEventListener("load", () => { if(!fc.isConnected) return; fc.style.removeProperty("--k"); fitCard(); }, {once: true}); });   /* a picture still loading changes the card's size */
+  const over = () => blk.getBoundingClientRect().bottom + 2 > bar.getBoundingClientRect().top;   /* the ⚡ under the last task may scroll: the task keeps its type */
+  fc.querySelectorAll("img").forEach(im => { if(im.closest(".glpic")) return; if(!im.complete) im.addEventListener("load", () => { if(!fc.isConnected) return; fc.style.removeProperty("--k"); fitCard(); }, {once: true}); });   /* tools 30: the text's picture has its own size (fitTxPic) */   /* a picture still loading changes the card's size */
   for(const k of [.92, .85, .78, .72, .66]){ if(!over()) return; fc.style.setProperty("--k", k); }
 }
 addEventListener("resize", () => { clearTimeout(fitCard.t); fitCard.t = setTimeout(() => { const fc = document.querySelector("#main .deck .fc, #main .cn"); if(fc) fc.style.removeProperty("--k"); fitCard(); }, 150); });
 /* tools 28 also (B2 6.11 fixes-1: the box grew to four groups and ran under the screen): on a computer the box beside a task must be seen
    whole (her rule) — only when it doesn't fit, its type gets a little smaller, step by step, never below .72 */
+/* tools 30 (B2 6.11: five parts and a long title took two rows above every screen): the stage bar drops its → arrows when that keeps it on the title's row */
+/* tools 30 (C1 6.11 v2, the six photos under a long task, ⏱ and the reactions): a picture block's picture gets smaller (not below 140 px)
+   until the task under it and Back / Next fit 1280×720; again when the photo loads */
+function fitPic(){
+  const f = document.querySelector("#main .blk > figure.pic"), blk = document.querySelector("#main .blk"), bar = document.querySelector("#main .stepbar"); if(!f || !blk || !bar || innerWidth < 760) return;
+  f.classList.remove("fitted"); f.style.removeProperty("--pich");
+  const im = f.querySelector("img"); if(im && !im.complete && !im._fp){ im._fp = 1; im.addEventListener("load", () => { if(f.isConnected) fitPic(); }, {once: true}); }
+  const over = blk.getBoundingClientRect().bottom + 2 - bar.getBoundingClientRect().top; if(over <= 0) return;
+  const h = f.getBoundingClientRect().height; f.style.setProperty("--pich", Math.max(140, Math.floor(h - over)) + "px"); f.classList.add("fitted");
+}
+function fitHead(){
+  const h = document.querySelector("#main header.head"), nav = h && h.querySelector("nav.stages"), t = h && h.querySelector("h1"); if(!nav || !t || innerWidth < 900) return;
+  nav.classList.remove("tight");
+  const low = () => nav.getBoundingClientRect().top > t.getBoundingClientRect().bottom - 8, rows = () => new Set([...nav.querySelectorAll(".stage-btn")].map(x => Math.round(x.getBoundingClientRect().top))).size;
+  const l0 = low(), r0 = rows(); if(!l0 && r0 === 1) return;
+  nav.classList.add("tight"); const l1 = low(), r1 = rows();
+  if(!(r1 < r0 || (l0 && !l1))) nav.classList.remove("tight");   /* tools 30: also when the bar itself wraps (beside the box) */
+}
 function fitSideBox(){
   const bx = document.querySelector("#side aside.box"); if(!bx) return; bx.style.removeProperty("--bxk");
   if(innerWidth < 900) return;
@@ -4207,6 +4376,18 @@ function fitSideBox(){
 addEventListener("resize", () => { clearTimeout(fitSideBox.t); fitSideBox.t = setTimeout(fitSideBox, 150); });
 /* the box with X{{rest}}: the first letter shown, the rest hidden yellow (tap the yellow to open it; tap the line to tick it) */
 const boxLineHTML = t => phHTML(t).replace(/\{\{(.+?)\}\}/g, '<span class="bh" data-bh>$1</span>');
+/* tools 30 (her 6.11 12:35 «этот чудесный useful language box появляется только на практике, когда студенты одни. Может вместо мемо
+   его?»): "kind": "box" — the box on its own screen, big, as on her slides; then Next: the same box with the phrases hidden — the first
+   letters and the translations stay, tap the yellow to check (her usual sequence: the box → the box with words hidden → the box + questions).
+   "instr" for the first screen, "instr2" for the hidden one. Only the bold part of a line hides; a line with no bold stays as it is. */
+const hideWords = s => String(s).replace(/[A-Za-z][A-Za-z'’]*/g, w => w.length > 1 ? w[0] + "{{" + w.slice(1) + "}}" : w);
+const hideLine = t => String(t).replace(/##.+?##/g, m => "\u0000" + encodeURIComponent(m) + "\u0000").replace(/\*\*(.+?)\*\*/g, (m, x) => "**" + hideWords(x) + "**").replace(/\u0000(.+?)\u0000/g, (m, x) => decodeURIComponent(x));
+const hideBox = box => box.map(g => Object.assign({}, g, g.pairs ? {pairs: g.pairs.map(pr => [hideWords(pr[0]), hideWords(pr[1])].concat(pr.slice(2)))} : {items: (g.items || []).map(hideLine)}));
+function boxBlockHTML(b){
+  const box = D.boxes[b.box || "BOX"] || [], hid = !!bs(b).shown, B = hid ? hideBox(box) : box;
+  const groups = B.map((g, gi) => `<div class="mb-g">${boxGroupHTML(g, gi, (t, ti) => `<button class="ph ${usedPhrases.has(gi + "." + ti) ? "used" : ""}" data-ph="${gi}.${ti}" data-pt="${esc(phPlain(t))}" aria-pressed="${usedPhrases.has(gi + "." + ti)}">${boxLineHTML(t)}</button>`)}</div>`).join("");
+  return `<aside class="box mainbox${hid ? " hid" : ""}" aria-label="Useful language"><div class="box-top"><img class="sticker" src="${STICKER}" alt="Useful language"></div><div class="mb-cols">${groups}</div></aside>`;
+}
 function fieldBoxHTML(box){
   const items = box.map((g, gi) => boxGroupHTML(g, gi, (t, ti) => `<button class="ph ${usedPhrases.has(gi + "." + ti) ? "used" : ""}" data-ph="${gi}.${ti}" data-pt="${esc(t.replace(/\*\*|\{\{|\}\}/g, ""))}" aria-pressed="${usedPhrases.has(gi + "." + ti)}">${boxLineHTML(t)}</button>`)).join("");   /* tools 28 also: a US | UK pairs group (tool_base) */
   return `<aside class="box" aria-label="Useful language"><div class="box-top"><img class="sticker" src="${STICKER}" alt="Useful language"></div>${items}</aside>`;
@@ -4250,6 +4431,8 @@ function wire(root){
   on("[data-bm]", (x, e) => { e.stopPropagation(); const st = bs(b), id = x.dataset.bm, onNow = !st.bm.has(id); onNow ? st.bm.add(id) : st.bm.delete(id); lwSignal("gap", `b${b._pid}:${gapAnswer(b, id)}`, onNow ? 1 : 0); render(); });
   /* say */
   on("[data-sayshow]", () => { bs(b).shown = true; render(); });
+  root.querySelectorAll("[data-so-show]").forEach(x => x.addEventListener("click", () => { sayOOpen(b, x.dataset.soShow); render(); keepPlace(); }));   /* tools 30 */
+  if(b.kind === "box"){ wireBox(root); wireBoxHidden(root); }
   on("[data-txshow]", () => { bs(b).shown = true; render(); keepPlace(); });   /* tools 25 */
   on("[data-check]", x => { const st = bs(b); st.check = x.dataset.check; lwSignal("check", "b" + b._pid, st.check); render(); });
   /* calendars */
@@ -4259,7 +4442,9 @@ function wire(root){
     if(st.done && !was){ const f = document.querySelector(".cal-done"); if(f){ pop(f); f.scrollIntoView({block: "center", behavior: calm() ? "auto" : "smooth"}); } } });
   on("[data-peek]", () => { const st = bs(b); st.peek = !st.peek; render(); });
   on("[data-scnex]", () => { const sc = sceneState(b), k = sc.order[sc.at]; sc.ex = Object.assign({}, sc.ex, {[k]: true}); render(); keepPlace(); });   /* tools 28 */
-  on("[data-ptimer]", () => { bs(b).tEnd = Date.now() + b.timer * 1000; bs(b).glowed = false; const nx = document.querySelector("[data-step]"); if(nx) nx.classList.remove("ready", "ready-still"); clearInterval(ptimerTick.h); ptimerTick.h = 0; ptimerTick(); });
+  on("[data-zoom]", x => picZoom(x, false));   /* tools 30 */
+  on("[data-ptimer]", () => { const zf = document.querySelector("#main figure.pic[data-zoom]"); if(zf) setTimeout(() => picZoom(zf, true), 0);   /* tools 30: the minute = the pictures on the whole screen */
+    bs(b).tEnd = Date.now() + b.timer * 1000; bs(b).glowed = false; const nx = document.querySelector("[data-step]"); if(nx) nx.classList.remove("ready", "ready-still"); clearInterval(ptimerTick.h); ptimerTick.h = 0; ptimerTick(); });
   if(b.timer) ptimerTick();
   on("[data-scn]", x => { sceneState(b).at = +x.dataset.scn; render(); });
   on("[data-covall]", () => { const st = bs(b); st.open.clear(); st.done = false; render(); });
@@ -4307,6 +4492,10 @@ function wire(root){
   on("[data-fast-cards]", () => { S.fast = fastDeckBlock(); delete S.bs.fastdeck; render(); scrollTo(0, 0); });
   on("[data-fast-text]", () => { const t = BLOCKS.find(x => x.kind === "text"); S.noFirst = true; bs(t).open.clear(); S.at[t._si] = t._bi; goStage(t._si, false); render(); });
 }
+/* tools 29: → and ← = Next and Back (tool_base keySteps); a page inside a tool block sends its keys here (lwKey) */
+keySteps(".stepbar [data-step]", ".stepbar [data-back]");
+addEventListener("message", e => { const k = e.data && e.data.lwKey; if(k !== "next" && k !== "back") return; const f = document.querySelector("#main .tool-frame");
+  if(!f || e.source !== f.contentWindow) return; const btn = document.querySelector(k === "next" ? ".stepbar [data-step]" : ".stepbar [data-back]"); if(keyBtnOk(btn)) btn.click(); });
 document.addEventListener("keydown", e => {
   if(e.target.closest && e.target.closest("input, textarea, select")) return;
   const b = S.fast || curBlock(); if(S.view !== "field" || (S.intro && !S.fast) || !b || b.kind !== "cards") return; const d = deckOf(b); if(!d.queue.length || bs(b).look != null) return;

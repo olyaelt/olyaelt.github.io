@@ -2681,7 +2681,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = [];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "62";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "63";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [{"type": "rewrite", "r": {"o": "My degree is in physics.", "k": "DID", "pre": "I ", "post": " university.", "a": "did physics at", "acc": ["did physics at", "did a physics degree at"], "n": "<span class=\"ipa\">/ˈfɪzɪks/<\/span><br>do + subject, no article; at university.<br><i class=\"ru\">учился на физика<\/i><br><i class=\"ru\">or: did a physics degree at<\/i><br><i class=\"ru\">AmE: I majored in physics in college.<\/i>"}, "frm": "23.10.26"}, {"type": "sayit", "s": {"rows": [["<span class=\"en\">I studied <span class=\"trap\">at the faculty of mathematics<\/span>.<\/span> <i class=\"ru\">(учился на матфаке)<\/i>", "I studied <b class=\"g\">maths<\/b>. / I did <b class=\"g\">maths at uni<\/b>."]], "note": "", "html": true}, "instr": "What would Dan or Ruth say instead?", "frm": "21.10.26"}, {"type": "rewrite", "r": {"pre": "", "hint": "У нас часы не переводят", "post": ", so I can never remember whether our calls move earlier or later.", "a": "We don't change the clocks here", "acc": ["We don't change the clocks here", "The clocks don't change here", "We don't have daylight saving here", "We don't have daylight saving time here"], "n": "change the clocks — the clocks, plural.<br><i class=\"ru\">or: The clocks don't change here / We don't have daylight saving (time) here<\/i>"}, "frm": "23.10.26"}, {"type": "sayit", "s": {"rows": [["<span class=\"en\">Nobody taught me how to talk to clients — I learned it <span class=\"trap\">in practice<\/span>.<\/span> <i class=\"ru\">(научилась в процессе работы)<\/i>", "Nobody taught me how to talk to clients — I learned it <b class=\"g\">on the job<\/b>."]], "note": "", "html": true}, "instr": "What would Dan or Ruth say instead?", "frm": "21.10.26"}];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -4877,6 +4877,17 @@ function renderProduce(st, count, pct){
   });
 }
 
+/* engine 63 (her 6.11 09:55 «чтобы next и back были доступны с клавиатуры»): → and ← = the screen's Next (or Check / Finish) and Back, as
+   in slides — the lesson pages too. Not while typing (the arrows move the cursor there), not on a key held down, and without Ctrl / Alt /
+   Cmd: on a Mac Ctrl + ← → moves to another desktop, and Alt + ← (Windows) and Cmd + ← (Mac) are the browser's Back, which would leave
+   the page. Never a Send button: sending to Olya is always a tap. */
+document.addEventListener("keydown", e => {
+  if((e.key !== "ArrowRight" && e.key !== "ArrowLeft") || e.ctrlKey || e.altKey || e.metaKey || e.shiftKey || e.repeat || e.defaultPrevented) return;
+  if(e.target && e.target.closest && e.target.closest('input, textarea, select, audio, video, [contenteditable]:not([contenteditable="false"]), [role="slider"]')) return;
+  const btn = document.getElementById(e.key === "ArrowRight" ? "go" : "prev");
+  if(!btn || btn.disabled || !btn.getClientRects().length || e.key === "ArrowRight" && /send/i.test(btn.textContent)) return;
+  e.preventDefault(); btn.click();
+});
 /* ---------- start ---------- */
 /* a student sees only their own group: with a code from the other group, go to that group's list */
 function toOwnGroup(gid){

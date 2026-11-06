@@ -172,6 +172,8 @@
 .gm-list.check button{font:inherit;font-weight:800;font-size:1.1rem;border:3px solid #1D1D1B;border-radius:10px;padding:4px 12px;background:#FFFFFF;color:#1D1D1B;box-shadow:0 3px 0 #1D1D1B;cursor:pointer}
 .gm-list.check button.on{background:#BFF2B8}
 .gm-cover{display:flex;flex-wrap:wrap;gap:8px}
+.gm-list.ghost li{box-shadow:none;color:#1D1D1B}   /* tools 30: the hidden plates — same size, nothing to press */
+.gm-list.ghost .gm-hid{color:transparent;background-image:radial-gradient(circle, #8A8F98 1.4px, transparent 1.6px);background-size:.42em .42em;background-repeat:repeat-x;background-position:0 78%}
 .gm-cover span{width:6.5rem;height:2.2rem;border-radius:10px;border:3px solid #1D1D1B;background:#8BE2FF;box-shadow:0 3px 0 #1D1D1B}
 .gm-lists{display:grid;gap:8px}
 .gm-g{display:grid;gap:4px}

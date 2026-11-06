@@ -25,12 +25,12 @@ const PAGE = 'tools/b2-2026-10-30/f-seen';
   out.stages = await p.evaluate(() => D.stages.map(s => s.label + ':' + s.blocks.map(b => b.kind + (b.piece ? '/' + b.piece : '')).join(',')));
   expect('four stages: test / memo / sort, fix, fix / secret, questions', out.stages.join('|') === '📝 Test yourself:say|🔁 Recall:game/memo|🃏 Practice:sort,fix,fix|💬 Use it:game/secret,questions', out.stages);
   // 🧠 Memo
-  await go(p, 'game', 'memo'); const memo = () => p.evaluate(() => ({ph: bs(curBlock()).memo.phase, h: [...document.querySelectorAll('.gm-h')].map(x => x.textContent), li: document.querySelectorAll('.gm-list li').length, cov: document.querySelectorAll('.gm-cover span').length, big: (document.querySelector('.gm-big') || {}).textContent || ''}));
+  await go(p, 'game', 'memo'); const memo = () => p.evaluate(() => ({ph: bs(curBlock()).memo.phase, h: [...document.querySelectorAll('.gm-h')].map(x => x.textContent), li: document.querySelectorAll('.gm-list li').length, cov: document.querySelectorAll('.gm-list.ghost li').length,   /* tools 30: the plates instead of the blue covers */ big: (document.querySelector('.gm-big') || {}).textContent || ''}));
   const M = [await memo()]; await fit(p, 'memo ready');
   await next(p); M.push(await memo()); await shot(p, 'seen-memo-look'); await fit(p, 'memo look');
   await next(p); M.push(await memo()); await fit(p, 'memo recall');
   await next(p); M.push(await memo()); await p.locator('[data-gm-k]').first().click(); M.push(await memo()); await fit(p, 'memo check');
-  expect('memo: 12 · 40 s → the list under the three headings → covers with the headings → tap the ones you remembered', /12 expressions · 40 seconds/.test(M[0].big) && M[1].ph === 'look' && M[1].h.length === 3 && M[1].li === 12 && M[2].ph === 'recall' && M[2].cov === 12 && M[2].h.length === 3 && M[3].ph === 'check' && /1 of 12/.test(M[4].big), M);
+  expect('memo: 12 · 40 s → the list under the three headings → the hidden plates with the headings → tap the ones you remembered', /12 expressions · 40 seconds/.test(M[0].big) && M[1].ph === 'look' && M[1].h.length === 3 && M[1].li === 12 && M[2].ph === 'recall' && M[2].cov === 12 && M[2].h.length === 3 && M[3].ph === 'check' && /1 of 12/.test(M[4].big), M);
   // 🗂 sort
   await go(p, 'sort'); const so = () => p.evaluate(() => { const Q = bs(curBlock()).so; return {at: Q.at, open: Q.open, landed: Q.landed, done: Q.done, placed: Object.assign({}, Q.placed), ctx: (document.querySelector('.fs-ctx') || {}).textContent || '', why: (document.querySelector('.fs-why') || {}).textContent || '', wrong: (document.querySelector('.fs-wrong') || {}).textContent || '', glow: (document.querySelector('.fs-pat.glow') || {dataset: {}}).dataset.fsp || '', box: !!document.querySelector('aside.box')}; });
   const Q = [await so()]; await fit(p, 'sort 1');

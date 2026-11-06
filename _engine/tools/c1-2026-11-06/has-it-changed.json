@@ -18,7 +18,7 @@
    {
     "h": "WHAT'S DIFFERENT?",
     "items": [
-     "It's **got** / **gotten** a lot [busier / livelier / …].",
+     "It's **got** / **gotten** a lot [greener / more built-up / more run-down / fancier / emptier / …]. ((зеленее / плотнее застроено / обшарпаннее / пафоснее / безлюднее))",
      "It's **become** a lot **more** [touristy / expensive / …].",
      "It's a lot [busier / cleaner / …] **than it used to be**.",
      "It's **not quite as** [nice / quiet / …] **as it was**.",
@@ -46,7 +46,7 @@
    {
     "h": "WHAT'S DIFFERENT?",
     "items": [
-     "It's g{{ot}} / g{{otten}} a lot [busier / livelier / …].",
+     "It's g{{ot}} / g{{otten}} a lot [greener / more built-up / more run-down / fancier / emptier / …].",
      "It's b{{ecome}} a lot m{{ore}} [touristy / expensive / …].",
      "It's a lot [busier / cleaner / …] t{{han}} **it** u{{sed}} **to be**.",
      "It's **not** q{{uite}} a{{s}} [nice / quiet / …] a{{s}} **it** w{{as}}.",
@@ -83,12 +83,51 @@
      "**more and more** …"
     ]
    }
+  ],
+  "FORM": [
+   {
+    "h": "-ER / -IER",
+    "items": [
+     "one syllable, or two syllables ending in -y: green → **greener**, busy → **busier**, pricey → **pricier**"
+    ]
+   },
+   {
+    "h": "MORE …",
+    "items": [
+     "most other words: **more** crowded, **more** modern"
+    ]
+   },
+   {
+    "h": "BOTH ARE FINE",
+    "items": [
+     "quieter / more quiet · livelier / more lively"
+    ]
+   },
+   {
+    "h": "IRREGULAR",
+    "items": [
+     "good → **better** · bad → **worse**"
+    ]
+   },
+   {
+    "h": "REMEMBER",
+    "items": [
+     "-er OR more, never both: busier — not ~~more busier~~",
+     "going down: **less** + the plain form: less green, less safe"
+    ]
+   }
   ]
  },
  "stages": [
   {
    "label": "☕ Warm-up",
    "blocks": [
+    {
+     "kind": "picture",
+     "img": "copley-square-then-now.jpg",
+     "alt": "Copley Square, Boston: around 1900 and today",
+     "credit": "Photos: then — [Library of Congress, Prints & Photographs Division, Detroit Publishing Company Collection](https://www.loc.gov/resource/det.4a09999/) · now — [© Goldpanda94 / Reddit](https://www.reddit.com/r/boston/comments/77lkpq/historic_pic_recreation_part_5_i_recreated_a/)"
+    },
     {
      "kind": "postits",
      "instr": "Share with your partner.",
@@ -107,8 +146,612 @@
    ]
   },
   {
-   "label": "💬 First chat",
+   "label": "🎬 Video",
    "blocks": [
+    {
+     "kind": "text",
+     "instr": "Read. Why does the speaker call Stratford “Restaurants-upon-Avon”?",
+     "lines": [
+      {
+       "s": "Interviewer",
+       "p": [
+        "Has the area you live in changed much in recent years?"
+       ]
+      },
+      {
+       "s": "Stratford",
+       "p": [
+        {
+         "b": "Yes, it has, actually."
+        },
+        " I’m originally from Stratford-upon-Avon, and ",
+        {
+         "b": "these days"
+        },
+        " I like to call it Restaurants-upon-Avon, because the whole town is ",
+        {
+         "b": "geared towards"
+        },
+        " the tourist industry. And whereas perhaps ",
+        {
+         "b": "when I was growing up"
+        },
+        " there were more independent shops, fewer restaurants… whereas now everything seems to be a Pret or a Prezzo or a Strada or an Ask. So, yes, I would say that my local area, especially my hometown, ",
+        {
+         "b": "has changed quite a lot"
+        },
+        "."
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        {
+         "b": "these days"
+        },
+        " ",
+        {
+         "ipa": "/ðiːz ˈdeɪz/"
+        },
+        " — now"
+       ],
+       "ru": "сейчас, в наши дни (не ~~“in our days”~~)"
+      },
+      {
+       "p": [
+        {
+         "b": "geared towards"
+        },
+        " ",
+        {
+         "ipa": "/ɡɪəd təˈwɔːdz/"
+        },
+        " — set up mainly for"
+       ],
+       "ru": "заточен под"
+      },
+      {
+       "p": [
+        {
+         "b": "independent shops"
+        },
+        " — not chains"
+       ],
+       "ru": "небольшие несетевые магазины"
+      },
+      {
+       "p": [
+        {
+         "b": "a Pret, a Prezzo…"
+        },
+        " — chain cafés and restaurants"
+       ],
+       "ru": "сетевые кафе и рестораны"
+      },
+      {
+       "p": [
+        {
+         "b": "Restaurants-upon-Avon"
+        },
+        " — a play on the name Stratford-upon-Avon"
+       ],
+       "ru": "игра слов"
+      }
+     ],
+     "credit": "Source: Empower C1 Workbook (Cambridge University Press), video 9A"
+    },
+    {
+     "kind": "text",
+     "instr": "Read on. What has changed in Whetstone — and what hasn’t?",
+     "lines": [
+      {
+       "s": "Interviewer",
+       "p": [
+        "Has the area you live in changed much in recent years?"
+       ]
+      },
+      {
+       "s": "Whetstone",
+       "p": [
+        {
+         "b": "Not really, no."
+        },
+        " Well, for me it’s stayed ",
+        {
+         "b": "pretty much the same"
+        },
+        ". There’s not been a whole load of changes. I mean, buildings ",
+        {
+         "b": "knocked down"
+        },
+        ", new buildings being built — quite a few new buildings, actually. But generally on the high street as well… different shops, but it’s pretty static… I don’t know. It doesn’t really change that much."
+       ]
+      },
+      {
+       "s": "Interviewer",
+       "p": [
+        "Where do you live?"
+       ]
+      },
+      {
+       "s": "Whetstone",
+       "p": [
+        "I live in Whetstone. It’s in between Barnet and Finchley, in Greater London. It’s a good place."
+       ]
+      },
+      {
+       "s": "Interviewer",
+       "p": [
+        "You like living there?"
+       ]
+      },
+      {
+       "s": "Whetstone",
+       "p": [
+        "Yeah, I do like living there. I like living in London."
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        {
+         "b": "Not really, no."
+        },
+        " — a soft “no”"
+       ],
+       "ru": "да не особо"
+      },
+      {
+       "p": [
+        {
+         "b": "pretty much the same"
+        },
+        " ",
+        {
+         "ipa": "/ˈprɪti mʌtʃ ðə seɪm/"
+        },
+        " — almost the same"
+       ],
+       "ru": "почти без изменений"
+      },
+      {
+       "p": [
+        {
+         "b": "knocked down"
+        },
+        " ",
+        {
+         "ipa": "/nɒkt daʊn/"
+        },
+        " — demolished"
+       ],
+       "ru": "снесли"
+      },
+      {
+       "p": [
+        {
+         "b": "the high street"
+        },
+        " — the main shopping street (US: Main Street)"
+       ],
+       "ru": "главная улица с магазинами"
+      },
+      {
+       "p": [
+        {
+         "b": "pretty static"
+        },
+        " ",
+        {
+         "ipa": "/ˈstætɪk/"
+        },
+        " — not changing"
+       ],
+       "ru": "без перемен"
+      }
+     ],
+     "credit": "Source: Empower C1 Workbook (Cambridge University Press), video 9A"
+    },
+    {
+     "kind": "text",
+     "instr": "Read on. Why isn’t Chorleywood “quite as nice as it was”?",
+     "lines": [
+      {
+       "s": "Interviewer",
+       "p": [
+        "Has the area you live in changed much in recent years?"
+       ]
+      },
+      {
+       "s": "Highbury",
+       "p": [
+        "The area I’m living in now hasn’t, but where I grew up, it has, a lot."
+       ]
+      },
+      {
+       "s": "Interviewer",
+       "p": [
+        "Where did you grow up?"
+       ]
+      },
+      {
+       "s": "Highbury",
+       "p": [
+        "I grew up in a little town called Chorleywood, which is just outside London."
+       ]
+      },
+      {
+       "s": "Interviewer",
+       "p": [
+        "And where do you live now?"
+       ]
+      },
+      {
+       "s": "Highbury",
+       "p": [
+        "Now I live in Highbury, which is in London, so it’s ",
+        {
+         "b": "a lot busier"
+        },
+        "… Chorleywood is a very small, kind of quaint little English village. But yeah, it’s changed a lot… High street shops have changed, and more buildings going up — there’s lots of houses going up. It’s still lovely, but it’s ",
+        {
+         "b": "not quite as nice as it was"
+        },
+        "."
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        {
+         "b": "just outside London"
+        },
+        " — near London"
+       ],
+       "ru": "под Лондоном"
+      },
+      {
+       "p": [
+        {
+         "b": "a lot busier"
+        },
+        " ",
+        {
+         "ipa": "/ə lɒt ˈbɪziə/"
+        },
+        " — more people, more traffic"
+       ],
+       "ru": "гораздо больше народу"
+      },
+      {
+       "p": [
+        {
+         "b": "quaint"
+        },
+        " ",
+        {
+         "ipa": "/kweɪnt/"
+        },
+        " — pretty and old-fashioned"
+       ],
+       "ru": "милый, старомодный"
+      },
+      {
+       "p": [
+        "houses ",
+        {
+         "b": "going up"
+        },
+        " ",
+        {
+         "ipa": "/ˈhaʊzɪz ˈɡəʊɪŋ ʌp/"
+        },
+        " — being built"
+       ],
+       "ru": "строятся дома"
+      },
+      {
+       "p": [
+        {
+         "b": "not quite as nice as it was"
+        },
+        " — a bit less nice than before"
+       ],
+       "ru": "уже не так хорошо, как раньше"
+      }
+     ],
+     "credit": "Source: Empower C1 Workbook (Cambridge University Press), video 9A"
+    },
+    {
+     "kind": "text",
+     "instr": "In the video, three people answer this question. Take turns reading the lines aloud and try to remember the missing words. Tap the yellow boxes to check.",
+     "lines": [
+      {
+       "s": "Interviewer",
+       "p": [
+        "Has the area you live in changed much in recent years?"
+       ]
+      },
+      {
+       "s": "Stratford",
+       "p": [
+        {
+         "f": "Y",
+         "r": "es"
+        },
+        ", ",
+        {
+         "f": "i",
+         "r": "t"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "as"
+        },
+        ", ",
+        {
+         "f": "a",
+         "r": "ctually"
+        },
+        ". … ",
+        {
+         "f": "T",
+         "r": "hese"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "ays"
+        },
+        " I like to call it Restaurants-upon-Avon … ",
+        {
+         "f": "w",
+         "r": "hen"
+        },
+        " ",
+        {
+         "b": "I"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "as"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "rowing"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "p"
+        },
+        " there were more independent shops, fewer restaurants … my hometown ",
+        {
+         "f": "h",
+         "r": "as"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "hanged"
+        },
+        " ",
+        {
+         "f": "q",
+         "r": "uite"
+        },
+        " ",
+        {
+         "b": "a"
+        },
+        " ",
+        {
+         "f": "l",
+         "r": "ot"
+        },
+        "."
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        {
+         "b": "Yes, it has, actually."
+        },
+        " — yes, in fact"
+       ],
+       "ru": "вообще-то да"
+      },
+      {
+       "p": [
+        {
+         "b": "these days"
+        },
+        " — now",
+        " ",
+        {
+         "ipa": "/ðiːz ˈdeɪz/"
+        }
+       ],
+       "ru": "сейчас, в наши дни"
+      },
+      {
+       "p": [
+        {
+         "b": "when I was growing up"
+        },
+        " — when I was a child",
+        " ",
+        {
+         "ipa": "/ˈɡrəʊɪŋ ʌp/"
+        }
+       ],
+       "ru": "когда я рос(ла)"
+      },
+      {
+       "p": [
+        {
+         "b": "has changed quite a lot"
+        },
+        " — is very different now"
+       ],
+       "ru": "довольно сильно изменился"
+      }
+     ]
+    },
+    {
+     "kind": "text",
+     "instr": "And the other two. Try to remember the missing words.",
+     "lines": [
+      {
+       "s": "Whetstone",
+       "p": [
+        {
+         "f": "N",
+         "r": "ot"
+        },
+        " ",
+        {
+         "f": "r",
+         "r": "eally"
+        },
+        ", ",
+        {
+         "f": "n",
+         "r": "o"
+        },
+        ". Well, for me it’s stayed ",
+        {
+         "f": "p",
+         "r": "retty"
+        },
+        " ",
+        {
+         "f": "m",
+         "r": "uch"
+        },
+        " ",
+        {
+         "b": "the"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "ame"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Highbury",
+       "p": [
+        "The area I’m living in now hasn’t, but where I grew up, it has, a lot. … Now I live in Highbury, which is in London, so it’s ",
+        {
+         "b": "a"
+        },
+        " ",
+        {
+         "f": "l",
+         "r": "ot"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "usier"
+        },
+        " … It’s still lovely, but it’s ",
+        {
+         "f": "n",
+         "r": "ot"
+        },
+        " ",
+        {
+         "f": "q",
+         "r": "uite"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "s"
+        },
+        " ",
+        {
+         "f": "n",
+         "r": "ice"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "s"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "t"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "as"
+        },
+        "."
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        {
+         "b": "Not really, no."
+        },
+        " — a soft “no”"
+       ],
+       "ru": "да не особо"
+      },
+      {
+       "p": [
+        {
+         "b": "pretty much the same"
+        },
+        " — almost the same",
+        " ",
+        {
+         "ipa": "/ˈprɪti mʌtʃ ðə seɪm/"
+        }
+       ],
+       "ru": "почти без изменений"
+      },
+      {
+       "p": [
+        {
+         "b": "a lot busier"
+        },
+        " — more people, more traffic",
+        " ",
+        {
+         "ipa": "/ə lɒt ˈbɪziə/"
+        }
+       ],
+       "ru": "гораздо больше народу"
+      },
+      {
+       "p": [
+        {
+         "b": "not quite as nice as it was"
+        },
+        " — a bit less nice than before"
+       ],
+       "ru": "уже не так хорошо, как раньше"
+      }
+     ]
+    },
     {
      "kind": "questions",
      "box": "BOX",
@@ -122,8 +765,61 @@
    ]
   },
   {
-   "label": "✏️ Make sentences",
+   "label": "✏️ Practice",
    "blocks": [
+    {
+     "kind": "cards",
+     "style": "say",
+     "box": "FORM",
+     "instr": "Take turns: think of a place you know well and say how it’s changed. Use one word from each card: It’s got / gotten a lot … Then tap the card to check.",
+     "instr_next": "And these?",
+     "cards": [
+      {
+       "front": "**green**  ↔  **built-up** ((more trees and parks · houses where there used to be fields))",
+       "back": "It’s got / gotten a lot **greener**. · It’s got / gotten a lot **more built-up**."
+      },
+      {
+       "front": "**busy**  ↔  **quiet** ((more people, more traffic · not as many cars))",
+       "back": "It’s got / gotten a lot **busier**. · It’s got / gotten a lot **quieter** / **more quiet**."
+      },
+      {
+       "front": "**crowded**  ↔  **empty** ((you can’t move on Saturdays · hardly anyone on the streets after six))",
+       "back": "It’s got / gotten a lot **more crowded**. · It’s got / gotten a lot **emptier**."
+      },
+      {
+       "front": "**clean**  ↔  **dirty** ((clean streets now · trash on the streets))",
+       "back": "It’s got / gotten a lot **cleaner**. · It’s got / gotten a lot **dirtier**."
+      },
+      {
+       "front": "**safe**  ↔  **dangerous** ((you can walk home at night · you don’t go out alone at night))",
+       "back": "It’s got / gotten a lot **safer**. · It’s got / gotten a lot **more dangerous**."
+      },
+      {
+       "front": "**fancy**  ↔  **run-down** ((cocktail bars instead of cheap cafés · peeling paint, broken windows))",
+       "back": "It’s got / gotten a lot **fancier**. · It’s got / gotten a lot **more run-down**."
+      },
+      {
+       "front": "**pricey**  ↔  **affordable** ((eight euros for a coffee! · rents have gone down))",
+       "back": "It’s got / gotten a lot **pricier**. · It’s got / gotten a lot **more affordable**."
+      },
+      {
+       "front": "**lively** ((new bars and cafés))",
+       "back": "It’s got / gotten a lot **livelier** / **more lively**."
+      },
+      {
+       "front": "**touristy** ((souvenir shops on every corner))",
+       "back": "It’s got / gotten a lot **more touristy**."
+      },
+      {
+       "front": "**modern** ((glass towers everywhere))",
+       "back": "It’s got / gotten a lot **more modern**."
+      },
+      {
+       "front": "**good**  ↔  **bad** ((a new park, a new metro line · more crime, more traffic jams))",
+       "back": "It’s got / gotten a lot **better**. · It’s got / gotten a lot **worse**."
+      }
+     ]
+    },
     {
      "kind": "cards",
      "style": "say",
@@ -162,12 +858,7 @@
        "turn": "What’s getting more and more popular where you live? Who’s happy about it, and who isn’t?"
       }
      ]
-    }
-   ]
-  },
-  {
-   "label": "🧠 Recall",
-   "blocks": [
+    },
     {
      "kind": "text",
      "cols": 2,
@@ -337,8 +1028,8 @@
          "f": "g",
          "r": "otten"
         },
-        " a lot [busier / livelier / …].",
-        "  ((– Стало гораздо [многолюднее / оживлённее / …].))"
+        " a lot [greener / more built-up / more run-down / fancier / emptier / …].",
+        "  ((– Стало гораздо [зеленее / больше застройки / обшарпаннее / пафоснее / безлюднее / …].))"
        ]
       },
       {
@@ -492,16 +1183,17 @@
    ]
   },
   {
-   "label": "🖼 Pictures",
+   "label": "💬 Use it",
    "blocks": [
     {
      "kind": "picture",
      "img": "then-now-all.jpg",
      "timer": 60,
      "box": "BOX",
-     "alt": "1 High street: small shops then — crowds and chain cafés now · 2 Seaside village: fishing boats then — tourists and souvenir shops now · 3 Old warehouses: empty and run-down then — loft apartments and cafés now · 4 City square: full of cars then — trees, benches and cafés now · 5 Village: fields then — rows of new houses and a supermarket now · 6 Village square: almost the same",
-     "instr": "One minute: look at the pictures and think how each place has changed. Then take turns: one of you secretly picks a picture, and the other asks: **Has it changed much?** Whoever picked answers as if it’s their hometown and says what’s different. The other guesses the picture and reacts.",
-     "task": "React: **Is that a good thing?** · **Sounds like a change for the better!** · **Oh, that’s a shame.** · **Oh, nice — some places never change.**"
+     "alt": "1 Asakusa, Tokyo: 1981 and 2019 · 2 Lake Tjörnin, Reykjavík: 1908 and 2019 · 3 An old-town street in Cēsis, Latvia: the 1960s and today · 4 Piazza Grande, Locarno, Switzerland: 1959 and 2018 · 5 A street corner in Vienna: 1914 and 2021 · 6 Alicante, Spain: 1998 and 2021",
+     "instr": "One minute: look at the pictures and think how each place has changed. Then take turns: one of you secretly picks a picture and imagines it’s their hometown. The other asks: **Has it changed much?** The one who picked answers and says what’s changed — or what hasn’t. The other guesses the picture and reacts.",
+     "task": "React: **Is that a good thing?** · **Sounds like a change for the better!** · **Oh, that’s a shame.** · **Oh, nice — some places never change.**",
+     "credit": "Photos: FDNOL_, kkruiji, First_Experience_698 / Reddit · re.photos (CC BY-SA 4.0, CC BY 4.0) — collected by [cheery.world](https://cheery.world/discover-travel/20-photos-that-show-how-much-the-same-place-can-change-over-time-284/)"
     },
     {
      "kind": "scenes",
@@ -513,47 +1205,48 @@
      "scenes": [
       {
        "img": "then-now-1.jpg",
-       "alt": "High street: small shops then — crowds and chain cafés now",
+       "alt": "Asakusa, Tokyo: 1981 and 2019",
+       "credit": "© FDNOL_ / Reddit",
        "say": "Has it changed much?",
-       "example": "Yes, it has, actually. It’s **got** / **gotten** a lot **busier**, and rents are **getting higher and higher**."
+       "example": "Yes, it has, actually. It’s **got** / **gotten** a lot **busier** — and a lot **more touristy**."
       },
       {
        "img": "then-now-2.jpg",
-       "alt": "Seaside village: fishing boats then — tourists and souvenir shops now",
+       "alt": "Lake Tjörnin, Reykjavík: 1908 and 2019",
+       "credit": "© re.photos · CC BY-SA 4.0",
        "say": "Has it changed much?",
-       "example": "Yes, it’s **completely changed**. It’s **become** a lot **more touristy** — and a lot **pricier**."
+       "example": "**It’s changed quite a lot.** The old boats are gone, and there’s a big modern building on the water now — it’s **a lot more built-up**."
       },
       {
        "img": "then-now-3.jpg",
-       "alt": "Old warehouses: empty and run-down then — loft apartments and cafés now",
+       "alt": "An old-town street in Cēsis, Latvia: the 1960s and today",
+       "credit": "© kkruiji / Reddit",
        "say": "Has it changed much?",
-       "example": "**It’s changed quite a lot.** The old warehouses are all apartments and cafés now, so it’s **a lot livelier than it used to be**."
+       "example": "**Yes and no.** It’s **pretty much the same** street — even the tree is still there — but it’s **got** / **gotten** a lot **nicer**."
       },
       {
        "img": "then-now-4.jpg",
-       "alt": "City square: full of cars then — trees, benches and cafés now",
+       "alt": "Piazza Grande, Locarno, Switzerland: 1959 and 2018",
+       "credit": "© re.photos",
        "say": "Has it changed much?",
-       "example": "Yes, it has, actually. It’s **got** / **gotten** a lot **nicer** since they closed it to cars."
+       "example": "Yes, it has, actually. It’s **got** / **gotten** a lot **nicer** since they closed it to cars — and **a lot livelier**."
       },
       {
        "img": "then-now-5.jpg",
-       "alt": "Village: fields then — rows of new houses and a supermarket now",
+       "alt": "A street corner in Vienna: 1914 and 2021",
+       "credit": "© re.photos · CC BY 4.0",
        "say": "Has it changed much?",
-       "example": "Yes and no. The old village is **pretty much the same**, but it’s **not as green as it used to be**."
+       "example": "Yes and no. The street is **pretty much the same**, but it’s **a lot greener**, and the old building on the corner is gone."
       },
       {
        "img": "then-now-6.jpg",
-       "alt": "Village square: almost the same",
+       "alt": "Alicante, Spain: 1998 and 2021",
+       "credit": "© First_Experience_698 / Reddit",
        "say": "Has it changed much?",
-       "example": "**Not really, no.** It’s **pretty much the same** — just a new café or two."
+       "example": "**Not really, no.** From up on the hill, it’s **pretty much the same**."
       }
      ]
-    }
-   ]
-  },
-  {
-   "label": "💬 Then & now",
-   "blocks": [
+    },
     {
      "kind": "say",
      "box": "FL",

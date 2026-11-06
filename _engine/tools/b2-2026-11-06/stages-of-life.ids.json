@@ -2,18 +2,18 @@
  "blocks": [
   {
    "pid": 0,
-   "sig": "say in pairs: how would you say these in english? take turns. don't worry about mistakes — we'll come back to them after the conversation.",
+   "sig": "say in pairs: how would you say these in english? take turns. don't worry about mistakes — we'll come back to them later.",
    "gone": false
   },
   {
    "pid": 1,
    "sig": "text leo and his gran look at her old photos. read their conversation with the glossary. who are you more like — margaret or leo? tell each other why: give two reasons. photos-main.jpg",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 2,
    "sig": "say look again. how do they say when? discuss together, then tap “show the answer”.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 3,
@@ -23,7 +23,7 @@
   {
    "pid": 4,
    "sig": "game memo: look at the phrases for 40 seconds and try to remember them. then they disappear: take turns and say one each — in a sentence about you.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 5,
@@ -67,7 +67,57 @@
   },
   {
    "pid": 13,
-   "sig": "game the wheel of questions: take turns to spin. ask the next person: when did you last…? they answer (two weeks ago, last month, ages ago…) + one detail. then tap to check your question.",
+   "sig": "game the wheel of questions: take turns to spin. ask the next person: when did you last…? they answer (last month, ages ago, at school…) + one detail. then tap to check your question.",
+   "gone": false
+  },
+  {
+   "pid": 14,
+   "sig": "text leo and his gran look at her old photos. read the first part of their conversation with the glossary. photos-main.jpg",
+   "gone": false
+  },
+  {
+   "pid": 15,
+   "sig": "text read on. who are you more like — margaret or leo? tell each other why: give two reasons.",
+   "gone": false
+  },
+  {
+   "pid": 16,
+   "sig": "say look at the bold phrases from the conversation. how do they say when? discuss each question, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 17,
+   "sig": "box the language for today. read it together: which phrases were in leo and margaret's conversation?",
+   "gone": false
+  },
+  {
+   "pid": 18,
+   "sig": "text the second part: remember the missing words and say them. tap the yellow and orange to check.",
+   "gone": false
+  },
+  {
+   "pid": 19,
+   "sig": "text now without the glossary: the second part.",
+   "gone": false
+  },
+  {
+   "pid": 20,
+   "sig": "postits share with your partner. old-photos.jpg",
+   "gone": false
+  },
+  {
+   "pid": 21,
+   "sig": "say agree or disagree — gently. take turns. read out a statement as if it's your own opinion, with the tag. your partner gently agrees or disagrees, using a phrase from the box, and gives one reason.",
+   "gone": false
+  },
+  {
+   "pid": 22,
+   "sig": "say more statements. take turns, as before.",
+   "gone": false
+  },
+  {
+   "pid": 23,
+   "sig": "say more statements. take turns, as before.",
    "gone": false
   }
  ],
@@ -334,83 +384,83 @@
   },
   {
    "pid": 52,
-   "sig": "when did you last go to the cinema? 1 go to the cinema when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
-   "gone": false
+   "sig": "when did you last go to the cinema? 1 go to the cinema when did you last + базовая форма or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
   },
   {
    "pid": 53,
-   "sig": "when did you last cook for friends? 2 cook for friends when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
-   "gone": false
+   "sig": "when did you last cook for friends? 2 cook for friends when did you last + базовая форма or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
   },
   {
    "pid": 54,
-   "sig": "when did you last call an old friend? 3 call an old friend when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
-   "gone": false
+   "sig": "when did you last call an old friend? 3 call an old friend when did you last + базовая форма or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
   },
   {
    "pid": 55,
-   "sig": "when did you last have a proper holiday / vacation? 4 have a proper holiday / vacation when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
-   "gone": false
+   "sig": "when did you last have a proper holiday / vacation? 4 have a proper holiday / vacation when did you last + базовая форма or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
   },
   {
    "pid": 56,
-   "sig": "when did you last go to a concert? 5 go to a concert when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
-   "gone": false
+   "sig": "when did you last go to a concert? 5 go to a concert when did you last + базовая форма or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
   },
   {
    "pid": 57,
-   "sig": "when did you last read a really good book? 6 read a really good book when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
-   "gone": false
+   "sig": "when did you last read a really good book? 6 read a really good book when did you last + базовая форма or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
   },
   {
    "pid": 58,
-   "sig": "when did you last go out for dinner? 7 go out for dinner when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
-   "gone": false
+   "sig": "when did you last go out for dinner? 7 go out for dinner when did you last + базовая форма or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
   },
   {
    "pid": 59,
-   "sig": "when did you last take a day off? 8 take a day off when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
-   "gone": false
+   "sig": "when did you last take a day off? 8 take a day off when did you last + базовая форма or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
   },
   {
    "pid": 60,
-   "sig": "when did you last buy something you didn't really need? 9 buy something you didn't really need when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
-   "gone": false
+   "sig": "when did you last buy something you didn't really need? 9 buy something you didn't really need when did you last + базовая форма or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
   },
   {
    "pid": 61,
-   "sig": "when did you last go swimming? 10 go swimming when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
-   "gone": false
+   "sig": "when did you last go swimming? 10 go swimming when did you last + базовая форма or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
   },
   {
    "pid": 62,
-   "sig": "when did you last stay up really late? 11 stay up really late when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
-   "gone": false
+   "sig": "when did you last stay up really late? 11 stay up really late when did you last + базовая форма or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
   },
   {
    "pid": 63,
-   "sig": "when did you last travel by train? 12 travel by train when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
-   "gone": false
+   "sig": "when did you last travel by train? 12 travel by train when did you last + базовая форма or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
   },
   {
    "pid": 64,
-   "sig": "when did you last go to a museum? 13 go to a museum when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
-   "gone": false
+   "sig": "when did you last go to a museum? 13 go to a museum when did you last + базовая форма or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
   },
   {
    "pid": 65,
-   "sig": "when did you last try something new? 14 try something new when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
-   "gone": false
+   "sig": "when did you last try something new? 14 try something new when did you last + базовая форма or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
   },
   {
    "pid": 66,
-   "sig": "when did you last lose your keys? 15 lose your keys when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
-   "gone": false
+   "sig": "when did you last lose your keys? 15 lose your keys when did you last + базовая форма or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
   },
   {
    "pid": 67,
-   "sig": "when did you last learn something new? 16 learn something new when did you last + базовая форма. or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail.",
-   "gone": false
+   "sig": "when did you last learn something new? 16 learn something new when did you last + базовая форма or: when was the last time you…? не: when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
   },
   {
    "pid": 68,
@@ -470,6 +520,166 @@
   {
    "pid": 79,
    "sig": "when did you learn to type? ask learn to type answer: i learned… did + базовая форма: “when did you learn…?”, не learned.",
+   "gone": false
+  },
+  {
+   "pid": 80,
+   "sig": "when did you last go to the cinema? 1 go to the cinema when did you last + базовая форма or: when was the last time you…? ✗ when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
+  },
+  {
+   "pid": 81,
+   "sig": "when did you last cook for friends? 2 cook for friends when did you last + базовая форма or: when was the last time you…? ✗ when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
+  },
+  {
+   "pid": 82,
+   "sig": "when did you last call an old friend? 3 call an old friend when did you last + базовая форма or: when was the last time you…? ✗ when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
+  },
+  {
+   "pid": 83,
+   "sig": "when did you last have a proper holiday / vacation? 4 have a proper holiday / vacation when did you last + базовая форма or: when was the last time you…? ✗ when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
+  },
+  {
+   "pid": 84,
+   "sig": "when did you last go to a concert? 5 go to a concert when did you last + базовая форма or: when was the last time you…? ✗ when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
+  },
+  {
+   "pid": 85,
+   "sig": "when did you last read a really good book? 6 read a really good book when did you last + базовая форма or: when was the last time you…? ✗ when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
+  },
+  {
+   "pid": 86,
+   "sig": "when did you last go out for dinner? 7 go out for dinner when did you last + базовая форма or: when was the last time you…? ✗ when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
+  },
+  {
+   "pid": 87,
+   "sig": "when did you last take a day off? 8 take a day off when did you last + базовая форма or: when was the last time you…? ✗ when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
+  },
+  {
+   "pid": 88,
+   "sig": "when did you last buy something you didn't really need? 9 buy something you didn't really need when did you last + базовая форма or: when was the last time you…? ✗ when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
+  },
+  {
+   "pid": 89,
+   "sig": "when did you last go swimming? 10 go swimming when did you last + базовая форма or: when was the last time you…? ✗ when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
+  },
+  {
+   "pid": 90,
+   "sig": "when did you last stay up really late? 11 stay up really late when did you last + базовая форма or: when was the last time you…? ✗ when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
+  },
+  {
+   "pid": 91,
+   "sig": "when did you last travel by train? 12 travel by train when did you last + базовая форма or: when was the last time you…? ✗ when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
+  },
+  {
+   "pid": 92,
+   "sig": "when did you last go to a museum? 13 go to a museum when did you last + базовая форма or: when was the last time you…? ✗ when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
+  },
+  {
+   "pid": 93,
+   "sig": "when did you last try something new? 14 try something new when did you last + базовая форма or: when was the last time you…? ✗ when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
+  },
+  {
+   "pid": 94,
+   "sig": "when did you last lose your keys? 15 lose your keys when did you last + базовая форма or: when was the last time you…? ✗ when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
+  },
+  {
+   "pid": 95,
+   "sig": "when did you last learn something new? 16 learn something new when did you last + базовая форма or: when was the last time you…? ✗ when did you go … last time? the answer: two weeks ago · last month · ages ago — or: i haven't been for ages! not sure? i can't remember exactly — last summer, maybe? + one detail",
+   "gone": true
+  },
+  {
+   "pid": 96,
+   "sig": "when did you last go to the cinema / the movies? 1 go to the cinema / the movies or: when was the last time you went to the cinema / the movies? did you last go · the last time you went ✗ when did you go to the cinema last time? the answer: two weeks ago · last month — or: i haven't been for ages! not sure? i can't remember exactly — in the summer, maybe? + one detail: what did you see? was it good?",
+   "gone": false
+  },
+  {
+   "pid": 97,
+   "sig": "when did you last solve an equation? 2 solve an equation or: when was the last time you solved an equation? the answer: at school · ages ago — or: last week, helping my kid with their homework! not sure? i can't remember exactly — in my last year at school, maybe? + one detail: was it for you or for your kids?",
+   "gone": false
+  },
+  {
+   "pid": 98,
+   "sig": "when did you last cook for friends? 3 cook for friends or: when was the last time you cooked for friends? the answer: last weekend · a month ago — or: i haven't done that for ages! not sure? i can't remember exactly — on my birthday, maybe? + one detail: what did you make?",
+   "gone": false
+  },
+  {
+   "pid": 99,
+   "sig": "when did you last climb a tree? 4 climb a tree or: when was the last time you climbed a tree? ✗ when did you climb a tree last time? the answer: as a kid · ages ago — or: last summer, with my kids! not sure? i can't remember exactly — at 12, maybe? + one detail: where was it? did you get down ok?",
+   "gone": false
+  },
+  {
+   "pid": 100,
+   "sig": "when did you last go to a concert? 5 go to a concert or: when was the last time you went to a concert? the answer: last spring · a few years ago — or: i haven't been to one for ages! not sure? i can't remember exactly — two years ago, maybe? + one detail: who did you see?",
+   "gone": false
+  },
+  {
+   "pid": 101,
+   "sig": "when did you last build a snowman? 6 build a snowman or: when was the last time you built a snowman? the answer: last winter · as a kid · ages ago not sure? i can't remember exactly — a few years ago, maybe? + one detail: where? who with?",
+   "gone": false
+  },
+  {
+   "pid": 102,
+   "sig": "when did you last stay up really late? 7 stay up really late or: when was the last time you stayed up really late? the answer: last night! · on saturday · on new year's eve + one detail: why? what were you doing?",
+   "gone": false
+  },
+  {
+   "pid": 103,
+   "sig": "when did you last go camping? 8 go camping or: when was the last time you went camping? did you last go · the last time you went the answer: in my early twenties · a few years ago — or: i haven't been for ages! never? i've never been camping! not sure? i can't remember exactly — at 18, maybe? + one detail: where? did it rain?",
+   "gone": false
+  },
+  {
+   "pid": 104,
+   "sig": "when did you last go to a wedding? 9 go to a wedding or: when was the last time you went to a wedding? ✗ when did you go to a wedding last time? the answer: last summer · a few years ago — or: i haven't been to one for ages! not sure? i can't remember exactly — three years ago, maybe? + one detail: whose wedding was it? was it fun?",
+   "gone": false
+  },
+  {
+   "pid": 105,
+   "sig": "when did you last go on a rollercoaster? 10 go on a rollercoaster or: when was the last time you went on a rollercoaster? the answer: last summer · as a kid · ages ago — or: i haven't been on one for ages! never? i've never been on one! not sure? i can't remember exactly — five years ago, maybe? + one detail: where? was it fun — or a bit too scary?",
+   "gone": false
+  },
+  {
+   "pid": 106,
+   "sig": "when did you last lose your keys? 11 lose your keys or: when was the last time you lost your keys? the answer: last week · a few months ago · ages ago + one detail: where were they in the end?",
+   "gone": false
+  },
+  {
+   "pid": 107,
+   "sig": "when did you last take an exam? 12 take an exam or: when was the last time you took an exam? сдавать экзамен = take an exam · сдать = pass an exam the answer: at university / in college · in my mid-twenties · last year not sure? i can't remember exactly — three years ago, maybe? + one detail: what was it? did you pass?",
+   "gone": false
+  },
+  {
+   "pid": 108,
+   "sig": "when did you last have a proper holiday / a real vacation? 13 have a proper holiday / a real vacation or: when was the last time you had a proper holiday / a real vacation? ✗ when did you have a proper holiday last time? the answer: in the summer · last year — or: i haven't had one for ages! not sure? i can't remember exactly — two years ago, maybe? + one detail: where did you go?",
+   "gone": false
+  },
+  {
+   "pid": 109,
+   "sig": "when did you last send a postcard? 14 send a postcard or: when was the last time you sent a postcard? the answer: ages ago · as a kid — or: i haven't done that for ages! not sure? i can't remember exactly — ten years ago, maybe? + one detail: who to? where from?",
+   "gone": false
+  },
+  {
+   "pid": 110,
+   "sig": "when did you last buy something you didn't really need? 15 buy something you didn't really need or: when was the last time you bought something you didn't really need? the answer: yesterday · last week · last month + one detail: what was it? do you actually use it?",
+   "gone": false
+  },
+  {
+   "pid": 111,
+   "sig": "when did you last ride a bike? 16 ride a bike or: when was the last time you rode a bike? ride → rode ✗ when did you ride a bike last time? the answer: last weekend · last summer · as a kid not sure? i can't remember exactly — two years ago, maybe? + one detail: where did you go?",
    "gone": false
   }
  ],

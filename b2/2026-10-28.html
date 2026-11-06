@@ -2101,7 +2101,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = [];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "62";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "63";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -4297,6 +4297,17 @@ function renderProduce(st, count, pct){
   });
 }
 
+/* engine 63 (her 6.11 09:55 «чтобы next и back были доступны с клавиатуры»): → and ← = the screen's Next (or Check / Finish) and Back, as
+   in slides — the lesson pages too. Not while typing (the arrows move the cursor there), not on a key held down, and without Ctrl / Alt /
+   Cmd: on a Mac Ctrl + ← → moves to another desktop, and Alt + ← (Windows) and Cmd + ← (Mac) are the browser's Back, which would leave
+   the page. Never a Send button: sending to Olya is always a tap. */
+document.addEventListener("keydown", e => {
+  if((e.key !== "ArrowRight" && e.key !== "ArrowLeft") || e.ctrlKey || e.altKey || e.metaKey || e.shiftKey || e.repeat || e.defaultPrevented) return;
+  if(e.target && e.target.closest && e.target.closest('input, textarea, select, audio, video, [contenteditable]:not([contenteditable="false"]), [role="slider"]')) return;
+  const btn = document.getElementById(e.key === "ArrowRight" ? "go" : "prev");
+  if(!btn || btn.disabled || !btn.getClientRects().length || e.key === "ArrowRight" && /send/i.test(btn.textContent)) return;
+  e.preventDefault(); btn.click();
+});
 /* ---------- start ---------- */
 /* a student sees only their own group: with a code from the other group, go to that group's list */
 function toOwnGroup(gid){

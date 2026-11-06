@@ -32,8 +32,19 @@ if(EMBED){
 }
 if(EMBED) addEventListener("message", e => { const m = e.data && e.data.lwStep; if(!m) return;
   const end = typeof embNext !== "function" || (m === "next" ? embNext() : embBack()); if(end) try{ window.parent.postMessage({lwStepEnd: m}, "*"); }catch(err){} });
+/* tools 29 (her 6.11 09:55 «чтобы next и back были доступны с клавиатуры»): Next / Back from the keyboard, as in slides — → and ←.
+   Without Ctrl / Alt / Cmd: on a Mac Ctrl + ← → moves to another desktop (the page never gets it), and Alt + ← (Windows) and Cmd + ←
+   (Mac) are the browser's Back, which would leave the page. Not while typing (the arrows move the cursor there), not on a key held
+   down, not when the page already used the key. Inside a field the keys go to the field page: its Next / Back step through this page. */
+const stepKey = e => (e.key === "ArrowRight" || e.key === "ArrowLeft") && !e.ctrlKey && !e.altKey && !e.metaKey && !e.shiftKey && !e.repeat && !e.defaultPrevented
+  && !(e.target && e.target.closest && e.target.closest('input, textarea, select, audio, video, [contenteditable]:not([contenteditable="false"]), [role="slider"]'));
+const keyBtnOk = el => !!el && !el.disabled && el.getClientRects().length > 0;
+function keySteps(next, back){ document.addEventListener("keydown", e => { if(!stepKey(e)) return;
+  const btn = document.querySelector(e.key === "ArrowRight" ? next : back); if(!keyBtnOk(btn)) return; e.preventDefault(); btn.click(); }); }
+if(EMBED && window.parent !== window) document.addEventListener("keydown", e => { if(!stepKey(e)) return; e.preventDefault();
+  try{ window.parent.postMessage({lwKey: e.key === "ArrowRight" ? "next" : "back"}, "*"); }catch(err){} });
 /* **box phrase** in a speaking task or a follow-up = shown like the box phrases in the examples (checklist 8.07) */
-const boxMarks = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>').replace(/\(\((.+?)\)\)/g, '<span class="bx-ctx">$1</span>').replace(/##(.+?)##/g, '<span class="ipa">$1</span>')   /* tools 28 also: ##/ipa/## in a box line (B2 6.11) */
+const boxMarks = s => esc(s).replace(/~~(.+?)~~/g, '<span class="m-del">$1</span>').replace(/\*\*(.+?)\*\*/g, '<b class="bx">$1</b>').replace(/\(\((.+?)\)\)/g, '<span class="bx-ctx">$1</span>').replace(/##(.+?)##/g, '<span class="ipa">$1</span>')   /* tools 28 also: ##/ipa/## in a box line (B2 6.11) */
   .replace(/&lt;m([123])&gt;(.+?)&lt;\/m\1&gt;/g, '<span class="mv m$1">$2</span>');   /* tools 25 (the German page): grey extras, her move colours */
 const calm = () => !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
 /* a small burst of confetti from an element (the end of a deck): brand colours, falls and fades in about a second; none with reduced motion */
@@ -142,7 +153,7 @@ const FLAGS = {
 function pairsHTML(g, gi, clickable = true){
   const cols = g.cols || ["US", "UK"];
   const cell = (t, key, c) => clickable
-    ? `<button class="ph pp-c c${c}${usedPhrases.has(key) ? " used" : ""}" data-ph="${key}" data-pt="${esc(phPlain(t))}" aria-pressed="${usedPhrases.has(key)}">${boxMarks("**" + t + "**")}</button>`
+    ? `<button class="ph pp-c c${c}${usedPhrases.has(key) ? " used" : ""}" data-ph="${key}" data-pt="${esc(phPlain(t))}" aria-pressed="${usedPhrases.has(key)}">${boxMarks("**" + t + "**").replace(/\{\{(.+?)\}\}/g, '<span class="bh" data-bh>$1</span>')}</button>`   /* tools 30: the box with the phrases hidden */
     : `<p class="ph pp-c c${c}">${boxMarks("**" + t + "**")}</p>`;
   return `<div class="ph-pairs"><div class="pp-h">${cols.map(c => `<span>${FLAGS[c] || ""}${esc(c)}</span>`).join("")}</div>${(g.pairs || []).map((pr, ti) =>
     `<div class="pp-row">${cell(pr[0], `${gi}.${ti}.0`, 0)}${cell(pr[1], `${gi}.${ti}.1`, 1)}${pr[2] ? `<span class="pp-ru">${esc(pr[2])}</span>` : ""}</div>`).join("")}</div>`;

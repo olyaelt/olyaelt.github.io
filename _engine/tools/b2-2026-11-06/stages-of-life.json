@@ -56,6 +56,39 @@
      "Oh, nice! · How old were you? · Really? Why?"
     ]
    }
+  ],
+  "DIS": [
+   {
+    "h": "A QUESTION FIRST",
+    "items": [
+     "**Do you think so?** I found it…"
+    ]
+   },
+   {
+    "h": "AGREE A LITTLE, THEN YOUR POINT",
+    "items": [
+     "**Yeah, I suppose so. But** …"
+    ]
+   },
+   {
+    "h": "KEEP YOUR OPINION — GENTLY",
+    "items": [
+     "**Maybe, but I still think** …"
+    ]
+   },
+   {
+    "h": "ANOTHER VIEW",
+    "items": [
+     "**But I guess you could say** …"
+    ]
+   },
+   {
+    "h": "AGREE AND ADD · FINISH",
+    "items": [
+     "**That's true, and** … · **Exactly. And** …",
+     "**Fair enough.** / **OK, fair point.**"
+    ]
+   }
   ]
  },
  "stages": [
@@ -63,8 +96,46 @@
    "label": "📝 Test yourself",
    "blocks": [
     {
+     "kind": "postits",
+     "instr": "Share with your partner.",
+     "notes": [
+      "Do you ever look at your old photos? Who with?",
+      "Where do you keep them? Do you have old photo albums, or do you keep them online?"
+     ],
+     "img": "old-photos.jpg",
+     "alt": "A wooden box full of old black-and-white photos"
+    },
+    {
      "kind": "say",
-     "instr": "In pairs: how would you say these in English? Take turns. Don't worry about mistakes — we'll come back to them after the conversation.",
+     "box": "DIS",
+     "instr": "**Agree or disagree — gently.** Take turns. Read out a statement as if it's your own opinion, with the tag. Your partner gently agrees or disagrees, using a phrase from the box, and gives one reason.",
+     "task": [
+      "**1**  Parents shouldn't post photos of their kids online, **should they?**",
+      "**2**  People who post a lot about themselves online just want attention, **don't they?**",
+      "**3**  Other people's holiday photos are a bit boring, **aren't they?**"
+     ]
+    },
+    {
+     "kind": "say",
+     "box": "DIS",
+     "instr": "More statements. Take turns, as before.",
+     "task": [
+      "**1**  We take far too many photos these days, **don't we?**",
+      "**2**  It's better to just enjoy the moment than spend it taking photos, **isn't it?**"
+     ]
+    },
+    {
+     "kind": "say",
+     "box": "DIS",
+     "instr": "More statements. Take turns, as before.",
+     "task": [
+      "**1**  Printed photos are so much nicer than photos on your phone, **aren't they?**",
+      "**2**  Looking at old photos is a bit sad, **isn't it?**"
+     ]
+    },
+    {
+     "kind": "say",
+     "instr": "In pairs: how would you say these in English? Take turns. Don't worry about mistakes — we'll come back to them later.",
      "task": [
       "**1**  Я научилась плавать в детстве.",
       "**2**  В 18 я уехала от родителей.",
@@ -78,11 +149,11 @@
    ]
   },
   {
-   "label": "📸 Old photos",
+   "label": "📖 The text",
    "blocks": [
     {
      "kind": "text",
-     "instr": "Leo and his gran look at her old photos. Read their conversation with the glossary. Who are you more like — Margaret or Leo? Tell each other why: give **two** reasons.",
+     "instr": "Leo and his gran look at her old photos. Read the first part of their conversation with the glossary.",
      "tip": "Read on your own first, then talk.",
      "img": "photos-main.jpg",
      "lines": [
@@ -93,8 +164,7 @@
        "s": "Leo",
        "p": [
         "Gran, is this you? With the piano?"
-       ],
-       "img": "photo-piano.jpg"
+       ]
       },
       {
        "s": "Margaret",
@@ -130,8 +200,7 @@
          "b": "When did you leave"
         },
         " home?"
-       ],
-       "img": "photo-suitcase.jpg"
+       ]
       },
       {
        "s": "Margaret",
@@ -182,78 +251,6 @@
        "s": "Leo",
        "p": [
         "Nobody. But hey, it was a start. Who's this next to you?"
-       ],
-       "img": "photo-jean.jpg"
-      },
-      {
-       "s": "Margaret",
-       "p": [
-        "That's Jean, my best friend. We met ",
-        {
-         "b": "in my third year at university"
-        },
-        ". Fifty years on, we talk on the phone every Sunday."
-       ]
-      },
-      {
-       "s": "Leo",
-       "p": [
-        "That's so sweet! ",
-        {
-         "b": "When did you last see"
-        },
-        " her?"
-       ]
-      },
-      {
-       "s": "Margaret",
-       "p": [
-        "Oh, ",
-        {
-         "b": "ages ago"
-        },
-        ". ",
-        {
-         "b": "I can't remember exactly"
-        },
-        " — five years ago, maybe?"
-       ]
-      },
-      {
-       "s": "Leo",
-       "p": [
-        "You should visit her! Oh — and is that your first car?"
-       ],
-       "img": "photo-car.jpg"
-      },
-      {
-       "s": "Margaret",
-       "p": [
-        "It is! I bought it ",
-        {
-         "b": "in my early thirties"
-        },
-        ". Before that, I cycled everywhere. ",
-        {
-         "b": "When did you learn"
-        },
-        " to drive?"
-       ]
-      },
-      {
-       "s": "Leo",
-       "p": [
-        "Gran… ",
-        {
-         "b": "I still can't drive"
-        },
-        ". Mom tried to teach me once. Just once."
-       ]
-      },
-      {
-       "s": "Margaret",
-       "p": [
-        "Oh dear! Well, I could always give you a lesson!"
        ]
       }
      ],
@@ -325,6 +322,95 @@
       },
       {
        "p": [
+        "I lasted about a week · instruction manuals"
+       ],
+       "ru": "меня хватило примерно на неделю · инструкции"
+      }
+     ],
+     "img_side": true,
+     "alt": "An old photo album with black-and-white photos"
+    },
+    {
+     "kind": "text",
+     "instr": "Read on. Who are you more like — Margaret or Leo? Tell each other why: give **two** reasons.",
+     "lines": [
+      {
+       "ctx": "…Leo: “Who's this next to you?”"
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "That's Jean, my best friend. We met ",
+        {
+         "b": "in my third year at university"
+        },
+        ". Fifty years on, we talk on the phone every Sunday."
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "That's so sweet! ",
+        {
+         "b": "When did you last see"
+        },
+        " her?"
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "Oh, ",
+        {
+         "b": "ages ago"
+        },
+        ". ",
+        {
+         "b": "I can't remember exactly"
+        },
+        " — five years ago, maybe?"
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "You should visit her! Oh — and is that your first car?"
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "It is! I bought it ",
+        {
+         "b": "in my early thirties"
+        },
+        ". Before that, I cycled everywhere. ",
+        {
+         "b": "When did you learn"
+        },
+        " to drive?"
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "Gran… ",
+        {
+         "b": "I still can't drive"
+        },
+        ". Mom tried to teach me once. Just once."
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "Oh dear! Well, I could always give you a lesson!"
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
         {
          "b": "in my third year at university"
         },
@@ -390,7 +476,7 @@
       },
       {
        "p": [
-        "I lasted about a week · instruction manuals · Jean ",
+        "Jean ",
         {
          "ipa": "/dʒiːn/"
         },
@@ -400,15 +486,14 @@
         },
         " everywhere"
        ],
-       "ru": "меня хватило примерно на неделю · инструкции · Джин (женское имя) · пятьдесят лет спустя · везде ездила на велосипеде"
+       "ru": "Джин (женское имя) · пятьдесят лет спустя · везде ездила на велосипеде"
       }
      ]
     },
     {
      "kind": "say",
-     "instr": "Look again. How do they say WHEN? Discuss together, then tap “Show the answer”.",
+     "instr": "Look at the **bold** phrases from the conversation. How do they say WHEN? Discuss each question, then tap “Show the answer”.",
      "task": [
-      "**as a kid · at school · after high school · at 18 · in my third year at university · right out of college · in my early thirties**",
       "**1**  Which two phrases give an age?",
       "**2**  Which phrases are about school or university?",
       "**3**  Which two mean «после окончания школы»? Which one means «после уроков»? (a) I did my homework after school. (b) I got a job after I left school. (c) I worked at a pizza place after high school.",
@@ -422,86 +507,105 @@
       "**4**  **Past simple** — it answers “When?”, and it's over. ((это ответ на «когда?», и это уже в прошлом))",
       "**5**  Not yet → **still** + don't have / can't ((это правда и сейчас; “still” — перед “don't” / “can't”: не I ~~don't still~~ have))"
      ],
-     "answer_title": "Check"
-    },
-    {
-     "kind": "say",
-     "instr": "🔁 Back to the start: how would you say these now? Take turns. Then tap “Show the answer”.",
-     "task": [
-      "**1**  ((Я научилась плавать в детстве.))",
-      "• • •",
-      "**2**  ((В 18 я уехала от родителей.))",
-      "• • •",
-      "**3**  ((Сразу после вуза я нашла работу.))",
-      "• • •",
-      "**4**  ((Я познакомилась с лучшей подругой на третьем курсе.))",
-      "• • •",
-      "**5**  ((Когда ты научился водить?))",
-      "• • •",
-      "**6**  ((Я до сих пор не умею водить.))",
-      "• • •"
-     ],
-     "answer": [
-      "**1**  ((Я научилась плавать в детстве.))",
-      "I learned to swim **as a kid**.",
-      "((“in my childhood” — тоже можно, но “as a kid” / “when I was a kid” гораздо чаще))",
-      "**2**  ((В 18 я уехала от родителей.))",
-      "I left home **at 18**.",
-      "((в 18 лет → “at”, не ~~in 18~~))",
-      "**3**  ((Сразу после вуза я нашла работу.))",
-      "I got a job **right out of college**. / I got a job **straight out of university**.",
-      "((сразу после вуза: первый вариант американский, второй британский; “right after university” — тоже верно))",
-      "**4**  ((Я познакомилась с лучшей подругой на третьем курсе.))",
-      "I met my best friend **in my third year at university**.",
-      "((на третьем курсе (UK; US: “in my third year of college”) — не ~~on the third course~~))",
-      "**5**  ((Когда ты научился водить?))",
-      "**When did you learn** to drive?",
-      "((did + базовая форма: не When did you ~~learned~~))",
-      "**6**  ((Я до сих пор не умею водить.))",
-      "**I still can't** drive.",
-      "((до сих пор не умею → “still” + “can't”: не I still ~~don't can~~))"
-     ],
-     "answer_title": "Our answers",
-     "tip": "The six sentences from the start. Say them aloud first, then check."
-    },
-    {
-     "kind": "game",
-     "piece": "memo",
-     "seconds": 40,
-     "instr": "Memo: look at the phrases for 40 seconds and try to remember them. Then they disappear: take turns and say one each — in a sentence about you.",
-     "groups": [
+     "ex": [
       {
-       "h": "STAGES OF LIFE",
-       "items": [
-        "as a kid",
-        "at school",
-        "after high school / after I left school",
-        "at 18",
-        "in my third year at university",
-        "right out of college / straight out of university",
-        "in my early / mid- / late thirties"
+       "s": "Margaret",
+       "p": [
+        "Yes! I started playing ",
+        {
+         "b": "at school"
+        },
+        "."
        ]
       },
       {
-       "h": "NOT YET?",
-       "items": [
-        "I still can't drive.",
-        "I still don't have my own place."
+       "s": "Leo",
+       "p": [
+        "I tried the guitar ",
+        {
+         "b": "as a kid"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "When did you leave home?"
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        {
+         "b": "At 18"
+        },
+        ". One suitcase and a radio…"
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "And ",
+        {
+         "b": "I still don't have my own place"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "No, that was ",
+        {
+         "b": "after high school"
+        },
+        ". I got my first real job ",
+        {
+         "b": "right out of college"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "We met ",
+        {
+         "b": "in my third year at university"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Margaret",
+       "p": [
+        "I bought it ",
+        {
+         "b": "in my early thirties"
+        },
+        "."
+       ]
+      },
+      {
+       "s": "Leo",
+       "p": [
+        "Gran… ",
+        {
+         "b": "I still can't drive"
+        },
+        "."
        ]
       }
      ],
-     "items": [
-      "as a kid",
-      "at school",
-      "after high school / after I left school",
-      "at 18",
-      "in my third year at university",
-      "right out of college / straight out of university",
-      "in my early / mid- / late thirties",
-      "I still can't drive.",
-      "I still don't have my own place."
-     ],
-     "tip": "Tap ▶ and look for 40 seconds. Then the phrases hide: take turns and say one each in a true sentence about you. At the end, tap the ones you remembered."
+     "one": true
+    },
+    {
+     "kind": "box",
+     "box": "BOX",
+     "instr": "The language for today. Read it together: which phrases were in Leo and Margaret's conversation?",
+     "instr2": "Now some words are hidden. Take turns: say the whole phrase, then tap the yellow to check.",
+     "tip": "First the whole box. Next hides the phrases (the first letters stay): say each one, then tap the yellow."
     },
     {
      "kind": "text",
@@ -654,6 +758,144 @@
        "p": [
         "Nobody. But hey, it was a start. Who's this next to you?"
        ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        {
+         "f": "",
+         "r": "at"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "chool"
+        }
+       ],
+       "ru": "в школе"
+      },
+      {
+       "p": [
+        {
+         "f": "a",
+         "r": "s"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "a"
+        },
+        " ",
+        {
+         "f": "k",
+         "r": "id"
+        }
+       ],
+       "ru": "в детстве (так говорят чаще, чем “in my childhood”)"
+      },
+      {
+       "p": [
+        "When did you ",
+        {
+         "f": "l",
+         "r": "eave"
+        },
+        " home?"
+       ],
+       "ru": "когда ты уехала от родителей? (did + базовая форма)"
+      },
+      {
+       "p": [
+        {
+         "f": "",
+         "r": "at"
+        },
+        " 18",
+        " ",
+        {
+         "f": "",
+         "r": "/ət ˌeɪˈtiːn/",
+         "o": 1
+        }
+       ],
+       "ru": "в 18 лет"
+      },
+      {
+       "p": [
+        "I ",
+        {
+         "f": "s",
+         "r": "till"
+        },
+        " don't have my ",
+        {
+         "f": "o",
+         "r": "wn"
+        },
+        " ",
+        {
+         "f": "p",
+         "r": "lace"
+        }
+       ],
+       "ru": "у меня до сих пор нет своего жилья"
+      },
+      {
+       "p": [
+        {
+         "f": "a",
+         "r": "fter"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "igh"
+        },
+        " school"
+       ],
+       "ru": "после окончания школы (US); в Британии — “after I left school”. Но “after school” — обычно «после уроков»!"
+      },
+      {
+       "p": [
+        {
+         "f": "r",
+         "r": "ight"
+        },
+        " ",
+        {
+         "f": "o",
+         "r": "ut"
+        },
+        " ",
+        {
+         "f": "",
+         "r": "of"
+        },
+        " college",
+        " ",
+        {
+         "f": "",
+         "r": "/ˈkɒlɪdʒ/",
+         "o": 1
+        }
+       ],
+       "ru": "сразу после вуза (US: “college” = любой вуз); в Британии — “straight out of university”"
+      },
+      {
+       "p": [
+        "I lasted about a week · instruction manuals"
+       ],
+       "ru": "меня хватило примерно на неделю · инструкции"
+      }
+     ]
+    },
+    {
+     "kind": "text",
+     "instr": "The second part: remember the missing words and say them. Tap the yellow and orange to check.",
+     "lines": [
+      {
+       "ctx": "…Leo: “Who's this next to you?”"
       },
       {
        "s": "Margaret",
@@ -789,127 +1031,6 @@
        "p": [
         {
          "f": "",
-         "r": "at"
-        },
-        " ",
-        {
-         "f": "s",
-         "r": "chool"
-        }
-       ],
-       "ru": "в школе"
-      },
-      {
-       "p": [
-        {
-         "f": "a",
-         "r": "s"
-        },
-        " ",
-        {
-         "f": "",
-         "r": "a"
-        },
-        " ",
-        {
-         "f": "k",
-         "r": "id"
-        }
-       ],
-       "ru": "в детстве (так говорят чаще, чем “in my childhood”)"
-      },
-      {
-       "p": [
-        "When did you ",
-        {
-         "f": "l",
-         "r": "eave"
-        },
-        " home?"
-       ],
-       "ru": "когда ты уехала от родителей? (did + базовая форма)"
-      },
-      {
-       "p": [
-        {
-         "f": "",
-         "r": "at"
-        },
-        " 18",
-        " ",
-        {
-         "f": "",
-         "r": "/ət ˌeɪˈtiːn/",
-         "o": 1
-        }
-       ],
-       "ru": "в 18 лет"
-      },
-      {
-       "p": [
-        "I ",
-        {
-         "f": "s",
-         "r": "till"
-        },
-        " don't have my ",
-        {
-         "f": "o",
-         "r": "wn"
-        },
-        " ",
-        {
-         "f": "p",
-         "r": "lace"
-        }
-       ],
-       "ru": "у меня до сих пор нет своего жилья"
-      },
-      {
-       "p": [
-        {
-         "f": "a",
-         "r": "fter"
-        },
-        " ",
-        {
-         "f": "h",
-         "r": "igh"
-        },
-        " school"
-       ],
-       "ru": "после окончания школы (US); в Британии — “after I left school”. Но “after school” — обычно «после уроков»!"
-      },
-      {
-       "p": [
-        {
-         "f": "r",
-         "r": "ight"
-        },
-        " ",
-        {
-         "f": "o",
-         "r": "ut"
-        },
-        " ",
-        {
-         "f": "",
-         "r": "of"
-        },
-        " college",
-        " ",
-        {
-         "f": "",
-         "r": "/ˈkɒlɪdʒ/",
-         "o": 1
-        }
-       ],
-       "ru": "сразу после вуза (US: “college” = любой вуз); в Британии — “straight out of university”"
-      },
-      {
-       "p": [
-        {
-         "f": "",
          "r": "in"
         },
         " my ",
@@ -1037,7 +1158,7 @@
       },
       {
        "p": [
-        "I lasted about a week · instruction manuals · Jean ",
+        "Jean ",
         {
          "f": "",
          "r": "/dʒiːn/",
@@ -1051,7 +1172,7 @@
         },
         " everywhere"
        ],
-       "ru": "меня хватило примерно на неделю · инструкции · Джин (женское имя) · пятьдесят лет спустя · везде ездила на велосипеде"
+       "ru": "Джин (женское имя) · пятьдесят лет спустя · везде ездила на велосипеде"
       }
      ]
     },
@@ -1206,6 +1327,15 @@
        "p": [
         "Nobody. But hey, it was a start. Who's this next to you?"
        ]
+      }
+     ]
+    },
+    {
+     "kind": "text",
+     "instr": "Now without the glossary: the second part.",
+     "lines": [
+      {
+       "ctx": "…Leo: “Who's this next to you?”"
       },
       {
        "s": "Margaret",
@@ -1522,106 +1652,239 @@
      "piece": "wheel",
      "box": "BOX",
      "check": "Check",
-     "instr": "The wheel of questions: take turns to spin. Ask the next person: When did you last…? They answer (two weeks ago, last month, ages ago…) + one detail. Then tap to check your question.",
+     "instr": "The wheel of questions: take turns to spin. Ask the next person: When did you last…? They answer (last month, ages ago, at school…) + one detail. Then tap to check your question.",
      "tasks": [
       {
        "label": "1",
-       "q": "go to the cinema",
-       "a": "**When did you last** go to the cinema?",
-       "why": "When did you last + базовая форма. Or: When was the last time you…? Не: When did you go … ~~last time~~? The answer: two weeks ago · last month · ages ago — or: I haven't been for ages! Not sure? I can't remember exactly — last summer, maybe? + one detail."
+       "q": "go to the cinema / the movies",
+       "a": "**When did you last** go to the cinema / the movies?",
+       "why": [
+        "Or: **When was the last time you went** to the cinema / the movies?",
+        "((did you last **go** · the last time you **went**))",
+        "✗ When did you go to the cinema ~~last time~~?",
+        "The answer: **two weeks ago · last month** — or: **I haven't been for ages!**",
+        "Not sure? **I can't remember exactly** — in the summer, maybe?",
+        "+ **one** detail: what did you see? Was it good?"
+       ]
       },
       {
        "label": "2",
-       "q": "cook for friends",
-       "a": "**When did you last** cook for friends?",
-       "why": "When did you last + базовая форма. Or: When was the last time you…? Не: When did you go … ~~last time~~? The answer: two weeks ago · last month · ages ago — or: I haven't been for ages! Not sure? I can't remember exactly — last summer, maybe? + one detail."
+       "q": "solve an equation",
+       "a": "**When did you last** solve an equation?",
+       "why": [
+        "Or: **When was the last time you solved** an equation?",
+        "The answer: **at school · ages ago** — or: **last week, helping my kid with their homework!**",
+        "Not sure? **I can't remember exactly** — in my last year at school, maybe?",
+        "+ **one** detail: was it for you or for your kids?"
+       ]
       },
       {
        "label": "3",
-       "q": "call an old friend",
-       "a": "**When did you last** call an old friend?",
-       "why": "When did you last + базовая форма. Or: When was the last time you…? Не: When did you go … ~~last time~~? The answer: two weeks ago · last month · ages ago — or: I haven't been for ages! Not sure? I can't remember exactly — last summer, maybe? + one detail."
+       "q": "cook for friends",
+       "a": "**When did you last** cook for friends?",
+       "why": [
+        "Or: **When was the last time you cooked** for friends?",
+        "The answer: **last weekend · a month ago** — or: **I haven't done that for ages!**",
+        "Not sure? **I can't remember exactly** — on my birthday, maybe?",
+        "+ **one** detail: what did you make?"
+       ]
       },
       {
        "label": "4",
-       "q": "have a proper holiday / vacation",
-       "a": "**When did you last** have a proper holiday / vacation?",
-       "why": "When did you last + базовая форма. Or: When was the last time you…? Не: When did you go … ~~last time~~? The answer: two weeks ago · last month · ages ago — or: I haven't been for ages! Not sure? I can't remember exactly — last summer, maybe? + one detail."
+       "q": "climb a tree",
+       "a": "**When did you last** climb a tree?",
+       "why": [
+        "Or: **When was the last time you climbed** a tree?",
+        "✗ When did you climb a tree ~~last time~~?",
+        "The answer: **as a kid · ages ago** — or: **last summer, with my kids!**",
+        "Not sure? **I can't remember exactly** — at 12, maybe?",
+        "+ **one** detail: where was it? Did you get down OK?"
+       ]
       },
       {
        "label": "5",
        "q": "go to a concert",
        "a": "**When did you last** go to a concert?",
-       "why": "When did you last + базовая форма. Or: When was the last time you…? Не: When did you go … ~~last time~~? The answer: two weeks ago · last month · ages ago — or: I haven't been for ages! Not sure? I can't remember exactly — last summer, maybe? + one detail."
+       "why": [
+        "Or: **When was the last time you went** to a concert?",
+        "The answer: **last spring · a few years ago** — or: **I haven't been to one for ages!**",
+        "Not sure? **I can't remember exactly** — two years ago, maybe?",
+        "+ **one** detail: who did you see?"
+       ]
       },
       {
        "label": "6",
-       "q": "read a really good book",
-       "a": "**When did you last** read a really good book?",
-       "why": "When did you last + базовая форма. Or: When was the last time you…? Не: When did you go … ~~last time~~? The answer: two weeks ago · last month · ages ago — or: I haven't been for ages! Not sure? I can't remember exactly — last summer, maybe? + one detail."
+       "q": "build a snowman",
+       "a": "**When did you last** build a snowman?",
+       "why": [
+        "Or: **When was the last time you built** a snowman?",
+        "The answer: **last winter · as a kid · ages ago**",
+        "Not sure? **I can't remember exactly** — a few years ago, maybe?",
+        "+ **one** detail: where? Who with?"
+       ]
       },
       {
        "label": "7",
-       "q": "go out for dinner",
-       "a": "**When did you last** go out for dinner?",
-       "why": "When did you last + базовая форма. Or: When was the last time you…? Не: When did you go … ~~last time~~? The answer: two weeks ago · last month · ages ago — or: I haven't been for ages! Not sure? I can't remember exactly — last summer, maybe? + one detail."
+       "q": "stay up really late",
+       "a": "**When did you last** stay up really late?",
+       "why": [
+        "Or: **When was the last time you stayed up** really late?",
+        "The answer: **last night! · on Saturday · on New Year's Eve**",
+        "+ **one** detail: why? What were you doing?"
+       ]
       },
       {
        "label": "8",
-       "q": "take a day off",
-       "a": "**When did you last** take a day off?",
-       "why": "When did you last + базовая форма. Or: When was the last time you…? Не: When did you go … ~~last time~~? The answer: two weeks ago · last month · ages ago — or: I haven't been for ages! Not sure? I can't remember exactly — last summer, maybe? + one detail."
+       "q": "go camping",
+       "a": "**When did you last** go camping?",
+       "why": [
+        "Or: **When was the last time you went** camping?",
+        "((did you last **go** · the last time you **went**))",
+        "The answer: **in my early twenties · a few years ago** — or: **I haven't been for ages!**",
+        "Never? **I've never been camping!**",
+        "Not sure? **I can't remember exactly** — at 18, maybe?",
+        "+ **one** detail: where? Did it rain?"
+       ]
       },
       {
        "label": "9",
-       "q": "buy something you didn't really need",
-       "a": "**When did you last** buy something you didn't really need?",
-       "why": "When did you last + базовая форма. Or: When was the last time you…? Не: When did you go … ~~last time~~? The answer: two weeks ago · last month · ages ago — or: I haven't been for ages! Not sure? I can't remember exactly — last summer, maybe? + one detail."
+       "q": "go to a wedding",
+       "a": "**When did you last** go to a wedding?",
+       "why": [
+        "Or: **When was the last time you went** to a wedding?",
+        "✗ When did you go to a wedding ~~last time~~?",
+        "The answer: **last summer · a few years ago** — or: **I haven't been to one for ages!**",
+        "Not sure? **I can't remember exactly** — three years ago, maybe?",
+        "+ **one** detail: whose wedding was it? Was it fun?"
+       ]
       },
       {
        "label": "10",
-       "q": "go swimming",
-       "a": "**When did you last** go swimming?",
-       "why": "When did you last + базовая форма. Or: When was the last time you…? Не: When did you go … ~~last time~~? The answer: two weeks ago · last month · ages ago — or: I haven't been for ages! Not sure? I can't remember exactly — last summer, maybe? + one detail."
+       "q": "go on a rollercoaster",
+       "a": "**When did you last** go on a rollercoaster?",
+       "why": [
+        "Or: **When was the last time you went on** a rollercoaster?",
+        "The answer: **last summer · as a kid · ages ago** — or: **I haven't been on one for ages!**",
+        "Never? **I've never been on one!**",
+        "Not sure? **I can't remember exactly** — five years ago, maybe?",
+        "+ **one** detail: where? Was it fun — or a bit too scary?"
+       ]
       },
       {
        "label": "11",
-       "q": "stay up really late",
-       "a": "**When did you last** stay up really late?",
-       "why": "When did you last + базовая форма. Or: When was the last time you…? Не: When did you go … ~~last time~~? The answer: two weeks ago · last month · ages ago — or: I haven't been for ages! Not sure? I can't remember exactly — last summer, maybe? + one detail."
+       "q": "lose your keys",
+       "a": "**When did you last** lose your keys?",
+       "why": [
+        "Or: **When was the last time you lost** your keys?",
+        "The answer: **last week · a few months ago · ages ago**",
+        "+ **one** detail: where were they in the end?"
+       ]
       },
       {
        "label": "12",
-       "q": "travel by train",
-       "a": "**When did you last** travel by train?",
-       "why": "When did you last + базовая форма. Or: When was the last time you…? Не: When did you go … ~~last time~~? The answer: two weeks ago · last month · ages ago — or: I haven't been for ages! Not sure? I can't remember exactly — last summer, maybe? + one detail."
+       "q": "take an exam",
+       "a": "**When did you last** take an exam?",
+       "why": [
+        "Or: **When was the last time you took** an exam?",
+        "((сдавать экзамен = **take** an exam · сдать = **pass** an exam))",
+        "The answer: **at university / in college · in my mid-twenties · last year**",
+        "Not sure? **I can't remember exactly** — three years ago, maybe?",
+        "+ **one** detail: what was it? Did you pass?"
+       ]
       },
       {
        "label": "13",
-       "q": "go to a museum",
-       "a": "**When did you last** go to a museum?",
-       "why": "When did you last + базовая форма. Or: When was the last time you…? Не: When did you go … ~~last time~~? The answer: two weeks ago · last month · ages ago — or: I haven't been for ages! Not sure? I can't remember exactly — last summer, maybe? + one detail."
+       "q": "have a proper holiday / a real vacation",
+       "a": "**When did you last** have a proper holiday / a real vacation?",
+       "why": [
+        "Or: **When was the last time you had** a proper holiday / a real vacation?",
+        "✗ When did you have a proper holiday ~~last time~~?",
+        "The answer: **in the summer · last year** — or: **I haven't had one for ages!**",
+        "Not sure? **I can't remember exactly** — two years ago, maybe?",
+        "+ **one** detail: where did you go?"
+       ]
       },
       {
        "label": "14",
-       "q": "try something new",
-       "a": "**When did you last** try something new?",
-       "why": "When did you last + базовая форма. Or: When was the last time you…? Не: When did you go … ~~last time~~? The answer: two weeks ago · last month · ages ago — or: I haven't been for ages! Not sure? I can't remember exactly — last summer, maybe? + one detail."
+       "q": "send a postcard",
+       "a": "**When did you last** send a postcard?",
+       "why": [
+        "Or: **When was the last time you sent** a postcard?",
+        "The answer: **ages ago · as a kid** — or: **I haven't done that for ages!**",
+        "Not sure? **I can't remember exactly** — ten years ago, maybe?",
+        "+ **one** detail: who to? Where from?"
+       ]
       },
       {
        "label": "15",
-       "q": "lose your keys",
-       "a": "**When did you last** lose your keys?",
-       "why": "When did you last + базовая форма. Or: When was the last time you…? Не: When did you go … ~~last time~~? The answer: two weeks ago · last month · ages ago — or: I haven't been for ages! Not sure? I can't remember exactly — last summer, maybe? + one detail."
+       "q": "buy something you didn't really need",
+       "a": "**When did you last** buy something you didn't really need?",
+       "why": [
+        "Or: **When was the last time you bought** something you didn't really need?",
+        "The answer: **yesterday · last week · last month**",
+        "+ **one** detail: what was it? Do you actually use it?"
+       ]
       },
       {
        "label": "16",
-       "q": "learn something new",
-       "a": "**When did you last** learn something new?",
-       "why": "When did you last + базовая форма. Or: When was the last time you…? Не: When did you go … ~~last time~~? The answer: two weeks ago · last month · ages ago — or: I haven't been for ages! Not sure? I can't remember exactly — last summer, maybe? + one detail."
+       "q": "ride a bike",
+       "a": "**When did you last** ride a bike?",
+       "why": [
+        "Or: **When was the last time you rode** a bike?",
+        "((ride → **rode**))",
+        "✗ When did you ride a bike ~~last time~~?",
+        "The answer: **last weekend · last summer · as a kid**",
+        "Not sure? **I can't remember exactly** — two years ago, maybe?",
+        "+ **one** detail: where did you go?"
+       ]
       }
      ],
-     "tip": "Spin, ask When did you last…?, the next person answers + one detail. Then tap to check the question."
+     "tip": "Spin, ask When did you last…?, the next person answers (last month, ages ago, at school…) + one detail. Then tap to check the question."
+    }
+   ]
+  },
+  {
+   "label": "🔁 Back to the start",
+   "blocks": [
+    {
+     "kind": "say",
+     "instr": "🔁 Back to the start: how would you say these now? Take turns. Then tap “Show the answer”.",
+     "task": [
+      "**1**  ((Я научилась плавать в детстве.))",
+      "• • •",
+      "**2**  ((В 18 я уехала от родителей.))",
+      "• • •",
+      "**3**  ((Сразу после вуза я нашла работу.))",
+      "• • •",
+      "**4**  ((Я познакомилась с лучшей подругой на третьем курсе.))",
+      "• • •",
+      "**5**  ((Когда ты научился водить?))",
+      "• • •",
+      "**6**  ((Я до сих пор не умею водить.))",
+      "• • •"
+     ],
+     "answer": [
+      "**1**  ((Я научилась плавать в детстве.))",
+      "I learned to swim **as a kid**.",
+      "((“in my childhood” — тоже можно, но “as a kid” / “when I was a kid” гораздо чаще))",
+      "**2**  ((В 18 я уехала от родителей.))",
+      "I left home **at 18**.",
+      "((в 18 лет → “at”, не ~~in 18~~))",
+      "**3**  ((Сразу после вуза я нашла работу.))",
+      "I got a job **right out of college**. / I got a job **straight out of university**.",
+      "((сразу после вуза: первый вариант американский, второй британский; “right after university” — тоже верно))",
+      "**4**  ((Я познакомилась с лучшей подругой на третьем курсе.))",
+      "I met my best friend **in my third year at university**.",
+      "((на третьем курсе (UK; US: “in my third year of college”) — не ~~on the third course~~))",
+      "**5**  ((Когда ты научился водить?))",
+      "**When did you learn** to drive?",
+      "((did + базовая форма: не When did you ~~learned~~))",
+      "**6**  ((Я до сих пор не умею водить.))",
+      "**I still can't** drive.",
+      "((до сих пор не умею → “still” + “can't”: не I still ~~don't can~~))"
+     ],
+     "tip": "The six sentences from the start. Say them aloud first, then check.",
+     "one": true
     }
    ]
   },
