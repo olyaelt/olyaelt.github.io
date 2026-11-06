@@ -60,62 +60,6 @@
      "W{{hen}} **I was** g{{rowing}} **up**, … T{{hese}} d{{ays}}, …"
     ]
    }
-  ],
-  "ABC": [
-   {
-    "h": "A · THE CHANGE, UP TO NOW",
-    "items": [
-     "has **got / gotten** -er",
-     "has **become** more …"
-    ]
-   },
-   {
-    "h": "B · NOW COMPARED WITH THEN",
-    "items": [
-     "… **than it used to be**",
-     "**not as** … **as**"
-    ]
-   },
-   {
-    "h": "C · STILL CHANGING",
-    "items": [
-     "is **getting** -er and -er",
-     "**more and more** …"
-    ]
-   }
-  ],
-  "FORM": [
-   {
-    "h": "-ER / -IER",
-    "items": [
-     "one syllable, or two syllables ending in -y: green → **greener**, busy → **busier**, pricey → **pricier**"
-    ]
-   },
-   {
-    "h": "MORE …",
-    "items": [
-     "most other words: **more** crowded, **more** modern"
-    ]
-   },
-   {
-    "h": "BOTH ARE FINE",
-    "items": [
-     "quieter / more quiet · livelier / more lively"
-    ]
-   },
-   {
-    "h": "IRREGULAR",
-    "items": [
-     "good → **better** · bad → **worse**"
-    ]
-   },
-   {
-    "h": "REMEMBER",
-    "items": [
-     "-er OR more, never both: busier — not ~~more busier~~",
-     "going down: **less** + the plain form: less green, less safe"
-    ]
-   }
   ]
  },
  "stages": [
@@ -150,7 +94,80 @@
    "blocks": [
     {
      "kind": "text",
-     "instr": "Read. Why does the speaker call Stratford “Restaurants-upon-Avon”?",
+     "instr": "How do you think the interviewer asks the question? Complete it and type it in the chat. Then watch the start and tap the yellow to check.",
+     "lines": [
+      {
+       "s": "Interviewer",
+       "p": [
+        {
+         "f": "",
+         "r": "Has"
+        },
+        " the area you live in ",
+        {
+         "f": "",
+         "r": "changed"
+        },
+        " much in recent years?  ((change))"
+       ]
+      }
+     ]
+    },
+    {
+     "kind": "text",
+     "instr": "Watch. Has each person’s area changed? Then tap the yellow to check, and tell each other two things you remember about each speaker.",
+     "lines": [
+      {
+       "s": "Stratford-upon-Avon",
+       "img": "speaker-1.jpg",
+       "p": [
+        {
+         "f": "",
+         "r": "Yes, quite a lot."
+        }
+       ]
+      },
+      {
+       "s": "Whetstone, London",
+       "img": "speaker-2.jpg",
+       "p": [
+        {
+         "f": "",
+         "r": "Not really."
+        }
+       ]
+      },
+      {
+       "s": "Highbury, London — where this person lives now",
+       "img": "speaker-3.jpg",
+       "p": [
+        {
+         "f": "",
+         "r": "No."
+        }
+       ]
+      },
+      {
+       "s": "Chorleywood — where they grew up",
+       "p": [
+        {
+         "f": "",
+         "r": "Yes, a lot."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "kind": "say",
+     "instr": "Watch again.",
+     "task": [
+      "Note down the phrases they use to say how their area has **changed**."
+     ]
+    },
+    {
+     "kind": "text",
+     "instr": "Read the transcript and check your notes.",
      "lines": [
       {
        "s": "Interviewer",
@@ -181,7 +198,8 @@
          "b": "has changed quite a lot"
         },
         "."
-       ]
+       ],
+       "img": "speaker-1.jpg"
       }
      ],
      "gloss": [
@@ -210,6 +228,19 @@
         " — set up mainly for"
        ],
        "ru": "заточен под"
+      },
+      {
+       "p": [
+        {
+         "b": "whereas"
+        },
+        " ",
+        {
+         "ipa": "/weərˈæz/"
+        },
+        " — while (to contrast two facts)"
+       ],
+       "ru": "тогда как, а"
       },
       {
        "p": [
@@ -243,7 +274,7 @@
     },
     {
      "kind": "text",
-     "instr": "Read on. What has changed in Whetstone — and what hasn’t?",
+     "instr": "Read on and check your notes.",
      "lines": [
       {
        "s": "Interviewer",
@@ -266,7 +297,8 @@
          "b": "knocked down"
         },
         ", new buildings being built — quite a few new buildings, actually. But generally on the high street as well… different shops, but it’s pretty static… I don’t know. It doesn’t really change that much."
-       ]
+       ],
+       "img": "speaker-2.jpg"
       },
       {
        "s": "Interviewer",
@@ -278,7 +310,8 @@
        "s": "Whetstone",
        "p": [
         "I live in Whetstone. It’s in between Barnet and Finchley, in Greater London. It’s a good place."
-       ]
+       ],
+       "img": "speaker-2.jpg"
       },
       {
        "s": "Interviewer",
@@ -290,7 +323,8 @@
        "s": "Whetstone",
        "p": [
         "Yeah, I do like living there. I like living in London."
-       ]
+       ],
+       "img": "speaker-2.jpg"
       }
      ],
      "gloss": [
@@ -356,7 +390,7 @@
     },
     {
      "kind": "text",
-     "instr": "Read on. Why isn’t Chorleywood “quite as nice as it was”?",
+     "instr": "Read on and check your notes.",
      "lines": [
       {
        "s": "Interviewer",
@@ -368,7 +402,8 @@
        "s": "Highbury",
        "p": [
         "The area I’m living in now hasn’t, but where I grew up, it has, a lot."
-       ]
+       ],
+       "img": "speaker-3.jpg"
       },
       {
        "s": "Interviewer",
@@ -380,7 +415,8 @@
        "s": "Highbury",
        "p": [
         "I grew up in a little town called Chorleywood, which is just outside London."
-       ]
+       ],
+       "img": "speaker-3.jpg"
       },
       {
        "s": "Interviewer",
@@ -400,7 +436,8 @@
          "b": "not quite as nice as it was"
         },
         "."
-       ]
+       ],
+       "img": "speaker-3.jpg"
       }
      ],
      "gloss": [
@@ -466,8 +503,16 @@
      "credit": "Source: Empower C1 Workbook (Cambridge University Press), video 9A"
     },
     {
+     "kind": "questions",
+     "box": "BOX",
+     "instr": "Look at the box.",
+     "items": [
+      "Which of these did you note down? Which are new to you?"
+     ]
+    },
+    {
      "kind": "text",
-     "instr": "In the video, three people answer this question. Take turns reading the lines aloud and try to remember the missing words. Tap the yellow boxes to check.",
+     "instr": "Can you remember the missing words? In pairs, take turns reading the lines aloud, then tap the yellow boxes to check.",
      "lines": [
       {
        "s": "Interviewer",
@@ -556,7 +601,8 @@
          "r": "ot"
         },
         "."
-       ]
+       ],
+       "img": "speaker-1.jpg"
       }
      ],
      "gloss": [
@@ -608,7 +654,7 @@
     },
     {
      "kind": "text",
-     "instr": "And the other two. Try to remember the missing words.",
+     "instr": "Now do the same for the other two speakers.",
      "lines": [
       {
        "s": "Whetstone",
@@ -647,7 +693,8 @@
          "r": "ame"
         },
         "."
-       ]
+       ],
+       "img": "speaker-2.jpg"
       },
       {
        "s": "Highbury",
@@ -702,7 +749,8 @@
          "r": "as"
         },
         "."
-       ]
+       ],
+       "img": "speaker-3.jpg"
       }
      ],
      "gloss": [
@@ -768,62 +816,197 @@
    "label": "✏️ Practice",
    "blocks": [
     {
-     "kind": "cards",
-     "style": "say",
-     "box": "FORM",
-     "instr": "Take turns: think of a place you know well and say how it’s changed. Use one word from each card: It’s got / gotten a lot … Then tap the card to check.",
-     "instr_next": "And these?",
-     "cards": [
-      {
-       "front": "**green**  ↔  **built-up** ((more trees and parks · houses where there used to be fields))",
-       "back": "It’s got / gotten a lot **greener**. · It’s got / gotten a lot **more built-up**."
-      },
-      {
-       "front": "**busy**  ↔  **quiet** ((more people, more traffic · not as many cars))",
-       "back": "It’s got / gotten a lot **busier**. · It’s got / gotten a lot **quieter** / **more quiet**."
-      },
-      {
-       "front": "**crowded**  ↔  **empty** ((you can’t move on Saturdays · hardly anyone on the streets after six))",
-       "back": "It’s got / gotten a lot **more crowded**. · It’s got / gotten a lot **emptier**."
-      },
-      {
-       "front": "**clean**  ↔  **dirty** ((clean streets now · trash on the streets))",
-       "back": "It’s got / gotten a lot **cleaner**. · It’s got / gotten a lot **dirtier**."
-      },
-      {
-       "front": "**safe**  ↔  **dangerous** ((you can walk home at night · you don’t go out alone at night))",
-       "back": "It’s got / gotten a lot **safer**. · It’s got / gotten a lot **more dangerous**."
-      },
-      {
-       "front": "**fancy**  ↔  **run-down** ((cocktail bars instead of cheap cafés · peeling paint, broken windows))",
-       "back": "It’s got / gotten a lot **fancier**. · It’s got / gotten a lot **more run-down**."
-      },
-      {
-       "front": "**pricey**  ↔  **affordable** ((eight euros for a coffee! · rents have gone down))",
-       "back": "It’s got / gotten a lot **pricier**. · It’s got / gotten a lot **more affordable**."
-      },
-      {
-       "front": "**lively** ((new bars and cafés))",
-       "back": "It’s got / gotten a lot **livelier** / **more lively**."
-      },
-      {
-       "front": "**touristy** ((souvenir shops on every corner))",
-       "back": "It’s got / gotten a lot **more touristy**."
-      },
-      {
-       "front": "**modern** ((glass towers everywhere))",
-       "back": "It’s got / gotten a lot **more modern**."
-      },
-      {
-       "front": "**good**  ↔  **bad** ((a new park, a new metro line · more crime, more traffic jams))",
-       "back": "It’s got / gotten a lot **better**. · It’s got / gotten a lot **worse**."
-      }
+     "kind": "say",
+     "instr": "Read. What do the highlighted words have in common? What do we call them?",
+     "task": [
+      "Has my hometown changed? Oh, definitely. When I was growing up, it was a quiet little place. These days it’s **a lot busier**, and it’s gotten **much more touristy**. The old market is **fancier** now — and **pricier**, of course. On the plus side, it’s **greener** and **safer** than it used to be. But the traffic’s got **worse**, and the main street feels **less friendly** than it used to."
+     ],
+     "answer_title": "Answer",
+     "answer": [
+      "They’re **comparatives**: they compare the place now with how it was before. **A lot / much** make them stronger."
      ]
+    },
+    {
+     "kind": "say",
+     "instr": "How do we make comparatives? Say the comparative of each word, then show the answer.",
+     "task": [
+      "**nice** → ? · **busy** → ? · **pricey** → ?",
+      "**crowded** → ? · **expensive** → ? · **modern** → ?",
+      "**quiet** → ? · **lively** → ?",
+      "**good** → ? · **bad** → ?"
+     ],
+     "answer_title": "The rules",
+     "answer": [
+      "**-er / -ier** — one syllable, or two syllables ending in -y: nicer · busier · pricier",
+      "**more …** — most other words: more crowded · more expensive · more modern",
+      "**both are fine** — quieter / more quiet · livelier / more lively",
+      "**irregular** — better · worse",
+      "**a lot / much** + -er: a lot busier — not ~~more busier~~",
+      "going down: **less** + the plain form: less green, less safe — not ~~less greener~~"
+     ]
+    },
+    {
+     "kind": "questions",
+     "box": "BOX",
+     "instr": "Now look at the box.",
+     "items": [
+      "Find the comparatives. Which ones add -er, and which use more?"
+     ]
+    },
+    {
+     "kind": "sort",
+     "instr": "Take turns: how has a place you know changed? Use the word in a sentence: **It’s got / gotten a lot …** Then tap to check and put it in its box.",
+     "summary": "The four groups",
+     "patterns": [
+      {
+       "id": "A",
+       "en": "-er / -ier",
+       "ru": "короткие слова и слова на -y"
+      },
+      {
+       "id": "B",
+       "en": "more …",
+       "ru": "длинные слова"
+      },
+      {
+       "id": "C",
+       "en": "both are fine",
+       "ru": "можно и так, и так"
+      },
+      {
+       "id": "D",
+       "en": "irregular",
+       "ru": "неправильные"
+      }
+     ],
+     "items": [
+      {
+       "ctx": "more trees and parks",
+       "ru": "green",
+       "en": "It’s got / gotten a lot **greener**.",
+       "p": "A",
+       "mode": "auto",
+       "why": "One syllable → -er."
+      },
+      {
+       "ctx": "houses where there used to be fields",
+       "ru": "built-up",
+       "en": "It’s got / gotten a lot **more built-up**.",
+       "p": "B",
+       "mode": "hint",
+       "why": "Two words → more."
+      },
+      {
+       "ctx": "more people, more traffic",
+       "ru": "busy",
+       "en": "It’s got / gotten a lot **busier**.",
+       "p": "A",
+       "mode": "free",
+       "why": "Two syllables ending in -y → -ier."
+      },
+      {
+       "ctx": "not as many cars",
+       "ru": "quiet",
+       "en": "It’s got / gotten a lot **quieter** / **more quiet**.",
+       "p": "C",
+       "mode": "free",
+       "why": "Both are fine: quieter / more quiet."
+      },
+      {
+       "ctx": "you can’t move on Saturdays",
+       "ru": "crowded",
+       "en": "It’s got / gotten a lot **more crowded**.",
+       "p": "B",
+       "mode": "free",
+       "why": "A long word → more."
+      },
+      {
+       "ctx": "hardly anyone on the streets after six",
+       "ru": "empty",
+       "en": "It’s got / gotten a lot **emptier**.",
+       "p": "A",
+       "mode": "free",
+       "why": "Two syllables ending in -y → -ier."
+      },
+      {
+       "ctx": "the streets are swept every day",
+       "ru": "clean",
+       "en": "It’s got / gotten a lot **cleaner**.",
+       "p": "A",
+       "mode": "free",
+       "why": "One syllable → -er."
+      },
+      {
+       "ctx": "trash on the streets",
+       "ru": "dirty",
+       "en": "It’s got / gotten a lot **dirtier**.",
+       "p": "A",
+       "mode": "free",
+       "why": "Two syllables ending in -y → -ier."
+      },
+      {
+       "ctx": "you can walk home at night",
+       "ru": "safe",
+       "en": "It’s got / gotten a lot **safer**.",
+       "p": "A",
+       "mode": "free",
+       "why": "One syllable → -er."
+      },
+      {
+       "ctx": "you don’t go out alone at night",
+       "ru": "dangerous",
+       "en": "It’s got / gotten a lot **more dangerous**.",
+       "p": "B",
+       "mode": "free",
+       "why": "A long word → more."
+      },
+      {
+       "ctx": "cocktail bars instead of cheap cafés",
+       "ru": "fancy",
+       "en": "It’s got / gotten a lot **fancier**.",
+       "p": "A",
+       "mode": "free",
+       "why": "Two syllables ending in -y → -ier."
+      },
+      {
+       "ctx": "peeling paint, broken windows",
+       "ru": "run-down",
+       "en": "It’s got / gotten a lot **more run-down**.",
+       "p": "B",
+       "mode": "free",
+       "why": "Two words → more."
+      },
+      {
+       "ctx": "new bars and cafés",
+       "ru": "lively",
+       "en": "It’s got / gotten a lot **livelier** / **more lively**.",
+       "p": "C",
+       "mode": "free",
+       "why": "Both are fine: livelier / more lively."
+      },
+      {
+       "ctx": "a new park, a new metro line",
+       "ru": "good",
+       "en": "It’s got / gotten a lot **better**.",
+       "p": "D",
+       "mode": "free",
+       "why": "Irregular: good → better."
+      },
+      {
+       "ctx": "more crime, more traffic jams",
+       "ru": "bad",
+       "en": "It’s got / gotten a lot **worse**.",
+       "p": "D",
+       "mode": "free",
+       "why": "Irregular: bad → worse."
+      }
+     ],
+     "end": "Choose two or three of these words to describe how the place where you live has changed, and say why."
     },
     {
      "kind": "cards",
      "style": "say",
-     "box": "ABC",
+     "box": "BOX",
      "instr": "Take turns: make a sentence from the words — the grey line is a clue. Say it aloud, then tap the card to check. Then both of you talk about yourselves.",
      "instr_next": "And this one? Then talk about yourselves.",
      "cards": [

@@ -18,27 +18,27 @@
   {
    "pid": 3,
    "sig": "text read. why does the speaker call stratford “restaurants-upon-avon”?",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 4,
    "sig": "text read on. what has changed in whetstone — and what hasn’t?",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 5,
    "sig": "text read on. why isn’t chorleywood “quite as nice as it was”?",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 6,
    "sig": "text in the video, three people answer this question. take turns reading the lines aloud and try to remember the missing words. tap the yellow boxes to check.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 7,
    "sig": "text and the other two. try to remember the missing words.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 8,
@@ -48,7 +48,7 @@
   {
    "pid": 9,
    "sig": "cards take turns: think of a place you know well and say how it’s changed. use one word from each card: it’s got / gotten a lot … then tap the card to check.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 10,
@@ -74,63 +74,128 @@
    "pid": 14,
    "sig": "say at the start of the lesson, you answered this question in the chat. how would you answer it now? take turns. try not to look at the box.",
    "gone": false
+  },
+  {
+   "pid": 15,
+   "sig": "text how do you think the interviewer asks the question? complete it and type it in the chat. then watch the start and tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 16,
+   "sig": "text watch. has each person’s area changed? then tap the yellow to check, and tell each other two things you remember about each speaker.",
+   "gone": false
+  },
+  {
+   "pid": 17,
+   "sig": "say watch again.",
+   "gone": false
+  },
+  {
+   "pid": 18,
+   "sig": "text read the transcript and check your notes.",
+   "gone": false
+  },
+  {
+   "pid": 19,
+   "sig": "text read on and check your notes.",
+   "gone": false
+  },
+  {
+   "pid": 20,
+   "sig": "text read on and check your notes.",
+   "gone": false
+  },
+  {
+   "pid": 21,
+   "sig": "questions look at the box.",
+   "gone": false
+  },
+  {
+   "pid": 22,
+   "sig": "text can you remember the missing words? in pairs, take turns reading the lines aloud, then tap the yellow boxes to check.",
+   "gone": false
+  },
+  {
+   "pid": 23,
+   "sig": "text now do the same for the other two speakers.",
+   "gone": false
+  },
+  {
+   "pid": 24,
+   "sig": "say read. what do the highlighted words have in common? what do we call them?",
+   "gone": false
+  },
+  {
+   "pid": 25,
+   "sig": "say how do we make comparatives? say the comparative of each word, then show the answer.",
+   "gone": false
+  },
+  {
+   "pid": 26,
+   "sig": "questions now look at the box.",
+   "gone": false
+  },
+  {
+   "pid": 27,
+   "sig": "sort take turns: how has a place you know changed? use the word in a sentence: it’s got / gotten a lot … then tap to check and put it in its box.",
+   "gone": false
   }
  ],
  "cards": [
   {
    "pid": 0,
    "sig": "it’s got / gotten a lot greener. · it’s got / gotten a lot more built-up. green ↔ built-up more trees and parks · houses where there used to be fields",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 1,
    "sig": "it’s got / gotten a lot busier. · it’s got / gotten a lot quieter / more quiet. busy ↔ quiet more people, more traffic · not as many cars",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 2,
    "sig": "it’s got / gotten a lot more crowded. · it’s got / gotten a lot emptier. crowded ↔ empty you can’t move on saturdays · hardly anyone on the streets after six",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 3,
    "sig": "it’s got / gotten a lot cleaner. · it’s got / gotten a lot dirtier. clean ↔ dirty clean streets now · trash on the streets",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 4,
    "sig": "it’s got / gotten a lot safer. · it’s got / gotten a lot more dangerous. safe ↔ dangerous you can walk home at night · you don’t go out alone at night",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 5,
    "sig": "it’s got / gotten a lot fancier. · it’s got / gotten a lot more run-down. fancy ↔ run-down cocktail bars instead of cheap cafés · peeling paint, broken windows",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 6,
    "sig": "it’s got / gotten a lot pricier. · it’s got / gotten a lot more affordable. pricey ↔ affordable eight euros for a coffee! · rents have gone down",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 7,
    "sig": "it’s got / gotten a lot livelier / more lively. lively new bars and cafés",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 8,
    "sig": "it’s got / gotten a lot more touristy. touristy souvenir shops on every corner",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 9,
    "sig": "it’s got / gotten a lot more modern. modern glass towers everywhere",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 10,
    "sig": "it’s got / gotten a lot better. · it’s got / gotten a lot worse. good ↔ bad a new park, a new metro line · more crime, more traffic jams",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 11,
@@ -180,6 +245,20 @@
   {
    "pid": 1,
    "sig": "2 and the place where you live now — has it changed since you moved there? never moved? talk about a place you go to a lot.",
+   "gone": false
+  }
+ ],
+ "questions.21": [
+  {
+   "pid": 0,
+   "sig": "which of these did you note down? which are new to you?",
+   "gone": false
+  }
+ ],
+ "questions.26": [
+  {
+   "pid": 0,
+   "sig": "find the comparatives. which ones add -er, and which use more?",
    "gone": false
   }
  ]

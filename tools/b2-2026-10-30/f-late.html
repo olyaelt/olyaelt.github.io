@@ -743,6 +743,7 @@ aside.box.mainbox .pp-ru{font-size:calc(1rem * var(--k, 1))}
 .fgame .gt-a .note.lines{display:grid;gap:3px;color:#1D1D1B;font-weight:600;font-size:calc(1.02rem * var(--k, 1))}
 .fgame .gt-a .note.lines .ctx{color:#5F6368}
 .fgame .gt-a .note.lines .nlab{font-weight:900;color:#1D1D1B}
+.finstr.frames b.bx{background:linear-gradient(transparent 12%, #FFF27A 12%, #FFF27A 88%, transparent 88%);color:#1D1D1B;padding:0 3px;border-radius:2px}   /* tools 30 (C1 fixes-1): the frame to use, in a marker */
 .say-isles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:12px;align-items:start}
 .say-isle{background:var(--ground);border-radius:12px;padding:10px 14px 6px}
 .say-lines p.new{border-left:4px solid var(--ok);padding-left:10px;margin-left:-14px;animation:ansIn .35s ease-out}
@@ -835,6 +836,8 @@ figure.pic.zoomable::after{content:"🔍 Tap to see it big";position:absolute;ri
 .fc.enter{animation:deal .45s cubic-bezier(.2,.8,.2,1)}
 @keyframes deal{from{opacity:0;transform:translateX(50px) rotate(2deg)}to{opacity:1;transform:none}}
 .fc .lbl{font-size:.85rem;letter-spacing:.07em;text-transform:uppercase;font-weight:900;color:var(--label)}
+.fc .lbl.long{text-transform:none;letter-spacing:0;font-size:calc(1rem * var(--k, 1));font-weight:800;line-height:1.35}   /* tools 30 (her 14:31): a long instruction in capitals is hard to read */
+.fc p.cue{margin:2px 0 0;color:var(--muted, #5F6368);font-size:calc(1rem * var(--k, 1));font-weight:600}
 .fc .say{font-size:calc(1.6rem * var(--k, 1));font-weight:700;line-height:1.3;margin:0}
 .fc .sm{font-size:calc(1.15rem * var(--k, 1));margin:0}
 .fc .kw{color:var(--label);font-weight:900;letter-spacing:.03em;text-transform:uppercase;margin-left:.4em}
@@ -1254,6 +1257,12 @@ figure.pic.zoomable::after{content:"🔍 Tap to see it big";position:absolute;ri
 .kbub.w > span{left:8%;right:9%}
 button.kbub{cursor:pointer} button.kbub small{display:block;font-size:.85rem;font-weight:700;color:var(--muted)} .kb-dots{font-size:1.6rem;letter-spacing:.2em;color:#9A9A9A}
 .kbub.w.open > span{animation:ansIn .3s ease-out}
+/* tools 30 (her 6.11 14:38, C1 scenes: «ответы не влезают в баббл»): the text is one block inside (bold parts stay in the line), and the
+   open answer's bubble grows with its text — the bubble stretches, its tail stays at the bottom */
+.kbub .kb-t{display:block}
+.kbub.w.open{aspect-ratio:auto;max-width:22rem}
+.scn-bubs:has(.kbub.w.open) .kbub.y{max-width:12.5rem} .scn-bubs:has(.kbub.w.open) .kbub.y > span{font-size:calc(1.08rem * var(--k, 1))}   /* the question's bubble makes room for the answer */
+.kbub.w.open > span{position:relative;inset:auto;left:auto;right:auto;top:auto;bottom:auto;display:block;padding:11% 12% 23% 15%;font-size:calc(1.06rem * var(--k, 1));line-height:1.3}
 @media (max-width:760px){ .scn-pair{grid-template-columns:minmax(0,1fr)} }
 .rl-carda{display:block;margin-top:8px;font-size:calc(1.15rem * var(--k, 1));font-weight:700;color:#0679BD;animation:ansIn .3s ease-out}
 .rl-carda b{color:#C00000}
@@ -3444,8 +3453,8 @@ function scenesHTML(b){
   const fig = `<figure class="scn ${S.enter || st.dealt ? "deal" : ""}" style="margin:0">${x._missing ? altFramesHTML(x.alt) : `<img src="${esc(x.img)}" alt="${esc(x.alt || "")}">`}${x.credit ? `<figcaption>${creditHTML(x.credit)}</figcaption>` : ""}</figure>`;
   /* tools 28 (B2 03.11 22:15, her Slide Kit bubbles): the line of the one who loved it in a yellow bubble beside the close-up; an example
      reply in a white one, hidden until they tap it (or Next shows it first, then the next scene) */
-  const bubs = x.say || x.example ? `<div class="scn-bubs">${x.say ? `<div class="kbub y"><span>${mk(x.say)}</span></div>` : ""}${x.example ? (sc.ex && sc.ex[k]
-      ? `<div class="kbub w open"><span>${mk(x.example)}</span></div>` : `<button class="kbub w" data-scnex><span><span class="kb-dots">•••</span><small>Tap to see an example</small></span></button>`) : ""}</div>` : "";
+  const bubs = x.say || x.example ? `<div class="scn-bubs">${x.say ? `<div class="kbub y"><span><span class="kb-t">${mk(x.say)}</span></span></div>` : ""}${x.example ? (sc.ex && sc.ex[k]
+      ? `<div class="kbub w open"><span><span class="kb-t">${mk(x.example)}</span></span></div>` : `<button class="kbub w" data-scnex><span><span class="kb-dots">•••</span><small>Tap to see an example</small></span></button>`) : ""}</div>` : "";
   return `<div class="scn-top">${dots}<button class="redo" data-peek>${b.street_label ? esc(b.street_label) : /maple/.test(b.street || "") ? "🏙 The whole street" : b.scenes.length > 1 ? `🖼 All ${["", "", "two", "three", "four", "five", "six", "seven", "eight"][b.scenes.length] || b.scenes.length} pictures` : "🖼 The whole picture"}</button></div>
     ${bubs ? `<div class="scn-pair">${fig}${bubs}</div>` : fig}${mine}`;
 }
@@ -3463,6 +3472,9 @@ function frontHTML(b, c, i, open){
   if(st === "share") return `${c.ctx ? `<p class="lctx">${mk(c.ctx)}</p>` : ""}<p class="say">A: ${mk(c.a)}</p>${c.hint ? `<p class="hintline">${mk(c.hint)}</p>` : ""}`;
   if(st === "bubble") return `<p class="sit">${mk(c.ctx)}</p><div class="scene"><img class="skimg fig" src="../sk-listen.png" alt="">
     <div class="bub ${open ? "said" : ""}">${open ? `<span>${mk(c.back)}</span>` : `<span class="dots" aria-label="What might they say?">•••</span>`}${TAIL}</div><img class="skimg fig" src="../sk-talk.png" alt=""></div>`;
+  /* tools 30 (C1 6.11 fixes-1, her 14:31): a grey ((cue)) at the end of a front goes on its own line, a bit smaller */
+  const cue = String(c.front || "").match(/^([\s\S]*?\S)\s*\(\(([^()]+)\)\)\s*$/);
+  if(cue && !c.key) return `<p class="say">${mk(cue[1])}</p><p class="cue">${mk(cue[2])}</p>${picHTML(b, open)}`;
   return `<p class="say">${mk(c.front)}${c.key ? `<span class="kw">${esc(c.key)}</span>` : ""}</p>${picHTML(b, open)}`;   /* tools 18: a key word in red (reformulation) */
 }
 const TAIL = `<svg class="tail" viewBox="0 0 46 34" aria-hidden="true"><path d="M2 0 C 14 12, 28 24, 43 32 C 31 18, 27 9, 25 0 Z" fill="var(--card)"/><path d="M2 2 C 14 12, 28 24, 43 32 C 31 18, 27 9, 25 2" fill="none" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/></svg>`;
@@ -3510,7 +3522,7 @@ function cardsHTML(b){
   }
   const i = d.queue[0], c = d.cards[i], first = d.got.size + d.again.size === 0;
   return `${dots}${ledCardTools(c)}<div class="fc ${d.flipped ? "open" : ""} ${d.fresh ? "enter" : ""}" data-flip ${d.flipped ? "" : `role="button" tabindex="0" aria-label="Show the answer"`}>
-      <span class="lbl">${esc(cardInstr(b, i, first) || "")}</span>${frontHTML(b, c, i, d.flipped)}
+      <span class="lbl${String(cardInstr(b, i, first) || "").length > 40 ? " long" : ""}">${esc(cardInstr(b, i, first) || "")}</span>${frontHTML(b, c, i, d.flipped)}
       ${d.flipped ? ansHTML(b, c) : `<span class="corner">tap to check ↓</span>`}</div>
     <div class="deck-act">${d.flipped ? `<button class="btn again" data-again>↺ Again later</button><button class="btn ok" data-got>✓ Got it</button>` : ""}</div>`;
 }
@@ -3827,7 +3839,8 @@ function sortHTML(b){
     ${b.end ? `<div class="fs-end"><p class="fs-q">${mk(b.end.q)}</p><details><summary>Tap to see</summary><p>${mk(b.end.a)}</p></details></div>` : ""}
     <p class="fs-again"><button class="linklike" data-fsagain>↺ Do it again</button></p></div>`;
   const it = items[Q.at];
-  const ask = !Q.open ? `Say it in English — aloud. Then tap to check.${it.mode === "auto" ? " Watch the first one." : ""}` : Q.landed ? "✓ That's its box." : it.mode === "auto" ? "Watch: it goes into its box." : "Now put it in its box: tap the box (or drag the card).";
+  /* tools 30 (C1 6.11 fixes-1): the prompt is an English word, not Russian → "Say a sentence with it"; a block may set its own "ask" */
+  const ask = !Q.open ? `${b.ask || (/[А-Яа-яЁё]/.test(it.ru || "") ? "Say it in English — aloud." : "Say a sentence with it — aloud.")} Then tap to check.${it.mode === "auto" ? " Watch the first one." : ""}` : Q.landed ? "✓ That's its box." : it.mode === "auto" ? "Watch: it goes into its box." : "Now put it in its box: tap the box (or drag the card).";
   return `<div class="fsort"><div class="fs-pats">${b.patterns.map(p => { const n = inPat(p.id).length;
       return `<button class="fs-pat${Q.open && !Q.landed && it.mode === "hint" && p.id === it.p ? " glow" : ""}" data-fsp="${esc(p.id)}"><span class="fs-en">${mk(p.en)}</span><span class="fs-ru">${esc(p.ru)}</span>${n ? `<span class="fs-c">${n}</span>` : ""}${Q.why && Q.why.p === p.id ? `<span class="fs-why">${mk(Q.why.t)}</span>` : ""}</button>`; }).join("")}</div>
     <div class="fs-card${Q.open ? " open" : ""}${Q.landed ? " landed" : ""}${Q.open && !Q.landed && it.mode !== "auto" ? " grab" : ""}" data-fscard><span class="fs-n">${Q.at + 1} of ${items.length}</span>
@@ -4068,7 +4081,7 @@ function blockHTML(b){
   const tip = S.howto && b.tip ? `<p class="tip">🎓 How it works: ${mk(b.tip)}</p>` : "";
   const how = demoKind(b) ? ` <button class="g-howto" data-gdemo>▶ How to play</button>` : "";   /* tools 21 */
   const ledI = instr && instr === b.instr && LEDP["blocks." + b._pos + ".instr"] ? ledBtn("blocks." + b._pos + ".instr") : "";   /* tools 24 */
-  return `${tip}${instr ? `<p class="finstr"${ledI ? " data-live-host" : ""}>${mk(instr)}${how}${npHTML(b)}${ledI}</p>` : npHTML(b)}<section class="blk ${S.enter ? "enter" : ""}" data-blk="${b._id}">${body}</section>`;
+  return `${tip}${instr ? `<p class="finstr${D.instr_frames || b.kind === "sort" ? " frames" : ""}"${ledI ? " data-live-host" : ""}>${mk(instr)}${how}${npHTML(b)}${ledI}</p>` : npHTML(b)}<section class="blk ${S.enter ? "enter" : ""}" data-blk="${b._id}">${body}</section>`;
 }
 /* ---------- tools 25 (her 2.11 06:56, the wheel on «At the water cooler»: one spin, one answer, the hand goes to Next — and the game was
    gone; «не полагаемся на поведение студентов»): in a game Next is the game's next move — spin, roll, flip, sail, show the answer — until

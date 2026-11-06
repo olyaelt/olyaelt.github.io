@@ -78,6 +78,8 @@ Several Claude chats save into this folder. Each part has one owner, so nobody s
   - `"fast"` may be a list; a block's own `fast` shows under it after its last question (not only on the last screen); on the last screen a block with its own `fast` shows only that.
   - `~~struck~~` in box lines and in a glossary's Russian note.
   - The open wheel answer takes the wheel's place (B2 fixes-3: 4–6 lines per card).
+  - C1 fixes-1 (14:50): a card front ending in `((cue))` shows the cue on its own line, a bit smaller; a card label longer than 40 characters is in normal case; `**frame**` in a sort's instruction (or on a page with `"instr_frames": true`) is in a yellow marker; a sort whose prompts are English words asks «Say a sentence with it» (`"ask"` overrides).
+  - Scenes (her 14:38): the example bubble's text is one block (bold parts stay in the line) and the open bubble grows with it; the question's bubble gets smaller while the answer is open.
   - `tests/fix2_check.js`.
 - **Keys, engine 63 / tools 29** (her 6.11 09:55): → and ← are the screen's Next (Check / Finish) and Back, on the homework pages (`#go` / `#prev`) and on the field pages (the step bar; `keySteps(next, back)` in tool_base.js). Plain arrows, as in slides: Ctrl + ← → switches desktops on a Mac, Alt + ← and Cmd + ← are the browser's Back. Not while typing in a field, not on a held key; never a Send button. A page inside a field's tool block (`?embed=1`) sends its keys to the field (`lwKey`). The say-it cards page keeps its own: ← Again, → Got it. `tests/keys_check.js`.
 - **Subtitles on the field pages, tools 29:** the listening block's player does the same as the homework player — once per load (`LIS.loadN`, `lisCcOff`). `tests/field_captions_check.js`.

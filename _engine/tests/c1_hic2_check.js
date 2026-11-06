@@ -25,24 +25,30 @@ const {chromium} = require('playwright'); const path = require('path'); const fs
   await go(0, 0); out.w = await p.evaluate(() => ({instr: !!document.querySelector('#main .finstr'), fig: !!document.querySelector('#main figure.pic'), links: [...document.querySelectorAll('#main p.credit a')].map(a => [a.target, a.rel, /^https:/.test(a.href)])}));
   expect('warm-up: the photo alone, the credit links open in a new tab', !out.w.instr && out.w.fig && out.w.links.length === 2 && out.w.links.every(l => l[0] === '_blank' && l[1] === 'noopener' && l[2]), out.w);
   // video: three parts with glossary + source, two memorisation screens with gaps
-  for (const bi of [0, 1, 2]) { await go(1, bi); const v = await p.evaluate(() => ({cred: (document.querySelector('#main p.credit') || {}).textContent || '', gl: document.querySelectorAll('#main aside.gloss .gl').length, ipa: [...document.querySelectorAll('#main aside.gloss .ipa')].length}));
+  for (const bi of [3, 4, 5]) { await go(1, bi); const v = await p.evaluate(() => ({cred: (document.querySelector('#main p.credit') || {}).textContent || '', gl: document.querySelectorAll('#main aside.gloss .gl').length, ipa: [...document.querySelectorAll('#main aside.gloss .ipa')].length}));
     expect(`video ${bi + 1}: its glossary, the IPA shown, the source line`, /Empower C1 Workbook/.test(v.cred) && v.gl >= 5 && v.ipa >= 1, v); }
-  await go(1, 0); out.del = await p.evaluate(() => document.querySelectorAll('#main aside.gloss .ru .m-del').length); expect('a struck form in a glossary note («in our days»)', out.del === 1, out.del);
-  for (const bi of [3, 4]) { await go(1, bi); const g = await p.evaluate(() => document.querySelectorAll('#main .dlg .gp').length); expect(`memorisation ${bi - 2}: gaps with first letters`, g >= 10, g); }
+  await go(1, 3); out.del = await p.evaluate(() => document.querySelectorAll('#main aside.gloss .ru .m-del').length); expect('a struck form in a glossary note («in our days»)', out.del === 1, out.del);
+  for (const bi of [7, 8]) { await go(1, bi); const g = await p.evaluate(() => document.querySelectorAll('#main .dlg .gp').length); expect(`memorisation ${bi - 6}: gaps with first letters`, g >= 10, g); }
   // the first chat: two questions one at a time, its own ⚡ after the second
-  await go(1, 5); out.q1 = await p.evaluate(() => ({fast: !!document.querySelector('#main section.fast'), box: !!document.querySelector('#side aside.box')}));
+  await go(1, 9); out.q1 = await p.evaluate(() => ({fast: !!document.querySelector('#main section.fast'), box: !!document.querySelector('#side aside.box')}));
   await p.click('.stepbar [data-step]'); await p.waitForTimeout(300);
   out.q2 = await p.evaluate(() => { const f = document.querySelector('#main section.fast'); return {fast: f ? f.innerText : '', stage: S.stage}; });
   expect('the first chat: the box beside, ⚡ only after the second question, with its own line', !out.q1.fast && out.q1.box && /hardly changed/.test(out.q2.fast) && !/bring back/.test(out.q2.fast) && out.q2.stage === 1, {q1: out.q1, q2: out.q2});
-  // practice: one deck — 11 form cards (FORM), then 6 make-sentence cards (ABC) with their own instruction and 💬 Your turn
-  await go(2, 0);
-  out.deck = await p.evaluate(() => { const b = curBlock(); return {n: b.cards.length, box0: boxFor(b), del: document.querySelectorAll('#side aside.box .m-del').length}; });
-  expect('practice: one deck of 17 cards, box FORM first, «more busier» struck', out.deck.n === 17 && out.deck.box0 === 'FORM' && out.deck.del === 1, out.deck);
-  out.c12 = await p.evaluate(() => { const b = curBlock(), d = deckOf(b); d.queue = [11].concat(d.queue.filter(i => i !== 11)); d.flipped = false; render(); return {box: boxFor(b), lbl: (document.querySelector('#main .deck .fc .lbl, #main .deck .fc .fc-lbl, #main .deck .flab') || document.querySelector('#main .deck')).innerText.slice(0, 120)}; });
-  expect('card 12 (make sentences): box ABC, its own instruction', out.c12.box === 'ABC' && /make a sentence from the words/i.test(out.c12.lbl), out.c12);
+  // fixes-1 (her 14:29–14:36): Video starts with the question, who says what (speaker photos), watch again; whereas in glossary 1
+  out.v = await p.evaluate(() => D.stages[1].blocks.map(b => b.kind)); expect('video: 10 screens in her order', out.v.join() === 'text,text,say,text,text,text,questions,text,text,questions', out.v);
+  await go(1, 1); out.sp = await p.evaluate(() => [...document.querySelectorAll('#main .dlg img')].filter(i => i.naturalWidth > 0).length); expect('who says what: the speakers\' photos beside their lines', out.sp === 3, out.sp);
+  await go(1, 3); out.wh = await p.evaluate(() => /whereas/.test(document.querySelector('#main aside.gloss').innerText) && document.querySelectorAll('#main .dlg img').length >= 1); expect('transcript 1: «whereas» in the glossary, the speaker\'s photo', out.wh, out.wh);
+  // practice: input → rules → box → sort → the 6 make-sentence cards → the recall, one box (BOX) all the way
+  out.pr = await p.evaluate(() => D.stages[2].blocks.map(b => b.kind + ':' + (b.box || ''))); expect('practice: input, rules, box, sort, cards, recall; only BOX', out.pr.join() === 'say:,say:,questions:BOX,sort:,cards:BOX,text:', out.pr);
+  out.boxes = await p.evaluate(() => Object.keys(D.boxes).sort().join()); expect('only BOX and FL left', out.boxes === 'BOX,FL', out.boxes);
+  await go(2, 3); out.sort = await p.evaluate(() => ({mark: !!document.querySelector('#main .finstr.frames b.bx'), pats: document.querySelectorAll('#main .fs-pat').length, n: curBlock().items.length, ask: (document.querySelector('#main .fsort') || {}).innerText || ''}));
+  expect('the sort: the frame in a marker, four boxes, 15 words, «Say a sentence with it»', out.sort.mark && out.sort.pats === 4 && out.sort.n === 15 && /Say a sentence with it/.test(out.sort.ask), Object.assign({}, out.sort, {ask: out.sort.ask.slice(0, 80)}));
+  await go(2, 4);
+  out.card = await p.evaluate(() => { const l = document.querySelector('#main .deck .fc .lbl'), cue = document.querySelector('#main .deck .fc p.cue'); return {long: l.classList.contains('long'), tt: getComputedStyle(l).textTransform, cue: cue ? cue.textContent : '', box: boxFor(curBlock())}; });
+  expect('make-sentence cards: the instruction in normal case, the grey cue on its own line, box BOX', out.card.long && out.card.tt === 'none' && /renovated/.test(out.card.cue) && out.card.box === 'BOX', out.card);
   await p.click('.stepbar [data-step]'); await p.waitForTimeout(250); await p.click('.stepbar [data-step]'); await p.waitForTimeout(300);
   out.turn = await p.evaluate(() => ({turn: deckOf(curBlock()).turn, t: /your turn/i.test(document.querySelector('#main').innerText)}));
-  expect('after its answer: 💬 Your turn', out.turn.turn === 11 && out.turn.t, out.turn);
+  expect('after its answer: 💬 Your turn', out.turn.turn != null && out.turn.t, out.turn);
   expect('the Your turn screen fits', (await fits()).ok, await fits());
   // use it: the six photos with ⏱ and the credit on one row, the reactions under them
   await go(3, 0); out.pic = await p.evaluate(() => { const row = document.querySelector('#main .ptimer-row.pcred'); return {row: !!row, tm: row && !!row.querySelector('[data-ptimer]'), cred: row && !!row.querySelector('p.credit a'), task: /Is that a good thing/.test((document.querySelector('#main p.task') || {}).textContent || ''), frames: document.querySelectorAll('#main .alt-grid .alt-f').length, imgs: document.querySelectorAll('#main figure.pic img').length}; });
@@ -57,7 +63,9 @@ const {chromium} = require('playwright'); const path = require('path'); const fs
     expect('an arrow closes the big picture and doesn\'t step on', !out.tz2.open && out.tz2.at === 0, out.tz2); }
   await go(3, 1); out.sc = [];
   for (let k = 0; k < 6; k++) { out.sc.push(await p.evaluate(() => ({cred: (document.querySelector('#main figure.scn figcaption p.credit') || {}).textContent || '', say: /Has it changed much/.test(document.querySelector('#main .scn-bubs') ? document.querySelector('#main .scn-bubs').innerText : '')})));
-    const f = await fits(); expect(`scene ${k + 1} fits`, f.ok, f); await p.click('.stepbar [data-step]'); await p.waitForTimeout(250); await p.click('.stepbar [data-step]'); await p.waitForTimeout(250); }
+    await p.click('.stepbar [data-step]'); await p.waitForTimeout(250);
+    const f = await fits(), ib = await p.evaluate(() => { const w = document.querySelector('#main .kbub.w.open'), t = w && w.querySelector('.kb-t'); if (!w) return false; const a = w.getBoundingClientRect(), c = t.getBoundingClientRect(); return c.bottom <= a.bottom - a.height * .12 && c.left >= a.left + 8 && c.right <= a.right - 4; });
+    expect(`scene ${k + 1}: with its answer open it fits, the answer inside its bubble (her 14:38)`, f.ok && ib, {f, ib}); await p.click('.stepbar [data-step]'); await p.waitForTimeout(250); }
   expect('six scenes, each with its credit and the question bubble', out.sc.every(x => x.cred.length > 3 && x.say), out.sc);
   await go(3, 2); out.end = await p.evaluate(() => { const f = document.querySelector('#main section.fast'); return {lines: f ? f.querySelectorAll('p').length : 0, t: f ? f.innerText : '', box: boxFor(curBlock()), bh: document.querySelectorAll('#side aside.box .bh').length}; });
   expect('then & now: box FL with first letters, ⚡ with its two lines only', out.end.box === 'FL' && out.end.bh > 20 && out.end.lines === 2 && !/hardly changed/.test(out.end.t), out.end);
