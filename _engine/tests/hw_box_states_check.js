@@ -12,7 +12,10 @@ const {chromium} = require('playwright'); const path = require('path');
     await p.goto('file://' + path.join(site, 'c1/2026-11-06.html')); await p.waitForTimeout(400);
     const go = async (id, k) => { await p.evaluate(([id, k]) => { current = TASKS.find(t => t.id === id); stepIdx = k; checked = false; renderTask(); }, [id, k]); await p.waitForTimeout(200); };
     // gapped: the box from the start, its forms hidden, a tap opens one, a second tap hides it
-    await go('e1', 1);   /* fixes-1: step 0 is the box as a gap text; step 1 «your turn» has the gapped box */
+    await go('e1', 1);   /* step 0 is the box task; her 07.11 15:09: from step 1 the box beside the pictures is folded — Peek opens it gapped */
+    const fz = await p.evaluate(() => ({bar: !!document.querySelector('[data-peek]'), bgap: document.querySelectorAll('aside.box .bgap').length, ip: document.querySelectorAll('.instr .ip').length, six: /Six places/.test(document.querySelector('.instr').textContent)}));
+    expect(`${vp.width} e1 first picture: the box folded, the instruction in paragraphs, no «Six places»`, fz.bar && fz.bgap === 0 && fz.ip === 2 && !fz.six, fz);
+    await p.click('[data-peek]'); await p.waitForTimeout(200);
     const g0 = await p.evaluate(() => ({box: !!document.querySelector('aside.box'), n: document.querySelectorAll('aside.box .bgap').length, t: document.querySelector('aside.box .bgap').textContent}));
     expect(`${vp.width} gapped: the box is there before Check, forms hidden`, g0.box && g0.n >= 15 && /…/.test(g0.t), g0);
     // her 07.11 13:52: beside the pictures no fork — the red pattern once, the words in runs with commas, the Russian beside each

@@ -381,6 +381,7 @@ body.pic-zoomed{overflow:hidden}
 .box p.stem + p.sub{margin-top:0}
 .box p.run{line-height:1.55}
 .box p.run .ru, .box p.stem .ru{display:inline}
+.instr .ip{display:block;margin-top:.5em}   /* a second paragraph in an instruction (her 15:09: «делаем отбивку, и следующим абзацем…») */
 .box p.run .it{display:inline-block}   /* a word and its Russian wrap together */
 /* wide enough: the stem beside the line (a narrow column or a phone: the stem above it) */
 @container (min-width:24em){ .box .fork-in{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:.55em}
@@ -3814,7 +3815,11 @@ function renderGate(){
 /* engine 60: the sections of a topic — the three of the homework pages in their order, then any other a page uses (her own pages: none,
    the tasks in their order) */
 const SECS = ["Revision", "Extension", "Over to you!"];
-const secsOf = tp => { const own = [...new Set(TASKS.filter(t => t.topic === tp.id).map(t => t.sec || ""))]; return SECS.filter(x => own.includes(x)).concat(own.filter(x => !SECS.includes(x))); };
+/* engine 63 also (her 07.11 15:09, C1 6.11: «разделить extension 1 и extension 2, чтобы было визуально видно два блока»): "Extension 1",
+   "Extension 2"… take the Extension place, in their own order */
+const secRank = x => { const i = SECS.findIndex(s => x === s || x.startsWith(s + " ")); return i < 0 ? 99 : i; };
+const secsOf = tp => { const own = [...new Set(TASKS.filter(t => t.topic === tp.id).map(t => t.sec || ""))];
+  return own.map((x, j) => [x, j]).sort((a, b) => secRank(a[0]) - secRank(b[0]) || a[1] - b[1]).map(a => a[0]); };
 function renderHome(justDone){
   if(LOCKED()) return renderGate();
   current = null;

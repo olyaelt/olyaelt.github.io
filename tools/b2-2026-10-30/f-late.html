@@ -4192,6 +4192,7 @@ function stepPending(b){
   if(b.kind === "picture" && b.answer) return !st.shown;   /* tools 18: the retell's whole text */
   if(b.kind === "council") return cnPending(b);   /* tools 18: the next subject, then Decide */
   if(b.kind === "fix") return fixPending(b);   /* tools 16 */
+  if(b.kind === "sort") return sortPending(b);   /* tools 30 also (her 7.11 15:11, C1 class view: the sort was the last block and Next stopped after the first adjective) */
   if(b.kind === "game") return gamePending(b) || gameLive(b);
   if(b.kind === "listen") return lisPending(b);   /* tools 26 */   /* tools 25: a game being played is never "done" */
   if(b.kind === "cards") return deckOf(b).queue.length > 0 || deckOf(b).turn != null || (st.look != null && (!!st.lookBack || !st.lookOpen));
