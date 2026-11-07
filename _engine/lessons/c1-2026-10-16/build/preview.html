@@ -357,7 +357,57 @@ body.pic-zoomed{overflow:hidden}
 .dlg .lph{position:absolute;left:0;top:2px;width:38px;height:38px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px var(--card)}
 .box b.pat{color:var(--label)}   /* the pattern, red as the box heading (C1 6.11 fixes-1) */
 .box p.sub{font-size:.8em;color:var(--muted);font-weight:400;margin:8px 0 0}
+/* engine 63 also (her 07.11 13:35, C1 6.11 BOX_COMP: «многовато этих It's gotten a lot… collocation fork»): the pattern once, a vertical
+   line, the words under each other — <div class="fork"><b class="pat fork-stem">It's gotten a lot</b><div class="fork-list"><p>…</p>…</div></div> */
+.box .fork{container-type:inline-size;margin:.3em 0 .45em}
+.box .fork-stem{display:block;line-height:1.2;margin-bottom:.15em}
+.box .fork-list{border-left:3px solid var(--label);padding:.1em 0 .1em .6em;margin-left:.3em;display:grid;grid-template-columns:repeat(auto-fill,minmax(12em,1fr));gap:.12em .9em;align-content:start}
+.box .fork-list p{margin:0}
+.box .fork-list p.sub{grid-column:1/-1;margin:.3em 0 0}
+.box .fork-list p.sub:first-child{margin-top:0}
+.box .fork-list .ru{display:inline}   /* the Russian stays beside its word in a fork, also on a phone */
+/* her 07.11 13:52: beside a picture no fork — the red pattern once, then the words in one run with commas, the Russian beside each */
+.box p.stem{margin-top:.45em}
+.box h4 + p.stem{margin-top:0}
+.box p.stem + p.sub{margin-top:0}
+.box p.run{line-height:1.55}
+.box p.run .ru, .box p.stem .ru{display:inline}
+.box p.run .it{display:inline-block}   /* a word and its Russian wrap together */
+/* wide enough: the stem beside the line (a narrow column or a phone: the stem above it) */
+@container (min-width:24em){ .box .fork-in{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:.55em}
+  .box .fork-stem{max-width:8.5em;text-align:right;margin:0} .box .fork-list{margin-left:0} }
+/* the box task of forks on a computer: the big fork on the left (its words in two columns), the others on the right */
+@media (min-width:720px){ .box-task .box:has(.fork){display:grid;column-count:auto;grid-template-columns:minmax(0,3fr) minmax(0,2fr);grid-template-rows:auto auto auto auto 1fr;column-gap:1.6rem;align-items:start}
+  .box-task .box .fork-list{grid-template-columns:repeat(auto-fill,minmax(9.5em,1fr))}
+  .box-task .box:has(.fork) > .sticker, .box-task .box:has(.fork) > h4{grid-column:1/-1}
+  .box-task .box:has(.fork) > .fork:first-of-type{grid-column:1;grid-row:span 3}
+  .box-task .box:has(.fork) > :not(.fork:first-of-type):not(.sticker):not(h4){grid-column:2} }
 @media (min-width:720px){ .actions.under{position:static;background:none} }
+.think-row{display:flex;align-items:center;flex-wrap:wrap;gap:6px 16px;margin-top:6px}
+.think-row .hourglass{margin:0}
+.think-row .hg-svg{width:2.4rem}
+.think-row .actions.in-card{position:static;background:none;flex:1 1 260px;margin:0;padding:0}
+.pic-row{display:grid;gap:10px;margin-bottom:12px}
+.pic-row .step-pic{margin:0}
+.pic-row .pic-instr{margin:0;order:-1}
+.stage .panel{container-type:inline-size}
+@container (min-width:640px){ .pic-row{grid-template-columns:minmax(0,3fr) minmax(0,2fr);align-items:start} .pic-row .pic-instr{order:0} }
+.hourglass{display:flex;align-items:center;margin:10px 0 2px}
+.hg-btn{all:unset;cursor:pointer;display:block;border-radius:10px}
+.hg-btn:focus-visible{outline:3px solid var(--instr);outline-offset:4px}
+.hg-svg{width:3.4rem;height:auto;display:block;overflow:visible}
+.hg-rot{transform-origin:60px 90px;transform-box:view-box}
+.hg-glass{fill:color-mix(in srgb,var(--instr) 9%,var(--card))}
+.hg-line{fill:none;stroke:var(--ink);stroke-width:3;stroke-linejoin:round}
+.hg-sand{fill:#F2B705}
+.hg-stream{stroke:#F2B705;stroke-width:2.4;transition:opacity .2s}
+.hg-cap{fill:#B9772E;stroke:var(--ink);stroke-width:3}
+.hg-post{stroke:var(--ink);stroke-width:4;stroke-linecap:round}
+.btn.primary.ready{box-shadow:0 0 0 4px color-mix(in srgb,var(--instr) 30%,transparent);animation:hgReady 1.6s ease-in-out 3}
+@keyframes hgReady{50%{box-shadow:0 0 0 9px color-mix(in srgb,var(--instr) 12%,transparent)}}
+.box-task .box{margin-top:0;font-size:1rem;border:0;padding:4px 0}
+.box-task .box > .sticker{column-span:all;width:7.5rem;margin:-10px 0 0 -6px}   /* her 07.11 13:35: «с самого начала там будет написано, что это useful language» */
+@media (min-width:720px){ .box-task .box{display:block;column-count:2;column-gap:1.6rem} .box-task .box > *{break-inside:avoid} .box-task .box h4, .box-task .box p.sub{break-after:avoid} }
 .gap-input{font:inherit;font-weight:700;color:var(--answer);background:var(--ground);border:0;border-bottom:2px dashed var(--muted);border-radius:4px 4px 0 0;
   padding:2px 6px;width:min(100%,13em);margin-block:2px}
 .gap-input::placeholder{color:var(--muted);font-weight:400;font-style:italic}
@@ -3981,7 +4031,9 @@ function fitBoxes(){
   app.querySelectorAll(".stage .box").forEach(b => {
     const stage = b.closest(".stage");
     if(!BIG_SCREEN.matches){ b.style.fontSize = ""; if(stage) stage.classList.remove("box2"); return; }
-    const over = () => b.getBoundingClientRect().bottom + scrollY > innerHeight - 12;
+    /* the box task: the buttons stay at the bottom of the screen over it, so it fits above them (her 13:35: the sticker on it now) */
+    const act = b.closest(".box-task") && app.querySelector(".actions"), under = act ? act.offsetHeight : 0;
+    const over = () => b.getBoundingClientRect().bottom + scrollY > innerHeight - 12 - under;
     const fit = () => { let f = 1.15; b.style.fontSize = f + "rem";
       while(f > .9 && over()){ f = Math.round((f - .05) * 100) / 100; b.style.fontSize = f + "rem"; } return !over(); };
     if(stage) stage.classList.remove("box2");
@@ -4023,10 +4075,12 @@ const CLASS_MAT = null;
 function classHTML(){
   const c = CLASS_MAT; if(!c) return "";
   const tops = c.topics || [], safe = u => /^(https:\/\/|\.\.\/|[\w-]+\.html)/.test(u || "") ? u : "";
+  /* tools 30 also (her 07.11 12:00): a class page opened from here knows its way back (?hw=…) */
+  const m = location.pathname.match(/(b2|c1)\/(\d{4}-\d{2}-\d{2})\.html$/), withHw = u => m && /^\.\.\/tools\/[^?#]+-class\.html$/.test(u) ? `${u}?hw=${m[1]}/${m[2]}` : u;
   if(!safe(c.slides) && !tops.some(x => safe(x.href))) return "";
   const d = LESSON.date.slice(0, 5);
   return `<details class="cm-peek"><summary><span>📂 Class materials</span><span class="cm-n">· ${esc(d)}</span><span class="cm-open">▸ Open</span></summary>
-    <div class="cm-in">${tops.map((x, k) => safe(x.href) ? `<a class="cm-lk t${k % 2}" href="${esc(safe(x.href))}">${esc(x.t)}<span class="go">→</span></a>` : `<div class="cm-lk off">${esc(x.t)}</div>`).join("")}
+    <div class="cm-in">${tops.map((x, k) => safe(x.href) ? `<a class="cm-lk t${k % 2}" href="${esc(withHw(safe(x.href)))}">${esc(x.t)}<span class="go">→</span></a>` : `<div class="cm-lk off">${esc(x.t)}</div>`).join("")}
     ${safe(c.slides) ? `<div class="cm-gs">📊 The same lesson on <a href="${esc(safe(c.slides))}" target="_blank" rel="noopener">Google Slides</a></div>` : ""}</div></details>`;
 }
 const ON_SITE = /\.github\.io$|(^|\.)clickswith\.me$/.test(location.hostname) || location.protocol === "file:";   /* the list of all homework lives next to this page on the site */
@@ -4154,7 +4208,15 @@ function shell({count, pct, instr, stageHTML, withBox, actionsHTML, panel}){
   const db = document.getElementById("do-bm"); if(db) db.addEventListener("click", () => { const base = TASKS.find(x=>x.id===current.id), again = onceMoreTask(base); if(again){ current = again; stepIdx = 0; checked = false; renderTask(); } });
   const ts = document.getElementById("t-strip"); if(ts) ts.addEventListener("click",()=>renderTeacherTask(ts.dataset.strip));
   if(document.getElementById("t-mkbar")) wireMkBar(current.id);
+  picInstr();
   fitStepPic();
+}
+/* engine 63 also (her 07.11 13:03: «студенты могут пропустить инструкции… инструкции должны быть прямо рядом с картинкой на карточке»):
+   on a step with a picture the blue instruction moves into the card, beside the picture (on a phone: above it) */
+function picInstr(){
+  const fig = app.querySelector(".stage .panel > .step-pic"), ins = app.querySelector(".instr");
+  if(!fig || !ins || ins.closest(".pic-row")) return;
+  const row = document.createElement("div"); row.className = "pic-row"; fig.before(row); ins.classList.add("pic-instr"); row.append(fig, ins);
 }
 /* engine 63 also (her 07.11 10:25, C1 e1 on a laptop: «боюсь они кликнут show the answers, не заметив текст»): a step's picture gives way —
    on a short screen it shrinks until the first two lines under it show above the buttons (not below 150 px); a tap on it opens it big */
@@ -4164,7 +4226,7 @@ function fitStepPic(){
   act.classList.add("under");   /* her 10:26: «может просто next должен быть под текстом?» — on a laptop the buttons come after the text, not over it */
   fig.onclick = () => { const z = !fig.classList.contains("zoom"); fig.classList.toggle("zoom", z); document.body.classList.toggle("pic-zoomed", z); };
   const go = () => { if(!img.isConnected) return; img.style.maxHeight = "";
-    const next = fig.nextElementSibling; if(!next) return;
+    const next = (fig.closest(".pic-row") || fig).nextElementSibling; if(!next) return;
     const top = next.getBoundingClientRect().top + scrollY;              /* where the text starts, from the top of the page */
     const room = innerHeight - (wide ? 0 : act.offsetHeight) - 10;       /* on a phone the buttons stay at the bottom of the screen */
     const over = top + 72 - room; if(over <= 0) return;
@@ -4198,7 +4260,7 @@ function renderTask(){
   if(!t._once && !isTeacher()) savePos(t.id, stepIdx);
   const count = t._once ? `Once more: your bookmarks · ${stepIdx+1} of ${t.steps.length}` : `${stepIdx+1} of ${t.steps.length}`;
   const pct = Math.round((stepIdx)/t.steps.length*100);
-  ({dlg:renderDlg, gist:renderGist, rewrite:renderRewrite, fix:renderFix, sayit:renderSayit, share:renderShare, lookback:renderLookback, listen:renderListen, task:renderTaskCard, plan:renderPlan, produce:renderProduce, sort:renderSort})[st.type](st, count, pct);
+  ({dlg:renderDlg, gist:renderGist, rewrite:renderRewrite, fix:renderFix, sayit:renderSayit, boxtask:renderBoxTask, share:renderShare, lookback:renderLookback, listen:renderListen, task:renderTaskCard, plan:renderPlan, produce:renderProduce, sort:renderSort})[st.type](st, count, pct);
   if(!t._once) annotateMarks();
   window.scrollTo(0,0);
 }
@@ -4733,9 +4795,60 @@ document.addEventListener("click", e => {
   const g = e.target.closest && e.target.closest(".bgap");
   if(g){ if(!g.dataset.f) g.dataset.f = g.textContent; const open = !g.classList.contains("open"); g.classList.toggle("open", open); g.textContent = open ? g.dataset.a : g.dataset.f; }
 });
+/* the hourglass (engine 63 also; her 07.11 13:36: «sand timer у нас был разработан, и мы его делаем без времени, чтобы не давить»): the one
+   from the lesson pages (tools/game.js gHourglass), only the sand — no numbers, no «Time's up». It starts by itself, a tap turns it over
+   and starts it again; when the sand has run, Next glows. It never locks anything (her rule 5.11: no waiting times). */
+const HG_PATH = "M26 22 H94 C94 58 66 72 61 90 C66 108 94 122 94 158 H26 C26 122 54 108 59 90 C54 72 26 58 26 22Z";
+const hourglassHTML = sec => `<div class="hourglass" data-sec="${sec}"><button type="button" class="hg-btn" aria-label="An hourglass for ${sec >= 60 ? sec / 60 + " minute" + (sec > 60 ? "s" : "") : sec + " seconds"}. Tap to turn it over."><svg viewBox="0 0 120 180" class="hg-svg" aria-hidden="true"><g class="hg-rot">
+  <defs><clipPath id="hgClipTop"><path d="M26 22 H94 C94 58 66 72 61 88 H59 C54 72 26 58 26 22Z"/></clipPath><clipPath id="hgClipBot"><path d="M59 92 H61 C66 108 94 122 94 158 H26 C26 122 54 108 59 92Z"/></clipPath></defs>
+  <path d="${HG_PATH}" class="hg-glass"/><g clip-path="url(#hgClipTop)"><rect x="20" width="80" class="hg-sand hg-top" y="26" height="66"/></g>
+  <g clip-path="url(#hgClipBot)"><path class="hg-sand hg-pile" d=""/></g><line x1="60" y1="88" x2="60" y2="156" class="hg-stream"/>
+  <path d="${HG_PATH}" class="hg-line"/><rect x="12" y="8" width="96" height="14" rx="5" class="hg-cap"/><rect x="12" y="158" width="96" height="14" rx="5" class="hg-cap"/>
+  <line x1="18" y1="22" x2="18" y2="158" class="hg-post"/><line x1="102" y1="22" x2="102" y2="158" class="hg-post"/></g></svg></button></div>`;
+let hgRaf = 0;
+function startHourglass(){
+  cancelAnimationFrame(hgRaf); const el = app.querySelector(".hourglass"); if(!el) return;
+  const total = +el.dataset.sec * 1000, top = el.querySelector(".hg-top"), pile = el.querySelector(".hg-pile"), stream = el.querySelector(".hg-stream"), rot = el.querySelector(".hg-rot");
+  const H = {f: 0, run: false, t0: 0}, calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ready = on => { const g = document.getElementById("go"); if(g) g.classList.toggle("ready", on); el.classList.toggle("done", on); };
+  const paint = () => { const f = H.f, topH = 62 * Math.pow(1 - f, .8), y = 88 - topH; top.setAttribute("y", y.toFixed(1)); top.setAttribute("height", (topH + 4).toFixed(1));
+    const ph = 46 * Math.pow(f, .75), base = 158, peak = base - ph - 6 * Math.min(1, f * 4);
+    pile.setAttribute("d", f <= 0 ? "" : `M20 ${base + 2} L20 ${(base - ph).toFixed(1)} Q60 ${peak.toFixed(1)} 100 ${(base - ph).toFixed(1)} L100 ${base + 2}Z`);
+    stream.style.opacity = H.run && f < 1 ? 1 : 0; stream.setAttribute("y2", (base - ph - 2).toFixed(1)); };
+  const tick = now => { if(!el.isConnected) return; H.f = Math.min(1, (now - H.t0) / total); paint();
+    if(H.f >= 1){ H.run = false; paint(); ready(true); return; } hgRaf = requestAnimationFrame(tick); };
+  const start = () => { H.f = 0; H.run = true; H.t0 = performance.now(); ready(false); hgRaf = requestAnimationFrame(tick); };
+  el.querySelector(".hg-btn").onclick = () => { cancelAnimationFrame(hgRaf); H.run = false;
+    if(calm){ start(); return; }
+    const t0 = performance.now(), turn = now => { if(!el.isConnected) return; const t = Math.min(1, (now - t0) / 650);
+      rot.style.transform = `rotate(${(180 * (1 - Math.pow(1 - t, 3))).toFixed(1)}deg)`;
+      if(t < 1){ hgRaf = requestAnimationFrame(turn); return; } rot.style.transform = ""; H.f = 0; paint(); start(); };
+    hgRaf = requestAnimationFrame(turn); };
+  paint(); start();
+}
+/* engine 63 also (her 07.11 13:03, C1 e1 «before the test сделаем в виде вот этого useful language box»): the box itself as the task —
+   the class box with its forms hidden (bgap), large, in the card; a tap opens one, Show the answers opens all */
+function renderBoxTask(st, count, pct){
+  shell({count, pct, instr: st.instr || "Say each line with the word in the right form. Then tap to check.",
+    stageHTML: `<div class="panel box-task">${box(st.html)}</div>`, withBox: false, actionsHTML: navButtons("Show the answers")});
+  if(checked) app.querySelectorAll(".box-task .bgap").forEach(g => { if(!g.dataset.f) g.dataset.f = g.textContent; g.classList.add("open"); g.textContent = g.dataset.a; });
+  wireNav(() => renderTaskKeep());
+}
 function renderSayit(st, count, pct){
   const s = st.s;
   const bx = st.box !== undefined ? st.box : (typeof BOX_CLOCKS !== "undefined" ? BOX_CLOCKS : "");
+  /* engine 63 also (her 07.11 13:03, C1 e1: «там, где минута перед заданием, там не нужно ответа вообще, ответы появляются на следующем…
+     песочные часы на минутку»): a think step — the picture, the box, a one-minute hourglass; no answer here, the button is Next */
+  if(st.think){ checked = true;
+    shell({count, pct, instr: st.instr || "Look at the picture for a minute.",
+      stageHTML: `<div class="panel">${picHTML(st.pic, st.picAlt)}${hourglassHTML(st.think === true ? 60 : st.think)}</div>${bx ? stepBox(st, bx) : ""}`,
+      withBox: !!bx, actionsHTML: navButtons()});
+    wireNav(() => {}); startHourglass();
+    /* on a laptop the box beside is tall, and Next under the whole stage fell below the screen: the buttons sit in the card, in one row
+       with the hourglass (on a phone they stay at the bottom of the screen) */
+    if(matchMedia("(min-width:720px)").matches){ const hg = app.querySelector(".panel .hourglass"), act = app.querySelector(".actions");
+      if(hg && act){ const row = document.createElement("div"); row.className = "think-row"; hg.before(row); row.append(hg, act); act.classList.add("in-card"); } }
+    return; }
   shell({count, pct,
     instr: st.instr || (st.first ? "Say it in English — aloud. Then tap the yellow box to check." : "Say it in English."),
     stageHTML: `
@@ -4964,7 +5077,10 @@ function partsHTML(parts){
 }
 function renderListen(st, count, pct){
   const lines = st.clip;
-  const instr = st.first
+  /* engine 63 also (C1 06.11 e4/e5): a listening task's own `instr` leads its first screen, the how-to after it */
+  const instr = st.first && current.instr
+    ? current.instr + " Tap a line to hear it (the top one plays the whole clip), then Check next to a gap, or Check answers."
+    : st.first
     ? "Tap the top line to hear the whole clip, or any line to hear just that line. Catch the missing words in the framed lines: type them if you like, then tap Check next to a gap, or Check answers for all of them."
     : "Listen and catch the missing words, then tap Check next to a gap, or Check answers.";
   let gk = 0;

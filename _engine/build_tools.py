@@ -254,6 +254,7 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
             if not (isinstance(lb, int) and 0 < lb <= len(last['blocks'])):
                 sys.exit('%s: class_view last_blocks must be 1…%d' % (path, len(last['blocks'])))
             dc['stages'] = dc['stages'][:-1] + [dict(last, blocks=last['blocks'][:lb])]
+        dc['class_of'] = lesson.split('-')[0]   # tools 30 also (her 07.11 12:00: «не вернуться обратно»): the class page links back to the homework
         page = fill(tpl, dc, lesson + '/' + name + '-class').replace('__LIVE__', 'false').replace('__SYNC_URL__', '')
         assert '__DATA__' not in page and '__PAGE_ID__' not in page, 'placeholder left in the class view of %s' % path
         open(os.path.join(out_dir, name + '-class.html'), 'w', encoding='utf-8').write(site_theme.add(page))

@@ -2026,7 +2026,7 @@
      "piece": "snakes",
      "box": "BOX",
      "check": "Check",
-     "instr": "Snakes and ladders: take turns to roll the dice and move. On your square, ask the next person: When did you…? Tap to check your question. Then they answer with a time phrase (from the box or your own: in my mid-twenties, two years ago; not sure? I can't remember exactly — at ten, maybe?) + one detail. Try from memory first — stuck? Peek at the box.",
+     "instr": "Snakes and ladders: take turns to roll the dice and move. **Ask** square: ask the next person When did you…? **Fix it** square: say the sentence correctly, then ask the question. Tap to check. Then they answer with a time phrase + one detail. Try from memory first — stuck? Peek at the box.",
      "rule": "Ladder + right question = go up. Snake + wrong question = go down. First to the top wins!",
      "tasks": [
       {
@@ -2046,6 +2046,12 @@
        "q": "learn to drive ((answer: I learned…))",
        "a": "**When did you** learn to drive?",
        "why": "did + базовая форма: “When did you learn…?”, не ~~learned~~."
+      },
+      {
+       "label": "Fix it",
+       "q": "“In 18, I left home.” ((Fix it. Then ask: How old were you when you left home?))",
+       "a": "**At 18**, I left home. → How old were you when you left home?",
+       "why": "возраст: **at** 18, не ~~in 18~~ (в тесте 06.11 так сказали почти все)"
       },
       {
        "label": "Ask",
@@ -2072,6 +2078,12 @@
        "why": "did + базовая форма: “When did you get…?”, не ~~got~~."
       },
       {
+       "label": "Fix it",
+       "q": "“I met my best friend on the third course.” ((Fix it. Then ask: When did you meet your best friend?))",
+       "a": "I met my best friend **in my third year** at university. → When did you meet your best friend?",
+       "why": "курс = year, на → in: не ~~on the third course~~"
+      },
+      {
        "label": "Ask",
        "q": "learn to cook ((answer: I learned…))",
        "a": "**When did you** learn to cook?",
@@ -2088,6 +2100,12 @@
        "q": "buy your first car ((answer: I bought…))",
        "a": "**When did you** buy your first car?",
        "why": "did + базовая форма: “When did you buy…?”, не ~~bought~~."
+      },
+      {
+       "label": "Fix it",
+       "q": "“When did you last seen your cousins?” ((Fix it. Then ask it.))",
+       "a": "When did you last **see** your cousins?",
+       "why": "did + базовая форма: see, не ~~seen~~"
       },
       {
        "label": "Ask",
@@ -2114,6 +2132,12 @@
        "why": "did + базовая форма: “When did you go…?”, не ~~went~~."
       },
       {
+       "label": "Fix it",
+       "q": "“I've learned to swim as a kid.” ((Fix it. Then ask: When did you learn to swim?))",
+       "a": "I **learned** to swim as a kid. → When did you learn to swim?",
+       "why": "as a kid — законченное прошлое → past simple, не ~~I've learned~~"
+      },
+      {
        "label": "Ask",
        "q": "move into your current home ((answer: I moved…))",
        "a": "**When did you** move into your current home?",
@@ -2130,6 +2154,12 @@
        "q": "start school ((answer: I started…))",
        "a": "**When did you** start school?",
        "why": "did + базовая форма: “When did you start…?”, не ~~started~~."
+      },
+      {
+       "label": "Fix it",
+       "q": "“I can't still drive.” ((Fix it. Then ask: Is there anything you still can't do?))",
+       "a": "I **still can't** drive. → Is there anything you still can't do?",
+       "why": "still — перед can't: не ~~I can't still~~"
       },
       {
        "label": "Ask",
@@ -2156,6 +2186,12 @@
        "why": "did + базовая форма: “When did you take…?”, не ~~took~~."
       },
       {
+       "label": "Fix it",
+       "q": "A friend: “I can't remember our first English teacher's name.” You: “I also don't remember.” ((Fix it. Then ask: Do you remember your first teacher's name?))",
+       "a": "**Me neither!** · or: I can't remember **either**. → Do you remember your first teacher's name?",
+       "why": "в ответ на чужое «не…» — Me neither / …either, не ~~also~~"
+      },
+      {
        "label": "Ask",
        "q": "open your first bank account ((answer: I opened…))",
        "a": "**When did you** open your first bank account?",
@@ -2172,6 +2208,12 @@
        "q": "take up your first hobby ((answer: I took…))",
        "a": "**When did you** take up your first hobby?",
        "why": "did + базовая форма: “When did you take…?”, не ~~took~~."
+      },
+      {
+       "label": "Fix it",
+       "q": "“I stopped eating meat at 20. From this time I don't eat meat.” ((Fix it. Then ask: Is there anything you stopped doing years ago?))",
+       "a": "I stopped eating meat at 20. **Since then, I haven't eaten** it. → Is there anything you stopped doing years ago?",
+       "why": "since then + present perfect, не ~~from this time I don't~~"
       },
       {
        "label": "Ask",
@@ -2196,6 +2238,12 @@
        "q": "learn to type ((answer: I learned…))",
        "a": "**When did you** learn to type?",
        "why": "did + базовая форма: “When did you learn…?”, не ~~learned~~."
+      },
+      {
+       "label": "Fix it",
+       "q": "“After I had graduated the university, I found a job.” ((Fix it. Then ask: What did you do right after school or university?))",
+       "a": "**After I graduated from** university, I found a job. · or: I found a job **straight out of university**. → What did you do right after school or university?",
+       "why": "graduate **from** university (без the); после after Past Perfect не нужен"
       }
      ],
      "box_state": "folded"

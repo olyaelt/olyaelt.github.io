@@ -58,7 +58,7 @@
   {
    "pid": 11,
    "sig": "game snakes and ladders: take turns to roll the dice and move. on your square, ask the next person: when did you…? tap to check your question. then they answer with a time phrase (from the box or your own: in my mid-twenties, two years ago; not sure? i can't remember exactly — at ten, maybe?) + one detail. try from memory first — stuck? peek at the box.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 12,
@@ -133,6 +133,11 @@
   {
    "pid": 26,
    "sig": "questions now your real stories. get ready for a minute: peek at the box and think what you'll say. then talk from memory.",
+   "gone": false
+  },
+  {
+   "pid": 27,
+   "sig": "game snakes and ladders: take turns to roll the dice and move. ask square: ask the next person when did you…? fix it square: say the sentence correctly, then ask the question. tap to check. then they answer with a time phrase + one detail. try from memory first — stuck? peek at the box.",
    "gone": false
   }
  ],
@@ -695,6 +700,46 @@
   {
    "pid": 111,
    "sig": "when did you last ride a bike? 16 ride a bike or: when was the last time you rode a bike? ride → rode ✗ when did you ride a bike last time? the answer: last weekend · last summer · as a kid not sure? i can't remember exactly — two years ago, maybe? + one detail: where did you go?",
+   "gone": false
+  },
+  {
+   "pid": 112,
+   "sig": "at 18, i left home. → how old were you when you left home? fix it “in 18, i left home.” fix it. then ask: how old were you when you left home? возраст: at 18, не in 18 (в тесте 06.11 так сказали почти все)",
+   "gone": false
+  },
+  {
+   "pid": 113,
+   "sig": "i met my best friend in my third year at university. → when did you meet your best friend? fix it “i met my best friend on the third course.” fix it. then ask: when did you meet your best friend? курс = year, на → in: не on the third course",
+   "gone": false
+  },
+  {
+   "pid": 114,
+   "sig": "when did you last see your cousins? fix it “when did you last seen your cousins?” fix it. then ask it. did + базовая форма: see, не seen",
+   "gone": false
+  },
+  {
+   "pid": 115,
+   "sig": "i learned to swim as a kid. → when did you learn to swim? fix it “i've learned to swim as a kid.” fix it. then ask: when did you learn to swim? as a kid — законченное прошлое → past simple, не i've learned",
+   "gone": false
+  },
+  {
+   "pid": 116,
+   "sig": "i still can't drive. → is there anything you still can't do? fix it “i can't still drive.” fix it. then ask: is there anything you still can't do? still — перед can't: не i can't still",
+   "gone": false
+  },
+  {
+   "pid": 117,
+   "sig": "me neither! · or: i can't remember either. → do you remember your first teacher's name? fix it a friend: “i can't remember our first english teacher's name.” you: “i also don't remember.” fix it. then ask: do you remember your first teacher's name? в ответ на чужое «не…» — me neither / …either, не also",
+   "gone": false
+  },
+  {
+   "pid": 118,
+   "sig": "i stopped eating meat at 20. since then, i haven't eaten it. → is there anything you stopped doing years ago? fix it “i stopped eating meat at 20. from this time i don't eat meat.” fix it. then ask: is there anything you stopped doing years ago? since then + present perfect, не from this time i don't",
+   "gone": false
+  },
+  {
+   "pid": 119,
+   "sig": "after i graduated from university, i found a job. · or: i found a job straight out of university. → what did you do right after school or university? fix it “after i had graduated the university, i found a job.” fix it. then ask: what did you do right after school or university? graduate from university (без the); после after past perfect не нужен",
    "gone": false
   }
  ],

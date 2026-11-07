@@ -18,7 +18,7 @@ const {chromium, devices} = require('playwright'); const path = require('path');
   expect('the full page keeps all its stages', out.full === 6, out.full);
   await p.goto('file://' + path.join(site, 'c1/2026-11-04.html')); await p.waitForTimeout(300);
   out.hw = await p.evaluate(() => [...document.querySelectorAll('.cm-peek .cm-lk')].map(a => a.getAttribute('href')));
-  expect('C1 homework 4.11: Class materials → the class view', out.hw.length === 1 && out.hw[0] === '../tools/c1-2026-11-04/practical-things-class.html', out.hw);
+  expect('C1 homework 4.11: Class materials → the class view', out.hw.length === 1 && /^\.\.\/tools\/c1-2026-11-04\/practical-things-class\.html(\?hw=c1\/2026-11-04)?$/.test(out.hw[0]), out.hw);
   console.log(JSON.stringify(out)); if (errs.length) fail.push('page errors: ' + errs.join(' | '));
   console.log(fail.length ? 'FAILED:\n' + fail.join('\n') : 'OK class view'); await b.close(); process.exit(fail.length ? 1 : 0);
 })();

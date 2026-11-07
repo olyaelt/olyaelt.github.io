@@ -18,7 +18,8 @@
   "OTY": "otu.json",
   "SPK1": "speaker-1.jpg",
   "SPK2": "speaker-2.jpg",
-  "SPK3": "speaker-3.jpg"
+  "SPK3": "speaker-3.jpg",
+  "TQ": "tq.json"
  },
  "earlier_only": [
   "back in my day",

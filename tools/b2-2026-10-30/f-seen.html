@@ -4327,15 +4327,24 @@ function stepBack(){
 const introHTML = () => `<section class="stage-intro ${S.enter ? "enter" : ""}" aria-label="${esc(D.stages[S.stage].label)}"><div class="si-card"><img src="../stage-cloud.png" alt=""><span class="si-name ${String(D.stages[S.stage].label).replace(/^[^A-Za-z]+/, "").length > 13 ? "long" : ""}">${esc(String(D.stages[S.stage].label).replace(/^[^A-Za-z]+/, ""))}</span></div></section>`;
 const cellName = () => D.board && D.board.col ? `${D.board.col} · $${D.board.value}` : "";
 const boardHref = () => D.boardPage ? `${D.boardPage}${LIVE_ON ? "-live" : ""}.html` : "";
+/* tools 30 also (her 07.11 12:00: from 📂 Class materials «не вернуться обратно»): a class page (-class.html) leads back — to the homework
+   it was opened from (?hw=b2/2026-11-06, set by the homework page), else to the group's list */
+function hwBack(){
+  if(!D.class_of || !/^(b2|c1)$/.test(D.class_of)) return null;
+  let hw = ""; try{ hw = new URLSearchParams(location.search).get("hw") || ""; }catch(e){}
+  return /^(b2|c1)\/\d{4}-\d{2}-\d{2}$/.test(hw) ? {href: `../../${hw}.html`, label: "Homework"} : {href: `../../${D.class_of}/index.html`, label: "All homework"};
+}
 function headHTML(){
   const st = SORD.map(i => [String(i), D.stages[i].label]).concat(liveTeacher() ? [["groups", "📥 Groups"]] : []);
   const howto = !D.demo && BLOCKS.some(b => b.tip) && S.view === "field" ? `<button class="btn slim howto" data-howto aria-pressed="${S.howto}" title="Show how each part of this page works (for the screen you share)">🎓 How it works</button>` : "";
   const board = boardHref() ? `<a class="board-top" href="${boardHref()}" title="Back to the game board">⬅ Board</a>` : "";   /* on top: the bottom is Back / Next only */
+  const hwb = hwBack();
+  const back = hwb ? `<a class="board-top" href="${hwb.href}" title="Back to the homework">⬅ ${hwb.label}</a>` : "";
   /* tools 25 (the German page: twelve parts took three rows and pushed the task off the screen): more than 8 parts → each button shows
      its sign, the current one its name too (the name on hover) */
   const many = SORD.length > 8, lbl = l => { const m = String(l).match(/^(\S+)\s+(.+)$/); return many && m ? `<span class="s-ic">${esc(m[1])}</span><span class="s-nm"> ${esc(m[2])}</span>` : l; };
   const nav = stagesHTML(st.map(([id, l]) => [id, lbl(l)]), S.view === "groups" ? "groups" : String(S.stage)).replace('<nav class="stages ', many ? '<nav class="stages many ' : '<nav class="stages ');
-  return `<header class="head">${board}${cellName() ? `<span class="part">${esc(cellName())}</span>` : ""}<h1>${esc(D.title)}</h1>${nav}${howto}${filmBtnHTML()}</header>${filmPanelHTML()}`;
+  return `<header class="head">${board}${back}${cellName() ? `<span class="part">${esc(cellName())}</span>` : ""}<h1>${esc(D.title)}</h1>${nav}${howto}${filmBtnHTML()}</header>${filmPanelHTML()}`;
 }
 /* tools 30: the big picture closes when the screen changes, and with Esc or an arrow (which then don't step on) */
 addEventListener("keydown", e => { const z = document.querySelector(".pic-zoom"); if(!z || !["Escape", "ArrowRight", "ArrowLeft", "Enter", " "].includes(e.key)) return;
