@@ -1,0 +1,968 @@
+{
+ "steps": [
+  {
+   "type": "dlg",
+   "intro": "The question in the video: “Has the area you live in changed much in recent years?” Three people answer. Speaker 1 grew up in Stratford-upon-Avon. Say the missing words — the glossary helps — then tap the yellow boxes to check.",
+   "lines": [
+    {
+     "s": "Interviewer",
+     "p": [
+      "Has the area you live in changed much in recent years?"
+     ]
+    },
+    {
+     "s": "Stratford",
+     "p": [
+      {
+       "f": "Y",
+       "r": "es"
+      },
+      ",",
+      " ",
+      {
+       "f": "i",
+       "r": "t"
+      },
+      " ",
+      {
+       "f": "h",
+       "r": "as"
+      },
+      ",",
+      " ",
+      {
+       "f": "a",
+       "r": "ctually"
+      },
+      ".",
+      " I'm originally from Stratford-upon-Avon, and ",
+      {
+       "f": "t",
+       "r": "hese"
+      },
+      " ",
+      {
+       "f": "d",
+       "r": "ays"
+      },
+      " I like to call it Restaurants-upon-Avon, because the whole town is ",
+      {
+       "f": "g",
+       "r": "eared"
+      },
+      " ",
+      {
+       "f": "t",
+       "r": "owards"
+      },
+      " the tourist industry. And ",
+      {
+       "f": "w",
+       "r": "hereas"
+      },
+      " perhaps ",
+      {
+       "f": "w",
+       "r": "hen"
+      },
+      " ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "as"
+      },
+      " ",
+      {
+       "f": "g",
+       "r": "rowing"
+      },
+      " ",
+      {
+       "f": "u",
+       "r": "p"
+      },
+      " there were more ",
+      {
+       "f": "i",
+       "r": "ndependent"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "hops"
+      },
+      ", fewer restaurants… ",
+      {
+       "f": "w",
+       "r": "hereas"
+      },
+      " now everything seems to be a Pret or a Prezzo or a Strada or an Ask. So, yes, I would say that my local area, especially my hometown, ",
+      {
+       "f": "h",
+       "r": "as"
+      },
+      " ",
+      {
+       "f": "c",
+       "r": "hanged"
+      },
+      " ",
+      {
+       "f": "q",
+       "r": "uite"
+      },
+      " ",
+      {
+       "b": "a"
+      },
+      " ",
+      {
+       "f": "l",
+       "r": "ot"
+      },
+      "."
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      "Yes, it has, actually."
+     ],
+     "m": "yes, in fact",
+     "ru": "вообще-то да"
+    },
+    {
+     "p": [
+      "these days ",
+      {
+       "ipa": "/ðiːz deɪz/"
+      }
+     ],
+     "m": "now",
+     "ru": "сейчас, в наши дни (не “in our days”)"
+    },
+    {
+     "p": [
+      "Restaurants-upon-Avon"
+     ],
+     "m": "a play on the name Stratford-upon-Avon",
+     "ru": "игра слов"
+    },
+    {
+     "p": [
+      "geared towards ",
+      {
+       "ipa": "/ɡɪəd təˈwɔːdz/"
+      }
+     ],
+     "m": "set up mainly for",
+     "ru": "заточен под"
+    },
+    {
+     "p": [
+      "when I was growing up ",
+      {
+       "ipa": "/wen aɪ wəz ˈɡrəʊɪŋ ʌp/"
+      }
+     ],
+     "m": "when I was a child or a teenager",
+     "ru": "когда я рос(ла)"
+    },
+    {
+     "p": [
+      "independent shops"
+     ],
+     "m": "small shops, not chains",
+     "ru": "небольшие несетевые магазины"
+    },
+    {
+     "p": [
+      "whereas ",
+      {
+       "ipa": "/weərˈæz/"
+      }
+     ],
+     "m": "while (to contrast two facts)",
+     "ru": "тогда как, а"
+    },
+    {
+     "p": [
+      "a Pret, a Prezzo…"
+     ],
+     "m": "chain cafés and restaurants",
+     "ru": "сетевые кафе и рестораны"
+    },
+    {
+     "p": [
+      "has changed quite a lot"
+     ],
+     "m": "is quite different now",
+     "ru": "довольно сильно изменился"
+    }
+   ],
+   "credit": "Source: Empower C1 Workbook (Cambridge University Press), video 9A"
+  },
+  {
+   "type": "dlg",
+   "intro": "Now the same text without the glossary.",
+   "lines": [
+    {
+     "s": "Interviewer",
+     "p": [
+      "Has the area you live in changed much in recent years?"
+     ]
+    },
+    {
+     "s": "Stratford",
+     "p": [
+      {
+       "f": "Y",
+       "r": "es"
+      },
+      ",",
+      " ",
+      {
+       "f": "i",
+       "r": "t"
+      },
+      " ",
+      {
+       "f": "h",
+       "r": "as"
+      },
+      ",",
+      " ",
+      {
+       "f": "a",
+       "r": "ctually"
+      },
+      ".",
+      " I'm originally from Stratford-upon-Avon, and ",
+      {
+       "f": "t",
+       "r": "hese"
+      },
+      " ",
+      {
+       "f": "d",
+       "r": "ays"
+      },
+      " I like to call it Restaurants-upon-Avon, because the whole town is ",
+      {
+       "f": "g",
+       "r": "eared"
+      },
+      " ",
+      {
+       "f": "t",
+       "r": "owards"
+      },
+      " the tourist industry. And ",
+      {
+       "f": "w",
+       "r": "hereas"
+      },
+      " perhaps ",
+      {
+       "f": "w",
+       "r": "hen"
+      },
+      " ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "as"
+      },
+      " ",
+      {
+       "f": "g",
+       "r": "rowing"
+      },
+      " ",
+      {
+       "f": "u",
+       "r": "p"
+      },
+      " there were more ",
+      {
+       "f": "i",
+       "r": "ndependent"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "hops"
+      },
+      ", fewer restaurants… ",
+      {
+       "f": "w",
+       "r": "hereas"
+      },
+      " now everything seems to be a Pret or a Prezzo or a Strada or an Ask. So, yes, I would say that my local area, especially my hometown, ",
+      {
+       "f": "h",
+       "r": "as"
+      },
+      " ",
+      {
+       "f": "c",
+       "r": "hanged"
+      },
+      " ",
+      {
+       "f": "q",
+       "r": "uite"
+      },
+      " ",
+      {
+       "b": "a"
+      },
+      " ",
+      {
+       "f": "l",
+       "r": "ot"
+      },
+      "."
+     ]
+    }
+   ],
+   "credit": "Source: Empower C1 Workbook (Cambridge University Press), video 9A"
+  },
+  {
+   "type": "dlg",
+   "intro": "Speaker 2 lives in Whetstone, in north London. Say the missing words, then tap to check.",
+   "lines": [
+    {
+     "s": "Interviewer",
+     "p": [
+      "Has the area you live in changed much in recent years?"
+     ]
+    },
+    {
+     "s": "Whetstone",
+     "p": [
+      {
+       "f": "N",
+       "r": "ot"
+      },
+      " ",
+      {
+       "f": "r",
+       "r": "eally"
+      },
+      ",",
+      " ",
+      {
+       "f": "n",
+       "r": "o"
+      },
+      ".",
+      " Well, for me it's stayed ",
+      {
+       "f": "p",
+       "r": "retty"
+      },
+      " ",
+      {
+       "f": "m",
+       "r": "uch"
+      },
+      " ",
+      {
+       "b": "the"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "ame"
+      },
+      ". There's not been a whole load of changes. I mean, buildings ",
+      {
+       "f": "k",
+       "r": "nocked"
+      },
+      " ",
+      {
+       "f": "d",
+       "r": "own"
+      },
+      ", new buildings being built — ",
+      {
+       "f": "q",
+       "r": "uite"
+      },
+      " ",
+      {
+       "b": "a"
+      },
+      " ",
+      {
+       "f": "f",
+       "r": "ew"
+      },
+      " new buildings, actually. But generally on the high street as well… different shops, but it's ",
+      {
+       "f": "p",
+       "r": "retty"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "tatic"
+      },
+      "… I don't know. It doesn't really change that much."
+     ]
+    },
+    {
+     "s": "Interviewer",
+     "p": [
+      "Where do you live?"
+     ]
+    },
+    {
+     "s": "Whetstone",
+     "p": [
+      "I live in Whetstone. It's in between Barnet and Finchley, in Greater London. It's a good place."
+     ]
+    },
+    {
+     "s": "Interviewer",
+     "p": [
+      "You like living there?"
+     ]
+    },
+    {
+     "s": "Whetstone",
+     "p": [
+      "Yeah, I do like living there. I like living in London."
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      "Not really, no."
+     ],
+     "m": "a soft “no”",
+     "ru": "да не особо"
+    },
+    {
+     "p": [
+      "pretty much the same ",
+      {
+       "ipa": "/ˈprɪti mʌtʃ ðə seɪm/"
+      }
+     ],
+     "m": "almost the same",
+     "ru": "почти без изменений"
+    },
+    {
+     "p": [
+      "a whole load of"
+     ],
+     "m": "a lot of (informal)",
+     "ru": "куча, масса"
+    },
+    {
+     "p": [
+      "knocked down ",
+      {
+       "ipa": "/nɒkt daʊn/"
+      }
+     ],
+     "m": "demolished — NOT built (AmE often: torn down)",
+     "ru": "снесли"
+    },
+    {
+     "p": [
+      "quite a few"
+     ],
+     "m": "quite a lot — NOT “a few”",
+     "ru": "довольно много"
+    },
+    {
+     "p": [
+      "the high street"
+     ],
+     "m": "the main shopping street (US: Main Street)",
+     "ru": "главная улица с магазинами"
+    },
+    {
+     "p": [
+      "pretty static ",
+      {
+       "ipa": "/ˈprɪti ˈstætɪk/"
+      }
+     ],
+     "m": "not changing",
+     "ru": "без перемен"
+    }
+   ],
+   "credit": "Source: Empower C1 Workbook (Cambridge University Press), video 9A"
+  },
+  {
+   "type": "dlg",
+   "intro": "Now without the glossary.",
+   "lines": [
+    {
+     "s": "Interviewer",
+     "p": [
+      "Has the area you live in changed much in recent years?"
+     ]
+    },
+    {
+     "s": "Whetstone",
+     "p": [
+      {
+       "f": "N",
+       "r": "ot"
+      },
+      " ",
+      {
+       "f": "r",
+       "r": "eally"
+      },
+      ",",
+      " ",
+      {
+       "f": "n",
+       "r": "o"
+      },
+      ".",
+      " Well, for me it's stayed ",
+      {
+       "f": "p",
+       "r": "retty"
+      },
+      " ",
+      {
+       "f": "m",
+       "r": "uch"
+      },
+      " ",
+      {
+       "b": "the"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "ame"
+      },
+      ". There's not been a whole load of changes. I mean, buildings ",
+      {
+       "f": "k",
+       "r": "nocked"
+      },
+      " ",
+      {
+       "f": "d",
+       "r": "own"
+      },
+      ", new buildings being built — ",
+      {
+       "f": "q",
+       "r": "uite"
+      },
+      " ",
+      {
+       "b": "a"
+      },
+      " ",
+      {
+       "f": "f",
+       "r": "ew"
+      },
+      " new buildings, actually. But generally on the high street as well… different shops, but it's ",
+      {
+       "f": "p",
+       "r": "retty"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "tatic"
+      },
+      "… I don't know. It doesn't really change that much."
+     ]
+    },
+    {
+     "s": "Interviewer",
+     "p": [
+      "Where do you live?"
+     ]
+    },
+    {
+     "s": "Whetstone",
+     "p": [
+      "I live in Whetstone. It's in between Barnet and Finchley, in Greater London. It's a good place."
+     ]
+    },
+    {
+     "s": "Interviewer",
+     "p": [
+      "You like living there?"
+     ]
+    },
+    {
+     "s": "Whetstone",
+     "p": [
+      "Yeah, I do like living there. I like living in London."
+     ]
+    }
+   ],
+   "credit": "Source: Empower C1 Workbook (Cambridge University Press), video 9A"
+  },
+  {
+   "type": "dlg",
+   "intro": "Speaker 3 grew up in Chorleywood and lives in Highbury now. Say the missing words, then tap to check.",
+   "lines": [
+    {
+     "s": "Interviewer",
+     "p": [
+      "Has the area you live in changed much in recent years?"
+     ]
+    },
+    {
+     "s": "Highbury",
+     "p": [
+      "The area I'm living in now ",
+      {
+       "f": "h",
+       "r": "asn't"
+      },
+      ", but where I grew up, it ",
+      {
+       "f": "h",
+       "r": "as"
+      },
+      ",",
+      " ",
+      {
+       "b": "a"
+      },
+      " ",
+      {
+       "f": "l",
+       "r": "ot"
+      },
+      "."
+     ]
+    },
+    {
+     "s": "Interviewer",
+     "p": [
+      "Where did you grow up?"
+     ]
+    },
+    {
+     "s": "Highbury",
+     "p": [
+      "I grew up in a little town called Chorleywood, which is ",
+      {
+       "f": "j",
+       "r": "ust"
+      },
+      " ",
+      {
+       "f": "o",
+       "r": "utside"
+      },
+      " London."
+     ]
+    },
+    {
+     "s": "Interviewer",
+     "p": [
+      "And where do you live now?"
+     ]
+    },
+    {
+     "s": "Highbury",
+     "p": [
+      "Now I live in Highbury, which is in London, so it's ",
+      {
+       "b": "a"
+      },
+      " ",
+      {
+       "f": "l",
+       "r": "ot"
+      },
+      " ",
+      {
+       "f": "b",
+       "r": "usier"
+      },
+      "… Chorleywood is a very small, kind of ",
+      {
+       "f": "q",
+       "r": "uaint"
+      },
+      " little English village. But yeah, it's changed a lot… High street shops have changed, and more buildings ",
+      {
+       "f": "g",
+       "r": "oing"
+      },
+      " ",
+      {
+       "f": "u",
+       "r": "p"
+      },
+      " — there's lots of houses ",
+      {
+       "f": "g",
+       "r": "oing"
+      },
+      " ",
+      {
+       "f": "u",
+       "r": "p"
+      },
+      ". It's still lovely, but it's ",
+      {
+       "f": "n",
+       "r": "ot"
+      },
+      " ",
+      {
+       "f": "q",
+       "r": "uite"
+      },
+      " ",
+      {
+       "f": "a",
+       "r": "s"
+      },
+      " ",
+      {
+       "f": "n",
+       "r": "ice"
+      },
+      " ",
+      {
+       "f": "a",
+       "r": "s"
+      },
+      " ",
+      {
+       "b": "it"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "as"
+      },
+      "."
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      "it hasn't · it has, a lot"
+     ],
+     "m": "short answers to “Has it changed?”",
+     "ru": "нет · да, очень"
+    },
+    {
+     "p": [
+      "just outside London"
+     ],
+     "m": "very near London",
+     "ru": "под Лондоном"
+    },
+    {
+     "p": [
+      "a lot busier ",
+      {
+       "ipa": "/ə lɒt ˈbɪziə/"
+      }
+     ],
+     "m": "more people, more traffic",
+     "ru": "гораздо больше народу"
+    },
+    {
+     "p": [
+      "quaint ",
+      {
+       "ipa": "/kweɪnt/"
+      }
+     ],
+     "m": "pretty and old-fashioned",
+     "ru": "милый, старомодный"
+    },
+    {
+     "p": [
+      "houses going up ",
+      {
+       "ipa": "/ˈhaʊzɪz ˈɡəʊɪŋ ʌp/"
+      }
+     ],
+     "m": "being built",
+     "ru": "строятся дома"
+    },
+    {
+     "p": [
+      "not quite as nice as it was"
+     ],
+     "m": "a little less nice than before",
+     "ru": "уже не совсем так хорошо, как раньше"
+    }
+   ],
+   "credit": "Source: Empower C1 Workbook (Cambridge University Press), video 9A"
+  },
+  {
+   "type": "dlg",
+   "intro": "Now without the glossary.",
+   "lines": [
+    {
+     "s": "Interviewer",
+     "p": [
+      "Has the area you live in changed much in recent years?"
+     ]
+    },
+    {
+     "s": "Highbury",
+     "p": [
+      "The area I'm living in now ",
+      {
+       "f": "h",
+       "r": "asn't"
+      },
+      ", but where I grew up, it ",
+      {
+       "f": "h",
+       "r": "as"
+      },
+      ",",
+      " ",
+      {
+       "b": "a"
+      },
+      " ",
+      {
+       "f": "l",
+       "r": "ot"
+      },
+      "."
+     ]
+    },
+    {
+     "s": "Interviewer",
+     "p": [
+      "Where did you grow up?"
+     ]
+    },
+    {
+     "s": "Highbury",
+     "p": [
+      "I grew up in a little town called Chorleywood, which is ",
+      {
+       "f": "j",
+       "r": "ust"
+      },
+      " ",
+      {
+       "f": "o",
+       "r": "utside"
+      },
+      " London."
+     ]
+    },
+    {
+     "s": "Interviewer",
+     "p": [
+      "And where do you live now?"
+     ]
+    },
+    {
+     "s": "Highbury",
+     "p": [
+      "Now I live in Highbury, which is in London, so it's ",
+      {
+       "b": "a"
+      },
+      " ",
+      {
+       "f": "l",
+       "r": "ot"
+      },
+      " ",
+      {
+       "f": "b",
+       "r": "usier"
+      },
+      "… Chorleywood is a very small, kind of ",
+      {
+       "f": "q",
+       "r": "uaint"
+      },
+      " little English village. But yeah, it's changed a lot… High street shops have changed, and more buildings ",
+      {
+       "f": "g",
+       "r": "oing"
+      },
+      " ",
+      {
+       "f": "u",
+       "r": "p"
+      },
+      " — there's lots of houses ",
+      {
+       "f": "g",
+       "r": "oing"
+      },
+      " ",
+      {
+       "f": "u",
+       "r": "p"
+      },
+      ". It's still lovely, but it's ",
+      {
+       "f": "n",
+       "r": "ot"
+      },
+      " ",
+      {
+       "f": "q",
+       "r": "uite"
+      },
+      " ",
+      {
+       "f": "a",
+       "r": "s"
+      },
+      " ",
+      {
+       "f": "n",
+       "r": "ice"
+      },
+      " ",
+      {
+       "f": "a",
+       "r": "s"
+      },
+      " ",
+      {
+       "b": "it"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "as"
+      },
+      "."
+     ]
+    }
+   ],
+   "credit": "Source: Empower C1 Workbook (Cambridge University Press), video 9A"
+  }
+ ]
+}

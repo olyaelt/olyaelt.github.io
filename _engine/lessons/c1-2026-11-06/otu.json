@@ -1,0 +1,50 @@
+{
+ "title": "Has it changed? A message to a friend",
+ "read": {
+  "intro": "First, a chat. Kate's friend sends her an old photo and a message. What do you think the friend asks? Guess, then tap to see the message.",
+  "hidden": "Look what I found! 😄 Remember this place? We're going there in August. Has it changed much since you lived there?",
+  "reply": "Ha, I love that photo! **Yes and no.** The old town is **pretty much the same** — same little streets, same bakery on the corner. But **it's gotten a lot busier**, and **way more touristy**: in summer you can hardly move. They've built a tram line down to the beach, and **quite a few** new hotels **are going up** along the coast. When I lived there, it was a sleepy little place, **whereas now** there's something going on every night. Honestly, **it's not quite as charming as it was** — but you'll still love it. Where are you staying? I'll send you a list of my favorite cafés!"
+ },
+ "task": "A friend sends you an old photo of a place you used to know well — a town where you used to go on vacation, a city you once lived in — and asks: “Has it changed much?” Write your reply — or record it as a voice message.",
+ "map": [
+  {
+   "part": "1 · Has it changed?",
+   "items": [
+    "Yes, it has, actually.",
+    "Not really, no.",
+    "Yes and no.",
+    "It's completely changed.",
+    "It's pretty much the same."
+   ]
+  },
+  {
+   "part": "2 · What's different now?",
+   "items": [
+    "It's gotten a lot … (-er / more …)",
+    "It's become a lot more …",
+    "They've knocked down … and built quite a few …",
+    "New … are going up.",
+    "It's getting -er and -er (busier and busier) / more and more …"
+   ]
+  },
+  {
+   "part": "3 · Then and now",
+   "items": [
+    "When I lived there / When I was growing up, …, whereas now …",
+    "These days, …",
+    "It's a lot … than it used to be.",
+    "It's not quite as … as it was."
+   ]
+  },
+  {
+   "part": "4 · A question or an offer",
+   "items": [
+    "When are you going?",
+    "Where are you staying?",
+    "I'll send you a list of my favorite …!"
+   ]
+  }
+ ],
+ "plan_instr": "Tap the phrases you'd like to use.",
+ "produce_instr": "Write your reply to your friend. (Prefer to talk? Tap Record it.)"
+}

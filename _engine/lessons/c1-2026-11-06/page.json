@@ -1,0 +1,58 @@
+{
+ "title": "These days I like to call it Restaurants-upon-Avon",
+ "group": "c1",
+ "file": "2026-11-06.html",
+ "listed": false,
+ "assets": {
+  "STICKER": "sticker.png",
+  "SQUARE": "then-now-square.jpg",
+  "STREET": "then-now-street.jpg",
+  "HOUSE": "then-now-house.jpg",
+  "HARBOR": "then-now-harbor.jpg",
+  "CANAL": "then-now-canal.jpg",
+  "TOWERS": "then-now-warehouses.jpg",
+  "R1": "gaps_r1.json",
+  "E1": "e1_comparatives.json",
+  "E2": "e2_tenses.json",
+  "E3": "e3_story.json",
+  "OTY": "otu.json"
+ },
+ "earlier_only": [
+  "back in my day",
+  "out of touch",
+  "by heart",
+  "nobody ever taught",
+  "hands-on",
+  "complete waste",
+  "never used it since",
+  "come in handy",
+  "than you'd think",
+  "point of",
+  "add value",
+  "along the way",
+  "none of it counted",
+  "from scratch",
+  "paid off",
+  "only gets you so far",
+  "stopped hiring juniors",
+  "over to AI",
+  "out of date",
+  "steep learning curve",
+  "the hard way",
+  "on the job",
+  "read up on",
+  "taught myself",
+  "being able to adapt",
+  "what worries me",
+  "soft skills",
+  "look clueless"
+ ],
+ "class": {
+  "topics": [
+   {
+    "t": "Has it changed much?",
+    "href": "../tools/c1-2026-11-06/has-it-changed-class.html"
+   }
+  ]
+ }
+}

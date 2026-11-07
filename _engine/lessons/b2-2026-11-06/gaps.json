@@ -1,0 +1,611 @@
+{
+ "part1": {
+  "intro": "Leo, 24, grew up in the US. He's visiting his gran Margaret, 71, in England. They're looking at her old photos.",
+  "lines": [
+   {
+    "s": "Leo",
+    "p": [
+     "Gran, is this you? With the piano?"
+    ]
+   },
+   {
+    "s": "Margaret",
+    "p": [
+     "Yes! I started playing ",
+     {
+      "f": "",
+      "r": "at"
+     },
+     " ",
+     {
+      "f": "s",
+      "r": "chool",
+      "n": "в школе"
+     },
+     ". Our poor neighbours!"
+    ]
+   },
+   {
+    "s": "Leo",
+    "p": [
+     "Ha! I tried the guitar ",
+     {
+      "f": "a",
+      "r": "s"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "a"
+     },
+     " ",
+     {
+      "f": "k",
+      "r": "id",
+      "n": "в детстве (чаще, чем in my childhood)"
+     },
+     ". I lasted about a week."
+    ]
+   },
+   {
+    "s": "Margaret",
+    "p": [
+     "A week? Your mum gave up after a day!"
+    ]
+   },
+   {
+    "s": "Leo",
+    "p": [
+     "And this one — with the suitcase. ",
+     {
+      "b": "When did you "
+     },
+     {
+      "f": "l",
+      "r": "eave",
+      "n": "когда ты уехала из дома? did + базовая форма: leave, не ~~left~~"
+     },
+     " home?"
+    ]
+   },
+   {
+    "s": "Margaret",
+    "p": [
+     {
+      "f": "",
+      "r": "At",
+      "n": "в 18 лет → at 18, не ~~in 18~~"
+     },
+     {
+      "b": " 18"
+     },
+     ". One suitcase and a radio — that was everything I had."
+    ]
+   },
+   {
+    "s": "Leo",
+    "p": [
+     "Wow. I only left home two years ago — I lived with Mom and Dad all through college. And ",
+     {
+      "b": "I "
+     },
+     {
+      "f": "s",
+      "r": "till"
+     },
+     {
+      "b": " don't have my "
+     },
+     {
+      "f": "o",
+      "r": "wn"
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "lace",
+      "n": "у меня до сих пор нет своего жилья"
+     },
+     ". I share an apartment with two friends."
+    ]
+   },
+   {
+    "s": "Margaret",
+    "p": [
+     "Well, sharing with friends can be fun! Are you still working at that pizza place?"
+    ]
+   },
+   {
+    "s": "Leo",
+    "p": [
+     "No, that was ",
+     {
+      "f": "a",
+      "r": "fter"
+     },
+     " ",
+     {
+      "f": "h",
+      "r": "igh",
+      "n": "после окончания школы (US); в Британии — after I left school; after school — обычно «после уроков»!"
+     },
+     {
+      "b": " school"
+     },
+     ". I got my first real job ",
+     {
+      "f": "r",
+      "r": "ight"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "ut"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "of",
+      "n": "сразу после вуза (US: college = любой вуз); в Британии — straight out of university"
+     },
+     {
+      "b": " college"
+     },
+     " — writing instruction manuals for microwaves."
+    ]
+   },
+   {
+    "s": "Margaret",
+    "p": [
+     "Microwave manuals? Does anyone actually read those?"
+    ]
+   },
+   {
+    "s": "Leo",
+    "p": [
+     "Nobody. But hey, it was a start. Who's this next to you?"
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     {
+      "f": "",
+      "r": "at"
+     },
+     " ",
+     {
+      "f": "s",
+      "r": "chool"
+     }
+    ],
+    "ru": "в школе"
+   },
+   {
+    "p": [
+     {
+      "f": "a",
+      "r": "s"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "a"
+     },
+     " ",
+     {
+      "f": "k",
+      "r": "id"
+     }
+    ],
+    "ru": "в детстве (так говорят чаще, чем “in my childhood”)"
+   },
+   {
+    "p": [
+     "When did you ",
+     {
+      "f": "l",
+      "r": "eave"
+     },
+     " home?"
+    ],
+    "ru": "когда ты уехала от родителей? (did + базовая форма)"
+   },
+   {
+    "p": [
+     {
+      "f": "",
+      "r": "at"
+     },
+     " 18",
+     " ",
+     {
+      "f": "",
+      "r": "/ət ˌeɪˈtiːn/",
+      "o": 1
+     }
+    ],
+    "ru": "в 18 лет"
+   },
+   {
+    "p": [
+     "I ",
+     {
+      "f": "s",
+      "r": "till"
+     },
+     " don't have my ",
+     {
+      "f": "o",
+      "r": "wn"
+     },
+     " ",
+     {
+      "f": "p",
+      "r": "lace"
+     }
+    ],
+    "ru": "у меня до сих пор нет своего жилья"
+   },
+   {
+    "p": [
+     {
+      "f": "a",
+      "r": "fter"
+     },
+     " ",
+     {
+      "f": "h",
+      "r": "igh"
+     },
+     " school"
+    ],
+    "ru": "после окончания школы (US); в Британии — “after I left school”. Но “after school” — обычно «после уроков»!"
+   },
+   {
+    "p": [
+     {
+      "f": "r",
+      "r": "ight"
+     },
+     " ",
+     {
+      "f": "o",
+      "r": "ut"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "of"
+     },
+     " college",
+     " ",
+     {
+      "f": "",
+      "r": "/ˈkɒlɪdʒ/",
+      "o": 1
+     }
+    ],
+    "ru": "сразу после вуза (US: “college” = любой вуз); в Британии — “straight out of university”"
+   },
+   {
+    "p": [
+     "I lasted about a week · instruction manuals"
+    ],
+    "ru": "меня хватило примерно на неделю · инструкции"
+   }
+  ]
+ },
+ "part2": {
+  "intro": "The conversation goes on.",
+  "lines": [
+   {
+    "s": "Leo",
+    "p": [
+     "…Who's this next to you?"
+    ]
+   },
+   {
+    "s": "Margaret",
+    "p": [
+     "That's Jean, my best friend. We met ",
+     {
+      "f": "",
+      "r": "in"
+     },
+     {
+      "b": " my "
+     },
+     {
+      "f": "t",
+      "r": "hird"
+     },
+     " ",
+     {
+      "f": "y",
+      "r": "ear"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "at",
+      "n": "на третьем курсе (UK); US: in my third year of college · не ~~on the third course~~"
+     },
+     {
+      "b": " university"
+     },
+     ". Fifty years on, we talk on the phone every Sunday."
+    ]
+   },
+   {
+    "s": "Leo",
+    "p": [
+     "That's so sweet! ",
+     {
+      "b": "When did you "
+     },
+     {
+      "f": "l",
+      "r": "ast"
+     },
+     " ",
+     {
+      "f": "s",
+      "r": "ee",
+      "n": "когда ты её последний раз видела? did + last + базовая форма: see, не ~~seen~~"
+     },
+     " her?"
+    ]
+   },
+   {
+    "s": "Margaret",
+    "p": [
+     "Oh, ",
+     {
+      "f": "a",
+      "r": "ges"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "go",
+      "n": "сто лет назад"
+     },
+     ". ",
+     {
+      "b": "I can't "
+     },
+     {
+      "f": "r",
+      "r": "emember"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "xactly",
+      "n": "точно не помню (…, maybe? = может, …?)"
+     },
+     " — five years ago, maybe?"
+    ]
+   },
+   {
+    "s": "Leo",
+    "p": [
+     "You should visit her! Oh — and is that your first car?"
+    ]
+   },
+   {
+    "s": "Margaret",
+    "p": [
+     "It is! I bought it ",
+     {
+      "f": "",
+      "r": "in"
+     },
+     {
+      "b": " my "
+     },
+     {
+      "f": "e",
+      "r": "arly"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "hirties",
+      "n": "когда мне было чуть за тридцать · mid- ≈ 34–36, late ≈ 37–39"
+     },
+     ". Before that, I cycled everywhere. ",
+     {
+      "b": "When did you "
+     },
+     {
+      "f": "l",
+      "r": "earn",
+      "n": "когда ты научился…? did + базовая форма: learn"
+     },
+     " to drive?"
+    ]
+   },
+   {
+    "s": "Leo",
+    "p": [
+     "Gran… ",
+     {
+      "b": "I "
+     },
+     {
+      "f": "s",
+      "r": "till"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "an't",
+      "n": "я до сих пор не умею водить · still перед can't"
+     },
+     {
+      "b": " drive"
+     },
+     ". Mom tried to teach me once. Just once."
+    ]
+   },
+   {
+    "s": "Margaret",
+    "p": [
+     "Oh dear! Well, I could always give you a lesson!"
+    ]
+   }
+  ],
+  "gloss": [
+   {
+    "p": [
+     {
+      "f": "",
+      "r": "in"
+     },
+     " my ",
+     {
+      "f": "t",
+      "r": "hird"
+     },
+     " ",
+     {
+      "f": "y",
+      "r": "ear"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "at"
+     },
+     " university",
+     " ",
+     {
+      "f": "",
+      "r": "/θɜːd ˌjuːnɪˈvɜːsəti/",
+      "o": 1
+     }
+    ],
+    "ru": "на третьем курсе (UK); в США — “in my third year of college”"
+   },
+   {
+    "p": [
+     "When did you ",
+     {
+      "f": "l",
+      "r": "ast"
+     },
+     " ",
+     {
+      "f": "s",
+      "r": "ee"
+     },
+     " her?"
+    ],
+    "ru": "когда ты её последний раз видела? (did + last + базовая форма)"
+   },
+   {
+    "p": [
+     {
+      "f": "a",
+      "r": "ges"
+     },
+     " ",
+     {
+      "f": "a",
+      "r": "go"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˈeɪdʒɪz əˈɡəʊ/",
+      "o": 1
+     }
+    ],
+    "ru": "сто лет назад"
+   },
+   {
+    "p": [
+     "I can't ",
+     {
+      "f": "r",
+      "r": "emember"
+     },
+     " ",
+     {
+      "f": "e",
+      "r": "xactly"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ɪɡˈzæktli/",
+      "o": 1
+     }
+    ],
+    "ru": "точно не помню (— …, maybe? = может, …?)"
+   },
+   {
+    "p": [
+     {
+      "f": "",
+      "r": "in"
+     },
+     " my ",
+     {
+      "f": "e",
+      "r": "arly"
+     },
+     " ",
+     {
+      "f": "t",
+      "r": "hirties"
+     },
+     " ",
+     {
+      "f": "",
+      "r": "/ˈɜːli ˈθɜːtiz/",
+      "o": 1
+     }
+    ],
+    "ru": "когда мне было чуть за тридцать; also: in my mid-thirties — лет в 35, in my late thirties — ближе к 40"
+   },
+   {
+    "p": [
+     "I ",
+     {
+      "f": "s",
+      "r": "till"
+     },
+     " ",
+     {
+      "f": "c",
+      "r": "an't"
+     },
+     " drive"
+    ],
+    "ru": "я до сих пор не умею водить"
+   },
+   {
+    "p": [
+     "Jean ",
+     {
+      "f": "",
+      "r": "/dʒiːn/",
+      "o": 1
+     },
+     " · Fifty years on · cycled ",
+     {
+      "f": "",
+      "r": "/ˈsaɪkld/",
+      "o": 1
+     },
+     " everywhere"
+    ],
+    "ru": "Джин (женское имя) · пятьдесят лет спустя · везде ездила на велосипеде"
+   }
+  ]
+ }
+}

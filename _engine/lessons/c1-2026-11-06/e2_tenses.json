@@ -1,0 +1,250 @@
+{
+ "steps": [
+  {
+   "type": "dlg",
+   "pic": "SQUARE",
+   "box": "BOX_TENSE",
+   "box_state": "gapped",
+   "intro": "The same six places. Стало или становится? Say the verb in the right form — the Russian tells you which — then tap to check.",
+   "lines": [
+    {
+     "p": [
+      "Since they renovated the old buildings, the square ",
+      {
+       "f": "",
+       "r": "has gotten"
+      },
+      " ",
+      {
+       "b": "a lot livelier"
+      },
+      " (стала)."
+     ]
+    },
+    {
+     "p": [
+      "And ",
+      {
+       "f": "",
+       "r": "it's getting"
+      },
+      " ",
+      {
+       "b": "busier every weekend"
+      },
+      " (становится) — more and more people are coming to the market."
+     ]
+    },
+    {
+     "p": [
+      "The old clock tower ",
+      {
+       "f": "",
+       "r": "hasn't changed"
+      },
+      " ",
+      {
+       "b": "at all"
+      },
+      " (не изменилась)."
+     ]
+    }
+   ],
+   "note": "стала + -er → has gotten (BrE: has got) — or: has become · становится (ещё идёт) → it's getting (or: it's been getting) · ничуть не изменилась → hasn't changed at all · 's = has or is: it's gotten = it has gotten, it's getting = it is getting."
+  },
+  {
+   "type": "dlg",
+   "pic": "STREET",
+   "box": "BOX_TENSE",
+   "box_state": "gapped",
+   "intro": "The shopping street. Стало или становится?",
+   "lines": [
+    {
+     "p": [
+      "The street ",
+      {
+       "f": "",
+       "r": "has become"
+      },
+      " ",
+      {
+       "b": "really run-down"
+      },
+      " (стала)."
+     ]
+    },
+    {
+     "p": [
+      {
+       "f": "",
+       "r": "It's getting"
+      },
+      " ",
+      {
+       "b": "emptier every year"
+      },
+      " (становится) — another shop has just closed."
+     ]
+    },
+    {
+     "p": [
+      "Everything ",
+      {
+       "f": "",
+       "r": "has changed"
+      },
+      " (изменилось) — except the trees."
+     ]
+    }
+   ],
+   "note": "стала + adjective → has become (or: has gotten) · становится → it's getting (or: it's been getting) · изменилось → has changed."
+  },
+  {
+   "type": "dlg",
+   "pic": "HOUSE",
+   "box": "BOX_TENSE",
+   "box_state": "gapped",
+   "intro": "No Russian now. Look at the picture and the words around the gap: has the change already happened, or is it still happening?",
+   "lines": [
+    {
+     "p": [
+      "Over the last ten years, the area ",
+      {
+       "f": "",
+       "r": "has become"
+      },
+      " ",
+      {
+       "b": "a lot more built-up"
+      },
+      " (become)."
+     ]
+    },
+    {
+     "p": [
+      "New apartment buildings ",
+      {
+       "f": "",
+       "r": "are going up"
+      },
+      " ",
+      {
+       "b": "everywhere"
+      },
+      " (go up) — look at the cranes."
+     ]
+    },
+    {
+     "p": [
+      "The traffic ",
+      {
+       "f": "",
+       "r": "is getting"
+      },
+      " ",
+      {
+       "b": "worse every year"
+      },
+      " (get)."
+     ]
+    },
+    {
+     "p": [
+      "The little brick house ",
+      {
+       "f": "",
+       "r": "hasn't changed"
+      },
+      " ",
+      {
+       "b": "at all"
+      },
+      " (not change)."
+     ]
+    }
+   ],
+   "note": "over the last ten years + it has happened → has become (or: has gotten) · still happening: are going up (строятся), is getting worse every year (or: has been getting worse) · hasn't changed at all."
+  },
+  {
+   "type": "dlg",
+   "pic": "HARBOR",
+   "box": "BOX_TENSE",
+   "box_state": "gapped",
+   "intro": "The harbor. Happened, or still happening?",
+   "lines": [
+    {
+     "p": [
+      "Over the last few years, the harbor ",
+      {
+       "f": "",
+       "r": "has gotten"
+      },
+      " ",
+      {
+       "b": "a lot fancier"
+      },
+      " (get)."
+     ]
+    },
+    {
+     "p": [
+      {
+       "f": "",
+       "r": "It's getting"
+      },
+      " ",
+      {
+       "b": "more and more touristy every summer"
+      },
+      " (get)."
+     ]
+    },
+    {
+     "p": [
+      "The lighthouse ",
+      {
+       "f": "",
+       "r": "hasn't changed"
+      },
+      " (not change) — it's pretty much the same."
+     ]
+    },
+    {
+     "p": [
+      "And prices in the cafés ",
+      {
+       "f": "",
+       "r": "are getting"
+      },
+      " ",
+      {
+       "b": "higher and higher"
+      },
+      " (get)."
+     ]
+    }
+   ],
+   "note": "over the last few years + it has happened → has gotten (BrE: has got) · still happening: it's getting more and more touristy, prices are getting higher and higher (or: have been getting) "
+  },
+  {
+   "type": "sayit",
+   "pic": "CANAL",
+   "box": "BOX_TENSE",
+   "box_state": "folded",
+   "instr": "Less help now. Say two things that have changed and one that is still changing. Then tap to see one way to say it.",
+   "sit": "[The elevated highway and the canal.] Still changing: more and more people are coming here every weekend.",
+   "ans": "It's **gotten a lot greener**, and it's **become much quieter**. And it's **getting more and more popular**: every weekend there are more people walking along the water.",
+   "note": "happened: it's gotten / it's become (or: it's completely changed) · still happening: it's getting more and more … (or: it's been getting)"
+  },
+  {
+   "type": "sayit",
+   "pic": "TOWERS",
+   "box": "BOX_TENSE",
+   "box_state": "folded",
+   "instr": "No help now. Two things that have changed, one that is still changing. Then tap to check.",
+   "sit": "[The warehouses and the skyscrapers.] Still changing: there are more people here every year.",
+   "ans": "**It's completely changed.** It's **gotten a lot more built-up**, and it's **become much fancier**. And it's still **getting busier and busier** — there are more people every year.",
+   "note": "happened: it's changed / gotten / become · still happening: it's getting busier and busier (or: it's been getting busier)."
+  }
+ ]
+}

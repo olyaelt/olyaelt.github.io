@@ -93,6 +93,14 @@ details.summary[open] summary::after{content:"Hide"}
 .ipa.o{color:#B45309}
 /* engine 47 (her wish 29.10): "More about these phrases" — what the glossaries said, folded under the Useful language box */
 .box details.box-more{margin-top:8px;border-top:1px dashed var(--line);padding-top:6px}
+.box .bgap{display:inline-block;background:#fff1a8;color:#5c4b00;border-radius:6px;padding:0 5px;font-weight:700;cursor:pointer;border-bottom:2px solid #e7c94a}   /* engine 63 also: a hidden form in the box, tap → the form */
+.box .bgap.open{background:#e3f4e5;color:#1b5e20;border-bottom-color:#7cc38a}
+.box .fl{color:var(--muted);font-weight:700}
+.box.box-folded{padding:0;background:none;border:0;box-shadow:none}
+.box-peek{width:100%;text-align:left;border:2px dashed var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:10px 14px;font:inherit;cursor:pointer}
+.box-peek b{color:var(--instr)}
+.dlg.read p{line-height:1.6}
+.panel .credit{color:var(--muted);font-size:.8rem;margin-top:8px}
 .box details.box-more summary{cursor:pointer;font-weight:700;color:var(--instr);font-size:.92em}
 .box-more .bm-in{display:grid;gap:3px;margin-top:6px;font-size:.88em}
 .box-more h5{margin:8px 0 1px;color:var(--label);font-size:.85em;letter-spacing:.07em;font-weight:900}
@@ -949,7 +957,7 @@ const ENGINE_VERSION = "63";   /* _engine/engine/VERSION */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
   TOPICS.push({id:"earlier", title:"From earlier lessons", sub:"A quick look back at language from earlier homework", box:null});
-  TASKS.push({id:"earlier", topic:"earlier", sec:"Revision", title:"Quick look back", meta:`${EARLIER.length} sentences from earlier lessons`, kind:"steps",
+  TASKS.push({id:"earlier", topic:"earlier", sec:"Revision", title:"Quick look back", meta:`${EARLIER.length} sentence${EARLIER.length === 1 ? "" : "s"} from earlier lessons`, kind:"steps",
     steps: EARLIER.map((e,i)=> e.type==="rewrite"
       ? {type:"rewrite", r:e.r, first:i===0, instrFirst:"Do you still remember? Rewrite the sentence. Use the word in capitals, then tap Check.", instr:"Rewrite the sentence."}
       : {type:"sayit", s:e.s, first:i===0, box:"", instr:e.instr})});
@@ -1889,6 +1897,7 @@ const strikeMd = h => String(h == null ? "" : h).replace(/~~(.+?)~~/g, '<s class
 const noteMd = t => strikeMd(esc(t).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>"));
 /* ---------- gapped dialogue ---------- */
 let GNK = 0;   /* engine 43: ids that tie a gap to its red note */
+const JOINP = typeof JOIN_PUNCT !== "undefined" && JOIN_PUNCT;
 function gapLineHTML(line){
   if(line.scene) return `<p class="scene"><span>${esc((line.p || []).join(""))}</span></p>`;   /* engine 49: a date / time line, like WhatsApp's */
   const parts = line.p; let html = "", i = 0, notes = "";
@@ -1900,6 +1909,10 @@ function gapLineHTML(line){
         const y = parts[i];
         if(typeof y === "object" && "r" in y){ chunk += `<span class="gap${y.o?" o":""}"><span class="f">${esc(y.f)}</span><span class="r">${esc(y.r)}</span></span>`; if(y.n) ns.push(y.n); i++; }
         else if(typeof y === "string" && /^\s+$/.test(y) && typeof parts[i+1] === "object" && parts[i+1] && "r" in parts[i+1]){ chunk += y; i++; }
+        else if(JOINP && typeof y === "string" && /^[\s,]+$/.test(y)){   /* engine 63 also (C1 6.11 r1: «Yes, it has, actually.» is one chunk): JOIN_PUNCT on the page
+            lets a chunk run on through commas when a gap follows */
+          let j = i, run = ""; while(j < parts.length && typeof parts[j] === "string" && /^[\s,]+$/.test(parts[j])){ run += parts[j]; j++; }
+          if(typeof parts[j] === "object" && parts[j] && "r" in parts[j]){ chunk += esc(run); i = j; } else break; }
         else break;
       }
       const nk = ns.length ? ++GNK : 0;
@@ -2039,10 +2052,11 @@ function renderGaps(t){
 /* ---------- a gapped dialogue as one step: with a box of phrases, with a glossary, or on its own ---------- */
 const glossLineHTML = g => gapLineHTML({p:g.p}).replace(/<\/p>$/, `${g.m?` <span class="mean">— ${esc(g.m)}</span>`:""}${g.ru?` ${ru(esc(g.ru))}`:""}</p>`);
 function renderDlg(st, count, pct){
-  const side = st.box ? box(st.box)
+  if(st.read) checked = true;   /* engine 63 also (C1 6.11 e3): a text to read — no gaps, nothing to check, the button says Next */
+  const side = st.box ? stepBox(st, st.box)
     : st.gloss ? `<aside class="box gloss" aria-label="Glossary"><h4>GLOSSARY</h4>${st.gloss.map(g=>g.h?`<h4>${esc(g.h)}</h4>`:glossLineHTML(g)).join("")}</aside>` : "";
   shell({count, pct, instr: st.instr,
-    stageHTML:`<div class="panel">${picHTML(st.pic)}${st.intro?`<p class="situation">${esc(st.intro)}</p>`:""}<div class="dlg">${st.lines.map(gapLineHTML).join("")}</div>${checked&&st.note?`<p class="small">${st.note}</p>`:""}${checked?markHint()+revHint():""}</div>${side}`,
+    stageHTML:`<div class="panel">${picHTML(st.pic, st.picAlt)}${st.intro?`<p class="situation">${esc(st.intro)}</p>`:""}<div class="dlg${st.read?" read":""}">${st.lines.map(gapLineHTML).join("")}</div>${st.credit?`<p class="small credit">${esc(st.credit)}</p>`:""}${checked&&st.note?`<p class="small">${st.note}</p>`:""}${checked&&!st.read?markHint()+revHint():""}</div>${side}`,
     withBox: !!side, actionsHTML: navButtons(st.checkLabel || "Show the answers")});
   const chunks = [...app.querySelectorAll(".chunk")];
   const toggle = c => { c.classList.toggle("open"); c.setAttribute("aria-label", c.classList.contains("open")?"Hide the missing words":"Show the missing words"); syncGapNotes(app); allOpen(); };
@@ -2259,6 +2273,7 @@ function renderRewrite(st, count, pct){
   const hint = r.hint ? ` <span class="ru">(${esc(r.hint)})</span>` : "";
   const body = `
     <div class="panel ${checked?"checked":""}">
+      ${picHTML(st.pic, st.picAlt)}
       ${st.card?fixCardHTML(st.card, st.cardFirst !== false):""}
       ${r.o?`<p class="orig">${origHTML(r.o)}</p>`:""}
       ${r.k?`<p class="key">${r.k}</p>`:""}
@@ -2267,9 +2282,9 @@ function renderRewrite(st, count, pct){
       ${checked?markHint()+revHint():""}
       ${yours}
       ${checked?`<p class="note">${strikeMd(r.n)}</p>`:""}
-    </div>${(checked||st.boxAlways)&&st.box?box(st.box):""}`;   /* boxAlways (engine 49): the box beside it from the start, when the instruction says "use the box" */
+    </div>${(checked||st.boxAlways||st.boxState)&&st.box?stepBox(st, st.box):""}`;   /* boxAlways (engine 49): the box beside it from the start, when the instruction says "use the box" */
   const instr = st.first ? (st.instrFirst || "Rewrite the sentence. Use the word in capitals. Type the missing part or say it aloud, then tap Check.") : (st.instr || "Rewrite the sentence.");
-  shell({count, pct, instr, stageHTML: body, withBox: (checked||st.boxAlways) && !!st.box, actionsHTML: navButtons()});
+  shell({count, pct, instr, stageHTML: body, withBox: (checked||st.boxAlways||st.boxState) && !!st.box, actionsHTML: navButtons()});
   const inp = document.getElementById("rw");
   if(inp){
     inp.addEventListener("input",()=>{ typed[key] = inp.value; saveTyped(); });
@@ -2371,7 +2386,25 @@ function checkWhenAllOpen(sel){
 
 /* ---------- say it in English ---------- */
 /* engine 62 also (TZ C1 4.11): a picture above a gap chat or a say-it step — "pic": the image (an asset of the page) */
-const picHTML = src => src ? `<figure class="step-pic"><img src="${src}" alt=""></figure>` : "";
+const picHTML = (src, alt) => src ? `<figure class="step-pic"><img src="${src}" alt="${esc(alt || "")}"></figure>` : "";
+/* engine 63 also (C1 6.11 TZ, her 07.11 07:56: «как на уроке… прилагательные спрятаны под gap-fill… уже отсортированы, но всё равно
+   спрятаны, чтобы какая-то работа мозга шла»): a step's box can be "gapped" — the box's forms hidden behind their first letters
+   (<span class="bgap" data-a="answer">first letters</span> in the box HTML), a tap opens one — or "folded": a thin bar «Stuck? Peek ▸»,
+   a tap opens the gapped box. Either way the box is beside the step from the start (it's the help while they work). Not remembered:
+   each step opens in its own state. */
+const PEEK = {};
+function stepBox(st, html){
+  if(!html) return "";
+  if(st.boxState === "folded" && !PEEK[current.id + ":" + stepIdx])
+    return `<aside class="box box-folded" aria-label="Useful language"><button class="box-peek" data-peek>📦 Useful language · <b>Stuck? Peek ▸</b></button></aside>`;
+  return box(html);
+}
+document.addEventListener("click", e => {
+  const pk = e.target.closest && e.target.closest("[data-peek]");
+  if(pk){ PEEK[current.id + ":" + stepIdx] = true; const y = scrollY; renderTaskKeep(); scrollTo(0, y); return; }
+  const g = e.target.closest && e.target.closest(".bgap");
+  if(g){ if(!g.dataset.f) g.dataset.f = g.textContent; const open = !g.classList.contains("open"); g.classList.toggle("open", open); g.textContent = open ? g.dataset.a : g.dataset.f; }
+});
 function renderSayit(st, count, pct){
   const s = st.s;
   const bx = st.box !== undefined ? st.box : (typeof BOX_CLOCKS !== "undefined" ? BOX_CLOCKS : "");
@@ -2379,15 +2412,15 @@ function renderSayit(st, count, pct){
     instr: st.instr || (st.first ? "Say it in English — aloud. Then tap the yellow box to check." : "Say it in English."),
     stageHTML: `
       <div class="panel">
-        ${picHTML(st.pic)}
+        ${picHTML(st.pic, st.picAlt)}
         <div class="say">
           ${s.rows.map((row,i)=> st._rows && !st._rows.has(i) ? "" : `<div class="say-row"><span class="q">${row[0]}</span>
             <span class="say-a"><button class="reveal ${checked?"open":""}" data-r="${i}" aria-label="Show the English">${s.html ? row[1] : esc(row[1])}</button>${markBtn(stepIdx+"-"+i, s.html ? plainText(row[1]) : row[1])}${bmBtn(curS(), i)}</span>${checked&&row[2]?`<p class="small say-note">${strikeMd(row[2])}</p>`:""}</div>`).join("")}
         </div>
         ${checked?markHint()+revHint():""}
         ${checked&&s.note?`<p class="small">${s.note}</p>`:""}
-      </div>${(checked||st.boxAlways)&&bx?box(bx):""}`,
-    withBox: (checked||st.boxAlways) && !!bx, actionsHTML: navButtons()});
+      </div>${(checked||st.boxAlways||st.boxState)&&bx?stepBox(st, bx):""}`,
+    withBox: (checked||st.boxAlways||st.boxState) && !!bx, actionsHTML: navButtons()});
   app.querySelectorAll(".reveal").forEach(b=>b.addEventListener("click",()=>{ b.classList.toggle("open"); checkWhenAllOpen(".reveal"); }));
   wireNav(()=>renderTaskKeep());
 }

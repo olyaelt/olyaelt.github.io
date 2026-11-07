@@ -2214,5 +2214,15 @@
     }
    ]
   }
- ]
+ ],
+ "class_view": {
+  "stages": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "last_blocks": 2,
+  "why": "tracker b2-l13, 6.11: Warm-up, Test yourself, The text and in Practice the cards + noughts and crosses; not reached: the wheel, Back to start, Use it (her 07.11 06:46: «обрезанную версию, чтобы было только то, что было на уроке»)"
+ }
 }

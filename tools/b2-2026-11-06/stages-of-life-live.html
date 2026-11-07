@@ -1050,6 +1050,7 @@ figure.pic.zoomable::after{content:"🔍 Tap to see it big";position:absolute;ri
 .gd.gd-ok{background:var(--ok)}
 .gd.gd-again{background:var(--again)}
 .gd-meta{color:var(--muted);font-size:.82rem;margin-left:auto}
+.gdots .gd-copy{font-size:.82rem;padding:4px 10px}   /* tools 30 also: 📋 Copy the hard cards */
 /* ---------- lesson work (tools 13, 30.10, her wish): on a -live page Olya sees what each group types, where each room is, and sends quick notes; shared by chat-scenes and the revision pages ---------- */
 .t-note{background:#FFFBE6;border:2px solid #E8B800;border-radius:12px;padding:6px 10px;font-size:1rem;line-height:1.35;color:#111111}
 .t-note.new{animation:noteIn .5s cubic-bezier(.2,.8,.2,1)}
@@ -3562,7 +3563,19 @@ function groupDotsHTML(b){
   const n = (GW.decks || []).filter(r => r.ts >= gwSince()).length;
   return `<div class="gdots" data-gdots="${b._id}"><span class="gd-lbl">👥 The groups:</span>${(b.kind === "game" ? b.tasks : b.cards).map((c, i) => { const s = deckStats(c._n), size = s.again ? Math.min(2.2, 1.1 + .3 * s.again) : .95;
     const tip = s.again ? `back into the deck ${s.again}× (${s.screens} screen${s.screens === 1 ? "" : "s"})` : s.got ? "got it — nobody sent it back" : "no group has answered it yet";
-    return `<button class="gd ${s.again ? "gd-again" : s.got ? "gd-ok" : ""}" style="--s:${size.toFixed(2)}rem" data-gd="${i}" title="${esc(cardFrontPlain(b, c).replace(/\(\(|\)\)|\*\*/g, ""))} — ${tip}" aria-label="Card ${i + 1}: ${tip}"></button>`; }).join("")}<span class="gd-meta">${n} screen${n === 1 ? "" : "s"}</span></div>`;
+    return `<button class="gd ${s.again ? "gd-again" : s.got ? "gd-ok" : ""}" style="--s:${size.toFixed(2)}rem" data-gd="${i}" title="${esc(cardFrontPlain(b, c).replace(/\(\(|\)\)|\*\*/g, ""))} — ${tip}" aria-label="Card ${i + 1}: ${tip}"></button>`; }).join("")}<span class="gd-meta">${n} screen${n === 1 ? "" : "s"}</span><button class="btn slim gd-copy" data-gd-copy>${GDCOPY[b._id] || "📋 Copy the hard cards"}</button></div>`;
+}
+/* tools 30 also (B2 debrief 6.11: she looked for it after the lesson, as on the cards pages): 📋 the cards (or game squares) the groups sent
+   back, most often first, front → answer, for the next lesson and the homework */
+const GDCOPY = {};
+function hardCardsText(b){
+  const plain = s => String(s == null ? "" : s).replace(/\(\(|\)\)|\*\*|~~|<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+  const list = (b.kind === "game" ? b.tasks : b.cards) || [], front = c => plain(b.kind === "game" ? (c.q || c.front || c.label) : cardFrontPlain(b, c)), back = c => plain(c.back || c.a || c.example || "");
+  const rows = list.map((c, i) => ({c, i, s: deckStats(c._n)})), hard = rows.filter(x => x.s.again).sort((x, y) => y.s.again - x.s.again || x.i - y.i);
+  if(!hard.length) return "";
+  const ok = rows.filter(x => x.s.got && !x.s.again).length, none = rows.filter(x => !x.s.got && !x.s.again).length;
+  return [`${D.title}${D.part ? " (" + D.part + ")" : ""} · ${plain(b.instr || "").split(/[.:!?]/)[0]} — sent back into the deck`]
+    .concat(hard.map(x => `${x.s.again}×${x.s.screens > 1 ? ` (on ${x.s.screens} screens)` : ""} · ${front(x.c)}${back(x.c) ? " → " + back(x.c) : ""}`), "", `Got it, never sent back: ${ok} · not reached: ${none}`).join("\n");
 }
 /* tools 28 also: her 👥 dot on 🐍 snakes, ⬚ dots, 🎡 the wheel → that square's task as a card over the field, front first (the group says it
    again), a tap shows the answer; ← Back to the game. Nothing in the game moves. */
@@ -3573,7 +3586,10 @@ function gamePeekHTML(b){ const st = bs(b), t = st.peek != null ? (b.tasks || []
 function wireGamePeek(b, root){ root.querySelectorAll("[data-gpeek-x]").forEach(x => x.addEventListener("click", () => { bs(b).peek = null; render(); }));
   root.querySelectorAll("[data-gpeek-flip]").forEach(x => { const go = () => { bs(b).peekOpen = true; render(); }; x.addEventListener("click", go); x.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); go(); } }); }); }
 function onGroupData(){ document.querySelectorAll("[data-gdots]").forEach(el => { const b = BLOCKS.find(x => x._id === el.dataset.gdots); const h = groupDotsHTML(b); if(el.outerHTML !== h){ el.outerHTML = h; wireGroupDots(); } }); }
-function wireGroupDots(){ document.querySelectorAll("[data-gdots] [data-gd]").forEach(btn => btn.addEventListener("click", () => {
+function wireGroupDots(){
+  document.querySelectorAll("[data-gdots] [data-gd-copy]").forEach(btn => btn.addEventListener("click", async () => { const id = btn.closest("[data-gdots]").dataset.gdots, b = BLOCKS.find(x => x._id === id), t = hardCardsText(b);
+    GDCOPY[id] = !t ? "Nothing sent back yet" : (await copyText(t)) ? "Copied ✓" : "Couldn't copy"; onGroupData(); setTimeout(() => { delete GDCOPY[id]; onGroupData(); }, 2200); }));
+  document.querySelectorAll("[data-gdots] [data-gd]").forEach(btn => btn.addEventListener("click", () => {
   const b = BLOCKS.find(x => x._id === btn.closest("[data-gdots]").dataset.gdots), st = bs(b), i = +btn.dataset.gd;
   if(b.kind === "game" && peekG(b, b.tasks[i])){ const s = deckStats(b.tasks[i]._n); st.peek = st.peek === i ? null : i; st.peekOpen = false;   /* tools 28 also (her 4.11 17:52: «не получилось открыть сложные карточки над игрой snakes and ladders»): */
     st.peekLbl = `👥 ${s.again ? `Back into the deck ${s.again}× · ${s.screens} screen${s.screens === 1 ? "" : "s"}` : s.got ? "Nobody sent it back" : "No group has answered it yet"}`; render(); return; }   /* the card opens over the game, the game stays as it is */
@@ -3848,9 +3864,11 @@ function soShow(b){ const Q = soSt(b), x = b.items[Q.at], p = Q.placed[Q.at]; Q.
   if(p){ Q.open = true; Q.landed = true; Q.why = x.mode !== "free" ? {p, t: x.why} : null; } else { Q.open = false; Q.landed = false; Q.why = null; } }
 function sortHTML(b){
   const Q = soSt(b), items = b.items, inPat = id => items.map((x, i) => Object.assign({i}, x)).filter(x => Q.placed[x.i] === id);
+  /* tools 30 also (her 6.11 19:40, C1 sort: «тут перепутались все ответы», and ** showed): the summary lists every line in its own box
+     (its p, not where this device's saved state says it went), the phrase in bold where the data marks it */
   if(Q.done) return `<div class="fsort done"><div class="fs-pats sum">${b.patterns.map(p => `<div class="fs-pat"><span class="fs-en">${mk(p.en)}</span><span class="fs-ru">${esc(p.ru)}</span>
-      <ul>${inPat(p.id).map(x => `<li>${esc(x.en)}</li>`).join("")}</ul></div>`).join("")}</div>
-    ${b.end ? `<div class="fs-end"><p class="fs-q">${mk(b.end.q)}</p><details><summary>Tap to see</summary><p>${mk(b.end.a)}</p></details></div>` : ""}
+      <ul>${items.filter(x => x.p === p.id).map(x => `<li>${mk(x.en)}</li>`).join("")}</ul></div>`).join("")}</div>
+    ${b.end ? `<div class="fs-end"><p class="fs-q">${mk(b.end.q || (typeof b.end === "string" ? b.end : ""))}</p>${b.end.a ? `<details><summary>Tap to see</summary><p>${mk(b.end.a)}</p></details>` : ""}</div>` : ""}
     <p class="fs-again"><button class="linklike" data-fsagain>↺ Do it again</button></p></div>`;
   const it = items[Q.at];
   /* tools 30 (C1 6.11 fixes-1): the prompt is an English word, not Russian → "Say a sentence with it"; a block may set its own "ask" */
@@ -3859,27 +3877,32 @@ function sortHTML(b){
       return `<button class="fs-pat${Q.open && !Q.landed && it.mode === "hint" && p.id === it.p ? " glow" : ""}" data-fsp="${esc(p.id)}"><span class="fs-en">${mk(p.en)}</span><span class="fs-ru">${esc(p.ru)}</span>${n ? `<span class="fs-c">${n}</span>` : ""}${Q.why && Q.why.p === p.id ? `<span class="fs-why">${mk(Q.why.t)}</span>` : ""}</button>`; }).join("")}</div>
     <div class="fs-card${Q.open ? " open" : ""}${Q.landed ? " landed" : ""}${Q.open && !Q.landed && it.mode !== "auto" ? " grab" : ""}" data-fscard><span class="fs-n">${Q.at + 1} of ${items.length}</span>
       ${it.ctx ? `<p class="fs-ctx">${esc(it.ctx)}</p>` : ""}<p class="fs-ruline">${esc(it.ru)}</p>
-      ${Q.open ? `<p class="fs-enline">${esc(it.en)}</p>` : `<button class="fs-reveal" data-fsopen>tap to check</button>`}
+      ${Q.open ? `<p class="fs-enline">${mk(it.en)}</p>` : `<button class="fs-reveal" data-fsopen>tap to check</button>`}
       <p class="fs-ask">${ask}</p>${Q.wrong ? `<p class="fs-wrong">${mk(Q.wrong)}</p>` : ""}</div></div>`;
 }
-function soLand(b, p){ const Q = soSt(b); if(!Q.open || Q.landed) return; const x = b.items[Q.at];
+/* tools 30 also (C1 lesson chat 6.11 19:40, her screenshot: on a fast Next a card landed in the box of the card before): one card flies at a
+   time; the landing writes into the card it started from, and only lands the current card if it's still that one */
+const SOFLY = new Set();   /* the blocks whose card is in the air (not saved with the room's state) */
+function soLand(b, p){ const Q = soSt(b); if(!Q.open || Q.landed || SOFLY.has(b._id)) return; const x = b.items[Q.at], at = Q.at;
   const card = document.querySelector("[data-fscard] .fs-enline"), box = document.querySelector(`[data-fsp="${CSS.escape(p)}"]`);
-  const done = () => { Q.placed[Q.at] = p; Q.landed = true; Q.wrong = null; Q.why = x.mode !== "free" ? {p, t: x.why} : null; render();
+  const done = () => { SOFLY.delete(b._id); Q.placed[at] = p; if(Q.at !== at){ render(); return; }
+    Q.landed = true; Q.wrong = null; Q.why = x.mode !== "free" ? {p, t: x.why} : null; render();
     const nb = document.querySelector(`[data-fsp="${CSS.escape(p)}"]`); if(nb) pop(nb); };
   if(!card || !box || calm() || !card.animate) return done();
+  SOFLY.add(b._id);
   const a = card.getBoundingClientRect(), z = box.getBoundingClientRect(), g = card.cloneNode(true);
   g.className = "fs-ghost"; g.style.cssText = `position:fixed;left:${a.left}px;top:${a.top}px;width:${a.width}px;margin:0;z-index:40;pointer-events:none`; document.body.appendChild(g);
   g.animate([{transform: "none", opacity: 1}, {transform: `translate(${z.left + z.width / 2 - a.left - a.width / 2}px, ${z.top + z.height / 2 - a.top - a.height / 2}px) scale(.35)`, opacity: .2}], {duration: 650, easing: "cubic-bezier(.3,.7,.3,1)"}).onfinish = () => { g.remove(); done(); };
 }
 function soOpen(b){ const Q = soSt(b); if(Q.open) return; Q.open = true; render(); const it = b.items[Q.at];
-  if(it.mode === "auto"){ Q.busy = true; setTimeout(() => { Q.busy = false; if(curBlock() === b && soSt(b).open && !soSt(b).landed) soLand(b, it.p); }, calm() ? 50 : 900); } }
+  if(it.mode === "auto"){ const at = Q.at; SOFLY.add(b._id); setTimeout(() => { SOFLY.delete(b._id); const R = soSt(b); if(curBlock() === b && R.at === at && R.open && !R.landed) soLand(b, it.p); }, calm() ? 50 : 900); } }
 function soPick(b, p){ const Q = soSt(b), it = b.items[Q.at]; if(!Q.open || Q.landed || it.mode === "auto") return;
   if(p === it.p){ soLand(b, p); return; }
   Q.wrong = it.why; render(); const bx = document.querySelector(`[data-fsp="${CSS.escape(p)}"]`); if(bx){ bx.classList.remove("shake"); void bx.offsetWidth; bx.classList.add("shake"); } }
 const sortPending = b => !soSt(b).done;
 function sortNext(b){ const Q = soSt(b), it = b.items[Q.at];
   if(!Q.open){ soOpen(b); return; }
-  if(!Q.landed){ if(!Q.busy) soLand(b, it.p); return; }
+  if(!Q.landed){ if(!SOFLY.has(b._id)) soLand(b, it.p); return; }
   if(Q.at < b.items.length - 1){ Q.at++; soShow(b); render(); return; }
   Q.done = true; render(); }
 function sortBack(b){ const Q = soSt(b);

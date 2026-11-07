@@ -1,0 +1,36 @@
+{
+ "title": "Gran… I still can't drive!",
+ "group": "b2",
+ "file": "2026-11-06.html",
+ "assets": {
+  "STICKER": "sticker.png",
+  "GAPS": "gaps.json",
+  "TQ": "tq.json"
+ },
+ "earlier": true,
+ "earlier_only": [
+  "clocks go back",
+  "clocks went back",
+  "an hour later for",
+  "still work for you",
+  "extra hour of sleep",
+  "do you think so",
+  "i suppose so",
+  "maybe, but i still think",
+  "broken into",
+  "pickpocketed",
+  "scam going round",
+  "pretending to be",
+  "report him to",
+  "had my phone stolen"
+ ],
+ "listed": false,
+ "class": {
+  "topics": [
+   {
+    "t": "When did it happen? Stages of life",
+    "href": "../tools/b2-2026-11-06/stages-of-life-class.html"
+   }
+  ]
+ }
+}

@@ -246,6 +246,14 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
         if d['type'] != 'revision-field' or keep != list(range(len(keep))) or not 0 < len(keep) <= len(d['stages']):
             sys.exit('%s: class_view keeps the first stages of a revision field ([0, 1, …]); anything else is an engine request.' % path)
         dc = dict(d); dc['stages'] = d['stages'][:len(keep)]
+        # tools 30 also (her 07.11 06:46, B2 6.11: the class reached the cards and noughts and crosses, not the wheel): "last_blocks": n keeps only
+        # the first n blocks of the last kept stage — still a prefix of the page, so every card keeps its permanent number
+        lb = cv.get('last_blocks')
+        if lb is not None:
+            last = dc['stages'][-1]
+            if not (isinstance(lb, int) and 0 < lb <= len(last['blocks'])):
+                sys.exit('%s: class_view last_blocks must be 1…%d' % (path, len(last['blocks'])))
+            dc['stages'] = dc['stages'][:-1] + [dict(last, blocks=last['blocks'][:lb])]
         page = fill(tpl, dc, lesson + '/' + name + '-class').replace('__LIVE__', 'false').replace('__SYNC_URL__', '')
         assert '__DATA__' not in page and '__PAGE_ID__' not in page, 'placeholder left in the class view of %s' % path
         open(os.path.join(out_dir, name + '-class.html'), 'w', encoding='utf-8').write(site_theme.add(page))

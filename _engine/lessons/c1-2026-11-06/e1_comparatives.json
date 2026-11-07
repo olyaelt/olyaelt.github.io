@@ -1,0 +1,341 @@
+{
+ "steps": [
+  {
+   "type": "dlg",
+   "pic": "SQUARE",
+   "box": "BOX_COMP",
+   "box_state": "gapped",
+   "intro": "Six places, then and now. In each picture, the left half shows the place before, and the right half shows it now. First, the town square. Say each missing word in the right form, then tap to check.",
+   "lines": [
+    {
+     "p": [
+      {
+       "b": "It's gotten a lot"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "livelier"
+      },
+      " (lively) — there's a market now, and people sit outside at the cafés."
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's much"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "greener"
+      },
+      " (green), too: there are trees and flower boxes everywhere."
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's a lot"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "cleaner"
+      },
+      " (clean) — no more litter on the ground."
+     ]
+    },
+    {
+     "p": [
+      "The old buildings look ",
+      {
+       "b": "a lot"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "nicer"
+      },
+      " (nice) — they've all been painted."
+     ]
+    },
+    {
+     "p": [
+      "For cyclists, ",
+      {
+       "b": "it's"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "safer"
+      },
+      " ",
+      {
+       "b": "than it used to be"
+      },
+      " (safe) — there's a bike lane now."
+     ]
+    }
+   ],
+   "note": "lively → livelier (or: more lively) · -y → -ier · nice → nicer · safe → safer · a lot / much + -er, not “more cleaner”."
+  },
+  {
+   "type": "dlg",
+   "pic": "STREET",
+   "box": "BOX_COMP",
+   "box_state": "gapped",
+   "intro": "A shopping street. The same: say the word in the right form, then tap to check.",
+   "lines": [
+    {
+     "p": [
+      "Sadly, the street ",
+      {
+       "b": "has gotten a lot"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "emptier"
+      },
+      " (empty) — there's hardly anyone around."
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's much"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "quieter"
+      },
+      " ",
+      {
+       "b": "than it used to be"
+      },
+      " (quiet)."
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's become a lot"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "more run-down"
+      },
+      " (run-down): most of the shops have closed down, and the paint is peeling."
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "dirtier"
+      },
+      " (dirty), too — there's litter all over the sidewalk."
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's a lot"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "less lively"
+      },
+      " ",
+      {
+       "b": "than it was"
+      },
+      " (lively · less)."
+     ]
+    },
+    {
+     "p": [
+      "Basically, ",
+      {
+       "b": "it's gotten much"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "worse"
+      },
+      " (bad)."
+     ]
+    }
+   ],
+   "note": "quiet → quieter (more quiet is possible, but less common) · run-down → more run-down · less + the plain form: less lively, not “less livelier” · bad → worse."
+  },
+  {
+   "type": "dlg",
+   "pic": "HOUSE",
+   "box": "BOX_COMP",
+   "box_state": "gapped",
+   "intro": "Less help now: the whole comparative is hidden, and the letters in brackets start the adjective. -er or more? Say it, then tap to check.",
+   "lines": [
+    {
+     "p": [
+      {
+       "b": "It's gotten a lot"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "more built-up"
+      },
+      " (b…-u…): there are apartment buildings all around the little house."
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's much"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "busier"
+      },
+      " (b…) — more people, more cars."
+     ]
+    },
+    {
+     "p": [
+      "The sidewalks are ",
+      {
+       "b": "a lot"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "more crowded"
+      },
+      " ",
+      {
+       "b": "than they used to be"
+      },
+      " (c…)."
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It looks"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "more dangerous"
+      },
+      " (d…) for people on foot — the cars pass really close."
+     ]
+    }
+   ],
+   "note": "two-word adjectives (built-up, run-down) and -ed adjectives (crowded) → more · long adjectives: more dangerous · busy → busier."
+  },
+  {
+   "type": "dlg",
+   "pic": "HARBOR",
+   "box": "BOX_COMP",
+   "box_state": "gapped",
+   "intro": "A fishing harbor. The same: the letters start the adjective — -er or more?",
+   "lines": [
+    {
+     "p": [
+      "The harbor ",
+      {
+       "b": "has gotten a lot"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "fancier"
+      },
+      " (f…): there are hotels and restaurants all along the water."
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's much"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "busier"
+      },
+      " (b…) — and in summer, ",
+      {
+       "b": "a lot"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "more crowded"
+      },
+      " (c…)."
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's much"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "more touristy"
+      },
+      " ",
+      {
+       "b": "these days"
+      },
+      " (t…): tour boats, people with suitcases everywhere."
+     ]
+    },
+    {
+     "p": [
+      "And ",
+      {
+       "b": "it's a lot"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "noisier"
+      },
+      " ",
+      {
+       "b": "than it used to be"
+      },
+      " (n…) — you can hear the tour boats all day."
+     ]
+    }
+   ],
+   "note": "fancy → fancier · noisy → noisier · but touristy (three syllables) → more touristy · touristy, not “touristic” (often a bit negative: full of things for tourists)."
+  },
+  {
+   "type": "sayit",
+   "pic": "CANAL",
+   "box": "BOX_COMP",
+   "box_state": "folded",
+   "instr": "No help now. Choose three adjectives. For each one, say what you can see. Then tap the yellow box to see one way to say it.",
+   "sit": "[An old elevated highway in the city center — and the same place now.]",
+   "ans": "It's gotten **a lot greener**: there are trees and plants along the water. It's **much quieter**, too — there's no traffic. And it's **safer** for people walking and cycling.",
+   "note": "or: cleaner, nicer, more peaceful · a lot / much + -er · an elevated highway = эстакада (BrE: a flyover)"
+  }
+ ]
+}

@@ -1,0 +1,505 @@
+{
+ "steps": [
+  {
+   "type": "rewrite",
+   "pic": "SQUARE",
+   "box": "BOX_CHANGE",
+   "box_state": "gapped",
+   "instr": "Now the rest of the box, place by place. First, say it another way: complete the second sentence with the word in capitals, so it means the same.",
+   "o": "The square used to be gray and empty, but it's full of cafés and market stalls now.",
+   "k": "WHEREAS",
+   "pre": "The square used to be gray and empty, ",
+   "post": " full of cafés and market stalls.",
+   "a": "whereas now it's",
+   "acc": [
+    "whereas now it's",
+    "whereas now it is",
+    "whereas it's now",
+    "whereas it is now",
+    "whereas today it's",
+    "whereas today it is",
+    "whereas these days it's",
+    "whereas these days it is",
+    "whereas nowadays it's",
+    "whereas nowadays it is"
+   ],
+   "n": "whereas = а, тогда как: it puts two facts side by side."
+  },
+  {
+   "type": "rewrite",
+   "pic": "SQUARE",
+   "box": "BOX_CHANGE",
+   "box_state": "gapped",
+   "o": "As a child, I thought the square was really boring.",
+   "k": "GROWING",
+   "pre": "",
+   "post": ", I thought the square was really boring.",
+   "a": "When I was growing up",
+   "acc": [
+    "When I was growing up",
+    "While I was growing up",
+    "Growing up",
+    "As I was growing up"
+   ],
+   "n": "when I was growing up = когда я рос(ла): when you were a child or a teenager."
+  },
+  {
+   "type": "sayit",
+   "pic": "SQUARE",
+   "box": "BOX_CHANGE",
+   "box_state": "gapped",
+   "instr": "What would you say? Say it aloud, then tap the yellow box to check.",
+   "sit": "An old friend can't believe it: “You? At the square? You hated it when we were kids!” (You're there most Saturdays now.)",
+   "ans": "**These days** I'm there almost every Saturday!",
+   "note": "or: Nowadays I go there most Saturdays. · these days = сейчас (not “in our days”)"
+  },
+  {
+   "type": "dlg",
+   "pic": "SQUARE",
+   "read": true,
+   "intro": "Here's the whole story of the square. Read it — out loud, if you can.",
+   "lines": [
+    {
+     "s": "Friend",
+     "p": [
+      {
+       "b": "Has the square changed much?"
+      }
+     ]
+    },
+    {
+     "s": "You",
+     "p": [
+      {
+       "b": "Yes, it has, actually"
+      },
+      " — ",
+      {
+       "b": "it's completely changed"
+      },
+      ". ",
+      {
+       "b": "When I was growing up"
+      },
+      ", it was gray and run-down, ",
+      {
+       "b": "whereas now"
+      },
+      " it's full of cafés and market stalls. They've painted all the old buildings, and it's ",
+      {
+       "b": "gotten a lot livelier"
+      },
+      " — and ",
+      {
+       "b": "much greener"
+      },
+      ", too. Only the clock tower ",
+      {
+       "b": "hasn't changed"
+      },
+      " at all. ",
+      {
+       "b": "These days"
+      },
+      " I'm there almost every Saturday."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "rewrite",
+   "pic": "STREET",
+   "box": "BOX_CHANGE",
+   "box_state": "gapped",
+   "instr": "Say it another way: use the word in capitals.",
+   "o": "There was a bakery and a little café here before.",
+   "k": "USED",
+   "pre": "There ",
+   "post": " a bakery and a little café here.",
+   "a": "used to be",
+   "acc": [
+    "used to be"
+   ],
+   "n": "used to be = раньше был(и) — а теперь нет. More natural than “there was … before”."
+  },
+  {
+   "type": "rewrite",
+   "pic": "STREET",
+   "box": "BOX_CHANGE",
+   "box_state": "gapped",
+   "o": "Back then, the street was full of small shops that weren't part of a chain.",
+   "k": "INDEPENDENT",
+   "pre": "Back then, the street was full of ",
+   "post": ".",
+   "a": "independent shops",
+   "acc": [
+    "independent shops",
+    "small independent shops",
+    "independent stores",
+    "small independent stores",
+    "local independent shops"
+   ],
+   "n": "independent shops = small shops, not chains (небольшие несетевые магазины)."
+  },
+  {
+   "type": "sayit",
+   "pic": "STREET",
+   "box": "BOX_CHANGE",
+   "box_state": "gapped",
+   "instr": "What would you say? Say it aloud, then tap to check.",
+   "sit": "A colleague who grew up near this street asks: “Has it changed much?” It has — and not for the better.",
+   "ans": "Sadly, yes. **It's changed quite a lot.**",
+   "note": "or: It's completely changed. · Yes, it has, unfortunately."
+  },
+  {
+   "type": "dlg",
+   "pic": "STREET",
+   "read": true,
+   "intro": "The whole story of the street.",
+   "lines": [
+    {
+     "s": "Friend",
+     "p": [
+      {
+       "b": "Has it changed much?"
+      }
+     ]
+    },
+    {
+     "s": "You",
+     "p": [
+      "Sadly, yes — ",
+      {
+       "b": "it's changed quite a lot"
+      },
+      ". There ",
+      {
+       "b": "used to be"
+      },
+      " lots of ",
+      {
+       "b": "independent shops"
+      },
+      " here: a bakery, a fruit and vegetable shop, a little café. Now most of them have closed down, and the street has ",
+      {
+       "b": "gotten a lot emptier"
+      },
+      ". It's ",
+      {
+       "b": "much quieter than it used to be"
+      },
+      ", and it's ",
+      {
+       "b": "become"
+      },
+      " really run-down. It's a real shame."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "rewrite",
+   "pic": "HOUSE",
+   "box": "BOX_CHANGE",
+   "box_state": "gapped",
+   "instr": "Say it another way: use the word in capitals.",
+   "o": "They've built lots of new apartment buildings — more than I expected.",
+   "k": "FEW",
+   "pre": "They've built ",
+   "post": " new apartment buildings.",
+   "a": "quite a few",
+   "acc": [
+    "quite a few"
+   ],
+   "n": "quite a few = довольно много — NOT “a few” (несколько)."
+  },
+  {
+   "type": "rewrite",
+   "pic": "HOUSE",
+   "box": "BOX_CHANGE",
+   "box_state": "gapped",
+   "o": "It used to be a quiet village, very close to the city but not part of it.",
+   "k": "OUTSIDE",
+   "pre": "It used to be a quiet village ",
+   "post": " the city.",
+   "a": "just outside",
+   "acc": [
+    "just outside",
+    "right outside"
+   ],
+   "n": "just outside the city = совсем рядом с городом, под городом."
+  },
+  {
+   "type": "sayit",
+   "pic": "HOUSE",
+   "box": "BOX_CHANGE",
+   "box_state": "gapped",
+   "instr": "What would you say? Say it aloud, then tap to check.",
+   "sit": "Your cousin hasn't been to Grandma's old street for years. She asks: “Has it changed much?” (Grandma's house looks exactly as it did, but there are new apartment buildings and cranes all around it.)",
+   "ans": "**Yes and no.** Grandma's house is pretty much the same, but everything around it has changed.",
+   "note": "or: Well, yes and no. · Yes and no = some things have changed, some haven't."
+  },
+  {
+   "type": "dlg",
+   "pic": "HOUSE",
+   "read": true,
+   "intro": "The whole story of Grandma's street.",
+   "lines": [
+    {
+     "s": "Friend",
+     "p": [
+      {
+       "b": "Has the area changed much?"
+      }
+     ]
+    },
+    {
+     "s": "You",
+     "p": [
+      {
+       "b": "Yes and no."
+      },
+      " Grandma's house is ",
+      {
+       "b": "pretty much the same"
+      },
+      ", but almost everything around it ",
+      {
+       "b": "has changed"
+      },
+      ". It ",
+      {
+       "b": "used to be"
+      },
+      " a quiet village ",
+      {
+       "b": "just outside"
+      },
+      " the city, with fields behind the houses. Now they've built ",
+      {
+       "b": "quite a few"
+      },
+      " apartment buildings, and new ones ",
+      {
+       "b": "are going up"
+      },
+      " everywhere. It's ",
+      {
+       "b": "gotten a lot busier"
+      },
+      ", and the traffic ",
+      {
+       "b": "is getting worse"
+      },
+      " every year."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "dlg",
+   "pic": "HARBOR",
+   "box": "BOX_CHANGE",
+   "box_state": "gapped",
+   "intro": "Watch out! Each gap is a spot where people often slip. Say the missing words — the hint shows what to watch — then tap to check.",
+   "lines": [
+    {
+     "p": [
+      "The harbor",
+      {
+       "b": "'s gotten so"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "touristy"
+      },
+      " (tourist-…) — there are tour boats everywhere."
+     ]
+    },
+    {
+     "p": [
+      "They've built ",
+      {
+       "f": "",
+       "r": "quite a few"
+      },
+      " hotels (q… · 3 words — not “a few”) — they're everywhere now!"
+     ]
+    },
+    {
+     "p": [
+      "Since they built the hotels, the harbor ",
+      {
+       "f": "",
+       "r": "has become"
+      },
+      " ",
+      {
+       "b": "much busier"
+      },
+      " (become · since …)."
+     ]
+    },
+    {
+     "p": [
+      "It's still lovely, but ",
+      {
+       "b": "it's"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "not quite as special"
+      },
+      " ",
+      {
+       "b": "as it was"
+      },
+      " (уже не совсем такая особенная: not …)."
+     ]
+    },
+    {
+     "p": [
+      "The whole harbor is ",
+      {
+       "f": "",
+       "r": "geared towards"
+      },
+      " tourists now (= set up mainly for · g…)."
+     ]
+    }
+   ],
+   "note": "touristy, not “touristic” · quite a few = a lot (a few = несколько) · since + a change up to now → has become · not quite as … as it was = уже не совсем такой …, как раньше · geared towards (AmE also: geared toward)."
+  },
+  {
+   "type": "dlg",
+   "pic": "HARBOR",
+   "read": true,
+   "intro": "The whole story of the harbor.",
+   "lines": [
+    {
+     "s": "Friend",
+     "p": [
+      {
+       "b": "Has the harbor changed much?"
+      }
+     ]
+    },
+    {
+     "s": "You",
+     "p": [
+      "Yes, ",
+      {
+       "b": "it's completely changed"
+      },
+      " — only the lighthouse is ",
+      {
+       "b": "pretty much the same"
+      },
+      ". They've ",
+      {
+       "b": "knocked down"
+      },
+      " the old sheds and built ",
+      {
+       "b": "quite a few"
+      },
+      " hotels and restaurants. The whole harbor is ",
+      {
+       "b": "geared towards"
+      },
+      " tourists now, and it's ",
+      {
+       "b": "gotten so touristy"
+      },
+      ". It's ",
+      {
+       "b": "a lot fancier"
+      },
+      " now — but it's still lovely, just ",
+      {
+       "b": "not quite as special as it was"
+      },
+      "."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sayit",
+   "pic": "CANAL",
+   "box": "BOX_CHANGE",
+   "box_state": "folded",
+   "instr": "Less help now: only situations. What would you say? Say it aloud, then tap to check.",
+   "sit": "A friend who used to drive along the old elevated highway every day asks: “Is the old highway still there?”",
+   "ans": "No — **they've knocked it down** and built a canal in its place.",
+   "note": "or: They've knocked the highway down. / They've knocked down the highway. · AmE also: They've torn it down. · “it” goes in the middle: knock it down."
+  },
+  {
+   "type": "sayit",
+   "pic": "CANAL",
+   "box": "BOX_CHANGE",
+   "box_state": "folded",
+   "instr": "Say it aloud, then tap to check.",
+   "sit": "Your friend asks about the old building with the dome at the end of the street: “Has that changed?”",
+   "ans": "**Not really, no. It's pretty much the same.**",
+   "note": "or: It hasn't changed much. · It hasn't changed at all."
+  },
+  {
+   "type": "dlg",
+   "pic": "CANAL",
+   "read": true,
+   "intro": "The whole story of the canal.",
+   "lines": [
+    {
+     "s": "Friend",
+     "p": [
+      {
+       "b": "Has the area changed much?"
+      }
+     ]
+    },
+    {
+     "s": "You",
+     "p": [
+      {
+       "b": "Yes, it has, actually — it's completely changed."
+      },
+      " They've ",
+      {
+       "b": "knocked down"
+      },
+      " the old elevated highway and built a canal in its place. It's ",
+      {
+       "b": "a lot greener than it used to be"
+      },
+      ", and much quieter. ",
+      {
+       "b": "These days"
+      },
+      " people walk and cycle along the water, ",
+      {
+       "b": "whereas"
+      },
+      " before, it was just cars and concrete. The old building with the dome is still ",
+      {
+       "b": "pretty much the same"
+      },
+      "."
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sayit",
+   "pic": "TOWERS",
+   "box": "BOX_CHANGE",
+   "box_state": "folded",
+   "instr": "No help now. Tell the whole story in four or five sentences: what's gone, what's new, what's still the same. Use as much from the box as you can. Then tap to see one way.",
+   "sit": "A friend who hasn't been there for ten years asks: “Has it changed much?”",
+   "ans": "Oh, **it's completely changed.** They've **knocked down** the old warehouses and built **quite a few** skyscrapers. It's **gotten a lot more built-up**, and **much busier** — there are cafés and people everywhere. **These days** it's full of life, **whereas** before, hardly anyone went there. Only the old water tower is **pretty much the same**.",
+   "note": "Your story can be different, of course."
+  }
+ ]
+}

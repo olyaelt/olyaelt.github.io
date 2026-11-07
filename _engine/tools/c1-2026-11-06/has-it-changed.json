@@ -1455,5 +1455,14 @@
     }
    ]
   }
- ]
+ ],
+ "class_view": {
+  "stages": [
+   0,
+   1,
+   2
+  ],
+  "last_blocks": 4,
+  "why": "tracker c1-l8, 6.11: Warm-up, Video (to the first chat), Practice up to the sort; not reached: make a sentence, the recall, Use it (her 07.11: only what was in class)"
+ }
 }
