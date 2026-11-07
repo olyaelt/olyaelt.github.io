@@ -2157,8 +2157,8 @@
       },
       {
        "label": "Fix it",
-       "q": "“I can't still drive.” ((Fix it. Then ask: Is there anything you still can't do?))",
-       "a": "I **still can't** drive. → Is there anything you still can't do?",
+       "q": "“I can't still drive.” ((Fix it. Then ask the next person to name two things they still can't do.))",
+       "a": "I **still can't** drive. → Name two things you still can't do.",
        "why": "still — перед can't: не ~~I can't still~~"
       },
       {
@@ -2187,8 +2187,8 @@
       },
       {
        "label": "Fix it",
-       "q": "A friend: “I can't remember our first English teacher's name.” You: “I also don't remember.” ((Fix it. Then ask: Do you remember your first teacher's name?))",
-       "a": "**Me neither!** · or: I can't remember **either**. → Do you remember your first teacher's name?",
+       "q": "A friend: “I can't remember our first English teacher's name.” You: “I also don't remember.” ((Fix it. Then ask the next person to name two things they remember about their first English teacher.))",
+       "a": "**Me neither!** · or: I can't remember **either**. → Name two things you remember about your first English teacher.",
        "why": "в ответ на чужое «не…» — Me neither / …either, не ~~also~~"
       },
       {
@@ -2211,8 +2211,8 @@
       },
       {
        "label": "Fix it",
-       "q": "“I stopped eating meat at 20. From this time I don't eat meat.” ((Fix it. Then ask: Is there anything you stopped doing years ago?))",
-       "a": "I stopped eating meat at 20. **Since then, I haven't eaten** it. → Is there anything you stopped doing years ago?",
+       "q": "“I stopped eating meat at 20. From this time I don't eat meat.” ((Fix it. Then ask the next person to name one thing they stopped doing years ago, and why.))",
+       "a": "I stopped eating meat at 20. **Since then, I haven't eaten** it. → Name one thing you stopped doing years ago. Why?",
        "why": "since then + present perfect, не ~~from this time I don't~~"
       },
       {

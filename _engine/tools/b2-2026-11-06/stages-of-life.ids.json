@@ -724,22 +724,27 @@
   },
   {
    "pid": 116,
-   "sig": "i still can't drive. → is there anything you still can't do? fix it “i can't still drive.” fix it. then ask: is there anything you still can't do? still — перед can't: не i can't still",
+   "sig": "i still can't drive. → name two things you still can't do. fix it “i can't still drive.” fix it. then ask the next person to name two things they still can't do. still — перед can't: не i can't still",
    "gone": false
   },
   {
    "pid": 117,
    "sig": "me neither! · or: i can't remember either. → do you remember your first teacher's name? fix it a friend: “i can't remember our first english teacher's name.” you: “i also don't remember.” fix it. then ask: do you remember your first teacher's name? в ответ на чужое «не…» — me neither / …either, не also",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 118,
-   "sig": "i stopped eating meat at 20. since then, i haven't eaten it. → is there anything you stopped doing years ago? fix it “i stopped eating meat at 20. from this time i don't eat meat.” fix it. then ask: is there anything you stopped doing years ago? since then + present perfect, не from this time i don't",
+   "sig": "i stopped eating meat at 20. since then, i haven't eaten it. → name one thing you stopped doing years ago. why? fix it “i stopped eating meat at 20. from this time i don't eat meat.” fix it. then ask the next person to name one thing they stopped doing years ago, and why. since then + present perfect, не from this time i don't",
    "gone": false
   },
   {
    "pid": 119,
    "sig": "after i graduated from university, i found a job. · or: i found a job straight out of university. → what did you do right after school or university? fix it “after i had graduated the university, i found a job.” fix it. then ask: what did you do right after school or university? graduate from university (без the); после after past perfect не нужен",
+   "gone": false
+  },
+  {
+   "pid": 120,
+   "sig": "me neither! · or: i can't remember either. → name two things you remember about your first english teacher. fix it a friend: “i can't remember our first english teacher's name.” you: “i also don't remember.” fix it. then ask the next person to name two things they remember about their first english teacher. в ответ на чужое «не…» — me neither / …either, не also",
    "gone": false
   }
  ],

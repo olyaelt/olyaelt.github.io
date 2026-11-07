@@ -36,7 +36,9 @@ function makeEnv() {
   const pad = n => String(n).padStart(2, "0");
   const ctx = {
     SpreadsheetApp: { getActiveSpreadsheet: () => ss, getUi: () => { throw new Error("no ui"); } },
-    LockService: { getScriptLock: () => ({ waitLock() {}, releaseLock() {} }) },
+    LockService: { getScriptLock: () => ({ waitLock() { ctx.locks = (ctx.locks || 0) + 1; }, releaseLock() {} }) },
+    /* engine 64: the overview's short cache */
+    CacheService: { getScriptCache: () => ({ get: k => (ctx.cache || {})[k] || null, put: (k, v) => { (ctx.cache = ctx.cache || {})[k] = v; }, remove: k => { if (ctx.cache) delete ctx.cache[k]; } }) },
     /* engine 57: her Drive (recordings) */
     PropertiesService: { getScriptProperties: () => ({ getProperty: k => drive.props[k] || null, setProperty: (k, v) => { drive.props[k] = v; } }) },
     DriveApp: (() => { const iter = a => { let i = 0; return { hasNext: () => i < a.length, next: () => a[i++] }; };

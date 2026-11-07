@@ -1,0 +1,312 @@
+{
+ "blocks": [
+  {
+   "pid": 0,
+   "sig": "questions after watching: talk to your partner.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "questions talk to your partner: two questions about ben, two about you.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "text part 1. read with the glossary. then tell each other: what went wrong after ben's trips? what does he do about it now?",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "say what do these lines mean? discuss together, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "text remember the missing words and how to say them. tap the yellow and orange to check.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "text now without the glossary.",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "questions talk to your partner.",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "text part 2. read with the glossary. then tell each other: how does ben spend his days?",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "say what do these lines mean? discuss together, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "text remember the missing words. tap the yellow and orange to check.",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "text now without the glossary.",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "questions talk to your partner.",
+   "gone": false
+  },
+  {
+   "pid": 12,
+   "sig": "text part 3. read with the glossary. then tell each other: what is missing in ben's life?",
+   "gone": false
+  },
+  {
+   "pid": 13,
+   "sig": "say what do these lines mean? discuss together, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 14,
+   "sig": "text remember the missing words. tap the yellow and orange to check.",
+   "gone": false
+  },
+  {
+   "pid": 15,
+   "sig": "text now without the glossary.",
+   "gone": false
+  },
+  {
+   "pid": 16,
+   "sig": "questions talk to your partner.",
+   "gone": false
+  },
+  {
+   "pid": 17,
+   "sig": "picture",
+   "gone": false
+  },
+  {
+   "pid": 18,
+   "sig": "say ben's story: how do you say these in english? take turns, from memory. then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 19,
+   "sig": "text remember the missing words. use the first letters. tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 20,
+   "sig": "picture",
+   "gone": false
+  },
+  {
+   "pid": 21,
+   "sig": "text check with the text: which phrases from the box did you use? which did you forget?",
+   "gone": false
+  },
+  {
+   "pid": 22,
+   "sig": "questions talk to your partner.",
+   "gone": false
+  },
+  {
+   "pid": 23,
+   "sig": "say how does ben tell his story? discuss together, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 24,
+   "sig": "say story, sum-up or now? which tense for each? discuss, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 25,
+   "sig": "model two ways to tell it. the listener's question often decides which. say the verbs, then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 26,
+   "sig": "text tell the story or sum up? say the verbs in the right form. then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 27,
+   "sig": "say why these tenses? discuss together, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 28,
+   "sig": "text say the verbs in the right form.",
+   "gone": false
+  },
+  {
+   "pid": 29,
+   "sig": "say why these tenses? discuss together, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 30,
+   "sig": "text say the verbs in the right form.",
+   "gone": false
+  },
+  {
+   "pid": 31,
+   "sig": "say why these tenses? discuss together, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 32,
+   "sig": "text say the verbs in the right form.",
+   "gone": false
+  },
+  {
+   "pid": 33,
+   "sig": "say why these tenses? discuss together, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 34,
+   "sig": "text say the verbs in the right form.",
+   "gone": false
+  },
+  {
+   "pid": 35,
+   "sig": "say why these tenses? discuss together, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 36,
+   "sig": "text say the verbs in the right form.",
+   "gone": false
+  },
+  {
+   "pid": 37,
+   "sig": "say why these tenses? discuss together, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 38,
+   "sig": "questions before you go: talk to your partner.",
+   "gone": false
+  },
+  {
+   "pid": 39,
+   "sig": "questions now you: a change in your life (3 minutes).",
+   "gone": false
+  }
+ ],
+ "cards": [],
+ "write": [],
+ "questions.0": [
+  {
+   "pid": 0,
+   "sig": "1 what has ben done since he retired? name three things.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 why does ben go to starbucks every morning?",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "3 what's the nowhere-to-be thing? explain it in your own words.",
+   "gone": false
+  }
+ ],
+ "questions.1": [
+  {
+   "pid": 0,
+   "sig": "ben 1 “i'm not an unhappy person,” ben says. do you believe him? what in the video makes you say that?",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "ben 2 which of the things in the box bother ben? which would bother you most, and which wouldn't bother you at all?",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "you 3 what do you do when you've got time on your hands?",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "you 4 name two moments in life when people get that nowhere-to-be feeling (after a long trip, at the end of a big project…). what helps?",
+   "gone": false
+  }
+ ],
+ "questions.6": [
+  {
+   "pid": 0,
+   "sig": "from memory: what did ben do at first, and what happened every time he got home? use two phrases from part 1.",
+   "gone": false
+  }
+ ],
+ "questions.11": [
+  {
+   "pid": 0,
+   "sig": "ben goes to starbucks to feel part of something. name two places where people can feel part of something. which one works — or would work — for you?",
+   "gone": false
+  }
+ ],
+ "questions.16": [
+  {
+   "pid": 0,
+   "sig": "ben's at starbucks every morning these days. what do you do these days that you didn't do a year ago? name two things.",
+   "gone": false
+  }
+ ],
+ "questions.22": [
+  {
+   "pid": 0,
+   "sig": "1 ben says he probably relied on his son's family “way more than he should”. why do you think he feels that way?",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 “get up, get out of the house and go somewhere.” does it work for ben? would it work for you? why or why not?",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "3 ben has tried yoga, cooking and mandarin. name two things you've tried — or would like to try — in your free time, and one you'd never try (again).",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "4 ben says there's a hole in his life. name two things that could fill it — and one that wouldn't.",
+   "gone": false
+  }
+ ],
+ "questions.38": [
+  {
+   "pid": 0,
+   "sig": "1 tell ben's story in two sentences: how it all started, and where he is now.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 name two things you rely on more than you should (your phone? coffee? your car?). start: don't get me wrong, i love…, but…",
+   "gone": false
+  }
+ ],
+ "questions.39": [
+  {
+   "pid": 0,
+   "sig": "1 tell your partner about something new in your life: a job, a hobby, a routine… — or take one from the stories. your partner asks first: so what was it like at first? or how's it going so far? tell them how it started and how it's going now. then swap.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 now another one — this time your partner asks the other question first.",
+   "gone": false
+  }
+ ]
+}

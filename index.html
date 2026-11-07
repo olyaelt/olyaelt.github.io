@@ -135,6 +135,13 @@ let data = {};     /* group -> {stats, pages: {key: counts}, failed, pending} */
 let PUB = new Set();   /* drafts ("listed": false) she has published with the button on the page, from her table */
 const draft = h => h.unlisted && !PUB.has(h.key);
 let state = "";
+/* engine 64 (her 07.11 20:09: «очень подолгу грузиться… не открывается именно с телефона»): the last numbers from her table stay on this
+   device and show at once, with their time; the fresh ones replace them when the table answers (Refresh asks the table afresh) */
+let ovT = 0, ovRefresh = false;
+const OVK = "hw-ov-start";
+const ovLoad = () => { try{ const o = JSON.parse(ls.get(OVK) || "null"); return o && o.t && o.pages ? o : null; }catch(e){ return null; } };
+const ovSave = all => { try{ ls.set(OVK, JSON.stringify({t: Date.now(), pages: all.pages, groups: all.groups || {}, published: all.published || null})); }catch(e){} };
+const hhmm = t => { const d = new Date(t); return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"); };
 
 async function post(payload){
   try{ const r = await fetch(SYNC_URL, {method:"POST", body:JSON.stringify(payload), headers:{"Content-Type":"text/plain;charset=utf-8"}}); return await r.json(); }
@@ -167,28 +174,31 @@ async function teacherSync(code, key){
   return {ok:false, error:"busy"};
 }
 /* one request for all the homework; an older Code.gs answers "no-page", and then each homework is asked in turn */
-async function overview(code, keys, stats){
+async function overview(code, keys, stats, fresh){
   let res = {ok:false};
   for(let attempt = 0; attempt < 2 && !res.ok; attempt++){
-    res = await post({action:"overview", code, pages:keys, stats:!!stats});
+    res = await post({action:"overview", code, pages:keys, stats:!!stats, fresh:!!fresh});
     if(res.error === "no-page" || res.error === "unknown-code") break;
   }
   return res;
 }
-async function load(){
+function ovApply(all){
+  if(Array.isArray(all.published)) PUB = new Set(all.published);
+  for(const g of Object.keys(GROUPS)){ const d = data[g] = { stats: (all.groups || {})[g.toUpperCase()] || null, pages: {}, failed: 0, pending: 0 };
+    GROUPS[g].forEach(h => { if(all.pages[h.key]) d.pages[h.key] = all.pages[h.key]; else d.failed++; }); }
+}
+async function load(e){
   if(!isTeacher()) return;
-  const code = myCode(), items = [];
+  const code = myCode(), items = [], fresh = !!(e && e.type === "click"), old = ovLoad();   /* Refresh asks the table afresh */
   for(const g of Object.keys(GROUPS)){ data[g] = { stats: null, pages: {}, failed: 0, pending: GROUPS[g].length }; GROUPS[g].forEach(h => items.push([g, h])); }
-  state = "loading"; render();
-  const all = await overview(code, items.map(([g, h]) => h.key), true);
+  if(old){ ovApply(old); ovT = old.t; ovRefresh = true; state = "ok"; } else { ovT = 0; ovRefresh = false; state = "loading"; }
+  render();
+  const all = await overview(code, items.map(([g, h]) => h.key), true, fresh);
   if(code !== myCode()) return;
-  if(all.ok && all.pages){
-    if(Array.isArray(all.published)) PUB = new Set(all.published);
-    for(const g of Object.keys(GROUPS)){ const d = data[g]; d.pending = 0; d.stats = (all.groups || {})[g.toUpperCase()] || null;
-      GROUPS[g].forEach(h => { if(all.pages[h.key]) d.pages[h.key] = all.pages[h.key]; else d.failed++; }); }
-    state = "ok"; render(); return;
-  }
+  ovRefresh = false;
+  if(all.ok && all.pages){ ovApply(all); ovT = 0; ovSave(all); state = "ok"; render(); return; }
   if(all.error === "unknown-code"){ state = "unknown"; render(); return; }
+  if(old){ state = "ok"; render(); return; }   /* the table didn't answer now: the numbers from before stay, with their time */
   if(all.error !== "no-page"){ for(const g of Object.keys(GROUPS)){ data[g].pending = 0; data[g].failed = GROUPS[g].length; } state = "ok"; render(); return; }
   await inTurn(items, async ([g, h]) => {
     const res = await teacherSync(code, h.key);
@@ -206,7 +216,10 @@ function groupCard(g){
   const list = GROUPS[g] || [], d = data[g] || {pages:{}, failed:0, pending:0};
   const total = Object.values(d.pages).reduce((s,c)=>s+c.toAnswer, 0);
   /* never say "nothing waiting" before every homework has answered */
-  const todo = d.pending && d.pending === list.length ? `<p class="total-todo checking">Checking what waits for your answer…</p>`
+  const was = total ? `💬 ${total} waiting for your answer` : "✓ Nothing waiting for your answer";
+  const todo = ovRefresh ? `<p class="total-todo checking">${was} at ${hhmm(ovT)} · checking for new…</p>`
+    : ovT ? `<p class="total-todo">${was} at ${hhmm(ovT)} · ⚠️ the table didn't answer now — tap Refresh later</p>`
+    : d.pending && d.pending === list.length ? `<p class="total-todo checking">Checking what waits for your answer…</p>`
     : d.pending ? `<p class="total-todo checking">${total ? `💬 ${total} waiting for your answer so far · ` : ""}checking… ${list.length - d.pending} of ${list.length}</p>`
     : d.failed ? `<p class="total-todo">${total ? `💬 ${total} waiting for your answer · ` : ""}⚠️ ${d.failed} homework didn't answer — tap Refresh</p>`
     : `<p class="total-todo ${total?"":"none"}">${total ? `💬 ${total} waiting for your answer` : "✓ Nothing waiting for your answer"}</p>`;

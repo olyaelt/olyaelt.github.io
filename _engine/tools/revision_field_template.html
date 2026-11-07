@@ -46,7 +46,11 @@ __BASE_CSS__
 .stepbar .btn{min-width:8.5rem;font-size:1.1rem}
 .stepbar .step-msg{text-align:center;font-weight:800;color:var(--again)}
 .stepbar .step-mid{flex:1;display:grid;justify-items:center;gap:2px}
-.sdots{display:flex;gap:8px}
+.sdots{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.stepbar .step-mid{min-width:0}
+/* tools 31 (B2 11.11 «Ben's video»: 15 screens in 📜 Text, the box beside): many screens — smaller dots, and they wrap instead of running under the box */
+.sdots:has(button:nth-child(11)){gap:4px}
+.sdots:has(button:nth-child(11)) button{width:1.6rem;height:1.6rem;font-size:.8rem}
 .sdots button{width:2rem;height:2rem;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--muted);font:inherit;font-weight:900;font-size:.95rem;padding:0;display:grid;place-items:center}
 .sdots button.was{border-color:var(--instr);color:var(--instr-text);cursor:pointer}
 .sdots button.on{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
@@ -185,6 +189,13 @@ aside.box.mainbox .pp-ru{font-size:calc(1rem * var(--k, 1))}
 .ptimer-row{margin:0 0 10px}
 .ptimer-row.pcred{margin:8px 0 0;display:flex;align-items:center;gap:14px;flex-wrap:nowrap} .ptimer-row.pcred p.credit{margin:0;flex:1 1 auto}
 figure.pic.zoomable{cursor:zoom-in}
+/* tools 31: a row of pictures on white tiles, captions under them; on a phone two or three a row */
+.pic-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:10px 0 2px}
+.pic-row figure.tile{margin:0;background:#FFFFFF;border:1px solid var(--line,#E5DFC8);border-radius:12px;padding:6px 6px 4px;cursor:zoom-in;display:flex;flex-direction:column;align-items:center}
+.pic-row figure.tile img{width:100%;height:auto;max-height:var(--tile-h,170px);object-fit:contain;display:block;background:#FFFFFF;border-radius:6px}
+.pic-row figure.tile figcaption{margin-top:3px;font-size:.92rem;font-weight:800;color:#1D1D1B;text-align:center;line-height:1.2}
+@media (max-width:560px){ .pic-row{grid-template-columns:repeat(2,minmax(0,1fr))} }
+.pic-zoom img{background:#FFFFFF}
 .pic-zoom{position:fixed;inset:0;z-index:60;background:rgba(20,20,20,.92);display:flex;align-items:center;justify-content:center;cursor:zoom-out;padding:18px}
 .pic-zoom img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px}
 .pic-zoom .pz-t{position:absolute;top:14px;right:16px;background:var(--instr);color:var(--instr-ink);border-radius:99px;padding:6px 16px;font-size:1.4rem;font-weight:900;font-variant-numeric:tabular-nums}
@@ -1140,7 +1151,11 @@ const altFramesHTML = alt => { const parts = String(alt || "").split(/\s+·\s+(?
 const creditHTML = c => c ? `<p class="credit">${esc(c).replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, (m, t, u) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`)}</p>` : "";
 /* tools 30: with a credit, ⏱ and the credit share one row under the picture (the photos keep the room); a tap on a photo shows it on
    the whole screen, a tap closes it */
+/* tools 31 (B2 11.11 «Ben's video»: five pictures of his story): `imgs: [{img, cap}]` = a numbered row of small pictures, each on a white
+   tile (her pictures are black lines on a transparent ground: on the dark theme they would vanish), the caption under each; a tap shows one big */
+const picRowHTML = b => `<div class="pic-row">${b.imgs.map((o, i) => `<figure class="pic tile" data-zoom title="Tap to see it bigger"><img src="${esc(o.img)}" alt="${esc(o.cap || o.alt || "")}"><figcaption>${esc(o.cap || "")}</figcaption></figure>`).join("")}</div>`;
 const pictureHTML = b => { if(b.lead) return retellHTML(b);
+  if(b.imgs && b.imgs.length) return `${b.task ? `<p class="task">${mk(b.task)}</p>` : ""}${picRowHTML(b)}${creditHTML(b.credit)}`;
   const tm = b.timer ? `<button class="btn ptimer" data-ptimer>${esc(ptimerText(b))}</button>` : "", fig = b._missing ? `<figure class="pic" style="margin:0">${altFramesHTML(b.alt)}</figure>`
     : `<figure class="pic zoomable" style="margin:0" data-zoom title="Tap to see it bigger"><img src="${esc(b.img)}" alt="${esc(b.alt || b.instr || "")}"></figure>`;
   if(b.credit && tm) return `${fig}<div class="row-actions ptimer-row pcred">${tm}${creditHTML(b.credit)}</div>${b.task ? `<p class="task">${mk(b.task)}</p>` : ""}`;

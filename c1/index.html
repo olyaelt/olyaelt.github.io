@@ -274,6 +274,13 @@ function stats(h){
 }
 /* teacher view: what waits for Olya on each homework (the same data the homework page shows her) */
 let tdata = null, tpending = 0, tfailed = 0;
+/* engine 64 (her 07.11 20:09: «очень подолгу грузиться… не открывается именно с телефона»): the last numbers from her table stay on this
+   device and show at once, with their time; the fresh ones replace them when the table answers. Only in her teacher view. */
+let tstale = 0, trefresh = false;
+const OVK = "hw-ov-" + location.pathname;
+const ovLoad = () => { try{ const o = JSON.parse(ls.get(OVK) || "null"); return o && o.t && o.pages ? o : null; }catch(e){ return null; } };
+const ovSave = all => { try{ ls.set(OVK, JSON.stringify({t: Date.now(), pages: all.pages, published: all.published || null})); }catch(e){} };
+const hhmm = t => { const d = new Date(t); return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"); };
 const teacherView = () => !!(myCode() && ls.get("hw-role")==="teacher" && !asStudent() && syncState!=="unknown");
 function tcounts(res){
   const w = res.work || [], ticked = new Set(); Object.values(res.done || {}).forEach(a => a.forEach(i => ticked.add(i)));
@@ -295,19 +302,24 @@ async function teacherSync(code, key){
   return {ok:false, error:"busy"};
 }
 /* one request for all the homework; an older Code.gs answers "no-page", and then each homework is asked in turn */
-async function overview(code, keys, stats){
+async function overview(code, keys, stats, fresh){
   let res = {ok:false};
   for(let attempt = 0; attempt < 2 && !res.ok; attempt++){
-    res = await post({action:"overview", code, pages:keys, stats:!!stats});
+    res = await post({action:"overview", code, pages:keys, stats:!!stats, fresh:!!fresh});
     if(res.error === "no-page" || res.error === "unknown-code") break;
   }
   return res;
 }
 async function loadTeacher(){
-  const code = myCode(), L = HW_ALL; tdata = {}; tpending = L.length; tfailed = 0; render();
+  const code = myCode(), L = HW_ALL, old = ovLoad(); tdata = {}; tfailed = 0;
+  if(old){ gotPub(old.published); L.forEach(h=>{ if(old.pages[h.key]) tdata[h.key] = old.pages[h.key]; }); tpending = 0; tstale = old.t; trefresh = true; }
+  else { tpending = L.length; tstale = 0; trefresh = false; }
+  render();
   const all = await overview(code, L.map(h=>h.key));
   if(code !== myCode() || !teacherView()) return;
-  if(all.ok && all.pages){ gotPub(all.published); L.forEach(h=>{ if(all.pages[h.key]) tdata[h.key] = all.pages[h.key]; else tfailed++; }); tpending = 0; render(); return; }
+  trefresh = false;
+  if(all.ok && all.pages){ gotPub(all.published); tdata = {}; L.forEach(h=>{ if(all.pages[h.key]) tdata[h.key] = all.pages[h.key]; else tfailed++; }); tpending = 0; tstale = 0; ovSave(all); render(); return; }
+  if(old && all.error !== "unknown-code"){ render(); return; }   /* the table didn't answer now: the numbers from before stay, with their time */
   if(all.error !== "no-page"){ tpending = 0; tfailed = L.length; render(); return; }
   await inTurn(L, async h => {
     const res = await teacherSync(code, h.key);
@@ -324,6 +336,8 @@ function teacherSum(){
   /* never say "nothing waiting" before every homework has answered */
   if(tpending === HW_ALL.length) return `<p class="t-sum checking">Checking what waits for your answer…</p>`;
   if(tpending) return `<p class="t-sum checking">${total ? `💬 ${total} waiting for your answer so far · ` : ""}checking… ${HW_ALL.length - tpending} of ${HW_ALL.length}</p>`;
+  if(trefresh) return `<p class="t-sum checking">${total ? `💬 ${total} waiting for your answer` : "✓ Nothing waiting for your answer"} at ${hhmm(tstale)} · checking for new…</p>`;
+  if(tstale) return `<p class="t-sum">${total ? `💬 ${total} waiting for your answer` : "✓ Nothing waiting for your answer"} at ${hhmm(tstale)} · ⚠️ the table didn't answer now — reload the page later</p>`;
   if(tfailed) return `<p class="t-sum">${total ? `💬 ${total} waiting for your answer · ` : ""}⚠️ ${tfailed} homework didn't answer — reload the page</p>`;
   return `<p class="t-sum ${total?"":"none"}">${total ? `💬 ${total} waiting for your answer — open the homework with the red frame` : "✓ Nothing waiting for your answer"}</p>`;
 }
@@ -338,7 +352,7 @@ function card(h, i){
   const st = stats(h), n = h.tasks.length, all = n && st.done >= n;
   if(teacherView()){
     const c = tdata && tdata[h.key];
-    const badges = c ? [c.toAnswer?`<b>💬 ${c.toAnswer} to answer</b>`:"", `${c.started} of ${c.students} started`, c.marked?`❔ ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:""].filter(Boolean).join(" · ") : (tpending ? "checking…" : "didn't answer — reload the page");
+    const badges = c ? [c.toAnswer?`<b>💬 ${c.toAnswer} to answer</b>`:"", `${c.started} of ${c.students} started`, c.marked?`❔ ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:""].filter(Boolean).join(" · ") : ((tpending || trefresh) ? "checking…" : "didn't answer — reload the page");
     const latest = h === HW[0];
     return `<a class="hw ${latest?"latest":""} ${c && c.toAnswer ? "todo" : ""} ${isPub(h)?"":"unl"}" href="${esc(h.file)}">
     <div class="hw-top"><span class="date">${esc(h.date)}</span>${!isPub(h)?`<span class="tag unl-tag">🔒 Not published</span>`:latest?`<span class="tag">Latest</span>`:""}<span class="go" aria-hidden="true">→</span></div>

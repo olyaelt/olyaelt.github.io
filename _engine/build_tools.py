@@ -181,6 +181,12 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
                     if ed.get('type') == 'chat-scenes':   # her 📥 Groups names its chats; their texts are kept by the chats' permanent numbers
                         ep = page_ids(lesson, b['page'], ed, save=False).get('scenes', [])
                         d['embeds'][b['page']] = {'title': ed['title'], 'chats': {str(pid): x.get('contact', '') for pid, x in zip(ep, ed['scenes'])}}
+                if b.get('kind') == 'picture' and b.get('imgs'):   # tools 31 (B2 11.11): a row of pictures; one not there yet → left out
+                    keep = []
+                    for o in b['imgs']:
+                        if o.get('img') and os.path.exists(os.path.join(T, lesson, o['img'])): shutil.copyfile(os.path.join(T, lesson, o['img']), os.path.join(out_dir, o['img'])); keep.append(o)
+                        else: print('note: %s/%s — %s not there yet, the row leaves it out' % (lesson, name, o.get('img')))
+                    b['imgs'] = keep
                 if b.get('kind') in ('picture', 'model') and b.get('img'):   # tools 18: a model with its picture (Ljubljana) too
                     if os.path.exists(os.path.join(T, lesson, b['img'])): shutil.copyfile(os.path.join(T, lesson, b['img']), os.path.join(out_dir, b['img']))
                     else: print('note: %s/%s — %s not there yet: its alt text in frames' % (lesson, name, b['img'])); b['_missing'] = True   # tools 28 also (C1 6.11)

@@ -489,7 +489,7 @@ function parseDate_(v) {
 }
 
 // frames now = frames before the pages + every ticked task since the season start (its minutes; Over to you counts double)
-function groupStats_(group) {
+function groupStats_(group, stateRows) {   // engine 64: stateRows = State columns 1–8 already read (the overview reads them once for both groups)
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const set = settings_();
   const rows = set.getRange(2, 1, Math.max(1, set.getLastRow() - 1), SETTINGS_HEAD.length).getValues();
@@ -503,8 +503,8 @@ function groupStats_(group) {
     if (String(r[0]).trim() && String(r[1]).trim() && String(r[2]).trim().toUpperCase() === group) { codes[String(r[0]).trim().toLowerCase()] = true; size++; }
   });
   let total = before; const weekAgo = Date.now() - 7 * 86400000, active = {};
-  const state = ss.getSheetByName(STATE);
-  if (state && state.getLastRow() > 1) state.getRange(2, 1, state.getLastRow() - 1, 8).getValues().forEach(r => {
+  const state = stateRows ? null : ss.getSheetByName(STATE);
+  (stateRows || (state && state.getLastRow() > 1 ? state.getRange(2, 1, state.getLastRow() - 1, 8).getValues() : [])).forEach(r => {
     if (!codes[r[1]] || r[4] !== true) return;
     const ts = Number(r[5]);
     if (ts >= start) total += Number(r[7]) || 0;
@@ -545,6 +545,7 @@ function teacher_(stu, p) {
   if (p.action === "toolRoster") return toolRoster_(p);
   const page = clean_(p.page, 80);
   if (!page) return { ok: false, error: "no-page" };
+  if (p.action === "feedback" || p.action === "discussed" || p.action === "publish") ovBump_();   // engine 64: her overview counts afresh
   if (p.action === "feedback") return setFeedback_(p.id, p.text);
   if (p.action === "discussed") return discussed_(page, p);
   if (p.action === "publish") return publish_(page, p.on === true);
@@ -609,7 +610,8 @@ function overview_(p) {
   keys.forEach(k => { pages[k] = { toAnswer: 0, marked: 0, questions: 0, work: 0, started: 0, students: size[groupOfPage_(k)] || 0 }; });
   const started = {};
   const state = ss.getSheetByName(STATE);
-  if (state && state.getLastRow() > 1) state.getRange(2, 1, state.getLastRow() - 1, 5).getValues().forEach(r => {
+  const stateRows = state && state.getLastRow() > 1 ? state.getRange(2, 1, state.getLastRow() - 1, 8).getValues() : [];   // engine 64: read once
+  stateRows.forEach(r => {
     const k = String(r[2]);
     if (!pages[k] || r[4] !== true || groupOf[r[1]] !== groupOfPage_(k)) return;
     (started[k] = started[k] || {})[r[1]] = true;
@@ -632,7 +634,7 @@ function overview_(p) {
     if (t === "marked") c.marked++; else if (t === "question") c.questions++; else c.work++;
   });
   const groups = {};
-  if (p.stats) Object.keys(real).forEach(g => { if (keys.some(k => groupOfPage_(k) === g)) groups[g] = groupStats_(g); });
+  if (p.stats) Object.keys(real).forEach(g => { if (keys.some(k => groupOfPage_(k) === g)) groups[g] = groupStats_(g, stateRows); });
   return { ok: true, role: "teacher", pages: pages, groups: groups, published: published_(keys) };
 }
 
@@ -890,7 +892,30 @@ function readOnly_(p) {
     return stu.group === TEACHER ? toolList_(String(p.tool || "")) : { ok: false, error: "not-teacher" };
   }
   if (p.action === "myRecording") return myRecording_(p);                                      // engine 57: a student listens to their own recording again
+  // engine 64 (her 07.11 20:09: «очень подолгу грузиться… не открывается именно с телефона»): her overview only reads, so it doesn't wait
+  // in the queue behind the students' ticks, and a slow overview no longer keeps their requests waiting
+  if (p.action === "overview") {
+    const stu = findStudent_(p.code);
+    if (!stu) return { ok: false, error: "unknown-code" };
+    if (stu.group === TEACHER) return overviewCached_(p);
+  }
   return null;
+}
+
+// engine 64: the overview's answer is kept for a minute and a half (Refresh asks fresh: true); her answers, ✓ Discussed and Publish start it afresh
+const OV_TTL = 90;
+function ovVer_() { try { return CacheService.getScriptCache().get("ov-ver") || "0"; } catch (err) { return "0"; } }
+function ovBump_() { try { CacheService.getScriptCache().put("ov-ver", String(Date.now()), 21600); } catch (err) {} }
+function overviewCached_(p) {
+  const keys = (Array.isArray(p.pages) ? p.pages : []).map(k => clean_(k, 80)).filter(Boolean).slice(0, 500);
+  let h = 5381; const str = keys.join(",") + "|" + (p.stats ? 1 : 0);
+  for (let i = 0; i < str.length; i++) h = ((h << 5) + h + str.charCodeAt(i)) | 0;
+  const ck = "ov:" + ovVer_() + ":" + (h >>> 0).toString(36) + ":" + keys.length;
+  let cache = null; try { cache = CacheService.getScriptCache(); } catch (err) {}
+  if (cache && !p.fresh) { const hit = cache.get(ck); if (hit) { try { const o = JSON.parse(hit); o.cached = true; return o; } catch (err) {} } }
+  const res = overview_(p);
+  if (cache && res.ok) { try { const t = JSON.stringify(res); if (t.length < 90000) cache.put(ck, t, OV_TTL); } catch (err) {} }
+  return res;
 }
 
 function sync_(p) {
