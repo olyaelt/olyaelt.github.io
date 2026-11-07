@@ -3258,7 +3258,7 @@ const BOX_TENSE_G = `<h4>СТАЛО — the change has happened</h4>
 <p>New buildings <b class="pat">are</b> <span class="bgap" data-a="going up">g… u…</span> <i class="ru">(строятся)</i>.</p>`;
 
 const TOPICS = [
-  {id:"changed", title:"Has it changed much?", sub:"Three people answer it in a video — then six places, before and now.", box:()=>BOX_CHANGE}
+  {id:"changed", title:"These days I like to call it Restaurants-upon-Avon", sub:"Has it changed much? Three people answer in a video — then six places, before and now.", box:()=>BOX_CHANGE}
 ];
 
 /* r1: each text twice — with the glossary, then without */
@@ -4082,6 +4082,9 @@ const ON_SITE = /\.github\.io$|(^|\.)clickswith\.me$/.test(location.hostname) ||
 /* engine 35: on the site, the homework opens only with a code (her decision, 28.10). Without one — or with a code her table doesn't know —
    the page shows just the code field. A code this device already used keeps working when the table doesn't answer.
    It's a lock on the door, not a safe: the tasks are still in the page's source. Previews outside the site stay open. */
+/* engine 63 also (her 07.11 10:29, C1 6.11: «это название было прям огонь!»): a page whose content says SHOW_TITLE shows its own title as
+   the heading (and on the list card) instead of «Homework» */
+const SHOWT = typeof SHOW_TITLE !== "undefined" && !!SHOW_TITLE;
 const LOCKED = () => !!SYNC_URL && /\.github\.io$|(^|\.)clickswith\.me$/.test(location.hostname) && (!myCode() || syncState === "unknown");
 function renderGate(){
   current = null;
@@ -4089,7 +4092,7 @@ function renderGate(){
     <header class="lesson-head" id="gate">
       <a class="all-hw" href="index.html">${SELF ? "← My lessons" : "← All homework"}</a>
       <span class="date">${LESSON.date}</span>
-      <h1>${SELF ? esc(document.title) : "Homework"}</h1>
+      <h1>${SELF || SHOWT ? esc(document.title) : "Homework"}</h1>
     </header>
     <div id="sync-slot">${syncHTML()}</div>
     <p class="small gate-note">${SELF ? "The same code as on «My lessons» and the German page (Students → Group = Self). The teacher code isn't touched." : "The homework opens with your code. No code yet? Ask Olya — she'll send you one."}</p>`;
@@ -4115,7 +4118,7 @@ function renderHome(justDone){
     <header class="lesson-head">
       ${ON_SITE?`<a class="all-hw" href="index.html">${SELF ? "← My lessons" : "← All homework"}</a>`:""}
       <span class="date">${LESSON.date}</span>
-      <h1>${SELF ? esc(document.title) : "Homework"}</h1>
+      <h1>${SELF || SHOWT ? esc(document.title) : "Homework"}</h1>
       ${LESSON.sub?`<p>${LESSON.sub}</p>`:""}
       <p class="total">About ${Math.round(TASKS.filter(t=>!t.later).reduce((s,t)=>s+minutesOf(t),0)/5)*5} minutes in total — you don't have to do it all in one go.${TASKS.some(t=>t.later)?" Tasks marked <b>for later</b> aren't in that time: come back to them when you like.":""}</p>
     </header>

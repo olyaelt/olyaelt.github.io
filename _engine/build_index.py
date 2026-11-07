@@ -17,7 +17,10 @@ def meta(path):
     kb = t[t.index('const TASKS = ['):]; kb = kb[:kb.index('\n];')]
     tasks = re.findall(r'^\s*\{id:"([\w-]+)"', kb, re.M)
     sync = re.search(r'const SYNC_URL = "([^"]*)"', t).group(1)
-    return {'file': os.path.basename(path), 'key': key, 'date': date, 'topics': topics, 'tasks': tasks}, sync
+    it = {'file': os.path.basename(path), 'key': key, 'date': date, 'topics': topics, 'tasks': tasks}
+    if re.search(r'const SHOW_TITLE = true', t):   # engine 63 also (her 07.11): the page's own title on its card, above the topics
+        it['title'] = re.search(r'<title>([^<]*)</title>', t).group(1)
+    return it, sync
 ALL = {}
 for group in ('b2', 'c1'):
     folder = os.path.join(site, group)

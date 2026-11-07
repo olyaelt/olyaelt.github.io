@@ -2594,7 +2594,7 @@ const norm = s => String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/[.!?
 /* engine 62 (her 4.11 09:44 «кликаешь по домашке, и там появляется наверху совсем тоненькая Class materials… одна»): page.json "class":
    {"topics": [{"t": title, "href": page}], "slides": Google Slides} — the topics of that class (more than one, as in class), each to its
    lesson page when there is one; under them the same lesson on Google Slides. Folded by default; nothing at all when nothing links. */
-const CLASS_MAT = {"topics": [{"t": "When did it happen? Stages of life", "href": "../tools/b2-2026-11-06/stages-of-life.html"}]};
+const CLASS_MAT = {"topics": [{"t": "When did it happen? Stages of life", "href": "../tools/b2-2026-11-06/stages-of-life-class.html"}]};
 function classHTML(){
   const c = CLASS_MAT; if(!c) return "";
   const tops = c.topics || [], safe = u => /^(https:\/\/|\.\.\/|[\w-]+\.html)/.test(u || "") ? u : "";
@@ -2608,6 +2608,9 @@ const ON_SITE = /\.github\.io$|(^|\.)clickswith\.me$/.test(location.hostname) ||
 /* engine 35: on the site, the homework opens only with a code (her decision, 28.10). Without one — or with a code her table doesn't know —
    the page shows just the code field. A code this device already used keeps working when the table doesn't answer.
    It's a lock on the door, not a safe: the tasks are still in the page's source. Previews outside the site stay open. */
+/* engine 63 also (her 07.11 10:29, C1 6.11: «это название было прям огонь!»): a page whose content says SHOW_TITLE shows its own title as
+   the heading (and on the list card) instead of «Homework» */
+const SHOWT = typeof SHOW_TITLE !== "undefined" && !!SHOW_TITLE;
 const LOCKED = () => !!SYNC_URL && /\.github\.io$|(^|\.)clickswith\.me$/.test(location.hostname) && (!myCode() || syncState === "unknown");
 function renderGate(){
   current = null;
@@ -2615,7 +2618,7 @@ function renderGate(){
     <header class="lesson-head" id="gate">
       <a class="all-hw" href="index.html">${SELF ? "← My lessons" : "← All homework"}</a>
       <span class="date">${LESSON.date}</span>
-      <h1>${SELF ? esc(document.title) : "Homework"}</h1>
+      <h1>${SELF || SHOWT ? esc(document.title) : "Homework"}</h1>
     </header>
     <div id="sync-slot">${syncHTML()}</div>
     <p class="small gate-note">${SELF ? "The same code as on «My lessons» and the German page (Students → Group = Self). The teacher code isn't touched." : "The homework opens with your code. No code yet? Ask Olya — she'll send you one."}</p>`;
@@ -2641,7 +2644,7 @@ function renderHome(justDone){
     <header class="lesson-head">
       ${ON_SITE?`<a class="all-hw" href="index.html">${SELF ? "← My lessons" : "← All homework"}</a>`:""}
       <span class="date">${LESSON.date}</span>
-      <h1>${SELF ? esc(document.title) : "Homework"}</h1>
+      <h1>${SELF || SHOWT ? esc(document.title) : "Homework"}</h1>
       ${LESSON.sub?`<p>${LESSON.sub}</p>`:""}
       <p class="total">About ${Math.round(TASKS.filter(t=>!t.later).reduce((s,t)=>s+minutesOf(t),0)/5)*5} minutes in total — you don't have to do it all in one go.${TASKS.some(t=>t.later)?" Tasks marked <b>for later</b> aren't in that time: come back to them when you like.":""}</p>
     </header>

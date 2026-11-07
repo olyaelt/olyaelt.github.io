@@ -85,7 +85,7 @@ const BOX_TENSE_G = `<h4>СТАЛО — the change has happened</h4>
 <p>New buildings <b class="pat">are</b> <span class="bgap" data-a="going up">g… u…</span> <i class="ru">(строятся)</i>.</p>`;
 
 const TOPICS = [
-  {id:"changed", title:"Has it changed much?", sub:"Three people answer it in a video — then six places, before and now.", box:()=>BOX_CHANGE}
+  {id:"changed", title:"These days I like to call it Restaurants-upon-Avon", sub:"Has it changed much? Three people answer in a video — then six places, before and now.", box:()=>BOX_CHANGE}
 ];
 
 /* r1: each text twice — with the glossary, then without */
