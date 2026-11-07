@@ -12,14 +12,17 @@ const {chromium} = require('playwright'); const path = require('path');
     await p.goto('file://' + path.join(site, 'c1/2026-11-06.html')); await p.waitForTimeout(400);
     const go = async (id, k) => { await p.evaluate(([id, k]) => { current = TASKS.find(t => t.id === id); stepIdx = k; checked = false; renderTask(); }, [id, k]); await p.waitForTimeout(200); };
     // gapped: the box from the start, its forms hidden, a tap opens one, a second tap hides it
-    await go('e1', 0);
+    await go('e1', 1);   /* fixes-1: step 0 is the box as a gap text; step 1 «your turn» has the gapped box */
     const g0 = await p.evaluate(() => ({box: !!document.querySelector('aside.box'), n: document.querySelectorAll('aside.box .bgap').length, t: document.querySelector('aside.box .bgap').textContent}));
     expect(`${vp.width} gapped: the box is there before Check, forms hidden`, g0.box && g0.n >= 15 && /…/.test(g0.t), g0);
+    const pat = await p.evaluate(() => ({pat: document.querySelectorAll('aside.box b.pat').length, ru: document.querySelectorAll('aside.box .bgap + i.ru').length}));
+    expect(`${vp.width} the full pattern red beside every form, the Russian after it`, pat.pat >= 15 && pat.ru >= 15, pat);
+    if (vp.width === 1280) { const fit = await p.evaluate(() => Math.round(document.querySelector('aside.box').getBoundingClientRect().bottom) <= innerHeight); expect('1280×720: the whole box on the screen', fit, fit); }
     await p.click('aside.box .bgap >> nth=0'); const t1 = await p.evaluate(() => document.querySelector('aside.box .bgap').textContent);
     await p.click('aside.box .bgap >> nth=0'); const t2 = await p.evaluate(() => document.querySelector('aside.box .bgap').textContent);
     expect(`${vp.width} gapped: tap → the form, tap again → the letters`, t1 === 'greener' && t2 === g0.t, [t1, t2]);
     // folded: a thin bar, Peek → the gapped box; the next visit opens folded again
-    await go('e1', 4);
+    await go('e1', 9);
     const f0 = await p.evaluate(() => ({bar: !!document.querySelector('[data-peek]'), h: Math.round(document.querySelector('[data-peek]').getBoundingClientRect().height), box: document.querySelectorAll('aside.box .bgap').length}));
     expect(`${vp.width} folded: one thin bar, no phrases`, f0.bar && f0.h <= 60 && f0.box === 0, f0);
     await p.click('[data-peek]'); await p.waitForTimeout(200);
@@ -33,6 +36,10 @@ const {chromium} = require('playwright'); const path = require('path');
     await go('e3', 3);
     const rd = await p.evaluate(() => ({gaps: document.querySelectorAll('.panel .chunk').length, btn: document.getElementById('go').textContent.trim(), bold: document.querySelectorAll('.dlg.read b.given').length}));
     expect(`${vp.width} read: no gaps, Next, the chunks bold`, rd.gaps === 0 && /Next|Finish/.test(rd.btn) && rd.bold >= 5, rd);
+    // r1: the speakers' photos beside their lines, none beside the interviewer
+    await go('r1', 0);
+    const ph = await p.evaluate(() => [...document.querySelectorAll('.panel .dlg p')].map(x => (x.querySelector('.spk') || {}).textContent + (x.querySelector('img.lph') ? '📷' : '')));
+    expect(`${vp.width} r1: photo beside the speaker, not the interviewer`, ph.some(x => /Stratford.*📷/.test(x)) && !ph.some(x => /Interviewer.*📷/.test(x)), ph);
     // r1: «Yes, it has, actually» is one chunk; the source line
     await go('r1', 0);
     const c = await p.evaluate(() => ({first: document.querySelector('.panel .dlg .chunk').textContent, credit: (document.querySelector('.panel .credit') || {}).textContent || ''}));

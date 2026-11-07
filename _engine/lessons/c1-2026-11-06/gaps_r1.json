@@ -12,6 +12,7 @@
     },
     {
      "s": "Stratford",
+     "img": "speaker-1.jpg",
      "p": [
       {
        "f": "Y",
@@ -139,7 +140,7 @@
      "p": [
       "these days ",
       {
-       "ipa": "/ðiːz deɪz/"
+       "ipa": "/ðiːz ˈdeɪz/"
       }
      ],
      "m": "now",
@@ -166,7 +167,7 @@
      "p": [
       "when I was growing up ",
       {
-       "ipa": "/wen aɪ wəz ˈɡrəʊɪŋ ʌp/"
+       "ipa": "/ˈɡrəʊɪŋ ʌp/"
       }
      ],
      "m": "when I was a child or a teenager",
@@ -218,6 +219,7 @@
     },
     {
      "s": "Stratford",
+     "img": "speaker-1.jpg",
      "p": [
       {
        "f": "Y",
@@ -347,6 +349,7 @@
     },
     {
      "s": "Whetstone",
+     "img": "speaker-2.jpg",
      "p": [
       {
        "f": "N",
@@ -428,6 +431,7 @@
     },
     {
      "s": "Whetstone",
+     "img": "speaker-2.jpg",
      "p": [
       "I live in Whetstone. It's in between Barnet and Finchley, in Greater London. It's a good place."
      ]
@@ -440,6 +444,7 @@
     },
     {
      "s": "Whetstone",
+     "img": "speaker-2.jpg",
      "p": [
       "Yeah, I do like living there. I like living in London."
      ]
@@ -498,7 +503,7 @@
      "p": [
       "pretty static ",
       {
-       "ipa": "/ˈprɪti ˈstætɪk/"
+       "ipa": "/ˈstætɪk/"
       }
      ],
      "m": "not changing",
@@ -519,6 +524,7 @@
     },
     {
      "s": "Whetstone",
+     "img": "speaker-2.jpg",
      "p": [
       {
        "f": "N",
@@ -600,6 +606,7 @@
     },
     {
      "s": "Whetstone",
+     "img": "speaker-2.jpg",
      "p": [
       "I live in Whetstone. It's in between Barnet and Finchley, in Greater London. It's a good place."
      ]
@@ -612,6 +619,7 @@
     },
     {
      "s": "Whetstone",
+     "img": "speaker-2.jpg",
      "p": [
       "Yeah, I do like living there. I like living in London."
      ]
@@ -631,6 +639,7 @@
     },
     {
      "s": "Highbury",
+     "img": "speaker-3.jpg",
      "p": [
       "The area I'm living in now ",
       {
@@ -663,6 +672,7 @@
     },
     {
      "s": "Highbury",
+     "img": "speaker-3.jpg",
      "p": [
       "I grew up in a little town called Chorleywood, which is ",
       {
@@ -685,6 +695,7 @@
     },
     {
      "s": "Highbury",
+     "img": "speaker-3.jpg",
      "p": [
       "Now I live in Highbury, which is in London, so it's ",
       {
@@ -830,6 +841,7 @@
     },
     {
      "s": "Highbury",
+     "img": "speaker-3.jpg",
      "p": [
       "The area I'm living in now ",
       {
@@ -862,6 +874,7 @@
     },
     {
      "s": "Highbury",
+     "img": "speaker-3.jpg",
      "p": [
       "I grew up in a little town called Chorleywood, which is ",
       {
@@ -884,6 +897,7 @@
     },
     {
      "s": "Highbury",
+     "img": "speaker-3.jpg",
      "p": [
       "Now I live in Highbury, which is in London, so it's ",
       {

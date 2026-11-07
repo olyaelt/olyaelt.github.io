@@ -358,6 +358,15 @@ details.summary[open] summary::after{content:"Hide"}
 .note{margin:0;font-size:.95rem}
 .step-pic{margin:0 0 12px}
 .step-pic img{display:block;width:100%;height:auto;max-height:44vh;object-fit:contain;border-radius:12px}
+.step-pic img{cursor:zoom-in}
+.step-pic.zoom{position:fixed;inset:0;z-index:60;margin:0;padding:12px;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;cursor:zoom-out}
+.step-pic.zoom img{max-height:100%!important;max-width:100%;width:auto;cursor:zoom-out}
+body.pic-zoomed{overflow:hidden}
+.dlg p.has-lph{position:relative;padding-left:46px;min-height:40px}   /* engine 63 also: the speaker's photo beside the line */
+.dlg .lph{position:absolute;left:0;top:2px;width:38px;height:38px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px var(--card)}
+.box b.pat{color:var(--label)}   /* the pattern, red as the box heading (C1 6.11 fixes-1) */
+.box p.sub{font-size:.8em;color:var(--muted);font-weight:400;margin:8px 0 0}
+@media (min-width:720px){ .actions.under{position:static;background:none} }
 .gap-input{font:inherit;font-weight:700;color:var(--answer);background:var(--ground);border:0;border-bottom:2px dashed var(--muted);border-radius:4px 4px 0 0;
   padding:2px 6px;width:min(100%,13em);margin-block:2px}
 .gap-input::placeholder{color:var(--muted);font-weight:400;font-style:italic}
@@ -597,6 +606,13 @@ audio{width:100%}
   .legal{max-width:64rem}
   .stage.with-box{grid-template-columns:minmax(0,1fr) minmax(250px,22rem)}
   .stage .box{font-size:1.15rem}   /* fitBoxes() lowers it until the box fits on the screen */
+  .wrap:has(.stage.box2){max-width:78rem}
+  .stage.with-box.box2{grid-template-columns:minmax(0,1fr) minmax(250px,36rem)}
+  .stage.box2 .box{display:block;column-count:2;column-gap:1.2rem}
+  .stage.box2 .box > p, .stage.box2 .box > h4{margin-bottom:2px}
+  .stage.box2 .box > .sticker{column-span:all}
+  .stage.box2 .box > *{break-inside:avoid}
+  .stage.box2 .box h4, .stage.box2 .box p.sub{break-after:avoid}
   .stage .box h4{font-size:.76em}
   .stage .box .ru,.stage .box .mean{font-size:.86em}
   .box .sticker{width:9rem;margin-top:-1.6rem}
@@ -3417,9 +3433,15 @@ const app = document.getElementById("app");
 const BIG_SCREEN = window.matchMedia ? matchMedia("(min-width:900px)") : {matches: false};
 function fitBoxes(){
   app.querySelectorAll(".stage .box").forEach(b => {
-    if(!BIG_SCREEN.matches){ b.style.fontSize = ""; return; }
-    let f = 1.15; b.style.fontSize = f + "rem";
-    while(f > .9 && b.getBoundingClientRect().bottom + scrollY > innerHeight - 12){ f = Math.round((f - .05) * 100) / 100; b.style.fontSize = f + "rem"; }
+    const stage = b.closest(".stage");
+    if(!BIG_SCREEN.matches){ b.style.fontSize = ""; if(stage) stage.classList.remove("box2"); return; }
+    const over = () => b.getBoundingClientRect().bottom + scrollY > innerHeight - 12;
+    const fit = () => { let f = 1.15; b.style.fontSize = f + "rem";
+      while(f > .9 && over()){ f = Math.round((f - .05) * 100) / 100; b.style.fontSize = f + "rem"; } return !over(); };
+    if(stage) stage.classList.remove("box2");
+    /* engine 63 also (C1 6.11 fixes-1: the box with the full pattern on every line is 20 lines; her rule: the box whole, large, no scrolling):
+       a box that still runs off the screen at the smallest size gets two columns and a wider place beside the task */
+    if(!fit() && stage && b.querySelectorAll("p").length >= 8){ stage.classList.add("box2"); fit(); }
   });
 }
 let fitQueued = false;
@@ -3583,7 +3605,25 @@ function shell({count, pct, instr, stageHTML, withBox, actionsHTML, panel}){
   const db = document.getElementById("do-bm"); if(db) db.addEventListener("click", () => { const base = TASKS.find(x=>x.id===current.id), again = onceMoreTask(base); if(again){ current = again; stepIdx = 0; checked = false; renderTask(); } });
   const ts = document.getElementById("t-strip"); if(ts) ts.addEventListener("click",()=>renderTeacherTask(ts.dataset.strip));
   if(document.getElementById("t-mkbar")) wireMkBar(current.id);
+  fitStepPic();
 }
+/* engine 63 also (her 07.11 10:25, C1 e1 on a laptop: «боюсь они кликнут show the answers, не заметив текст»): a step's picture gives way —
+   on a short screen it shrinks until the first two lines under it show above the buttons (not below 150 px); a tap on it opens it big */
+function fitStepPic(){
+  const img = app.querySelector(".panel .step-pic img"), act = app.querySelector(".actions"); if(!img || !act) return;
+  const fig = img.closest(".step-pic"), wide = matchMedia("(min-width:720px)").matches;
+  act.classList.add("under");   /* her 10:26: «может просто next должен быть под текстом?» — on a laptop the buttons come after the text, not over it */
+  fig.onclick = () => { const z = !fig.classList.contains("zoom"); fig.classList.toggle("zoom", z); document.body.classList.toggle("pic-zoomed", z); };
+  const go = () => { if(!img.isConnected) return; img.style.maxHeight = "";
+    const next = fig.nextElementSibling; if(!next) return;
+    const top = next.getBoundingClientRect().top + scrollY;              /* where the text starts, from the top of the page */
+    const room = innerHeight - (wide ? 0 : act.offsetHeight) - 10;       /* on a phone the buttons stay at the bottom of the screen */
+    const over = top + 72 - room; if(over <= 0) return;
+    img.style.maxHeight = Math.max(150, Math.round(img.getBoundingClientRect().height - over)) + "px"; };
+  if(img.complete) setTimeout(go, 0); else img.addEventListener("load", go, {once: true});
+}
+addEventListener("resize", () => { const f = app && app.querySelector(".step-pic"); if(f && !f.classList.contains("zoom")) fitStepPic(); });
+addEventListener("keydown", e => { if(e.key === "Escape"){ const f = document.querySelector(".step-pic.zoom"); if(f) f.click(); } });
 const againBarHTML = () => { const base = TASKS.find(x=>x.id===current.id), bm = base ? onceMoreTask(base) : null;
   return `<div class="again-bar"><span class="ab-done">✓ Done</span><button class="linklike" id="do-again">↺ Do it again</button>${bm ? `<button class="linklike" id="do-bm">🔖 Your bookmarks again (${bm.steps.length})</button>` : ""}</div>`; };
 function goHome(justDone){ stopPlayer(); stopRecorder(); try{ history.replaceState(null,"",location.pathname+location.search); }catch(e){} renderHome(justDone===true); }
@@ -3659,7 +3699,9 @@ function gapLineHTML(line){
     else if(typeof x === "object" && "ipa" in x){ html += `<span class="ipa${x.o?" o":""}">${esc(x.ipa)}</span>`; i++; }   /* engine 44: shown IPA (a glossary that helps) */
     else { html += esc(x); i++; }
   }
-  return `<p>${line.s?`<span class="spk">${esc(line.s)}:</span> `:""}${html}${notes}</p>`;
+  /* engine 63 also (C1 6.11 fixes-1, her 10:23: «те же самые карточки спикеров, фотки в revision»): a small photo of the speaker beside the line */
+  const ph = line.img ? `<img class="lph" src="${line.img}" alt="">` : "";
+  return `<p${ph ? ' class="has-lph"' : ""}>${ph}${line.s?`<span class="spk">${esc(line.s)}:</span> `:""}${html}${notes}</p>`;
 }
 /* engine 43: a gap's red note shows while the gap is open (not on the plain, already-open text of "once more") */
 const syncGapNotes = root => (root || document).querySelectorAll(".gap-n[data-nk]").forEach(n => {

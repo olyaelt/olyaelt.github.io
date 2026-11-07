@@ -15,7 +15,10 @@
   "E1": "e1_comparatives.json",
   "E2": "e2_tenses.json",
   "E3": "e3_story.json",
-  "OTY": "otu.json"
+  "OTY": "otu.json",
+  "SPK1": "speaker-1.jpg",
+  "SPK2": "speaker-2.jpg",
+  "SPK3": "speaker-3.jpg"
  },
  "earlier_only": [
   "back in my day",

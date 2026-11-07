@@ -2,10 +2,265 @@
  "steps": [
   {
    "type": "dlg",
+   "box_state": "none",
+   "intro": "Before the pictures: the words from the lesson, all in one pattern. Read the Russian, say the whole line — It's gotten a lot greener — then tap to check.",
+   "lines": [
+    {
+     "p": [
+      {
+       "b": "It's gotten a lot"
+      },
+      " ",
+      {
+       "f": "g",
+       "r": "reener"
+      },
+      " (зеленее)"
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's gotten a lot"
+      },
+      " ",
+      {
+       "f": "c",
+       "r": "leaner"
+      },
+      " (чище)"
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's gotten a lot"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "afer"
+      },
+      " (безопаснее)"
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's gotten a lot"
+      },
+      " ",
+      {
+       "f": "b",
+       "r": "usier"
+      },
+      " (оживлённее, больше народу)"
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's gotten a lot"
+      },
+      " ",
+      {
+       "f": "e",
+       "r": "mptier"
+      },
+      " (пустыннее)"
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's gotten a lot"
+      },
+      " ",
+      {
+       "f": "d",
+       "r": "irtier"
+      },
+      " (грязнее)"
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's gotten a lot"
+      },
+      " ",
+      {
+       "f": "f",
+       "r": "ancier"
+      },
+      " (шикарнее)"
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's become a lot more"
+      },
+      " ",
+      {
+       "f": "d",
+       "r": "angerous"
+      },
+      " (опаснее)"
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's become a lot more"
+      },
+      " ",
+      {
+       "f": "c",
+       "r": "rowded"
+      },
+      " (многолюднее)"
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's become a lot more"
+      },
+      " ",
+      {
+       "f": "b",
+       "r": "uilt"
+      },
+      "-",
+      {
+       "f": "u",
+       "r": "p"
+      },
+      " (плотнее застроен)"
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's become a lot more"
+      },
+      " ",
+      {
+       "f": "r",
+       "r": "un"
+      },
+      "-",
+      {
+       "f": "d",
+       "r": "own"
+      },
+      " (обшарпаннее)"
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's gotten a lot"
+      },
+      " ",
+      {
+       "f": "q",
+       "r": "uieter"
+      },
+      " / ",
+      {
+       "b": "more"
+      },
+      " ",
+      {
+       "f": "q",
+       "r": "uiet"
+      },
+      " (тише)"
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's gotten a lot"
+      },
+      " ",
+      {
+       "f": "l",
+       "r": "ivelier"
+      },
+      " / ",
+      {
+       "b": "more"
+      },
+      " ",
+      {
+       "f": "l",
+       "r": "ively"
+      },
+      " (живее)"
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's gotten a lot"
+      },
+      " ",
+      {
+       "f": "b",
+       "r": "etter"
+      },
+      " (лучше)"
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's gotten a lot"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "orse"
+      },
+      " (хуже)"
+     ]
+    },
+    {
+     "p": [
+      {
+       "b": "It's gotten a lot less"
+      },
+      " ",
+      {
+       "f": "g",
+       "r": "reen"
+      },
+      " (менее зелёным)",
+      " "
+     ]
+    }
+   ],
+   "note": "-er / -ier for short words and -y words · more for long, -ed and two-word adjectives · quieter / more quiet, livelier / more lively — both fine · good → better, bad → worse · a lot / much + -er, not “more busier” · less + the plain form: less green."
+  },
+  {
+   "type": "sayit",
    "pic": "SQUARE",
    "box": "BOX_COMP",
    "box_state": "gapped",
-   "intro": "Six places, then and now. In each picture, the left half shows the place before, and the right half shows it now. First, the town square. Say each missing word in the right form, then tap to check.",
+   "instr": "Six places, then and now: in each picture, the left half is the place before, the right half is the place now. Your turn first: look at the picture for a minute. What has changed? Say four sentences — It's gotten a lot … / It's become a lot more … — with the box beside you. Then tap to see which words fit, and check yourself in the next step.",
+   "sit": "[The town square: before and now.]",
+   "ans": "**livelier · greener · cleaner · nicer · safer** (or: busier, more lively)",
+   "note": "Next step: one way to say it — compare it with what you said."
+  },
+  {
+   "type": "dlg",
+   "pic": "SQUARE",
+   "box": "BOX_COMP",
+   "box_state": "gapped",
+   "intro": "Now one way to say it. Say each missing word in the right form, then tap to check — and compare with what you said.",
    "lines": [
     {
      "p": [
@@ -82,11 +337,21 @@
    "note": "lively → livelier (or: more lively) · -y → -ier · nice → nicer · safe → safer · a lot / much + -er, not “more cleaner”."
   },
   {
+   "type": "sayit",
+   "pic": "STREET",
+   "box": "BOX_COMP",
+   "box_state": "gapped",
+   "instr": "Your turn first: look at the picture for a minute. What has changed? Say four sentences — It's gotten a lot … / It's become a lot more … — with the box beside you. Then tap to see which words fit, and check yourself in the next step.",
+   "sit": "[A shopping street: before and now.]",
+   "ans": "**emptier · quieter · more run-down · dirtier · less lively · worse**",
+   "note": "Next step: one way to say it — compare it with what you said."
+  },
+  {
    "type": "dlg",
    "pic": "STREET",
    "box": "BOX_COMP",
    "box_state": "gapped",
-   "intro": "A shopping street. The same: say the word in the right form, then tap to check.",
+   "intro": "Now one way to say it: the word in the right form, then tap to check.",
    "lines": [
     {
      "p": [
@@ -180,11 +445,21 @@
    "note": "quiet → quieter (more quiet is possible, but less common) · run-down → more run-down · less + the plain form: less lively, not “less livelier” · bad → worse."
   },
   {
+   "type": "sayit",
+   "pic": "HOUSE",
+   "box": "BOX_COMP",
+   "box_state": "gapped",
+   "instr": "Your turn first: look at the picture for a minute. What has changed? Say four sentences — It's gotten a lot … / It's become a lot more … — with the box beside you. Then tap to see which words fit, and check yourself in the next step.",
+   "sit": "[A little brick house: before and now.]",
+   "ans": "**more built-up · busier · more crowded · more dangerous · noisier**",
+   "note": "Next step: one way to say it — compare it with what you said."
+  },
+  {
    "type": "dlg",
    "pic": "HOUSE",
    "box": "BOX_COMP",
    "box_state": "gapped",
-   "intro": "Less help now: the whole comparative is hidden, and the letters in brackets start the adjective. -er or more? Say it, then tap to check.",
+   "intro": "Now one way to say it — with less help: the whole comparative is hidden, the letters in brackets start the adjective. -er or more? Say it, then tap to check.",
    "lines": [
     {
      "p": [
@@ -247,11 +522,21 @@
    "note": "two-word adjectives (built-up, run-down) and -ed adjectives (crowded) → more · long adjectives: more dangerous · busy → busier."
   },
   {
+   "type": "sayit",
+   "pic": "HARBOR",
+   "box": "BOX_COMP",
+   "box_state": "gapped",
+   "instr": "Your turn first: look at the picture for a minute. What has changed? Say four sentences — It's gotten a lot … / It's become a lot more … — with the box beside you. Then tap to see which words fit, and check yourself in the next step.",
+   "sit": "[A fishing harbor: before and now.]",
+   "ans": "**fancier · busier · more crowded · more touristy · noisier**",
+   "note": "Next step: one way to say it — compare it with what you said."
+  },
+  {
    "type": "dlg",
    "pic": "HARBOR",
    "box": "BOX_COMP",
    "box_state": "gapped",
-   "intro": "A fishing harbor. The same: the letters start the adjective — -er or more?",
+   "intro": "Now one way to say it: the letters start the adjective — -er or more?",
    "lines": [
     {
      "p": [
