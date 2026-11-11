@@ -11,7 +11,7 @@
     {
      "kind": "decode",
      "title": "Line",
-     "instr": "Listen. What's in the cloud? Write it in the Zoom chat.",
+     "instr": "Listen. What's in the cloud? Write it to Olya in a private message.",
      "instr2": "What was hard to hear? Why?",
      "lines": [
       {
@@ -94,7 +94,7 @@
     {
      "kind": "decode",
      "title": "Line",
-     "instr": "Watch, then listen. What's in the cloud? Write it in the Zoom chat.",
+     "instr": "Watch, then listen. What's in the cloud? Write it to Olya in a private message.",
      "instr2": "What was hard to hear? Why?",
      "lines": [
       {
@@ -160,6 +160,32 @@
        "ctx": "32:17.32",
        "text": "{{Well, I can't change}} the facts, dear.",
        "before": "You know I haven't slept in two years."
+      },
+      {
+       "id": "r19",
+       "clip": "33:15.64-33:19.18",
+       "ctx": "33:07.64",
+       "text": "— {{I can open the door}}. — Sure.",
+       "before": "Oh, thanks, but you don't have to."
+      },
+      {
+       "id": "r23",
+       "clip": "43:06.76-43:08.90",
+       "ctx": "42:58.76",
+       "text": "Do you know yet {{if we can go to dinner}} with Robbie and Annie?"
+      },
+      {
+       "id": "r24",
+       "clip": "47:26.62-47:33.06",
+       "ctx": "47:18.62",
+       "text": "But I'm hoping {{we can pick another night}}.",
+       "before": "Oh. Then no dinner tonight. Sorry. I was really looking forward to it."
+      },
+      {
+       "id": "r25",
+       "clip": "48:08.83-48:11.10",
+       "ctx": "48:00.83",
+       "text": "{{Can't tomorrow.}} What about Saturday?"
       }
      ]
     }

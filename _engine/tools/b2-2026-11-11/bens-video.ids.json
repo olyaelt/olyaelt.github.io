@@ -3,22 +3,22 @@
   {
    "pid": 0,
    "sig": "questions after watching: talk to your partner.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 1,
    "sig": "questions talk to your partner: two questions about ben, two about you.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 2,
    "sig": "text part 1. read with the glossary. then tell each other: what went wrong after ben's trips? what does he do about it now?",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 3,
    "sig": "say what do these lines mean? discuss together, then tap “show the answer”.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 4,
@@ -38,12 +38,12 @@
   {
    "pid": 7,
    "sig": "text part 2. read with the glossary. then tell each other: how does ben spend his days?",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 8,
    "sig": "say what do these lines mean? discuss together, then tap “show the answer”.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 9,
@@ -63,12 +63,12 @@
   {
    "pid": 12,
    "sig": "text part 3. read with the glossary. then tell each other: what is missing in ben's life?",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 13,
    "sig": "say what do these lines mean? discuss together, then tap “show the answer”.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 14,
@@ -83,7 +83,7 @@
   {
    "pid": 16,
    "sig": "questions talk to your partner.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 17,
@@ -113,7 +113,7 @@
   {
    "pid": 22,
    "sig": "questions talk to your partner.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 23,
@@ -197,7 +197,7 @@
   },
   {
    "pid": 39,
-   "sig": "questions now you: a change in your life (3 minutes).",
+   "sig": "questions now you. talk to your partner (3 minutes).",
    "gone": false
   },
   {
@@ -208,6 +208,66 @@
   {
    "pid": 41,
    "sig": "game the wheel of questions: take turns to spin. ask the next person: when did you last…? they answer (last month, ages ago, at school…) + one detail. then tap to check your question.",
+   "gone": false
+  },
+  {
+   "pid": 42,
+   "sig": "text have you seen this film? if yes, do you agree with the reviews? if not, what do you expect, based on the poster? intern_poster.jpg",
+   "gone": false
+  },
+  {
+   "pid": 43,
+   "sig": "picture intern_flyer.jpg",
+   "gone": false
+  },
+  {
+   "pid": 44,
+   "sig": "picture",
+   "gone": false
+  },
+  {
+   "pid": 45,
+   "sig": "text what went wrong after ben's trips?",
+   "gone": false
+  },
+  {
+   "pid": 46,
+   "sig": "questions talk to your partner: finish the sentences about you. your partner asks one more question.",
+   "gone": false
+  },
+  {
+   "pid": 47,
+   "sig": "text what does ben do about it now?",
+   "gone": false
+  },
+  {
+   "pid": 48,
+   "sig": "questions talk to your partner: finish the sentences about you. your partner asks one more question.",
+   "gone": false
+  },
+  {
+   "pid": 49,
+   "sig": "text what is missing in ben's life? what does he do about it?",
+   "gone": false
+  },
+  {
+   "pid": 50,
+   "sig": "questions talk to your partner: finish the sentences about you. your partner asks one more question.",
+   "gone": false
+  },
+  {
+   "pid": 51,
+   "sig": "picture",
+   "gone": false
+  },
+  {
+   "pid": 52,
+   "sig": "picture",
+   "gone": false
+  },
+  {
+   "pid": 53,
+   "sig": "questions what are your takeaways?",
    "gone": false
   }
  ],
@@ -337,6 +397,16 @@
   {
    "pid": 0,
    "sig": "from memory: what did ben do at first, and what happened every time he got home? use two phrases from part 1.",
+   "gone": true
+  },
+  {
+   "pid": 1,
+   "sig": "ben 1 “i'm not an unhappy person,” ben says. do you believe him? what in the video makes you say that?",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "ben 2 which of these things bother ben? which would bother you most, and which wouldn't bother you at all?",
    "gone": false
   }
  ],
@@ -344,6 +414,26 @@
   {
    "pid": 0,
    "sig": "ben goes to starbucks to feel part of something. name two places where people can feel part of something. which one works — or would work — for you?",
+   "gone": true
+  },
+  {
+   "pid": 1,
+   "sig": "1 ben says he probably relied on his son's family “way more than he should”. why do you think he feels that way?",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "2 “get up, get out of the house and go somewhere.” does it work for ben? would it work for you? why or why not?",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "3 ben has tried yoga, cooking and mandarin. name two things you've tried — or would like to try — in your free time, and one you'd never try (again).",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "4 ben says there's a hole in his life. name two things that could fill it — and one that wouldn't.",
    "gone": false
   }
  ],
@@ -392,11 +482,99 @@
   {
    "pid": 0,
    "sig": "1 tell your partner about something new in your life: a job, a hobby, a routine… — or take one from the stories. your partner asks first: so what was it like at first? or how's it going so far? tell them how it started and how it's going now. then swap.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 1,
    "sig": "2 now another one — this time your partner asks the other question first.",
+   "gone": true
+  },
+  {
+   "pid": 2,
+   "sig": "think of a change in your life: a move, a new job, a new hobby… — or take one from the stories. tell your partner one line about the beginning and one line that sums it up: at first, … / the first few weeks … · since then, i've … / so far, … your partner asks one question: so what was it like at first? / how's it going so far?",
+   "gone": false
+  }
+ ],
+ "questions.46": [
+  {
+   "pid": 0,
+   "sig": "as soon as i get home [after a long trip / from the office / …], i [unpack my suitcase / take a long bath / …].",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "at first, i really enjoyed [working from home / social media / my new gym / …]. the problem was, [i never left the house / i couldn't stop checking it / it was always full / …].",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "no matter where i [stay / travel / go on holiday], i always [sleep badly the first night / get lost on the first day / pack too much / …].",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "then: what do you do when you've got time on your hands?",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "name two moments in life when people get that nowhere-to-be feeling (after a long trip, at the end of a big project…). what helps?",
+   "gone": false
+  }
+ ],
+ "questions.48": [
+  {
+   "pid": 0,
+   "sig": "when i need a break, i get out of the house and [go for a walk / sit in a café / go to the gym / …].",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "[my local café / my choir / my english class / volunteering / …] makes me feel part of something.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "in a full café, i'd [ask someone, “mind if i sit here?” / rather wait / go somewhere else].",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "in my free time? [books, films, long walks / baking, gardening, the gym / …] — you name it.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "believe me, i've tried everything to [get up earlier / stop checking my phone / remember new words / …]: [three alarms / apps / flashcards / …].",
+   "gone": false
+  }
+ ],
+ "questions.50": [
+  {
+   "pid": 0,
+   "sig": "the only [sport / travelling / cooking] i do these days is [walking to the bus stop / going to the supermarket / making toast / …].",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "i think i rely on [my phone / coffee / my gps / …] way more than i should: [i can't … without it / …].",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "[i can't wait for the holidays / winter here is so long / i'm on my phone far too much]. don't get me wrong, [i love my job / i like it here / it's really useful], but [i really need a break / i miss the sun / i'd like to read more].",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "if i were ben, i'd fill the hole in his life with [a dog / singing in a choir / spanish lessons / volunteering / …].",
+   "gone": false
+  }
+ ],
+ "questions.53": [
+  {
+   "pid": 0,
+   "sig": "what are your takeaways?",
    "gone": false
   }
  ]

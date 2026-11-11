@@ -2,12 +2,12 @@
  "blocks": [
   {
    "pid": 0,
-   "sig": "decode watch, then listen. what's in the cloud? write it in the zoom chat.",
+   "sig": "decode watch, then listen. what's in the cloud? write it to olya in a private message.",
    "gone": false
   },
   {
    "pid": 1,
-   "sig": "decode listen. what's in the cloud? write it in the zoom chat.",
+   "sig": "decode listen. what's in the cloud? write it to olya in a private message.",
    "gone": false
   }
  ],
@@ -57,6 +57,26 @@
   {
    "pid": 8,
    "sig": "r18",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "r19",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "r23",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "r24",
+   "gone": false
+  },
+  {
+   "pid": 12,
+   "sig": "r25",
    "gone": false
   }
  ],

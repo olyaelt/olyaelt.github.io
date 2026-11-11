@@ -771,6 +771,14 @@ figure.pic.zoomable{cursor:zoom-in}
 .pic-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:10px 0 2px}
 .pic-row figure.tile{margin:0;background:#FFFFFF;border:1px solid var(--line,#E5DFC8);border-radius:12px;padding:6px 6px 4px;cursor:zoom-in;display:flex;flex-direction:column;align-items:center}
 .pic-row figure.tile img{width:100%;height:auto;max-height:var(--tile-h,170px);object-fit:contain;display:block;background:#FFFFFF;border-radius:6px}
+.bx.yt{color:#1D1D1B;background:#FFF34D;padding:0 .14em;border-radius:3px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.bx.pl{color:inherit}
+@media (min-width:900px){ .pic-row.many{grid-template-columns:repeat(3,minmax(0,1fr));--tile-h:min(30vh, 250px)} }   /* six stills: three a row, big enough to talk about on a shared screen */
+.pic-row.many figure.tile{justify-content:center}
+.tx.imgl{grid-template-columns:minmax(120px,15%) minmax(0,1.5fr) minmax(0,1fr)}
+.tx.imgl .tx-pic{margin:0}
+.tx.imgl .tx-pic img{width:100%;max-height:none;height:auto}
+@media (max-width:760px){ .tx.imgl{grid-template-columns:1fr} .tx.imgl .tx-pic img{max-width:40vw} }
 .pic-row figure.tile figcaption{margin-top:3px;font-size:.92rem;font-weight:800;color:#1D1D1B;text-align:center;line-height:1.2}
 @media (max-width:560px){ .pic-row{grid-template-columns:repeat(2,minmax(0,1fr))} }
 .pic-zoom img{background:#FFFFFF}
@@ -1459,6 +1467,9 @@ button.kbub{cursor:pointer} button.kbub small{display:block;font-size:.85rem;fon
 .dc-n b{color:var(--ink)}
 .dc-dots{display:flex;gap:6px;flex-wrap:wrap}
 .dc-dots button{width:2rem;height:2rem;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--muted);font-weight:800;font-size:.9rem;padding:0}
+.dc-dots.many{gap:4px}
+.dc-dots.many button{width:1.65rem;height:1.65rem;font-size:.78rem;border-width:2px}
+.dc-line.long{font-size:clamp(1.4rem, 2.6vw, 2.15rem)}
 .dc-dots button.on{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
 .dc-tools{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
 .btn.quiet{border-color:var(--line);color:var(--muted)}
@@ -3176,7 +3187,7 @@ BLOCKS.forEach((b, pos) => { const bp = "blocks." + pos; b._pos = pos;
   if(b.kind === "cards") b.cards.forEach(c => { c._ob = b; CARD_FIELDS.forEach(k => ledAdd(`cards.${c._pos}.${k}`, c, k)); });   /* _ob: its own block (the stage's cards become one deck below) */
 });
 /* a line with gaps as text for her to correct: [[…]] = a yellow gap, [[th|an you'd think]] = first letters shown, {{…}} = blue given words */
-const lineToMark = l => (l.p || []).map(x => typeof x === "string" ? x : x.b != null ? `{{${x.b}}}` : x.f ? `[[${x.f}|${x.r}]]` : `[[${x.r}]]`).join("");
+const lineToMark = l => (l.p || []).map(x => typeof x === "string" ? x : x.y != null ? `{{${x.y}}}` : x.b != null ? `{{${x.b}}}` : x.f ? `[[${x.f}|${x.r}]]` : `[[${x.r}]]`).join("");
 function lineFromMark(t, orig){ const p = [], re = /\[\[(.*?)\]\]|\{\{(.*?)\}\}/g; let k = 0, m;
   while((m = re.exec(t))){ if(m.index > k) p.push(t.slice(k, m.index));
     if(m[2] != null) p.push({b: m[2]}); else { const bar = m[1].indexOf("|"); p.push(bar > -1 ? {f: m[1].slice(0, bar), r: m[1].slice(bar + 1)} : {f: "", r: m[1]}); }
@@ -3272,7 +3283,10 @@ function partsHTML(parts, b, prefix){
   let k = 0; const st = bs(b);
   return (parts || []).map(x => {
     if(typeof x === "string") return mk(x);
-    if(x.b != null) return `<b class="bx">${esc(x.b)}</b>`;
+    /* tools 32 (B2 chat 11.11 16:45, her new script format): {"y"} = a target in the reading text, bold black on yellow, shown; in such a
+       block {"b"} = plain bold black (the other unknown words) and a glossary's {"b", "t": 1} = the target, blue bold */
+    if(x.y != null) return `<b class="bx yt">${esc(x.y)}</b>`;
+    if(x.b != null) return `<b class="bx${x.t ? " tg" : b && (b._plainB != null ? b._plainB : (b._plainB = /"(y|t)":/.test(JSON.stringify([b.lines || [], b.gloss || []])))) ? " pl" : ""}">${esc(x.b)}</b>`;
     if(x.ipa != null && x.r == null) return `<span class="ipa">${esc(x.ipa)}</span>`;   /* tools 30 (her 6.11 12:41: «undefined в первом глоссарии»): {"ipa"} = the transcription, shown, not a gap */
     const id = `${prefix}${k++}`, open = st.open.has(id), nf = S.noFirst && b.kind === "text";
     const bm = open && !x.o && sharing() ? `<button class="bm ${st.bm.has(id) ? "on" : ""}" data-bm="${id}" title="We didn't know this" aria-label="We didn't know this">🔖</button>` : "";
@@ -3306,6 +3320,8 @@ function textHTML(b){
   /* tools 28 also (B2 6.11, engine request 2): "img" on the block = one picture above the conversation; a missing file shows nothing */
   const pic = b.img ? `<figure class="tx-pic${b.img_side && gl ? " glpic" : ""}"><img src="${esc(b.img)}" alt="${esc(b.alt || "")}" onerror="this.parentNode.remove()"></figure>` : "";
   /* tools 30 (her 6.11 13:12 «картинку для текста»): "img_side": true — the picture in the glossary's column, under it, so the text keeps its place */
+  /* tools 32 (B2 chat 11.11, her slide 7): "img_left": true — the poster a narrow column left of the text, the glossary right */
+  if(b.img_left && pic) return `<div class="tx imgl${gl ? "" : " single"}">${pic}<div class="dlg${b.cols ? " cols" : ""}">${b.ctx ? `<p class="lctx">${mk(b.ctx)}</p>` : ""}${linesHTML(b.lines, b, "t")}${creditHTML(b.credit)}</div>${gl}</div>${gapTools(b)}${txAnsHTML(b)}`;
   if(b.img_side && gl) return `<div class="tx"><div class="dlg${b.cols ? " cols" : ""}">${b.ctx ? `<p class="lctx">${mk(b.ctx)}</p>` : ""}${linesHTML(b.lines, b, "t")}${creditHTML(b.credit)}</div><div class="tx-sidecol">${gl}${pic}</div></div>${gapTools(b)}${txAnsHTML(b)}`;
   return `${pic}<div class="tx ${gl ? "" : "single"}"><div class="dlg${b.cols ? " cols" : ""}">${b.ctx ? `<p class="lctx">${mk(b.ctx)}</p>` : ""}${linesHTML(b.lines, b, "t")}${creditHTML(b.credit)}</div>${gl}</div>${gapTools(b)}${txAnsHTML(b)}`;
 }
@@ -3494,7 +3510,7 @@ const creditHTML = c => c ? `<p class="credit">${esc(c).replace(/\[([^\]]+)\]\((
    the whole screen, a tap closes it */
 /* tools 31 (B2 11.11 «Ben's video»: five pictures of his story): `imgs: [{img, cap}]` = a numbered row of small pictures, each on a white
    tile (her pictures are black lines on a transparent ground: on the dark theme they would vanish), the caption under each; a tap shows one big */
-const picRowHTML = b => `<div class="pic-row">${b.imgs.map((o, i) => `<figure class="pic tile" data-zoom title="Tap to see it bigger"><img src="${esc(o.img)}" alt="${esc(o.cap || o.alt || "")}"><figcaption>${esc(o.cap || "")}</figcaption></figure>`).join("")}</div>`;
+const picRowHTML = b => `<div class="pic-row${b.imgs.length > 4 ? " many" : ""}">${b.imgs.map((o, i) => `<figure class="pic tile" data-zoom title="Tap to see it bigger"><img src="${esc(o.img)}" alt="${esc(o.cap || o.alt || "")}">${o.cap ? `<figcaption>${esc(o.cap)}</figcaption>` : ""}</figure>`).join("")}</div>`;   /* tools 32: no caption → no empty line under the tile */
 const pictureHTML = b => { if(b.lead) return retellHTML(b);
   if(b.imgs && b.imgs.length) return `${b.task ? `<p class="task">${mk(b.task)}</p>` : ""}${picRowHTML(b)}${creditHTML(b.credit)}`;
   const tm = b.timer ? `<button class="btn ptimer" data-ptimer>${esc(ptimerText(b))}</button>` : "", fig = b._missing ? `<figure class="pic" style="margin:0">${altFramesHTML(b.alt)}</figure>`
@@ -4329,7 +4345,8 @@ function dcLineInner(b){
     if(i) h += Q.ans ? `<span class="dj${M.k.includes(i - 1) ? " on" : ""}" data-dj="${i - 1}" title="Link these two words"> </span>` : `<span class="dj"> </span>`;
     h += Q.ans ? dcWordHTML(w, i, M, Q.just) : `<span class="dw">${esc(w.t)}</span>`; });
   const note = !Q.ans ? "" : DC.noteEdit ? `<div class="dc-notebox"><span aria-hidden="true">📝</span><input class="dp-in dc-notein" data-dcnotein value="${esc(M.n || "")}" maxlength="200" autocomplete="off" spellcheck="false" aria-label="A note on this line"><button class="dp-b ok" data-dcnoteok title="Enter">✓</button></div>` : M.n ? `<p class="dc-notet${DC.fresh === "n" ? " nw" : ""}" data-dcnote title="Tap to change">📝 ${esc(M.n)}</p>` : "";
-  return `<p class="dc-line${Q.ans && Q.just ? " just" : ""}" data-dcline>${h}</p><svg class="dc-arcs" aria-hidden="true"></svg>${note}${Q.ans ? dcPanHTML(b) : ""}`; }
+  const long = String(l.text || "").replace(/\{\{|\}\}/g, "").length > 52;   /* a long line a little smaller, so it fits beside the picture */
+  return `<p class="dc-line${long ? " long" : ""}${Q.ans && Q.just ? " just" : ""}" data-dcline>${h}</p><svg class="dc-arcs" aria-hidden="true"></svg>${note}${Q.ans ? dcPanHTML(b) : ""}`; }
 function dcPanHTML(b){ const P = DC.pan; if(!P) return ""; const Q = dcSt(b), M = dcMarks(b, Q.at), W = dcWords(dcLines(b)[Q.at]);
   if(P.say != null) return `<div class="dc-pan say" data-dcpan><span class="dp-l">sounds like</span><input class="dp-in" data-dcsayin value="${esc(P.say)}" maxlength="24" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="How it sounds"><button class="dp-b ok" data-dcsayok title="Enter">✓</button></div>`;
   const cur = P.l != null ? M.l[P.i + "." + P.l] : M.w[P.i], bt = (k, lbl, key, t) => `<button class="dp-b${cur === k ? " on" : ""}" data-dcmk="${k}" title="${t} (${key})">${lbl}</button>`;
@@ -4368,7 +4385,7 @@ function dcEditHTML(b){ const x = DCS.mine[b._pid];
 function decodeHTML(b){
   if(DC.edit === b._pid || !dcLines(b).length) return dcEditHTML(b);
   const Q = dcSt(b), l = dcLines(b)[Q.at], n = dcLines(b).length, pic = DC.pic && DC.url && DC.m && DC.m.videoWidth > 0;
-  const dots = n > 1 ? `<span class="dc-dots" role="group" aria-label="Lines">${dcLines(b).map((_, k) => `<button class="${k === Q.at ? "on" : ""}" data-dcgo="${k}" ${k === Q.at ? `aria-current="step"` : ""} aria-label="Line ${k + 1}">${k + 1}</button>`).join("")}</span>` : "";
+  const dots = n > 1 ? `<span class="dc-dots${n > 12 ? " many" : ""}" role="group" aria-label="Lines">${dcLines(b).map((_, k) => `<button class="${k === Q.at ? "on" : ""}" data-dcgo="${k}" ${k === Q.at ? `aria-current="step"` : ""} aria-label="Line ${k + 1}">${k + 1}</button>`).join("")}</span>` : "";
   const hint = Q.ans && !DC.hinted ? `<p class="dc-hint">Tap a word to mark it · tap the space between two words to link them</p>` : "";
   return `<div class="dc${Q.ans ? " ans" : ""}${pic ? " pic" : ""}" data-dc>
     <div class="dc-top"><span class="dc-n">${esc(b.title || "Line")} <b>${Q.at + 1}</b> of ${n}</span>${dots}${dcToolsHTML(b)}<button class="btn slim quiet" data-dcedit title="Write or paste your own lines (kept on this computer)">✏️ My lines</button></div>
