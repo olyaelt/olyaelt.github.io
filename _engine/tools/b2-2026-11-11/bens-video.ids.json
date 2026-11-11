@@ -269,6 +269,16 @@
    "pid": 53,
    "sig": "questions what are your takeaways?",
    "gone": false
+  },
+  {
+   "pid": 54,
+   "sig": "decode listen. what's in the cloud? write it to olya in a private message.",
+   "gone": false
+  },
+  {
+   "pid": 55,
+   "sig": "decode watch, then listen. what's in the cloud? write it to olya in a private message.",
+   "gone": false
   }
  ],
  "cards": [
@@ -575,6 +585,130 @@
   {
    "pid": 0,
    "sig": "what are your takeaways?",
+   "gone": false
+  }
+ ],
+ "lines.54": [
+  {
+   "pid": 0,
+   "sig": "d1",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "d2",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "d5",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "d8",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "d9",
+   "gone": false
+  }
+ ],
+ "lines.55": [
+  {
+   "pid": 0,
+   "sig": "r3",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "r4",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "r5",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "r6",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "r8",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "r9",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "r10",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "r11",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "r12",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "r13",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "r14",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "r15",
+   "gone": false
+  },
+  {
+   "pid": 12,
+   "sig": "r16",
+   "gone": false
+  },
+  {
+   "pid": 13,
+   "sig": "r17",
+   "gone": false
+  },
+  {
+   "pid": 14,
+   "sig": "r18",
+   "gone": false
+  },
+  {
+   "pid": 15,
+   "sig": "r21",
+   "gone": false
+  },
+  {
+   "pid": 16,
+   "sig": "r22",
+   "gone": false
+  },
+  {
+   "pid": 17,
+   "sig": "r23",
+   "gone": false
+  },
+  {
+   "pid": 18,
+   "sig": "r25",
    "gone": false
   }
  ]

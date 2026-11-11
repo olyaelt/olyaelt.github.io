@@ -783,7 +783,7 @@ button.kbub{cursor:pointer} button.kbub small{display:block;font-size:.85rem;fon
 .dc-dots button{width:2rem;height:2rem;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--muted);font-weight:800;font-size:.9rem;padding:0}
 .dc-dots.many{gap:4px}
 .dc-dots.many button{width:1.65rem;height:1.65rem;font-size:.78rem;border-width:2px}
-.dc-line.long{font-size:clamp(1.4rem, 2.6vw, 2.15rem)}
+.dc-line.long{font-size:calc(clamp(1.4rem, 2.6vw, 2.15rem) * var(--k, 1))}
 .dc-dots button.on{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
 .dc-tools{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
 .btn.quiet{border-color:var(--line);color:var(--muted)}
@@ -793,9 +793,9 @@ button.kbub{cursor:pointer} button.kbub small{display:block;font-size:.85rem;fon
 .dc-media{position:absolute;left:-9999px;top:0;width:2px;height:2px;opacity:0;pointer-events:none;object-fit:contain;background:#000;border-radius:12px;z-index:3}
 .dc-media.on{opacity:1}
 .dc-text{display:grid;gap:6px;padding:4px 0}
-.dc-ctx{margin:0;color:var(--muted);font-size:1.25rem;line-height:1.35}
+.dc-ctx{margin:0;color:var(--muted);font-size:calc(1.25rem * (.6 + .4 * var(--k, 1)));line-height:1.35}
 .dc-linebox{position:relative}
-.dc-line{margin:0;font-size:clamp(1.6rem, 3.1vw, 2.6rem);font-weight:700;line-height:2.25;color:var(--ink);letter-spacing:.005em}
+.dc-line{margin:0;font-size:calc(clamp(1.6rem, 3.1vw, 2.6rem) * var(--k, 1));font-weight:700;line-height:calc(2.25 * (.8 + .2 * var(--k, 1)));color:var(--ink);letter-spacing:.005em}
 .dc-arcs{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
 .dc-arcs path{fill:none;stroke:var(--dc-arc);stroke-width:3.5;stroke-linecap:round}
 .dc-cloud{display:inline-flex;align-items:center;justify-content:center;min-width:3.4em;height:1.25em;padding:0 .4em;vertical-align:-.12em;border-radius:999px;background:#D6ECFB;color:#0679BD;font-size:.95em}
@@ -963,11 +963,22 @@ function lineFromMark(t, orig){ const p = [], re = /\[\[(.*?)\]\]|\{\{(.*?)\}\}/
     k = re.lastIndex; }
   if(k < t.length) p.push(t.slice(k)); return Object.assign({}, orig, {p}); }
 const ledShown = e => e.kind === "line" ? lineToMark(e.orig) : e.orig;   /* what the edit box starts from (the page as built) */
-let SORD = D.stages.map((_, i) => i);
+/* tools 32 (her 11.11 17:01: «декодинг вставляем прямо на страницу… у студентов он пусть просто пропускается»): a stage with "teacher": true
+   shows only on her device (her code here); the data keeps it at the END of the stages, so the groups' part numbers and links stay
+   the same. "after": i puts it after stage i in her order (her ⇄ on the live page can still move it). */
+const T_ME = (() => { try{ return localStorage.getItem("hw-role") === "teacher" && !!localStorage.getItem("hw-code"); }catch(e){ return false; } })();
+const stageOn = i => !!D.stages[i] && (!D.stages[i].teacher || T_ME);
+const DEF_ORD = (() => { const o = D.stages.map((_, i) => i).filter(i => !D.stages[i].teacher);
+  if(T_ME) D.stages.forEach((st, i) => { if(!st.teacher) return; let k = o.indexOf(Number(st.after)); k = k > -1 ? k + 1 : o.length;
+    while(k < o.length && D.stages[o[k]].teacher) k++; o.splice(k, 0, i); });
+  return o; })();
+let SORD = DEF_ORD.slice();
 const stagePos = si => SORD.indexOf(si), nextStage = si => SORD[stagePos(si) + 1], prevStage = si => SORD[stagePos(si) - 1];
 function liveAdjust(){
-  const n = D.stages.length, o = Array.isArray(LV.order.stages) ? LV.order.stages.map(Number).filter(i => Number.isInteger(i) && i >= 0 && i < n) : [], u = [...new Set(o)];
-  SORD = u.concat(D.stages.map((_, i) => i).filter(i => !u.includes(i)));
+  const n = D.stages.length, o = Array.isArray(LV.order.stages) ? LV.order.stages.map(Number).filter(i => Number.isInteger(i) && i >= 0 && i < n && stageOn(i)) : [], u = [...new Set(o)];
+  SORD = u.concat(DEF_ORD.filter(i => !u.includes(i) && !D.stages[i].teacher));
+  DEF_ORD.filter(i => D.stages[i].teacher && !SORD.includes(i)).forEach(i => { const prev = DEF_ORD.slice(0, DEF_ORD.indexOf(i)).reverse().find(j => SORD.includes(j));
+    SORD.splice(prev == null ? 0 : SORD.indexOf(prev) + 1, 0, i); });   /* her stages not in a saved order yet: after the stage they follow by default */
   LED.forEach(e => { const v = liveText(e.path, null); e.obj[e.key] = v == null ? JSON.parse(JSON.stringify(e.orig)) : e.kind === "line" ? lineFromMark(v, e.orig) : v; });
   [...new Set(LED.filter(e => e.obj && e.obj._ob).map(e => e.obj))].forEach(c => { const b = c._ob, j = b.cards.indexOf(c);   /* the card's label follows a corrected instruction */
     if(b.style === "mix") c._b = Object.assign({}, b, {style: c.style || "say", check: c.check || "", instr: c.instr || b.instr, instr_next: null});
@@ -1018,13 +1029,13 @@ function leftForBoard(){ keepPlace(); }
    …page.html#part-3-screen-4 opens part 3, screen 4 (#part-3 = its cloud); her 🔗 under the screen copies it. Also when the page is
    already open (a new link in the Zoom chat). The hash goes away at once, so a reload goes on from where the room is. */
 function linkTo(h, now){ const m = String(h || "").match(/^#part-(\d+)(?:-screen-(\d+))?$/); if(!m) return false;
-  const si = +m[1] - 1; if(!D.stages[si]) return false; const n = D.stages[si].blocks.length, bi = m[2] ? Math.min(Math.max(+m[2] - 1, 0), n - 1) : 0;
+  const si = +m[1] - 1; if(!stageOn(si)) return false; const n = D.stages[si].blocks.length, bi = m[2] ? Math.min(Math.max(+m[2] - 1, 0), n - 1) : 0;
   S.stage = si; S.view = "field"; S.fast = null; S._moved = true; S.at = Object.assign({}, S.at, {[si]: bi}); S.intro = !m[2];
   if(now){ S.enter = true; render(); scrollTo(0, 0); } return true; }
 const screenLink = () => location.href.split("#")[0] + "#part-" + (S.stage + 1) + (S.intro ? "" : "-screen-" + (bIdx() + 1));
 addEventListener("hashchange", () => { if(linkTo(location.hash, true)) try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){} });
 (() => { const p = store.get(PLACE_KEY);
-  if(p && Date.now() - p.t < 3 * 3600e3 && D.stages[p.stage] && p.shape === SHAPE) Object.assign(S, {stage: p.stage, at: p.at || {}, far: p.far || {}, intro: !!p.intro, _restore: p.bs || {}});
+  if(p && Date.now() - p.t < 3 * 3600e3 && stageOn(p.stage) && p.shape === SHAPE) Object.assign(S, {stage: p.stage, at: p.at || {}, far: p.far || {}, intro: !!p.intro, _restore: p.bs || {}});
   linkTo(location.hash, false);
   if(location.hash) try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){} })();
 liveAdjust();   /* tools 24: her corrections and order from this device's copy, before the first screen */
@@ -1989,7 +2000,7 @@ const FILM = Object.assign({total: null, week: null, sent: {}, queue: [], open: 
 const filmSave = () => store.set(FILM_KEY, {total: FILM.total, week: FILM.week, sent: FILM.sent, queue: FILM.queue});
 const partId = i => "part-" + String(D.stages[i].label || i).replace(/^\S+\s+/, "").toLowerCase().replace(/[^a-z0-9äöüß]+/g, "-").replace(/^-|-$/g, "").slice(0, 40);
 const partMin = st => Number(st.min) > 0 ? Number(st.min) : Math.max(3, Math.round(st.blocks.reduce((a, b) => a + (b.kind === "listen" ? (b.clips || []).length * .5 : b.kind === "game" ? 6 : b.kind === "cards" ? (b.cards || []).length * .5 : b.kind === "tool" ? 6 : 2), 0)));
-function filmTasks(){ return D.stages.map((st, i) => ({id: partId(i), title: st.label, frames: partMin(st)}))
+function filmTasks(){ return D.stages.map((st, i) => ({id: partId(i), title: st.label, frames: partMin(st)})).filter((t, i) => !D.stages[i].teacher)
   .concat(BLOCKS.filter(isPlay).map(b => ({id: "win-" + b._pid, title: "🏆 " + (D.stages[b._si].label || ""), frames: 3}))); }
 async function filmSend(events){
   if(!PTS) return; const code = selfCode(); if(events) FILM.queue = FILM.queue.concat(events); filmSave(); if(!code || FILM.busy) return;
@@ -2400,7 +2411,8 @@ function wireDecode(b, root){ DC.b = b; const Q = dcSt(b), id = dcId(b, Q.at);
   dcArcs(); dcPanPlace(); dcWireWave(b); dcDraw(); requestAnimationFrame(() => { dcArcs(); dcPlace(); dcDraw(); });
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if(DC.b === b){ dcArcs(); dcPanPlace(); } });
   DC.fresh = null; DC.freshAll = null; }
-function dcAfter(b){ if(b && b.kind === "decode"){ dcPlace(); return; } if(DC.b){ dcStop(false); DC.b = null; dcClose(); } dcPlace(); }
+function dcAfter(b){ if(b && b.kind === "decode"){ dcArcs(); dcPlace(); return; }   /* tools 32: the line's type may have been fitted (fitCard) after its arcs were drawn */
+ if(DC.b){ dcStop(false); DC.b = null; dcClose(); } dcPlace(); }
 addEventListener("keydown", e => { const b = DC.b; if(!b || !document.querySelector("#main [data-dc]")) return;
   if(e.target && e.target.closest && e.target.closest("input, textarea, select, [contenteditable]")) return;
   if(e.ctrlKey || e.metaKey || e.altKey) return;
@@ -2676,7 +2688,7 @@ function render(){
   wrap.classList.toggle("nobox", !box && S.view === "field"); wrap.classList.toggle("wide", S.view === "groups" || (b && b.kind === "tool" && !box));
   wrap.classList.toggle("groups", S.view === "groups");
   const back = "";
-  const bar = S.view === "field" ? liveBarHTML(liveLabel) : "";
+  const bar = S.view === "field" && !D.stages[S.stage].teacher ? liveBarHTML(liveLabel) : "";   /* her own stages: no groups there, so no Live bar (the line and its player fit 720) */
   const pcs = pcStash();   /* her 👥 panel under a message keeps a half-typed note */
   if(S.view === "groups") main.innerHTML = headHTML() + groupsHTML() + back;
   else if(S.fast) main.innerHTML = headHTML() + `<p class="finstr">↺ Your hard cards once more</p><section class="blk"><div class="deck">${cardsHTML(S.fast)}</div></section>` + back + stepbarHTML();
@@ -2709,7 +2721,7 @@ function fitTxPic(before){
 /* tools 18 (C1 04.11: an "our sentences" card with its answer, the note and "Your turn" beside the box ran under Back / Next): a long card
    makes its type smaller, step by step, until the card and its buttons fit above them — her rule, a whole card on the shared screen. A phone scrolls as before. */
 function fitCard(){
-  const fc = document.querySelector("#main .deck .fc, #main .cn, #main .blk > .tx, #main .blk > .mix, #main .blk > .rl, #main .blk > .fgame, #main .blk .parts, #main .blk > .say-two, #main .blk > .mainbox, #main .blk > .say-lines"), blk = document.querySelector("#main .blk"), bar = document.querySelector("#main .stepbar");   /* tools 20: a long text, the mix, the example too */
+  const fc = document.querySelector("#main .deck .fc, #main .cn, #main .blk > .tx, #main .blk > .mix, #main .blk > .rl, #main .blk > .fgame, #main .blk .parts, #main .blk > .say-two, #main .blk > .mainbox, #main .blk > .say-lines, #main .blk .dc[data-dc]"), blk = document.querySelector("#main .blk"), bar = document.querySelector("#main .stepbar");   /* tools 20: a long text, the mix, the example too */
   if(!fc || !blk || !bar || innerWidth < 760) return;
   /* tools 28 also (her 4.11 17:16 «шрифт в карточке мелковат»): measured afresh every time — a game first shows its ▶ How to play, which is
      taller, and the card kept the small type after it; a game that changes in place (the task, its answer, the next roll) fits again by itself */
@@ -2718,7 +2730,7 @@ function fitCard(){
   try{ fitCardK(fc, blk, bar); } finally { if(gp) gp.style.display = gpd; }
 }
 function fitCardK(fc, blk, bar){
-  if(window.ResizeObserver && fc.classList.contains("fgame") && !fc._ro){ fc._ro = new ResizeObserver(() => { cancelAnimationFrame(fc._rt); fc._rt = requestAnimationFrame(() => { if(fc.isConnected) fitCard(); }); }); fc._ro.observe(fc); }
+  if(window.ResizeObserver && (fc.classList.contains("fgame") || fc.matches("[data-dc]")) && !fc._ro){ fc._ro = new ResizeObserver(() => { cancelAnimationFrame(fc._rt); fc._rt = requestAnimationFrame(() => { if(fc.isConnected) fitCard(); }); }); fc._ro.observe(fc); }
   const over = () => blk.getBoundingClientRect().bottom + 2 > bar.getBoundingClientRect().top;   /* the ⚡ under the last task may scroll: the task keeps its type */
   fc.querySelectorAll("img").forEach(im => { if(im.closest(".glpic")) return; if(!im.complete) im.addEventListener("load", () => { if(!fc.isConnected) return; fc.style.removeProperty("--k"); fitCard(); }, {once: true}); });   /* tools 30: the text's picture has its own size (fitTxPic) */   /* a picture still loading changes the card's size */
   for(const k of [.92, .85, .78, .72, .66]){ if(!over()) return; fc.style.setProperty("--k", k); }

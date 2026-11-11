@@ -1,0 +1,537 @@
+{
+ "blocks": [
+  {
+   "pid": 0,
+   "sig": "text last lesson: «has the area you live in changed much?» read the three answers again. how did they say it?",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "text read on: the second answer.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "text and the third answer.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "box last lesson's language: has it changed? some words are hidden. take turns: say the whole phrase, then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "cards take turns: make a sentence from the words — the grey line is a clue. say it aloud, then tap the card to check. then both of you talk about yourselves.",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "text have you seen this film? if yes, do you agree with the reviews? if not, what do you expect, based on the poster? intern_poster.jpg",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "picture intern_flyer.jpg",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "picture",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "picture",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "picture",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "questions talk to your partner.",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "text what went wrong after ben's trips?",
+   "gone": false
+  },
+  {
+   "pid": 12,
+   "sig": "text remember the missing words and how to say them. tap the yellow and orange to check.",
+   "gone": false
+  },
+  {
+   "pid": 13,
+   "sig": "text now without the glossary.",
+   "gone": false
+  },
+  {
+   "pid": 14,
+   "sig": "questions talk to your partner: finish the sentences about you. your partner asks one more question.",
+   "gone": false
+  },
+  {
+   "pid": 15,
+   "sig": "text what does ben do about it now?",
+   "gone": false
+  },
+  {
+   "pid": 16,
+   "sig": "text remember the missing words. tap the yellow and orange to check.",
+   "gone": false
+  },
+  {
+   "pid": 17,
+   "sig": "text now without the glossary.",
+   "gone": false
+  },
+  {
+   "pid": 18,
+   "sig": "questions talk to your partner: finish the sentences about you. your partner asks one more question.",
+   "gone": false
+  },
+  {
+   "pid": 19,
+   "sig": "text what is missing in ben's life? what does he do about it?",
+   "gone": false
+  },
+  {
+   "pid": 20,
+   "sig": "text remember the missing words. tap the yellow and orange to check.",
+   "gone": false
+  },
+  {
+   "pid": 21,
+   "sig": "text now without the glossary.",
+   "gone": false
+  },
+  {
+   "pid": 22,
+   "sig": "questions talk to your partner: finish the sentences about you. your partner asks one more question.",
+   "gone": false
+  },
+  {
+   "pid": 23,
+   "sig": "picture",
+   "gone": false
+  },
+  {
+   "pid": 24,
+   "sig": "say ben's story: how do you say these in english? take turns, from memory. then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 25,
+   "sig": "text remember the missing words. use the first letters. tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 26,
+   "sig": "picture",
+   "gone": false
+  },
+  {
+   "pid": 27,
+   "sig": "text check with the text: which phrases from the box did you use? which did you forget?",
+   "gone": false
+  },
+  {
+   "pid": 28,
+   "sig": "questions talk to your partner.",
+   "gone": false
+  },
+  {
+   "pid": 29,
+   "sig": "say how does ben tell his story? discuss together, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 30,
+   "sig": "say story, sum-up or now? which tense for each? discuss, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 31,
+   "sig": "model two ways to tell it. the listener's question often decides which. say the verbs, then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 32,
+   "sig": "text tell the story or sum up? say the verbs in the right form. then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 33,
+   "sig": "say why these tenses? discuss together, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 34,
+   "sig": "text say the verbs in the right form.",
+   "gone": false
+  },
+  {
+   "pid": 35,
+   "sig": "say why these tenses? discuss together, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 36,
+   "sig": "text say the verbs in the right form.",
+   "gone": false
+  },
+  {
+   "pid": 37,
+   "sig": "say why these tenses? discuss together, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 38,
+   "sig": "text say the verbs in the right form.",
+   "gone": false
+  },
+  {
+   "pid": 39,
+   "sig": "say why these tenses? discuss together, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 40,
+   "sig": "text say the verbs in the right form.",
+   "gone": false
+  },
+  {
+   "pid": 41,
+   "sig": "say why these tenses? discuss together, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 42,
+   "sig": "text say the verbs in the right form.",
+   "gone": false
+  },
+  {
+   "pid": 43,
+   "sig": "say why these tenses? discuss together, then tap “show the answer”.",
+   "gone": false
+  },
+  {
+   "pid": 44,
+   "sig": "questions before you go: talk to your partner.",
+   "gone": false
+  },
+  {
+   "pid": 45,
+   "sig": "questions what are your takeaways?",
+   "gone": false
+  },
+  {
+   "pid": 46,
+   "sig": "questions now you. talk to your partner (3 minutes).",
+   "gone": false
+  },
+  {
+   "pid": 47,
+   "sig": "decode listen. what's in the cloud? write it to olya in a private message.",
+   "gone": false
+  },
+  {
+   "pid": 48,
+   "sig": "decode watch, then listen. what's in the cloud? write it to olya in a private message.",
+   "gone": false
+  }
+ ],
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "the station has got / gotten a lot nicer. also fine: has become a lot nicer the station · nice they renovated it last year a place near you that has got / gotten a lot nicer — or a lot worse. what happened?",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "tvs are a lot cheaper than they used to be. also fine: tvs have got / gotten a lot cheaper. tvs · cheap you pay much less now than twenty years ago two things that are a lot cheaper — or a lot more expensive — than they used to be. which one do you notice most?",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "the summers are getting hotter and hotter. the summers · hot every year it’s worse two things that are getting better and better — or worse and worse — where you live. which one matters most to you?",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "my favourite restaurant isn’t as good as it used to be. also fine: … isn’t as good as it was. my favourite restaurant · good it was better ten years ago a café, a shop or a tv show that isn’t as good as it used to be. what’s changed?",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "the old town has become a lot more touristy. also fine: … is a lot more touristy than it used to be. the old town · touristy souvenir shops everywhere now a place that has become a lot more touristy — or one that hasn’t changed at all. why do you think that is?",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "my street is getting noisier and noisier. my street · noisy a new bar opens every month what’s getting more and more popular where you live? who’s happy about it, and who isn’t?",
+   "gone": false
+  }
+ ],
+ "write": [],
+ "questions.10": [
+  {
+   "pid": 0,
+   "sig": "“i'm not an unhappy person,” ben says. do you believe him? what in the video makes you say that?",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "which of these things bother ben? which would bother you most, and which wouldn't bother you at all?",
+   "gone": false
+  }
+ ],
+ "questions.14": [
+  {
+   "pid": 0,
+   "sig": "as soon as i get home [after a long trip / from the office / …], i [unpack my suitcase / take a long bath / …].",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "at first, i really enjoyed [working from home / social media / my new gym / …]. the problem was, [i never left the house / i couldn't stop checking it / it was always full / …].",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "no matter where i [stay / travel / go on holiday], i always [sleep badly the first night / get lost on the first day / pack too much / …].",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "then: what do you do when you've got time on your hands?",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "name two moments in life when people get that nowhere-to-be feeling (after a long trip, at the end of a big project…). what helps?",
+   "gone": false
+  }
+ ],
+ "questions.18": [
+  {
+   "pid": 0,
+   "sig": "when i need a break, i get out of the house and [go for a walk / sit in a café / go to the gym / …].",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "[my local café / my choir / my english class / volunteering / …] makes me feel part of something.",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "in a full café, i'd [ask someone, “mind if i sit here?” / rather wait / go somewhere else].",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "in my free time? [books, films, long walks / baking, gardening, the gym / …] — you name it.",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "believe me, i've tried everything to [get up earlier / stop checking my phone / remember new words / …]: [three alarms / apps / flashcards / …].",
+   "gone": false
+  }
+ ],
+ "questions.22": [
+  {
+   "pid": 0,
+   "sig": "the only [sport / travelling / cooking] i do these days is [walking to the bus stop / going to the supermarket / making toast / …].",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "i think i rely on [my phone / coffee / my gps / …] way more than i should: [i can't … without it / …].",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "[i can't wait for the holidays / winter here is so long / i'm on my phone far too much]. don't get me wrong, [i love my job / i like it here / it's really useful], but [i really need a break / i miss the sun / i'd like to read more].",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "if i were ben, i'd fill the hole in his life with [a dog / singing in a choir / spanish lessons / volunteering / …].",
+   "gone": false
+  }
+ ],
+ "questions.28": [
+  {
+   "pid": 0,
+   "sig": "1 ben says he probably relied on his son's family “way more than he should”. why do you think he feels that way?",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 “get up, get out of the house and go somewhere.” does it work for ben? would it work for you? why or why not?",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "3 ben has tried yoga, cooking and mandarin. name two things you've tried — or would like to try — in your free time, and one you'd never try (again).",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "4 ben says there's a hole in his life. name two things that could fill it — and one that wouldn't.",
+   "gone": false
+  }
+ ],
+ "questions.44": [
+  {
+   "pid": 0,
+   "sig": "1 tell ben's story in two sentences: how it all started, and where he is now.",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 name two things you rely on more than you should (your phone? coffee? your car?). start: don't get me wrong, i love…, but…",
+   "gone": false
+  }
+ ],
+ "questions.45": [
+  {
+   "pid": 0,
+   "sig": "what are your takeaways?",
+   "gone": false
+  }
+ ],
+ "questions.46": [
+  {
+   "pid": 0,
+   "sig": "think of a change in your life: a move, a new job, a new hobby… — or take one from the stories. tell your partner one line about the beginning and one line that sums it up: at first, … / the first few weeks … · since then, i've … / so far, … your partner asks one question: so what was it like at first? / how's it going so far?",
+   "gone": false
+  }
+ ],
+ "lines.47": [
+  {
+   "pid": 0,
+   "sig": "d1",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "d2",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "d3",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "d4",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "d5",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "d6",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "d7",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "d8",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "d9",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "d10",
+   "gone": false
+  }
+ ],
+ "lines.48": [
+  {
+   "pid": 0,
+   "sig": "r4",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "r6",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "r7",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "r9",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "r12",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "r14",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "r15",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "r16",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "r18",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "r19",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "r23",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "r24",
+   "gone": false
+  },
+  {
+   "pid": 12,
+   "sig": "r25",
+   "gone": false
+  }
+ ]
+}
