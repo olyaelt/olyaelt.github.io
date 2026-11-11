@@ -125,7 +125,7 @@
    "blocks": [
     {
      "kind": "text",
-     "instr": "Last lesson: «Has the area you live in changed much?» Read the three answers again. How did they say it?",
+     "instr": "Last lesson: «Has the area you live in changed much?» Can you remember the missing words? Take turns reading the lines aloud, then tap the yellow to check.",
      "lines": [
       {
        "s": "Interviewer",
@@ -137,19 +137,81 @@
        "s": "Stratford",
        "p": [
         {
-         "b": "Yes, it has, actually."
+         "f": "Y",
+         "r": "es"
         },
-        " I’m originally from Stratford-upon-Avon, and ",
+        ", ",
         {
-         "b": "these days"
+         "f": "i",
+         "r": "t"
+        },
+        " ",
+        {
+         "f": "h",
+         "r": "as"
+        },
+        ", ",
+        {
+         "f": "a",
+         "r": "ctually"
+        },
+        ". I’m originally from Stratford-upon-Avon, and ",
+        {
+         "f": "t",
+         "r": "hese"
+        },
+        " ",
+        {
+         "f": "d",
+         "r": "ays"
         },
         " I like to call it Restaurants-upon-Avon, because the whole town is geared towards the tourist industry. And whereas perhaps ",
         {
-         "b": "when I was growing up"
+         "f": "w",
+         "r": "hen"
+        },
+        " ",
+        {
+         "b": "I"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "as"
+        },
+        " ",
+        {
+         "f": "g",
+         "r": "rowing"
+        },
+        " ",
+        {
+         "f": "u",
+         "r": "p"
         },
         " there were more independent shops, fewer restaurants… whereas now everything seems to be a Pret or a Prezzo or a Strada or an Ask. So, yes, I would say that my local area, especially my hometown, ",
         {
-         "b": "has changed quite a lot"
+         "f": "h",
+         "r": "as"
+        },
+        " ",
+        {
+         "f": "c",
+         "r": "hanged"
+        },
+        " ",
+        {
+         "f": "q",
+         "r": "uite"
+        },
+        " ",
+        {
+         "b": "a"
+        },
+        " ",
+        {
+         "f": "l",
+         "r": "ot"
         },
         "."
        ],
@@ -160,11 +222,13 @@
       {
        "p": [
         {
-         "b": "these days"
+         "f": "t",
+         "r": "hese"
         },
         " ",
         {
-         "ipa": "/ðiːz ˈdeɪz/"
+         "f": "d",
+         "r": "ays"
         },
         " — now"
        ],
@@ -228,7 +292,7 @@
     },
     {
      "kind": "text",
-     "instr": "Read on: the second answer.",
+     "instr": "Now the second answer: read it aloud, then tap the yellow to check.",
      "lines": [
       {
        "s": "Interviewer",
@@ -240,11 +304,37 @@
        "s": "Whetstone",
        "p": [
         {
-         "b": "Not really, no."
+         "f": "N",
+         "r": "ot"
         },
-        " Well, for me it’s stayed ",
+        " ",
         {
-         "b": "pretty much the same"
+         "f": "r",
+         "r": "eally"
+        },
+        ", ",
+        {
+         "f": "n",
+         "r": "o"
+        },
+        ". Well, for me it’s stayed ",
+        {
+         "f": "p",
+         "r": "retty"
+        },
+        " ",
+        {
+         "f": "m",
+         "r": "uch"
+        },
+        " ",
+        {
+         "b": "the"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "ame"
         },
         ". There’s not been a whole load of changes. I mean, buildings knocked down, new buildings being built — quite a few new buildings, actually. But generally on the high street as well… different shops, but it’s pretty static… I don’t know. It doesn’t really change that much."
        ],
@@ -281,20 +371,42 @@
       {
        "p": [
         {
-         "b": "Not really, no."
+         "f": "N",
+         "r": "ot"
         },
-        " — a soft “no”"
+        " ",
+        {
+         "f": "r",
+         "r": "eally"
+        },
+        ", ",
+        {
+         "f": "n",
+         "r": "o"
+        },
+        ". — a soft “no”"
        ],
        "ru": "да не особо"
       },
       {
        "p": [
         {
-         "b": "pretty much the same"
+         "f": "p",
+         "r": "retty"
         },
         " ",
         {
-         "ipa": "/ˈprɪti mʌtʃ ðə seɪm/"
+         "f": "m",
+         "r": "uch"
+        },
+        " ",
+        {
+         "b": "the"
+        },
+        " ",
+        {
+         "f": "s",
+         "r": "ame"
         },
         " — almost the same"
        ],
@@ -379,11 +491,52 @@
        "p": [
         "Now I live in Highbury, which is in London, so it’s ",
         {
-         "b": "a lot busier"
+         "b": "a"
+        },
+        " ",
+        {
+         "f": "l",
+         "r": "ot"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "usier"
         },
         "… Chorleywood is a very small, kind of quaint little English village. But yeah, it’s changed a lot… High street shops have changed, and more buildings going up — there’s lots of houses going up. It’s still lovely, but it’s ",
         {
-         "b": "not quite as nice as it was"
+         "f": "n",
+         "r": "ot"
+        },
+        " ",
+        {
+         "f": "q",
+         "r": "uite"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "s"
+        },
+        " ",
+        {
+         "f": "n",
+         "r": "ice"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "s"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "t"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "as"
         },
         "."
        ],
@@ -403,11 +556,17 @@
       {
        "p": [
         {
-         "b": "a lot busier"
+         "b": "a"
         },
         " ",
         {
-         "ipa": "/ə lɒt ˈbɪziə/"
+         "f": "l",
+         "r": "ot"
+        },
+        " ",
+        {
+         "f": "b",
+         "r": "usier"
         },
         " — more people, more traffic"
        ],
@@ -443,7 +602,38 @@
       {
        "p": [
         {
-         "b": "not quite as nice as it was"
+         "f": "n",
+         "r": "ot"
+        },
+        " ",
+        {
+         "f": "q",
+         "r": "uite"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "s"
+        },
+        " ",
+        {
+         "f": "n",
+         "r": "ice"
+        },
+        " ",
+        {
+         "f": "a",
+         "r": "s"
+        },
+        " ",
+        {
+         "f": "i",
+         "r": "t"
+        },
+        " ",
+        {
+         "f": "w",
+         "r": "as"
         },
         " — a bit less nice than before"
        ],

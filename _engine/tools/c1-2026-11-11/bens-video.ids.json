@@ -3,12 +3,12 @@
   {
    "pid": 0,
    "sig": "text last lesson: «has the area you live in changed much?» read the three answers again. how did they say it?",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 1,
    "sig": "text read on: the second answer.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 2,
@@ -243,6 +243,16 @@
   {
    "pid": 48,
    "sig": "decode watch, then listen. what's in the cloud? write it to olya in a private message.",
+   "gone": false
+  },
+  {
+   "pid": 49,
+   "sig": "text last lesson: «has the area you live in changed much?» can you remember the missing words? take turns reading the lines aloud, then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 50,
+   "sig": "text now the second answer: read it aloud, then tap the yellow to check.",
    "gone": false
   }
  ],
