@@ -775,6 +775,11 @@ figure.pic.zoomable{cursor:zoom-in}
 .bx.pl{color:inherit}
 @media (min-width:900px){ .pic-row.many{grid-template-columns:repeat(3,minmax(0,1fr));--tile-h:min(30vh, 250px)} }   /* six stills: three a row, big enough to talk about on a shared screen */
 .pic-row.many figure.tile{justify-content:center}
+/* tools 32 (her 11.11 16:48, her slide 7): "cards": true — each line a coloured card (pink, green, yellow, as on her slide), bold plain black */
+.tx.cards .dlg > p{padding:8px 12px;border-radius:8px;color:#1D1D1B;margin:0 0 10px}
+.tx.cards .dlg > p:nth-of-type(3n+1){background:#F4CCCC}
+.tx.cards .dlg > p:nth-of-type(3n+2){background:#D9EAD3}
+.tx.cards .dlg > p:nth-of-type(3n+3){background:#FFF2CC}
 .tx.imgl{grid-template-columns:minmax(120px,15%) minmax(0,1.5fr) minmax(0,1fr)}
 .tx.imgl .tx-pic{margin:0}
 .tx.imgl .tx-pic img{width:100%;max-height:none;height:auto}
@@ -3286,7 +3291,7 @@ function partsHTML(parts, b, prefix){
     /* tools 32 (B2 chat 11.11 16:45, her new script format): {"y"} = a target in the reading text, bold black on yellow, shown; in such a
        block {"b"} = plain bold black (the other unknown words) and a glossary's {"b", "t": 1} = the target, blue bold */
     if(x.y != null) return `<b class="bx yt">${esc(x.y)}</b>`;
-    if(x.b != null) return `<b class="bx${x.t ? " tg" : b && (b._plainB != null ? b._plainB : (b._plainB = /"(y|t)":/.test(JSON.stringify([b.lines || [], b.gloss || []])))) ? " pl" : ""}">${esc(x.b)}</b>`;
+    if(x.b != null) return `<b class="bx${x.t ? " tg" : b && (b._plainB != null ? b._plainB : (b._plainB = !!b.cards || /"(y|t)":/.test(JSON.stringify([b.lines || [], b.gloss || []])))) ? " pl" : ""}">${esc(x.b)}</b>`;
     if(x.ipa != null && x.r == null) return `<span class="ipa">${esc(x.ipa)}</span>`;   /* tools 30 (her 6.11 12:41: «undefined в первом глоссарии»): {"ipa"} = the transcription, shown, not a gap */
     const id = `${prefix}${k++}`, open = st.open.has(id), nf = S.noFirst && b.kind === "text";
     const bm = open && !x.o && sharing() ? `<button class="bm ${st.bm.has(id) ? "on" : ""}" data-bm="${id}" title="We didn't know this" aria-label="We didn't know this">🔖</button>` : "";
@@ -3321,7 +3326,7 @@ function textHTML(b){
   const pic = b.img ? `<figure class="tx-pic${b.img_side && gl ? " glpic" : ""}"><img src="${esc(b.img)}" alt="${esc(b.alt || "")}" onerror="this.parentNode.remove()"></figure>` : "";
   /* tools 30 (her 6.11 13:12 «картинку для текста»): "img_side": true — the picture in the glossary's column, under it, so the text keeps its place */
   /* tools 32 (B2 chat 11.11, her slide 7): "img_left": true — the poster a narrow column left of the text, the glossary right */
-  if(b.img_left && pic) return `<div class="tx imgl${gl ? "" : " single"}">${pic}<div class="dlg${b.cols ? " cols" : ""}">${b.ctx ? `<p class="lctx">${mk(b.ctx)}</p>` : ""}${linesHTML(b.lines, b, "t")}${creditHTML(b.credit)}</div>${gl}</div>${gapTools(b)}${txAnsHTML(b)}`;
+  if(b.img_left && pic) return `<div class="tx imgl${gl ? "" : " single"}${b.cards ? " cards" : ""}">${pic}<div class="dlg${b.cols ? " cols" : ""}">${b.ctx ? `<p class="lctx">${mk(b.ctx)}</p>` : ""}${linesHTML(b.lines, b, "t")}${creditHTML(b.credit)}</div>${gl}</div>${gapTools(b)}${txAnsHTML(b)}`;
   if(b.img_side && gl) return `<div class="tx"><div class="dlg${b.cols ? " cols" : ""}">${b.ctx ? `<p class="lctx">${mk(b.ctx)}</p>` : ""}${linesHTML(b.lines, b, "t")}${creditHTML(b.credit)}</div><div class="tx-sidecol">${gl}${pic}</div></div>${gapTools(b)}${txAnsHTML(b)}`;
   return `${pic}<div class="tx ${gl ? "" : "single"}"><div class="dlg${b.cols ? " cols" : ""}">${b.ctx ? `<p class="lctx">${mk(b.ctx)}</p>` : ""}${linesHTML(b.lines, b, "t")}${creditHTML(b.credit)}</div>${gl}</div>${gapTools(b)}${txAnsHTML(b)}`;
 }

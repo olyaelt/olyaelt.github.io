@@ -401,12 +401,12 @@
   },
   {
    "pid": 1,
-   "sig": "ben 1 “i'm not an unhappy person,” ben says. do you believe him? what in the video makes you say that?",
+   "sig": "“i'm not an unhappy person,” ben says. do you believe him? what in the video makes you say that?",
    "gone": false
   },
   {
    "pid": 2,
-   "sig": "ben 2 which of these things bother ben? which would bother you most, and which wouldn't bother you at all?",
+   "sig": "which of these things bother ben? which would bother you most, and which wouldn't bother you at all?",
    "gone": false
   }
  ],

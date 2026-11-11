@@ -497,7 +497,8 @@
        "ru": "Единственная причина — …"
       }
      ],
-     "img_left": true
+     "img_left": true,
+     "cards": true
     },
     {
      "kind": "picture",
@@ -583,8 +584,8 @@
      "instr": "Talk to your partner.",
      "box": "RETIRE",
      "items": [
-      "**Ben 1**  “I'm not an unhappy person,” Ben says. Do you believe him? What in the video makes you say that?",
-      "**Ben 2**  Which of these things bother Ben? Which would bother **you** most, and which wouldn't bother you at all?"
+      "“I'm not an unhappy person,” Ben says. Do you believe him? What in the video makes you say that?",
+      "Which of these things bother Ben? Which would bother **you** most, and which wouldn't bother you at all?"
      ]
     }
    ]
