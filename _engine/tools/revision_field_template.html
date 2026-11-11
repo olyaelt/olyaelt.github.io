@@ -2034,7 +2034,7 @@ function dcBack(b){ const Q = dcSt(b); dcClose();
 function dcWords(l){ const out = [];
   String(l.text || "").split(/(\{\{[\s\S]+?\}\})/).forEach(p => { const g = /^\{\{[\s\S]*\}\}$/.test(p), s = g ? p.slice(2, -2) : p;
     s.split(/\s+/).forEach((t, k) => { if(!t) return;
-      if(k === 0 && out.length && !g && /^[,.;:!?…)]+$/.test(t)){ out[out.length - 1].t += t; return; }   /* "{{…today}}," — the comma stays on its word */
+      if(k === 0 && out.length && !g && /^[,.;:!?…)"”’]+$/.test(t)){ out[out.length - 1].t += t; return; }   /* "{{…today}}," — the comma stays on its word */
       out.push({t, g}); }); });
   return out; }
 const dcBare = t => String(t).toLowerCase().replace(/’/g, "'").replace(/[^a-z0-9']/g, "");

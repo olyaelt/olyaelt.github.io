@@ -4,6 +4,11 @@
    "pid": 0,
    "sig": "decode watch, then listen. what's in the cloud? write it in the zoom chat.",
    "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "decode listen. what's in the cloud? write it in the zoom chat.",
+   "gone": false
   }
  ],
  "cards": [],
@@ -82,6 +87,33 @@
   {
    "pid": 14,
    "sig": "r18",
+   "gone": false
+  }
+ ],
+ "lines.1": [
+  {
+   "pid": 0,
+   "sig": "d1",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "d2",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "d5",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "d8",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "d9",
    "gone": false
   }
  ]

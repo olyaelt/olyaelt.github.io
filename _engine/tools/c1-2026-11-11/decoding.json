@@ -6,7 +6,90 @@
  "boxes": {},
  "stages": [
   {
-   "label": "🎧 Decoding",
+   "label": "🎧 Ben's video",
+   "blocks": [
+    {
+     "kind": "decode",
+     "title": "Line",
+     "instr": "Listen. What's in the cloud? Write it in the Zoom chat.",
+     "instr2": "What was hard to hear? Why?",
+     "lines": [
+      {
+       "id": "d1",
+       "clip": "1:11.12-1:16.22",
+       "ctx": "1:03.12",
+       "before": "Freud said, \"Love and work. Work and love.",
+       "text": "{{That's all there is.}}\""
+      },
+      {
+       "id": "d2",
+       "clip": "1:16.22-1:23.36",
+       "ctx": "1:08.22",
+       "before": "Well, I'm retired, and my wife is dead.",
+       "text": "{{As you can imagine}}, {{that's given me}} some time on my hands."
+      },
+      {
+       "id": "d3",
+       "clip": "1:27.70-1:33.57",
+       "ctx": "1:19.70",
+       "before": "That is an ongoing, relentless effort in creativity.",
+       "text": "At first, I admit I enjoyed the {{novelty of it}}."
+      },
+      {
+       "id": "d4",
+       "clip": "1:30.80-1:35.21",
+       "ctx": "1:22.80",
+       "before": "At first, I admit I enjoyed the novelty of it.",
+       "text": "{{Sort of felt}} like I was playing hooky."
+      },
+      {
+       "id": "d5",
+       "clip": "1:33.57-1:38.91",
+       "ctx": "1:25.57",
+       "before": "Sort of felt like I was playing hooky.",
+       "text": "I used {{all the miles I'd saved}} and traveled the globe."
+      },
+      {
+       "id": "d6",
+       "clip": "1:38.91-1:44.08",
+       "ctx": "1:30.91",
+       "before": "The problem was, no matter where I went, as soon as I got home,",
+       "text": "the nowhere-to-be thing hit me like {{a ton of bricks}}."
+      },
+      {
+       "id": "d7",
+       "clip": "1:44.08-1:50.22",
+       "ctx": "1:36.08",
+       "before": "I realized the key to this whole deal was to keep moving.",
+       "text": "Get up, {{get out of the house}}, and go somewhere."
+      },
+      {
+       "id": "d8",
+       "clip": "1:56.56-2:03.74",
+       "ctx": "1:48.56",
+       "before": "— Excuse me, mind if we join you? — No. — Hey. How are you?",
+       "text": "{{Can't explain it}}, but it makes me feel part of something."
+      },
+      {
+       "id": "d9",
+       "clip": "2:44.34-2:53.55",
+       "ctx": "2:36.34",
+       "before": "Don't get me wrong, I'm not an unhappy person. Quite the contrary.",
+       "text": "I just know {{there's a hole in my life}}, and I need to fill it."
+      },
+      {
+       "id": "d10",
+       "clip": "2:57.36-3:03.23",
+       "ctx": "2:49.36",
+       "before": "Which brings me to today when I was leaving the market",
+       "text": "and caught your flyer {{out of the corner of my eye}}."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "label": "🎧 More scenes",
    "blocks": [
     {
      "kind": "decode",
@@ -16,65 +99,65 @@
      "lines": [
       {
        "id": "r4",
-       "clip": "8:53.41-8:55.71",
-       "ctx": "8:45.41",
+       "clip": "8:51.21-8:55.71",
+       "ctx": "8:43.21",
        "text": "I love that five. {{Can we make it}} more graphic?",
        "before": "Try making the photo grid bigger."
       },
       {
        "id": "r6",
-       "clip": "20:46.09-20:48.03",
-       "ctx": "20:38.09",
+       "clip": "20:44.56-20:48.03",
+       "ctx": "20:36.56",
        "text": "{{Can't leave}} before the Boss leaves, Davis.",
        "before": "You staying?"
       },
       {
        "id": "r7",
-       "clip": "21:31.50-21:33.14",
-       "ctx": "21:23.50",
+       "clip": "21:28.87-21:33.14",
+       "ctx": "21:20.87",
        "text": "{{so they can spot a problem}} if there is one, right?",
        "before": "Okay, so they want to know what customers bought who didn't come back"
       },
       {
        "id": "r9",
-       "clip": "22:54.02-22:56.15",
-       "ctx": "22:46.02",
+       "clip": "22:50.02-22:56.15",
+       "ctx": "22:42.02",
        "text": "{{Can't imagine}} it would hurt.",
        "before": "I should probably actually just talk to her, huh? Obviously."
       },
       {
        "id": "r12",
-       "clip": "23:37.03-23:39.93",
-       "ctx": "23:29.03",
+       "clip": "23:35.03-23:39.93",
+       "ctx": "23:27.03",
        "text": "{{Can you take it}} to the photo studio? {{There's lots of}} cleaners and stuff in there.",
        "before": "Yes, Jules spilled soy sauce on her Saint Laurent jacket."
       },
       {
        "id": "r14",
-       "clip": "25:20.07-25:21.43",
-       "ctx": "25:12.07",
+       "clip": "25:17.90-25:21.43",
+       "ctx": "25:09.90",
        "text": "{{Can you see that}} working?",
        "before": "run every idea I have by this person?"
       },
       {
        "id": "r15",
-       "clip": "26:18.66-26:20.42",
-       "ctx": "26:10.66",
+       "clip": "26:16.96-26:20.42",
+       "ctx": "26:08.96",
        "text": "{{I can't hear}} a thing.",
        "before": "You were in there a long time."
       },
       {
        "id": "r16",
-       "clip": "30:55.50-30:57.53",
-       "ctx": "30:44.29",
+       "clip": "30:50.13-30:59.44",
+       "ctx": "30:42.13",
        "text": "Why don't you tell her {{you can't drive her today}},",
        "before": "… from a paper bag. I don't know what you're talking about, man.",
        "after": "or I'm gonna have to."
       },
       {
        "id": "r18",
-       "clip": "32:26.89-32:29.13",
-       "ctx": "32:18.89",
+       "clip": "32:25.32-32:29.13",
+       "ctx": "32:17.32",
        "text": "{{Well, I can't change}} the facts, dear.",
        "before": "You know I haven't slept in two years."
       }
