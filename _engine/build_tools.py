@@ -147,6 +147,7 @@ def page_ids(lesson, name, d, save=True):
         pids['write'] = assign_ids(reg, 'write', [it for b in blocks if b.get('kind') == 'write' for it in b['items']], report)
         for b, bp in zip(blocks, pids['blocks']):
             if b.get('kind') == 'questions': pids['questions.%d' % bp] = assign_ids(reg, 'questions.%d' % bp, b['items'], report)
+            if b.get('kind') == 'decode': pids['lines.%d' % bp] = assign_ids(reg, 'lines.%d' % bp, b.get('lines', []), report, sig=lambda l: _plain(l.get('id') or l.get('text', '')))   # tools 32: a decoding line keeps its number (her marks and plays are kept by it)
     if not save: return pids
     if json.dumps(reg, ensure_ascii=False, sort_keys=True) != before:
         json.dump(reg, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

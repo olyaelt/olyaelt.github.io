@@ -409,8 +409,10 @@ figure.pic.zoomable::after{content:"🔍 Tap to see it big";position:absolute;ri
 .tc-next{color:var(--muted);font-size:.95rem;padding:10px 0}
 .fc .turn{margin:4px 0 0;font-weight:800;font-size:calc(1.12rem * var(--k, 1));color:var(--ink)}
 .fc{gap:calc(10px * var(--k, 1))}
+/* tools 32 also (C1 06.11 fixes-3: the recall's longer instruction took two rows and the two columns ran 15 px under Back / Next): two
+   columns get smaller with the card too (fitCard's --k), as one column always did */
 @media (min-width:900px){ .dlg.cols p.wide{column-span:all;margin-bottom:10px} .dlg.cols .lh.colbreak{break-before:column;margin-top:0} }
-@media (min-width:900px){ .dlg.cols{columns:2;column-gap:40px} .dlg.cols p{break-inside:avoid;font-size:1.06rem;line-height:1.42;margin-bottom:4px} .dlg.cols p.lh{font-size:.88rem} .dlg.cols .lh{break-after:avoid} }
+@media (min-width:900px){ .dlg.cols{columns:2;column-gap:40px} .dlg.cols p{break-inside:avoid;font-size:calc(1.06rem * var(--k, 1));line-height:1.42;margin-bottom:4px} .dlg.cols p.lh{font-size:.88rem} .dlg.cols .lh{break-after:avoid} }
 .say-later{margin:6px 0 0;color:var(--muted);font-size:1rem}
 .pi-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:22px;align-items:center}
 .pi-wrap .postits{grid-template-columns:minmax(0,1fr)}
@@ -759,6 +761,93 @@ button.kbub{cursor:pointer} button.kbub small{display:block;font-size:.85rem;fon
 .sec-all summary{cursor:pointer;font-weight:700}
 .sec-allc{color:var(--ink);font-size:.95rem;margin:6px 0}
 @media (max-width:640px){ .sec-pair,.sec-shows{grid-template-columns:1fr} .sec-nums{grid-template-columns:repeat(3,3.2rem)} }
+/* ---------- tools 32: 🎧 decoding (the AL chat's handoff 09.11) ---------- */
+.dc{display:grid;gap:10px;--dc-grey:#A3A3A3;--dc-strike:var(--label);--dc-arc:var(--instr)}
+.dc-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-height:38px}
+.dc-n{font-weight:800;color:var(--muted);font-size:1rem}
+.dc-n b{color:var(--ink)}
+.dc-dots{display:flex;gap:6px;flex-wrap:wrap}
+.dc-dots button{width:2rem;height:2rem;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--muted);font-weight:800;font-size:.9rem;padding:0}
+.dc-dots button.on{background:var(--instr);border-color:var(--instr);color:var(--instr-ink)}
+.dc-tools{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.btn.quiet{border-color:var(--line);color:var(--muted)}
+.dc-main{display:grid;gap:18px;align-items:center}
+.dc.pic .dc-main{grid-template-columns:minmax(0,1fr) minmax(220px,34%)}
+.dc-vid{aspect-ratio:16/9;width:100%;border-radius:12px;background:#000}
+.dc-media{position:absolute;left:-9999px;top:0;width:2px;height:2px;opacity:0;pointer-events:none;object-fit:contain;background:#000;border-radius:12px;z-index:3}
+.dc-media.on{opacity:1}
+.dc-text{display:grid;gap:6px;padding:4px 0}
+.dc-ctx{margin:0;color:var(--muted);font-size:1.25rem;line-height:1.35}
+.dc-linebox{position:relative}
+.dc-line{margin:0;font-size:clamp(1.6rem, 3.1vw, 2.6rem);font-weight:700;line-height:2.25;color:var(--ink);letter-spacing:.005em}
+.dc-arcs{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.dc-arcs path{fill:none;stroke:var(--dc-arc);stroke-width:3.5;stroke-linecap:round}
+.dc-cloud{display:inline-flex;align-items:center;justify-content:center;min-width:3.4em;height:1.25em;padding:0 .4em;vertical-align:-.12em;border-radius:999px;background:#D6ECFB;color:#0679BD;font-size:.95em}
+.dc-cloud span{font-size:.9em;line-height:1}
+.dw{display:inline-block;position:relative;border-radius:8px;line-height:1.15;transition:color .35s, background-color .2s}
+.dl{display:inline-block;position:relative;line-height:1.15;transition:color .35s}
+.dj{display:inline-block;position:relative;white-space:pre;padding:0 .1em;border-radius:6px;line-height:1.15}
+.dc.ans .dw[data-dw]{cursor:pointer}
+.dc.ans .dw[data-dw]:hover, .dc.ans .dw.sel{background:rgba(6,147,227,.10)}
+.dc.ans .dj[data-dj]{cursor:pointer}
+.dc.ans .dj[data-dj]:hover{background:rgba(6,147,227,.16)}
+.dw.gw{animation:ansIn .45s ease-out both}
+/* the marks */
+.dw.m-grey, .dl.m-grey{color:var(--dc-grey)}
+.dw.m-strong{font-weight:900;text-decoration:underline;text-decoration-thickness:.07em;text-underline-offset:.16em}
+.dl.m-strong{font-weight:900}
+.dl.m-strong::before{content:"";position:absolute;left:50%;top:.02em;width:.18em;height:.18em;margin-left:-.09em;border-radius:50%;background:currentColor}
+.dw.m-strike::after, .dl.m-strike::after{content:"";position:absolute;left:-.05em;right:-.05em;top:52%;height:.1em;margin-top:-.05em;border-radius:3px;background:var(--dc-strike);transform-origin:left center}
+.dw.m-strike, .dl.m-strike{color:color-mix(in srgb, var(--ink) 70%, var(--card))}
+.dsay{display:inline-block;position:relative}
+.dsay-t{position:absolute;left:50%;bottom:96%;transform:translateX(-50%);font-size:.5em;font-weight:800;color:var(--ipa);letter-spacing:.02em;line-height:1;white-space:nowrap;pointer-events:none}
+.nw.m-strike::after{animation:dcStrike .4s cubic-bezier(.3,.7,.4,1) both}
+.nw.m-grey{animation:dcGrey .5s ease-out both}
+.nw.m-strong{animation:dcPop .35s ease-out both}
+.dsay.nw .dsay-t{animation:dcSay .4s ease-out both}
+@keyframes dcSay{from{opacity:0;transform:translate(-50%,6px)}to{opacity:1;transform:translate(-50%,0)}}
+@keyframes dcStrike{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes dcGrey{from{color:var(--ink)}to{color:var(--dc-grey)}}
+@keyframes dcPop{40%{transform:scale(1.08)}}
+/* single letters: the word grows, each letter can be tapped */
+.dw.lt{font-size:1.28em;letter-spacing:.07em;background:rgba(6,147,227,.10);padding:0 .12em;margin:0 .06em}
+.dw.lt .dl[data-dl]{cursor:pointer;border-bottom:3px dotted rgba(6,147,227,.55);margin:0 .02em;border-radius:3px}
+.dw.lt .dl[data-dl]:hover{background:rgba(6,147,227,.18)}
+/* the panel */
+.dc-pan{position:absolute;z-index:5;display:flex;flex-wrap:wrap;max-width:calc(100vw - 16px);box-sizing:border-box;gap:4px;align-items:center;padding:6px;background:var(--card);border:2px solid var(--line);border-radius:14px;box-shadow:0 8px 24px rgba(29,29,27,.18);white-space:nowrap;animation:ansIn .18s ease-out both}
+.dp-b{border:2px solid transparent;background:transparent;color:var(--ink);border-radius:10px;min-height:40px;padding:2px 10px;font-weight:800;font-size:1rem}
+.dp-b:hover{background:rgba(6,147,227,.10)}
+.dp-b.on{border-color:var(--instr);background:rgba(6,147,227,.12)}
+.dp-b.ok{color:var(--instr-text)}
+.pv-grey{color:var(--dc-grey)}
+.pv-gone{text-decoration:line-through;text-decoration-color:var(--label);text-decoration-thickness:3px}
+.pv-abc{letter-spacing:.06em}
+.pv-say{color:var(--ipa);font-weight:900}
+.dp-l{font-weight:800;color:var(--ipa);padding:0 6px}
+.dp-in{font:inherit;font-size:1.1rem;font-weight:800;width:7.5em;padding:6px 8px;border:2px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+.dc-hint{margin:2px 0 0;color:var(--muted);font-size:.85rem}
+/* the player */
+.dc-plbox{border-top:2px solid var(--line);padding-top:10px}
+.dc-pl{display:grid;gap:8px}
+.dc-pl.nofile{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.dc-note{color:var(--muted);font-size:.9rem}
+.dc-wavebox{position:relative}
+.dc-wave{display:block;width:100%;height:118px;border-radius:10px;cursor:crosshair;touch-action:none;
+  --dc-wbg:#F3F7FA;--dc-clip:rgba(29,29,27,.06);--dc-sel:rgba(6,147,227,.20);--dc-edge:#0693E3;--dc-wave:#3D6F8F;--dc-tick:#6B6B6B;--dc-cur:#1D1D1B;--dc-head:#E00000}
+.dc-wmsg{position:absolute;left:12px;top:10px;font-size:.9rem;font-weight:700;color:var(--muted);background:var(--card);padding:2px 8px;border-radius:8px}
+.dc-cnt{position:absolute;right:8px;top:8px;font-weight:900;font-size:1.05rem;color:var(--instr-ink);background:var(--instr);border-radius:999px;padding:2px 12px;pointer-events:none}
+.dc-cnt.zero{opacity:.45}
+.dc-cnt.pop{animation:dcPop .35s ease-out}
+.dc-ctl{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.dc-play kbd{font:inherit;font-size:.72rem;font-weight:800;margin-left:8px;padding:1px 6px;border-radius:6px;background:rgba(255,255,255,.25)}
+.dc-seltx{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:700;font-size:.95rem}
+.dc-sp{flex:1}
+.btn.slim.dc-file{max-width:16rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:760px){ .dc.pic .dc-main{grid-template-columns:1fr} .dc-line{font-size:1.5rem} .dc-wave{height:96px} .dc-tools{margin-left:0} }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .dc{--dc-grey:#7C8086} :root:not([data-theme="light"]) .dc-wave{--dc-wbg:#15191D;--dc-clip:rgba(255,255,255,.05);--dc-sel:rgba(108,195,255,.22);--dc-edge:#6CC3FF;--dc-wave:#7FB6DA;--dc-tick:#A4A7AB;--dc-cur:#ECECEA;--dc-head:#FF7A7A} :root:not([data-theme="light"]) .dc-cloud{background:#1E3A52;color:#9ED3FA} }
+:root[data-theme="dark"] .dc{--dc-grey:#7C8086}
+:root[data-theme="dark"] .dc-wave{--dc-wbg:#15191D;--dc-clip:rgba(255,255,255,.05);--dc-sel:rgba(108,195,255,.22);--dc-edge:#6CC3FF;--dc-wave:#7FB6DA;--dc-tick:#A4A7AB;--dc-cur:#ECECEA;--dc-head:#FF7A7A}
+:root[data-theme="dark"] .dc-cloud{background:#1E3A52;color:#9ED3FA}
 </style>
 </head>
 <body>
@@ -889,7 +978,7 @@ function keepPlace(){
   if(S.view !== "field" || S.fast) return;
   const bsOut = Object.assign({}, S._restore || {}); Object.entries(S.bs).forEach(([id, st]) => { if(id === "fastdeck") return; const d = st.deck;
     bsOut[id] = {open: [...st.open], shown: !!st.shown, check: st.check || "", done: !!st.done, bm: [...(st.bm || [])], spk: st.spk ? st.spk.key : null,
-      sc: st.sc || null, cn: st.cn ? Object.assign({}, st.cn, {busy: false, enter: false}) : null, fx: st.fx || null, so: st.so || null, sec: st.sec || null, memo: st.memo ? {phase: st.memo.phase, got: [...st.memo.got], end: st.memo.end || 0} : null, g: st.g || null, np: st.np || null, ended: !!st.ended, lis: st.lis || null, wh: st.wh || null, so1: st.so1 || null, rl: st.rl ? {ph: st.rl.ph, roll: st.rl.roll, dk: st.rl.dk || null} : null, mx: st.mx || null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null, talk: st.ttt.talk != null ? st.ttt.talk : -1} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, talked: [...(d.talked || [])], flipped: !!d.flipped} : (st._deck || null)}; });
+      sc: st.sc || null, cn: st.cn ? Object.assign({}, st.cn, {busy: false, enter: false}) : null, fx: st.fx || null, so: st.so || null, sec: st.sec || null, memo: st.memo ? {phase: st.memo.phase, got: [...st.memo.got], end: st.memo.end || 0} : null, g: st.g || null, np: st.np || null, ended: !!st.ended, dc: st.dc ? {at: st.dc.at, ans: !!st.dc.ans} : null, lis: st.lis || null, wh: st.wh || null, so1: st.so1 || null, rl: st.rl ? {ph: st.rl.ph, roll: st.rl.roll, dk: st.rl.dk || null} : null, mx: st.mx || null, ttt: st.ttt ? {cells: st.ttt.cells.map(c => ({i: (BLOCKS.find(x => x._id === id) || {tasks: []}).tasks.indexOf(c.t), m: c.m})), turn: st.ttt.turn, open: st.ttt.open, shown: !!st.ttt.shown, over: st.ttt.over || null, talk: st.ttt.talk != null ? st.ttt.talk : -1} : null, deck: d ? {n: d.cards.length, queue: d.queue, got: [...d.got], again: [...d.again], hist: d.hist, talked: [...(d.talked || [])], flipped: !!d.flipped} : (st._deck || null)}; });
   store.set(PLACE_KEY, {stage: S.stage, at: S.at, far: S.far, intro: S.intro, bs: bsOut, t: Date.now(), shape: SHAPE});
   store.set(LEFT_KEY, {page: PAGE_ID, href: location.pathname.split("/").pop(), cell: cellName(), title: D.title, stage: String(D.stages[S.stage].label || ""), t: Date.now()});
 }
@@ -914,6 +1003,7 @@ function restoreBs(id){ const r = S._restore && S._restore[id]; if(!r) return nu
   if(r.fx) st.fx = r.fx; if(r.ttt && Array.isArray(r.ttt.cells)) st.ttt = r.ttt;   /* tools 16 */
   if(r.np) st.np = r.np;   /* tools 23 */
   if(r.ended) st.ended = true;   /* tools 25: 🏁 Finish the game */
+  if(r.dc && typeof r.dc.at === "number") st.dc = {at: r.dc.at, ans: !!r.dc.ans};   /* tools 32 */
   if(r.lis && r.lis.typed) st.lis = r.lis;   /* tools 26 */
   if(r.so1 && Array.isArray(r.so1.seen)) st.so1 = r.so1;   /* tools 30 */
   if(r.so) st.so = r.so; if(r.sec) st.sec = r.sec; if(r.memo) st.memo = r.memo;   /* tools 17 */
@@ -1379,7 +1469,8 @@ function wireGroupDots(){
 /* ---------- ⚡ fast finishers (the last block): the fast line, their ↺ cards once more, the text again without first letters ---------- */
 function fastHTML(){
   if(S.view !== "field") return "";
-  const lb = curBlock();   /* her 15:17: not before the last question, or nobody goes on to the second one */
+  const lb = curBlock();
+  if(lb && lb.kind === "decode") return "";   /* tools 32: her screen, whole class — no ⚡ */   /* her 15:17: not before the last question, or nobody goes on to the second one */
   if(lb && lb.kind === "questions"){ const at = spkView.findIndex(x => x.k === spkCur.key); if(at < spkView.length - 1) return ""; }
   /* tools 30 (C1 6.11 v2: the first chat has its own ⚡ in the middle of the page): a block's own "fast" shows under it, after its last
      question; on the last screen, the page's ⚡ as before */
@@ -1884,16 +1975,342 @@ function wireFilm(root){ if(!PTS) return;
     try{ localStorage.setItem(SELF_KEY, v); }catch(e){} FILM.total = null; FILM.err = ""; filmPaint(); filmSend(); }); });
   root.querySelectorAll("[data-film-change]").forEach(x => { if(x._w) return; x._w = 1; x.addEventListener("click", () => { try{ localStorage.removeItem(SELF_KEY); }catch(e){} FILM.total = null; FILM.err = ""; filmPaint(); }); });
 }
+/* ---------- tools 32 (the AL chat's handoff 09.11 22:10; her words 22:06 «мне сейчас нужна именно возможность быстро показывать разбор.
+   Редактирую его мучительно»): 🎧 "kind": "decode" — decoding on her shared screen. A line, its gap a ☁; Next = the answer, plain black (her
+   rule 15); then the marks come as the group finds them, one tap each, no markup anywhere on the screen:
+   - a word → a small panel: grey (hard to hear) · gone (struck) · a·b·c (single letters) · sounds like (small, above) · strong · ↺;
+   - after a·b·c the word grows and each letter takes the same panel (the h in "him", the t in "get");
+   - the space between two words → a link arc grows under them; a tap there again takes it away;
+   - a mark the data already has for that word ("marks") goes on with the first tap, no panel.
+   🧹 clears the line. Kept on this computer by the line's id: the same lesson (4 hours) comes back as it was, a later one opens clean with
+   ↺ Last time. 📋 Copy analysis = the lines, their marks (also in the data's own "marks" form) and the plays.
+   Under the line her scene file's waveform, as in Aegisub: the file plays from her computer (nothing is uploaded — the site is public, it
+   is a film); click = the cursor, drag = a piece, Space plays it again and again, ▶ N counts. The waveform reads the whole file (up to
+   400 MB) into peaks kept on this computer; a whole film's peaks file (stage 2) will feed the same picture. ---------- */
+const DC_FRESH = 4 * 3600e3, DC_MAX = 400 * 1048576, DC_RATE = 200, DCK = "tool-decode-" + PAGE_ID;
+let DCS = store.get(DCK) || {}; ["m", "prev", "plays", "clips"].forEach(k => { if(!DCS[k] || typeof DCS[k] !== "object") DCS[k] = {}; });
+const dcSave = () => store.set(DCK, DCS);
+const DC = {mk: {}, fresh: null, pan: null, letters: null, url: "", name: "", m: null, peaks: null, wBusy: false, wErr: "", dur: 0, win: null, winFor: null,
+  sel: null, cur: 0, playing: false, stopAt: null, pic: !!store.get("dc-pic"), handle: null, raf: 0, b: null, drag: null, hinted: !!store.get("dc-hinted")};
+const dcLines = b => b.lines || [];
+const dcId = (b, i) => { const l = dcLines(b)[i] || {}, pl = P["lines." + b._pid] || []; return String(l.id || "b" + b._pid + "-" + (pl[i] != null ? pl[i] : i)); };
+const dcSt = b => { const st = bs(b); if(!st.dc) st.dc = {at: 0, ans: false}; st.dc.at = Math.min(st.dc.at, dcLines(b).length - 1); return st.dc; };
+const dcPending = b => { const Q = dcSt(b); return !Q.ans || Q.at < dcLines(b).length - 1; };
+function dcNext(b){ const Q = dcSt(b); dcClose(); if(!Q.ans){ Q.ans = true; Q.just = true; } else { Q.at++; Q.ans = false; } render(); keepPlace(); Q.just = false; }
+function dcBack(b){ const Q = dcSt(b); dcClose();
+  if(Q.ans){ Q.ans = false; render(); keepPlace(); return true; }
+  if(Q.at > 0){ Q.at--; Q.ans = true; render(); keepPlace(); return true; } return false; }
+function dcWords(l){ const out = [];
+  String(l.text || "").split(/(\{\{[\s\S]+?\}\})/).forEach(p => { const g = /^\{\{[\s\S]*\}\}$/.test(p), s = g ? p.slice(2, -2) : p;
+    s.split(/\s+/).filter(Boolean).forEach(t => out.push({t, g})); });
+  return out; }
+const dcBare = t => String(t).toLowerCase().replace(/’/g, "'").replace(/[^a-z0-9']/g, "");
+const dcNew = () => ({w: {}, l: {}, k: [], s: {}});
+const dcHas = M => !!M && (Object.keys(M.w || {}).length + Object.keys(M.l || {}).length + (M.k || []).length + Object.keys(M.s || {}).length > 0);
+/* this lesson's marks of line i: in memory, else what this computer kept from the last 4 hours (a reload in the lesson) */
+function dcMarks(b, i){ const id = dcId(b, i); if(DC.mk[id]) return DC.mk[id];
+  const o = DCS.m[id], l = dcLines(b)[i];
+  DC.mk[id] = o && Date.now() - o.t < DC_FRESH && o.x === l.text && o.v ? JSON.parse(JSON.stringify(o.v)) : dcNew();
+  ["w", "l", "s"].forEach(k => { if(!DC.mk[id][k]) DC.mk[id][k] = {}; }); if(!Array.isArray(DC.mk[id].k)) DC.mk[id].k = [];
+  return DC.mk[id]; }
+function dcStore(b){ const Q = dcSt(b), id = dcId(b, Q.at), o = DCS.m[id], l = dcLines(b)[Q.at];
+  if(o && Date.now() - o.t >= DC_FRESH && dcHas(o.v)) DCS.prev[id] = o;   /* the lesson before stays as ↺ Last time */
+  DCS.m[id] = {x: l.text, t: Date.now(), v: dcMarks(b, Q.at)}; dcSave(); }
+function dcLast(b){ const Q = dcSt(b), id = dcId(b, Q.at), x = dcLines(b)[Q.at].text, o = DCS.m[id], p = DCS.prev[id];
+  if(o && Date.now() - o.t >= DC_FRESH && o.x === x && dcHas(o.v)) return o;
+  if(p && p.x === x && dcHas(p.v)) return p; return null; }
+/* the data's ready marks: "at" = a word ("was", "it#2" = its second "it"), its letters ("get:t" — the last t), or two words ("get|into") */
+function dcPresets(l, W){ const P = {}, K = [];
+  const find = w => { const m = String(w).match(/^(.*?)(?:#(\d+))?$/), name = dcBare(m[1]), nth = +(m[2] || 1); let c = 0;
+    for(let i = 0; i < W.length; i++) if(dcBare(W[i].t) === name && ++c === nth) return i; return -1; };
+  (l.marks || []).forEach(x => { const at = String(x.at || ""), mk = String(x.mark || "");
+    if(at.includes("|")){ const [a, z] = at.split("|").map(dcBare); for(let i = 0; i < W.length - 1; i++) if(dcBare(W[i].t) === a && dcBare(W[i + 1].t) === z){ K.push(i); break; } return; }
+    const [w, lt] = at.split(":"), i = find(w); if(i < 0) return; const p = P[i] = P[i] || {w: null, l: {}, s: {}};
+    if(lt){ const j = W[i].t.toLowerCase().lastIndexOf(lt.toLowerCase()); if(j < 0) return;
+      if(mk === "sounds") p.s[i + "." + j + "." + lt.length] = String(x.say || ""); else for(let q = 0; q < lt.length; q++) p.l[i + "." + (j + q)] = mk; }
+    else if(mk === "sounds") p.s[String(i)] = String(x.say || ""); else if(mk !== "link") p.w = mk; });
+  return {P, K}; }
+/* a tap on a word with a ready mark that isn't on yet → it goes on (true); else the panel opens */
+function dcPreset(b, i){ const Q = dcSt(b), l = dcLines(b)[Q.at], p = dcPresets(l, dcWords(l)).P[i], M = dcMarks(b, Q.at); if(!p) return false;
+  const miss = (p.w && M.w[i] !== p.w) || Object.entries(p.l).some(([k, v]) => M.l[k] !== v) || Object.entries(p.s).some(([k, v]) => M.s[k] !== v);
+  if(!miss) return false;
+  if(p.w){ M.w[i] = p.w; DC.fresh = "w" + i; } Object.assign(M.l, p.l); Object.assign(M.s, p.s);
+  if(!p.w){ const k = Object.keys(p.l)[0]; DC.fresh = k ? "l" + k : "s" + Object.keys(p.s)[0]; }
+  DC.freshAll = [].concat(Object.keys(p.l).map(k => "l" + k), Object.keys(p.s).map(k => "s" + k));
+  dcStore(b); dcPaint(b); return true; }
+/* ---- the line ---- */
+const dcCharHTML = (c, i, j, M) => { const m = M.l[i + "." + j], k = "l" + i + "." + j, isL = /[A-Za-z0-9'’]/.test(c);
+  return `<span class="dl${m ? " m-" + m : ""}${dcIsFresh(k) ? " nw" : ""}"${isL ? ` data-dl="${i}.${j}"` : ""}>${esc(c)}</span>`; };
+const dcIsFresh = k => DC.fresh === k || (DC.freshAll || []).includes(k);
+function dcWordHTML(w, i, M, ans){
+  const chars = [...w.t], sayAt = {}; let h = "", j = 0;
+  Object.entries(M.s).forEach(([k, v]) => { const p = k.split("."); if(p.length === 3 && +p[0] === i) sayAt[+p[1]] = [+p[2], v, k]; });
+  while(j < chars.length){
+    if(sayAt[j]){ const [n, v, k] = sayAt[j]; h += `<span class="dsay${dcIsFresh("s" + k) ? " nw" : ""}"><span class="dsay-t">${esc(v)}</span>${chars.slice(j, j + n).map((c, q) => dcCharHTML(c, i, j + q, M)).join("")}</span>`; j += n; continue; }
+    h += dcCharHTML(chars[j], i, j, M); j++; }
+  const ws = M.s[String(i)], wm = M.w[i];
+  if(ws != null) h = `<span class="dsay${dcIsFresh("s" + i) ? " nw" : ""}"><span class="dsay-t">${esc(ws)}</span>${h}</span>`;
+  const cls = ["dw", wm ? "m-" + wm : "", dcIsFresh("w" + i) ? "nw" : "", DC.letters === i ? "lt" : "", DC.pan && DC.pan.i === i && DC.pan.l == null ? "sel" : "", ans && w.g ? "gw" : ""].filter(Boolean).join(" ");
+  return `<span class="${cls}" data-dw="${i}">${h}</span>`; }
+function dcLineInner(b){
+  const Q = dcSt(b), l = dcLines(b)[Q.at], W = dcWords(l), M = dcMarks(b, Q.at); let h = "", cloud = false;
+  W.forEach((w, i) => {
+    if(!Q.ans && w.g){ if(!cloud) h += (i ? `<span class="dj"> </span>` : "") + `<span class="dc-cloud" role="img" aria-label="missing words"><span>☁</span></span>`; cloud = true; return; }
+    cloud = false;
+    if(i) h += Q.ans ? `<span class="dj${M.k.includes(i - 1) ? " on" : ""}" data-dj="${i - 1}" title="Link these two words"> </span>` : `<span class="dj"> </span>`;
+    h += Q.ans ? dcWordHTML(w, i, M, Q.just) : `<span class="dw">${esc(w.t)}</span>`; });
+  return `<p class="dc-line${Q.ans && Q.just ? " just" : ""}" data-dcline>${h}</p><svg class="dc-arcs" aria-hidden="true"></svg>${Q.ans ? dcPanHTML(b) : ""}`; }
+function dcPanHTML(b){ const P = DC.pan; if(!P) return ""; const Q = dcSt(b), M = dcMarks(b, Q.at), W = dcWords(dcLines(b)[Q.at]);
+  if(P.say != null) return `<div class="dc-pan say" data-dcpan><span class="dp-l">sounds like</span><input class="dp-in" data-dcsayin value="${esc(P.say)}" maxlength="24" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="How it sounds"><button class="dp-b ok" data-dcsayok title="Enter">✓</button></div>`;
+  const cur = P.l != null ? M.l[P.i + "." + P.l] : M.w[P.i], bt = (k, lbl, key, t) => `<button class="dp-b${cur === k ? " on" : ""}" data-dcmk="${k}" title="${t} (${key})">${lbl}</button>`;
+  const lettersOk = P.l == null && W[P.i] && [...W[P.i].t].filter(c => /[A-Za-z]/.test(c)).length > 1;
+  return `<div class="dc-pan" data-dcpan role="toolbar" aria-label="Mark ${P.l != null ? "this letter" : "this word"}">${bt("grey", '<span class="pv-grey">grey</span>', "G", "Hard to hear")}${bt("strike", '<span class="pv-gone">gone</span>', "S", "It disappears")}${lettersOk ? `<button class="dp-b" data-dcletters title="Mark single letters (L)"><span class="pv-abc">a·b·c</span></button>` : ""}<button class="dp-b" data-dcsay title="How it sounds — small, above (W)"><span class="pv-say">ə</span> sounds like</button>${bt("strong", '<b class="pv-strong">strong</b>', "B", "Full, stressed")}<button class="dp-b" data-dcundo title="Take the marks away (⌫)">↺</button></div>`; }
+function dcClose(){ DC.pan = null; DC.letters = null; }
+function dcPanPlace(){ const pan = document.querySelector("#main [data-dcpan]"), box = document.querySelector("#main .dc-linebox"); if(!pan || !box || !DC.pan) return;
+  const el = DC.pan.l != null ? box.querySelector(`[data-dl="${DC.pan.i}.${DC.pan.l}"]`) : box.querySelector(`[data-dw="${DC.pan.i}"]`); if(!el) return;
+  const r = el.getBoundingClientRect(), R = box.getBoundingClientRect(), pw = pan.offsetWidth, ph = pan.offsetHeight;
+  let x = r.left + r.width / 2 - R.left - pw / 2; x = Math.max(8 - R.left, Math.min(x, innerWidth - 8 - R.left - pw));   /* inside the screen (a phone too) */
+  let y = r.top - R.top - ph - 10; if(r.top - ph - 10 < 4) y = r.bottom - R.top + 8;
+  pan.style.left = x + "px"; pan.style.top = y + "px";
+  const inp = pan.querySelector("[data-dcsayin]"); if(inp){ inp.focus(); inp.select(); } }
+function dcArcs(){ const box = document.querySelector("#main .dc-linebox"), svg = box && box.querySelector(".dc-arcs"); if(!svg) return;
+  const b = DC.b; if(!b) return; const Q = dcSt(b); if(!Q.ans){ svg.innerHTML = ""; return; }
+  const M = dcMarks(b, Q.at), R = box.getBoundingClientRect(); let h = "";
+  M.k.forEach(k => { const a = [...box.querySelectorAll(`[data-dw="${k}"] .dl`)].pop(), z = box.querySelector(`[data-dw="${k + 1}"] .dl`); if(!a || !z) return;
+    const ra = a.getBoundingClientRect(), rz = z.getBoundingClientRect(); if(Math.abs(ra.top - rz.top) > 4) return;   /* the two words on two rows: no arc */
+    const x1 = ra.left + ra.width * .55 - R.left, x2 = rz.left + rz.width * .45 - R.left, y = Math.max(ra.bottom, rz.bottom) - R.top - ra.height * .08, d = Math.min(ra.height * .32, Math.max(9, (x2 - x1) * .45));
+    h += `<path class="${dcIsFresh("k" + k) ? "nw" : ""}" d="M ${x1.toFixed(1)} ${y.toFixed(1)} Q ${((x1 + x2) / 2).toFixed(1)} ${(y + d * 2).toFixed(1)} ${x2.toFixed(1)} ${y.toFixed(1)}"/>`; });
+  svg.innerHTML = h;
+  if(!calm()) svg.querySelectorAll("path.nw").forEach(p => { const L = p.getTotalLength(); p.style.strokeDasharray = L; p.style.strokeDashoffset = L; p.getBoundingClientRect(); p.style.transition = "stroke-dashoffset .5s cubic-bezier(.3,.7,.4,1)"; p.style.strokeDashoffset = 0; }); }
+function dcPaint(b){ const box = document.querySelector("#main .dc-linebox"); if(!box) return;
+  box.innerHTML = dcLineInner(b); dcArcs(); dcPanPlace(); DC.fresh = null; DC.freshAll = null;
+  const t = document.querySelector("#main [data-dctools]"); if(t) t.outerHTML = dcToolsHTML(b);
+  const hint = document.querySelector("#main .dc-hint"); if(hint && DC.hinted) hint.remove(); }
+function dcToolsHTML(b){ const Q = dcSt(b), has = dcHas(dcMarks(b, Q.at)), last = Q.ans && !has ? dcLast(b) : null;
+  return `<span class="dc-tools" data-dctools>${Q.ans && has ? `<button class="btn slim" data-dcclear title="Take all the marks off this line">🧹 Clear</button>` : ""}${last ? `<button class="btn slim" data-dclast title="The marks this line had last time">↺ Last time (${new Date(last.t).toLocaleDateString("en-GB", {day: "numeric", month: "short"})})</button>` : ""}<button class="btn slim quiet" data-dccopy title="The lines with their marks and plays, for the debrief">📋 Copy analysis</button></span>`; }
+/* ---- the card ---- */
+function decodeHTML(b){
+  const Q = dcSt(b), l = dcLines(b)[Q.at], n = dcLines(b).length, pic = DC.pic && DC.url && DC.m && DC.m.videoWidth > 0;
+  const dots = n > 1 ? `<span class="dc-dots" role="group" aria-label="Lines">${dcLines(b).map((_, k) => `<button class="${k === Q.at ? "on" : ""}" data-dcgo="${k}" ${k === Q.at ? `aria-current="step"` : ""} aria-label="Line ${k + 1}">${k + 1}</button>`).join("")}</span>` : "";
+  const hint = Q.ans && !DC.hinted ? `<p class="dc-hint">Tap a word to mark it · tap the space between two words to link them</p>` : "";
+  return `<div class="dc${Q.ans ? " ans" : ""}${pic ? " pic" : ""}" data-dc>
+    <div class="dc-top"><span class="dc-n">${esc(b.title || "Line")} <b>${Q.at + 1}</b> of ${n}</span>${dots}${dcToolsHTML(b)}</div>
+    <div class="dc-main"><div class="dc-text">${l.before ? `<p class="dc-ctx">${esc(l.before)}</p>` : ""}<div class="dc-linebox">${dcLineInner(b)}</div>${l.after ? `<p class="dc-ctx">${esc(l.after)}</p>` : ""}${hint}</div>${pic ? `<div class="dc-vid" data-dcvid></div>` : ""}</div>
+    <div class="dc-plbox" data-dcplayer>${dcPlayerHTML(b)}</div></div>`; }
+/* ---- the player ---- */
+const dcT = s => { const p = String(s).trim().split(":").map(Number); return !p.length || p.some(x => isNaN(x)) ? null : p.reduce((a, x) => a * 60 + x, 0); };
+const dcFmt = t => { t = Math.max(0, t); const m = Math.floor(t / 60), s = t - m * 60; return m + ":" + (s < 10 ? "0" : "") + s.toFixed(2); };
+const dcFmtS = t => { const m = Math.floor(t / 60), s = Math.round((t - m * 60) * 10) / 10; return m + ":" + (s < 10 ? "0" : "") + (s % 1 ? s.toFixed(1) : s); };
+function dcClip(b, i){ const id = dcId(b, i), c = DCS.clips[id] || dcLines(b)[i].clip; if(!c) return null;
+  const [a, z] = String(c).split(/\s*[-–—]\s*(?=\d)/), s = dcT(a), e = dcT(z); return s != null && e != null && e > s ? {s, e} : null; }
+const dcPlays = (b, i) => (DCS.plays[dcId(b, i)] || []).filter(p => Date.now() - p.t < DC_FRESH);
+function dcWinFor(b){ const Q = dcSt(b), c = dcClip(b, Q.at), D0 = DC.dur || 0;
+  if(c){ DC.win = [Math.max(0, c.s - 3), D0 ? Math.min(D0, c.e + 3) : c.e + 3]; DC.sel = {s: c.s, e: c.e}; DC.cur = c.s; }
+  else { DC.win = [0, D0 ? Math.min(D0, 12) : 12]; DC.sel = null; DC.cur = 0; }
+  if(DC.win[1] - DC.win[0] < 1) DC.win[1] = DC.win[0] + 1; }
+function dcPlayerHTML(b){
+  const Q = dcSt(b), n = dcPlays(b, Q.at).length;
+  if(!DC.url){ const again = DC.handle ? `<button class="btn primary" data-dcreopen>▶ Open ${esc(DC.handle.name)} again</button>` : "";
+    return `<div class="dc-pl nofile">${again}<button class="btn${again ? " slim" : " primary"}" data-dcopen>📂 ${again ? "Another file" : "Open the scene file"}</button><span class="dc-note">The video plays from this computer — nothing is uploaded.</span></div>`; }
+  const msg = DC.wErr === "big" ? "This file is too big for the waveform — the line still plays." : DC.wErr ? "This browser can't draw this file's waveform — the line still plays." : DC.wBusy ? "Drawing the waveform…" : "";
+  const c = dcClip(b, Q.at), selTxt = DC.sel ? `${dcFmt(DC.sel.s)} – ${dcFmt(DC.sel.e)}` : "", pinOk = DC.sel && DC.sel.e - DC.sel.s > .15 && !(c && Math.abs(c.s - DC.sel.s) < .02 && Math.abs(c.e - DC.sel.e) < .02);
+  return `<div class="dc-pl"><div class="dc-wavebox"><canvas class="dc-wave" data-dcwave aria-label="The waveform: click to put the cursor, drag to select, Space to play"></canvas>${msg ? `<span class="dc-wmsg">${msg}</span>` : ""}<span class="dc-cnt${n ? "" : " zero"}" data-dccnt title="Plays of this line in this lesson">▶ ${n}</span></div>
+    <div class="dc-ctl"><button class="btn slim primary dc-play" data-dcplay>${DC.playing ? "■ Stop" : "▶ Play"}<kbd>Space</kbd></button><span class="dc-seltx" data-dcseltx>${selTxt}</span>${pinOk ? `<button class="btn slim quiet" data-dcpin title="Keep this piece as the line's time (it goes into 📋 Copy analysis)">📌 Line's time</button>` : ""}<span class="dc-sp"></span>${DC.m && DC.m.videoWidth > 0 ? `<button class="btn slim quiet" data-dcpic aria-pressed="${DC.pic}" title="Show the video above the waveform">🎬 Picture</button>` : ""}<button class="btn slim quiet dc-file" data-dcopen title="Open another file">📂 ${esc(DC.name.length > 26 ? DC.name.slice(0, 24) + "…" : DC.name)}</button></div></div>`; }
+function dcPlayerPaint(){ const b = DC.b, box = document.querySelector("#main [data-dcplayer]"); if(!b || !box) return; box.innerHTML = dcPlayerHTML(b); dcWireWave(b); dcDraw(); }
+function dcCtl(){ const x = document.querySelector("#main [data-dcplay]"); if(x) x.innerHTML = `${DC.playing ? "■ Stop" : "▶ Play"}<kbd>Space</kbd>`; }
+function dcMedia(){ if(DC.m) return DC.m;
+  const v = document.createElement("video"); v.className = "dc-media"; v.playsInline = true; v.preload = "auto"; v.setAttribute("aria-hidden", "true"); document.body.appendChild(v); DC.m = v;
+  v.addEventListener("ended", () => { DC.playing = false; DC.stopAt = null; dcDraw(); dcCtl(); });
+  v.addEventListener("loadedmetadata", () => { DC.dur = v.duration || 0; if(DC.b){ const Q = dcSt(DC.b); DC.winFor = dcId(DC.b, Q.at); dcWinFor(DC.b); render(); } });
+  return v; }
+function dcPlace(){ const v = DC.m; if(!v) return; const ph = document.querySelector("#main [data-dcvid]");
+  if(!ph || !DC.b){ v.classList.remove("on"); return; }
+  const r = ph.getBoundingClientRect(); Object.assign(v.style, {left: r.left + scrollX + "px", top: r.top + scrollY + "px", width: r.width + "px", height: r.height + "px"}); v.classList.add("on"); }
+/* the file: Chrome / Edge remember it (its handle, kept on this computer) and bring it back with one click; other browsers ask again */
+function dcDB(){ return new Promise((ok, no) => { if(!window.indexedDB) return no(new Error("no idb")); const r = indexedDB.open("olya-decode", 1);
+  r.onupgradeneeded = () => r.result.createObjectStore("kv"); r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error); }); }
+async function dcGet(k){ try{ const db = await dcDB(); return await new Promise(ok => { const q = db.transaction("kv").objectStore("kv").get(k); q.onsuccess = () => ok(q.result); q.onerror = () => ok(null); }); }catch(e){ return null; } }
+async function dcPut(k, v){ try{ const db = await dcDB(); await new Promise(ok => { const tx = db.transaction("kv", "readwrite"); tx.objectStore("kv").put(v, k); tx.oncomplete = ok; tx.onerror = ok; tx.onabort = ok; }); }catch(e){} }
+async function dcOpen(){
+  if(window.showOpenFilePicker){
+    let h; try{ [h] = await showOpenFilePicker({id: "decode", types: [{description: "Video or sound", accept: {"video/*": [".mp4", ".m4v", ".mov", ".mkv", ".webm"], "audio/*": [".mp3", ".m4a", ".aac", ".wav", ".ogg", ".opus", ".flac"]}}]}); }catch(e){ return; }
+    DC.handle = h; dcPut("handle", h); try{ dcUse(await h.getFile()); }catch(e){} return; }
+  const inp = document.createElement("input"); inp.type = "file"; inp.accept = "video/*,audio/*,.mkv"; inp.style.display = "none"; document.body.appendChild(inp);
+  inp.addEventListener("change", () => { if(inp.files && inp.files[0]) dcUse(inp.files[0]); inp.remove(); }); inp.click(); }
+async function dcReopen(){ const h = DC.handle; if(!h) return dcOpen();
+  try{ let p = h.queryPermission ? await h.queryPermission({mode: "read"}) : "granted"; if(p !== "granted" && h.requestPermission) p = await h.requestPermission({mode: "read"});
+    if(p === "granted") dcUse(await h.getFile()); }catch(e){ DC.handle = null; dcOpen(); } }
+function dcUse(f){ dcStop(false); if(DC.url) URL.revokeObjectURL(DC.url);
+  DC.url = URL.createObjectURL(f); DC.name = f.name; DC.peaks = null; DC.wErr = ""; DC.dur = 0;
+  const m = dcMedia(); m.src = DC.url; m.load(); dcPeaks(f); render(); }
+async function dcPeaks(f){ const key = "peaks|" + f.name + "|" + f.size + "|" + f.lastModified, c = await dcGet(key);
+  if(c && c.max){ DC.peaks = c; dcPlayerPaint(); return; }
+  if(f.size > DC_MAX){ DC.wErr = "big"; dcPlayerPaint(); return; }
+  DC.wBusy = true; dcPlayerPaint();
+  try{ const buf = await f.arrayBuffer(), Ctx = window.OfflineAudioContext || window.webkitOfflineAudioContext, ac = new Ctx(1, 1, 8000);
+    const ab = await new Promise((ok, no) => { const p = ac.decodeAudioData(buf, ok, no); if(p && p.then) p.then(ok, no); });
+    DC.peaks = dcMakePeaks(ab); dcPut(key, DC.peaks); }
+  catch(e){ DC.wErr = "decode"; }
+  DC.wBusy = false; if(DC.name === f.name) dcPlayerPaint(); }
+function dcMakePeaks(ab){ const n = Math.ceil(ab.duration * DC_RATE), min = new Int8Array(n), max = new Int8Array(n), chs = [];
+  for(let c = 0; c < ab.numberOfChannels; c++) chs.push(ab.getChannelData(c));
+  const per = ab.sampleRate / DC_RATE, len = chs[0].length;
+  for(let i = 0; i < n; i++){ let lo = 0, hi = 0; const a = Math.floor(i * per), z = Math.min(len, Math.floor((i + 1) * per));
+    for(let s = a; s < z; s++){ let v = 0; for(let c = 0; c < chs.length; c++) v += chs[c][s]; v /= chs.length; if(v < lo) lo = v; if(v > hi) hi = v; }
+    min[i] = Math.max(-127, Math.round(lo * 127)); max[i] = Math.min(127, Math.round(hi * 127)); }
+  return {rate: DC_RATE, n, min, max, dur: ab.duration}; }
+function dcDraw(){
+  const cv = document.querySelector("#main canvas[data-dcwave]"); if(!cv || !DC.win) return;
+  const W = Math.max(50, cv.clientWidth), H = Math.max(40, cv.clientHeight), r = devicePixelRatio || 1;
+  if(cv.width !== Math.round(W * r) || cv.height !== Math.round(H * r)){ cv.width = Math.round(W * r); cv.height = Math.round(H * r); }
+  const g = cv.getContext("2d"); g.setTransform(r, 0, 0, r, 0, 0); g.clearRect(0, 0, W, H);
+  const cs = getComputedStyle(cv), col = v => cs.getPropertyValue(v).trim() || "#888";
+  const [w0, w1] = DC.win, X = t => (t - w0) / (w1 - w0) * W, RH = 18, WH = H - RH, mid = WH / 2;
+  g.fillStyle = col("--dc-wbg"); g.fillRect(0, 0, W, WH);
+  const c = DC.b ? dcClip(DC.b, dcSt(DC.b).at) : null; if(c){ g.fillStyle = col("--dc-clip"); g.fillRect(X(c.s), 0, X(c.e) - X(c.s), WH); }
+  if(DC.sel){ g.fillStyle = col("--dc-sel"); g.fillRect(X(DC.sel.s), 0, Math.max(1, X(DC.sel.e) - X(DC.sel.s)), WH); }
+  const pk = DC.peaks; g.fillStyle = col("--dc-wave");
+  if(pk){ const a0 = Math.max(0, Math.floor(w0 * pk.rate)), a1 = Math.min(pk.n, Math.ceil(w1 * pk.rate)); let top = 6;
+    for(let i = a0; i < a1; i++){ if(pk.max[i] > top) top = pk.max[i]; if(-pk.min[i] > top) top = -pk.min[i]; }
+    const amp = (WH / 2 - 3) / top;
+    for(let x = 0; x < W; x++){ const a = Math.floor((w0 + x / W * (w1 - w0)) * pk.rate), z = Math.max(a + 1, Math.floor((w0 + (x + 1) / W * (w1 - w0)) * pk.rate)); let lo = 0, hi = 0;
+      for(let i = Math.max(0, a); i < Math.min(pk.n, z); i++){ if(pk.min[i] < lo) lo = pk.min[i]; if(pk.max[i] > hi) hi = pk.max[i]; }
+      g.fillRect(x, mid - hi * amp, 1, Math.max(1, (hi - lo) * amp)); } }
+  else g.fillRect(0, mid, W, 1);
+  if(DC.sel){ g.fillStyle = col("--dc-edge"); g.fillRect(X(DC.sel.s) - 1, 0, 2, WH); g.fillRect(X(DC.sel.e) - 1, 0, 2, WH); }
+  g.fillStyle = col("--dc-tick"); g.font = "600 11px system-ui, sans-serif"; g.textBaseline = "alphabetic";
+  const span = w1 - w0, step = span > 60 ? 10 : span > 24 ? 5 : span > 9 ? 1 : span > 3 ? .5 : .1;
+  for(let t = Math.ceil(w0 / step - 1e-6) * step; t <= w1 + 1e-6; t += step){ const x = X(t); g.fillRect(Math.round(x), WH, 1, 5); if(x < W - 34) g.fillText(dcFmtS(t), Math.round(x) + 3, H - 3); }
+  g.fillStyle = col("--dc-cur"); g.fillRect(Math.round(X(DC.cur)), 0, 1, WH);
+  if(DC.playing && DC.m){ g.fillStyle = col("--dc-head"); g.fillRect(Math.round(X(DC.m.currentTime)) - 1, 0, 2, WH); } }
+function dcWireWave(b){ const cv = document.querySelector("#main canvas[data-dcwave]"); if(!cv || cv._w) return; cv._w = 1;
+  const tAt = e => { const r = cv.getBoundingClientRect(), [w0, w1] = DC.win; return Math.max(0, Math.min(DC.dur || w1, w0 + (e.clientX - r.left) / r.width * (w1 - w0))); };
+  cv.addEventListener("pointerdown", e => { if(e.button) return; e.preventDefault(); try{ cv.setPointerCapture(e.pointerId); }catch(x){} DC.drag = {t0: tAt(e), x0: e.clientX, moved: false}; });
+  cv.addEventListener("pointermove", e => { const d = DC.drag; if(!d) return; if(Math.abs(e.clientX - d.x0) > 4) d.moved = true;
+    if(d.moved){ const t = tAt(e); DC.sel = {s: Math.min(d.t0, t), e: Math.max(d.t0, t)}; dcDraw(); const s = document.querySelector("#main [data-dcseltx]"); if(s) s.textContent = `${dcFmt(DC.sel.s)} – ${dcFmt(DC.sel.e)}`; } });
+  const up = e => { const d = DC.drag; DC.drag = null; if(!d) return;
+    if(!d.moved){ const t = tAt(e); if(DC.sel && (t < DC.sel.s || t > DC.sel.e)) DC.sel = null; DC.cur = t; if(DC.playing) dcStop(false); }
+    else { DC.cur = DC.sel.s; if(DC.playing) dcStop(false); }
+    dcPlayerPaint(); };
+  cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", () => { DC.drag = null; });
+  cv.addEventListener("wheel", e => { e.preventDefault(); let [w0, w1] = DC.win; const w = w1 - w0, D0 = DC.dur || Math.max(w1, 12);
+    if(e.ctrlKey || e.altKey || e.metaKey){ const t = tAt(e), nw = Math.max(1, Math.min(Math.max(D0, 1), w * (e.deltaY > 0 ? 1.25 : .8))); w0 = t - (t - w0) * nw / w; w1 = w0 + nw; }
+    else { const dx = (Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY) / cv.clientWidth * w; w0 += dx; w1 += dx; }
+    if(w0 < 0){ w1 -= w0; w0 = 0; } if(DC.dur && w1 > DC.dur){ w0 = Math.max(0, w0 - (w1 - DC.dur)); w1 = DC.dur; }
+    DC.win = [w0, w1]; dcDraw(); }, {passive: false}); }
+function dcFollow(t){ const [w0, w1] = DC.win, w = w1 - w0; if(t > w1 - w * .04 || t < w0){ let a = t - w * .2; if(DC.dur) a = Math.min(a, Math.max(0, DC.dur - w)); DC.win = [Math.max(0, a), Math.max(0, a) + w]; } }
+function dcPlay(b, s, e){ const m = dcMedia(); if(!DC.url) return;
+  DC.stopAt = e; try{ m.currentTime = s; }catch(x){} const p = m.play(); if(p && p.catch) p.catch(() => { DC.playing = false; dcCtl(); });
+  DC.playing = true; const Q = dcSt(b), id = dcId(b, Q.at);
+  (DCS.plays[id] = DCS.plays[id] || []).push({s: +s.toFixed(2), e: e == null ? null : +e.toFixed(2), t: Date.now()}); if(DCS.plays[id].length > 300) DCS.plays[id] = DCS.plays[id].slice(-300); dcSave();
+  const cnt = document.querySelector("#main [data-dccnt]"); if(cnt){ cnt.textContent = "▶ " + dcPlays(b, Q.at).length; cnt.classList.remove("zero"); if(!calm()){ cnt.classList.remove("pop"); void cnt.offsetWidth; cnt.classList.add("pop"); } }
+  dcCtl(); cancelAnimationFrame(DC.raf);
+  const step = () => { if(!DC.playing || !DC.m) return; const t = DC.m.currentTime;
+    if(DC.stopAt != null && t >= DC.stopAt){ DC.m.pause(); DC.playing = false; DC.stopAt = null; dcDraw(); dcCtl(); return; }
+    if(DC.stopAt == null) dcFollow(t); dcDraw(); DC.raf = requestAnimationFrame(step); };
+  DC.raf = requestAnimationFrame(step); }
+function dcStop(keep){ const m = DC.m; if(m && !m.paused){ m.pause(); if(keep) DC.cur = m.currentTime; } DC.playing = false; DC.stopAt = null; cancelAnimationFrame(DC.raf); dcDraw(); dcCtl(); }
+/* Space (and ▶): a piece selected → it plays from its start, every time; nothing selected → play from the cursor, Space again stops */
+function dcSpace(b){ if(!DC.url){ const o = document.querySelector("#main [data-dcreopen], #main [data-dcopen]"); if(o){ o.classList.remove("nudge"); void o.offsetWidth; o.classList.add("nudge"); } return; }
+  if(DC.sel){ dcPlay(b, DC.sel.s, DC.sel.e); return; }
+  if(DC.playing){ dcStop(true); return; }
+  dcPlay(b, DC.cur, null); }
+/* ---- marks ---- */
+function dcMark(b, kind){ const P = DC.pan; if(!P) return; const Q = dcSt(b), M = dcMarks(b, Q.at), key = P.l != null ? P.i + "." + P.l : String(P.i), tab = P.l != null ? M.l : M.w;
+  if(tab[key] === kind) delete tab[key]; else { tab[key] = kind; DC.fresh = (P.l != null ? "l" : "w") + key; }
+  DC.pan = null; if(P.l == null) DC.letters = null; dcHinted(); dcStore(b); dcPaint(b); }
+function dcUndo(b){ const P = DC.pan; if(!P) return; const Q = dcSt(b), M = dcMarks(b, Q.at), i = P.i;
+  if(P.l == null){ delete M.w[i]; delete M.s[String(i)]; Object.keys(M.l).forEach(k => { if(+k.split(".")[0] === i) delete M.l[k]; }); Object.keys(M.s).forEach(k => { if(+k.split(".")[0] === i) delete M.s[k]; }); DC.letters = null; }
+  else { delete M.l[i + "." + P.l]; Object.keys(M.s).forEach(k => { const p = k.split(".").map(Number); if(p.length === 3 && p[0] === i && P.l >= p[1] && P.l < p[1] + p[2]) delete M.s[k]; }); }
+  DC.pan = null; dcStore(b); dcPaint(b); }
+function dcSayOk(b){ const P = DC.pan, inp = document.querySelector("#main [data-dcsayin]"); if(!P || P.say == null) return; const v = (inp ? inp.value : P.say).trim(), Q = dcSt(b), M = dcMarks(b, Q.at);
+  const key = P.l != null ? P.i + "." + P.l + ".1" : String(P.i);
+  if(P.l != null) Object.keys(M.s).forEach(k => { const p = k.split(".").map(Number); if(p.length === 3 && p[0] === P.i && P.l >= p[1] && P.l < p[1] + p[2]) delete M.s[k]; });
+  if(v){ M.s[key] = v; DC.fresh = "s" + key; } else delete M.s[key];
+  DC.pan = null; dcHinted(); dcStore(b); dcPaint(b); }
+function dcHinted(){ if(!DC.hinted){ DC.hinted = true; store.set("dc-hinted", true); } }
+function dcLink(b, k){ const Q = dcSt(b), M = dcMarks(b, Q.at), at = M.k.indexOf(k);
+  if(at > -1) M.k.splice(at, 1); else { M.k.push(k); DC.fresh = "k" + k; }
+  DC.pan = null; DC.letters = null; dcHinted(); dcStore(b); dcPaint(b); }
+/* 📋 the analysis: each line with its marks (as words and in the data's own "marks" form, for the lesson chat) and the plays */
+function dcAt(W, i){ const name = dcBare(W[i].t); let n = 0; for(let q = 0; q <= i; q++) if(dcBare(W[q].t) === name) n++; return W[i].t.replace(/[^A-Za-z0-9'’]/g, "") + (n > 1 ? "#" + n : ""); }
+function dcMarksOut(W, M){ const out = [];
+  Object.entries(M.w).forEach(([i, m]) => out.push({at: dcAt(W, +i), mark: m}));
+  const runs = {}; Object.entries(M.l).forEach(([k, m]) => { const [i, j] = k.split(".").map(Number); (runs[i + "|" + m] = runs[i + "|" + m] || []).push(j); });
+  Object.entries(runs).forEach(([k, js]) => { const [i, m] = k.split("|"); js.sort((a, z) => a - z); let a = js[0], p = js[0];
+    const push = () => out.push({at: dcAt(W, +i) + ":" + [...W[+i].t].slice(a, p + 1).join(""), mark: m}); js.slice(1).forEach(j => { if(j === p + 1){ p = j; return; } push(); a = p = j; }); push(); });
+  M.k.forEach(k => { if(W[k + 1]) out.push({at: W[k].t.replace(/[^A-Za-z0-9'’]/g, "") + "|" + W[k + 1].t.replace(/[^A-Za-z0-9'’]/g, ""), mark: "link"}); });
+  Object.entries(M.s).forEach(([k, v]) => { const p = k.split(".").map(Number); out.push(p.length === 3 ? {at: dcAt(W, p[0]) + ":" + [...W[p[0]].t].slice(p[1], p[1] + p[2]).join(""), mark: "sounds", say: v} : {at: dcAt(W, p[0]), mark: "sounds", say: v}); });
+  return out; }
+const DC_WORD = {grey: "grey", strike: "gone", strong: "strong", link: "link", sounds: "sounds like"};
+function dcCopyText(b){
+  const out = [`🎧 ${D.title} · ${new Date().toLocaleString("en-GB", {day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"})}${DC.name ? " · " + DC.name : ""}`];
+  dcLines(b).forEach((l, i) => { const id = dcId(b, i), W = dcWords(l), M = dcMarks(b, i), pl = dcPlays(b, i), mk = dcMarksOut(W, M);
+    out.push("", `${i + 1} (${id}) ${String(l.text || "").replace(/\{\{|\}\}/g, m => m === "{{" ? "[" : "]")}`);
+    if(mk.length) out.push("   " + mk.map(x => `${DC_WORD[x.mark] || x.mark} ${x.at.replace("|", "‿")}${x.say ? ` → “${x.say}”` : ""}`).join(" · "), `   marks: ${JSON.stringify(mk)}`);
+    else out.push("   no marks");
+    if(pl.length){ const g = {}; pl.forEach(p => { const k = p.e == null ? `from ${dcFmt(p.s)}` : `${dcFmt(p.s)}–${dcFmt(p.e)}`; g[k] = (g[k] || 0) + 1; });
+      out.push(`   ▶ ${pl.length}: ` + Object.entries(g).map(([k, n]) => `${k} ×${n}`).join(", ")); }
+    if(DCS.clips[id]) out.push(`   📌 clip: "${DCS.clips[id]}"`); });
+  return out.join("\n"); }
+/* ---- wiring ---- */
+function wireDecode(b, root){ DC.b = b; const Q = dcSt(b), id = dcId(b, Q.at);
+  if(DC.winFor !== id){ DC.winFor = id; dcStop(false); dcWinFor(b); dcClose(); }
+  const card = root.querySelector("[data-dc]"); if(!card) return;
+  card.addEventListener("click", async e => { const t = e.target, on = q => t.closest(q);
+    let x;
+    if((x = on("[data-dcgo]"))){ dcClose(); Q.at = +x.dataset.dcgo; Q.ans = false; render(); keepPlace(); return; }
+    if(on("[data-dcopen]")){ dcOpen(); return; }
+    if(on("[data-dcreopen]")){ dcReopen(); return; }
+    if(on("[data-dcplay]")){ if(DC.playing && DC.sel){ dcStop(false); return; } dcSpace(b); return; }
+    if(on("[data-dcpin]")){ if(DC.sel){ DCS.clips[id] = dcFmt(DC.sel.s) + "-" + dcFmt(DC.sel.e); dcSave(); dcPlayerPaint(); } return; }
+    if(on("[data-dcpic]")){ DC.pic = !DC.pic; store.set("dc-pic", DC.pic); render(); return; }
+    if(on("[data-dccopy]")){ const btn = on("[data-dccopy]"), ok = await copyText(dcCopyText(b)); btn.textContent = ok ? "Copied ✓" : "Couldn't copy"; setTimeout(() => { if(btn.isConnected) btn.textContent = "📋 Copy analysis"; }, 2200); return; }
+    if(on("[data-dcclear]")){ const id2 = dcId(b, Q.at); DC.mk[id2] = dcNew(); dcClose(); dcStore(b); dcPaint(b); return; }
+    if(on("[data-dclast]")){ const L = dcLast(b); if(L){ const M = JSON.parse(JSON.stringify(L.v)); DC.mk[id] = M; DC.freshAll = [].concat(Object.keys(M.w).map(k => "w" + k), Object.keys(M.l).map(k => "l" + k), M.k.map(k => "k" + k), Object.keys(M.s).map(k => "s" + k)); dcStore(b); dcPaint(b); } return; }
+    if(!Q.ans) return;
+    if((x = on("[data-dcmk]"))){ dcMark(b, x.dataset.dcmk); return; }
+    if(on("[data-dcundo]")){ dcUndo(b); return; }
+    if(on("[data-dcletters]")){ DC.letters = DC.pan.i; DC.pan = null; dcPaint(b); return; }
+    if(on("[data-dcsay]")){ const P = DC.pan, M = dcMarks(b, Q.at); P.say = P.l != null ? (Object.entries(M.s).find(([k]) => { const p = k.split(".").map(Number); return p.length === 3 && p[0] === P.i && P.l >= p[1] && P.l < p[1] + p[2]; }) || [0, ""])[1] : M.s[String(P.i)] || ""; dcPaint(b); return; }
+    if(on("[data-dcsayok]")){ dcSayOk(b); return; }
+    if(on("[data-dcpan]")) return;
+    if((x = on("[data-dj]"))){ dcLink(b, +x.dataset.dj); return; }
+    const dw = on("[data-dw]");
+    if(dw){ const i = +dw.dataset.dw, dl = on("[data-dl]");
+      if(DC.letters === i && dl){ const j = +dl.dataset.dl.split(".")[1]; DC.pan = DC.pan && DC.pan.i === i && DC.pan.l === j ? null : {i, l: j}; dcPaint(b); return; }
+      if(dcPreset(b, i)){ DC.pan = null; DC.letters = null; dcHinted(); return; }
+      DC.pan = DC.pan && DC.pan.i === i && DC.pan.l == null ? null : {i, l: null}; if(DC.letters !== i) DC.letters = null; dcPaint(b); return; }
+    if(DC.pan || DC.letters != null){ dcClose(); dcPaint(b); } });
+  card.addEventListener("keydown", e => { if(e.target.matches && e.target.matches("[data-dcsayin]")){ if(e.key === "Enter"){ e.preventDefault(); dcSayOk(b); } if(e.key === "Escape"){ e.preventDefault(); dcClose(); dcPaint(b); } } });
+  dcArcs(); dcPanPlace(); dcWireWave(b); dcDraw(); requestAnimationFrame(() => { dcArcs(); dcPlace(); dcDraw(); });
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if(DC.b === b){ dcArcs(); dcPanPlace(); } });
+  DC.fresh = null; DC.freshAll = null; }
+function dcAfter(b){ if(b && b.kind === "decode"){ dcPlace(); return; } if(DC.b){ dcStop(false); DC.b = null; dcClose(); } dcPlace(); }
+addEventListener("keydown", e => { const b = DC.b; if(!b || !document.querySelector("#main [data-dc]")) return;
+  if(e.target && e.target.closest && e.target.closest("input, textarea, select, [contenteditable]")) return;
+  if(e.ctrlKey || e.metaKey || e.altKey) return;
+  if(e.key === " "){ e.preventDefault(); e.stopImmediatePropagation(); if(!e.repeat) dcSpace(b); return; }
+  if(e.key === "Escape" && (DC.pan || DC.letters != null)){ e.preventDefault(); dcClose(); dcPaint(b); return; }
+  if(!DC.pan || DC.pan.say != null || !dcSt(b).ans) return;
+  const k = e.key.toLowerCase(), map = {g: "grey", s: "strike", b: "strong"};
+  if(map[k]){ e.preventDefault(); dcMark(b, map[k]); return; }
+  if(k === "l" && DC.pan.l == null){ e.preventDefault(); DC.letters = DC.pan.i; DC.pan = null; dcPaint(b); return; }
+  if(k === "w"){ e.preventDefault(); const sb = document.querySelector("#main [data-dcsay]"); if(sb) sb.click(); return; }
+  if(e.key === "Backspace" || e.key === "Delete"){ e.preventDefault(); dcUndo(b); } }, true);
+addEventListener("keyup", e => { if(e.key === " " && DC.b && document.querySelector("#main [data-dc]") && !(e.target && e.target.closest && e.target.closest("input, textarea"))) e.preventDefault(); }, true);
+addEventListener("resize", () => { clearTimeout(dcAfter.t); dcAfter.t = setTimeout(() => { if(!DC.b) return; dcArcs(); dcPanPlace(); dcDraw(); dcPlace(); }, 100); });
+if(BLOCKS.some(b => b.kind === "decode")) dcGet("handle").then(h => { if(h && h.getFile){ DC.handle = h; if(DC.b && !DC.url) dcPlayerPaint(); } });
 /* ---------- the page ---------- */
 function blockHTML(b){
   const body = b.kind === "text" ? textHTML(b) : b.kind === "model" ? modelHTML(b) : b.kind === "write" ? writeHTML(b) : b.kind === "say" ? sayHTML(b) : b.kind === "postits" ? postitsHTML(b) : b.kind === "council" ? councilHTML(b)
     : b.kind === "picture" ? pictureHTML(b) : b.kind === "calendars" ? calendarsHTML(b) : b.kind === "tool" ? toolHTML(b)
     : b.kind === "questions" ? questionsHTML(b) : b.kind === "cards" ? groupDotsHTML(b) + `<div class="deck">${cardsHTML(b)}</div>` : b.kind === "scenes" ? scenesHTML(b)
     : b.kind === "fix" ? fixHTML(b) : b.kind === "sort" ? sortHTML(b) : b.kind === "game" && b.piece === "secret" ? secretHTML(b)
-    : b.kind === "listen" ? listenHTML(b) : b.kind === "box" ? boxBlockHTML(b) : b.kind === "mix" ? mixHTML(b) : b.kind === "game" && b.piece === "wheel" ? groupDotsHTML(b) + gamePeekHTML(b) + wheelHTML(b) : b.kind === "game" && ROLLS.includes(b.piece) ? rollHTML(b)
+    : b.kind === "listen" ? listenHTML(b) : b.kind === "decode" ? decodeHTML(b) : b.kind === "box" ? boxBlockHTML(b) : b.kind === "mix" ? mixHTML(b) : b.kind === "game" && b.piece === "wheel" ? groupDotsHTML(b) + gamePeekHTML(b) + wheelHTML(b) : b.kind === "game" && ROLLS.includes(b.piece) ? rollHTML(b)
     : b.kind === "game" ? (b.piece === "memo" ? "" : groupDotsHTML(b) + (NEWG.includes(b.piece) || b.piece === "tictactoe" ? gamePeekHTML(b) : "")) + (b.rule ? `<p class="g-rule">${mk(b.rule)}</p>` : "") + `<div class="fgame${b.piece === "memo" ? " fmemo" : ""} fg-${esc(b.piece || "ttt")}" data-game="${b._id}"></div>` : "";
   const instr = b.kind === "cards" || b.kind === "questions" ? (b.kind === "questions" ? b.instr : "") : b.kind === "scenes" && sceneAt(b) >= 0 ? (b.street_first === false ? [b.instr, b.task].filter(Boolean).join(" ") : b.task)
-    : b.kind === "game" && b.piece === "secret" ? secInstr(b) : b.kind === "box" && bs(b).shown ? b.instr2 || b.instr : b.kind === "game" && ROLLS.includes(b.piece) && rlIntro(b) ? b.intro.instr || b.instr : b.instr;
+    : b.kind === "game" && b.piece === "secret" ? secInstr(b) : b.kind === "box" && bs(b).shown ? b.instr2 || b.instr : b.kind === "decode" && dcSt(b).ans ? b.instr2 || b.instr : b.kind === "game" && ROLLS.includes(b.piece) && rlIntro(b) ? b.intro.instr || b.instr : b.instr;
   const tip = S.howto && b.tip ? `<p class="tip">🎓 How it works: ${mk(b.tip)}</p>` : "";
   const how = demoKind(b) ? ` <button class="g-howto" data-gdemo>▶ How to play</button>` : "";   /* tools 21 */
   const ledI = instr && instr === b.instr && LEDP["blocks." + b._pos + ".instr"] ? ledBtn("blocks." + b._pos + ".instr") : "";   /* tools 24 */
@@ -1949,7 +2366,7 @@ function gameStep(b){
    the answers — Next first shows them (the gaps, the answer, the card's back, the time on the calendars), the next Next goes on. There is
    no way to jump ahead past the answers; only the stage bubbles on top move freely (for her "move on"). */
 const stepbarHTML = () => `<nav class="stepbar" aria-label="Back and next"><button class="btn" data-back aria-keyshortcuts="ArrowLeft" ${canBack() ? "" : "disabled"}>← Back</button><span class="step-mid">${screenDotsHTML()}${meTeacher() && S.view === "field" && !S.fast ? `<button class="btn slim sd-link" data-sdlink title="Copy a link that opens this screen — for the Zoom chat">🔗 Link</button>` : ""}<span class="step-msg" id="step-msg" aria-live="polite"></span></span>${finBtnHTML()}<button class="btn primary" data-step aria-keyshortcuts="ArrowRight" ${canNext() ? "" : "disabled"}>${nextLabel()}</button></nav>`;
-const nextLabel = () => { const b = !S.intro && !S.fast && S.view === "field" ? curBlock() : null; return b && b.kind === "picture" && b.answer && !bs(b).shown ? "Look at the answers →" : b && isPlay(b) && !gameLive(b) && !(ROLLS.includes(b.piece) && rlIntro(b)) && !isLast() ? "Next task →" : "Next →"; };
+const nextLabel = () => { const b = !S.intro && !S.fast && S.view === "field" ? curBlock() : null; return b && b.kind === "decode" && dcPending(b) ? (dcSt(b).ans ? "Next line →" : "Answer →") : b && b.kind === "picture" && b.answer && !bs(b).shown ? "Look at the answers →" : b && isPlay(b) && !gameLive(b) && !(ROLLS.includes(b.piece) && rlIntro(b)) && !isLast() ? "Next task →" : "Next →"; };
 /* her 15:17: where you are in a stage and how much is left — one numbered circle per screen, between Back and Next; the screens
    already seen can be tapped to go back to them */
 /* tools 28 also (her 4.11 19:33, C1 «Say it naturally»: «первые пять экранов были в whole class, и потом студентам пришлось их прокликивать —
@@ -1971,6 +2388,7 @@ function stepPending(b){
   if(b.kind === "picture" && b.answer) return !st.shown;   /* tools 18: the retell's whole text */
   if(b.kind === "council") return cnPending(b);   /* tools 18: the next subject, then Decide */
   if(b.kind === "fix") return fixPending(b);   /* tools 16 */
+  if(b.kind === "decode") return dcPending(b);   /* tools 32 */
   if(b.kind === "sort") return sortPending(b);   /* tools 30 also (her 7.11 15:11, C1 class view: the sort was the last block and Next stopped after the first adjective) */
   if(b.kind === "game") return gamePending(b) || gameLive(b);
   if(b.kind === "listen") return lisPending(b);   /* tools 26 */   /* tools 25: a game being played is never "done" */
@@ -2022,6 +2440,7 @@ function stepNext(){
   if(b.kind === "game" && b.piece === "secret" && secPending(b)){ secNext(b); return; }   /* the chat's answers → How it works → the game */
   if(b.kind === "game" && ROLLS.includes(b.piece) && rlPending(b)){ rlNext(b); return; }   /* tools 20: the example → Go */
   if(b.kind === "game" && NEWG.includes(b.piece) && ngPending(b)){ ngNext(b); return; }   /* tools 20: an open task → its answer */
+  if(b.kind === "decode" && dcPending(b)){ dcNext(b); return; }   /* tools 32: the answer, then the next line */
   if(b.kind === "sort" && sortPending(b)){ sortNext(b); return; }
   if(b.kind === "game" && gamePending(b)){ st.ttt.shown = true; render(); return; }   /* an open square: Next shows its answer */
   if(b.kind === "game" && gameLive(b)){ gameStep(b); return; }
@@ -2094,6 +2513,7 @@ function stepBack(){
   if(b && b.kind === "listen" && lisSt(b).at > 0){ lisSt(b).at--; render(); keepPlace(); return; }   /* tools 26: the clip before */
   if(b && b.kind === "council" && cnBack(b)) return;   /* the answer → the question, like the slide before */
   if(b && b.kind === "fix" && fixPh(b).ph > 0){ fixPh(b).ph--; render(); return; }   /* tools 16: the screen before */
+  if(b && b.kind === "decode" && dcBack(b)) return;   /* tools 32: the line's question, then the line before with its answer */
   if(b && b.kind === "sort" && sortBack(b)) return;   /* tools 17: the card before, as it was left */
   if(b && b.kind === "game" && b.piece === "secret" && secSt(b).ph > (b.intro ? 0 : 1)){ secSt(b).ph--; render(); return; }
   if(b && b.kind === "game" && ROLLS.includes(b.piece) && b.intro && rlSt(b).ph === "play"){ rlSt(b).ph = "intro"; render(); return; }   /* tools 20: back to the example */
@@ -2159,6 +2579,7 @@ function render(){
   wireStageDrag(main);
   if(S.view === "groups") wireGroups(main); else { paintWriteNotes(); gwPaint(); const sb = main.querySelector("[data-step]"); if(sb) sb.disabled = !canNext(); }
   fitHead(); fitTxPic(true); fitCard(); fitTxPic(); fitPic(); sizeTool();
+  dcAfter(S.view === "field" && !S.intro && !S.fast ? b : null);   /* tools 32: leaving the decoding stops its player */
 }
 /* tools 30: the text's picture under the glossary fills only the room the text leaves: beside the conversation, above Back / Next (at most
    260 px); less than 80 px → no picture on this screen. It never makes the text smaller (fitCard runs without it). A phone: 160 px. */
@@ -2328,6 +2749,7 @@ function wire(root){
   if(b.kind === "mix") wireMix(b, root);
   if(b.kind === "picture" && b.lead) hgMount(b, root.querySelector(`[data-hg="${b._id}"]`));
   if(b.kind === "council") wireCouncil(b, root);
+  if(b.kind === "decode") wireDecode(b, root);   /* tools 32 */
   if(b.kind === "sort") wireSort(b, root);   /* tools 17 */
   if(b.kind === "game" && b.piece === "secret") wireSecret(b, root);
   if(b.kind === "listen") wireListen(b, root);   /* tools 26 */

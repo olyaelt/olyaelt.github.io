@@ -1,0 +1,38 @@
+{
+ "blocks": [
+  {
+   "pid": 0,
+   "sig": "decode listen. what's in the cloud? write it in the chat.",
+   "gone": false
+  }
+ ],
+ "cards": [],
+ "write": [],
+ "lines.0": [
+  {
+   "pid": 0,
+   "sig": "t1",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "t2",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "t3",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "t4",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "t5",
+   "gone": false
+  }
+ ]
+}

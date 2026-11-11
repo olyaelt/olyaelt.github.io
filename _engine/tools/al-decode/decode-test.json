@@ -1,0 +1,21 @@
+{
+ "type": "revision-field",
+ "file": "decode-test",
+ "title": "Decoding — test",
+ "part": "Authentic Listening · a test page for the decoding block (Treliving lines; the times fit any file)",
+ "boxes": {},
+ "stages": [
+  {"label": "🎧 Decoding", "blocks": [
+   {"kind": "decode", "title": "Line",
+    "instr": "Listen. What's in the cloud? Write it in the chat.",
+    "instr2": "What was hard to hear? Why?",
+    "lines": [
+     {"id": "t1", "clip": "0:01.00-0:03.20", "text": "{{I was sitting there}} with Gus one day"},
+     {"id": "t2", "clip": "0:04.00-0:06.00", "before": "And he said:", "text": "yeah you should {{get into business}}", "marks": [{"at": "get|into", "mark": "link"}, {"at": "get:t", "mark": "sounds", "say": "d"}]},
+     {"id": "t3", "clip": "0:07.00-0:09.50", "text": "yeah yeah sure {{what am I}} gonna know about this"},
+     {"id": "t4", "clip": "0:10.50-0:12.00", "text": "{{and that's how}} it started", "marks": [{"at": "and:d", "mark": "strike"}]},
+     {"id": "t5", "clip": "0:13.00-0:16.00", "text": "that just started with that {{little spark}} in there"}
+    ]}
+  ]}
+ ]
+}

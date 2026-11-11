@@ -94,7 +94,7 @@
    "blocks": [
     {
      "kind": "text",
-     "instr": "How do you think the interviewer asks the question? Complete it and type it in the chat. Then watch the start and tap the yellow to check.",
+     "instr": "What exactly do you think the interviewer asks? Complete the question and type it in the chat. Then watch the start and tap the yellow to check.",
      "lines": [
       {
        "s": "Interviewer",
@@ -115,7 +115,7 @@
     },
     {
      "kind": "text",
-     "instr": "Watch. Has each person’s area changed? Then tap the yellow to check, and tell each other two things you remember about each speaker.",
+     "instr": "Watch. Has each person’s area changed? Tap the yellow to check. Then tell the group: what else do you remember about the speakers?",
      "lines": [
       {
        "s": "Stratford-upon-Avon",
@@ -185,11 +185,7 @@
         {
          "b": "these days"
         },
-        " I like to call it Restaurants-upon-Avon, because the whole town is ",
-        {
-         "b": "geared towards"
-        },
-        " the tourist industry. And whereas perhaps ",
+        " I like to call it Restaurants-upon-Avon, because the whole town is geared towards the tourist industry. And whereas perhaps ",
         {
          "b": "when I was growing up"
         },
@@ -292,11 +288,7 @@
         {
          "b": "pretty much the same"
         },
-        ". There’s not been a whole load of changes. I mean, buildings ",
-        {
-         "b": "knocked down"
-        },
-        ", new buildings being built — quite a few new buildings, actually. But generally on the high street as well… different shops, but it’s pretty static… I don’t know. It doesn’t really change that much."
+        ". There’s not been a whole load of changes. I mean, buildings knocked down, new buildings being built — quite a few new buildings, actually. But generally on the high street as well… different shops, but it’s pretty static… I don’t know. It doesn’t really change that much."
        ],
        "img": "speaker-2.jpg"
       },
@@ -647,7 +639,7 @@
         {
          "b": "has changed quite a lot"
         },
-        " — is very different now"
+        " — is quite different now"
        ],
        "ru": "довольно сильно изменился"
       }
@@ -807,9 +799,9 @@
      "instr": "Ask each other. Start your answer with a phrase from the box, then say the rest any way you can.",
      "items": [
       "**1**  **Has the place where you grew up changed much?** ((In what way? What’s one thing that’s different now? Haven’t been back in a while? Say what you’ve heard.))",
-      "**2**  **And the place where you live now — has it changed since you moved there?** ((Never moved? Talk about a place you go to a lot.))"
+      "**2**  **And the place where you live now — has it changed since you moved there? What’s different, and what’s still the same?** ((Never moved? Talk about a place you go to a lot.))"
      ],
-     "fast": "Think of a place you know that has hardly changed. What’s still the same there?",
+     "fast": "Tell your partner about a place you know that has hardly changed. What’s still the same there?",
      "box_state": "gapped"
     }
    ]
@@ -821,7 +813,7 @@
      "kind": "say",
      "instr": "Read. What do the highlighted words have in common? What do we call them?",
      "task": [
-      "Has my hometown changed? Oh, definitely. When I was growing up, it was a quiet little place. These days it’s **a lot busier**, and it’s gotten **much more touristy**. The old market is **fancier** now — and **pricier**, of course. On the plus side, it’s **greener** and **safer** than it used to be. But the traffic’s got **worse**, and the main street feels **less friendly** than it used to."
+      "Has my hometown changed? Oh, definitely. When I was growing up, it was a quiet little place. These days it’s **a lot busier**, and it’s gotten **much more touristy**. The old market is **fancier** now — and **pricier**, of course. On the plus side, it’s **greener** and **safer** than it used to be. But the traffic’s gotten **worse**, and the main street feels **less friendly** than it used to."
      ],
      "answer_title": "Answer",
      "answer": [
@@ -843,8 +835,8 @@
       "**more …** — most other words: more crowded · more expensive · more modern",
       "**both are fine** — quieter / more quiet · livelier / more lively",
       "**irregular** — better · worse",
-      "**a lot / much** + -er: a lot busier — not ~~more busier~~",
-      "going down: **less** + the plain form: less green, less safe — not ~~less greener~~"
+      "**a lot / much** make it stronger: a lot busier · much more touristy — not ~~a lot more busier~~",
+      "**less** + the plain form: less green, less safe — not ~~less greener~~"
      ]
     },
     {
@@ -916,7 +908,7 @@
        "why": "Both are fine: quieter / more quiet."
       },
       {
-       "ctx": "you can’t move on Saturdays",
+       "ctx": "you can hardly move on Saturdays",
        "ru": "crowded",
        "en": "It’s got / gotten a lot **more crowded**.",
        "p": "B",
@@ -924,7 +916,7 @@
        "why": "A long word → more."
       },
       {
-       "ctx": "hardly anyone on the streets after six",
+       "ctx": "nobody’s around after six",
        "ru": "empty",
        "en": "It’s got / gotten a lot **emptier**.",
        "p": "A",
@@ -1049,7 +1041,7 @@
     {
      "kind": "text",
      "cols": 2,
-     "instr": "Can you remember today’s phrases? Use the first letters and the Russian. Take turns: say one phrase each, then tap the yellow to check.",
+     "instr": "Can you remember the phrases from this lesson? Use the first letters and the Russian. Take turns: say one phrase each, then tap the yellow to check.",
      "lines": [
       {
        "h": "HAS IT CHANGED?"
@@ -1439,13 +1431,13 @@
     {
      "kind": "say",
      "box": "BOX",
-     "instr": "At the start of the lesson, you answered this question in the chat. How would you answer it now? Take turns. Try from memory first — stuck? Peek at the box.",
+     "instr": "On 6 November, you answered this question in the chat. How would you answer it now? Take turns. Try from memory first — stuck? Peek at the box.",
      "task": [
       "**1**  Your partner asks: **Has the place where you grew up changed much?** ((Haven’t been back in a while? Say what you’ve heard — or talk about where you live now.))",
       "**2**  Answer, then give details: how it’s changed, how it compares with the past, and what’s still changing.",
       "**3**  Your partner follows up:",
       "**Is that a good thing?** Why (not)? ((— if you don’t say how you feel about it))",
-      "**Where do you hear about it — family, friends, social media?** ((— if you don’t live there now))"
+      "**How do you hear about it — from family, friends, social media?** ((— if you don’t live there now))"
      ],
      "fast": [
       "Without looking at the box, take turns to say a phrase about how a place has changed. How many can you come up with together?",

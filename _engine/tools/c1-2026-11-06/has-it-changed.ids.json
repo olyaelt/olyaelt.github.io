@@ -57,7 +57,7 @@
   },
   {
    "pid": 11,
-   "sig": "text can you remember today’s phrases? use the first letters and the russian. take turns: say one phrase each, then tap the yellow to check.",
+   "sig": "text can you remember the phrases from this lesson? use the first letters and the russian. take turns: say one phrase each, then tap the yellow to check.",
    "gone": false
   },
   {
@@ -72,17 +72,17 @@
   },
   {
    "pid": 14,
-   "sig": "say at the start of the lesson, you answered this question in the chat. how would you answer it now? take turns. try from memory first — stuck? peek at the box.",
+   "sig": "say on 6 november, you answered this question in the chat. how would you answer it now? take turns. try from memory first — stuck? peek at the box.",
    "gone": false
   },
   {
    "pid": 15,
-   "sig": "text how do you think the interviewer asks the question? complete it and type it in the chat. then watch the start and tap the yellow to check.",
+   "sig": "text what exactly do you think the interviewer asks? complete the question and type it in the chat. then watch the start and tap the yellow to check.",
    "gone": false
   },
   {
    "pid": 16,
-   "sig": "text watch. has each person’s area changed? then tap the yellow to check, and tell each other two things you remember about each speaker.",
+   "sig": "text watch. has each person’s area changed? tap the yellow to check. then tell the group: what else do you remember about the speakers?",
    "gone": false
   },
   {
@@ -244,7 +244,7 @@
   },
   {
    "pid": 1,
-   "sig": "2 and the place where you live now — has it changed since you moved there? never moved? talk about a place you go to a lot.",
+   "sig": "2 and the place where you live now — has it changed since you moved there? what’s different, and what’s still the same? never moved? talk about a place you go to a lot.",
    "gone": false
   }
  ],
