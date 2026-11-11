@@ -2310,7 +2310,7 @@ function blockHTML(b){
     : b.kind === "listen" ? listenHTML(b) : b.kind === "decode" ? decodeHTML(b) : b.kind === "box" ? boxBlockHTML(b) : b.kind === "mix" ? mixHTML(b) : b.kind === "game" && b.piece === "wheel" ? groupDotsHTML(b) + gamePeekHTML(b) + wheelHTML(b) : b.kind === "game" && ROLLS.includes(b.piece) ? rollHTML(b)
     : b.kind === "game" ? (b.piece === "memo" ? "" : groupDotsHTML(b) + (NEWG.includes(b.piece) || b.piece === "tictactoe" ? gamePeekHTML(b) : "")) + (b.rule ? `<p class="g-rule">${mk(b.rule)}</p>` : "") + `<div class="fgame${b.piece === "memo" ? " fmemo" : ""} fg-${esc(b.piece || "ttt")}" data-game="${b._id}"></div>` : "";
   const instr = b.kind === "cards" || b.kind === "questions" ? (b.kind === "questions" ? b.instr : "") : b.kind === "scenes" && sceneAt(b) >= 0 ? (b.street_first === false ? [b.instr, b.task].filter(Boolean).join(" ") : b.task)
-    : b.kind === "game" && b.piece === "secret" ? secInstr(b) : b.kind === "box" && bs(b).shown ? b.instr2 || b.instr : b.kind === "decode" && dcSt(b).ans ? b.instr2 || b.instr : b.kind === "game" && ROLLS.includes(b.piece) && rlIntro(b) ? b.intro.instr || b.instr : b.instr;
+    : b.kind === "game" && b.piece === "secret" ? secInstr(b) : b.kind === "box" && (bs(b).shown || b.recall) ? b.instr2 || b.instr : b.kind === "decode" && dcSt(b).ans ? b.instr2 || b.instr : b.kind === "game" && ROLLS.includes(b.piece) && rlIntro(b) ? b.intro.instr || b.instr : b.instr;
   const tip = S.howto && b.tip ? `<p class="tip">🎓 How it works: ${mk(b.tip)}</p>` : "";
   const how = demoKind(b) ? ` <button class="g-howto" data-gdemo>▶ How to play</button>` : "";   /* tools 21 */
   const ledI = instr && instr === b.instr && LEDP["blocks." + b._pos + ".instr"] ? ledBtn("blocks." + b._pos + ".instr") : "";   /* tools 24 */
@@ -2384,7 +2384,7 @@ function stepPending(b){
   if(!b) return false; const st = bs(b);
   if(b.kind === "tool") return true;   /* the page inside says when it has nothing more (lwStepEnd) */
   if(b.kind === "say") return b.one ? sayOLeft(b).length > 0 : !!b.answer && !st.shown;   /* tools 30: one answer at a time */
-  if(b.kind === "box") return !st.shown;   /* tools 30: the box, then the box with the phrases hidden */
+  if(b.kind === "box") return !st.shown && !b.recall;   /* tools 30: the box, then the box with the phrases hidden; "recall": hidden from the start, one screen (tools 32, her 11.11: a Revision stage to remember last lesson's box) */
   if(b.kind === "picture" && b.answer) return !st.shown;   /* tools 18: the retell's whole text */
   if(b.kind === "council") return cnPending(b);   /* tools 18: the next subject, then Decide */
   if(b.kind === "fix") return fixPending(b);   /* tools 16 */
@@ -2427,7 +2427,7 @@ function stepNext(){
   /* the chat page inside (her 13:24: no Next of its own): the field's Next / Back step through its chats and its speaking */
   if(b.kind === "tool"){ const f = document.querySelector(".tool-frame"); if(f && f.contentWindow){ f.contentWindow.postMessage({lwStep: "next"}, "*"); return; } }
   if(b.kind === "say" && b.one && sayOLeft(b).length){ sayOOpen(b, sayOLeft(b)[0]); render(); return; }   /* tools 30 */
-  if(b.kind === "box" && !st.shown){ st.shown = true; render(); return; }
+  if(b.kind === "box" && !st.shown && !b.recall){ st.shown = true; render(); return; }
   if(b.kind === "say" && !b.one && b.answer && !st.shown){ st.shown = true; render(); return; }
   if(b.kind === "picture" && b.answer && !st.shown){ st.shown = true; render(); return; }
   if(b.kind === "council" && cnPending(b)){ const C = cnSt(b), R = C.subs[C.at], w = CN_W[b.lists[cnSubs(b)[C.at].li].kind];
@@ -2506,7 +2506,7 @@ function stepBack(){
     else if(d.hist.length){ st.look = d.hist[d.hist.length - 1]; st.lookBack = true; st.lookLbl = "↩ Looking back"; render(); return; } }
   if(S.fast){ S.fast = null; render(); return; }
   if(b && b.kind === "say" && b.one && sayOSt(b).open != null){ sayOSt(b).open = null; render(); return; }   /* tools 30 */
-  if(b && b.kind === "box" && bs(b).shown){ bs(b).shown = false; render(); return; }
+  if(b && b.kind === "box" && bs(b).shown && !b.recall){ bs(b).shown = false; render(); return; }
   if(b && b.kind === "say" && bs(b).shown){ bs(b).shown = false; render(); return; }
   if(b && b.kind === "picture" && b.answer && bs(b).shown){ bs(b).shown = false; render(); return; }
   if(b && b.kind === "text" && b.answer && b.answer.length && bs(b).shown){ bs(b).shown = false; render(); return; }   /* tools 25 */
@@ -2645,7 +2645,7 @@ const hideWords = s => String(s).replace(/[A-Za-z][A-Za-z'’]*/g, w => w.length
 const hideLine = t => String(t).replace(/##.+?##/g, m => "\u0000" + encodeURIComponent(m) + "\u0000").replace(/\*\*(.+?)\*\*/g, (m, x) => "**" + hideWords(x) + "**").replace(/\u0000(.+?)\u0000/g, (m, x) => decodeURIComponent(x));
 const hideBox = box => box.map(g => Object.assign({}, g, g.pairs ? {pairs: g.pairs.map(pr => [hideWords(pr[0]), hideWords(pr[1])].concat(pr.slice(2)))} : {items: (g.items || []).map(hideLine)}));
 function boxBlockHTML(b){
-  const box = D.boxes[b.box || "BOX"] || [], hid = !!bs(b).shown, B = hid ? hideBox(box) : box;
+  const box = D.boxes[b.box || "BOX"] || [], hid = !!bs(b).shown || !!b.recall, B = hid ? hideBox(box) : box;
   const groups = B.map((g, gi) => `<div class="mb-g">${boxGroupHTML(g, gi, (t, ti) => `<button class="ph ${usedPhrases.has(gi + "." + ti) ? "used" : ""}" data-ph="${gi}.${ti}" data-pt="${esc(phPlain(t))}" aria-pressed="${usedPhrases.has(gi + "." + ti)}">${boxLineHTML(t)}</button>`)}</div>`).join("");
   return `<aside class="box mainbox${hid ? " hid" : ""}" aria-label="Useful language"><div class="box-top"><img class="sticker" src="${STICKER}" alt="Useful language"></div><div class="mb-cols">${groups}</div></aside>`;
 }

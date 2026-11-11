@@ -199,9 +199,100 @@
    "pid": 39,
    "sig": "questions now you: a change in your life (3 minutes).",
    "gone": false
+  },
+  {
+   "pid": 40,
+   "sig": "box last lesson's language: stages of life. some words are hidden. take turns: say the whole phrase, then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 41,
+   "sig": "game the wheel of questions: take turns to spin. ask the next person: when did you last…? they answer (last month, ages ago, at school…) + one detail. then tap to check your question.",
+   "gone": false
   }
  ],
- "cards": [],
+ "cards": [
+  {
+   "pid": 0,
+   "sig": "when did you last go to the cinema / the movies? 1 go to the cinema / the movies or: when was the last time you went to the cinema / the movies? did you last go · the last time you went ✗ when did you go to the cinema last time? the answer: two weeks ago · last month — or: i haven't been for ages! not sure? i can't remember exactly — in the summer, maybe? + one detail: what did you see? was it good?",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "when did you last solve an equation? 2 solve an equation or: when was the last time you solved an equation? the answer: at school · ages ago — or: last week, helping my kid with their homework! not sure? i can't remember exactly — in my last year at school, maybe? + one detail: was it for you or for your kids?",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "when did you last cook for friends? 3 cook for friends or: when was the last time you cooked for friends? the answer: last weekend · a month ago — or: i haven't done that for ages! not sure? i can't remember exactly — on my birthday, maybe? + one detail: what did you make?",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "when did you last climb a tree? 4 climb a tree or: when was the last time you climbed a tree? ✗ when did you climb a tree last time? the answer: as a kid · ages ago — or: last summer, with my kids! not sure? i can't remember exactly — at 12, maybe? + one detail: where was it? did you get down ok?",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "when did you last go to a concert? 5 go to a concert or: when was the last time you went to a concert? the answer: last spring · a few years ago — or: i haven't been to one for ages! not sure? i can't remember exactly — two years ago, maybe? + one detail: who did you see?",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "when did you last build a snowman? 6 build a snowman or: when was the last time you built a snowman? the answer: last winter · as a kid · ages ago not sure? i can't remember exactly — a few years ago, maybe? + one detail: where? who with?",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "when did you last stay up really late? 7 stay up really late or: when was the last time you stayed up really late? the answer: last night! · on saturday · on new year's eve + one detail: why? what were you doing?",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "when did you last go camping? 8 go camping or: when was the last time you went camping? did you last go · the last time you went the answer: in my early twenties · a few years ago — or: i haven't been for ages! never? i've never been camping! not sure? i can't remember exactly — at 18, maybe? + one detail: where? did it rain?",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "when did you last go to a wedding? 9 go to a wedding or: when was the last time you went to a wedding? ✗ when did you go to a wedding last time? the answer: last summer · a few years ago — or: i haven't been to one for ages! not sure? i can't remember exactly — three years ago, maybe? + one detail: whose wedding was it? was it fun?",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "when did you last go on a rollercoaster? 10 go on a rollercoaster or: when was the last time you went on a rollercoaster? the answer: last summer · as a kid · ages ago — or: i haven't been on one for ages! never? i've never been on one! not sure? i can't remember exactly — five years ago, maybe? + one detail: where? was it fun — or a bit too scary?",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "when did you last lose your keys? 11 lose your keys or: when was the last time you lost your keys? the answer: last week · a few months ago · ages ago + one detail: where were they in the end?",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "when did you last take an exam? 12 take an exam or: when was the last time you took an exam? сдавать экзамен = take an exam · сдать = pass an exam the answer: at university / in college · in my mid-twenties · last year not sure? i can't remember exactly — three years ago, maybe? + one detail: what was it? did you pass?",
+   "gone": false
+  },
+  {
+   "pid": 12,
+   "sig": "when did you last have a proper holiday / a real vacation? 13 have a proper holiday / a real vacation or: when was the last time you had a proper holiday / a real vacation? ✗ when did you have a proper holiday last time? the answer: in the summer · last year — or: i haven't had one for ages! not sure? i can't remember exactly — two years ago, maybe? + one detail: where did you go?",
+   "gone": false
+  },
+  {
+   "pid": 13,
+   "sig": "when did you last send a postcard? 14 send a postcard or: when was the last time you sent a postcard? the answer: ages ago · as a kid — or: i haven't done that for ages! not sure? i can't remember exactly — ten years ago, maybe? + one detail: who to? where from?",
+   "gone": false
+  },
+  {
+   "pid": 14,
+   "sig": "when did you last buy something you didn't really need? 15 buy something you didn't really need or: when was the last time you bought something you didn't really need? the answer: yesterday · last week · last month + one detail: what was it? do you actually use it?",
+   "gone": false
+  },
+  {
+   "pid": 15,
+   "sig": "when did you last ride a bike? 16 ride a bike or: when was the last time you rode a bike? ride → rode ✗ when did you ride a bike last time? the answer: last weekend · last summer · as a kid not sure? i can't remember exactly — two years ago, maybe? + one detail: where did you go?",
+   "gone": false
+  }
+ ],
  "write": [],
  "questions.0": [
   {

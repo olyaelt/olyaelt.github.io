@@ -71,9 +71,268 @@
      "How's it going **so far**? → the sum-up"
     ]
    }
+  ],
+  "LIFE": [
+   {
+    "h": "STAGES OF LIFE",
+    "items": [
+     "**as a kid** ((в детстве))",
+     "**at school** ((в школе))",
+     "**at 18** ((в 18 лет))",
+     "**in my early / mid- / late thirties** ((чуть за 30 · лет 35 · под 40))",
+     "((twenties, forties… · thirties ##/ˈθɜːtiz/## · twenties ##/ˈtwentiz/##))"
+    ]
+   },
+   {
+    "h": "SCHOOL & UNIVERSITY: CHOOSE ONE",
+    "cols": [
+     "US",
+     "UK"
+    ],
+    "pairs": [
+     [
+      "after high school",
+      "after I left school",
+      "окончив школу"
+     ],
+     [
+      "right out of college",
+      "straight out of university",
+      "сразу после вуза"
+     ],
+     [
+      "in my third year of college",
+      "in my third year at university",
+      "на 3-м курсе"
+     ]
+    ]
+   },
+   {
+    "h": "NOT YET?",
+    "items": [
+     "**I still can't** drive (swim, cook…).",
+     "**I still don't have** my own place (a car…)."
+    ]
+   },
+   {
+    "h": "ASK AND REACT",
+    "items": [
+     "**When did you** learn to drive? → I learned ##/lɜːnd/##… ((did + базовая форма))",
+     "**When did you last** go to the cinema? → **ages ago** · or: I haven't been **for ages**!",
+     "Not sure? **I can't remember exactly** — last summer, **maybe**? ##/ɪɡˈzæktli/##",
+     "Oh, nice! · How old were you? · Really? Why?"
+    ]
+   }
   ]
  },
  "stages": [
+  {
+   "label": "🔁 Revision",
+   "blocks": [
+    {
+     "kind": "box",
+     "box": "LIFE",
+     "recall": true,
+     "instr": "Last lesson's language: stages of life. Some words are hidden. Take turns: say the whole phrase, then tap the yellow to check.",
+     "tip": "Say each phrase whole, from memory. Then tap the yellow to check."
+    },
+    {
+     "kind": "game",
+     "piece": "wheel",
+     "box": "LIFE",
+     "check": "Check",
+     "instr": "The wheel of questions: take turns to spin. Ask the next person: When did you last…? They answer (last month, ages ago, at school…) + one detail. Then tap to check your question.",
+     "tasks": [
+      {
+       "label": "1",
+       "q": "go to the cinema / the movies",
+       "a": "**When did you last** go to the cinema / the movies?",
+       "why": [
+        "Or: **When was the last time you went** to the cinema / the movies?",
+        "((did you last **go** · the last time you **went**))",
+        "✗ When did you go to the cinema ~~last time~~?",
+        "The answer: **two weeks ago · last month** — or: **I haven't been for ages!**",
+        "Not sure? **I can't remember exactly** — in the summer, maybe?",
+        "+ **one** detail: what did you see? Was it good?"
+       ]
+      },
+      {
+       "label": "2",
+       "q": "solve an equation",
+       "a": "**When did you last** solve an equation?",
+       "why": [
+        "Or: **When was the last time you solved** an equation?",
+        "The answer: **at school · ages ago** — or: **last week, helping my kid with their homework!**",
+        "Not sure? **I can't remember exactly** — in my last year at school, maybe?",
+        "+ **one** detail: was it for you or for your kids?"
+       ]
+      },
+      {
+       "label": "3",
+       "q": "cook for friends",
+       "a": "**When did you last** cook for friends?",
+       "why": [
+        "Or: **When was the last time you cooked** for friends?",
+        "The answer: **last weekend · a month ago** — or: **I haven't done that for ages!**",
+        "Not sure? **I can't remember exactly** — on my birthday, maybe?",
+        "+ **one** detail: what did you make?"
+       ]
+      },
+      {
+       "label": "4",
+       "q": "climb a tree",
+       "a": "**When did you last** climb a tree?",
+       "why": [
+        "Or: **When was the last time you climbed** a tree?",
+        "✗ When did you climb a tree ~~last time~~?",
+        "The answer: **as a kid · ages ago** — or: **last summer, with my kids!**",
+        "Not sure? **I can't remember exactly** — at 12, maybe?",
+        "+ **one** detail: where was it? Did you get down OK?"
+       ]
+      },
+      {
+       "label": "5",
+       "q": "go to a concert",
+       "a": "**When did you last** go to a concert?",
+       "why": [
+        "Or: **When was the last time you went** to a concert?",
+        "The answer: **last spring · a few years ago** — or: **I haven't been to one for ages!**",
+        "Not sure? **I can't remember exactly** — two years ago, maybe?",
+        "+ **one** detail: who did you see?"
+       ]
+      },
+      {
+       "label": "6",
+       "q": "build a snowman",
+       "a": "**When did you last** build a snowman?",
+       "why": [
+        "Or: **When was the last time you built** a snowman?",
+        "The answer: **last winter · as a kid · ages ago**",
+        "Not sure? **I can't remember exactly** — a few years ago, maybe?",
+        "+ **one** detail: where? Who with?"
+       ]
+      },
+      {
+       "label": "7",
+       "q": "stay up really late",
+       "a": "**When did you last** stay up really late?",
+       "why": [
+        "Or: **When was the last time you stayed up** really late?",
+        "The answer: **last night! · on Saturday · on New Year's Eve**",
+        "+ **one** detail: why? What were you doing?"
+       ]
+      },
+      {
+       "label": "8",
+       "q": "go camping",
+       "a": "**When did you last** go camping?",
+       "why": [
+        "Or: **When was the last time you went** camping?",
+        "((did you last **go** · the last time you **went**))",
+        "The answer: **in my early twenties · a few years ago** — or: **I haven't been for ages!**",
+        "Never? **I've never been camping!**",
+        "Not sure? **I can't remember exactly** — at 18, maybe?",
+        "+ **one** detail: where? Did it rain?"
+       ]
+      },
+      {
+       "label": "9",
+       "q": "go to a wedding",
+       "a": "**When did you last** go to a wedding?",
+       "why": [
+        "Or: **When was the last time you went** to a wedding?",
+        "✗ When did you go to a wedding ~~last time~~?",
+        "The answer: **last summer · a few years ago** — or: **I haven't been to one for ages!**",
+        "Not sure? **I can't remember exactly** — three years ago, maybe?",
+        "+ **one** detail: whose wedding was it? Was it fun?"
+       ]
+      },
+      {
+       "label": "10",
+       "q": "go on a rollercoaster",
+       "a": "**When did you last** go on a rollercoaster?",
+       "why": [
+        "Or: **When was the last time you went on** a rollercoaster?",
+        "The answer: **last summer · as a kid · ages ago** — or: **I haven't been on one for ages!**",
+        "Never? **I've never been on one!**",
+        "Not sure? **I can't remember exactly** — five years ago, maybe?",
+        "+ **one** detail: where? Was it fun — or a bit too scary?"
+       ]
+      },
+      {
+       "label": "11",
+       "q": "lose your keys",
+       "a": "**When did you last** lose your keys?",
+       "why": [
+        "Or: **When was the last time you lost** your keys?",
+        "The answer: **last week · a few months ago · ages ago**",
+        "+ **one** detail: where were they in the end?"
+       ]
+      },
+      {
+       "label": "12",
+       "q": "take an exam",
+       "a": "**When did you last** take an exam?",
+       "why": [
+        "Or: **When was the last time you took** an exam?",
+        "((сдавать экзамен = **take** an exam · сдать = **pass** an exam))",
+        "The answer: **at university / in college · in my mid-twenties · last year**",
+        "Not sure? **I can't remember exactly** — three years ago, maybe?",
+        "+ **one** detail: what was it? Did you pass?"
+       ]
+      },
+      {
+       "label": "13",
+       "q": "have a proper holiday / a real vacation",
+       "a": "**When did you last** have a proper holiday / a real vacation?",
+       "why": [
+        "Or: **When was the last time you had** a proper holiday / a real vacation?",
+        "✗ When did you have a proper holiday ~~last time~~?",
+        "The answer: **in the summer · last year** — or: **I haven't had one for ages!**",
+        "Not sure? **I can't remember exactly** — two years ago, maybe?",
+        "+ **one** detail: where did you go?"
+       ]
+      },
+      {
+       "label": "14",
+       "q": "send a postcard",
+       "a": "**When did you last** send a postcard?",
+       "why": [
+        "Or: **When was the last time you sent** a postcard?",
+        "The answer: **ages ago · as a kid** — or: **I haven't done that for ages!**",
+        "Not sure? **I can't remember exactly** — ten years ago, maybe?",
+        "+ **one** detail: who to? Where from?"
+       ]
+      },
+      {
+       "label": "15",
+       "q": "buy something you didn't really need",
+       "a": "**When did you last** buy something you didn't really need?",
+       "why": [
+        "Or: **When was the last time you bought** something you didn't really need?",
+        "The answer: **yesterday · last week · last month**",
+        "+ **one** detail: what was it? Do you actually use it?"
+       ]
+      },
+      {
+       "label": "16",
+       "q": "ride a bike",
+       "a": "**When did you last** ride a bike?",
+       "why": [
+        "Or: **When was the last time you rode** a bike?",
+        "((ride → **rode**))",
+        "✗ When did you ride a bike ~~last time~~?",
+        "The answer: **last weekend · last summer · as a kid**",
+        "Not sure? **I can't remember exactly** — two years ago, maybe?",
+        "+ **one** detail: where did you go?"
+       ]
+      }
+     ],
+     "tip": "Spin, ask When did you last…?, the next person answers (last month, ages ago, at school…) + one detail. Then tap to check the question.",
+     "box_state": "gapped"
+    }
+   ]
+  },
   {
    "label": "🎬 Video",
    "blocks": [
