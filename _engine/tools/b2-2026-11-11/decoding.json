@@ -1,0 +1,123 @@
+{
+ "type": "revision-field",
+ "file": "decoding",
+ "title": "The Intern: decoding",
+ "part": "Lesson 13 · 11.11",
+ "boxes": {},
+ "stages": [
+  {
+   "label": "🎧 Decoding",
+   "blocks": [
+    {
+     "kind": "decode",
+     "title": "Line",
+     "instr": "Watch, then listen. What's in the cloud? Write it in the Zoom chat.",
+     "instr2": "What was hard to hear? Why?",
+     "lines": [
+      {
+       "id": "r3",
+       "clip": "8:38.13-8:40.57",
+       "ctx": "8:30.13",
+       "text": "Okay, so {{I can't read anything}},",
+       "after": "but if I could, what do you want me to see?"
+      },
+      {
+       "id": "r4",
+       "clip": "8:53.41-8:55.71",
+       "ctx": "8:45.41",
+       "text": "I love that five. {{Can we make it}} more graphic?",
+       "before": "Try making the photo grid bigger."
+      },
+      {
+       "id": "r5",
+       "clip": "18:17.21-18:19.54",
+       "ctx": "18:09.21",
+       "text": "If you requested to transfer, {{we can make}} that happen."
+      },
+      {
+       "id": "r6",
+       "clip": "20:46.09-20:48.03",
+       "ctx": "20:38.09",
+       "text": "{{Can't leave}} before the Boss leaves, Davis.",
+       "before": "You staying?"
+      },
+      {
+       "id": "r8",
+       "clip": "21:45.25-21:47.35",
+       "ctx": "21:37.25",
+       "text": "{{how long can a woman}} be mad at you for?"
+      },
+      {
+       "id": "r9",
+       "clip": "22:54.02-22:56.15",
+       "ctx": "22:46.02",
+       "text": "{{Can't imagine}} it would hurt.",
+       "before": "I should probably actually just talk to her, huh? Obviously."
+      },
+      {
+       "id": "r10",
+       "clip": "23:30.66-23:31.96",
+       "ctx": "23:22.66",
+       "text": "No, no, {{I-I can set}} it up."
+      },
+      {
+       "id": "r11",
+       "clip": "23:33.36-23:35.03",
+       "ctx": "23:25.36",
+       "text": "{{Something I can help}} you with?"
+      },
+      {
+       "id": "r12",
+       "clip": "23:37.03-23:39.93",
+       "ctx": "23:29.03",
+       "text": "{{Can you take it}} to the photo studio? {{There's lots of}} cleaners and stuff in there.",
+       "before": "Yes, Jules spilled soy sauce on her Saint Laurent jacket."
+      },
+      {
+       "id": "r13",
+       "clip": "24:22.88-24:24.88",
+       "ctx": "24:14.88",
+       "text": "Jules, {{we can't keep up}} with our own success.",
+       "before": "We hit our five-year goal in nine months. Exactly."
+      },
+      {
+       "id": "r14",
+       "clip": "25:20.07-25:21.43",
+       "ctx": "25:12.07",
+       "text": "{{Can you see that}} working?",
+       "before": "run every idea I have by this person?"
+      },
+      {
+       "id": "r15",
+       "clip": "26:18.66-26:20.42",
+       "ctx": "26:10.66",
+       "text": "{{I can't hear}} a thing.",
+       "before": "You were in there a long time."
+      },
+      {
+       "id": "r16",
+       "clip": "30:55.50-30:57.53",
+       "ctx": "30:44.29",
+       "text": "Why don't you tell her {{you can't drive her today}},",
+       "before": "… from a paper bag. I don't know what you're talking about, man.",
+       "after": "or I'm gonna have to."
+      },
+      {
+       "id": "r17",
+       "clip": "31:32.84-31:34.87",
+       "ctx": "31:24.84",
+       "text": "That's okay. {{Becky can drive me}}."
+      },
+      {
+       "id": "r18",
+       "clip": "32:26.89-32:29.13",
+       "ctx": "32:18.89",
+       "text": "{{Well, I can't change}} the facts, dear.",
+       "before": "You know I haven't slept in two years."
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

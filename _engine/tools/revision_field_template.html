@@ -843,6 +843,21 @@ button.kbub{cursor:pointer} button.kbub small{display:block;font-size:.85rem;fon
 .dc-seltx{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:700;font-size:.95rem}
 .dc-sp{flex:1}
 .btn.slim.dc-file{max-width:16rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* tools 32 (her 11.11 15:37): ⏱ a time, 🎬 Context with the picture over the page, ✏️ her own lines, 📝 a note */
+.dc-go{display:inline-flex;align-items:center;gap:4px;font-weight:800;color:var(--muted)}
+.dc-go input{font:inherit;font-weight:800;font-size:.95rem;width:5.6em;padding:6px 8px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font-variant-numeric:tabular-nums}
+.dc-media.ctx{position:fixed !important;left:50% !important;top:50% !important;transform:translate(-50%,-50%);width:min(94vw, calc(84vh * 16 / 9)) !important;height:auto !important;aspect-ratio:16/9;max-height:84vh;opacity:1;z-index:61;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.dc-ctxbg{position:fixed;inset:0;z-index:60;background:rgba(10,12,14,.82);cursor:pointer}
+.dc-ctxbg span{position:absolute;left:50%;bottom:2.5vh;transform:translateX(-50%);color:#E8E8E6;font-weight:700;font-size:.9rem;opacity:.75}
+.dc-edit{display:grid;gap:10px}
+.dc-edit-h{margin:0;font-size:1.05rem}
+.dc-edtext{font:inherit;font-size:1.1rem;line-height:1.55;width:100%;box-sizing:border-box;padding:10px 12px;border:2px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);resize:vertical;min-height:11em}
+.dc-edit-help{margin:0;color:var(--muted);font-size:.92rem;line-height:1.45}
+.dc-edit-ctl{display:flex;gap:10px;flex-wrap:wrap}
+.dc-notet{margin:.15em 0 0;font-size:clamp(1.05rem, 1.7vw, 1.35rem);font-weight:700;color:var(--ipa);cursor:pointer;line-height:1.35}
+.dc-notet.nw{animation:ansIn .4s ease-out both}
+.dc-notebox{display:flex;align-items:center;gap:6px;margin-top:.2em}
+.dc-notebox .dc-notein{width:min(36em, 80%);font-size:1.15rem}
 @media (max-width:760px){ .dc.pic .dc-main{grid-template-columns:1fr} .dc-line{font-size:1.5rem} .dc-wave{height:96px} .dc-tools{margin-left:0} }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .dc{--dc-grey:#7C8086} :root:not([data-theme="light"]) .dc-wave{--dc-wbg:#15191D;--dc-clip:rgba(255,255,255,.05);--dc-sel:rgba(108,195,255,.22);--dc-edge:#6CC3FF;--dc-wave:#7FB6DA;--dc-tick:#A4A7AB;--dc-cur:#ECECEA;--dc-head:#FF7A7A} :root:not([data-theme="light"]) .dc-cloud{background:#1E3A52;color:#9ED3FA} }
 :root[data-theme="dark"] .dc{--dc-grey:#7C8086}
@@ -1987,26 +2002,44 @@ function wireFilm(root){ if(!PTS) return;
    Under the line her scene file's waveform, as in Aegisub: the file plays from her computer (nothing is uploaded — the site is public, it
    is a film); click = the cursor, drag = a piece, Space plays it again and again, ▶ N counts. The waveform reads the whole file (up to
    400 MB) into peaks kept on this computer; a whole film's peaks file (stage 2) will feed the same picture. ---------- */
-const DC_FRESH = 4 * 3600e3, DC_MAX = 400 * 1048576, DC_RATE = 200, DCK = "tool-decode-" + PAGE_ID;
-let DCS = store.get(DCK) || {}; ["m", "prev", "plays", "clips"].forEach(k => { if(!DCS[k] || typeof DCS[k] !== "object") DCS[k] = {}; });
+const DC_FRESH = 4 * 3600e3, DC_MAX = (window.DC_MAX_MB || 400) * 1048576, DC_RATE = 200, DCK = "tool-decode-" + PAGE_ID;
+let DCS = store.get(DCK) || {}; ["m", "prev", "plays", "clips", "mine"].forEach(k => { if(!DCS[k] || typeof DCS[k] !== "object") DCS[k] = {}; });
 const dcSave = () => store.set(DCK, DCS);
 const DC = {mk: {}, fresh: null, pan: null, letters: null, url: "", name: "", m: null, peaks: null, wBusy: false, wErr: "", dur: 0, win: null, winFor: null,
-  sel: null, cur: 0, playing: false, stopAt: null, pic: !!store.get("dc-pic"), handle: null, raf: 0, b: null, drag: null, hinted: !!store.get("dc-hinted")};
-const dcLines = b => b.lines || [];
+  sel: null, cur: 0, playing: false, stopAt: null, pic: store.get("dc-pic") !== false,   /* the picture beside the line by default (her 11.11 15:46: «видео сбоку полезно») */ handle: null, raf: 0, b: null, drag: null, hinted: !!store.get("dc-hinted")};
+/* her own lines (her 11.11 15:37: «вставить конкретное время… gapped строчку, которую я заранее подготовила»): ✏️ My lines, one per row —
+   the film's time, then the line with the gap in [square brackets]: "21:28 I was [sitting there] with Gus", "21:28-21:30.5 …" (the piece's
+   end too), "21:16 > 21:28 …" (where 🎬 Context starts; else 10 s before). Kept on her computer only; a line's id = its text's hash. */
+const DC_TS = "\\d{1,2}(?::\\d{1,2}){1,2}(?:[.,]\\d+)?", DC_ROW = new RegExp(`^\\s*(?:(${DC_TS})\\s*>\\s*)?(${DC_TS})(?:(?:\\s*[-–—]\\s*|\\s+)(${DC_TS}))?\\s+(.+)$`),
+  DC_ASS = new RegExp(`^\\s*Dialogue:\\s*[^,]*,(${DC_TS}),(${DC_TS}),(?:[^,]*,){6}(.*)$`);   /* rows copied from Aegisub's grid (Ctrl+C): start, end, the text */
+let dcMineMemo = {raw: null, lines: []};
+function dcHash(s){ let h = 5381; for(const c of String(s)) h = ((h * 33) ^ c.codePointAt(0)) >>> 0; return h.toString(36); }
+function dcParseMine(raw){ if(dcMineMemo.raw === raw) return dcMineMemo.lines;
+  const out = [], seen = {}, fx = s => s.replace(",", ".");
+  String(raw || "").split(/\r?\n/).forEach(row => { if(!row.trim() || /^\s*#/.test(row)) return;
+    const a = row.match(DC_ASS); if(a) row = a[1] + "-" + a[2] + " " + a[3].replace(/\{[^}]*\}/g, "").replace(/\\[Nn]/g, " ").replace(/\s+/g, " ").trim();
+    const m = row.match(DC_ROW), text = (m ? m[4] : row).trim().replace(/\[([^\]]+)\]/g, "{{$1}}"), L = {text};
+    if(m){ L.at = fx(m[2]); if(m[3]) L.clip = fx(m[2]) + "-" + fx(m[3]); if(m[1]) L.ctx = fx(m[1]); }
+    let id = "m" + dcHash(text); seen[id] = (seen[id] || 0) + 1; if(seen[id] > 1) id += "-" + seen[id]; L.id = id; out.push(L); });
+  dcMineMemo = {raw, lines: out}; return out; }
+const dcMine = b => { const x = DCS.mine[b._pid]; return x && x.raw ? dcParseMine(x.raw) : []; };
+const dcLines = b => { const m = dcMine(b); return m.length ? m : b.lines || []; };
 const dcId = (b, i) => { const l = dcLines(b)[i] || {}, pl = P["lines." + b._pid] || []; return String(l.id || "b" + b._pid + "-" + (pl[i] != null ? pl[i] : i)); };
-const dcSt = b => { const st = bs(b); if(!st.dc) st.dc = {at: 0, ans: false}; st.dc.at = Math.min(st.dc.at, dcLines(b).length - 1); return st.dc; };
-const dcPending = b => { const Q = dcSt(b); return !Q.ans || Q.at < dcLines(b).length - 1; };
+const dcSt = b => { const st = bs(b); if(!st.dc) st.dc = {at: 0, ans: false}; st.dc.at = Math.max(0, Math.min(st.dc.at, dcLines(b).length - 1)); return st.dc; };
+const dcPending = b => { const Q = dcSt(b); return dcLines(b).length > 0 && (!Q.ans || Q.at < dcLines(b).length - 1); };
 function dcNext(b){ const Q = dcSt(b); dcClose(); if(!Q.ans){ Q.ans = true; Q.just = true; } else { Q.at++; Q.ans = false; } render(); keepPlace(); Q.just = false; }
 function dcBack(b){ const Q = dcSt(b); dcClose();
   if(Q.ans){ Q.ans = false; render(); keepPlace(); return true; }
   if(Q.at > 0){ Q.at--; Q.ans = true; render(); keepPlace(); return true; } return false; }
 function dcWords(l){ const out = [];
   String(l.text || "").split(/(\{\{[\s\S]+?\}\})/).forEach(p => { const g = /^\{\{[\s\S]*\}\}$/.test(p), s = g ? p.slice(2, -2) : p;
-    s.split(/\s+/).filter(Boolean).forEach(t => out.push({t, g})); });
+    s.split(/\s+/).forEach((t, k) => { if(!t) return;
+      if(k === 0 && out.length && !g && /^[,.;:!?…)]+$/.test(t)){ out[out.length - 1].t += t; return; }   /* "{{…today}}," — the comma stays on its word */
+      out.push({t, g}); }); });
   return out; }
 const dcBare = t => String(t).toLowerCase().replace(/’/g, "'").replace(/[^a-z0-9']/g, "");
-const dcNew = () => ({w: {}, l: {}, k: [], s: {}});
-const dcHas = M => !!M && (Object.keys(M.w || {}).length + Object.keys(M.l || {}).length + (M.k || []).length + Object.keys(M.s || {}).length > 0);
+const dcNew = () => ({w: {}, l: {}, k: [], s: {}, n: ""});
+const dcHas = M => !!M && (Object.keys(M.w || {}).length + Object.keys(M.l || {}).length + (M.k || []).length + Object.keys(M.s || {}).length > 0 || !!M.n);
 /* this lesson's marks of line i: in memory, else what this computer kept from the last 4 hours (a reload in the lesson) */
 function dcMarks(b, i){ const id = dcId(b, i); if(DC.mk[id]) return DC.mk[id];
   const o = DCS.m[id], l = dcLines(b)[i];
@@ -2059,7 +2092,8 @@ function dcLineInner(b){
     cloud = false;
     if(i) h += Q.ans ? `<span class="dj${M.k.includes(i - 1) ? " on" : ""}" data-dj="${i - 1}" title="Link these two words"> </span>` : `<span class="dj"> </span>`;
     h += Q.ans ? dcWordHTML(w, i, M, Q.just) : `<span class="dw">${esc(w.t)}</span>`; });
-  return `<p class="dc-line${Q.ans && Q.just ? " just" : ""}" data-dcline>${h}</p><svg class="dc-arcs" aria-hidden="true"></svg>${Q.ans ? dcPanHTML(b) : ""}`; }
+  const note = !Q.ans ? "" : DC.noteEdit ? `<div class="dc-notebox"><span aria-hidden="true">📝</span><input class="dp-in dc-notein" data-dcnotein value="${esc(M.n || "")}" maxlength="200" autocomplete="off" spellcheck="false" aria-label="A note on this line"><button class="dp-b ok" data-dcnoteok title="Enter">✓</button></div>` : M.n ? `<p class="dc-notet${DC.fresh === "n" ? " nw" : ""}" data-dcnote title="Tap to change">📝 ${esc(M.n)}</p>` : "";
+  return `<p class="dc-line${Q.ans && Q.just ? " just" : ""}" data-dcline>${h}</p><svg class="dc-arcs" aria-hidden="true"></svg>${note}${Q.ans ? dcPanHTML(b) : ""}`; }
 function dcPanHTML(b){ const P = DC.pan; if(!P) return ""; const Q = dcSt(b), M = dcMarks(b, Q.at), W = dcWords(dcLines(b)[Q.at]);
   if(P.say != null) return `<div class="dc-pan say" data-dcpan><span class="dp-l">sounds like</span><input class="dp-in" data-dcsayin value="${esc(P.say)}" maxlength="24" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="How it sounds"><button class="dp-b ok" data-dcsayok title="Enter">✓</button></div>`;
   const cur = P.l != null ? M.l[P.i + "." + P.l] : M.w[P.i], bt = (k, lbl, key, t) => `<button class="dp-b${cur === k ? " on" : ""}" data-dcmk="${k}" title="${t} (${key})">${lbl}</button>`;
@@ -2087,25 +2121,36 @@ function dcPaint(b){ const box = document.querySelector("#main .dc-linebox"); if
   const t = document.querySelector("#main [data-dctools]"); if(t) t.outerHTML = dcToolsHTML(b);
   const hint = document.querySelector("#main .dc-hint"); if(hint && DC.hinted) hint.remove(); }
 function dcToolsHTML(b){ const Q = dcSt(b), has = dcHas(dcMarks(b, Q.at)), last = Q.ans && !has ? dcLast(b) : null;
-  return `<span class="dc-tools" data-dctools>${Q.ans && has ? `<button class="btn slim" data-dcclear title="Take all the marks off this line">🧹 Clear</button>` : ""}${last ? `<button class="btn slim" data-dclast title="The marks this line had last time">↺ Last time (${new Date(last.t).toLocaleDateString("en-GB", {day: "numeric", month: "short"})})</button>` : ""}<button class="btn slim quiet" data-dccopy title="The lines with their marks and plays, for the debrief">📋 Copy analysis</button></span>`; }
+  const M = dcMarks(b, Q.at);
+  return `<span class="dc-tools" data-dctools>${Q.ans && !M.n && !DC.noteEdit ? `<button class="btn slim quiet" data-dcnote title="A short note on this line — they see it; it goes into 📋 Copy analysis">📝 Note</button>` : ""}${Q.ans && has ? `<button class="btn slim" data-dcclear title="Take all the marks off this line">🧹 Clear</button>` : ""}${last ? `<button class="btn slim" data-dclast title="The marks this line had last time">↺ Last time (${new Date(last.t).toLocaleDateString("en-GB", {day: "numeric", month: "short"})})</button>` : ""}<button class="btn slim quiet" data-dccopy title="The lines with their marks and plays, for the debrief">📋 Copy analysis</button></span>`; }
 /* ---- the card ---- */
+function dcEditHTML(b){ const x = DCS.mine[b._pid];
+  return `<div class="dc" data-dc><div class="dc-edit"><p class="dc-edit-h"><b>✏️ My lines</b> — one per row: the time in the film, then the line with the gap in [square brackets]. Kept on this computer only.</p>
+    <textarea class="dc-edtext" data-dcedtext rows="9" spellcheck="false" placeholder="21:28 I was [sitting there] with Gus one day&#10;21:40.5-21:42.8 yeah you should [get into business]&#10;21:50 > 22:01 [and that's how] it started">${esc(x && x.raw || "")}</textarea>
+    <p class="dc-edit-help"><b>21:28</b> — where the line starts (the waveform opens there; drag over the piece, then Space). <b>21:28-21:30.5</b> (or two times, as in Aegisub: <b>0:25:20.07 0:25:21.43</b>) — the piece is selected already. Rows copied from Aegisub (Ctrl+C in its list) work too: add the [ ] after pasting. <b>🎬 Context</b> plays the 10 seconds before the line with the picture; to start it elsewhere: <b>21:16 &gt; 21:28 …</b></p>
+    <div class="dc-edit-ctl"><button class="btn primary" data-dcedok>Save</button>${dcLines(b).length ? `<button class="btn" data-dcedno>Cancel</button>` : ""}${x && x.raw ? `<button class="btn quiet" data-dcedclear title="Back to the lines this page came with">Use the page's lines</button>` : ""}</div></div></div>`; }
 function decodeHTML(b){
+  if(DC.edit === b._pid || !dcLines(b).length) return dcEditHTML(b);
   const Q = dcSt(b), l = dcLines(b)[Q.at], n = dcLines(b).length, pic = DC.pic && DC.url && DC.m && DC.m.videoWidth > 0;
   const dots = n > 1 ? `<span class="dc-dots" role="group" aria-label="Lines">${dcLines(b).map((_, k) => `<button class="${k === Q.at ? "on" : ""}" data-dcgo="${k}" ${k === Q.at ? `aria-current="step"` : ""} aria-label="Line ${k + 1}">${k + 1}</button>`).join("")}</span>` : "";
   const hint = Q.ans && !DC.hinted ? `<p class="dc-hint">Tap a word to mark it · tap the space between two words to link them</p>` : "";
   return `<div class="dc${Q.ans ? " ans" : ""}${pic ? " pic" : ""}" data-dc>
-    <div class="dc-top"><span class="dc-n">${esc(b.title || "Line")} <b>${Q.at + 1}</b> of ${n}</span>${dots}${dcToolsHTML(b)}</div>
+    <div class="dc-top"><span class="dc-n">${esc(b.title || "Line")} <b>${Q.at + 1}</b> of ${n}</span>${dots}${dcToolsHTML(b)}<button class="btn slim quiet" data-dcedit title="Write or paste your own lines (kept on this computer)">✏️ My lines</button></div>
     <div class="dc-main"><div class="dc-text">${l.before ? `<p class="dc-ctx">${esc(l.before)}</p>` : ""}<div class="dc-linebox">${dcLineInner(b)}</div>${l.after ? `<p class="dc-ctx">${esc(l.after)}</p>` : ""}${hint}</div>${pic ? `<div class="dc-vid" data-dcvid></div>` : ""}</div>
     <div class="dc-plbox" data-dcplayer>${dcPlayerHTML(b)}</div></div>`; }
 /* ---- the player ---- */
 const dcT = s => { const p = String(s).trim().split(":").map(Number); return !p.length || p.some(x => isNaN(x)) ? null : p.reduce((a, x) => a * 60 + x, 0); };
 const dcFmt = t => { t = Math.max(0, t); const m = Math.floor(t / 60), s = t - m * 60; return m + ":" + (s < 10 ? "0" : "") + s.toFixed(2); };
 const dcFmtS = t => { const m = Math.floor(t / 60), s = Math.round((t - m * 60) * 10) / 10; return m + ":" + (s < 10 ? "0" : "") + (s % 1 ? s.toFixed(1) : s); };
-function dcClip(b, i){ const id = dcId(b, i), c = DCS.clips[id] || dcLines(b)[i].clip; if(!c) return null;
+function dcClip(b, i){ const id = dcId(b, i), c = DCS.clips[id] || (dcLines(b)[i] || {}).clip; if(!c) return null;
   const [a, z] = String(c).split(/\s*[-–—]\s*(?=\d)/), s = dcT(a), e = dcT(z); return s != null && e != null && e > s ? {s, e} : null; }
 const dcPlays = (b, i) => (DCS.plays[dcId(b, i)] || []).filter(p => Date.now() - p.t < DC_FRESH);
-function dcWinFor(b){ const Q = dcSt(b), c = dcClip(b, Q.at), D0 = DC.dur || 0;
+const dcStart = (b, i) => { const c = dcClip(b, i), l = dcLines(b)[i] || {}; return c ? c.s : l.at != null ? dcT(l.at) : null; };
+function dcGo(t){ const w = DC.win ? Math.max(6, Math.min(20, DC.win[1] - DC.win[0])) : 12;   /* ⏱ a time: the waveform there, the cursor on it */
+  DC.win = [Math.max(0, t - 3), t - 3 + w]; if(DC.win[0] === 0) DC.win[1] = w; if(DC.dur && DC.win[1] > DC.dur){ DC.win = [Math.max(0, DC.dur - w), DC.dur]; } DC.sel = null; DC.cur = t; if(DC.playing) dcStop(false); if(DC.m) try{ DC.m.currentTime = t; }catch(x){} dcPlayerPaint(); }
+function dcWinFor(b){ const Q = dcSt(b), c = dcClip(b, Q.at), D0 = DC.dur || 0, a = dcStart(b, Q.at);
   if(c){ DC.win = [Math.max(0, c.s - 3), D0 ? Math.min(D0, c.e + 3) : c.e + 3]; DC.sel = {s: c.s, e: c.e}; DC.cur = c.s; }
+  else if(a != null){ DC.win = [Math.max(0, a - 3), D0 ? Math.min(D0, a + 9) : a + 9]; DC.sel = null; DC.cur = a; }
   else { DC.win = [0, D0 ? Math.min(D0, 12) : 12]; DC.sel = null; DC.cur = 0; }
   if(DC.win[1] - DC.win[0] < 1) DC.win[1] = DC.win[0] + 1; }
 function dcPlayerHTML(b){
@@ -2115,15 +2160,17 @@ function dcPlayerHTML(b){
   const msg = DC.wErr === "big" ? "This file is too big for the waveform — the line still plays." : DC.wErr ? "This browser can't draw this file's waveform — the line still plays." : DC.wBusy ? "Drawing the waveform…" : "";
   const c = dcClip(b, Q.at), selTxt = DC.sel ? `${dcFmt(DC.sel.s)} – ${dcFmt(DC.sel.e)}` : "", pinOk = DC.sel && DC.sel.e - DC.sel.s > .15 && !(c && Math.abs(c.s - DC.sel.s) < .02 && Math.abs(c.e - DC.sel.e) < .02);
   return `<div class="dc-pl"><div class="dc-wavebox"><canvas class="dc-wave" data-dcwave aria-label="The waveform: click to put the cursor, drag to select, Space to play"></canvas>${msg ? `<span class="dc-wmsg">${msg}</span>` : ""}<span class="dc-cnt${n ? "" : " zero"}" data-dccnt title="Plays of this line in this lesson">▶ ${n}</span></div>
-    <div class="dc-ctl"><button class="btn slim primary dc-play" data-dcplay>${DC.playing ? "■ Stop" : "▶ Play"}<kbd>Space</kbd></button><span class="dc-seltx" data-dcseltx>${selTxt}</span>${pinOk ? `<button class="btn slim quiet" data-dcpin title="Keep this piece as the line's time (it goes into 📋 Copy analysis)">📌 Line's time</button>` : ""}<span class="dc-sp"></span>${DC.m && DC.m.videoWidth > 0 ? `<button class="btn slim quiet" data-dcpic aria-pressed="${DC.pic}" title="Show the video above the waveform">🎬 Picture</button>` : ""}<button class="btn slim quiet dc-file" data-dcopen title="Open another file">📂 ${esc(DC.name.length > 26 ? DC.name.slice(0, 24) + "…" : DC.name)}</button></div></div>`; }
+    <div class="dc-ctl"><button class="btn slim primary dc-play" data-dcplay>${DC.playing ? "■ Stop" : "▶ Play"}<kbd>Space</kbd></button><label class="dc-go" title="Go to a time in the film, then Space plays from there"><span aria-hidden="true">⏱</span><input data-dctime inputmode="decimal" autocomplete="off" placeholder="21:28" aria-label="Go to a time (m:ss)"></label><button class="btn slim" data-dcctx title="The 10 seconds before the line, with the picture (Space or Esc stops)">${DC.m && DC.m.videoWidth > 0 ? "🎬" : "🔈"} Context</button><span class="dc-seltx" data-dcseltx>${selTxt}</span>${pinOk ? `<button class="btn slim quiet" data-dcpin title="Keep this piece as the line's time (it goes into 📋 Copy analysis)">📌 Line's time</button>` : ""}<span class="dc-sp"></span>${DC.m && DC.m.videoWidth > 0 ? `<button class="btn slim quiet" data-dcpic aria-pressed="${DC.pic}" title="Show the video above the waveform">🎬 Picture</button>` : ""}<button class="btn slim quiet dc-file" data-dcopen title="Open another file">📂 ${esc(DC.name.length > 26 ? DC.name.slice(0, 24) + "…" : DC.name)}</button></div></div>`; }
 function dcPlayerPaint(){ const b = DC.b, box = document.querySelector("#main [data-dcplayer]"); if(!b || !box) return; box.innerHTML = dcPlayerHTML(b); dcWireWave(b); dcDraw(); }
 function dcCtl(){ const x = document.querySelector("#main [data-dcplay]"); if(x) x.innerHTML = `${DC.playing ? "■ Stop" : "▶ Play"}<kbd>Space</kbd>`; }
 function dcMedia(){ if(DC.m) return DC.m;
   const v = document.createElement("video"); v.className = "dc-media"; v.playsInline = true; v.preload = "auto"; v.setAttribute("aria-hidden", "true"); document.body.appendChild(v); DC.m = v;
-  v.addEventListener("ended", () => { DC.playing = false; DC.stopAt = null; dcDraw(); dcCtl(); });
+  v.addEventListener("ended", () => { DC.playing = false; DC.stopAt = null; dcCtxEnd(); dcDraw(); dcCtl(); });
   v.addEventListener("loadedmetadata", () => { DC.dur = v.duration || 0; if(DC.b){ const Q = dcSt(DC.b); DC.winFor = dcId(DC.b, Q.at); dcWinFor(DC.b); render(); } });
   return v; }
-function dcPlace(){ const v = DC.m; if(!v) return; const ph = document.querySelector("#main [data-dcvid]");
+function dcPlace(){ const v = DC.m; if(!v) return;
+  if(DC.ctxOn){ v.removeAttribute("style"); v.classList.add("on", "ctx"); return; } v.classList.remove("ctx");
+  const ph = document.querySelector("#main [data-dcvid]");
   if(!ph || !DC.b){ v.classList.remove("on"); return; }
   const r = ph.getBoundingClientRect(); Object.assign(v.style, {left: r.left + scrollX + "px", top: r.top + scrollY + "px", width: r.width + "px", height: r.height + "px"}); v.classList.add("on"); }
 /* the file: Chrome / Edge remember it (its handle, kept on this computer) and bring it back with one click; other browsers ask again */
@@ -2144,14 +2191,33 @@ function dcUse(f){ dcStop(false); if(DC.url) URL.revokeObjectURL(DC.url);
   DC.url = URL.createObjectURL(f); DC.name = f.name; DC.peaks = null; DC.wErr = ""; DC.dur = 0;
   const m = dcMedia(); m.src = DC.url; m.load(); dcPeaks(f); render(); }
 async function dcPeaks(f){ const key = "peaks|" + f.name + "|" + f.size + "|" + f.lastModified, c = await dcGet(key);
-  if(c && c.max){ DC.peaks = c; dcPlayerPaint(); return; }
-  if(f.size > DC_MAX){ DC.wErr = "big"; dcPlayerPaint(); return; }
+  if(c && c.max && !c.live){ DC.peaks = c; dcPlayerPaint(); return; }
+  DC.liveKey = null;
+  if(f.size > DC_MAX){ dcLiveStart(key, c && c.live ? c : null); return; }
   DC.wBusy = true; dcPlayerPaint();
   try{ const buf = await f.arrayBuffer(), Ctx = window.OfflineAudioContext || window.webkitOfflineAudioContext, ac = new Ctx(1, 1, 8000);
     const ab = await new Promise((ok, no) => { const p = ac.decodeAudioData(buf, ok, no); if(p && p.then) p.then(ok, no); });
     DC.peaks = dcMakePeaks(ab); dcPut(key, DC.peaks); }
-  catch(e){ DC.wErr = "decode"; }
+  catch(e){ DC.wBusy = false; dcLiveStart(key, null); return; }
   DC.wBusy = false; if(DC.name === f.name) dcPlayerPaint(); }
+/* a whole film (her 11.11: «21:28», the film on her computer) is too big to read at once: its waveform draws as it plays — the sound goes
+   through an analyser, each moment's peaks land at the film's time — and is kept on this computer per file, so what she played while
+   preparing is there in the lesson. */
+function dcLiveStart(key, cache){ const v = dcMedia();
+  const go = () => { const d = v.duration; if(!d || !isFinite(d)) return; const n = Math.ceil(d * DC_RATE);
+    DC.peaks = cache && cache.n === n && cache.got ? cache : {rate: DC_RATE, n, min: new Int8Array(n), max: new Int8Array(n), got: new Uint8Array(n), dur: d, live: true};
+    DC.liveKey = key; dcLiveInit(); dcPlayerPaint(); };
+  if(v.readyState >= 1) go(); else v.addEventListener("loadedmetadata", go, {once: true}); }
+function dcLiveInit(){ if(DC.live) return; try{ const Ctx = window.AudioContext || window.webkitAudioContext, ac = new Ctx(), src = ac.createMediaElementSource(dcMedia()), an = ac.createAnalyser();
+  an.fftSize = 2048; src.connect(an); an.connect(ac.destination); DC.live = {ac, an, buf: new Float32Array(an.fftSize)}; }catch(e){ DC.live = null; } }
+function dcCapture(){ const L = DC.live, pk = DC.peaks, m = DC.m; if(!L || !pk || !pk.live || !m || m.paused) return;
+  L.an.getFloatTimeDomainData(L.buf); const sr = L.ac.sampleRate, N = L.buf.length, now = m.currentTime, per = sr / pk.rate, k = Math.floor(N / per);
+  for(let c = 0; c < k; c++){ const a = Math.floor(N - (c + 1) * per), z = Math.floor(N - c * per); let lo = 0, hi = 0;
+    for(let s = Math.max(0, a); s < z; s++){ const x = L.buf[s]; if(x < lo) lo = x; if(x > hi) hi = x; }
+    const i = Math.floor((now - (c + .5) * per / sr) * pk.rate); if(i < 0 || i >= pk.n) continue;
+    pk.min[i] = Math.max(-127, Math.round(lo * 127)); pk.max[i] = Math.min(127, Math.round(hi * 127)); pk.got[i] = 1; }
+  DC.liveDirty = true; }
+function dcLiveSave(){ if(DC.liveDirty && DC.liveKey && DC.peaks && DC.peaks.live){ DC.liveDirty = false; dcPut(DC.liveKey, DC.peaks); } }
 function dcMakePeaks(ab){ const n = Math.ceil(ab.duration * DC_RATE), min = new Int8Array(n), max = new Int8Array(n), chs = [];
   for(let c = 0; c < ab.numberOfChannels; c++) chs.push(ab.getChannelData(c));
   const per = ab.sampleRate / DC_RATE, len = chs[0].length;
@@ -2170,12 +2236,14 @@ function dcDraw(){
   const c = DC.b ? dcClip(DC.b, dcSt(DC.b).at) : null; if(c){ g.fillStyle = col("--dc-clip"); g.fillRect(X(c.s), 0, X(c.e) - X(c.s), WH); }
   if(DC.sel){ g.fillStyle = col("--dc-sel"); g.fillRect(X(DC.sel.s), 0, Math.max(1, X(DC.sel.e) - X(DC.sel.s)), WH); }
   const pk = DC.peaks; g.fillStyle = col("--dc-wave");
-  if(pk){ const a0 = Math.max(0, Math.floor(w0 * pk.rate)), a1 = Math.min(pk.n, Math.ceil(w1 * pk.rate)); let top = 6;
-    for(let i = a0; i < a1; i++){ if(pk.max[i] > top) top = pk.max[i]; if(-pk.min[i] > top) top = -pk.min[i]; }
-    const amp = (WH / 2 - 3) / top;
-    for(let x = 0; x < W; x++){ const a = Math.floor((w0 + x / W * (w1 - w0)) * pk.rate), z = Math.max(a + 1, Math.floor((w0 + (x + 1) / W * (w1 - w0)) * pk.rate)); let lo = 0, hi = 0;
-      for(let i = Math.max(0, a); i < Math.min(pk.n, z); i++){ if(pk.min[i] < lo) lo = pk.min[i]; if(pk.max[i] > hi) hi = pk.max[i]; }
-      g.fillRect(x, mid - hi * amp, 1, Math.max(1, (hi - lo) * amp)); } }
+  if(pk){ const a0 = Math.max(0, Math.floor(w0 * pk.rate)), a1 = Math.min(pk.n, Math.ceil(w1 * pk.rate)); let top = 6, gotAny = 0;
+    for(let i = a0; i < a1; i++){ if(pk.max[i] > top) top = pk.max[i]; if(-pk.min[i] > top) top = -pk.min[i]; if(pk.live && pk.got[i]) gotAny++; }
+    const amp = (WH / 2 - 3) / top, wv = col("--dc-wave"), un = col("--dc-tick");
+    for(let x = 0; x < W; x++){ const a = Math.floor((w0 + x / W * (w1 - w0)) * pk.rate), z = Math.max(a + 1, Math.floor((w0 + (x + 1) / W * (w1 - w0)) * pk.rate)); let lo = 0, hi = 0, got = !pk.live;
+      for(let i = Math.max(0, a); i < Math.min(pk.n, z); i++){ if(pk.min[i] < lo) lo = pk.min[i]; if(pk.max[i] > hi) hi = pk.max[i]; if(!got && pk.got[i]) got = true; }
+      if(got){ g.fillStyle = wv; g.fillRect(x, mid - hi * amp, 1, Math.max(1, (hi - lo) * amp)); } else if(x % 6 < 3){ g.fillStyle = un; g.fillRect(x, mid, 1, 1); } }
+    if(pk.live && gotAny < (a1 - a0) * .05){ g.fillStyle = col("--dc-tick"); g.font = "700 14px system-ui, sans-serif"; g.textAlign = "center"; g.fillText("The waveform draws as it plays — play this bit once (🎬 Context does it too)", W / 2, mid - 12); g.textAlign = "left"; }
+    g.fillStyle = wv; }
   else g.fillRect(0, mid, W, 1);
   if(DC.sel){ g.fillStyle = col("--dc-edge"); g.fillRect(X(DC.sel.s) - 1, 0, 2, WH); g.fillRect(X(DC.sel.e) - 1, 0, 2, WH); }
   g.fillStyle = col("--dc-tick"); g.font = "600 11px system-ui, sans-serif"; g.textBaseline = "alphabetic";
@@ -2199,19 +2267,28 @@ function dcWireWave(b){ const cv = document.querySelector("#main canvas[data-dcw
     if(w0 < 0){ w1 -= w0; w0 = 0; } if(DC.dur && w1 > DC.dur){ w0 = Math.max(0, w0 - (w1 - DC.dur)); w1 = DC.dur; }
     DC.win = [w0, w1]; dcDraw(); }, {passive: false}); }
 function dcFollow(t){ const [w0, w1] = DC.win, w = w1 - w0; if(t > w1 - w * .04 || t < w0){ let a = t - w * .2; if(DC.dur) a = Math.min(a, Math.max(0, DC.dur - w)); DC.win = [Math.max(0, a), Math.max(0, a) + w]; } }
-function dcPlay(b, s, e){ const m = dcMedia(); if(!DC.url) return;
-  DC.stopAt = e; try{ m.currentTime = s; }catch(x){} const p = m.play(); if(p && p.catch) p.catch(() => { DC.playing = false; dcCtl(); });
+function dcContext(b){ if(!DC.url) return; const Q = dcSt(b), l = dcLines(b)[Q.at] || {}, a0 = dcStart(b, Q.at), a = a0 != null ? a0 : DC.cur, s = l.ctx != null && dcT(l.ctx) != null && dcT(l.ctx) < a ? dcT(l.ctx) : Math.max(0, a - 10);
+  if(a - s < .3) return; const v = dcMedia();
+  if(v.videoWidth > 0){ DC.ctxOn = true; if(!DC.bg){ DC.bg = document.createElement("div"); DC.bg.className = "dc-ctxbg"; DC.bg.innerHTML = `<span>Space or Esc stops</span>`; DC.bg.addEventListener("click", () => dcStop(false)); document.body.appendChild(DC.bg); } DC.bg.hidden = false; dcPlace(); }
+  dcPlay(b, s, a, true); }
+function dcCtxEnd(){ if(!DC.ctxOn) return; DC.ctxOn = false; if(DC.bg) DC.bg.hidden = true; if(DC.m) DC.m.classList.remove("ctx"); dcPlace(); }
+function dcPlay(b, s, e, ctx){ const m = dcMedia(); if(!DC.url) return;
+  if(DC.live && DC.live.ac.state !== "running") try{ DC.live.ac.resume(); }catch(x){}
+  if(!ctx) dcCtxEnd();
+  DC.stopAt = e; try{ m.currentTime = s; }catch(x){} const p = m.play(); if(p && p.catch) p.catch(() => { DC.playing = false; dcCtxEnd(); dcCtl(); });
   DC.playing = true; const Q = dcSt(b), id = dcId(b, Q.at);
+  if(ctx){ dcCtl(); cancelAnimationFrame(DC.raf); const step = () => { if(!DC.playing || !DC.m) return; dcCapture(); if(DC.m.currentTime >= DC.stopAt){ DC.m.pause(); DC.playing = false; DC.stopAt = null; dcCtxEnd(); dcLiveSave(); dcDraw(); dcCtl(); return; } dcDraw(); DC.raf = requestAnimationFrame(step); }; DC.raf = requestAnimationFrame(step); return; }
   (DCS.plays[id] = DCS.plays[id] || []).push({s: +s.toFixed(2), e: e == null ? null : +e.toFixed(2), t: Date.now()}); if(DCS.plays[id].length > 300) DCS.plays[id] = DCS.plays[id].slice(-300); dcSave();
   const cnt = document.querySelector("#main [data-dccnt]"); if(cnt){ cnt.textContent = "▶ " + dcPlays(b, Q.at).length; cnt.classList.remove("zero"); if(!calm()){ cnt.classList.remove("pop"); void cnt.offsetWidth; cnt.classList.add("pop"); } }
   dcCtl(); cancelAnimationFrame(DC.raf);
-  const step = () => { if(!DC.playing || !DC.m) return; const t = DC.m.currentTime;
-    if(DC.stopAt != null && t >= DC.stopAt){ DC.m.pause(); DC.playing = false; DC.stopAt = null; dcDraw(); dcCtl(); return; }
+  const step = () => { if(!DC.playing || !DC.m) return; const t = DC.m.currentTime; dcCapture();
+    if(DC.stopAt != null && t >= DC.stopAt){ DC.m.pause(); DC.playing = false; DC.stopAt = null; dcLiveSave(); dcDraw(); dcCtl(); return; }
     if(DC.stopAt == null) dcFollow(t); dcDraw(); DC.raf = requestAnimationFrame(step); };
   DC.raf = requestAnimationFrame(step); }
-function dcStop(keep){ const m = DC.m; if(m && !m.paused){ m.pause(); if(keep) DC.cur = m.currentTime; } DC.playing = false; DC.stopAt = null; cancelAnimationFrame(DC.raf); dcDraw(); dcCtl(); }
+function dcStop(keep){ const m = DC.m, wasCtx = DC.ctxOn; if(m && !m.paused){ m.pause(); if(keep && !wasCtx) DC.cur = m.currentTime; } DC.playing = false; DC.stopAt = null; cancelAnimationFrame(DC.raf); dcCtxEnd(); dcLiveSave(); dcDraw(); dcCtl(); }
 /* Space (and ▶): a piece selected → it plays from its start, every time; nothing selected → play from the cursor, Space again stops */
-function dcSpace(b){ if(!DC.url){ const o = document.querySelector("#main [data-dcreopen], #main [data-dcopen]"); if(o){ o.classList.remove("nudge"); void o.offsetWidth; o.classList.add("nudge"); } return; }
+function dcSpace(b){ if(DC.ctxOn){ dcStop(false); return; }
+  if(!DC.url){ const o = document.querySelector("#main [data-dcreopen], #main [data-dcopen]"); if(o){ o.classList.remove("nudge"); void o.offsetWidth; o.classList.add("nudge"); } return; }
   if(DC.sel){ dcPlay(b, DC.sel.s, DC.sel.e); return; }
   if(DC.playing){ dcStop(true); return; }
   dcPlay(b, DC.cur, null); }
@@ -2228,6 +2305,8 @@ function dcSayOk(b){ const P = DC.pan, inp = document.querySelector("#main [data
   if(P.l != null) Object.keys(M.s).forEach(k => { const p = k.split(".").map(Number); if(p.length === 3 && p[0] === P.i && P.l >= p[1] && P.l < p[1] + p[2]) delete M.s[k]; });
   if(v){ M.s[key] = v; DC.fresh = "s" + key; } else delete M.s[key];
   DC.pan = null; dcHinted(); dcStore(b); dcPaint(b); }
+function dcNoteOk(b){ const ni = document.querySelector("#main [data-dcnotein]"), Q = dcSt(b), M = dcMarks(b, Q.at); if(!ni) return;
+  M.n = ni.value.trim(); DC.noteEdit = false; if(M.n) DC.fresh = "n"; dcStore(b); dcPaint(b); }
 function dcHinted(){ if(!DC.hinted){ DC.hinted = true; store.set("dc-hinted", true); } }
 function dcLink(b, k){ const Q = dcSt(b), M = dcMarks(b, Q.at), at = M.k.indexOf(k);
   if(at > -1) M.k.splice(at, 1); else { M.k.push(k); DC.fresh = "k" + k; }
@@ -2247,6 +2326,8 @@ function dcCopyText(b){
   const out = [`🎧 ${D.title} · ${new Date().toLocaleString("en-GB", {day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"})}${DC.name ? " · " + DC.name : ""}`];
   dcLines(b).forEach((l, i) => { const id = dcId(b, i), W = dcWords(l), M = dcMarks(b, i), pl = dcPlays(b, i), mk = dcMarksOut(W, M);
     out.push("", `${i + 1} (${id}) ${String(l.text || "").replace(/\{\{|\}\}/g, m => m === "{{" ? "[" : "]")}`);
+    if(M.n) out.push(`   📝 ${M.n}`);
+    if(l.at && !dcClip(b, i)) out.push(`   ⏱ ${l.at}`);
     if(mk.length) out.push("   " + mk.map(x => `${DC_WORD[x.mark] || x.mark} ${x.at.replace("|", "‿")}${x.say ? ` → “${x.say}”` : ""}`).join(" · "), `   marks: ${JSON.stringify(mk)}`);
     else out.push("   no marks");
     if(pl.length){ const g = {}; pl.forEach(p => { const k = p.e == null ? `from ${dcFmt(p.s)}` : `${dcFmt(p.s)}–${dcFmt(p.e)}`; g[k] = (g[k] || 0) + 1; });
@@ -2255,10 +2336,18 @@ function dcCopyText(b){
   return out.join("\n"); }
 /* ---- wiring ---- */
 function wireDecode(b, root){ DC.b = b; const Q = dcSt(b), id = dcId(b, Q.at);
-  if(DC.winFor !== id){ DC.winFor = id; dcStop(false); dcWinFor(b); dcClose(); }
+  if(DC.winFor !== id){ DC.winFor = id; dcStop(false); dcWinFor(b); dcClose(); DC.noteEdit = false; if(DC.url && DC.m && DC.m.readyState >= 1) try{ DC.m.currentTime = DC.cur; }catch(x){} dcPlayerPaint(); }   /* the picture beside: the line's own moment */
   const card = root.querySelector("[data-dc]"); if(!card) return;
   card.addEventListener("click", async e => { const t = e.target, on = q => t.closest(q);
     let x;
+    if(on("[data-dcedit]")){ dcStop(false); dcClose(); DC.noteEdit = false; DC.edit = b._pid; render(); const ta = document.querySelector("#main [data-dcedtext]"); if(ta) ta.focus(); return; }
+    if(on("[data-dcedok]")){ const ta = document.querySelector("#main [data-dcedtext]"), raw = ta ? ta.value : ""; if(raw.trim()) DCS.mine[b._pid] = {raw, t: Date.now()}; else delete DCS.mine[b._pid]; dcSave(); DC.edit = null; Q.at = 0; Q.ans = false; DC.winFor = null; render(); keepPlace(); return; }
+    if(on("[data-dcedno]")){ DC.edit = null; render(); return; }
+    if(on("[data-dcedclear]")){ delete DCS.mine[b._pid]; dcSave(); DC.edit = null; Q.at = 0; Q.ans = false; DC.winFor = null; render(); keepPlace(); return; }
+    if(on("[data-dcctx]")){ if(DC.ctxOn) dcStop(false); else dcContext(b); return; }
+    if(on("[data-dcnoteok]")){ dcNoteOk(b); return; }
+    if(on("[data-dcnote]")){ dcClose(); DC.noteEdit = true; dcPaint(b); const ni = document.querySelector("#main [data-dcnotein]"); if(ni){ ni.focus(); ni.select(); } return; }
+    if(on("[data-dcnotein]") || on("[data-dctime]")) return;
     if((x = on("[data-dcgo]"))){ dcClose(); Q.at = +x.dataset.dcgo; Q.ans = false; render(); keepPlace(); return; }
     if(on("[data-dcopen]")){ dcOpen(); return; }
     if(on("[data-dcreopen]")){ dcReopen(); return; }
@@ -2282,7 +2371,10 @@ function wireDecode(b, root){ DC.b = b; const Q = dcSt(b), id = dcId(b, Q.at);
       if(dcPreset(b, i)){ DC.pan = null; DC.letters = null; dcHinted(); return; }
       DC.pan = DC.pan && DC.pan.i === i && DC.pan.l == null ? null : {i, l: null}; if(DC.letters !== i) DC.letters = null; dcPaint(b); return; }
     if(DC.pan || DC.letters != null){ dcClose(); dcPaint(b); } });
-  card.addEventListener("keydown", e => { if(e.target.matches && e.target.matches("[data-dcsayin]")){ if(e.key === "Enter"){ e.preventDefault(); dcSayOk(b); } if(e.key === "Escape"){ e.preventDefault(); dcClose(); dcPaint(b); } } });
+  card.addEventListener("keydown", e => {
+    if(e.target.matches && e.target.matches("[data-dctime]") && e.key === "Enter"){ e.preventDefault(); const v = dcT(e.target.value.replace(",", ".")); if(v != null && DC.url){ e.target.blur(); dcGo(v); } return; }
+    if(e.target.matches && e.target.matches("[data-dcnotein]")){ if(e.key === "Enter"){ e.preventDefault(); dcNoteOk(b); } if(e.key === "Escape"){ e.preventDefault(); DC.noteEdit = false; dcPaint(b); } return; }
+    if(e.target.matches && e.target.matches("[data-dcsayin]")){ if(e.key === "Enter"){ e.preventDefault(); dcSayOk(b); } if(e.key === "Escape"){ e.preventDefault(); dcClose(); dcPaint(b); } } });
   dcArcs(); dcPanPlace(); dcWireWave(b); dcDraw(); requestAnimationFrame(() => { dcArcs(); dcPlace(); dcDraw(); });
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if(DC.b === b){ dcArcs(); dcPanPlace(); } });
   DC.fresh = null; DC.freshAll = null; }
@@ -2291,6 +2383,7 @@ addEventListener("keydown", e => { const b = DC.b; if(!b || !document.querySelec
   if(e.target && e.target.closest && e.target.closest("input, textarea, select, [contenteditable]")) return;
   if(e.ctrlKey || e.metaKey || e.altKey) return;
   if(e.key === " "){ e.preventDefault(); e.stopImmediatePropagation(); if(!e.repeat) dcSpace(b); return; }
+  if(e.key === "Escape" && DC.ctxOn){ e.preventDefault(); dcStop(false); return; }
   if(e.key === "Escape" && (DC.pan || DC.letters != null)){ e.preventDefault(); dcClose(); dcPaint(b); return; }
   if(!DC.pan || DC.pan.say != null || !dcSt(b).ans) return;
   const k = e.key.toLowerCase(), map = {g: "grey", s: "strike", b: "strong"};
