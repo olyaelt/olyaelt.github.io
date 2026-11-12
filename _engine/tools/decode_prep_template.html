@@ -31,6 +31,7 @@ body{overflow:hidden}
 .cue.cur{background:var(--ground)}
 .cue-pl{width:26px;height:26px;border-radius:50%;border:0;background:var(--instr);color:var(--instr-ink);font-size:.7rem;cursor:pointer;align-self:center}
 .cue-pl.ctxpick{background:#E08A00}
+.cue-pl.stopb{background:var(--ink);color:var(--card);font-size:.8rem}
 .cue-t, .cue-pl{user-select:none}
 .cue-t{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.82rem;font-weight:700;cursor:pointer}
 .cue-x{font-size:1.05rem;line-height:1.55;user-select:text;cursor:text}
@@ -58,18 +59,33 @@ body{overflow:hidden}
 .pp-btn{font:inherit;font-weight:800;font-size:.9rem;border:2px solid var(--instr);color:var(--instr);background:var(--card);border-radius:10px;padding:4px 10px;cursor:pointer}
 .pp-btn.pri{background:var(--instr);color:var(--instr-ink)}
 .pp-btn.quiet{border-color:var(--line);color:var(--muted)}
+.pp-why{font-size:.8rem;font-weight:700;color:var(--muted)}
+.pp-hint.sm{font-size:.78rem;margin:0}
 .pp-btn[disabled]{opacity:.45;cursor:default}
 .pp-hint{margin:0;color:var(--muted);font-size:.88rem}
 .pp-bank details{border-top:1px solid var(--line);padding:4px 0}
 .pp-bank summary{cursor:pointer;font-weight:800}
-.pp-bank ul{margin:4px 0 0;padding-left:1.1em;display:grid;gap:2px}
-.pp-bank li{cursor:pointer}
-.pp-bank li .tm{color:var(--muted);font-variant-numeric:tabular-nums;font-size:.85rem;margin-right:4px}
-.pp-bank li .hd{font-size:.75rem;font-weight:900;color:#A35A00;margin-left:4px}
+.pp-bank ul{margin:4px 0 0;padding:0;list-style:none;display:grid;gap:2px}
+.pp-bank li{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto auto auto auto;align-items:center;gap:5px;padding:2px 4px;border-radius:8px}
+.pp-bank li.now{background:var(--ground);outline:2px solid var(--instr)}
+.pp-bank li.open{background:var(--ground)}
+.pp-bank li .tm{color:var(--muted);font-variant-numeric:tabular-nums;font-size:.85rem}
+.pp-bank .bk-t{cursor:pointer;line-height:1.3}
+.pp-bank .bk-t:hover{text-decoration:underline}
+.bk-pl{width:24px;height:24px;border-radius:50%;border:0;background:var(--instr);color:var(--instr-ink);font-size:.65rem;cursor:pointer}
+.bk-c{font:inherit;font-size:.72rem;font-weight:900;border:1.5px solid var(--line);background:transparent;color:var(--muted);border-radius:99px;padding:0 6px;cursor:pointer;line-height:1.5}
+.bk-c.hd.on{background:#FFE3B3;border-color:#A35A00;color:#5A3200}
+.bk-c.role.diag, .chip.role.diag{background:#DCEEFF;border-color:#0B5A8A;color:#0B4A72}
+.bk-c.role.train, .chip.role.train{background:#DDF5DD;border-color:#2C7A35;color:#1F5A26}
+.bk-x{border:0;background:transparent;color:var(--muted);font-size:.9rem;cursor:pointer;padding:0 2px}
+.bk-x:hover{color:var(--ink)}
+.bk-all{font:inherit;font-size:.75rem;font-weight:800;margin-left:8px;border:1.5px solid var(--instr);color:var(--instr);background:transparent;border-radius:99px;padding:0 8px;cursor:pointer}
+.bk-hid summary{color:var(--muted)}
+.cue-x mark.hid{opacity:.45;background-image:repeating-linear-gradient(135deg,transparent 0 4px,rgba(0,0,0,.08) 4px 6px)}
 .pp-wave{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:8px 10px;display:grid;gap:6px}
 .pp-wave canvas{display:block;width:100%;height:104px;border-radius:10px;cursor:crosshair;touch-action:none;
-  --fw-bg:#F3F7FA;--fw-sel:rgba(6,147,227,.20);--fw-edge:#0693E3;--fw-wave:#3D6F8F;--fw-tick:#6B6B6B;--fw-cur:#1D1D1B;--fw-head:#E00000;--fw-ctx:rgba(224,138,0,.18);--fw-piece:rgba(29,29,27,.07)}
-:root[data-theme="dark"] .pp-wave canvas{--fw-bg:#15191D;--fw-sel:rgba(108,195,255,.22);--fw-edge:#6CC3FF;--fw-wave:#7FB6DA;--fw-tick:#A4A7AB;--fw-cur:#ECECEA;--fw-head:#FF7A7A;--fw-ctx:rgba(255,170,60,.18);--fw-piece:rgba(255,255,255,.06)}
+  --fw-bg:#F3F7FA;--fw-sel:rgba(6,147,227,.20);--fw-edge:#0693E3;--fw-wave:#3D6F8F;--fw-tick:#6B6B6B;--fw-cur:#1D1D1B;--fw-head:#E00000;--fw-ctx:rgba(224,138,0,.18);--fw-piece:rgba(29,29,27,.07);--fw-rule:#E4ECF2}
+:root[data-theme="dark"] .pp-wave canvas{--fw-bg:#15191D;--fw-sel:rgba(108,195,255,.22);--fw-edge:#6CC3FF;--fw-wave:#7FB6DA;--fw-tick:#A4A7AB;--fw-cur:#ECECEA;--fw-head:#FF7A7A;--fw-ctx:rgba(255,170,60,.18);--fw-piece:rgba(255,255,255,.06);--fw-rule:#22282E}
 .pp-ctl{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .pp-ctl kbd{font:inherit;font-size:.72rem;font-weight:800;margin-left:6px;padding:1px 6px;border-radius:6px;background:var(--ground);color:var(--muted)}
 .pp-sel{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:700}
@@ -100,7 +116,7 @@ __BASE_JS__
    computer, and with her code in her table (sheet «Decoding bank»), so it is the same on both computers. ================= */
 const P = {v: null, url: "", film: "", sub: "", key: "", cues: [], pieces: [], features: [], cur: -1, sel: null, cursor: null, win: [0, 12],
   draft: null, ctxPick: false, from: "", to: "", q: "", playing: null, raf: 0, au: null, pk: {lo: {}, hi: {}}, pkKey: "", pkDirty: false,
-  dirty: {p: new Set(), del: new Set(), f: false}, saveT: 0, saved: "", status: "", rate: 1};
+  dirty: {p: new Set(), del: new Set(), f: false}, saveT: 0, saved: "", status: "", rate: 1, keepN: 0, dragging: false, mouseDown: false};
 const isHer = () => { try{ return localStorage.getItem("hw-role") === "teacher" && !!localStorage.getItem("hw-code"); }catch(e){ return false; } };
 const tableOn = () => TABLE_PAGE && !!LIVE_URL && isHer();
 const PALETTE = ["#FFF06A", "#7CF07C", "#9FD3FF", "#FFB3C7", "#FFC98A", "#C9B3FF", "#A8F0E4", "#E0E0A0"];
@@ -111,12 +127,13 @@ const parseT = s => { const m = String(s || "").trim().replace(",", ".").match(/
 const uid = () => "p" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 /* ---------- the subtitles: .srt or .ass (Aegisub), as they are — a cue is a line ---------- */
 function parseSubs(txt){
-  const out = [], clean = s => String(s).replace(/\{[^}]*\}/g, "").replace(/<[^>]+>/g, "").replace(/\\N|\\n/g, " ").replace(/\s+/g, " ").trim();
+  /* a line break inside a cue is a space: <br/> (her The Intern .srt, 12.11), \N in .ass, a lone \r */
+  const out = [], clean = s => String(s).replace(/<br\s*\/?>/gi, " ").replace(/\{[^}]*\}/g, "").replace(/<[^>]+>/g, "").replace(/\\[Nnh]/g, " ").replace(/[\s\u0085\u200b]+/g, " ").trim();
   if(/^\s*\[Script Info\]/m.test(txt) || /^Dialogue:/m.test(txt)){
-    txt.split(/\r?\n/).forEach(l => { const m = l.match(/^Dialogue:\s*[^,]*,([^,]+),([^,]+),(?:[^,]*,){6}(.*)$/); if(!m) return;
+    txt.split(/\r\n?|\n/).forEach(l => { const m = l.match(/^Dialogue:\s*[^,]*,([^,]+),([^,]+),(?:[^,]*,){6}(.*)$/); if(!m) return;
       const s = parseT(m[1]), e = parseT(m[2]), t = clean(m[3]); if(s != null && e != null && t) out.push({s, e, t}); });
   } else {
-    txt.replace(/\r/g, "").split(/\n\s*\n/).forEach(b => { const L = b.split("\n").filter(x => x.trim() !== ""); const i = L.findIndex(x => /-->/.test(x)); if(i < 0) return;
+    txt.replace(/\r\n?|[\u2028\u2029\u0085]/g, "\n").split(/\n\s*\n/).forEach(b => { const L = b.split("\n").filter(x => x.trim() !== ""); const i = L.findIndex(x => /-->/.test(x)); if(i < 0) return;
       const m = L[i].match(/(\d+:\d+:\d+[.,]\d+)\s*-->\s*(\d+:\d+:\d+[.,]\d+)/); if(!m) return;
       const t = clean(L.slice(i + 1).join(" ")); if(t) out.push({s: parseT(m[1]), e: parseT(m[2]), t}); });
   }
@@ -153,15 +170,59 @@ function capture(){ const A = P.au, v = P.v; if(!A || !A.an || !v || v.paused) r
   P.pkDirty = true; }
 async function peaksKeep(){ if(!P.pkDirty || !P.pkKey) return; P.pkDirty = false; idbPut("pk:" + P.pkKey, {lo: P.pk.lo, hi: P.pk.hi}); }
 async function peaksLoad(key){ P.pkKey = key; P.pk = {lo: {}, hi: {}}; const v = await idbGet("pk:" + key); if(v && P.pkKey === key){ P.pk = {lo: Object.assign({}, v.lo, P.pk.lo), hi: Object.assign({}, v.hi, P.pk.hi)}; waveDraw(); } }
-function stop(){ cancelAnimationFrame(P.raf); if(P.v) try{ P.v.pause(); }catch(e){} P.playing = null; waveDraw(); }
-function play(s, e, what){
+function stop(){ cancelAnimationFrame(P.raf); clearTimeout(P.nextT); if(P.v) try{ P.v.pause(); }catch(e){} P.playing = null; nowMark(); bankMark(); waveDraw(); }
+/* tools 36 (her 12.11 13:19–13:21): from a line or a point on the waveform the film plays ON — the waveform and the line follow; a piece stops at its end */
+const TAIL = .4;   /* a line plays a little past its subtitle's end: the .srt end often cuts the last sound */
+function play(s, e, what, more){
   if(!P.url){ nudge("[data-pick='film']"); return; }
-  stop(); const v = video(); audio(); v.playbackRate = P.rate; P.playing = {s, e, what};
+  stop(); const v = video(); audio(); v.playbackRate = P.rate; P.playing = Object.assign({s, e, what}, more || {}); nowMark(); bankMark();
   const go = () => { const p = v.play(); if(p && p.catch) p.catch(() => {});
-    const tick = () => { if(!P.playing) return; capture(); waveDraw(); if(v.currentTime >= e || v.ended){ stop(); peaksKeep(); return; } P.raf = requestAnimationFrame(tick); };
+    const tick = () => { if(!P.playing) return; capture(); if(what === "run") follow(v.currentTime); waveDraw(); if(v.currentTime >= e || v.ended){ const next = P.playing.next; stop(); peaksKeep(); if(next) P.nextT = setTimeout(next, 700); return; } if(what === "run" && ++P.keepN % 600 === 0) peaksKeep(); P.raf = requestAnimationFrame(tick); };
     P.raf = requestAnimationFrame(tick); };
   if(Math.abs(v.currentTime - s) < .05 && v.readyState >= 2) go(); else { v.addEventListener("seeked", go, {once: true}); v.currentTime = Math.max(0, s); }
 }
+/* the playhead runs on: the waveform turns its page when the head nears the right edge (unless she moved it away), and the line it is in lights up */
+function follow(t){
+  const [w0, w1] = P.win, w = w1 - w0;
+  if(!P.dragging && t >= w0 && t <= w1 + .3 && t > w1 - w * .08){ P.win = [t - w * .08, t - w * .08 + w]; }
+  const C = P.cues; if(!C.length) return; let lo = 0, hi = C.length - 1, k = -1;
+  while(lo <= hi){ const m = (lo + hi) >> 1; if(C[m].s <= t + .02){ k = m; lo = m + 1; } else hi = m - 1; }
+  if(k > -1 && k !== P.cur) setCur(k);
+}
+function setCur(k){
+  const L = document.getElementById("pp-cues"); if(!L){ P.cur = k; return; }
+  const old = L.querySelector(".cue.cur"), el = L.querySelector(`.cue[data-c="${k}"]`), lr = L.getBoundingClientRect();
+  const seen = x => { const a = x.getBoundingClientRect(); return a.bottom > lr.top && a.top < lr.bottom; };
+  const lead = !P.mouseDown && (!old || seen(old));   /* she follows along (her line was on screen) → the list follows; she scrolled away → it stays */
+  if(old) old.classList.remove("cur"); P.cur = k;
+  if(el){ el.classList.add("cur"); const a = el.getBoundingClientRect();
+    if(lead && (a.bottom > lr.bottom - 6 || a.top < lr.top + 2)) L.scrollTo({top: L.scrollTop + (a.top - lr.top) - lr.height * .25, behavior: "smooth"}); }
+  nowMark();
+}
+/* the line that plays on shows ■ (stop) instead of ▶ */
+function nowMark(){
+  document.querySelectorAll(".cue-pl.stopb").forEach(b => { b.classList.remove("stopb"); b.textContent = P.ctxPick ? "⏮" : "▶"; const l = P.ctxPick ? "Context from this line" : "Play from this line"; b.title = l; b.setAttribute("aria-label", l); });
+  if(P.playing && P.playing.what === "run" && !P.ctxPick){ const b = document.querySelector(`.cue[data-c="${P.cur}"] .cue-pl`);
+    if(b){ b.classList.add("stopb"); b.textContent = "■"; b.title = "Stop"; b.setAttribute("aria-label", "Stop"); } }
+}
+/* tools 36 (her 12.11 13:47: «быстро пройтись по списку и проверить, что всё играет»): ▶ in the bank plays exactly what the students will hear — the context, then the piece */
+function playBank(id, next){ const x = P.pieces.find(p => p.id === id); if(!x) return; const a = x.ctx != null ? Math.min(x.ctx, x.s) : x.s;
+  P.cur = x.c0; winTo(a, x.e); play(a, x.e + TAIL, "bank", {id, next}); setCur(x.c0); }
+function playAll(ids){ let i = 0; const go = () => { if(i >= ids.length) return; const id = ids[i++]; playBank(id, i < ids.length ? go : null); }; go(); }
+function bankMark(){ document.querySelectorAll(".pp-bank li.now").forEach(l => l.classList.remove("now"));
+  document.querySelectorAll(".pp-bank [data-bplay]").forEach(b => { b.textContent = "▶"; b.title = "Play: the context, then the piece"; });
+  const id = P.playing && P.playing.what === "bank" && P.playing.id; if(!id) return;
+  const li = document.querySelector(`.pp-bank li[data-pid="${id}"]`); if(li){ li.classList.add("now"); const b = li.querySelector("[data-bplay]"); if(b){ b.textContent = "■"; b.title = "Stop"; } li.scrollIntoView({block: "nearest"}); } }
+/* a change made in the list: the piece (and the open copy of it) at once, kept like a save */
+function bankSet(id, ch){ const x = P.pieces.find(p => p.id === id); if(!x) return; Object.assign(x, ch, {u: Date.now()}); if(P.draft && P.draft.id === id) Object.assign(P.draft, ch);
+  P.dirty.p.add(id); saveSoon(); renderSide(); }
+const roleOf = x => x.role === "train" ? "train" : "diag";
+function runFrom(i){ const c = P.cues[i]; if(!c) return;
+  if(P.ctxPick && P.draft){ P.draft.ctx = c.s; P.ctxPick = false; renderSide(); paintCues(); return; }
+  P.cur = i; winTo(c.s, c.e); P.sel = null; P.cursor = c.s; paintCues(); play(c.s, Infinity, "run"); }
+function clampWin(){ let [w0, w1] = P.win; const w = w1 - w0, d = P.v && isFinite(P.v.duration) ? P.v.duration : Infinity;
+  if(w1 > d + 1){ w1 = d + 1; w0 = w1 - w; } if(w0 < 0){ w1 -= w0; w0 = 0; } P.win = [w0, w1]; }
+function moveWin(f){ const [w0, w1] = P.win, dt = (w1 - w0) * f; P.win = [w0 + dt, w1 + dt]; clampWin(); waveDraw(); }
 function winTo(s, e){ const pad = 1.5; let a = s - pad, b = e + pad; if(b - a < 8){ const m = (a + b) / 2; a = m - 4; b = m + 4; } if(a < 0){ b -= a; a = 0; } P.win = [a, b]; }
 function waveDraw(){
   const cv = document.querySelector("canvas[data-wave]"); if(!cv) return;
@@ -180,8 +241,9 @@ function waveDraw(){
   for(let x = 0; x < W; x++){ const a = Math.floor((w0 + x / W * (w1 - w0)) * FW), z = Math.max(a + 1, Math.floor((w0 + (x + 1) / W * (w1 - w0)) * FW)); let lo = 0, hi = 0, has = false;
     for(let b = a; b < z; b++){ if(P.pk.hi[b] == null) continue; has = true; if(P.pk.lo[b] < lo) lo = P.pk.lo[b]; if(P.pk.hi[b] > hi) hi = P.pk.hi[b]; }
     if(has){ g.fillStyle = wv; g.fillRect(x, mid - hi * amp, 1, Math.max(1, (hi - lo) * amp)); } else if(x % 6 < 3){ g.fillStyle = un; g.fillRect(x, mid, 1, 1); } }
-  if(got < (b1 - b0) * .05){ g.fillStyle = un; g.font = "700 13px system-ui, sans-serif"; g.textAlign = "center"; g.fillText(P.url ? "The sound draws here as it plays — ▶ a line, or drag here" : "Open your film first (📂 at the top)", W / 2, mid - 8); g.textAlign = "start"; }
+  if(got < (b1 - b0) * .05){ g.fillStyle = un; g.font = "700 13px system-ui, sans-serif"; g.textAlign = "center"; g.fillText(P.url ? "Not heard yet — click here: it plays on and the sound draws as it plays" : "Open your film first (📂 at the top)", W / 2, mid - 8); g.textAlign = "start"; }
   if(P.sel){ g.fillStyle = col("--fw-edge"); g.fillRect(X(P.sel.s) - 1, 0, 2, WH); g.fillRect(X(P.sel.e) - 1, 0, 2, WH); }
+  g.fillStyle = col("--fw-rule"); g.fillRect(0, WH, W, RH);
   g.fillStyle = col("--fw-tick"); g.font = "600 11px system-ui, sans-serif";
   const span = w1 - w0, step = span > 40 ? 5 : span > 16 ? 2 : 1;
   for(let t = Math.ceil(w0 / step) * step; t <= w1 + 1e-6; t += step){ const x = Math.round(X(t)); g.fillRect(x, WH, 1, 6); if(x < W - 40) g.fillText(tmS(t), x + 3, H - 3); }
@@ -191,23 +253,37 @@ function waveDraw(){
   const pt = document.querySelector("[data-pp-time]"); if(pt) pt.hidden = !P.sel;
 }
 function playPiece(){
-  const r = P.sel ? {s: P.sel.s, e: P.sel.e} : {s: P.cursor != null ? P.cursor : P.win[0], e: P.win[1]}; if(r.e - r.s < .05) return; play(r.s, r.e, "piece"); }
+  if(P.sel){ if(P.sel.e - P.sel.s >= .05) play(P.sel.s, P.sel.e, "piece"); return; }
+  if(P.draft){ play(P.draft.s, P.draft.e + TAIL, "line"); return; }
+  play(P.cursor != null ? P.cursor : P.win[0], Infinity, "run"); }
 function wireWave(){
   const cv = document.querySelector("canvas[data-wave]"); if(!cv || cv._w) return; cv._w = 1;
   const tAt = e => { const r = cv.getBoundingClientRect(), [w0, w1] = P.win; return Math.max(0, w0 + (e.clientX - r.left) / r.width * (w1 - w0)); };
-  let drag = null;
-  cv.addEventListener("pointerdown", e => { if(e.button) return; e.preventDefault(); try{ cv.setPointerCapture(e.pointerId); }catch(x){} drag = {t0: tAt(e), x0: e.clientX, moved: false}; });
-  cv.addEventListener("pointermove", e => { if(!drag) return; if(Math.abs(e.clientX - drag.x0) > 4) drag.moved = true;
-    if(drag.moved){ const t = tAt(e); P.sel = {s: Math.min(drag.t0, t), e: Math.max(drag.t0, t)}; waveDraw(); } });
-  cv.addEventListener("pointerup", e => { const d = drag; drag = null; if(!d) return; stop();
-    if(!d.moved){ P.sel = null; P.cursor = tAt(e); } else P.cursor = P.sel.s;
+  let drag = null; const onRule = e => { const r = cv.getBoundingClientRect(); return e.clientY - r.top > r.height - 19; };
+  cv.addEventListener("pointerdown", e => { if(e.button) return; e.preventDefault(); try{ cv.setPointerCapture(e.pointerId); }catch(x){} P.dragging = true;
+    drag = onRule(e) ? {pan: true, x0: e.clientX, win: P.win.slice()} : {t0: tAt(e), x0: e.clientX, moved: false}; if(drag.pan) cv.style.cursor = "grabbing"; });
+  cv.addEventListener("pointermove", e => { if(!drag){ cv.style.cursor = onRule(e) ? "grab" : "crosshair"; return; }
+    if(drag.pan){ const [a, z] = drag.win, dt = (e.clientX - drag.x0) / cv.clientWidth * (z - a); P.win = [a - dt, z - dt]; clampWin(); waveDraw(); return; }
+    if(Math.abs(e.clientX - drag.x0) > 4) drag.moved = true;
+    drag.x = e.clientX; if(drag.moved){ selTo(); edgeRun(); } });
+  /* tools 36 (her 12.11 13:44): a piece dragged to (or past) the edge moves the waveform along — the further past, the faster — and the piece grows with it */
+  const EDGE = 16, xIn = x => { const r = cv.getBoundingClientRect(); return Math.max(r.left, Math.min(r.right, x)); };
+  const selTo = () => { const t = tAt({clientX: xIn(drag.x)}); P.sel = {s: Math.min(drag.t0, t), e: Math.max(drag.t0, t)}; waveDraw(); };
+  const over = () => { const r = cv.getBoundingClientRect(); return drag.x > r.right - EDGE ? drag.x - (r.right - EDGE) : drag.x < r.left + EDGE ? drag.x - (r.left + EDGE) : 0; };
+  const edgeRun = () => { if(!drag || drag.edge || !over()) return; let last = performance.now();
+    const step = now => { if(!drag || drag.pan){ return; } const o = over(); if(!o){ drag.edge = 0; return; }
+      const [w0, w1] = P.win, w = w1 - w0, k = Math.min(3, .25 + Math.abs(o) / 80) * Math.sign(o), dt = Math.min(.05, (now - last) / 1000); last = now;
+      P.win = [w0 + w * k * dt, w1 + w * k * dt]; clampWin(); selTo(); drag.edge = requestAnimationFrame(step); };
+    drag.edge = requestAnimationFrame(step); };
+  cv.addEventListener("pointerup", e => { const d = drag; drag = null; P.dragging = false; if(!d) return; if(d.edge) cancelAnimationFrame(d.edge); if(d.pan){ cv.style.cursor = "grab"; return; } stop();
+    if(!d.moved){ P.sel = null; P.cursor = tAt(e); } else { d.x = e.clientX; drag = d; selTo(); drag = null; P.cursor = P.sel.s; }
     if(P.ctxPick && P.draft){ P.draft.ctx = P.cursor; P.ctxPick = false; renderSide(); }
-    waveDraw(); playPiece(); });
-  cv.addEventListener("pointercancel", () => { drag = null; });
+    waveDraw(); if(d.moved) playPiece(); else play(P.cursor, Infinity, "run"); });
+  cv.addEventListener("pointercancel", () => { if(drag && drag.edge) cancelAnimationFrame(drag.edge); drag = null; P.dragging = false; });
   cv.addEventListener("wheel", e => { e.preventDefault(); let [w0, w1] = P.win; const w = w1 - w0;
     if(e.ctrlKey || e.metaKey){ const t = tAt(e), nw = Math.max(2, Math.min(600, w * (e.deltaY > 0 ? 1.25 : .8))); w0 = t - (t - w0) * nw / w; w1 = w0 + nw; }
     else { const dx = (Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY) / cv.clientWidth * w; w0 += dx; w1 += dx; }
-    if(w0 < 0){ w1 -= w0; w0 = 0; } P.win = [w0, w1]; waveDraw(); }, {passive: false});
+    P.win = [w0, w1]; clampWin(); waveDraw(); }, {passive: false});
 }
 /* ---------- the bank: pieces and her features, kept on this computer and (her code, the live page) in her table ---------- */
 const localKey = () => "prep-bank-" + P.key;
@@ -216,14 +292,14 @@ function featColor(id){ const f = featureOf(id); if(!f) return "#E6E6E6"; const 
 function featName(id){ const f = featureOf(id); if(!f) return "—"; const p = f.parent ? featureOf(f.parent) : null; return p ? p.name + " › " + f.name : f.name; }
 async function bankLoad(){
   const loc = store.get(localKey()) || {pieces: [], features: []};
-  P.pieces = loc.pieces || []; P.features = loc.features || []; P.status = tableOn() ? "Loading your bank from your table…" : "On this computer only — open the live page with your code to keep it in your table";
+  P.pieces = loc.pieces || []; P.features = loc.features || []; if(relink()) localSave(); P.status = tableOn() ? "Loading your bank from your table…" : "On this computer only — open the live page with your code to keep it in your table";
   render();
   if(!tableOn()) return;
   const res = await livePost({action: "bankGet", code: localStorage.getItem("hw-code"), film: P.key});
   if(!res || !res.ok){ P.status = "⚠️ Your table didn't answer — the bank here is this computer's copy"; renderTop(); return; }
   const byId = {}; (res.pieces || []).forEach(x => { byId[x.id] = x; });
   P.pieces.forEach(x => { if(!byId[x.id] || (x.u || 0) > (byId[x.id].u || 0)){ byId[x.id] = x; P.dirty.p.add(x.id); } });   /* the newer copy of each piece wins */
-  P.pieces = Object.values(byId).sort((a, b) => a.s - b.s);
+  P.pieces = Object.values(byId).sort((a, b) => a.s - b.s); relink();
   if((res.features || []).length) P.features = mergeFeatures(res.features, P.features); else if(P.features.length) P.dirty.f = true;
   localSave(); P.status = "In your table ✓"; render(); if(P.dirty.p.size || P.dirty.f) saveSoon();
 }
@@ -242,7 +318,21 @@ const joinText = (c0, c1) => P.cues.slice(c0, c1 + 1).map(c => c.t).join(" ");
 const cueOffset = (c0, k) => P.cues.slice(c0, k).reduce((a, c) => a + c.t.length + 1, 0);
 function pieceParts(x){ const t = joinText(x.c0, x.c1); return {pre: t.slice(0, x.gs), gap: t.slice(x.gs, x.ge), post: t.slice(x.ge)}; }
 /* a piece points at its lines by their start times, so a renumbered .srt keeps it in place */
-function relink(){ P.pieces.forEach(x => { const i = P.cues.findIndex(c => Math.abs(c.s - x.cs0) < .05); if(i > -1){ const span = x.c1 - x.c0; x.c0 = i; x.c1 = Math.min(P.cues.length - 1, i + span); } }); }
+/* tools 36: a piece keeps its words when the line's text changes (the spaces that were missing at <br/>): matched by the letters, spaces aside */
+function relink(){ let n = 0;
+  const nsBefore = (t, k) => t.slice(0, k).replace(/\s/g, "").length;
+  const nsAt = (t, m, end) => { let c = 0; for(let i = 0; i < t.length; i++){ if(/\s/.test(t[i])) continue; if(end){ if(++c === m) return i + 1; } else if(c++ === m) return i; } return t.length; };
+  P.pieces.forEach(x => {
+    const i = x.cs0 != null ? P.cues.findIndex(c => Math.abs(c.s - x.cs0) < .05) : -1;
+    if(i > -1){ const span = x.c1 - x.c0; x.c0 = i; x.c1 = Math.min(P.cues.length - 1, i + span); }
+    if(x.c0 == null || x.c0 >= P.cues.length) return;
+    const now = joinText(x.c0, x.c1), was = x.text; if(!was || was === now) return;
+    let gs = -1, ge = -1;
+    if(was.replace(/\s/g, "") === now.replace(/\s/g, "")){ gs = nsAt(now, nsBefore(was, x.gs), false); ge = nsAt(now, nsBefore(was, x.ge), true); }
+    else if(x.gap && now.indexOf(x.gap) > -1){ gs = now.indexOf(x.gap); ge = gs + x.gap.length; }
+    if(gs < 0 || ge <= gs) return;
+    x.gs = gs; x.ge = ge; x.text = now; x.gap = now.slice(gs, ge); x.u = Date.now(); P.dirty.p.add(x.id); n++; });
+  return n; }
 function selToDraft(){
   const sel = window.getSelection(); if(!sel || sel.isCollapsed || !sel.rangeCount) return false;
   const rg = sel.getRangeAt(0), el = n => (n.nodeType === 1 ? n : n.parentElement).closest(".cue-x"), a = el(rg.startContainer), b = el(rg.endContainer);
@@ -255,27 +345,65 @@ function selToDraft(){
   while(gs > 0 && /[\w'’-]/.test(text[gs - 1])) gs--; while(ge < text.length && /[\w'’-]/.test(text[ge])) ge++;   /* whole words */
   if(ge <= gs) return false;
   sel.removeAllRanges();
-  const last = store.get("prep-last") || {};
+  /* tools 36 (her 12.11 13:28–13:34: «борюсь с интерфейсом»): the open piece is kept as it is (no Save needed); choosing words again over it only moves it */
+  const d = P.draft, abs = (c, o) => cueOffset(0, c) + o;
+  if(d && abs(c0, gs) < abs(d.c0, d.ge) && abs(d.c0, d.gs) < abs(c0, ge)){
+    Object.assign(d, {c0, c1, cs0: P.cues[c0].s, gs, ge}); if(!d.pinned){ d.s = P.cues[c0].s; d.e = P.cues[c1].e; }
+    if(d.fAuto){ const g = guessFeature(joinText(c0, c1).slice(gs, ge)); if(g){ d.f = g; if(!d.hardSet) hardFrom(d); } }
+    P.cur = c0; winTo(d.s, d.e); render(); return true; }
+  commitDraft(true);
+  const gap = joinText(c0, c1).slice(gs, ge), g = guessFeature(gap), last = store.get("prep-last") || {};
   P.addOpen = false;
-  P.draft = {id: null, c0, c1, cs0: P.cues[c0].s, gs, ge, s: P.cues[c0].s, e: P.cues[c1].e, f: last.f || null, b2: false, c1h: false, note: "", ctx: null};
+  /* the defaults: the feature its words point to (else the last one), hard for as last time in that feature, the context = the line from its start */
+  P.draft = {id: null, c0, c1, cs0: P.cues[c0].s, gs, ge, s: P.cues[c0].s, e: P.cues[c1].e, f: g || (featureOf(last.f) ? last.f : null), fAuto: g ? "words" : last.f ? "last" : "", b2: false, c1h: false, note: "", ctx: P.cues[c0].s,
+    role: P.q.trim() ? "train" : "diag"};   /* her 13:47: marked while listening to the scene = diagnostic; found with find / regex = training */
+  hardFrom(P.draft);
   P.cur = c0; winTo(P.draft.s, P.draft.e); render(); return true;
 }
-function openPiece(id){ const x = P.pieces.find(p => p.id === id); if(!x) return; P.addOpen = false; P.draft = Object.assign({}, x); P.cur = x.c0; winTo(x.s, x.e); render(); scrollToCue(x.c0); }
-function savePiece(){ const d = P.draft; if(!d) return; const pp = pieceParts(d);
-  const x = Object.assign({}, d, {gap: pp.gap, text: joinText(d.c0, d.c1), u: Date.now()}); if(!x.id) x.id = uid();
+/* the feature's words: her name for it (or one of its «a / b» forms) in the chosen words, a word of the name ("of" in "weak of"), the words of her earlier pieces in it */
+function guessFeature(gap){
+  const words = t => String(t || "").toLowerCase().replace(/[’‘]/g, "'").match(/[a-z']+/g) || [];
+  const g = words(gap), tm1 = (gw, w) => gw === w || gw.split("'")[0] === w || (gw.endsWith("n't") && gw.slice(0, -3) === w);
+  const phrase = ph => { const w = words(ph); return w.length && g.some((_, i) => w.every((x, j) => g[i + j] && tm1(g[i + j], x))); };
+  const STOP = new Set("a an the i you he she we they it to and or is are was be me my your".split(" "));   /* too common to point to a feature by themselves */
+  const seen = {}; P.pieces.forEach(x => { if(x.f) new Set(words(x.gap)).forEach(w => { if(!STOP.has(w)) (seen[w] = seen[w] || new Set()).add(x.f); }); });
+  let best = null, bs = 0;
+  P.features.forEach(f => { let sc = 0;
+    if(String(f.name).split(/\s*[\/,;|]\s*|\s+or\s+/).some(phrase)) sc += 3 + words(f.name).length * .1;
+    else sc += words(f.name).filter(w => g.some(gw => tm1(gw, w))).length * .8;
+    new Set(g).forEach(w => { if(seen[w] && seen[w].has(f.id)) sc += 1 / seen[w].size; });
+    if(sc > 0 && f.parent) sc += .05;
+    if(sc > bs){ bs = sc; best = f.id; } });
+  return bs >= .5 ? best : null;
+}
+/* hard for: as she marked the last piece in this feature (or its parent) — her «of» is C1 only → every next «of» piece is C1 only */
+function hardFrom(d){ const f = featureOf(d.f), h = (f && f.hard) || (f && f.parent && featureOf(f.parent) && featureOf(f.parent).hard) || null;
+  d.b2 = !!(h && h.b2); d.c1h = !!(h && h.c1h); d.hardAuto = h && f ? f.name : ""; }
+const KEEP = ["f", "b2", "c1h", "note", "ctx", "s", "e", "gs", "ge", "c0", "c1", "role", "hidden"];
+/* leaving the piece keeps it: new words, another piece, Esc, ✓ Done; nothing changed in an old piece → nothing is written */
+function commitDraft(quiet){ const d = P.draft; if(!d) return false; const n = document.querySelector("[data-note]"); if(n) d.note = n.value;
+  const o = d.id && P.pieces.find(p => p.id === d.id);
+  if(o && KEEP.every(k => (o[k] == null ? null : o[k]) === (d[k] == null ? null : d[k]))){ P.draft = null; P.ctxPick = false; if(!quiet) render(); return false; }
+  savePiece(quiet); return true; }
+function openPiece(id){ const x = P.pieces.find(p => p.id === id); if(!x) return; if(P.draft && P.draft.id !== id) commitDraft(true); P.addOpen = false; P.draft = Object.assign({}, x, {fAuto: "", hardAuto: ""}); P.cur = x.c0; winTo(x.s, x.e); render(); scrollToCue(x.c0); const sd = document.getElementById("pp-side"); if(sd) sd.scrollTop = 0; }
+function savePiece(quiet){ const d = P.draft; if(!d) return; const pp = pieceParts(d);
+  const x = Object.assign({}, d, {gap: pp.gap, text: joinText(d.c0, d.c1), u: Date.now()}); ["fAuto", "hardAuto", "hardSet"].forEach(k => delete x[k]); if(!x.id) x.id = uid();
   const i = P.pieces.findIndex(p => p.id === x.id); if(i > -1) P.pieces[i] = x; else P.pieces.push(x);
   P.pieces.sort((a, b) => a.s - b.s); P.dirty.p.add(x.id); if(x.f) store.set("prep-last", {f: x.f});
-  P.draft = null; P.ctxPick = false; saveSoon(); render(); }
+  const F = featureOf(x.f); if(F && (!F.hard || !!F.hard.b2 !== !!x.b2 || !!F.hard.c1h !== !!x.c1h)){ F.hard = {b2: !!x.b2, c1h: !!x.c1h}; P.dirty.f = true; }
+  P.draft = null; P.ctxPick = false; saveSoon(); if(!quiet) render(); }
 function deletePiece(){ const d = P.draft; if(!d) return; if(d.id){ P.pieces = P.pieces.filter(p => p.id !== d.id); P.dirty.del.add(d.id); P.dirty.p.delete(d.id); saveSoon(); } P.draft = null; P.ctxPick = false; render(); }
 function addFeature(name, parent){ name = String(name || "").trim(); if(!name) return null;
   const tops = P.features.filter(f => !f.parent).length, f = {id: "f" + Date.now().toString(36), name, parent: parent || null, color: parent ? null : PALETTE[tops % PALETTE.length]};
   P.features.push(f); P.dirty.f = true; saveSoon(); return f; }
 /* ---------- the screen ---------- */
 const nudge = sel => { const x = document.querySelector(sel); if(x){ x.classList.remove("pop"); void x.offsetWidth; x.classList.add("pop"); x.focus && x.focus(); } };
-function shown(){ const a = parseT(P.from), b = parseT(P.to); let re = null, q = P.q.trim();
+/* find: words, or a regex — with /…/ or without (her 13:37: «can|can't», «(can|can't)»: | ( ) [ ] \ * + ? make it a regex); ’ and ' are the same */
+function shown(){ const a = parseT(P.from), b = parseT(P.to), ap = t => String(t).replace(/[’‘]/g, "'"); let re = null, q = ap(P.q.trim());
   if(/^\/.+\/[a-z]*$/i.test(q)){ try{ const m = q.match(/^\/(.+)\/([a-z]*)$/i); re = new RegExp(m[1], m[2].includes("i") ? m[2] : m[2] + "i"); }catch(e){ re = null; } }
+  else if(/[|()[\]\\*+?^$]/.test(q)){ try{ re = new RegExp(q, "i"); }catch(e){ re = null; } }
   return P.cues.map((c, i) => i).filter(i => { const c = P.cues[i]; if(a != null && c.e < a) return false; if(b != null && c.s > b) return false;
-    if(!q) return true; return re ? re.test(c.t) : c.t.toLowerCase().includes(q.toLowerCase()); }); }
+    if(!q) return true; const t = ap(c.t); return re ? re.test(t) : t.toLowerCase().includes(q.toLowerCase()); }); }
 function cueHTML(i){
   const c = P.cues[i], marks = [];
   const add = (x, cls) => { if(i < x.c0 || i > x.c1) return; const base = cueOffset(x.c0, i), s = Math.max(0, x.gs - base), e = Math.min(c.t.length, x.ge - base); if(e > s) marks.push({s, e, x, cls}); };
@@ -283,9 +411,9 @@ function cueHTML(i){
   marks.sort((m, n) => m.s - n.s); let h = "", at = 0;
   marks.forEach(m => { if(m.s < at) return; h += esc(c.t.slice(at, m.s));
     h += m.cls === "draft" ? `<mark class="draft" style="background:${featColor(P.draft.f)}">${esc(c.t.slice(m.s, m.e))}</mark>`
-      : `<mark data-pc="${m.x.id}" style="background:${featColor(m.x.f)}" title="${esc(featName(m.x.f))}">${esc(c.t.slice(m.s, m.e))}</mark>`; at = m.e; });
+      : `<mark data-pc="${m.x.id}" class="${m.x.hidden ? "hid" : ""}" style="background:${featColor(m.x.f)}" title="${esc(featName(m.x.f))}${m.x.hidden ? " · hidden" : ""}">${esc(c.t.slice(m.s, m.e))}</mark>`; at = m.e; });
   h += esc(c.t.slice(at));
-  return `<div class="cue ${i === P.cur ? "cur" : ""}" data-c="${i}"><button class="cue-pl ${P.ctxPick ? "ctxpick" : ""}" data-cpl="${i}" aria-label="${P.ctxPick ? "Context from this line" : "Play this line"}" title="${P.ctxPick ? "Context from this line" : "Play this line"}">${P.ctxPick ? "⏮" : "▶"}</button><span class="cue-t" data-cpl="${i}">${tmS(c.s)}</span><span class="cue-x" data-cx="${i}">${h}</span></div>`;
+  return `<div class="cue ${i === P.cur ? "cur" : ""}" data-c="${i}"><button class="cue-pl ${P.ctxPick ? "ctxpick" : ""}" data-cpl="${i}" aria-label="${P.ctxPick ? "Context from this line" : "Play from this line"}" title="${P.ctxPick ? "Context from this line" : "Play from this line"}">${P.ctxPick ? "⏮" : "▶"}</button><span class="cue-t" data-cpl="${i}">${tmS(c.s)}</span><span class="cue-x" data-cx="${i}">${h}</span></div>`;
 }
 function renderTop(){ const t = document.getElementById("pp-top"); if(!t) return;
   t.innerHTML = `<h1>🎧 Decoding prep</h1>
@@ -301,30 +429,38 @@ function editorHTML(){
   const pp = pieceParts(d), tops = P.features.filter(f => !f.parent);
   const chip = f => `<button class="chip ${f.parent ? "sub" : ""} ${d.f === f.id ? "on" : ""}" data-feat="${f.id}"><span class="sw" style="background:${featColor(f.id)}"></span>${esc(f.parent ? "› " + f.name : f.name)}</button>`;
   const feats = tops.map(t => chip(t) + P.features.filter(f => f.parent === t.id).map(chip).join("")).join("");
-  const ctxTxt = d.ctx == null ? "none" : `from ${tm(d.ctx)} · ${(d.s - d.ctx).toFixed(1)} s before`;
+  const ls = P.cues[d.c0] ? P.cues[d.c0].s : null, atLine = d.ctx != null && ls != null && Math.abs(d.ctx - ls) < .01;
+  const ctxTxt = d.ctx == null ? "none" : atLine ? (d.s - d.ctx > .05 ? `the line's start · ${(d.s - d.ctx).toFixed(1)} s before` : "the line from its start") : `from ${tm(d.ctx)} · ${Math.max(0, d.s - d.ctx).toFixed(1)} s before`;
+  const why = (t) => t ? `<span class="pp-why">${esc(t)}</span>` : "";
   const addRow = P.addOpen || !P.features.length;
   return `<div class="pp-card" data-editor>
-    <div class="pp-row"><h3>${d.id ? "Piece" : "New piece"}</h3><span class="pp-stat sm">${tm(d.s)} – ${tm(d.e)}</span><span class="pp-sp"></span><button class="pp-btn" data-pp-play>▶ The piece</button><button class="pp-btn quiet" data-pp-time ${P.sel ? "" : "hidden"} title="The piece's time = what you chose on the waveform">📌 This time</button></div>
+    <div class="pp-row"><h3>${d.id ? "Piece" : "New piece"}</h3><button class="chip role ${roleOf(d)}" data-role title="Diagnostic: found while listening to the scene · Training: found with find / regex — tap to change">${roleOf(d) === "diag" ? "🔍 diagnostic" : "🏋 training"}</button><span class="pp-stat sm">${tm(d.s)} – ${tm(d.e)}</span><span class="pp-sp"></span><button class="pp-btn" data-pp-play>▶ The piece</button><button class="pp-btn quiet" data-pp-time ${P.sel ? "" : "hidden"} title="The piece's time = what you chose on the waveform">📌 This time</button></div>
     <p class="pp-line">${esc(pp.pre)}<b style="background:${featColor(d.f)}">${esc(pp.gap)}</b>${esc(pp.post)}</p>
-    <div class="pp-row"><span class="pp-lab">Feature</span>${feats}${addRow ? "" : `<button class="chip" data-addopen>＋ new</button>`}</div>
+    <div class="pp-row"><span class="pp-lab">Feature</span>${feats}${addRow ? "" : `<button class="chip" data-addopen>＋ new</button>`}${d.f ? why(d.fAuto === "words" ? "← from the words" : d.fAuto === "last" ? "← as the last piece" : "") : ""}</div>
     ${addRow ? `<div class="pp-row"><span class="pp-lab"></span><input class="pp-in grow" data-newf placeholder="${P.features.length ? "New feature" : "Your first feature (e.g. weak of)"}"><select class="pp-in" data-newp><option value="">on its own</option>${tops.map(t => `<option value="${t.id}">under ${esc(t.name)}</option>`).join("")}</select><button class="pp-btn quiet" data-addf>＋ Add</button></div>` : ""}
-    <div class="pp-row"><span class="pp-lab">Hard for</span><button class="chip hard ${d.b2 ? "on" : ""}" data-hard="b2">B2</button><button class="chip hard ${d.c1h ? "on" : ""}" data-hard="c1h">C1</button></div>
-    <div class="pp-row"><span class="pp-lab">Context</span><span class="pp-stat">${ctxTxt}</span>${d.ctx != null ? `<button class="pp-btn" data-ctxplay>▶ With context</button><button class="pp-btn quiet" data-ctxnone title="No context">✕</button>` : ""}<button class="pp-btn ${P.ctxPick ? "pri" : "quiet"}" data-ctxpick>${P.ctxPick ? "Tap ⏮ at a line, or the waveform" : "⏮ From a line or the waveform"}</button></div>
+    <div class="pp-row"><span class="pp-lab">Hard for</span><button class="chip hard ${d.b2 ? "on" : ""}" data-hard="b2">B2</button><button class="chip hard ${d.c1h ? "on" : ""}" data-hard="c1h">C1</button>${!d.hardSet && d.hardAuto ? why(`← as last time in «${d.hardAuto}»`) : ""}</div>
+    <div class="pp-row"><span class="pp-lab">Context</span><span class="pp-stat">${ctxTxt}</span>${d.ctx != null ? `<button class="pp-btn" data-ctxplay>▶ With context</button><button class="pp-btn quiet" data-ctxnone title="No context">✕</button>` : ""}<button class="pp-btn ${P.ctxPick ? "pri" : "quiet"}" data-ctxpick title="Context from another line (⏮) or a point on the waveform">${P.ctxPick ? "Tap ⏮ at a line, or the waveform" : "⏮ Other"}</button></div>
     <div class="pp-row"><span class="pp-lab">Note</span><input class="pp-in grow" data-note value="${esc(d.note || "")}" placeholder="what happens to the sound"></div>
-    <div class="pp-row"><button class="pp-btn pri" data-save>Save</button><button class="pp-btn quiet" data-cancel>Cancel</button><span class="pp-sp"></span><button class="pp-btn quiet" data-del>${d.id ? "Delete" : "Drop it"}</button></div>
+    <div class="pp-row"><button class="pp-btn pri" data-save title="The piece keeps itself anyway when you choose other words, open another piece, or press Esc">✓ Done</button><span class="pp-hint sm">or just go on</span><span class="pp-sp"></span><button class="pp-btn quiet" data-del>🗑 ${d.id ? "Delete" : "Drop it"}</button></div>
   </div>`;
 }
+/* the bank by feature: diagnostic first, then training; each piece ▶ (context + piece), B2 / C1 and diagnostic / training to tap, ✕ = hide (not deleted) */
+const bankOrder = list => list.slice().sort((a, b) => (roleOf(a) === roleOf(b) ? 0 : roleOf(a) === "diag" ? -1 : 1) || a.s - b.s);
 function bankHTML(){
   if(!P.pieces.length) return "";
-  const groups = {}; P.pieces.forEach(x => { const k = x.f || "_"; (groups[k] = groups[k] || []).push(x); });
+  const groups = {}, hid = []; P.pieces.forEach(x => { if(x.hidden){ hid.push(x); return; } const k = x.f || "_"; (groups[k] = groups[k] || []).push(x); });
   const order = P.features.filter(f => !f.parent).flatMap(t => [t.id, ...P.features.filter(f => f.parent === t.id).map(f => f.id)]).filter(k => groups[k]).concat(groups._ ? ["_"] : []);
-  return `<div class="pp-card pp-bank"><h3>The bank · ${esc(P.key)}</h3>${order.map(k => `<details open><summary><span class="sw" style="display:inline-block;width:.8em;height:.8em;border-radius:3px;background:${k === "_" ? "#E6E6E6" : featColor(k)}"></span> ${esc(k === "_" ? "no feature yet" : featName(k))} · ${groups[k].length}</summary>
-    <ul>${groups[k].map(x => `<li data-open="${x.id}"><span class="tm">${tmS(x.s)}</span>${esc(x.gap)}${x.b2 ? `<span class="hd">B2</span>` : ""}${x.c1h ? `<span class="hd">C1</span>` : ""}</li>`).join("")}</ul></details>`).join("")}</div>`;
+  const li = x => `<li data-pid="${x.id}" class="${P.draft && P.draft.id === x.id ? "open" : ""}"><button class="bk-pl" data-bplay="${x.id}" title="Play: the context, then the piece">▶</button><span class="tm">${tmS(x.s)}</span><span class="bk-t" data-open="${x.id}" title="Open the piece">${esc(x.gap)}</span>`
+    + (x.hidden ? `<button class="bk-c" data-bhide="${x.id}" title="Bring it back">↩</button>`
+      : `<button class="bk-c hd ${x.b2 ? "on" : ""}" data-bhard="${x.id}:b2" title="Hard for B2 — tap to switch">B2</button><button class="bk-c hd ${x.c1h ? "on" : ""}" data-bhard="${x.id}:c1h" title="Hard for C1 — tap to switch">C1</button><button class="bk-c role ${roleOf(x)}" data-brole="${x.id}" title="Diagnostic / training — tap to switch">${roleOf(x) === "diag" ? "diag" : "train"}</button><button class="bk-x" data-bhide="${x.id}" title="Hide (not deleted: it goes to Hidden at the bottom)">✕</button>`) + `</li>`;
+  return `<div class="pp-card pp-bank"><h3>The bank · ${esc(P.key)}</h3>${order.map(k => { const L = bankOrder(groups[k]);
+    return `<details open><summary><span class="sw" style="display:inline-block;width:.8em;height:.8em;border-radius:3px;background:${k === "_" ? "#E6E6E6" : featColor(k)}"></span> ${esc(k === "_" ? "no feature yet" : featName(k))} · ${L.length}<button class="bk-all" data-ball="${L.map(x => x.id).join(",")}" title="Play them all, one after another">▶ all</button></summary>
+    <ul>${L.map(li).join("")}</ul></details>`; }).join("")}${hid.length ? `<details class="bk-hid"><summary>Hidden · ${hid.length}</summary><ul>${hid.map(li).join("")}</ul></details>` : ""}</div>`;
 }
-function renderSide(){ const s = document.getElementById("pp-side"); if(s){ s.innerHTML = editorHTML() + bankHTML(); } const L = document.getElementById("pp-cues"); if(L) paintCues(); waveDraw(); }
+function renderSide(){ const s = document.getElementById("pp-side"); if(s){ const top = (s.querySelector(".pp-bank") || {}).scrollTop, sc = s.scrollTop; s.innerHTML = editorHTML() + bankHTML(); s.scrollTop = sc; } const L = document.getElementById("pp-cues"); if(L) paintCues(); bankMark(); waveDraw(); }
 function paintCues(){ const L = document.getElementById("pp-cues"); if(!L) return; const list = shown();
   L.innerHTML = list.length ? list.map(cueHTML).join("") : `<p class="pp-hint">${P.cues.length ? "No lines match." : "Open the subtitles (.srt) — the lines appear here."}</p>`;
-  const n = document.getElementById("pp-n"); if(n) n.textContent = P.cues.length ? `${list.length} line${list.length === 1 ? "" : "s"}` : ""; }
+  const n = document.getElementById("pp-n"); if(n) n.textContent = P.cues.length ? `${list.length} line${list.length === 1 ? "" : "s"}` : ""; nowMark(); }
 function scrollToCue(i){ const el = document.querySelector(`.cue[data-c="${i}"]`); if(el) el.scrollIntoView({block: "center", behavior: "smooth"}); }
 function render(){
   const app = document.getElementById("app");
@@ -335,7 +471,7 @@ function render(){
         <div class="pp-right"><div class="pp-vid" id="pp-vid"><div class="msg">Your film plays here — from your computer, nothing is uploaded.</div></div><div class="pp-side" id="pp-side"></div></div></div>
       <div class="pp-wave"><canvas data-wave aria-label="The sound: drag to choose a piece"></canvas>
         <div class="pp-ctl"><button class="pp-btn" data-pp-piece>▶ Play the piece <kbd>Space</kbd></button><span class="pp-sel" id="pp-sel"></span>
-          <span class="pp-hint">Drag = a piece · click = play from there · wheel = move along, Ctrl + wheel = zoom</span><span class="pp-sp"></span>
+          <span class="pp-hint">Drag = a piece · click = play on · wheel, ← → or drag the times = move · Ctrl + wheel = zoom · Esc = stop</span><span class="pp-sp"></span>
           <span class="spd" role="group" aria-label="Speed">${[1, .75, .5].map(r => `<button class="chip ${P.rate === r ? "on" : ""}" data-rate="${r}">${r === 1 ? "normal" : r}</button>`).join(" ")}</span>
           <span class="pp-legal"><a href="../../impressum.html">Impressum</a> · <a href="../../datenschutz.html">Datenschutz</a></span></div></div>`;
     wire(); }
@@ -346,27 +482,31 @@ function wire(){
   const app = document.getElementById("app");
   app.addEventListener("click", e => { const t = e.target, on = q => t.closest(q); let x;
     if((x = on("[data-pick]"))){ if(x.dataset.re) reopen(x.dataset.pick); else pick(x.dataset.pick); return; }
-    if((x = on("[data-cpl]"))){ const i = +x.dataset.cpl, c = P.cues[i];
-      if(P.ctxPick && P.draft){ P.draft.ctx = c.s; P.ctxPick = false; renderSide(); return; }
-      P.cur = i; winTo(c.s, c.e); P.sel = null; P.cursor = c.s; paintCues(); play(c.s, c.e, "line"); return; }
+    if((x = on("[data-cpl]"))){ if(x.classList.contains("stopb")){ stop(); return; } runFrom(+x.dataset.cpl); return; }
     if((x = on("mark[data-pc]")) && window.getSelection().isCollapsed){ openPiece(x.dataset.pc); return; }
+    if((x = on(".cue-x")) && window.getSelection().isCollapsed && e.detail <= 1){ runFrom(+x.dataset.cx); return; }   /* a click in the words (not a drag, not a double click) */
+    if((x = on("[data-bplay]"))){ if(P.playing && P.playing.id === x.dataset.bplay) stop(); else playBank(x.dataset.bplay); return; }
+    if((x = on("[data-ball]"))){ e.preventDefault(); playAll(x.dataset.ball.split(",").filter(Boolean)); return; }
+    if((x = on("[data-bhard]"))){ const [id, k] = x.dataset.bhard.split(":"), p = P.pieces.find(q => q.id === id); if(p) bankSet(id, {[k]: !p[k]}); return; }
+    if((x = on("[data-brole]"))){ const p = P.pieces.find(q => q.id === x.dataset.brole); if(p) bankSet(p.id, {role: roleOf(p) === "diag" ? "train" : "diag"}); return; }
+    if((x = on("[data-bhide]"))){ const p = P.pieces.find(q => q.id === x.dataset.bhide); if(p) bankSet(p.id, {hidden: !p.hidden}); return; }
     if((x = on("[data-open]"))){ openPiece(x.dataset.open); return; }
     if(on("[data-pp-piece]")){ playPiece(); return; }
     if((x = on("[data-rate]"))){ P.rate = +x.dataset.rate; if(P.v) P.v.playbackRate = P.rate; app.querySelectorAll("[data-rate]").forEach(b => b.classList.toggle("on", +b.dataset.rate === P.rate)); return; }
     if(on("[data-copy]")){ copyText(chatText()).then(ok => { const b = on("[data-copy]"); if(b){ b.textContent = ok ? "Copied ✓" : "Couldn't copy"; setTimeout(() => renderTop(), 2000); } }); return; }
     if(on("[data-json]")){ const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([JSON.stringify({film: P.key, features: P.features, pieces: P.pieces}, null, 1)], {type: "application/json"})); a.download = P.key + "-bank.json"; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000); return; }
     const d = P.draft; if(!d) return;
-    if(on("[data-pp-play]")){ play(d.s, d.e, "line"); return; }
-    if(on("[data-pp-time]")){ if(P.sel){ d.s = P.sel.s; d.e = P.sel.e; renderSide(); } return; }
-    if((x = on("[data-feat]"))){ d.f = d.f === x.dataset.feat ? null : x.dataset.feat; renderSide(); paintCues(); return; }
+    if(on("[data-pp-play]")){ play(d.s, d.e + TAIL, "line"); return; }
+    if(on("[data-pp-time]")){ if(P.sel){ d.s = P.sel.s; d.e = P.sel.e; d.pinned = true; renderSide(); } return; }
+    if((x = on("[data-feat]"))){ d.f = d.f === x.dataset.feat ? null : x.dataset.feat; d.fAuto = ""; if(!d.hardSet) hardFrom(d); renderSide(); return; }
     if(on("[data-addopen]")){ P.addOpen = true; renderSide(); const n = app.querySelector("[data-newf]"); if(n) n.focus(); return; }
-    if(on("[data-addf]")){ const n = app.querySelector("[data-newf]"), p = app.querySelector("[data-newp]"), f = addFeature(n.value, p.value); if(f){ d.f = f.id; P.addOpen = true; renderSide(); paintCues(); } return; }
-    if((x = on("[data-hard]"))){ d[x.dataset.hard] = !d[x.dataset.hard]; renderSide(); return; }
+    if(on("[data-addf]")){ const n = app.querySelector("[data-newf]"), p = app.querySelector("[data-newp]"), f = addFeature(n.value, p.value); if(f){ d.f = f.id; d.fAuto = ""; if(!d.hardSet) hardFrom(d); P.addOpen = true; renderSide(); paintCues(); } return; }
+    if(on("[data-role]")){ d.role = roleOf(d) === "diag" ? "train" : "diag"; renderSide(); return; }
+    if((x = on("[data-hard]"))){ d[x.dataset.hard] = !d[x.dataset.hard]; d.hardSet = true; renderSide(); return; }
     if(on("[data-ctxpick]")){ P.ctxPick = !P.ctxPick; renderSide(); return; }
     if(on("[data-ctxnone]")){ d.ctx = null; P.ctxPick = false; renderSide(); return; }
-    if(on("[data-ctxplay]")){ if(d.ctx != null) play(d.ctx, d.s, "ctx"); return; }
-    if(on("[data-save]")){ const n = app.querySelector("[data-note]"); if(n) d.note = n.value; savePiece(); return; }
-    if(on("[data-cancel]")){ P.draft = null; P.ctxPick = false; render(); return; }
+    if(on("[data-ctxplay]")){ if(d.ctx != null) play(Math.min(d.ctx, d.s), d.e + TAIL, "ctx"); return; }   /* the context and then the piece (her 13:35: from the line's start it played nothing) */
+    if(on("[data-save]")){ commitDraft(); return; }
     if(on("[data-del]")){ deletePiece(); return; }
   });
   app.addEventListener("input", e => { const t = e.target;
@@ -376,20 +516,25 @@ function wire(){
     if(t.matches("[data-newf]") && e.key === "Enter"){ e.preventDefault(); app.querySelector("[data-addf]").click(); }
     if(t.matches("[data-note]") && e.key === "Enter"){ e.preventDefault(); app.querySelector("[data-save]").click(); } });
   document.getElementById("pp-cues").addEventListener("mouseup", () => setTimeout(selToDraft, 0));
+  document.getElementById("pp-cues").addEventListener("mousedown", () => { P.mouseDown = true; });
 }
 document.addEventListener("keydown", e => {
   if(e.target.closest && e.target.closest("input, textarea, select")) return;
   if(e.key === " "){ e.preventDefault(); if(document.activeElement && document.activeElement.blur) document.activeElement.blur(); playPiece(); }
-  if(e.key === "Escape"){ if(P.playing) stop(); else if(P.draft){ P.draft = null; P.ctxPick = false; render(); } }
+  if(e.key === "Escape"){ if(P.playing) stop(); else if(P.draft) commitDraft(); }
+  if((e.key === "ArrowLeft" || e.key === "ArrowRight") && !e.altKey && !e.ctrlKey && !e.metaKey){ e.preventDefault(); moveWin(e.key === "ArrowLeft" ? -.4 : .4); }
 });
+addEventListener("mouseup", () => { P.mouseDown = false; });
+addEventListener("pagehide", () => { if(P.draft) commitDraft(true); });
 addEventListener("resize", waveDraw);
 async function copyText(t){ try{ await navigator.clipboard.writeText(t); return true; }catch(e){ const ta = document.createElement("textarea"); ta.value = t; document.body.appendChild(ta); ta.select(); let ok = false; try{ ok = document.execCommand("copy"); }catch(x){} ta.remove(); return ok; } }
 /* for a chat (Authentic Listening, a lesson chat): the bank by feature, each piece in the decoding block's own form ({{the gap}}) */
 function chatText(){
-  const out = [`🎧 Decoding bank · ${P.key} · ${P.pieces.length} pieces · ${new Date().toLocaleDateString("en-GB")}`];
-  const groups = {}; P.pieces.forEach(x => { (groups[x.f || "_"] = groups[x.f || "_"] || []).push(x); });
+  const shownP = P.pieces.filter(x => !x.hidden), hid = P.pieces.length - shownP.length;   /* hidden pieces stay out of the chat text (they are in ⬇ JSON) */
+  const out = [`🎧 Decoding bank · ${P.key} · ${shownP.length} pieces${hid ? ` (+ ${hid} hidden, not here)` : ""} · ${new Date().toLocaleDateString("en-GB")}`];
+  const groups = {}; shownP.forEach(x => { (groups[x.f || "_"] = groups[x.f || "_"] || []).push(x); });
   Object.keys(groups).forEach(k => { out.push("", `## ${k === "_" ? "no feature yet" : featName(k)} (${groups[k].length})`);
-    groups[k].forEach(x => { const pp = pieceParts(x); out.push(`${tm(x.s)}-${tm(x.e)}${x.ctx != null ? ` · ctx ${tm(x.ctx)}` : ""} · ${[x.b2 ? "hard B2" : "", x.c1h ? "hard C1" : ""].filter(Boolean).join(", ") || "—"} · ${pp.pre}{{${pp.gap}}}${pp.post}${x.note ? ` · ${x.note}` : ""} · id ${x.id}`); }); });
+    bankOrder(groups[k]).forEach(x => { const pp = pieceParts(x); out.push(`${roleOf(x) === "diag" ? "DIAGNOSTIC" : "training"} · ${tm(x.s)}-${tm(x.e)}${x.ctx != null ? ` · ctx ${tm(x.ctx)}` : ""} · ${[x.b2 ? "hard B2" : "", x.c1h ? "hard C1" : ""].filter(Boolean).join(", ") || "no group (reserve)"} · ${pp.pre}{{${pp.gap}}}${pp.post}${x.note ? ` · ${x.note}` : ""} · id ${x.id}`); }); });
   return out.join("\n");
 }
 /* the start: the filter as she left it; the files remembered by the browser come back with one click (▶ Open … again) */
