@@ -15,6 +15,15 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
   let A = env.sheets.Attempts; ok(A && A.getLastRow() === 2 && A.get(2, 11) === 'one', 'the script kept a second try: ' + (A && A.getLastRow()));
   const other = P({action: 'attempts', code: 'b2a', page: PAGE, items: [{item: 'x:s0', first: 'z'}]}); ok(!other.ok && other.error === 'other-group', 'another group\'s page was taken');
   ok(!P({action: 'attemptsSummary', code: 'c1a', page: PAGE}).ok, 'a student code read the summary');
+  // engine 68 (AL chat 12.11 09:10, one journal): a listening item's first try keeps its listens and words; what happened up to Check comes
+  // later on the same row; the first try never changes; the columns sit after Key, so a sheet from the earlier script keeps working
+  const L = (item, extra) => P({action: 'attempts', code: 'c1a', page: PAGE, items: [Object.assign({item, task: 'film', type: 'film', prompt: 'p', answer: "I've lived", first: 'lived', ok: false, words: '1/2', lis: 1}, extra || {})]});
+  L('film:h1'); L('film:h1', {first: 'changed', after: {plays: 4, pieces: 2, slow: true, checks: 1, shown: false, final: "I've lived", wfinal: '2/2', secs: 12}});
+  const hd = A.getRange(1, 1, 1, 26).getValues()[0], fr = A.getRange(1, 1, A.getLastRow(), 26).getValues().find(r => r[6] === 'film:h1') || [];
+  ok(hd[13] === 'Key' && hd[14] === 'Words first' && hd[15] === 'Listens before first try' && hd[25] === 'Compare', 'the journal\'s columns: ' + JSON.stringify(hd));
+  ok(fr[10] === 'lived' && fr[14] === '1/2' && fr[15] === 1 && fr[16] === 4 && fr[17] === 2 && fr[18] === 'yes' && fr[19] === 1 && fr[21] === "I've lived" && fr[22] === '2/2' && fr[23] === 12, 'the listening row: ' + JSON.stringify(fr));
+  const sumL = P({action: 'attemptsSummary', code: tc, page: PAGE}), itL = (sumL.items || []).find(x => x.item === 'film:h1');
+  ok(itL && itL.who[0][3] === 1 && itL.who[0][4] === '1/2', 'the summary: no listens: ' + JSON.stringify(itL));
   A.d.splice(1);   // clean for the pages
   // the page, with the mocked script
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'att-')); fs.mkdirSync(path.join(tmp, 'c1'));

@@ -838,6 +838,8 @@ button.kbub{cursor:pointer} button.kbub small{display:block;font-size:.85rem;fon
 .dw.lt{font-size:1.28em;letter-spacing:.07em;background:rgba(6,147,227,.10);padding:0 .12em;margin:0 .06em}
 .dw.lt .dl[data-dl]{cursor:pointer;border-bottom:3px dotted rgba(6,147,227,.55);margin:0 .02em;border-radius:3px}
 .dw.lt .dl[data-dl]:hover{background:rgba(6,147,227,.18)}
+.dw.lt .dl.sel{background:rgba(6,147,227,.30);border-bottom:3px solid var(--instr)}
+.dc-pan .dp-w{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;opacity:.65;align-self:center;padding:0 4px 0 2px}
 /* the panel */
 .dc-pan{position:absolute;z-index:5;display:flex;flex-wrap:wrap;max-width:calc(100vw - 16px);box-sizing:border-box;gap:4px;align-items:center;padding:6px;background:var(--card);border:2px solid var(--line);border-radius:14px;box-shadow:0 8px 24px rgba(29,29,27,.18);white-space:nowrap;animation:ansIn .18s ease-out both}
 .dp-b{border:2px solid transparent;background:transparent;color:var(--ink);border-radius:10px;min-height:40px;padding:2px 10px;font-weight:800;font-size:1rem}
@@ -2048,7 +2050,7 @@ function wireFilm(root){ if(!PTS) return;
 const DC_FRESH = 4 * 3600e3, DC_MAX = (window.DC_MAX_MB || 400) * 1048576, DC_RATE = 200, DCK = "tool-decode-" + PAGE_ID;
 let DCS = store.get(DCK) || {}; ["m", "prev", "plays", "clips", "mine"].forEach(k => { if(!DCS[k] || typeof DCS[k] !== "object") DCS[k] = {}; });
 const dcSave = () => store.set(DCK, DCS);
-const DC = {mk: {}, ty: {}, fresh: null, pan: null, letters: null, url: "", name: "", m: null, peaks: null, wBusy: false, wErr: "", dur: 0, win: null, winFor: null,
+const DC = {mk: {}, ty: {}, was: {}, hist: {}, fresh: null, pan: null, letters: null, url: "", name: "", m: null, peaks: null, wBusy: false, wErr: "", dur: 0, win: null, winFor: null,
   sel: null, cur: 0, playing: false, stopAt: null, pic: store.get("dc-pic") !== false,   /* the picture beside the line by default (her 11.11 15:46: «видео сбоку полезно») */ handle: null, raf: 0, b: null, drag: null, hinted: !!store.get("dc-hinted")};
 /* her own lines (her 11.11 15:37: «вставить конкретное время… gapped строчку, которую я заранее подготовила»): ✏️ My lines, one per row —
    the film's time, then the line with the gap in [square brackets]: "21:28 I was [sitting there] with Gus", "21:28-21:30.5 …" (the piece's
@@ -2068,11 +2070,13 @@ function dcParseMine(raw){ if(dcMineMemo.raw === raw) return dcMineMemo.lines;
 const dcMine = b => { const x = DCS.mine[b._pid]; return x && x.raw ? dcParseMine(x.raw) : []; };
 const dcLines = b => { const m = dcMine(b); return m.length ? m : b.lines || []; };
 const dcId = (b, i) => { const l = dcLines(b)[i] || {}, pl = P["lines." + b._pid] || []; return String(l.id || "b" + b._pid + "-" + (pl[i] != null ? pl[i] : i)); };
-const dcSt = b => { const st = bs(b); if(!st.dc) st.dc = {at: 0, ans: false}; st.dc.at = Math.max(0, Math.min(st.dc.at, dcLines(b).length - 1)); return st.dc; };
+/* tools 34 (the B2 debrief chat 12.11 12:15, her 12:02: «декодинг — без пропусков, только с разборами»): `shown: true` (the class view) —
+   every line with its words and her marks from the start, no question step; Next / Back go line to line */
+const dcSt = b => { const st = bs(b); if(!st.dc) st.dc = {at: 0, ans: !!b.shown}; if(b.shown) st.dc.ans = true; st.dc.at = Math.max(0, Math.min(st.dc.at, dcLines(b).length - 1)); return st.dc; };
 const dcPending = b => { const Q = dcSt(b); return dcLines(b).length > 0 && (!Q.ans || Q.at < dcLines(b).length - 1); };
-function dcNext(b){ const Q = dcSt(b); dcClose(); if(!Q.ans){ dcTry(b); Q.ans = true; Q.just = true; } else { Q.at++; Q.ans = false; } render(); keepPlace(); Q.just = false; }
+function dcNext(b){ const Q = dcSt(b); dcClose(); if(!Q.ans){ dcTry(b); Q.ans = true; Q.just = true; } else { Q.at++; Q.ans = !!b.shown; } render(); keepPlace(); Q.just = false; }
 function dcBack(b){ const Q = dcSt(b); dcClose();
-  if(Q.ans){ Q.ans = false; render(); keepPlace(); return true; }
+  if(Q.ans && !b.shown){ Q.ans = false; render(); keepPlace(); return true; }
   if(Q.at > 0){ Q.at--; Q.ans = true; render(); keepPlace(); return true; } return false; }
 function dcWords(l){ const out = [];
   String(l.text || "").split(/(\{\{[\s\S]+?\}\})/).forEach(p => { const g = /^\{\{[\s\S]*\}\}$/.test(p), s = g ? p.slice(2, -2) : p;
@@ -2088,10 +2092,22 @@ function dcMarks(b, i){ const id = dcId(b, i); if(DC.mk[id]) return DC.mk[id];
   const o = DCS.m[id], l = dcLines(b)[i];
   DC.mk[id] = o && Date.now() - o.t < DC_FRESH && o.x === l.text && o.v ? JSON.parse(JSON.stringify(o.v)) : dcNew();
   ["w", "l", "s"].forEach(k => { if(!DC.mk[id][k]) DC.mk[id][k] = {}; }); if(!Array.isArray(DC.mk[id].k)) DC.mk[id].k = [];
+  if(b.shown && !(o && o.x === l.text && o.v)){ const M = DC.mk[id], R = dcPresets(l, dcWords(l));   /* tools 34: her marks on at once */
+    Object.entries(R.P).forEach(([i, p]) => { if(p.w) M.w[i] = p.w; Object.assign(M.l, p.l); Object.assign(M.s, p.s); }); R.K.forEach(k => { if(!M.k.includes(k)) M.k.push(k); }); }
+  DC.was[id] = dcSnap(DC.mk[id]);
   return DC.mk[id]; }
-function dcStore(b){ const Q = dcSt(b), id = dcId(b, Q.at), o = DCS.m[id], l = dcLines(b)[Q.at];
+/* tools 34 (her 12.11 12:05: «кнопку „Отменить последнее действие“»): each change to a line's marks keeps the state before it; ↶ Undo
+   (Ctrl+Z) takes the line back one step; what was typed in the gap is not part of it */
+const dcSnap = M => { const c = Object.assign({}, M); delete c.ty; return JSON.stringify(c); };
+function dcStore(b){ const Q = dcSt(b), id = dcId(b, Q.at), o = DCS.m[id], l = dcLines(b)[Q.at], M = dcMarks(b, Q.at), now = dcSnap(M);
+  if(DC.was[id] != null && DC.was[id] !== now){ const H = DC.hist[id] = DC.hist[id] || []; H.push(DC.was[id]); if(H.length > 60) H.shift(); }
+  DC.was[id] = now;
   if(o && Date.now() - o.t >= DC_FRESH && dcHas(o.v)) DCS.prev[id] = o;   /* the lesson before stays as ↺ Last time */
-  DCS.m[id] = {x: l.text, t: Date.now(), v: dcMarks(b, Q.at)}; dcSave(); }
+  DCS.m[id] = {x: l.text, t: Date.now(), v: M}; dcSave(); }
+function dcUndoLast(b){ const Q = dcSt(b), id = dcId(b, Q.at), H = DC.hist[id]; if(!H || !H.length) return;
+  const ty = dcMarks(b, Q.at).ty, M = JSON.parse(H.pop()); ["w", "l", "s"].forEach(k => { if(!M[k]) M[k] = {}; }); if(!Array.isArray(M.k)) M.k = []; if(ty) M.ty = ty;
+  DC.mk[id] = M; DC.was[id] = dcSnap(M); DCS.m[id] = {x: dcLines(b)[Q.at].text, t: Date.now(), v: M}; dcSave();
+  dcClose(); DC.noteEdit = false; dcPaint(b); }
 function dcLast(b){ const Q = dcSt(b), id = dcId(b, Q.at), x = dcLines(b)[Q.at].text, o = DCS.m[id], p = DCS.prev[id];
   if(o && Date.now() - o.t >= DC_FRESH && o.x === x && dcHas(o.v)) return o;
   if(p && p.x === x && dcHas(p.v)) return p; return null; }
@@ -2116,7 +2132,8 @@ function dcPreset(b, i){ const Q = dcSt(b), l = dcLines(b)[Q.at], p = dcPresets(
   dcStore(b); dcPaint(b); return true; }
 /* ---- the line ---- */
 const dcCharHTML = (c, i, j, M) => { const m = M.l[i + "." + j], k = "l" + i + "." + j, isL = /[A-Za-z0-9'’]/.test(c);
-  return `<span class="dl${m ? " m-" + m : ""}${dcIsFresh(k) ? " nw" : ""}"${isL ? ` data-dl="${i}.${j}"` : ""}>${esc(c)}</span>`; };
+  const sel = DC.pan && DC.pan.i === i && DC.pan.l === j && DC.pan.say == null;   /* tools 34: the letter whose panel is open */
+  return `<span class="dl${m ? " m-" + m : ""}${dcIsFresh(k) ? " nw" : ""}${sel ? " sel" : ""}"${isL ? ` data-dl="${i}.${j}"` : ""}>${esc(c)}</span>`; };
 const dcIsFresh = k => DC.fresh === k || (DC.freshAll || []).includes(k);
 function dcWordHTML(w, i, M, ans){
   const chars = [...w.t], sayAt = {}; let h = "", j = 0;
@@ -2135,9 +2152,10 @@ function dcLineInner(b){
     cloud = false;
     if(i) h += Q.ans ? `<span class="dj${M.k.includes(i - 1) ? " on" : ""}" data-dj="${i - 1}" title="Link these two words"> </span>` : `<span class="dj"> </span>`;
     h += Q.ans ? dcWordHTML(w, i, M, Q.just) : `<span class="dw">${esc(w.t)}</span>`; });
+  const said = Q.ans && l.note && !M.n && !DC.noteEdit ? `<p class="dc-notet dc-said">💬 ${esc(l.note)}</p>` : "";   /* tools 34: what she said about it in class */
   const note = !Q.ans ? "" : DC.noteEdit ? `<div class="dc-notebox"><span aria-hidden="true">📝</span><input class="dp-in dc-notein" data-dcnotein value="${esc(M.n || "")}" maxlength="200" autocomplete="off" spellcheck="false" aria-label="A note on this line"><button class="dp-b ok" data-dcnoteok title="Enter">✓</button></div>` : M.n ? `<p class="dc-notet${DC.fresh === "n" ? " nw" : ""}" data-dcnote title="Tap to change">📝 ${esc(M.n)}</p>` : "";
   const long = String(l.text || "").replace(/\{\{|\}\}/g, "").length > 52;   /* a long line a little smaller, so it fits beside the picture */
-  return `<p class="dc-line${long ? " long" : ""}${Q.ans && Q.just ? " just" : ""}" data-dcline>${h}</p><svg class="dc-arcs" aria-hidden="true"></svg>${Q.ans ? dcTryHTML(l, M) : ""}${note}${Q.ans ? dcPanHTML(b) : ""}`; }
+  return `<p class="dc-line${long ? " long" : ""}${Q.ans && Q.just ? " just" : ""}" data-dcline>${h}</p><svg class="dc-arcs" aria-hidden="true"></svg>${Q.ans ? dcTryHTML(l, M) : ""}${said}${note}${Q.ans ? dcPanHTML(b) : ""}`; }
 /* what was typed in the gap: the right words green, the rest struck (kind corrections); all of it right → ✓ */
 const dcTySize = v => Math.max(9, String(v).length + 2);
 function dcTry(b){ const Q = dcSt(b), inp = document.querySelector("#main [data-dcgapin]"), v = (inp ? inp.value : DC.ty[dcId(b, Q.at)] || "").trim(), M = dcMarks(b, Q.at);
@@ -2152,8 +2170,8 @@ function dcTryHTML(l, M){ if(!M.ty) return "";
 function dcPanHTML(b){ const P = DC.pan; if(!P) return ""; const Q = dcSt(b), M = dcMarks(b, Q.at), W = dcWords(dcLines(b)[Q.at]);
   if(P.say != null) return `<div class="dc-pan say" data-dcpan><span class="dp-l">sounds like</span><input class="dp-in" data-dcsayin value="${esc(P.say)}" maxlength="24" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="How it sounds"><button class="dp-b ok" data-dcsayok title="Enter">✓</button></div>`;
   const cur = P.l != null ? M.l[P.i + "." + P.l] : M.w[P.i], bt = (k, lbl, key, t) => `<button class="dp-b${cur === k ? " on" : ""}" data-dcmk="${k}" title="${t} (${key})">${lbl}</button>`;
-  const lettersOk = P.l == null && W[P.i] && [...W[P.i].t].filter(c => /[A-Za-z]/.test(c)).length > 1;
-  return `<div class="dc-pan" data-dcpan role="toolbar" aria-label="Mark ${P.l != null ? "this letter" : "this word"}">${bt("grey", '<span class="pv-grey">grey</span>', "G", "Hard to hear")}${bt("strike", '<span class="pv-gone">gone</span>', "S", "It disappears")}${lettersOk ? `<button class="dp-b" data-dcletters title="Mark single letters (L)"><span class="pv-abc">a·b·c</span></button>` : ""}<button class="dp-b" data-dcsay title="How it sounds — small, above (W)"><span class="pv-say">ə</span> sounds like</button>${bt("strong", '<b class="pv-strong">strong</b>', "B", "Full, stressed")}<button class="dp-b" data-dcundo title="Take the marks away (⌫)">↺</button></div>`; }
+  const what = P.l != null ? "this letter" : "the whole word";
+  return `<div class="dc-pan" data-dcpan role="toolbar" aria-label="Mark ${what}"><span class="dp-w">${P.l != null ? "letter" : "word"}</span>${bt("grey", '<span class="pv-grey">grey</span>', "G", "Hard to hear")}${bt("strike", '<span class="pv-gone">gone</span>', "S", "It disappears")}<button class="dp-b" data-dcsay title="How it sounds — small, above (W)"><span class="pv-say">ə</span> sounds like</button>${bt("strong", '<b class="pv-strong">strong</b>', "B", "Full, stressed")}<button class="dp-b" data-dcundo title="Take the marks off ${what} (⌫)">✕</button></div>`; }
 function dcClose(){ DC.pan = null; DC.letters = null; }
 function dcPanPlace(){ const pan = document.querySelector("#main [data-dcpan]"), box = document.querySelector("#main .dc-linebox"); if(!pan || !box || !DC.pan) return;
   const el = DC.pan.l != null ? box.querySelector(`[data-dl="${DC.pan.i}.${DC.pan.l}"]`) : box.querySelector(`[data-dw="${DC.pan.i}"]`); if(!el) return;
@@ -2177,7 +2195,8 @@ function dcPaint(b){ const box = document.querySelector("#main .dc-linebox"); if
   const hint = document.querySelector("#main .dc-hint"); if(hint && DC.hinted) hint.remove(); }
 function dcToolsHTML(b){ const Q = dcSt(b), has = dcHas(dcMarks(b, Q.at)), last = Q.ans && !has ? dcLast(b) : null;
   const M = dcMarks(b, Q.at);
-  return `<span class="dc-tools" data-dctools>${Q.ans && !M.n && !DC.noteEdit ? `<button class="btn slim quiet" data-dcnote title="A short note on this line — they see it; it goes into 📋 Copy analysis">📝 Note</button>` : ""}${Q.ans && has ? `<button class="btn slim" data-dcclear title="Take all the marks off this line">🧹 Clear</button>` : ""}${last ? `<button class="btn slim" data-dclast title="The marks this line had last time">↺ Last time (${new Date(last.t).toLocaleDateString("en-GB", {day: "numeric", month: "short"})})</button>` : ""}<button class="btn slim quiet" data-dccopy title="The lines with their marks and plays, for the debrief">📋 Copy analysis</button></span>`; }
+  const H = DC.hist[dcId(b, Q.at)];
+  return `<span class="dc-tools" data-dctools>${Q.ans && H && H.length ? `<button class="btn slim" data-dcundolast title="Undo the last change on this line (Ctrl+Z)">↶ Undo</button>` : ""}${Q.ans && !M.n && !DC.noteEdit ? `<button class="btn slim quiet" data-dcnote title="A short note on this line — they see it; it goes into 📋 Copy analysis">📝 Note</button>` : ""}${Q.ans && has ? `<button class="btn slim" data-dcclear title="Take all the marks off this line">🧹 Clear</button>` : ""}${last ? `<button class="btn slim" data-dclast title="The marks this line had last time">↺ Last time (${new Date(last.t).toLocaleDateString("en-GB", {day: "numeric", month: "short"})})</button>` : ""}<button class="btn slim quiet" data-dccopy title="The lines with their marks and plays, for the debrief">📋 Copy analysis</button></span>`; }
 /* ---- the card ---- */
 function dcEditHTML(b){ const x = DCS.mine[b._pid];
   return `<div class="dc" data-dc><div class="dc-edit"><p class="dc-edit-h"><b>✏️ My lines</b> — one per row: the time in the film, then the line with the gap in [square brackets]. Kept on this computer only.</p>
@@ -2188,9 +2207,9 @@ function decodeHTML(b){
   if(DC.edit === b._pid || !dcLines(b).length) return dcEditHTML(b);
   const Q = dcSt(b), l = dcLines(b)[Q.at], n = dcLines(b).length, pic = DC.pic && DC.url && DC.m && DC.m.videoWidth > 0;
   const dots = n > 1 ? `<span class="dc-dots${n > 12 ? " many" : ""}" role="group" aria-label="Lines">${dcLines(b).map((_, k) => `<button class="${k === Q.at ? "on" : ""}" data-dcgo="${k}" ${k === Q.at ? `aria-current="step"` : ""} aria-label="Line ${k + 1}">${k + 1}</button>`).join("")}</span>` : "";
-  const hint = Q.ans && !DC.hinted ? `<p class="dc-hint">Tap a word to mark it · tap the space between two words to link them</p>` : "";
+  const hint = Q.ans && !DC.hinted ? `<p class="dc-hint">Tap a word: mark it, or one of its letters · tap the space between two words to link them</p>` : "";
   return `<div class="dc${Q.ans ? " ans" : ""}${pic ? " pic" : ""}" data-dc>
-    <div class="dc-top"><span class="dc-n">${esc(b.title || "Line")} <b>${Q.at + 1}</b> of ${n}</span>${dots}${dcToolsHTML(b)}<button class="btn slim quiet" data-dcedit title="Write or paste your own lines (kept on this computer)">✏️ My lines</button></div>
+    <div class="dc-top"><span class="dc-n">${esc(b.title || "Line")} <b>${Q.at + 1}</b> of ${n}</span>${dots}${b.shown ? "" : dcToolsHTML(b)}${b.shown ? "" : `<button class="btn slim quiet" data-dcedit title="Write or paste your own lines (kept on this computer)">✏️ My lines</button>`}</div>
     <div class="dc-main"><div class="dc-text">${l.before ? `<p class="dc-ctx">${esc(l.before)}</p>` : ""}<div class="dc-linebox">${dcLineInner(b)}</div>${l.after ? `<p class="dc-ctx">${esc(l.after)}</p>` : ""}${hint}</div>${pic ? `<div class="dc-vid" data-dcvid></div>` : ""}</div>
     <div class="dc-plbox" data-dcplayer>${dcPlayerHTML(b)}</div></div>`; }
 /* ---- the player ---- */
@@ -2411,6 +2430,7 @@ function wireDecode(b, root){ DC.b = b; const Q = dcSt(b), id = dcId(b, Q.at);
     if(on("[data-dcpin]")){ if(DC.sel){ DCS.clips[id] = dcFmt(DC.sel.s) + "-" + dcFmt(DC.sel.e); dcSave(); dcPlayerPaint(); } return; }
     if(on("[data-dcpic]")){ DC.pic = !DC.pic; store.set("dc-pic", DC.pic); render(); return; }
     if(on("[data-dccopy]")){ const btn = on("[data-dccopy]"), ok = await copyText(dcCopyText(b)); btn.textContent = ok ? "Copied ✓" : "Couldn't copy"; setTimeout(() => { if(btn.isConnected) btn.textContent = "📋 Copy analysis"; }, 2200); return; }
+    if(on("[data-dcundolast]")){ dcUndoLast(b); return; }
     if(on("[data-dcclear]")){ const id2 = dcId(b, Q.at); DC.mk[id2] = dcNew(); delete DC.ty[id2]; dcClose(); dcStore(b); dcPaint(b); return; }
     if(on("[data-dclast]")){ const L = dcLast(b); if(L){ const M = JSON.parse(JSON.stringify(L.v)); DC.mk[id] = M; DC.freshAll = [].concat(Object.keys(M.w).map(k => "w" + k), Object.keys(M.l).map(k => "l" + k), M.k.map(k => "k" + k), Object.keys(M.s).map(k => "s" + k)); dcStore(b); dcPaint(b); } return; }
     if(!Q.ans) return;
@@ -2423,9 +2443,11 @@ function wireDecode(b, root){ DC.b = b; const Q = dcSt(b), id = dcId(b, Q.at);
     if((x = on("[data-dj]"))){ dcLink(b, +x.dataset.dj); return; }
     const dw = on("[data-dw]");
     if(dw){ const i = +dw.dataset.dw, dl = on("[data-dl]");
-      if(DC.letters === i && dl){ const j = +dl.dataset.dl.split(".")[1]; DC.pan = DC.pan && DC.pan.i === i && DC.pan.l === j ? null : {i, l: j}; dcPaint(b); return; }
+      if(DC.letters === i && dl){ const j = +dl.dataset.dl.split(".")[1]; DC.pan = DC.pan && DC.pan.i === i && DC.pan.l === j ? {i, l: null} : {i, l: j}; dcPaint(b); return; }
       if(dcPreset(b, i)){ DC.pan = null; DC.letters = null; dcHinted(); return; }
-      DC.pan = DC.pan && DC.pan.i === i && DC.pan.l == null ? null : {i, l: null}; if(DC.letters !== i) DC.letters = null; dcPaint(b); return; }
+      if(DC.letters === i && DC.pan && DC.pan.i === i && DC.pan.l == null){ dcClose(); dcPaint(b); return; }   /* the open word again: closed */
+      DC.pan = {i, l: null}; DC.letters = dcWords(dcLines(b)[Q.at])[i] && [...dcWords(dcLines(b)[Q.at])[i].t].filter(c => /[A-Za-z0-9]/.test(c)).length > 1 ? i : null;   /* tools 34: its letters open at once */
+      dcPaint(b); return; }
     if(DC.pan || DC.letters != null){ dcClose(); dcPaint(b); } });
   card.addEventListener("input", e => { if(e.target.matches && e.target.matches("[data-dcgapin]")){ DC.ty[dcId(b, Q.at)] = e.target.value; e.target.size = dcTySize(e.target.value); } });
   card.addEventListener("keydown", e => {
@@ -2443,6 +2465,7 @@ function dcAfter(b){ if(b && b.kind === "decode"){ dcArcs(); dcPlace(); return; 
  if(DC.b){ dcStop(false); DC.b = null; dcClose(); } dcPlace(); }
 addEventListener("keydown", e => { const b = DC.b; if(!b || !document.querySelector("#main [data-dc]")) return;
   if(e.target && e.target.closest && e.target.closest("input, textarea, select, [contenteditable]")) return;
+  if((e.ctrlKey || e.metaKey) && !e.altKey && e.key.toLowerCase() === "z" && dcSt(b).ans){ e.preventDefault(); dcUndoLast(b); return; }   /* tools 34 */
   if(e.ctrlKey || e.metaKey || e.altKey) return;
   if(e.key === " "){ e.preventDefault(); e.stopImmediatePropagation(); if(!e.repeat) dcSpace(b); return; }
   if(e.key === "Escape" && DC.ctxOn){ e.preventDefault(); dcStop(false); return; }
@@ -2704,8 +2727,14 @@ function headHTML(){
 /* tools 30: the big picture closes when the screen changes, and with Esc or an arrow (which then don't step on) */
 addEventListener("keydown", e => { const z = document.querySelector(".pic-zoom"); if(!z || !["Escape", "ArrowRight", "ArrowLeft", "Enter", " "].includes(e.key)) return;
   e.preventDefault(); e.stopImmediatePropagation(); z.remove(); }, true);
+/* tools 35: her debrief file — the hard cards of every deck, the decoding lines that were marked or played, and the screen log */
+debriefAdd("Hard cards", () => BLOCKS.filter(b => (b.kind === "cards" || b.kind === "game") && (b.cards || b.tasks)).map(b => { try{ return hardCardsText(b); }catch(e){ return ""; } }).filter(Boolean).join("\n\n"));
+debriefAdd("Decoding", () => BLOCKS.filter(b => b.kind === "decode" && dcLines(b).some((l, i) => (DCS.m[dcId(b, i)] && dcHas(DCS.m[dcId(b, i)].v)) || dcPlays(b, i).length)).map(b => dcCopyText(b)).join("\n\n"));
+function debriefWhere(){ if(S.view !== "field") return S.view === "groups" ? "👥 Groups" : ""; if(S.intro) return D.stages[S.stage].label + " · intro";
+  const b = S.fast ? null : curBlock(); return D.stages[S.stage].label + " · " + (S.fast ? "hard cards again" : (bIdx() + 1) + " of " + curBlocks().length + (b && b.kind === "decode" ? " · line " + (dcSt(b).at + 1) + (dcSt(b).ans ? " (answer)" : "") : "")); }
 function render(){
   liveApply();
+  try{ debriefScreen(debriefWhere()); }catch(e){}   /* tools 35 */
   document.querySelectorAll(".pic-zoom").forEach(z => { if(z.dataset.blk !== ((S.fast || curBlock()) || {})._id) z.remove(); });
   if(S.view === "field" && !S.intro && !S.fast) S.far[S.stage] = Math.max(S.far[S.stage] || 0, bIdx());
   if(PTS && S.view === "field" && !S.intro && !S.fast && stagePos(S.stage) === SORD.length - 1 && bIdx() === curBlocks().length - 1) filmDone(partId(S.stage));   /* tools 26: the last part */

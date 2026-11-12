@@ -212,16 +212,33 @@ const MODEL = [
 ];
 const TQ_STEPS = ["click on the top line to hear the context","click on the line with the gap and try to catch what's in the gap","check","listen again — how did the expression sound?","optional: pronounce the expression like the speaker"];
 
-/* engine 65 (the AL chat's request 11.11 21:40): the film's lines — times from Olya's subtitles (The_Intern__2361509_1791728683_720p), not checked by ear */
-const FILM_INTERN = {
-  film: "The Intern",
+/* engine 69 (AL chat's request 11.11 22:10 / 22:55; her 12.11 09:37): part 1 — YouTube lines for everyone, the same mechanic; times = the
+   subtitle lines in the TubeQuizard base (AL's example), not checked by ear; the words around the gap are placeholders here: the lesson
+   chats bring the real lines in their TZ. `tier` 1 → 3, `first` = the first line. */
+const YT_LINES = {
   instr: "Click a line and listen once. Write what you caught — even one word. Then listen as many times as you like.",
   lines: [
-    {id:"h1", clip:"5:29.31-5:31.24", text:"{{I've lived}} here all my life, and lately I feel"},
+    {id:"y1", video:"n3hBzIOUSms", start:97.82, end:100.34, text:"… {{I've worked}} …", form:"'ve", tier:1, first:true},
+    {id:"y2", video:"WvvuLDX7iIk", start:709.07, end:710.82, text:"… {{I've studied}} …", form:"'ve", tier:2},
+    {id:"y4", video:"xBw2VFsRXao", start:203.47, end:205.83, text:"… {{I looked}} …", form:"-ed", tier:2},
+    {id:"y3", video:"WAMy9g4Zdso", start:18.06, end:21.78, text:"… {{I've worked}} …", form:"'ve", tier:3},
+    {id:"y5", video:"7kUGdZ8cba0", start:542.51, end:546.61, text:"… {{you worked}} …", form:"-ed", tier:3}
+  ]
+};
+/* engine 65 (the AL chat's request 11.11 21:40): the film's lines — times from Olya's subtitles (The_Intern__2361509_1791728683_720p), not checked by ear.
+   engine 69: part 2, optional; line h1 in two variants (AL 22:55, the gap's length): half x sees B, half y sees A */
+const FILM_INTERN = {
+  film: "The Intern",
+  optional: true,
+  ab: {name: "gap-length"},
+  instr: "Click a line and listen once. Write what you caught — even one word. Then listen as many times as you like.",
+  lines: [
+    {id:"h1", clip:"5:29.31-5:31.24", set:"p", text:"{{I've lived here}} all my life, and lately I feel", b:{text:"{{I've lived}} here all my life, and lately I feel"}},
     {id:"h2", clip:"1:35.21-1:38.91", text:"I used all the miles {{I'd saved}} and traveled the globe."},
     {id:"h3", clip:"5:37.58-5:39.82", text:"They stop when {{there's}} no more music in them."}
   ]
 };
 const TASKS = [
+  {id:"yt", topic:"film", sec:"Listening", title:"YouTube: what did they say?", meta:"5 lines from YouTube", kind:"steps", min:6, film:YT_LINES, steps:[]},
   {id:"film", topic:"film", sec:"Listening", title:"The Intern: what did they say?", meta:"3 lines from the film", kind:"steps", min:5, film:FILM_INTERN, steps:[]}
 ];

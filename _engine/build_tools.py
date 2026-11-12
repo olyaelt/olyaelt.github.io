@@ -262,6 +262,28 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
             if not (isinstance(lb, int) and 0 < lb <= len(last['blocks'])):
                 sys.exit('%s: class_view last_blocks must be 1…%d' % (path, len(last['blocks'])))
             dc['stages'] = dc['stages'][:-1] + [dict(last, blocks=last['blocks'][:lb])]
+        # tools 34 (the B2 debrief chat 12.11 12:15): "also": [i, …] — her decoding stages (teacher, at the end) go after the kept ones as
+        # everyone's stages; "decode": {"<line id>": {"marks": […], "note": "…"}} keeps only those lines (in that order), with her marks on at
+        # once and her line from the class under each (the block is "shown": no question step)
+        also, dcv = cv.get('also') or [], cv.get('decode') or {}
+        for i in also:
+            if not (isinstance(i, int) and 0 <= i < len(d['stages']) and d['stages'][i].get('teacher')):
+                sys.exit('%s: class_view also takes her own (teacher) stages only' % path)
+            st = {k: v for k, v in d['stages'][i].items() if k not in ('teacher', 'after')}
+            blocks = []
+            for b in st['blocks']:
+                if b.get('kind') == 'decode':
+                    lines = {l['id']: l for l in b.get('lines', [])}
+                    keep_ids = [x for x in dcv if x in lines]
+                    if not keep_ids: continue
+                    nb = dict(b, shown=True, lines=[dict(lines[x], marks=dcv[x].get('marks', lines[x].get('marks', [])), **({'note': dcv[x]['note']} if dcv[x].get('note') else {})) for x in keep_ids])
+                    nb['instr'] = cv.get('decode_instr', "Listen to each line and look at what happens to the sounds. Tap a word to see it closer.")
+                    nb['instr2'] = nb['instr']
+                    blocks.append(nb)
+                else: blocks.append(b)
+            if blocks: dc['stages'] = dc['stages'] + [dict(st, blocks=blocks)]
+        missing = [x for x in dcv if not any(x in [l['id'] for b in s.get('blocks', []) if b.get('kind') == 'decode' for l in b.get('lines', [])] for s in dc['stages'])]
+        if missing: sys.exit('%s: class_view decode lines not found: %s' % (path, ', '.join(missing)))
         dc['class_of'] = lesson.split('-')[0]   # tools 30 also (her 07.11 12:00: «не вернуться обратно»): the class page links back to the homework
         page = fill(tpl, dc, lesson + '/' + name + '-class').replace('__LIVE__', 'false').replace('__SYNC_URL__', '')
         assert '__DATA__' not in page and '__PAGE_ID__' not in page, 'placeholder left in the class view of %s' % path

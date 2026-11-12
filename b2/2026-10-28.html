@@ -814,6 +814,7 @@ audio{width:100%}
 .film-msg p{margin:0 0 10px;line-height:1.4}.film-msg .btn{margin:4px}
 .film-warn{margin:0;width:100%;background:rgba(0,0,0,.72);color:#FFE38A;font-size:.85rem;font-weight:700;padding:4px 8px}
 .film-note{display:block;margin-top:6px;font-weight:600;font-size:.88em;opacity:.9}
+.film-ab{display:inline-flex;gap:4px;align-items:center;margin-left:8px;font-size:.85em;font-weight:700}.film-ab .chip-t{padding:1px 10px;background:transparent;color:inherit;border-color:currentColor}.film-ab .chip-t[aria-pressed="true"]{background:var(--card);border-color:var(--card);color:var(--ink)}
 .panel.film .lines{margin-top:10px}
 /* on a computer the film on the left, the line and its buttons on the right: everything above Back / Next at 1280 × 720 */
 @media (min-width:900px){ .panel.film:not(.fsum){display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,32%);gap:8px 22px;align-items:start}
@@ -869,7 +870,7 @@ audio{width:100%}
 .ft-item{border-top:1px solid var(--line);padding:8px 0;display:grid;gap:3px}
 .ft-p{margin:0;font-weight:700}.ft-a{margin:0;color:var(--muted)}.ft-a b{color:var(--ink)}
 .ft-type{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;border:1.5px solid var(--line);border-radius:99px;padding:0 6px;margin-left:4px}
-.ft-n{margin:0}.ft-ok{color:var(--ok-ink);font-weight:800}.ft-bl{color:var(--muted);font-weight:700}
+.ft-n{margin:0}.ft-ok{color:var(--ok-ink);font-weight:800}.ft-bl{color:var(--muted);font-weight:700}.ft-lis{color:var(--muted);font-size:.9em;font-weight:700;margin-left:4px}
 .ft-w{margin:0;display:flex;flex-wrap:wrap;gap:4px 12px}.ft-wr s{text-decoration-color:var(--strike);color:var(--ink)}
 .ft-who{margin:2px 0 0;padding-left:1.2em;display:grid;gap:2px}.ft-who s{color:var(--strike)}
 .ft-empty{margin:0;color:var(--muted)}
@@ -887,6 +888,7 @@ audio{width:100%}
 .up-n{font-weight:900;white-space:nowrap}
 :root[data-theme="dark"] .up-want.on{background:#4A1C2C;color:#FFC2D6;border-color:#E0457B}
 @media (max-width:560px){ .up-row{flex-direction:column;align-items:stretch} .up-side{text-align:right} }
+.meter-next{font-weight:600;opacity:.8;margin-left:6px;font-size:.92em}   /* engine 70: the next round while the reached goal is still coming */
 </style>
 
 </head>
@@ -2258,7 +2260,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = [];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "67";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "70";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -2329,6 +2331,18 @@ function firstTry(t, item, o){
   const id = t.id + ":" + item; if(FIRST[id]) return;
   const first = String(o.first == null ? "" : o.first).trim();
   FIRST[id] = {task: t.id, item: id, type: o.type, prompt: ftPlain(o.prompt).slice(0, 300), answer: ftPlain(o.answer).slice(0, 200), first: first.slice(0, 300), ok: !!o.ok && !!first, blank: !first, t: Date.now()};
+  /* engine 68 (AL chat's handoff 12.11 09:10: one journal): a listening item also says after how many listens it was typed and how many of
+     its words were right, so a first try after one listen can be told from one after five */
+  ["words", "lis", "slow", "v", "ab"].forEach(k => { if(o[k] != null && o[k] !== false) FIRST[id][k] = o[k]; });
+  try{ localStorage.setItem(FT_KEY, JSON.stringify(FIRST)); }catch(e){}
+  ftSendSoon();
+}
+/* …and what happened after it, up to Check (listens, pieces, 🐢, Check ×, show me, the final text and its words, seconds): the same row,
+   brought up to date at each Check; the first try itself never changes */
+function ftAfter(t, item, a){
+  if(!t || t._once || t._review || isTeacher()) return;
+  const id = t.id + ":" + item, x = FIRST[id]; if(!x) return;
+  x.after = a; x.asent = 0;
   try{ localStorage.setItem(FT_KEY, JSON.stringify(FIRST)); }catch(e){}
   ftSendSoon();
 }
@@ -2336,10 +2350,12 @@ let ftTimer = null, ftBusy = false;
 function ftSendSoon(){ if(ftTimer) return; ftTimer = setTimeout(() => { ftTimer = null; ftSend(); }, 1500); }   /* a send already waiting takes what comes before it */
 async function ftSend(){
   if(ftBusy || !myCode() || isTeacher() || asStudent() || syncState === "unknown") return;
-  const todo = Object.values(FIRST).filter(x => !x.sent); if(!todo.length) return;
-  ftBusy = true; const part = todo.slice(0, 150);
-  const res = await post({action: "attempts", code: myCode(), page: PAGE_KEY, date: LESSON.date, items: part});
-  if(res && res.ok){ (Array.isArray(res.got) ? res.got : part.map(x => x.item)).forEach(i => { if(FIRST[i]) FIRST[i].sent = 1; }); try{ localStorage.setItem(FT_KEY, JSON.stringify(FIRST)); }catch(e){} }
+  const todo = Object.values(FIRST).filter(x => !x.sent || (x.after && !x.asent)); if(!todo.length) return;
+  ftBusy = true; const part = todo.slice(0, 150), had = {}; part.forEach(x => { had[x.item] = x.after ? JSON.stringify(x.after) : ""; });
+  const res = await post({action: "attempts", code: myCode(), page: PAGE_KEY, date: LESSON.date, items: part.map(x => { const y = Object.assign({}, x); delete y.sent; delete y.asent; return y; })});
+  if(res && res.ok){ (Array.isArray(res.got) ? res.got : part.map(x => x.item)).forEach(i => { const x = FIRST[i]; if(!x) return; x.sent = 1;
+      if(x.after && JSON.stringify(x.after) === had[i]) x.asent = 1; });   /* a Check that came while it was on its way goes next time */
+    try{ localStorage.setItem(FT_KEY, JSON.stringify(FIRST)); }catch(e){} }
   ftBusy = false; if(res && res.ok && todo.length > part.length) ftSendSoon();
 }
 function setStudentView(on){
@@ -2354,9 +2370,15 @@ async function syncNow(code, opts={}){
   if(syncBusy && !opts.keepalive){ syncAgain = true; return null; }
   syncBusy = true;
   const res = await post({ action:"sync", code, page:PAGE_KEY, date:LESSON.date,
-      tasks: TASKS.map(t=>({id:t.id, title:t.title, frames:framesOf(t)})),
+      tasks: TASKS.map(t=>({id:t.id, title:t.title + (t.film && t.film.optional ? " (optional)" : ""), frames:framesOf(t)})),
+      ab: TASKS.some(t => t.film && t.film.ab) ? 1 : 0,   /* engine 69: her table gives this student a half for the A/B lines */
+      teacher: ls.get("hw-role") === "teacher" ? 1 : 0,   /* engine 70: her page only reads, so her table answers it without the queue */
       events: Object.entries(marks).map(([task,m])=>({task, done:m.done, ts:m.ts})) }, opts);
   syncBusy = false;
+  /* engine 70 (her 12.11 12:13: «две минуты как loading»): a busy table or a dropped connection → ask again, a little later each time
+     (her view used to stay at «loading…» after one busy answer) */
+  if(!res.ok && ["busy", "offline", "server"].includes(res.error) && !opts.keepalive && (opts.tries || 0) < (ls.get("hw-role") === "teacher" ? 4 : 2) && code === myCode()){
+    const n = (opts.tries || 0) + 1; setTimeout(() => syncNow(code, {tries: n}), 2500 * n); }
   if(!res.ok && res.error === "other-group" && res.gid){ ls.set("hw-code", code); ls.set("hw-role",""); ls.set("hw-who",""); ls.set("hw-gid", res.gid); toOwnGroup(res.gid); return res; }
   if(res.ok) ls.set("hw-gid", res.role === "teacher" ? "" : (res.gid || ""));
   if(res.ok && res.role === "teacher"){
@@ -2373,6 +2395,7 @@ async function syncNow(code, opts={}){
     });
     saveMarks();
     if(res.work){ work = res.work; saveWork(); refreshWork(); }
+    if(res.half && code === myCode()) ls.set("hw-half-" + code, res.half);
     if(code === myCode()){ flushFlags(); ftSendSoon(); wantSendSoon(); }
     if(res.group && code === myCode()){ groupStats = res.group; ls.set("hw-group-"+GROUP_ID, JSON.stringify(res.group)); refreshMeter(); checkMilestone(res.group, GROUP_ID); }
     if(gotMe(res, code)) refreshMeter();
@@ -2639,9 +2662,9 @@ function meterHTML(gs){
   if(!gs || !gs.goal) return "";
   const pct = Math.min(1, gs.total/gs.goal), n = 20, filled = Math.min(n, Math.round(pct*n));
   return `<section class="meter" aria-label="Our group's goal">
-      <div class="meter-top"><b>🎬 Our group</b><span>${gs.reached ? "Goal reached!" : `${fmtN(gs.total)} / ${fmtN(gs.goal)} 🎞`}</span></div>
+      <div class="meter-top"><b>🎬 Our group</b><span>${gs.reached ? "Goal reached!" : gs.prev ? `Goal reached! <span class="meter-next">Next: ${fmtN(gs.total)} / ${fmtN(gs.goal)} 🎞</span>` : `${fmtN(gs.total)} / ${fmtN(gs.goal)} 🎞`}</span></div>
       <div class="strip" role="img" aria-label="${Math.round(pct*100)}% of the way">${Array.from({length:n},(_,i)=>`<i class="${i<filled?"on":""}"></i>`).join("")}</div>
-      <p class="small">${gs.reached ? `🎉 We did it! ${esc(capFirst(gs.reward))} is coming.` : `Every task adds frames — one per minute of work, Over to you counts double. At ${fmtN(gs.goal)} we'll have ${esc(gs.reward)}.`}${gs.size ? ` <b>${gs.week} of ${gs.size}</b> have added something this week.` : ""}</p>
+      <p class="small">${gs.reached ? `🎉 We did it! ${esc(capFirst(gs.reward))} is coming.` : gs.prev ? `🎉 We did it! ${esc(capFirst(gs.prev))} is coming. And we're already collecting for the next goal — every task adds frames, Over to you counts double.` : `Every task adds frames — one per minute of work, Over to you counts double. At ${fmtN(gs.goal)} we'll have ${esc(gs.reward)}.`}${gs.size ? ` <b>${gs.week} of ${gs.size}</b> have added something this week.` : ""}</p>
     </section>`;
 }
 function confetti(big){
@@ -3001,7 +3024,7 @@ function refreshMeter(){ const m = document.getElementById("meter-slot"); if(m &
 function footHTML(){
   if(SELF) return myCode() && syncState!=="unknown" ? `<span>My ticks are saved with my code, on all my devices.</span>` : `<span>The ticks on this page are saved on this device only until I enter my code.</span>`;   /* engine 60 */
   return myCode() && syncState!=="unknown"
-    ? `<span>When you finish a task, mark it in our spreadsheet in your colour.</span><span>Your ticks are saved for Olya and on all your devices.</span><span>Olya sees your first try at each answer, so she knows what to go over in class.</span>`
+    ? `<span>When you finish a task, mark it in our spreadsheet in your colour.</span><span>Your ticks are saved for Olya and on all your devices.</span><span>Olya sees your first try at each answer${hasListening() ? " and how many times you listened" : ""}, so she knows what to go over in class.</span>`
     : `<span>When you finish a task, mark it in our spreadsheet in your colour.</span><span>The ticks on this page are saved on this phone only.</span>`;
 }
 function refreshFoot(){ const f = document.getElementById("foot"); if(f) f.innerHTML = footHTML(); }
@@ -3048,6 +3071,7 @@ const TYPED_KEY = "hw-typed-" + PAGE_KEY, POS_KEY = "hw-pos-" + PAGE_KEY, SORT_K
 const lsJSON = (k, d) => { try{ return JSON.parse(ls.get(k) || "null") || d; }catch(e){ return d; } };
 Object.assign(typed, lsJSON(TYPED_KEY, {}));
 TASKS.forEach(t => { if(t.film) t.steps = filmSteps(t); });   /* engine 65: 🎬 a film task's screens, in this device's order */
+function hasListening(){ return TASKS.some(t => t.film || (t.steps || []).some(s => s && s.type === "listen")); }   /* engine 68: the notice says «how many times you listened» only where there is listening */
 let typedT = 0; const saveTyped = () => { clearTimeout(typedT); typedT = setTimeout(() => ls.set(TYPED_KEY, JSON.stringify(typed)), 300); };
 const norm = s => String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/[.!?,;:]+$/,"").replace(/\s+/g," ").trim();
 
@@ -3102,7 +3126,7 @@ function renderHome(justDone){
   const taskBtn = t => `
           <div class="task-wrap"><div class="task-row ${done.has(t.id)?"is-done":""} ${t.stop?"stop":""}">
             <button class="task-btn" data-open="${t.id}">
-              <span><div class="t">${esc(t.title)}${t.later?` <span class="later-tag">for later</span>`:""}${t.film && !FILM_DESK ? ` <span class="later-tag">💻 on the computer</span>` : ""}</div><div class="m">${esc(t.meta)} · ≈ ${minutesOf(t)} min</div>${t.alt?`<div class="alt">${esc(t.alt)}</div>`:""}</span>
+              <span><div class="t">${esc(t.title)}${t.later?` <span class="later-tag">for later</span>`:""}${fileTask(t) && !FILM_DESK ? ` <span class="later-tag">💻 on the computer</span>` : ""}${t.film && t.film.optional ? ` <span class="later-tag">optional</span>` : ""}</div><div class="m">${esc(t.meta)} · ≈ ${minutesOf(t)} min</div>${t.alt?`<div class="alt">${esc(t.alt)}</div>`:""}</span>
             </button>
             ${done.has(t.id) && t.kind === "steps" && !isTeacher() ? `<button class="again-btn" data-again="${t.id}" aria-label="Do it again" title="Do it again">↺</button>` : ""}<button class="status" data-toggle="${t.id}" aria-pressed="${done.has(t.id)}" aria-label="${done.has(t.id)?"Done — tap to untick":"Tap to mark as done"}">✓</button>
           </div><div data-fbslot="${t.id}">${isTeacher() ? teacherLine(t.id) : fbLine(t.id)}</div>${isTeacher() && t.tqLink ? tqLinkHTML(t) : !isTeacher() && t.tq ? tqAltHTML(t) : ""}</div>`;
@@ -3113,7 +3137,7 @@ function renderHome(justDone){
       <span class="date">${LESSON.date}</span>
       <h1>${SELF || SHOWT ? esc(document.title) : "Homework"}</h1>
       ${LESSON.sub?`<p>${LESSON.sub}</p>`:""}
-      ${TASKS.some(t=>!t.later && !(t.film && !FILM_DESK)) ? `<p class="total">About ${Math.round(TASKS.filter(t=>!t.later && !(t.film && !FILM_DESK)).reduce((s,t)=>s+minutesOf(t),0)/5)*5} minutes in total — you don't have to do it all in one go.${TASKS.some(t=>t.later)?" Tasks marked <b>for later</b> aren't in that time: come back to them when you like.":""}</p>` : ""}
+      ${TASKS.some(t=>!t.later && !(fileTask(t) && !FILM_DESK) && !(t.film && t.film.optional)) ? `<p class="total">About ${Math.round(TASKS.filter(t=>!t.later && !(fileTask(t) && !FILM_DESK) && !(t.film && t.film.optional)).reduce((s,t)=>s+minutesOf(t),0)/5)*5} minutes in total — you don't have to do it all in one go.${TASKS.some(t=>t.later)?" Tasks marked <b>for later</b> aren't in that time: come back to them when you like.":""}${TASKS.some(t=>t.film && t.film.optional)?" <b>Optional</b> tasks aren't in it either.":""}</p>` : ""}
     </header>
     ${classHTML()}
     ${isTeacher() && SYNC_URL ? `<p class="ft-open-row"><button class="btn" id="ft-open">📊 First tries</button><span class="small">what they typed or chose before the answer was shown</span></p>` : ""}
@@ -3233,7 +3257,8 @@ function goHome(justDone){ stopPlayer(); filmStop(); stopRecorder(); try{ histor
 function renderTask(){
   const t = current;
   const nextListen = t.steps && stepIdx < t.steps.length && t.steps[stepIdx].type === "listen";
-  if(nextListen && playerOnScreen()) pausePlayer(); else stopPlayer();
+  const nextYT = t.steps && stepIdx < t.steps.length && /^film/.test(t.steps[stepIdx].type) && ytTask(t);   /* engine 69: the task keeps its one player */
+  if((nextListen || nextYT) && playerOnScreen()) pausePlayer(); else stopPlayer();
   if(!(t.steps && stepIdx < t.steps.length && /^film/.test(t.steps[stepIdx].type))) filmStop();
   stopRecorder();
   if(t.kind==="gaps") return renderGaps(t);
@@ -4157,8 +4182,11 @@ function renderListen(st, count, pct){
     else startYT();
   }
   const rows = [...app.querySelectorAll(".ln")];
+  /* engine 68 (AL chat 12.11 09:10): how many times each row played and whether 🐢 was on, for the first try of its gaps */
+  const heard = rows.map(() => 0); let heardSlow = false;
   const play = (from, to, i) => {
     if(!ytPlayer || !ytReady) return;
+    heard[i] = (heard[i] || 0) + 1; if(rateNow() < 1) heardSlow = true;
     clearInterval(ytTimer); clearTimeout(ytWatch);
     rows.forEach((m,k)=>m.classList.toggle("playing", k===i));
     try{ ytPlayer.setPlaybackRate(rateNow()); }catch(e){}
@@ -4182,12 +4210,15 @@ function renderListen(st, count, pct){
     try{ ytPlayer && ytPlayer.setPlaybackRate(r); }catch(e){}
   }));
   /* engine 55: each gap with the other forms it takes (its alt) and the words after it (a short form can't close a clause) */
-  const gapsAll = lines.flatMap(l => l[3].map((p, j) => typeof p === "string" ? null : {ans: p.gap, accs: [p.gap, ...(p.alt || [])], post: typeof l[3][j+1] === "string" ? l[3][j+1] : "",
+  const gapsAll = lines.flatMap((l, row) => l[3].map((p, j) => typeof p === "string" ? null : {ans: p.gap, accs: [p.gap, ...(p.alt || [])], post: typeof l[3][j+1] === "string" ? l[3][j+1] : "",
+    pre: typeof l[3][j-1] === "string" ? l[3][j-1] : "", row,
     line: l[3].map((q, m) => typeof q === "string" ? q : m === j ? "___" : q.gap).join("")}).filter(Boolean));
   /* engine 38: what they typed stays in the gap, green when right, red + → the answer when not (see judgeRewrite) */
   const judgeGap = inp => {
       const k = +inp.dataset.k, g = gapsAll[k], ans = g.ans, val = inp.value.trim();
-      firstTry(current, "s" + curS() + ".g" + k, {type: "listen", prompt: g.line, answer: ans, first: val, ok: !!val && (sameAnswer(val, g.accs, g.post) || markAnswer(val, g.accs).ok)});   /* engine 67 */
+      const gw = gapWords(val, ans, g.accs.slice(1), g.pre, g.post);
+      firstTry(current, "s" + curS() + ".g" + k, {type: "listen", prompt: g.line, answer: ans, first: val, ok: !!val && (sameAnswer(val, g.accs, g.post) || markAnswer(val, g.accs).ok),
+        words: gw.got + "/" + gw.n, lis: (heard[g.row] || 0) + (g.row ? heard[0] || 0 : 0), slow: heardSlow});   /* engine 67, 68: after how many listens */
       const ck = inp.nextElementSibling; if(ck && ck.classList.contains("gap-ck")) ck.remove();
       const res = document.createElement("span");
       if(!val){ res.className = "gap-res ans"; res.textContent = ans; inp.replaceWith(res); return; }
@@ -4266,16 +4297,25 @@ function filmKey(t){ return "hw-film-" + PAGE_KEY + "-" + t.id; }   /* declarati
 function filmState(t){ const S = lsJSON(filmKey(t), {}); S.lines = S.lines || {}; return S; }
 function filmSave(t, S){ ls.set(filmKey(t), JSON.stringify(S)); }
 const filmT = s => { const m = String(s || "").trim().match(/^(?:(\d+):)?(\d+):(\d+(?:\.\d+)?)$/); return m ? (+(m[1] || 0)) * 3600 + (+m[2]) * 60 + (+m[3]) : null; };
-const filmClip = l => { const [a, b] = String(l.clip || "").split(/\s*[-–]\s*/); const s = filmT(a), e = filmT(b); return s != null && e != null && e > s ? {s, e} : null; };
+const filmClip = l => { if(l && l.video){ const s = Number(l.start), e = Number(l.end); return isFinite(s) && isFinite(e) && e > s ? {s, e} : null; }
+  const [a, b] = String(l.clip || "").split(/\s*[-–]\s*/); const s = filmT(a), e = filmT(b); return s != null && e != null && e > s ? {s, e} : null; };
+/* engine 69 (AL chat's request 11.11 21:40, additions 22:10 / 22:55; her «да, давай попробуем сделать сейчас», 12.11 09:37): the same
+   listening task with lines from YouTube (`video`, `start`, `end` — the subtitle line's bounds, as in TubeQuizard) — one player for the
+   task, a strip under the line instead of the waveform (YouTube doesn't give the page its sound), works on a phone too */
+const YT_LEAD = 1;   /* a second before and after the line, as TubeQuizard and the listening clips do */
+const ytLine = l => !!(l && l.video), ytTask = t => !!(t && t.film && (t.film.lines || []).some(ytLine));
+const fileTask = t => !!(t && t.film && !ytTask(t));   /* the film from the student's own file: a computer only */
 const filmFmt = t => { t = Math.max(0, t || 0); const h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = Math.floor(t % 60); return (h ? h + ":" + String(m).padStart(2, "0") : m) + ":" + String(s).padStart(2, "0"); };
 function filmParts(l){ const m = String(l.text || "").match(/^([\s\S]*?)\{\{([\s\S]*?)\}\}([\s\S]*)$/); return m ? {pre: m[1], gap: m[2].trim(), post: m[3]} : {pre: String(l.text || ""), gap: "", post: ""}; }
 /* the words of a gap they got right, in order (contractions and apostrophes as in the other gaps) */
 const filmCore = w => coreOf(String(w).replace(APOS, "'")).core.toLowerCase();
-function filmWords(val, l){
-  const P = filmParts(l), T = splitTok(P.gap).map(filmCore).filter(Boolean), n = T.length;
+function filmWords(val, l){ const P = filmParts(l); return gapWords(val, P.gap, l.alt || [], P.pre, P.post); }
+/* how many words of a gap were caught, in order (I've = I have, as in the other gaps); the film's lines and the clips' gaps alike */
+function gapWords(val, gap, alts, pre, post){
+  const T = splitTok(gap).map(filmCore).filter(Boolean), n = T.length;
   const v = String(val || "").trim(); if(!v) return {got: 0, n};
-  if(sameAnswer(v, [P.gap].concat(l.alt || []), P.post)) return {got: n, n};
-  const S = splitTok(stripFrame(v, {pre: P.pre, post: P.post})).map(filmCore).filter(Boolean);
+  if(sameAnswer(v, [gap].concat(alts || []), post)) return {got: n, n};
+  const S = splitTok(stripFrame(v, {pre: pre, post: post})).map(filmCore).filter(Boolean);
   const L = Array.from({length: S.length + 1}, () => new Array(n + 1).fill(0));
   for(let i = S.length - 1; i >= 0; i--) for(let j = n - 1; j >= 0; j--) L[i][j] = S[i] === T[j] ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
   return {got: Math.min(n, L[0][0]), n};
@@ -4284,11 +4324,27 @@ function filmWords(val, l){
 function filmSteps(t){
   const lines = t.film.lines || [], S = filmState(t);
   let order = Array.isArray(S.order) && S.order.length === lines.length && lines.every(l => S.order.includes(l.id)) ? S.order : null;
-  if(!order){ const rest = lines.slice(1).map(l => l.id); for(let i = rest.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [rest[i], rest[j]] = [rest[j], rest[i]]; }
-    order = lines.length ? [lines[0].id].concat(t.film.shuffle === false ? lines.slice(1).map(l => l.id) : rest) : []; S.order = order; filmSave(t, S); }
+  if(!order){   /* engine 69: `first: true` marks the first line (else the first in the data); `tier` 1 → 2 → 3, the lines of a tier in this device's own order */
+    const first = lines.find(l => l.first) || lines[0], rest = lines.filter(l => l !== first);
+    const shuf = a => { for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+    const tiers = [...new Set(rest.map(l => Number(l.tier) || 0))].sort((a, b) => a - b);
+    const ids = t.film.shuffle === false ? rest.map(l => l.id) : tiers.flatMap(k => shuf(rest.filter(l => (Number(l.tier) || 0) === k).map(l => l.id)));
+    order = first ? [first.id].concat(ids) : []; S.order = order; filmSave(t, S); }
   return order.map((id, k) => ({type: "film", li: lines.findIndex(l => l.id === id), first: k === 0})).concat([{type: "filmsum"}]);
 }
 
+/* engine 69 (AL 22:55, an A/B comparison): a line can have a second variant `b: {text, …}` and a set `set: "p" | "q"`; each student has a half
+   (x / y) from her table, the same on every device and every homework; half x sees variant B on set p and A on set q, half y the other way
+   round. Without a code, a set or a half: variant A (`text`). A line keeps the variant it was first heard in. Olya switches A / B in her view. */
+const filmHalf = () => { const c = myCode(); return c ? ls.get("hw-half-" + c) || "" : ""; };
+function filmVariant(base, R){
+  if(!base || !base.b) return "a";
+  if(isTeacher()) return ls.get("hw-ab-view") === "b" ? "b" : "a";
+  if(R && R.v) return R.v;
+  const h = filmHalf(); if(!h || !base.set) return "a";
+  return (h === "x") === (base.set === "p") ? "b" : "a";
+}
+function filmLineV(base, R){ const v = filmVariant(base, R); return v === "b" ? Object.assign({}, base, base.b, {id: base.id, _v: "b"}) : Object.assign({}, base, {_v: "a"}); }
 /* the film file: one <video> for the page, moved into each screen; Chrome / Edge remember the file for the next time */
 function filmVideo(){
   if(!FILM.v){ const v = document.createElement("video"); v.className = "film-v"; v.playsInline = true; v.preload = "auto"; v.disablePictureInPicture = true;
@@ -4322,9 +4378,11 @@ function filmPaintBox(){ const box = app && app.querySelector(".film-box"); if(!
 /* the picture waits on the line's own moment */
 function filmCue(){ const st = current && current.film && current.steps && current.steps[stepIdx]; if(!st || st.type !== "film" || !FILM.url || FILM.playing) return;
   const c = filmClip(current.film.lines[st.li]); if(c) try{ FILM.v.currentTime = Math.max(0, c.s - .3); }catch(e){} }
-function filmStop(){ cancelAnimationFrame(FILM.raf); if(FILM.v) try{ FILM.v.pause(); }catch(e){} const done = FILM.playing; FILM.playing = null; app && app.querySelectorAll(".ln.playing").forEach(x => x.classList.remove("playing")); return done; }
+function filmStop(){ cancelAnimationFrame(FILM.raf); clearInterval(FILM.ytT); if(FILM.v) try{ FILM.v.pause(); }catch(e){}
+  if(FILM.playing && FILM.playing.yt) try{ ytPlayer && ytPlayer.pauseVideo(); }catch(e){} const done = FILM.playing; FILM.playing = null; app && app.querySelectorAll(".ln.playing").forEach(x => x.classList.remove("playing")); return done; }
 /* a clip with a little air around it (subtitles start late and end early); ends → onEnd */
 function filmPlay(l, rate, onEnd, row, range){
+  if(ytLine(l)) return ytfPlay(l, rate, onEnd, row, range);
   const c = filmClip(l), v = filmVideo(); if(!c || !FILM.url) return false;
   filmStop(); const W = fwWin(l), s = range ? range.s : W[0], e = range ? range.e : W[1];
   FILM.playing = {id: l.id, onEnd}; v.playbackRate = rate || 1; fwAudio();
@@ -4336,13 +4394,66 @@ function filmPlay(l, rate, onEnd, row, range){
   if(Math.abs(v.currentTime - s) < .05 && v.readyState >= 2) go(); else { v.addEventListener("seeked", go, {once: true}); v.currentTime = s; }
   return true;
 }
+/* engine 69: a YouTube line — seek, play, stop at its end (the player is asked every 40 ms; it may still report the old time just after a seek) */
+function ytfPlay(l, rate, onEnd, row, range){
+  if(!ytPlayer || !ytReady){ const o = app.querySelector("#yt-ok, .yt-box .film-msg .btn"); if(o){ o.classList.remove("nudge"); void o.offsetWidth; o.classList.add("nudge"); } return false; }
+  filmStop(); const W = fwWin(l), s = range ? range.s : W[0], e = range ? range.e : W[1];
+  FILM.playing = {id: l.id, onEnd, yt: true}; FILM.ytNow = s;
+  if(!range){ row = row || app.querySelector(".film-ln"); if(row) row.classList.add("playing"); }
+  try{ ytPlayer.setPlaybackRate(rate || 1); }catch(x){}
+  if(ytVideo !== l.video){ ytVideo = l.video; ytLoadN++; try{ ytPlayer.loadVideoById({videoId: l.video, startSeconds: s}); }catch(x){} }
+  else try{ ytPlayer.seekTo(s, true); ytPlayer.playVideo(); }catch(x){}
+  let seen = false; const t0 = Date.now();
+  FILM.ytT = setInterval(() => {
+    if(!FILM.playing || FILM.playing.id !== l.id){ clearInterval(FILM.ytT); return; }
+    let now = 0, st = -1; try{ now = ytPlayer.getCurrentTime(); st = ytPlayer.getPlayerState(); }catch(x){}
+    if(now >= s - .3 && now < e) seen = true;
+    if(seen) FILM.ytNow = now; fwDraw();
+    if(seen && (now >= e || st === 0)){ const cb = FILM.playing.onEnd, h = document.getElementById("hint"); if(h) h.hidden = true; filmStop(); fwDraw(); if(cb) cb(); return; }
+    if(!seen && Date.now() - t0 > 3000){ const h = document.getElementById("hint"); if(h) h.hidden = false; }   /* nothing yet (a phone may want a tap on the video first; an ad may come first) */
+    if(!seen && Date.now() - t0 > 40000){ filmStop(); fwDraw(); }   /* never started: nothing counts as heard */
+  }, 40);
+  return true;
+}
+function ytfBoxHTML(){ return `<div class="film-box video yt-box"><div id="yt"></div><div class="film-over">${ls.get("hw-yt-ok") ? `<p class="vload">Loading the video…</p>` : ytConsentHTML()}</div></div>`; }
+function ytfMount(videoId, at){
+  const box = app.querySelector(".film-box.yt-box"); if(!box) return;
+  const over = () => app.querySelector(".yt-box .film-over");
+  const failed = () => { if(ytReady || !over()) return;
+    over().innerHTML = ON_SITE ? `<div class="film-msg"><p>The video isn't loading.</p><button class="btn" id="ytf-retry">Try again</button></div>` : `<div class="film-msg"><p>The video can't play in this preview. On the published page it plays right here.</p></div>`;
+    const r = document.getElementById("ytf-retry"); if(r) r.addEventListener("click", () => { clearTimeout(ytReadyWatch); if(ytPlayer){ try{ ytPlayer.destroy(); }catch(e){} ytPlayer = null; }
+      const b = app.querySelector(".yt-box"); if(b && !b.querySelector("#yt")) b.insertAdjacentHTML("afterbegin", `<div id="yt"></div>`); ytfMount(videoId, at); }); };
+  const start = () => { if(over()) over().innerHTML = `<p class="vload">Loading the video…</p>`;
+    loadYT().then(() => { if(!document.getElementById("yt")) return;
+      ytVideo = videoId; ytReady = false; ytLoadN++;
+      ytPlayer = new YT.Player("yt", {videoId, width: "100%", height: "100%",
+        playerVars: {playsinline: 1, rel: 0, modestbranding: 1, controls: 0, disablekb: 1, cc_load_policy: 0, iv_load_policy: 3, start: Math.floor(at || 0)},
+        events: {onReady: () => { ytReady = true; clearTimeout(ytReadyWatch); if(over()) over().innerHTML = ""; const b = app.querySelector(".yt-box"); if(b) b.classList.add("has-film"); },
+                 onApiChange: captionsOffOnce, onStateChange: e => { if(e && e.data === 1){ setTimeout(captionsOffOnce, 300); setTimeout(captionsOffOnce, 1500); } }}});
+      clearTimeout(ytReadyWatch); ytReadyWatch = setTimeout(failed, YT_READY_WAIT); }).catch(failed); };
+  const ok = box.querySelector("#yt-ok"); if(ok) ok.addEventListener("click", () => { ls.set("hw-yt-ok", "1"); start(); }); else start();
+}
+/* a YouTube task keeps its one player from screen to screen (a new player = a new viewing, and ads): only what is around it changes */
+function filmShell(o, yt){
+  const box = app.querySelector(".stage .panel.film > .yt-box");
+  if(!yt || !box || !playerOnScreen() || !/yt-box/.test(o.stageHTML)){ if(yt && box) stopPlayer(); shell(o); return false; }
+  const bar = app.querySelector(".taskbar .count"); if(bar) bar.textContent = o.count;
+  const fill = app.querySelector(".taskbar .bar i"); if(fill) fill.style.width = o.pct + "%";
+  let ins = app.querySelector(".instr");
+  if(o.instr){ if(!ins){ app.querySelector(".stage").insertAdjacentHTML("beforebegin", `<div class="instr"></div>`); ins = app.querySelector(".instr"); } ins.innerHTML = o.instr; } else if(ins) ins.remove();
+  const tmp = document.createElement("div"); tmp.innerHTML = o.stageHTML; const np = tmp.firstElementChild, panel = box.parentNode, kids = [...np.children], at = kids.findIndex(k => k.classList.contains("yt-box"));
+  panel.className = np.className; [...panel.children].forEach(ch => { if(ch !== box) ch.remove(); });
+  kids.slice(0, at).forEach(k => panel.insertBefore(k, box)); kids.slice(at + 1).forEach(k => panel.appendChild(k));
+  app.querySelector(".actions").innerHTML = o.actionsHTML;
+  return true;
+}
 /* engine 66 (her 11.11 22:14: «гистограмму туда тоже встроить, так же, как она была у нас на сегодняшнем занятии внизу страницы… они могут
    кусочки проигрывать, и это прям очень-очень хорошо было для них»): the sound of the line under it, as on the lesson's decoding page.
    A whole film is too big to read in the browser, so the waveform draws as the line plays (an analyser on the film's own sound) and is
    kept on this computer for this file. It shows from the second listen on; drag = a piece, a click = from there; ▶ / Space plays it. */
 const FW_RATE = 100;
 FILM.pk = {lo: {}, hi: {}}; FILM.pkKey = ""; FILM.sel = {}; FILM.cur = {};
-const fwWin = l => { const c = filmClip(l); return c ? [Math.max(0, c.s - .3), c.e + .45] : [0, 1]; };
+const fwWin = l => { const c = filmClip(l); return !c ? [0, 1] : ytLine(l) ? [Math.max(0, c.s - YT_LEAD), c.e + YT_LEAD] : [Math.max(0, c.s - .3), c.e + .45]; };
 function fwAudio(){
   if(!FILM.au){ try{ const Ctx = window.AudioContext || window.webkitAudioContext, ac = new Ctx(), src = ac.createMediaElementSource(filmVideo()), an = ac.createAnalyser();
     an.fftSize = 2048; src.connect(an); an.connect(ac.destination); FILM.au = {ac, an, buf: new Float32Array(an.fftSize)}; }catch(e){ FILM.au = {off: true}; } }
@@ -4361,7 +4472,9 @@ async function fwLoad(key){ FILM.pkKey = key; FILM.pk = {lo: {}, hi: {}};
   try{ const db = await filmIDB(), v = await new Promise(res => { const r = db.transaction("h").objectStore("h").get("pk:" + key); r.onsuccess = () => res(r.result || null); r.onerror = () => res(null); });
     if(v && FILM.pkKey === key){ FILM.pk = {lo: Object.assign({}, v.lo, FILM.pk.lo), hi: Object.assign({}, v.hi, FILM.pk.hi)}; fwDraw(); } }catch(e){} }
 const fwFmt = t => { const m = Math.floor(t / 60), x = t - m * 60; return m + ":" + (x < 10 ? "0" : "") + x.toFixed(2); };
-function fwLine(){ const st = current && current.film && current.steps && current.steps[stepIdx]; return st && st.type === "film" ? current.film.lines[st.li] : null; }
+function fwLine(){ const st = current && current.film && current.steps && current.steps[stepIdx]; if(!(st && st.type === "film")) return null;
+  const k = FILM.lnow; if(k && k.t === current && k.i === stepIdx) return k.l;   /* the line on screen, in its variant (renderFilm) */
+  const base = current.film.lines[st.li], R = (filmState(current).lines || {})[base.id]; return filmLineV(base, R); }
 function fwDraw(){
   const cv = app && app.querySelector("canvas[data-fw]"), l = fwLine(); if(!cv || !l) return;
   const W = Math.max(50, cv.clientWidth), H = Math.max(40, cv.clientHeight), r = devicePixelRatio || 1;
@@ -4373,23 +4486,25 @@ function fwDraw(){
   if(sel){ g.fillStyle = col("--fw-sel"); g.fillRect(X(sel.s), 0, Math.max(1, X(sel.e) - X(sel.s)), WH); }
   const b0 = Math.floor(w0 * FW_RATE), b1 = Math.ceil(w1 * FW_RATE); let top = 6, got = 0;
   for(let b = b0; b < b1; b++){ const hi = FILM.pk.hi[b]; if(hi == null) continue; got++; top = Math.max(top, hi, -FILM.pk.lo[b]); }
-  const amp = (WH / 2 - 3) / top, wv = col("--fw-wave"), un = col("--fw-tick");
-  for(let x = 0; x < W; x++){ const a = Math.floor((w0 + x / W * (w1 - w0)) * FW_RATE), z = Math.max(a + 1, Math.floor((w0 + (x + 1) / W * (w1 - w0)) * FW_RATE)); let lo = 0, hi = 0, has = false;
+  const amp = (WH / 2 - 3) / top, wv = col("--fw-wave"), un = col("--fw-tick"), yt = ytLine(l);
+  if(yt){ g.fillStyle = wv; g.globalAlpha = .55; g.fillRect(0, mid - 3, W, 6); g.globalAlpha = 1; }   /* engine 69: the strip */
+  else for(let x = 0; x < W; x++){ const a = Math.floor((w0 + x / W * (w1 - w0)) * FW_RATE), z = Math.max(a + 1, Math.floor((w0 + (x + 1) / W * (w1 - w0)) * FW_RATE)); let lo = 0, hi = 0, has = false;
     for(let b = a; b < z; b++){ if(FILM.pk.hi[b] == null) continue; has = true; if(FILM.pk.lo[b] < lo) lo = FILM.pk.lo[b]; if(FILM.pk.hi[b] > hi) hi = FILM.pk.hi[b]; }
     if(has){ g.fillStyle = wv; g.fillRect(x, mid - hi * amp, 1, Math.max(1, (hi - lo) * amp)); } else if(x % 6 < 3){ g.fillStyle = un; g.fillRect(x, mid, 1, 1); } }
-  if(got < (b1 - b0) * .05){ g.fillStyle = un; g.font = "700 14px system-ui, sans-serif"; g.textAlign = "center"; g.fillText("The sound draws here as it plays — click the line", W / 2, mid - 10); g.textAlign = "start"; }
+  if(!yt && got < (b1 - b0) * .05){ g.fillStyle = un; g.font = "700 14px system-ui, sans-serif"; g.textAlign = "center"; g.fillText("The sound draws here as it plays — click the line", W / 2, mid - 10); g.textAlign = "start"; }
   if(sel){ g.fillStyle = col("--fw-edge"); g.fillRect(X(sel.s) - 1, 0, 2, WH); g.fillRect(X(sel.e) - 1, 0, 2, WH); }
   g.fillStyle = col("--fw-tick"); g.font = "600 11px system-ui, sans-serif";
   for(let t = Math.ceil(w0 * 2) / 2; t <= w1 + 1e-6; t += .5){ const x = Math.round(X(t)), whole = Math.abs(t - Math.round(t)) < 1e-6; g.fillRect(x, WH, 1, whole ? 6 : 3);
     if(whole && x < W - 30){ const m = Math.floor(t / 60), sec = Math.round(t - m * 60); g.fillText(m + ":" + String(sec).padStart(2, "0"), x + 3, H - 3); } }
   const cur = FILM.cur[l.id]; if(cur != null){ g.fillStyle = col("--fw-cur"); g.fillRect(Math.round(X(cur)), 0, 1, WH); }
-  if(FILM.playing && FILM.playing.id === l.id && FILM.v){ g.fillStyle = col("--fw-head"); g.fillRect(Math.round(X(FILM.v.currentTime)) - 1, 0, 2, WH); }
+  if(FILM.playing && FILM.playing.id === l.id && (FILM.playing.yt || FILM.v)){ g.fillStyle = col("--fw-head"); g.fillRect(Math.round(X(FILM.playing.yt ? FILM.ytNow || w0 : FILM.v.currentTime)) - 1, 0, 2, WH); }
 }
 function fwSelText(l){ const s = FILM.sel[l.id], c = FILM.cur[l.id]; return s ? `${fwFmt(s.s)} – ${fwFmt(s.e)}` : c != null ? `from ${fwFmt(c)}` : ""; }
 /* a piece: the selection, or from the click to the end of the line */
 function fwPiece(l, onPlay){ const s = FILM.sel[l.id], [w0, w1] = fwWin(l), c = FILM.cur[l.id];
   if(FILM.playing && FILM.playing.piece){ filmStop(); fwDraw(); return; }
-  const range = s ? {s: s.s, e: s.e} : {s: c != null ? c : w0, e: w1}; if(range.e - range.s < .05) return;
+  const range = s ? {s: s.s, e: s.e} : {s: c != null ? c : w0, e: w1}, min = ytLine(l) ? .3 : .05;   /* engine 69: YouTube can't play less than about .3 s cleanly */
+  if(range.e - range.s < min){ if(!s) return; range.e = Math.min(w1, range.s + min); range.s = Math.max(w0, range.e - min); }
   if(onPlay) onPlay(); filmPlay(l, rateNow(), null, null, range); if(FILM.playing) FILM.playing.piece = true; }
 function fwWire(l, onPlay){ const cv = app.querySelector("canvas[data-fw]"); if(!cv) return;
   const tAt = e => { const r = cv.getBoundingClientRect(), [w0, w1] = fwWin(l); return Math.max(w0, Math.min(w1, w0 + (e.clientX - r.left) / r.width * (w1 - w0))); };
@@ -4434,10 +4549,14 @@ function filmMarksHTML(l){
   return `<p class="film-marks"><span class="fm-h">How it sounds:</span> ${words.map((w, i) => wordHTML(w, i) + (i < words.length - 1 ? (link.has(i) ? `<span class="fm-link">‿</span>` : " ") : "")).join("")}</p>`;
 }
 function renderFilm(st, count, pct){
-  const t = current, l = t.film.lines[st.li], P = filmParts(l), S = filmState(t), R = S.lines[l.id] = S.lines[l.id] || {};
+  const t = current, base = t.film.lines[st.li], S = filmState(t), R = S.lines[base.id] = S.lines[base.id] || {};
+  const l = filmLineV(base, R), P = filmParts(l), yt = ytTask(t); FILM.lnow = {t, i: stepIdx, l};
   const phase = t._review || R.done ? 3 : R.first != null ? 2 : R.heard ? 1 : 0, last = stepIdx === t.steps.length - 2;
-  const instr = (t.film.instr || "Click a line and listen once. Write what you caught — even one word. Then listen as many times as you like.") + (st.first ? `<span class="film-note">In real life there's no replay. Your first listen shows your real ear; the rest is training.</span>` : "");
-  if(!FILM_DESK){ shell({count, pct, instr: "", stageHTML: `<div class="panel"><div class="film-phone"><p>💻 <b>Open this task on the computer where your film is.</b></p><p class="small">The sound comes from your own copy of ${esc(t.film.film || "the film")}, so this task works only there.</p></div></div>`,
+  const abSwitch = isTeacher() && base.b ? ` <span class="film-ab" role="group" aria-label="Variant">Variant${base.set ? " · set " + esc(base.set) : ""}: ${["a", "b"].map(v => `<button class="chip-t" data-abv="${v}" aria-pressed="${l._v === v}">${v.toUpperCase()}</button>`).join("")}</span>` : "";
+  const instr = (t.film.instr || "Click a line and listen once. Write what you caught — even one word. Then listen as many times as you like.")
+    + (st.first ? `<span class="film-note">In real life there's no replay. Your first listen shows your real ear; the rest is training.</span>` : "")
+    + (st.first && t.film.optional ? `<span class="film-note">${esc(t.film.optional === true ? "Optional — only if you have " + (t.film.film || "the film") + " on your computer." : t.film.optional)}</span>` : "") + abSwitch;
+  if(!FILM_DESK && !yt){ shell({count, pct, instr: "", stageHTML: `<div class="panel"><div class="film-phone"><p>💻 <b>Open this task on the computer where your film is.</b></p><p class="small">The sound comes from your own copy of ${esc(t.film.film || "the film")}, so this task works only there.</p></div></div>`,
     actionsHTML: `<button class="btn" id="prev">Back</button><button class="btn primary grow" id="go">${last ? "To the end" : "Next"}</button>`});
     document.getElementById("prev").addEventListener("click", () => { if(stepIdx > 0){ stepIdx--; renderTask(); } else goHome(); });
     document.getElementById("go").addEventListener("click", () => { stepIdx++; renderTask(); }); return; }
@@ -4456,26 +4575,37 @@ function renderFilm(st, count, pct){
     : `<div class="film-res" id="fh">${R.first == null ? "" : R.shown ? `<p class="film-score">First listen: <b>${w1.got} of ${w1.n}</b> word${w1.n === 1 ? "" : "s"}</p>` : `<p class="film-score">First listen: <b>${w1.got} of ${w1.n}</b> word${w1.n === 1 ? "" : "s"} → now: <b>${wf.got} of ${wf.n}</b></p>`}${filmMarksHTML(l)}<button class="btn" id="f-again">▶ Listen again</button></div>`;
   const ctx = x => x ? `<div class="ln film-ctx"><span></span><span class="ln-text">${esc(x)}</span></div>` : "";
   const stageHTML = `<div class="panel film">
-      <div class="film-box video"><div class="film-over">${filmBoxInner(t)}</div></div>
+      ${yt ? ytfBoxHTML() : `<div class="film-box video"><div class="film-over">${filmBoxInner(t)}</div></div>`}
       <div class="lines">${ctx(l.before)}<div class="ln has-gap film-ln" data-i="0"><button class="pl" aria-label="Play the line">▶</button><span class="ln-text">${esc(P.pre)}${gapHTML}${esc(P.post)}</span></div>${ctx(l.after)}</div>
       ${under}
-      ${phase >= 2 ? `<div class="fw"><canvas class="fw-wave" data-fw aria-label="The sound of the line: drag to choose a piece"></canvas>
-        <div class="fw-ctl"><button class="btn" id="fw-play">▶ Play the piece <kbd>Space</kbd></button><span class="fw-sel" id="fw-sel">${esc(fwSelText(l))}</span><span class="small fw-hint">Listen as many times as you like: click the line, or drag on the sound for a piece.</span>
+      ${yt ? `<div class="tap-hint small" id="hint" hidden><p>Nothing playing? Tap the video once, then click the line again. An ad? Let it finish — the line plays after it.</p></div>` : ""}
+      ${phase >= 2 ? `<div class="fw"><canvas class="fw-wave" data-fw aria-label="${yt ? "The line from start to end: drag to choose a piece" : "The sound of the line: drag to choose a piece"}"></canvas>
+        <div class="fw-ctl"><button class="btn" id="fw-play">▶ Play the piece <kbd>Space</kbd></button><span class="fw-sel" id="fw-sel">${esc(fwSelText(l))}</span><span class="small fw-hint">Listen as many times as you like: click the line, or drag on ${yt ? "the strip" : "the sound"} for a piece.</span>
           <span class="slow-row fw-spd"><span class="spd-l">🐢</span><span class="spd" id="spd" role="group" aria-label="Speed">${RATES.map(r => `<button data-rate="${r}" aria-pressed="${rateNow() === r}">${r === 1 ? "normal" : r}</button>`).join("")}</span></span></div></div>` : ""}</div>`;
-  shell({count, pct, instr, stageHTML, actionsHTML: `<button class="btn" id="prev">Back</button><button class="btn ${phase === 3 ? "primary" : ""} grow" id="go">${last ? "To the end" : "Next"}</button>`});
-  const box = app.querySelector(".film-box"); box.insertBefore(filmVideo(), box.firstChild); filmPaintBox(); if(!FILM.playing && FILM.v.readyState >= 1) filmCue();
+  const kept = filmShell({count, pct, instr, stageHTML, actionsHTML: `<button class="btn" id="prev">Back</button><button class="btn ${phase === 3 ? "primary" : ""} grow" id="go">${last ? "To the end" : "Next"}</button>`}, yt);
+  if(yt){ const c = filmClip(l), at = fwWin(l)[0];
+    if(!kept) ytfMount(l.video, at);
+    else if(!FILM.playing && ytReady && ytVideo !== l.video){ ytVideo = l.video; ytLoadN++; try{ ytPlayer.cueVideoById({videoId: l.video, startSeconds: Math.floor(at)}); }catch(e){} }
+    app.querySelectorAll("[data-abv]").forEach(b => b.addEventListener("click", () => { ls.set("hw-ab-view", b.dataset.abv); renderFilm(st, count, pct); })); }
+  else { const box = app.querySelector(".film-box"); box.insertBefore(filmVideo(), box.firstChild); filmPaintBox(); if(!FILM.playing && FILM.v.readyState >= 1) filmCue();
+    app.querySelectorAll("[data-abv]").forEach(b => b.addEventListener("click", () => { ls.set("hw-ab-view", b.dataset.abv); renderFilm(st, count, pct); })); }
   const save = () => filmSave(t, S), redo = () => { save(); renderFilm(st, count, pct); };
   const inp = app.querySelector(".film-in"), row = app.querySelector(".film-ln");
   const nudge = () => { const h = document.getElementById("fh"); [h, inp].forEach(x => { if(!x) return; x.classList.remove("nudge"); void x.offsetWidth; x.classList.add("nudge"); }); if(inp) inp.focus(); };
+  const after = () => { const wf = filmWords(R.final, l); ftAfter(t, l.id, {plays: R.plays || 0, pieces: R.pieces || 0, slow: !!R.slow, checks: R.checks || 0, shown: !!R.shown,
+    final: R.final || "", wfinal: wf.got + "/" + wf.n, secs: R.t2 && R.t0 ? Math.round((R.t2 - R.t0) / 1000) : null}); };   /* engine 68: the same row in her journal */
   const playMore = () => { const r = rateNow(); if(r < 1 && !R.done) R.slow = true; if(R.done) R.after = (R.after || 0) + 1; else R.plays = (R.plays || 0) + 1; save(); filmPlay(l, r); };
   const firstDone = txt => { R.first = txt; R.t1 = Date.now(); const w = filmWords(txt, l); R.w1 = w.got; R.typing = txt; save();
-    firstTry(t, l.id, {type: "film", prompt: P.pre + "___" + P.post, answer: P.gap, first: txt, ok: w.n > 0 && w.got === w.n});   /* engine 67 */
+    firstTry(t, l.id, {type: "film", prompt: P.pre + "___" + P.post, answer: P.gap, first: txt, ok: w.n > 0 && w.got === w.n, words: w.got + "/" + w.n, lis: R.plays || 1,
+      v: base.b ? l._v : null, ab: base.b && t.film.ab ? t.film.ab.name || "ab" : null});   /* engine 67, 68, 69 */
     if(w.got > 0 && inp) filmHearts(inp, w.got === w.n ? 9 : 4); if(!txt) playMore(); redo(); };
-  app.addEventListener("click", e => { const b = e.target.closest("[data-filmopen]"), b2 = e.target.closest("[data-filmreopen]"); if(b) filmOpen(); if(b2) filmReopen(); });
+  if(!yt && !app._filmOpenWired){ app._filmOpenWired = true; app.addEventListener("click", e => { const b = e.target.closest("[data-filmopen]"), b2 = e.target.closest("[data-filmreopen]"); if(b) filmOpen(); if(b2) filmReopen(); }); }
   row.addEventListener("click", e => {
     if(e.target.closest("input") && phase !== 0) return;
-    if(!FILM.url){ const o = app.querySelector("[data-filmopen]"); if(o){ o.classList.remove("nudge"); void o.offsetWidth; o.classList.add("nudge"); } return; }
-    if(phase === 0){ if(FILM.playing) return; R.t0 = R.t0 || Date.now(); R.plays = 1; save(); filmPlay(l, 1, () => { R.heard = true; save(); redo(); setTimeout(() => { const i = app.querySelector(".film-in"); if(i) i.focus(); }, 30); }); return; }
+    if(!yt && !FILM.url){ const o = app.querySelector("[data-filmopen]"); if(o){ o.classList.remove("nudge"); void o.offsetWidth; o.classList.add("nudge"); } return; }
+    if(phase === 0){ if(FILM.playing) return;
+      if(filmPlay(l, 1, () => { R.heard = true; save(); redo(); setTimeout(() => { const i = app.querySelector(".film-in"); if(i) i.focus(); }, 30); })){ R.t0 = R.t0 || Date.now(); R.plays = 1; if(base.b && !isTeacher()) R.v = l._v; save(); }
+      return; }
     if(phase === 1){ nudge(); return; }   /* the line waits for what they caught: «Nothing yet ↻» plays it again at once */
     playMore(); });
   if(inp){ inp.addEventListener("input", () => { R.typing = inp.value; inp.style.width = `min(100%, ${Math.max(9, P.gap.length + 4, inp.value.length + 3)}ch)`; save(); });
@@ -4483,11 +4613,12 @@ function renderFilm(st, count, pct){
       if(phase === 1) firstDone(inp.value.trim()); else if(phase === 2) document.getElementById("f-check").click(); }); }
   const on = (id, f) => { const x = document.getElementById(id); if(x) x.addEventListener("click", f); };
   on("f-none", () => firstDone(""));
-  on("f-check", () => { filmStop(); R.final = (inp ? inp.value : "").trim(); R.checks = (R.checks || 0) + 1; R.t2 = Date.now(); R.done = true; R.wf = filmWords(R.final, l).got; save(); redo(); });
-  on("f-show", () => { filmStop(); R.final = (inp ? inp.value : "").trim(); R.shown = true; R.t2 = Date.now(); R.done = true; R.wf = filmWords(R.final, l).got; save(); redo(); });
+  on("f-check", () => { filmStop(); R.final = (inp ? inp.value : "").trim(); R.checks = (R.checks || 0) + 1; R.t2 = Date.now(); R.done = true; R.wf = filmWords(R.final, l).got; save(); after(); redo(); });
+  on("f-show", () => { filmStop(); R.final = (inp ? inp.value : "").trim(); R.shown = true; R.t2 = Date.now(); R.done = true; R.wf = filmWords(R.final, l).got; save(); after(); redo(); });
   on("f-again", () => playMore());
   app.querySelectorAll("#spd [data-rate]").forEach(b => b.addEventListener("click", () => { const r = Number(b.dataset.rate); ls.set("hw-rate", String(r)); ls.set("hw-slow", "");
-    app.querySelectorAll("#spd [data-rate]").forEach(x => x.setAttribute("aria-pressed", Number(x.dataset.rate) === r)); if(FILM.v && FILM.playing){ FILM.v.playbackRate = r; if(r < 1){ R.slow = true; save(); } } }));
+    app.querySelectorAll("#spd [data-rate]").forEach(x => x.setAttribute("aria-pressed", Number(x.dataset.rate) === r));
+    if(FILM.playing){ if(FILM.playing.yt) try{ ytPlayer.setPlaybackRate(r); }catch(e){} else if(FILM.v) FILM.v.playbackRate = r; if(r < 1){ R.slow = true; save(); } } }));
   document.getElementById("prev").addEventListener("click", () => { filmStop(); if(stepIdx > 0){ stepIdx--; renderTask(); } else goHome(); });
   document.getElementById("go").addEventListener("click", () => { filmStop(); if(!R.done && !t._review){ R.skipped = true; save(); } stepIdx++; renderTask(); });
   if(phase === 1 && inp) setTimeout(() => inp.focus(), 30);
@@ -4496,17 +4627,15 @@ function renderFilm(st, count, pct){
 }
 /* the end: one listen → in the end, the hardest lines to hear again; the record goes to her table once (a student's code) */
 function filmTotals(t){ const S = filmState(t); let n = 0, a = 0, b = 0; const rows = [];
-  t.steps.filter(s => s.type === "film").forEach(s => { const l = t.film.lines[s.li], R = S.lines[l.id] || {}, w1 = filmWords(R.first, l), wf = filmWords(R.final, l);
+  t.steps.filter(s => s.type === "film").forEach(s => { const R = S.lines[t.film.lines[s.li].id] || {}, l = filmLineV(t.film.lines[s.li], R), w1 = filmWords(R.first, l), wf = filmWords(R.final, l);
     n += w1.n; a += w1.got; b += R.done ? wf.got : w1.got; rows.push({l, R, w1, wf}); });
   return {S, n, a, b, rows, p1: n ? Math.round(a / n * 100) : 0, p2: n ? Math.round(b / n * 100) : 0}; }
 function filmRecord(t, T){
-  const sec = ms => ms > 0 ? Math.round(ms / 1000) + " s" : "–";
-  const out = [`🎬 ${t.film.film || "film"} · order: ${t.steps.filter(s => s.type === "film").map(s => t.film.lines[s.li].id).join(" ")}${FILM.name ? " · file: " + FILM.name : ""}`];
-  T.rows.forEach(({l, R, w1, wf}) => { const P = filmParts(l);
-    out.push(`${l.id} [${P.gap}] — first: ${R.first == null ? (R.skipped ? "skipped" : "–") : R.first ? `"${R.first}"` : "nothing"} (${w1.got} of ${w1.n})`
-      + ` · plays before Check: ${R.plays || 0}${R.pieces ? ` (${R.pieces} of them pieces)` : ""} · Check ×${R.checks || 0}${R.shown ? " · show me" : ""}${R.slow ? " · 🐢" : ""}`
-      + ` · final: ${R.done ? (R.final ? `"${R.final}"` : "–") + ` (${wf.got} of ${wf.n})` : "not finished"} · ${sec((R.t2 || 0) - (R.t0 || 0))}`); });
-  out.push(`Total: first listen ${T.a}/${T.n} words (${T.p1}%) → in the end ${T.b}/${T.n} (${T.p2}%)`);
+  const yt = ytTask(t), out = [`${yt ? "🎧 YouTube" : "🎬 " + (t.film.film || "film")} · order: ${t.steps.filter(s => s.type === "film").map(s => t.film.lines[s.li].id).join(" ")}${!yt && FILM.name ? " · file: " + FILM.name : ""}${t.film.ab && filmHalf() ? " · half " + filmHalf() : ""}`];
+  /* engine 68 (AL chat 12.11 09:10, one journal): each line — first version, listens, pieces, 🐢, Check, show me, final — is a row of sheet
+     Attempts; this record keeps what the homework table needs: the order, the file and the totals */
+  out.push(`Total: first listen ${T.a}/${T.n} words (${T.p1}%) → in the end ${T.b}/${T.n} (${T.p2}%) · each line: sheet Attempts`);
+  const skipped = T.rows.filter(({R}) => R.first == null).map(({l}) => l.id); if(skipped.length) out.push(`not tried: ${skipped.join(" ")}`);
   return out.join("\n"); }
 let filmSending = false;
 async function filmSend(t, T){
@@ -4521,15 +4650,18 @@ function renderFilmSum(st, count, pct){
   const stageHTML = `<div class="panel film fsum">
       <div class="film-sum"><p class="film-big">After one listen you caught <b>${T.p1}%</b> of the words. In the end: <b>${T.p2}%</b>.</p>
       <p class="small">In real life there's no replay. Your first listen shows your real ear; the rest is training.</p></div>
-      ${hard.length && FILM_DESK ? `<div class="film-box video"><div class="film-over">${filmBoxInner(t)}</div></div>
+      ${hard.length && (FILM_DESK || ytTask(t)) ? `${ytTask(t) ? ytfBoxHTML() : `<div class="film-box video"><div class="film-over">${filmBoxInner(t)}</div></div>`}
       <p class="film-h">The hardest to hear — listen again:</p>
       <div class="lines">${hard.map(({l}) => { const P = filmParts(l); return `<div class="ln has-gap film-ln" data-id="${esc(l.id)}"><button class="pl" aria-label="Play the line">▶</button><span class="ln-text">${esc(P.pre)}<span class="gap-res ans">${esc(P.gap)}</span>${esc(P.post)}</span></div>`; }).join("")}</div>` : ""}
     </div>`;
-  shell({count, pct: 100, instr: "", stageHTML, actionsHTML: `<button class="btn" id="prev">Back</button><button class="btn primary grow" id="go">Finish</button>`});
-  const box = app.querySelector(".film-box"); if(box){ box.insertBefore(filmVideo(), box.firstChild); filmPaintBox(); }
-  app.addEventListener("click", e => { if(e.target.closest("[data-filmopen]")) filmOpen(); if(e.target.closest("[data-filmreopen]")) filmReopen(); });
-  app.querySelectorAll(".film-ln[data-id]").forEach(row => row.addEventListener("click", () => { const l = t.film.lines.find(x => x.id === row.dataset.id);
-    if(!FILM.url){ const o = app.querySelector("[data-filmopen]"); if(o){ o.classList.remove("nudge"); void o.offsetWidth; o.classList.add("nudge"); } return; }
+  const yt = ytTask(t), kept = filmShell({count, pct: 100, instr: "", stageHTML, actionsHTML: `<button class="btn" id="prev">Back</button><button class="btn primary grow" id="go">Finish</button>`}, yt);
+  FILM.lnow = null;
+  if(yt){ if(!kept && hard.length) ytfMount(hard[0].l.video, fwWin(hard[0].l)[0]); }
+  else { const box = app.querySelector(".film-box"); if(box){ box.insertBefore(filmVideo(), box.firstChild); filmPaintBox(); }
+    if(!app._filmOpenWired){ app._filmOpenWired = true; app.addEventListener("click", e => { if(e.target.closest("[data-filmopen]")) filmOpen(); if(e.target.closest("[data-filmreopen]")) filmReopen(); }); } }
+  app.querySelectorAll(".film-ln[data-id]").forEach(row => row.addEventListener("click", () => { const l = (hard.find(x => x.l.id === row.dataset.id) || {}).l;
+    if(!l) return;
+    if(!yt && !FILM.url){ const o = app.querySelector("[data-filmopen]"); if(o){ o.classList.remove("nudge"); void o.offsetWidth; o.classList.add("nudge"); } return; }
     filmPlay(l, rateNow(), null, row); }));
   document.getElementById("prev").addEventListener("click", () => { filmStop(); stepIdx--; renderTask(); });
   document.getElementById("go").addEventListener("click", () => { filmStop(); stepIdx++; renderTask(); });
@@ -4556,20 +4688,21 @@ function ftHTML(res){
   const blankWord = it => it.type === "film" ? "nothing caught" : "opened without a try";
   const itemHTML = it => FT_MODE === "item"
     ? `<div class="ft-item"><p class="ft-p">${esc(it.prompt)}</p><p class="ft-a">→ <b>${esc(it.answer)}</b> <span class="ft-type">${esc(ftTypeWord[it.type] || it.type)}</span></p>
-        <p class="ft-n">${it.tried ? `<span class="ft-ok">✓ ${it.ok} of ${it.tried}</span> right the first time` : `No one typed an answer`}${it.blank ? ` · <span class="ft-bl">${it.blank} ${blankWord(it)}</span>` : ""}</p>
+        <p class="ft-n">${it.tried ? `<span class="ft-ok">✓ ${it.ok} of ${it.tried}</span> right the first time` : `No one typed an answer`}${it.blank ? ` · <span class="ft-bl">${it.blank} ${blankWord(it)}</span>` : ""}${it.type === "listen" && it.tried ? ` · after one listen: <span class="ft-ok">✓ ${it.oneOk || 0} of ${it.one || 0}</span>` : ""}</p>
         ${it.wrong.length ? `<p class="ft-w">${it.wrong.map(([w, n]) => `<span class="ft-wr"><s>${esc(w)}</s>${n > 1 ? ` <b>×${n}</b>` : ""}</span>`).join(" ")}</p>` : ""}</div>`
     : `<div class="ft-item"><p class="ft-p">${esc(it.prompt)}</p><p class="ft-a">→ <b>${esc(it.answer)}</b></p>
-        <ul class="ft-who">${it.who.map(([name, first, r]) => `<li><b>${esc(name)}</b> ${r === "ok" ? `<span class="ft-ok">✓ ${esc(first)}</span>` : r === "no" ? `<s>${esc(first)}</s>` : `<span class="ft-bl">${blankWord(it)}</span>`}</li>`).join("")}</ul></div>`;
+        <ul class="ft-who">${it.who.map(([name, first, r, lis, words]) => `<li><b>${esc(name)}</b> ${r === "ok" ? `<span class="ft-ok">✓ ${esc(first)}</span>` : r === "no" ? `<s>${esc(first)}</s>` : `<span class="ft-bl">${blankWord(it)}</span>`}${lis != null && lis !== "" ? ` <span class="ft-lis">🎧 ${lis}${words ? " · " + esc(String(words).replace("/", " of ")) + " words" : ""}</span>` : ""}</li>`).join("")}</ul></div>`;
   return G.map(g => `<section class="ft-task"><h3>${esc(g.title)}</h3>${g.items.map(itemHTML).join("")}</section>`).join("")
     + (W.length ? `<section class="ft-task"><h3>❤️ I want to say this</h3>${W.map(w => `<div class="ft-item"><p class="ft-p">${esc(w.text)}</p><p class="ft-n"><b>${w.n}</b> ${w.n === 1 ? "student" : "students"}${FT_MODE === "student" ? ": " + w.who.map(esc).join(", ") : ""}</p></div>`).join("")}</section>` : "");
 }
 function ftCSV(res){
   const q = v => { v = String(v == null ? "" : v); return /[",\n;]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }, rows = [];
   const title = id => (TASKS.find(t => t.id === id) || {}).title || id;
-  if(FT_MODE === "item"){ rows.push(["Task", "Item", "Type", "Prompt", "Answer", "Tried", "Right the first time", "Opened without a try", "Wrong first tries"]);
-    ftGroups(res).forEach(g => g.items.forEach(it => rows.push([g.title, it.item, it.type, it.prompt, it.answer, it.tried, it.ok, it.blank, it.wrong.map(([w, n]) => w + (n > 1 ? " ×" + n : "")).join(" | ")]))); }
-  else { rows.push(["Task", "Item", "Type", "Prompt", "Answer", "Student", "First try", "Result"]);
-    ftGroups(res).forEach(g => g.items.forEach(it => it.who.forEach(([name, first, r]) => rows.push([g.title, it.item, it.type, it.prompt, it.answer, name, first, r === "ok" ? "right" : r === "no" ? "wrong" : "opened without a try"])))); }
+  if(FT_MODE === "item"){ rows.push(["Task", "Item", "Type", "Prompt", "Answer", "Tried", "Right the first time", "Opened without a try", "Wrong first tries", "Tried after one listen", "Right after one listen"]);
+    ftGroups(res).forEach(g => g.items.forEach(it => { const L = it.type === "listen" || it.type === "film";
+      rows.push([g.title, it.item, it.type, it.prompt, it.answer, it.tried, it.ok, it.blank, it.wrong.map(([w, n]) => w + (n > 1 ? " ×" + n : "")).join(" | "), L ? it.one || 0 : "", L ? it.oneOk || 0 : ""]); })); }
+  else { rows.push(["Task", "Item", "Type", "Prompt", "Answer", "Student", "First try", "Result", "Listens before the first try", "Words right"]);
+    ftGroups(res).forEach(g => g.items.forEach(it => it.who.forEach(([name, first, r, lis, words]) => rows.push([g.title, it.item, it.type, it.prompt, it.answer, name, first, r === "ok" ? "right" : r === "no" ? "wrong" : "opened without a try", lis == null ? "" : lis, words || ""])))); }
   (res.wants || []).forEach(w => rows.push([title(w.task), w.line, "want", w.text, "", w.n, "", "", FT_MODE === "student" ? w.who.join(" | ") : ""]));
   return "﻿" + rows.map(r => r.map(q).join(",")).join("\r\n");
 }

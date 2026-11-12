@@ -7,10 +7,10 @@ const {chromium, devices} = require('playwright'); const path = require('path'),
   if (!film) { film = path.join(os.tmpdir(), 'film-' + process.pid + '.mp4');
     execSync(`ffmpeg -y -loglevel error -f lavfi -i "anoisesrc=d=420:c=pink:a=0.3" -f lavfi -i "testsrc2=size=160x90:rate=10:d=420" -map 1:v -map 0:a -c:v libx264 -preset ultrafast -pix_fmt yuv420p -c:a aac -b:a 32k -shortest "${film}"`); }
   const b = await chromium.launch(), route = async ctx => ctx.route('https://hw.test/**', r => { const f = path.join(site, decodeURIComponent(new URL(r.request().url()).pathname)); fs.existsSync(f) ? r.fulfill({path: f}) : r.fulfill({status: 404}); });
-  const sent = [];
+  const sent = [], att = [];
   const ctx = await b.newContext({viewport: {width: 1280, height: 720}}); await route(ctx);
   await ctx.route('https://script.google.com/**', async r => { let body = {}; try { body = JSON.parse(r.request().postData() || '{}'); } catch (e) {}
-    if (body.action === 'submit') sent.push(body); r.fulfill({status: 200, contentType: 'application/json', body: JSON.stringify(body.action === 'sync' ? {ok: true, name: 'Test', marks: {}, work: []} : {ok: true, id: 1001})}); });
+    if (body.action === 'submit') sent.push(body); if (body.action === 'attempts') att.push(...body.items); r.fulfill({status: 200, contentType: 'application/json', body: JSON.stringify(body.action === 'sync' ? {ok: true, name: 'Test', marks: {}, work: []} : {ok: true, id: 1001})}); });
   await ctx.addInitScript(() => { window.showOpenFilePicker = undefined; if (!sessionStorage.getItem('x')) { sessionStorage.setItem('x', 1); localStorage.setItem('hw-code', 'test42'); } });
   const p = await ctx.newPage(); p.on('pageerror', e => errs.push(e.message));
   await p.goto('https://hw.test/c1/film-trial.html'); await p.waitForTimeout(600);
@@ -43,8 +43,8 @@ const {chromium, devices} = require('playwright'); const path = require('path'),
   await p.keyboard.press('Control+Space'); await p.waitForTimeout(250); ok(await p.evaluate(() => !!(FILM.playing && FILM.playing.piece)), 'Ctrl+Space in the box did not play the piece');
   await p.evaluate(() => filmStop());
   // 4. Check: the score line
-  await p.fill('.film-in', "I've lived"); await p.click('#f-check'); await p.waitForTimeout(300);
-  ok(/First listen: 1 of 2 words → now: 2 of 2/.test(await p.textContent('.film-score')), 'score: ' + await p.textContent('.film-score'));
+  await p.fill('.film-in', "I've lived here"); await p.click('#f-check'); await p.waitForTimeout(300);   /* engine 69: h1's variant A (no half without her table) is the long gap */
+  ok(/First listen: 1 of 3 words → now: 3 of 3/.test(await p.textContent('.film-score')), 'score: ' + await p.textContent('.film-score'));
   // 2. Nothing yet ↻ plays again at once; 5. show me without red
   await p.click('#go'); await p.waitForTimeout(300); await p.click('.film-ln .pl'); await p.waitForFunction(() => !FILM.playing, null, {timeout: 8000}); await p.waitForTimeout(200);
   await p.click('#f-none'); await p.waitForTimeout(250); ok(await p.evaluate(() => !!FILM.playing), 'Nothing yet did not play it again');
@@ -53,7 +53,11 @@ const {chromium, devices} = require('playwright'); const path = require('path'),
   // 6. the end: two percentages; 8. the record went to her table with the code
   ok(/After one listen you caught \d+% of the words\. In the end: \d+%\./.test(await p.textContent('.film-big')), 'no summary');
   await p.waitForTimeout(500);
-  ok(sent.length === 1 && sent[0].type === 'listening' && /h1 \[I've lived\] — first: "lived" \(1 of 2\) · plays before Check: \d+ \(\d+ of them pieces\)/.test(sent[0].text) && /order: h1 /.test(sent[0].text), 'the record: ' + JSON.stringify(sent));
+  ok(sent.length === 1 && sent[0].type === 'listening' && /order: h1 /.test(sent[0].text) && /Total: first listen \d+\/\d+ words .* · each line: sheet Attempts/.test(sent[0].text), 'the record: ' + JSON.stringify(sent));
+  // engine 68 (AL chat 12.11 09:10, one journal): the line's first version after one listen, then what happened up to Check, in the same item
+  const h1 = att.filter(x => x.item === 'film:h1'), last = h1[h1.length - 1] || {};
+  ok(h1.length >= 1 && last.first === 'lived' && last.words === '1/3' && last.lis === 1 && last.v === 'a' && last.ab === 'gap-length' && last.after && last.after.checks === 1 && last.after.final === "I've lived here" && last.after.wfinal === '3/3' && last.after.plays >= 2 && last.after.pieces >= 1,
+    'the journal: ' + JSON.stringify(h1));
   await p.click('#go'); await p.waitForTimeout(400); ok(await p.evaluate(() => done.has('film')), 'Finish did not tick the task');
   await p.goto('https://hw.test/c1/film-trial.html#film'); await p.waitForTimeout(500); ok(sent.length === 1, 'the record went twice');
   // without a code nothing goes

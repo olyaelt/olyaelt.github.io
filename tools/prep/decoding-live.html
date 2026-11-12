@@ -214,6 +214,9 @@ details.all[open] summary{color:var(--ink)}
 .mv.m1{background:#BFF2B8} .mv.m2{background:#FFF07A} .mv.m3{background:#A8E8FA}
 .bx-ctx{color:var(--muted);font-size:.9em}
 
+/* tools 35: 📁 Debrief folder in her Live bar */
+.dbf{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}.dbf .dbf-ask{border-color:#E08A00;color:#8A4B00}.dbf-err{font-size:.8rem;font-weight:700;color:#A33}
+
 /* ---------- game pieces (tools 14): coin, wheel, deck — the flat look of her slides: dark outline, solid offset shadow ---------- */
 .gcoin{position:relative;display:inline-grid;place-items:center;width:4.6rem;height:4.6rem;perspective:420px;flex:none;vertical-align:middle}
 .gc-body{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
@@ -663,7 +666,7 @@ body{overflow:hidden}
 <div class="prep" id="app"></div>
 <script>
 const D = {"type": "decode-prep", "title": "Decoding prep", "part": "1 · Analysis", "_pids": {}};
-const TOOLS_VERSION = "33";
+const TOOLS_VERSION = "35";
 const PAGE_ID = "prep/decoding";
 const TABLE_PAGE = true;   /* the -live page keeps the bank in her table; it has no live changes of its own, so the shared live polling stays off */
 const LIVE_ON = false, LIVE_URL = "https://script.google.com/macros/s/AKfycbwHqzwA-2z09POg7JSqiMhqglOKbD8bxs-UG-NcFKZPzTyzmdEW79ct3zHGktUGyLM_/exec";
@@ -977,7 +980,7 @@ function liveBarHTML(labelOf){
   const n = LV.hide.length + LV.last.length + Object.keys(LV.text).length + Object.keys(LV.order).length;
   liveLabelOf = labelOf;
   return `<div class="live-bar"><b>👩‍🏫 Live</b><span id="live-status">${esc(liveMsg || (n ? `${n} change${n === 1 ? "" : "s"} — the groups get them when they move on` : "✏️ correct · ⤓ to the end · Hide / Show — the groups get it when they move on"))}</span>
-    ${removed ? `<span class="live-removed">Hidden: ${removed}</span>` : ""}${n ? `<button class="live-chip" data-live-copy title="For the lesson debrief: what you changed live, to put into the slides and the page">📋 My changes</button><button class="live-reset" data-live-reset>Reset all</button>` : ""}</div>`;
+    <span class="dbf" data-dbf>${dbfBtnHTML()}</span>${removed ? `<span class="live-removed">Hidden: ${removed}</span>` : ""}${n ? `<button class="live-chip" data-live-copy title="For the lesson debrief: what you changed live, to put into the slides and the page">📋 My changes</button><button class="live-reset" data-live-reset>Reset all</button>` : ""}</div>`;
 }
 /* 📋 My changes (her wish 30.10 07:36): after the lesson, the debrief puts them into her slides and the page; plain words, the item's own text */
 let liveLabelOf = p => p;
@@ -1021,6 +1024,69 @@ function wireLive(root, current){
       liveRerender(); });
   }));
 }
+
+/* ---------- tools 35 (her 12.11 12:37 «отличная идея с папкой»; the B2 debrief chat 12:15: «желательно, чтобы всё с сайта забиралось
+   автоматически»): 📁 Debrief folder. On her live page (her code on this computer) she chooses a folder once, outside LMS (LMS goes to the
+   website); Chrome / Edge remember it. From then on the page keeps the lesson there by itself — <page>_<day>.json, rewritten when something
+   changes (every 15 s at most, and when the page is hidden): what she changed live, the groups' texts with her marks, the hard cards, the
+   decoding with its marks and ▶, and which screen was open when. The debrief chat reads it from her computer; nothing to paste. ---------- */
+const DBF = {prov: [], log: [], h: null, perm: "", last: "", t: 0, err: ""};
+function debriefAdd(name, fn){ DBF.prov.push({name, fn}); }
+const dbfDay = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
+const dbfHM = t => { const d = new Date(t); return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"); };
+const dbfLogKey = () => "dbf-log-" + PAGE_ID + "-" + dbfDay();
+/* which screen her page shows (the template calls it after each render): one row per change, kept for the day */
+function debriefScreen(label){
+  if(!liveTeacher() || !label) return;
+  if(!DBF.log.length) DBF.log = store.get(dbfLogKey()) || [];
+  const L = DBF.log; if(L.length && L[L.length - 1].s === label) return;
+  L.push({t: Date.now(), s: String(label).slice(0, 160)}); if(L.length > 600) L.splice(0, L.length - 600); store.set(dbfLogKey(), L);
+}
+function dbfDB(){ return new Promise((ok, no) => { try{ const r = indexedDB.open("olya-debrief", 1); r.onupgradeneeded = () => r.result.createObjectStore("kv"); r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error); }catch(e){ no(e); } }); }
+async function dbfGet(){ try{ const db = await dbfDB(); return await new Promise(ok => { const q = db.transaction("kv").objectStore("kv").get("dir"); q.onsuccess = () => ok(q.result || null); q.onerror = () => ok(null); }); }catch(e){ return null; } }
+async function dbfPut(h){ try{ const db = await dbfDB(); await new Promise(ok => { const tx = db.transaction("kv", "readwrite"); tx.objectStore("kv").put(h, "dir"); tx.oncomplete = ok; tx.onerror = ok; }); }catch(e){} }
+function dbfContent(){
+  const sections = {}; const ch = liveChangesText(); if(ch) sections["My changes"] = ch;
+  DBF.prov.forEach(p => { try{ const t = p.fn(); if(t && String(t).trim()) sections[p.name] = String(t); }catch(e){} });
+  if(!DBF.log.length) DBF.log = store.get(dbfLogKey()) || [];
+  return {page: PAGE_ID, title: document.title, url: location.href.split("#")[0].split("?")[0], day: dbfDay(), saved: new Date().toISOString(), tools: TOOLS_VERSION,
+    sections, screens: DBF.log.map(x => ({at: dbfHM(x.t), screen: x.s}))};
+}
+const dbfFile = () => PAGE_ID.replace(/[^\w-]+/g, "_") + "_" + dbfDay() + ".json";
+async function dbfWrite(force){
+  if(!DBF.h || DBF.perm !== "granted" || !liveTeacher()) return;
+  const c = dbfContent(), key = JSON.stringify(Object.assign({}, c, {saved: ""}));
+  if(!force && key === DBF.last) return;
+  try{ const fh = await DBF.h.getFileHandle(dbfFile(), {create: true}), w = await fh.createWritable(); await w.write(JSON.stringify(c, null, 1)); await w.close();
+    DBF.last = key; DBF.t = Date.now(); DBF.err = ""; }
+  catch(e){ const n = String(e && e.name || e); DBF.err = /NotAllowed|Security/.test(n) ? "" : "couldn't save (" + n + ")"; if(/NotAllowed|Security/.test(n)) DBF.perm = "prompt"; }
+  dbfPaint();
+}
+/* LMS goes to the website: a folder that looks like it (or is inside it, by its name) is refused */
+async function dbfIsSite(h){
+  if(/^(LMS|_engine|tools|b2|c1|me|fonts|assets)$/i.test(h.name)) return true;
+  for(const n of ["_engine", ".git"]) try{ await h.getDirectoryHandle(n); return true; }catch(e){}
+  for(const n of ["CNAME", "index.html"]) try{ await h.getFileHandle(n); return true; }catch(e){}
+  return false;
+}
+async function dbfPick(){
+  let h; try{ h = await showDirectoryPicker({id: "olya-debrief", mode: "readwrite", startIn: "documents"}); }catch(e){ return; }
+  if(await dbfIsSite(h)){ DBF.err = "That folder goes to the website — choose one outside LMS (e.g. Claude › Lessons › _debrief)"; dbfPaint(); return; }
+  DBF.h = h; DBF.perm = "granted"; DBF.err = ""; DBF.last = ""; await dbfPut(h); dbfWrite(true);
+}
+async function dbfAllow(){ if(!DBF.h) return dbfPick(); try{ DBF.perm = await DBF.h.requestPermission({mode: "readwrite"}); }catch(e){ DBF.perm = "prompt"; } dbfPaint(); if(DBF.perm === "granted"){ DBF.last = ""; dbfWrite(true); } }
+function dbfBtnHTML(){
+  if(!liveTeacher() || !window.showDirectoryPicker) return "";   /* Chrome / Edge on a computer only */
+  const err = DBF.err ? ` <span class="dbf-err">${esc(DBF.err)}</span>` : "";
+  if(!DBF.h) return `<button class="live-chip" data-dbf-pick title="Choose a folder on this computer, outside LMS (LMS goes to the website) — e.g. Claude › Lessons › _debrief. The page then keeps this lesson there for the debrief by itself.">📁 Debrief folder</button>${err}`;
+  if(DBF.perm !== "granted") return `<button class="live-chip dbf-ask" data-dbf-allow title="After a reload Chrome asks once more">📁 Allow saving to “${esc(DBF.h.name)}”</button>${err}`;
+  return `<button class="live-chip" data-dbf-pick title="The lesson is kept in “${esc(DBF.h.name)}” as ${esc(dbfFile())} — tap to choose another folder">📁 ${esc(DBF.h.name)} ✓${DBF.t ? " " + dbfHM(DBF.t) : ""}</button>${err}`;
+}
+function dbfPaint(){ document.querySelectorAll("[data-dbf]").forEach(x => { x.innerHTML = dbfBtnHTML(); }); }
+document.addEventListener("click", e => { const t = e.target.closest && e.target.closest("[data-dbf-pick], [data-dbf-allow]"); if(!t) return; e.stopPropagation(); if(t.hasAttribute("data-dbf-pick")) dbfPick(); else dbfAllow(); }, true);
+if(LIVE_ON && window.showDirectoryPicker) setTimeout(async () => { if(!liveTeacher()) return; const h = await dbfGet(); if(!h) return dbfPaint();
+  DBF.h = h; try{ DBF.perm = await h.queryPermission({mode: "readwrite"}); }catch(e){ DBF.perm = "prompt"; } dbfPaint(); if(DBF.perm === "granted") dbfWrite(true); }, 300);
+if(LIVE_ON){ setInterval(() => dbfWrite(false), 15000); document.addEventListener("visibilitychange", () => { if(document.hidden) dbfWrite(false); }); addEventListener("pagehide", () => dbfWrite(false)); }
 
 /* ---------- game pieces (tools 14, her wish 30.10 21:32): a coin, a spinning wheel, a deck of cards ----------
    The same calm motion as the die (her design rule 8): one smooth movement that slows down and stops — no bounce, no jerk at the end,

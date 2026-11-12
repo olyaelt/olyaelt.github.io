@@ -142,6 +142,7 @@ h1{margin:0;font-size:var(--step-2);line-height:1.2;font-weight:900}
 .legal a{color:inherit}
 .chip-t{font:inherit;font-size:.9rem;font-weight:700;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:3px 12px;cursor:pointer}
 .preview-bar{align-items:center;background:var(--card);border:2px dashed var(--instr);border-radius:12px;padding:8px 12px;color:var(--ink)}
+.meter-next{font-weight:600;opacity:.8;margin-left:6px;font-size:.92em}   /* engine 70: the next round while the reached goal is still coming */
 </style>
 </head>
 <body>
@@ -191,9 +192,9 @@ function meterHTML(gs){
   if(!gs || !gs.goal) return "";
   const pct = Math.min(1, gs.total/gs.goal), n = 20, filled = Math.min(n, Math.round(pct*n));
   return `<section class="meter" aria-label="Our group's goal">
-      <div class="meter-top"><b>🎬 Our group</b><span>${gs.reached ? "Goal reached!" : `${fmtN(gs.total)} / ${fmtN(gs.goal)} 🎞`}</span></div>
+      <div class="meter-top"><b>🎬 Our group</b><span>${gs.reached ? "Goal reached!" : gs.prev ? `Goal reached! <span class="meter-next">Next: ${fmtN(gs.total)} / ${fmtN(gs.goal)} 🎞</span>` : `${fmtN(gs.total)} / ${fmtN(gs.goal)} 🎞`}</span></div>
       <div class="strip" role="img" aria-label="${Math.round(pct*100)}% of the way">${Array.from({length:n},(_,i)=>`<i class="${i<filled?"on":""}"></i>`).join("")}</div>
-      <p class="small">${gs.reached ? `🎉 We did it! ${esc(capFirst(gs.reward))} is coming.` : `Every task adds frames — one per minute of work, Over to you counts double. At ${fmtN(gs.goal)} we'll have ${esc(gs.reward)}.`}${gs.size ? ` <b>${gs.week} of ${gs.size}</b> have added something this week.` : ""}</p>
+      <p class="small">${gs.reached ? `🎉 We did it! ${esc(capFirst(gs.reward))} is coming.` : gs.prev ? `🎉 We did it! ${esc(capFirst(gs.prev))} is coming. And we're already collecting for the next goal — every task adds frames, Over to you counts double.` : `Every task adds frames — one per minute of work, Over to you counts double. At ${fmtN(gs.goal)} we'll have ${esc(gs.reward)}.`}${gs.size ? ` <b>${gs.week} of ${gs.size}</b> have added something this week.` : ""}</p>
     </section>`;
 }
 function confetti(big){
@@ -296,7 +297,7 @@ async function inTurn(items, fn, width=2){
 }
 async function teacherSync(code, key){
   for(let attempt = 0; attempt < 2; attempt++){
-    const res = await post({action:"sync", code, page:key});
+    const res = await post({action:"sync", code, page:key, teacher:1});   /* engine 70: her read, without the queue */
     if(res.ok || res.error === "unknown-code" || res.error === "other-group") return res;
   }
   return {ok:false, error:"busy"};
@@ -352,7 +353,7 @@ function card(h, i){
   const st = stats(h), n = h.tasks.length, all = n && st.done >= n;
   if(teacherView()){
     const c = tdata && tdata[h.key];
-    const badges = c ? [c.toAnswer?`<b>💬 ${c.toAnswer} to answer</b>`:"", `${c.started} of ${c.students} started`, c.marked?`❔ ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:""].filter(Boolean).join(" · ") : ((tpending || trefresh) ? "checking…" : "didn't answer — reload the page");
+    const badges = c ? [c.toAnswer?`<b>💬 ${c.toAnswer} to answer</b>`:"", `${c.started} of ${c.students} started`, c.marked?`❔ ${c.marked}`:"", c.questions?`❓ ${c.questions}`:"", c.work?`✍️ ${c.work}`:""].filter(Boolean).join(" · ") : ((tpending || trefresh || !tdata) ? "checking…" : "didn't answer — reload the page");   /* 12.11: before the first answer (tdata not there yet) a card said «didn't answer» while the top said «Checking…» */
     const latest = h === HW[0];
     return `<a class="hw ${latest?"latest":""} ${c && c.toAnswer ? "todo" : ""} ${isPub(h)?"":"unl"}" href="${esc(h.file)}">
     <div class="hw-top"><span class="date">${esc(h.date)}</span>${!isPub(h)?`<span class="tag unl-tag">🔒 Not published</span>`:latest?`<span class="tag">Latest</span>`:""}<span class="go" aria-hidden="true">→</span></div>

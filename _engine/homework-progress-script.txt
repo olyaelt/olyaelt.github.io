@@ -14,10 +14,10 @@ const WORK = "Work";           // everything students send from "Over to you" + 
 const WORK_HEAD = ["ID", "Sent", "Student", "Group", "Homework", "Task", "Type", "Text", "Phrases they used", "Feedback", "Seen", "Key"];
 const W = { id: 1, sent: 2, student: 3, group: 4, homework: 5, task: 6, type: 7, text: 8, phrases: 9, feedback: 10, seen: 11, key: 12 };
 const SETTINGS = "Settings";   // the group goal: frames 🎞 (minutes of homework) towards a series lesson
-const SETTINGS_HEAD = ["Group", "Goal (frames)", "Frames before the pages", "Season start", "Reward", "Frames now (auto)", "Reached on (auto)"];
+const SETTINGS_HEAD = ["Group", "Goal (frames)", "Frames before the pages", "Season start", "Reward", "Frames now (auto)", "Reached on (auto)", "Reached, still coming"];   // engine 70: H = a goal reached whose reward hasn't happened yet (the meter says so while the next round fills)
 // worked out from the homework spreadsheets (30.09–21.10 for B2, 14.10–21.10 for C1): about two months to the goal at the current pace
-const SETTINGS_DEFAULTS = [["B2", 2700, 1182, new Date(2026, 8, 30), "a series lesson", "", ""],
-                           ["C1", 1800, 364, new Date(2026, 9, 14), "a series lesson", "", ""]];
+const SETTINGS_DEFAULTS = [["B2", 2700, 1182, new Date(2026, 8, 30), "a series lesson", "", "", ""],
+                           ["C1", 1800, 364, new Date(2026, 9, 14), "a series lesson", "", "", ""]];
 const STATE_HEAD = ["Key", "Code", "Page", "Task", "Done", "Time", "Title", "Frames"];
 const TEACHER = "TEACHER";     // a Students row with Group = Teacher: Olya's own code, opens the teacher view on the pages
 const REACT = "Reactions";      // Easy / OK / Hard after each task
@@ -52,6 +52,7 @@ function onOpen() {
   SpreadsheetApp.getUi().createMenu("Homework")
     .addItem("Set up the table", "setUp")
     .addItem("Make codes for new students", "makeCodes")
+    .addItem("Start a new goal (both groups)…", "newRound")
     .addSeparator()
     .addItem("Apply imported feedback", "applyImportedFeedback")
     .addItem("Apply imported ticks (old homework)", "applyImportedTicks")
@@ -476,9 +477,29 @@ function settings_() {
   const sh = sheet_(SETTINGS, SETTINGS_HEAD);
   if (sh.getLastRow() < 2) {
     sh.getRange(2, 1, SETTINGS_DEFAULTS.length, SETTINGS_HEAD.length).setValues(SETTINGS_DEFAULTS);
-    [70, 110, 170, 110, 160, 140, 140].forEach((w, i) => sh.setColumnWidth(i + 1, w));
+    [70, 110, 170, 110, 160, 140, 140, 170].forEach((w, i) => sh.setColumnWidth(i + 1, w));
   }
+  if (String(sh.getRange(1, 8).getValue()) !== SETTINGS_HEAD[7]) sh.getRange(1, 8).setValue(SETTINGS_HEAD[7]).setFontWeight("bold");   // engine 70: a table made earlier
   return sh;
+}
+// engine 70 (her 12.11 12:26: «вычтем то, что у них там… обеим группам поставим сейчас цель 2400… пусть они уже начинают копить»):
+// Homework → Start a new goal: both groups count again from now; the goal they reached stays on the meter («… is coming») until she clears H
+function newRound() {
+  const ui = SpreadsheetApp.getUi(), r = ui.prompt("Start a new goal", "Both groups start counting again from now. The new goal (frames):", ui.ButtonSet.OK_CANCEL);
+  if (r.getSelectedButton() !== ui.Button.OK) return;
+  const goal = Math.round(Number(String(r.getResponseText()).replace(/[^\d]/g, "")));
+  if (!(goal > 0)) { ui.alert("That isn't a number of frames."); return; }
+  const lock = LockService.getScriptLock(); lock.waitLock(30000);
+  try {
+    const set = settings_(), n = set.getLastRow() - 1; if (n < 1) return;
+    const rows = set.getRange(2, 1, n, SETTINGS_HEAD.length).getValues(), now = new Date();
+    rows.forEach((row, i) => { if (!String(row[0]).trim()) return;
+      const reached = Number(row[1]) > 0 && Number(row[5]) >= Number(row[1]);
+      const still = String(row[7] || "").trim() || (reached ? String(row[4] || "a series lesson").trim() : "");
+      set.getRange(i + 2, 2, 1, 7).setValues([[goal, 0, now, row[4] || "a series lesson", 0, "", still]]); });
+    ovBump_();
+  } finally { lock.releaseLock(); }
+  ui.alert("Done: both groups count from now towards " + goal + " frames. The reached goal stays on the meter (column H) — clear H when its reward has happened.");
 }
 
 function parseDate_(v) {
@@ -513,7 +534,7 @@ function groupStats_(group, stateRows) {   // engine 64: stateRows = State colum
   total = Math.round(total);
   set.getRange(i + 2, 6).setValue(total);
   if (goal && total >= goal && !rows[i][6]) set.getRange(i + 2, 7).setValue(new Date());
-  return { total: total, goal: goal, reward: reward, week: Object.keys(active).length, size: size, reached: goal > 0 && total >= goal };
+  return { total: total, goal: goal, reward: reward, week: Object.keys(active).length, size: size, reached: goal > 0 && total >= goal, prev: String(rows[i][7] || "").trim() };
 }
 
 // a student outside the groups (Group = Self, for people studying on their own): their own film, by their code only.
@@ -592,7 +613,7 @@ function teacher_(stu, p) {
     if (String(r[1]) !== page) return;
     try { discussed[String(r[2])] = JSON.parse(String(r[3])); } catch (err) {}
   });
-  st_touch_(stu);
+  if (!p._ro) st_touch_(stu);   // engine 70: the lock-free read writes no visit
   return { ok: true, role: "teacher", name: stu.name, students: students, done: done, work: work, reactions: reactions, discussed: discussed, published: published_([page]).length > 0, group: groupStats_(G) };
 }
 
@@ -886,24 +907,53 @@ function safeText_(s) { return /^[=+\-@]/.test(s) ? "'" + s : s; }
 // same item never comes in); "Opened without a try" = they showed the answer with nothing typed. Only Olya's code reads the summary.
 const ATTEMPTS = "Attempts";
 const ATT_HEAD = ["Time", "Code", "Student", "Group", "Homework", "Task", "Item", "Type", "Prompt", "Answer", "First try", "Right", "Opened without a try", "Key"];
+// tools 33 / engine 68 (AL chat's handoff 12.11 09:10: one journal for the first tries, the listening fields join it): columns after Key, so a
+// sheet made by the earlier script keeps working; a listening item (film line, a clip's gap) also gets what happened up to its Check, updated
+// later on the same row — the first-try columns never change
+const ATT_LIS = ["Words first", "Listens before first try", "Listens before Check", "Pieces", "Slow", "Checks", "Show me", "Final", "Words final", "Seconds", "Variant", "Compare"];
 const WANTS = "Want to say";
 const WANT_HEAD = ["Time", "Code", "Student", "Group", "Homework", "Task", "Line", "Text", "On", "Key"];
 function attempts_(stu, page, p) {
   const items = (Array.isArray(p.items) ? p.items : []).slice(0, 300), got = [];
   if (!items.length) return { ok: true, n: 0, got: got };
-  const sh = sheet_(ATTEMPTS, ATT_HEAD), n = sh.getLastRow() - 1, have = {};
-  if (n > 0) sh.getRange(2, ATT_HEAD.length, n, 1).getValues().forEach(r => { have[r[0]] = 1; });
+  const sh = sheet_(ATTEMPTS, ATT_HEAD), n = sh.getLastRow() - 1, at = {}, K = ATT_HEAD.length, W = K + ATT_LIS.length;
+  if (String(sh.getRange(1, K + 1).getValue()) !== ATT_LIS[0]) sh.getRange(1, K + 1, 1, ATT_LIS.length).setValues([ATT_LIS]).setFontWeight("bold");
+  if (n > 0) sh.getRange(2, K, n, 1).getValues().forEach((r, i) => { at[r[0]] = i + 2; });
+  const num = v => { const x = Number(v); return isFinite(x) && x >= 0 && x < 100000 ? Math.round(x) : ""; };
+  const yes = v => v === true ? "yes" : "";
+  // the listening part: what happened up to Check (it may come later than the first try, and again after another Check)
+  const lis = (x, a) => { a = a && typeof a === "object" ? a : null;
+    return [clean_(x.words, 12), num(x.lis), a ? num(a.plays) : "", a ? num(a.pieces) : "", a ? yes(a.slow) || (x.slow === true ? "yes" : "") : (x.slow === true ? "yes" : ""),
+      a ? num(a.checks) : "", a ? yes(a.shown) : "", a ? clean_(a.final, 300) : "", a ? clean_(a.wfinal, 12) : "", a ? num(a.secs) : "", clean_(x.v, 4), clean_(x.ab, 40)]; };
   const rows = [];
   items.forEach(x => {
     const item = clean_(x && x.item, 80); if (!item) return;
     const key = stu.code + "|" + page + "|" + item; got.push(item);
-    if (have[key]) return; have[key] = 1;
+    const listening = x.type === "film" || x.type === "listen";
+    if (at[key]) {   // a first try is never replaced; only the listening part after it is brought up to date
+      if (listening && x.after && at[key] > 1) sh.getRange(at[key], K + 3, 1, ATT_LIS.length - 2).setValues([lis(x, x.after).slice(2)]);
+      return;
+    }
+    at[key] = -1;
     const blank = x.blank === true;
     rows.push([fmtDate_(Number(x.t) > 0 ? Number(x.t) : Date.now()), stu.code, stu.name, stu.group, page, clean_(x.task, 60), item, clean_(x.type, 20),
-      clean_(x.prompt, 300), clean_(x.answer, 200), blank ? "" : clean_(x.first, 300), blank ? "" : (x.ok === true ? "✓" : "✗"), blank ? "yes" : "", key]);
+      clean_(x.prompt, 300), clean_(x.answer, 200), blank ? "" : clean_(x.first, 300), blank ? "" : (x.ok === true ? "✓" : "✗"), blank ? "yes" : "", key]
+      .concat(listening ? lis(x, x.after) : ATT_LIS.map(() => "")));
   });
-  if (rows.length) sh.getRange(sh.getLastRow() + 1, 1, rows.length, ATT_HEAD.length).setValues(rows);
+  if (rows.length) sh.getRange(sh.getLastRow() + 1, 1, rows.length, W).setValues(rows);
   return { ok: true, n: rows.length, got: got };
+}
+// engine 69 (AL chat's request 22:55, an A/B comparison): each student gets a half, x or y, once — the smaller half of their group (a tie:
+// either); it never changes, so a student sees the same variant of a line on every device and every homework
+const HALVES = "A/B halves";
+const HALF_HEAD = ["Code", "Student", "Group", "Half", "Since"];
+function half_(stu) {
+  const sh = sheet_(HALVES, HALF_HEAD), n = sh.getLastRow() - 1, rows = n > 0 ? sh.getRange(2, 1, n, 4).getValues() : [];
+  const mine = rows.filter(r => String(r[0]) === stu.code)[0]; if (mine) return String(mine[3]);
+  let x = 0, y = 0; rows.forEach(r => { if (String(r[2]) === String(stu.group)) { if (String(r[3]) === "x") x++; else if (String(r[3]) === "y") y++; } });
+  const h = x < y ? "x" : y < x ? "y" : (Math.random() < .5 ? "x" : "y");
+  sh.appendRow([stu.code, stu.name, stu.group, h, fmtDate_(Date.now())]);
+  return h;
 }
 // «I want to say this» on a line of the group's upgrade: a mark that can be taken off again (one row per student + line, On = yes / no)
 function wants_(stu, page, p) {
@@ -926,13 +976,16 @@ function attemptsSummary_(page) {
   if (!page) return { ok: false, error: "no-page" };
   const ss = SpreadsheetApp.getActiveSpreadsheet(), items = [], at = {}, wants = {};
   const sh = ss.getSheetByName(ATTEMPTS);
-  if (sh && sh.getLastRow() > 1) sh.getRange(2, 1, sh.getLastRow() - 1, ATT_HEAD.length).getValues().forEach(r => {
+  if (sh && sh.getLastRow() > 1) sh.getRange(2, 1, sh.getLastRow() - 1, ATT_HEAD.length + ATT_LIS.length).getValues().forEach(r => {
     if (String(r[4]) !== page) return;
     const id = String(r[6]); let it = at[id];
-    if (!it) { it = at[id] = { item: id, task: String(r[5]), type: String(r[7]), prompt: String(r[8]), answer: String(r[9]), tried: 0, ok: 0, blank: 0, wrong: {}, who: [] }; items.push(it); }
+    if (!it) { it = at[id] = { item: id, task: String(r[5]), type: String(r[7]), prompt: String(r[8]), answer: String(r[9]), tried: 0, ok: 0, blank: 0, wrong: {}, who: [], one: 0, oneOk: 0 }; items.push(it); }
     const blank = String(r[12]) === "yes", ok = String(r[11]) === "✓", first = String(r[10]);
     if (blank) it.blank++; else { it.tried++; if (ok) it.ok++; else { const k = normTry_(first); if (k) it.wrong[k] = (it.wrong[k] || 0) + 1; } }
-    it.who.push([String(r[2]), blank ? "" : first, blank ? "blank" : ok ? "ok" : "no"]);
+    // engine 68: a listening try says after how many listens it was typed; «after one listen» is the measure the AL chat counts
+    const lis = r[ATT_HEAD.length + 1] === "" ? null : Number(r[ATT_HEAD.length + 1]);
+    if (lis === 1 && !blank) { it.one++; if (ok) it.oneOk++; }
+    it.who.push([String(r[2]), blank ? "" : first, blank ? "blank" : ok ? "ok" : "no", lis, String(r[ATT_HEAD.length] || "")]);
   });
   items.forEach(it => { it.wrong = Object.keys(it.wrong).map(k => [k, it.wrong[k]]).sort((a, b) => b[1] - a[1]); });
   const w = ss.getSheetByName(WANTS);
@@ -996,6 +1049,12 @@ function readOnly_(p) {
     const stu = findStudent_(p.code);
     if (!stu) return { ok: false, error: "unknown-code" };
     if (stu.group === TEACHER) return overviewCached_(p);
+  }
+  // engine 70 (her 12.11 12:13: «домашка уже две минуты как loading»; the executions showed students' requests queueing for the lock and
+  // hers giving up after 20 s): her own page only reads, so it doesn't queue either. Pages that say teacher: 1; a student's code goes on as before.
+  if (p.action === "sync" && p.teacher === 1) {
+    const stu = findStudent_(p.code);
+    if (stu && stu.group === TEACHER) return teacher_(stu, Object.assign({}, p, { _ro: true }));
   }
   if (p.action === "bankGet") {                                                                // tools 33: her decoding bank (her code only)
     const stu = findStudent_(p.code);
@@ -1102,7 +1161,7 @@ function sync_(p) {
     const tasks = {};
     data.forEach(r => { if (r[1] === stu.code && r[2] === page) tasks[r[3]] = { done: r[4] === true, ts: Number(r[5]) }; });
     const own = isGroup_(stu.group);
-    return { ok: true, name: stu.name, gid: own ? stu.group.toLowerCase() : "", tasks: tasks, work: workFor_(stu, page), group: own ? groupStats_(stu.group) : null, me: own ? null : meStats_(stu.code) };
+    return { ok: true, name: stu.name, gid: own ? stu.group.toLowerCase() : "", tasks: tasks, work: workFor_(stu, page), group: own ? groupStats_(stu.group) : null, me: own ? null : meStats_(stu.code), half: p.ab ? half_(stu) : undefined };
   } finally {
     lock.releaseLock();
   }

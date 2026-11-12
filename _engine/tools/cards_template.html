@@ -168,6 +168,7 @@ function wireGroupDots(root){
     const t = hardCardsText(); GD.copied = !t ? "Nothing sent back yet" : (await copyText(t)) ? "Copied ✓" : "Couldn't copy"; paintGroupDots();
     setTimeout(() => { GD.copied = ""; paintGroupDots(); }, 2200); }));
 }
+if(typeof debriefAdd === "function") debriefAdd("Hard cards", () => { try{ return hardCardsText(); }catch(e){ return ""; } });   /* tools 35 */
 /* 📋 for the next lesson and the homework: the cards sent back, most often first, front → answer */
 function hardCardsText(){
   const st = groupStats(), plain = s => String(s).replace(/\(\(|\)\)/g, "");

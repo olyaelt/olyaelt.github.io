@@ -203,3 +203,6 @@ details.all[open] summary{color:var(--ink)}
 .mv{border-radius:4px;padding:0 .12em;color:#111111;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .mv.m1{background:#BFF2B8} .mv.m2{background:#FFF07A} .mv.m3{background:#A8E8FA}
 .bx-ctx{color:var(--muted);font-size:.9em}
+
+/* tools 35: 📁 Debrief folder in her Live bar */
+.dbf{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}.dbf .dbf-ask{border-color:#E08A00;color:#8A4B00}.dbf-err{font-size:.8rem;font-weight:700;color:#A33}

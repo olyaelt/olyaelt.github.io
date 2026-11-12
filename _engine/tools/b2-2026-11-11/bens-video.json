@@ -3355,5 +3355,115 @@
    "teacher": true,
    "after": 1
   }
- ]
+ ],
+ "class_view": {
+  "stages": [
+   0,
+   1
+  ],
+  "also": [
+   6,
+   7
+  ],
+  "decode_instr": "Listen to each line (📂 your copy of the film) and look at what happens to the sounds. Tap a word to look closer.",
+  "decode": {
+   "d1": {
+    "marks": [
+     {
+      "at": "there|is",
+      "mark": "link"
+     },
+     {
+      "at": "That's|all",
+      "mark": "link"
+     }
+    ],
+    "note": "there‿is run together — a very common place."
+   },
+   "d2": {
+    "marks": [
+     {
+      "at": "can:a",
+      "mark": "strike"
+     },
+     {
+      "at": "you:ou",
+      "mark": "grey"
+     },
+     {
+      "at": "can|imagine",
+      "mark": "link"
+     }
+    ],
+    "note": "given, not giving. can has no vowel (it sounds a bit like gonna): can‿imagine."
+   },
+   "d8": {
+    "marks": [
+     {
+      "at": "Can't:t",
+      "mark": "strike"
+     }
+    ],
+    "note": "can't: no t, but the full, long vowel — compare can in line 2. After can comes the verb, so the context helps."
+   },
+   "r3": {
+    "marks": [
+     {
+      "at": "can't:t",
+      "mark": "strike"
+     }
+    ],
+    "note": "can't: no t, a full vowel — and she stresses it."
+   },
+   "r4": {
+    "marks": [
+     {
+      "at": "Can:a",
+      "mark": "strike"
+     }
+    ],
+    "note": "can: no vowel. we and you sound almost the same here."
+   },
+   "r5": {
+    "marks": [
+     {
+      "at": "can:a",
+      "mark": "strike"
+     }
+    ],
+    "note": "can: no vowel."
+   },
+   "r6": {
+    "marks": [
+     {
+      "at": "Can't:t",
+      "mark": "strike"
+     }
+    ],
+    "note": "can't: no t, a full vowel."
+   },
+   "r8": {
+    "marks": [
+     {
+      "at": "woman:a",
+      "mark": "strike"
+     },
+     {
+      "at": "can:a",
+      "mark": "strike"
+     }
+    ],
+    "note": "no vowel in can or in the a of woman. The context helps: mad at."
+   },
+   "r9": {
+    "marks": [
+     {
+      "at": "Can't:t",
+      "mark": "strike"
+     }
+    ],
+    "note": "can or can't? The full vowel says can't — in British and American English alike."
+   }
+  }
+ }
 }

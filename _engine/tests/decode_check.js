@@ -39,10 +39,20 @@ const {chromium} = require('playwright'); const path = require('path'), fs = req
   await p.click('[data-dw="4"]'); await p.click('[data-dcundo]'); await p.waitForTimeout(150);
   s = await st(); ok(!s.m.w[4], '↺ did not take the mark away');
   // a letter
-  await p.click('[data-dw="2"]'); await p.click('[data-dcletters]'); await p.waitForTimeout(150);
-  ok(await p.evaluate(() => document.querySelector('[data-dw="2"]').classList.contains('lt')), 'letters mode did not open');
+  // tools 34 (her 12.11 12:05): a tap on a word opens its letters at once, with the word's panel
+  await p.click('[data-dw="2"]'); await p.waitForTimeout(150);
+  ok(await p.evaluate(() => document.querySelector('[data-dw="2"]').classList.contains('lt') && !!document.querySelector('[data-dcpan]') && !document.querySelector('[data-dcletters]')), 'a tap on a word: no letters, or no panel');
   await p.click('[data-dl="2.6"]'); await p.click('[data-dcmk="strike"]'); await p.waitForTimeout(150);
   s = await st(); ok(s.m.l['2.6'] === 'strike' && Object.keys(s.m.l).length === 1, 'one letter struck: ' + JSON.stringify(s.m.l));
+  ok(await p.evaluate(() => document.querySelector('[data-dw="2"]').classList.contains('lt')), 'the letters closed after a letter mark');
+  // ↶ Undo: the last change goes back, one step at a time; Ctrl+Z too
+  await p.click('[data-dl="2.0"]'); await p.click('[data-dcmk="grey"]'); await p.waitForTimeout(150);
+  ok((await st()).m.l['2.0'] === 'grey', 'the second letter mark');
+  await p.click('[data-dcundolast]'); await p.waitForTimeout(150); s = await st();
+  ok(!s.m.l['2.0'] && s.m.l['2.6'] === 'strike', '↶ Undo: ' + JSON.stringify(s.m.l));
+  await p.keyboard.press('Control+z'); await p.waitForTimeout(150); s = await st();
+  ok(!s.m.l['2.6'] && s.m.w[1] === 'grey', 'Ctrl+Z: ' + JSON.stringify(s.m));
+  await p.click('[data-dw="2"]'); await p.waitForTimeout(100); await p.click('[data-dl="2.6"]'); await p.click('[data-dcmk="strike"]'); await p.waitForTimeout(150);
   // between two words → an arc; again → gone
   await p.click('[data-dj="2"]'); await p.waitForTimeout(600);
   ok((await p.$$('.dc-arcs path')).length === 1, 'no arc after a tap between the words');

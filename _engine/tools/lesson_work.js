@@ -468,3 +468,5 @@ function wireGroups(root){
   if(box) box.querySelector("input").addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); sayAll(e.target.value); } });
   gwPaint();
 }
+
+if(typeof debriefAdd === "function") debriefAdd("What the groups wrote", () => gwCopyText(true));   /* tools 35: into her debrief file */

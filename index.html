@@ -150,7 +150,7 @@ async function post(payload){
 function meterHTML(gs){
   if(!gs || !gs.goal) return "";
   const pct = Math.min(1, gs.total/gs.goal), n = 20, filled = Math.min(n, Math.round(pct*n));
-  return `<div class="meter"><div class="meter-top"><span>🎬 ${gs.reached ? "Goal reached!" : `${fmtN(gs.total)} / ${fmtN(gs.goal)} 🎞`}</span><span class="small">${gs.size ? `${gs.week} of ${gs.size} active this week` : ""}</span></div>
+  return `<div class="meter"><div class="meter-top"><span>🎬 ${gs.reached ? "Goal reached!" : gs.prev ? `Goal reached! · next: ${fmtN(gs.total)} / ${fmtN(gs.goal)} 🎞` : `${fmtN(gs.total)} / ${fmtN(gs.goal)} 🎞`}</span><span class="small">${gs.size ? `${gs.week} of ${gs.size} active this week` : ""}</span></div>
     <div class="strip" role="img" aria-label="${Math.round(pct*100)}% of the way">${Array.from({length:n},(_,i)=>`<i class="${i<filled?"on":""}"></i>`).join("")}</div></div>`;
 }
 function counts(res){
