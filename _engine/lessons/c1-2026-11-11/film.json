@@ -1,0 +1,192 @@
+{
+ "f1": {
+  "film": "The Intern",
+  "optional": true,
+  "shuffle": false,
+  "instr": "Click a line and listen once. Write what you caught — even one word. Then listen as many times as you like.",
+  "lines": [
+   {
+    "id": "t1",
+    "clip": "1:11.12-1:16.22",
+    "text": "{{That's all there is.}}",
+    "before": "Freud said, love and work. Work and love.",
+    "bank": "pmwdieka6jeoq",
+    "form": "there's",
+    "class": true
+   },
+   {
+    "id": "c1",
+    "clip": "1:11.12-1:23.36",
+    "text": "{{As you can imagine}}, that's given me some time on my hands.",
+    "before": "Freud said, love and work. Work and love. That's all there is. Well, I'm retired, and my wife is dead.",
+    "bank": "pmwdighh6tu3x",
+    "form": "can",
+    "class": true
+   },
+   {
+    "id": "c2",
+    "clip": "2:00.10-2:03.74",
+    "text": "{{Can't explain it}}, but it makes me feel part of something.",
+    "bank": "pmwdis49pdjld",
+    "form": "can't",
+    "class": true
+   },
+   {
+    "id": "c5",
+    "clip": "24:22.88-24:24.88",
+    "text": "Jules, {{we can't keep up}} with our own success.",
+    "bank": "pmwdr4spwyrud",
+    "form": "can't"
+   },
+   {
+    "id": "c6",
+    "clip": "44:58.74-45:00.48",
+    "text": "No, {{I can make it}}. It's not a problem.",
+    "bank": "pmwdrf5v8cmln",
+    "form": "can"
+   },
+   {
+    "id": "c3",
+    "clip": "33:15.64-33:19.18",
+    "text": "– {{I can open the door}}. – Sure.",
+    "before": "Oh, thanks, but you don't have to.",
+    "bank": "pmwdra5fqbd8t",
+    "form": "can"
+   },
+   {
+    "id": "c4",
+    "clip": "33:15.64-33:22.98",
+    "text": "But {{if you can't stay here}},",
+    "before": "Oh, thanks, but you don't have to. – I can open the door. – Sure. Okay, so, this shouldn't take more than an hour.",
+    "bank": "pmwdramqacsup",
+    "form": "can't"
+   },
+   {
+    "id": "c7",
+    "clip": "30:44.79-30:57.53",
+    "text": "Why don't you tell her {{you can't drive her}} today,",
+    "before": "Look, I don't want to make you feel uncomfortable, but I just happen to have looked out the window, and it appeared you were drinking something from a paper bag. – I don't know what you're talking about, man.",
+    "bank": "pmwdr5v79imyv",
+    "form": "can't"
+   },
+   {
+    "id": "c8",
+    "clip": "43:06.76-43:08.90",
+    "text": "Do you know yet {{if we can go to dinner}} with Robbie and Annie?",
+    "bank": "pmwdrd8zz2uph",
+    "form": "can"
+   },
+   {
+    "id": "c9",
+    "clip": "32:11.64-32:29.13",
+    "text": "Well, {{I can't change}} the facts, dear.",
+    "before": "So, we've been studying women under 40 who sleep less than six hours a night. – And what'd you find out? – It's interesting. It seems like they're 38% more likely to experience major weight gain compared to women who slept seven hours a night. – Are you kidding me? You know I haven't slept in two years.",
+    "bank": "pmwdr92fg052x",
+    "form": "can't"
+   },
+   {
+    "id": "c10",
+    "clip": "46:19.66-46:28.83",
+    "text": "{{Can I try}}?",
+    "before": "Uh, I think we should take 4th to Flatbush. Much faster. – I-It won't be. – By 12 minutes, at least.",
+    "bank": "pmwdrfefwwsjl",
+    "form": "can"
+   },
+   {
+    "id": "c12",
+    "clip": "47:31.46-47:33.06",
+    "text": "But I'm hoping {{we can pick another night}}.",
+    "bank": "pmwdrg7dwtcsl",
+    "form": "can"
+   },
+   {
+    "id": "c11",
+    "clip": "40:13.79-40:16.79",
+    "text": "{{Can't keep my eyes open}}, Jule.",
+    "bank": "pmwdrcf5ioo7g",
+    "form": "can't"
+   }
+  ]
+ },
+ "f2": {
+  "film": "The Intern",
+  "optional": true,
+  "shuffle": false,
+  "instr": "Click a line and listen once. Write what you caught — even one word. Then listen as many times as you like.",
+  "lines": [
+   {
+    "id": "t2",
+    "clip": "2:48.68-2:53.55",
+    "text": "I just know {{there's a hole in my life}}, and I need to fill it.",
+    "bank": "pmwdj8kcrul8a",
+    "form": "there's",
+    "class": true
+   },
+   {
+    "id": "t3",
+    "clip": "5:37.58-5:39.82",
+    "text": "They stop when {{there's no more}} music in them.",
+    "bank": "pmwdrj3rpvqnh",
+    "form": "there's"
+   },
+   {
+    "id": "t4",
+    "clip": "9:31.08-9:33.38",
+    "text": "{{There's gonna be}} a couple of interviews today, Ben.",
+    "bank": "pmwdrjdzn9jb2",
+    "form": "there's"
+   },
+   {
+    "id": "t5",
+    "clip": "11:37.28-11:38.78",
+    "text": "{{There's been a ton of}} research on this,",
+    "bank": "pmwdrjvha21vu",
+    "form": "there's (has)"
+   },
+   {
+    "id": "t6",
+    "clip": "12:09.34-12:16.41",
+    "text": "{{There's a man}} everyone loves. He seems amazing.",
+    "before": "There's a great 72-year-old woman, really cute. – That's like the same age as my Mom. – That's too weird. – That's fine.",
+    "bank": "pmwdrkcj385cm",
+    "form": "there's"
+   },
+   {
+    "id": "t7",
+    "clip": "24:31.15-24:33.88",
+    "text": "And look, I get it. {{There's only}} so many hours in the day.",
+    "bank": "pmwdrlrf8d6mq",
+    "form": "there's"
+   },
+   {
+    "id": "t8",
+    "clip": "29:23.71-29:26.34",
+    "text": "Love that {{there's another}} oldie but goodie here.",
+    "bank": "pmwdrm3mgqd43",
+    "form": "there's"
+   },
+   {
+    "id": "t9",
+    "clip": "53:38.86-53:40.70",
+    "text": "So {{there are all}} these questions for your profile",
+    "bank": "pmwdrh2njt7lo",
+    "form": "there are"
+   },
+   {
+    "id": "t10",
+    "clip": "1:10:03.95-1:10:06.11",
+    "text": "Jules, {{I think there's only}} one thing we can do.",
+    "bank": "pmwdrmlfkmxq2",
+    "form": "there's"
+   },
+   {
+    "id": "t11",
+    "clip": "1:50:11.92-1:50:25.66",
+    "text": "But {{there's no need}} to get all sentimental about it",
+    "before": "And maybe also because you're my… – Intern. – Well, I was gonna say intern/best friend.",
+    "bank": "pmwdrn36jxwp9",
+    "form": "there's"
+   }
+  ]
+ }
+}

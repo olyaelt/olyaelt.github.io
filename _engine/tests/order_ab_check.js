@@ -20,7 +20,7 @@ const PLAYER = `function(id,o){const d=document.getElementById(id),f=document.cr
     await ctx.route(URL_ + '**', r => r.fulfill({status: 200, contentType: 'application/json', headers: {'Access-Control-Allow-Origin': '*'}, body: JSON.stringify(env.post(r.request().postData()))}));
     await ctx.route('https://hw.test/**', r => r.fulfill({status: 200, contentType: 'text/html', body: html}));
     const p = await ctx.newPage(); p.on('pageerror', e => errs.push(e.message)); await p.goto('https://hw.test/' + rel); await p.waitForTimeout(1200); return {ctx, p}; };
-  const order = p => p.evaluate(() => [...document.querySelectorAll('[data-open]')].map(x => x.dataset.open).join(','));
+  const order = p => p.evaluate(() => [...document.querySelectorAll('[data-open]')].map(x => x.dataset.open).filter(x => /^l/.test(x)).join(','));   // the YouTube tasks (the film block comes after them for everyone)
   const O = {x: 'l1,l2,l3', y: 'l2,l1,l3'};
   // two students of one group: the table gives them different halves; each sees his order, no word about halves or birthdays
   const A = await open('b2a'), B = await open('b2b');

@@ -1,11 +1,12 @@
 {
- "title": "Can you hear it? There is, there's, it's, that's, can, can't",
+ "title": "The Intern, Scene 1. Listening training",
  "group": "b2",
  "file": "2026-11-11.html",
  "listed": false,
  "assets": {
   "STICKER": "sticker.png",
-  "TQ": "tq.json"
+  "TQ": "tq.json",
+  "FILMQ": "film.json"
  },
  "class": {
   "topics": [

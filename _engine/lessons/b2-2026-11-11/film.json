@@ -1,0 +1,164 @@
+{
+ "f1": {
+  "film": "The Intern",
+  "optional": true,
+  "shuffle": false,
+  "instr": "Click a line and listen once. Write what you caught — even one word. Then listen as many times as you like.",
+  "lines": [
+   {
+    "id": "bt1",
+    "clip": "1:11.12-1:16.22",
+    "text": "{{That's all there is.}}",
+    "before": "Freud said, love and work. Work and love.",
+    "bank": "pmwdieka6jeoq",
+    "form": "there's",
+    "m": [
+     {
+      "at": "there|is",
+      "mark": "link"
+     },
+     {
+      "at": "That's|all",
+      "mark": "link"
+     }
+    ],
+    "class": true
+   },
+   {
+    "id": "bc1",
+    "clip": "1:11.12-1:23.36",
+    "text": "{{As you can imagine}}, that's given me some time on my hands.",
+    "before": "Freud said, love and work. Work and love. That's all there is. Well, I'm retired, and my wife is dead.",
+    "bank": "pmwdighh6tu3x",
+    "form": "can",
+    "m": [
+     {
+      "at": "can:a",
+      "mark": "strike"
+     },
+     {
+      "at": "you:ou",
+      "mark": "grey"
+     },
+     {
+      "at": "can|imagine",
+      "mark": "link"
+     }
+    ],
+    "class": true
+   },
+   {
+    "id": "b2",
+    "clip": "2:00.10-2:03.74",
+    "text": "{{Can't explain it}}, but it makes me feel part of something.",
+    "bank": "pmwdis49pdjld",
+    "form": "can't",
+    "m": [
+     {
+      "at": "Can't:t",
+      "mark": "strike"
+     }
+    ],
+    "class": true
+   },
+   {
+    "id": "b3",
+    "clip": "2:48.68-2:53.55",
+    "text": "I just know {{there's a hole in my life}}, and I need to fill it.",
+    "bank": "pmwdj8kcrul8a",
+    "form": "there's",
+    "class": false
+   },
+   {
+    "id": "b4",
+    "clip": "5:04.12-5:06.82",
+    "text": "I love the idea of having {{a place I can go}} every day.",
+    "bank": "pmwdr24exfwn5",
+    "form": "can"
+   },
+   {
+    "id": "b5",
+    "clip": "24:22.88-24:24.88",
+    "text": "Jules, {{we can't keep up}} with our own success.",
+    "bank": "pmwdr4spwyrud",
+    "form": "can't"
+   },
+   {
+    "id": "b6",
+    "clip": "30:44.79-30:57.53",
+    "text": "Why don't you tell her {{you can't drive her}} today,",
+    "before": "Look, I don't want to make you feel uncomfortable, but I just happen to have looked out the window, and it appeared you were drinking something from a paper bag. – I don't know what you're talking about, man.",
+    "bank": "pmwdr5v79imyv",
+    "form": "can't"
+   },
+   {
+    "id": "b7",
+    "clip": "31:32.84-31:34.87",
+    "text": "That's okay. Becky {{can drive me}}.",
+    "bank": "pmwdr7iunp97x",
+    "form": "can"
+   },
+   {
+    "id": "b8a",
+    "clip": "32:11.64-32:29.13",
+    "text": "Well, {{I can't change}} the facts, dear.",
+    "before": "So, we've been studying women under 40 who sleep less than six hours a night. – And what'd you find out? – It's interesting. It seems like they're 38% more likely to experience major weight gain compared to women who slept seven hours a night. – Are you kidding me? You know I haven't slept in two years.",
+    "bank": "pmwdr92fg052x",
+    "form": "can't"
+   },
+   {
+    "id": "b8b",
+    "clip": "32:11.64-32:34.10",
+    "text": "{{Can I call you}} when I get home?",
+    "before": "So, we've been studying women under 40 who sleep less than six hours a night. – And what'd you find out? – It's interesting. It seems like they're 38% more likely to experience major weight gain compared to women who slept seven hours a night. – Are you kidding me? You know I haven't slept in two years. – Well, I can't change the facts, dear. – Mom, you know what? I'm rushing into the city for a meeting and I need to prepare.",
+    "bank": "pmwdr99tdiux6",
+    "form": "can"
+   },
+   {
+    "id": "bc3",
+    "clip": "33:15.64-33:19.18",
+    "text": "– {{I can open the door}}. – Sure.",
+    "before": "Oh, thanks, but you don't have to.",
+    "bank": "pmwdra5fqbd8t",
+    "form": "can"
+   },
+   {
+    "id": "bc4",
+    "clip": "33:15.64-33:22.98",
+    "text": "But {{if you can't stay here}},",
+    "before": "Oh, thanks, but you don't have to. – I can open the door. – Sure. Okay, so, this shouldn't take more than an hour.",
+    "bank": "pmwdramqacsup",
+    "form": "can't"
+   },
+   {
+    "id": "bc4b",
+    "clip": "33:15.64-33:26.08",
+    "text": "And then {{you can just pull}} up…",
+    "before": "Oh, thanks, but you don't have to. – I can open the door. – Sure. Okay, so, this shouldn't take more than an hour. But if you can't stay here, I'll call Becky and then she'll find you.",
+    "bank": "pmwdrav9ak28z",
+    "form": "can"
+   },
+   {
+    "id": "b10",
+    "clip": "40:13.79-40:16.79",
+    "text": "{{Can't keep my eyes open}}, Jule.",
+    "bank": "pmwdrcf5ioo7g",
+    "form": "can't"
+   },
+   {
+    "id": "b11",
+    "clip": "40:32.91-40:35.01",
+    "text": "{{Can you turn out your light}}?",
+    "bank": "pmwdrckum28u7",
+    "form": "can"
+   },
+   {
+    "id": "b12",
+    "clip": "44:58.74-45:00.48",
+    "text": "No, {{I can make it}}. It's not a problem.",
+    "bank": "pmwdrf5v8cmln",
+    "form": "can"
+   }
+  ]
+ }
+}

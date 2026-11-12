@@ -1,4 +1,5 @@
 const STICKER = "__STICKER__";
+const FILMQ = __FILMQ__;   /* the 🎬 tasks from her film (AL chat's TZ 2026-11-12_1815; lesson-C1's TZ 1805): optional, no shuffle, joined places as lines in a row */
 const TQ = __TQ__;   /* L1, L2, L3: the clips [videoId, start, duration, parts] in the AL chat's order (its draft 12.11 14:45, «Домашка к 13.11 на слух»);
                         the lines are TubeQuizard's subtitles (12.11), capitals made normal; tqLink: her TubeQuizard copy of each quiz; tq: the quiz a student may do there instead */
 /* Link to the group's homework spreadsheet. Leave empty and the page simply says where to write. */
@@ -13,23 +14,28 @@ const box = inner => `<aside class="box" aria-label="Useful language"><img class
 const mapInner = (map, withRu=true, numbered=false, tenses="") => map.map((g,i)=>`<h4>${numbered?(i+1)+" · ":""}${g.h.toUpperCase()}</h4>${g.items.map(it=>{ const [en,r,mean] = it; return `<p>${en}${mean&&withRu?` <span class="mean">— ${mean}</span>`:""}${withRu&&r?` ${ru(r)}`:""}</p>`; }).join("")}`).join("")
   + (tenses?`<h4>TENSES</h4><p>${tenses}</p>`:"");
 
+/* her 12.11 17:53–17:54: «It's something I've lived with» out for both, «that's no disrespect» out for B2 */
+/* her 12.11 17:44: both groups the same quizzes (C1's lines; Emilia Clarke out, «there's a surprisingly easy solution» in) */
 /* ---------- content of this page: C1 homework Wed 11.11.26 → Fri 13.11, all listening: there is · there's, it's or that's · can or can't.
    Olya 12.11 13:11–14:45 via the AL chat: only what came up in the diagnostic on 11.11; the order of Listening 1 and 2 is compared by halves
    (her table's A/B halves: ORDER_AB, engine 71), Listening 3 last for everyone; every gap's first try goes to the Attempts sheet (engine 67/68). ---------- */
-const LESSON = { date:"11.11.26", sub:"" };
+const LESSON = { date:"11.11.26", sub:"<b>The Intern, Scene 1.</b> Listening training" };
 /* the order of «there is» and «there's, it's or that's?» by halves (engine 71): her table splits each group in two; «can or can't?» last for everyone.
    The students see only their order, no text about it (her 16:16: «чем меньше не нужного им текста, тем лучше»). */
 const ORDER_AB = {name:"order: chunks / contrast", x:["l1", "l2", "l3"], y:["l2", "l1", "l3"]};
 
-const TOPICS = [
-  {id:"ear", title:"Can you hear it?", sub:"Short words in real, fast speech"}
+const TOPICS = [   /* her 12.11 18:14: two blocks, and it must show that the first is YouTube, the second the film and optional */
+  {id:"ear", title:"Based on YouTube", sub:"Short clips — for everyone"},
+  {id:"film", title:"Based on the film · optional", sub:"Only if you have The Intern on your computer"}
 ];
 
 const listenSteps = clips => clips.map((clip, i) => ({type:"listen", clip, first:i===0}));
 const TASKS = [
-  {id:"l1", topic:"ear", sec:"", title:"There is / there are", meta:"8 short clips · 10 gaps", kind:"steps", min:6, tqLink:TQ.tqLink.L1, tq:TQ.tq.L1, steps:listenSteps(TQ.L1)},
-  {id:"l2", topic:"ear", sec:"", title:"There's, it's or that's?", meta:"10 short clips · 11 gaps", kind:"steps", min:6, tqLink:TQ.tqLink.L2, tq:TQ.tq.L2, steps:listenSteps(TQ.L2)},
-  {id:"l3", topic:"ear", sec:"", title:"Can or can't?", meta:"8 short clips · 9 gaps", kind:"steps", min:5, tqLink:TQ.tqLink.L3, tq:TQ.tq.L3, steps:listenSteps(TQ.L3)}
+  {id:"l1", topic:"ear", sec:"", title:"There is / there are", meta:"8 short clips · 9 gaps", kind:"steps", min:6, tqLink:TQ.tqLink.L1, tq:TQ.tq.L1, steps:listenSteps(TQ.L1)},
+  {id:"l2", topic:"ear", sec:"", title:"There's, it's or that's?", meta:"9 short clips · 10 gaps", kind:"steps", min:6, tqLink:TQ.tqLink.L2, tq:TQ.tq.L2, steps:listenSteps(TQ.L2)},
+  {id:"l3", topic:"ear", sec:"", title:"Can or can't?", meta:"8 short clips · 9 gaps", kind:"steps", min:5, tqLink:TQ.tqLink.L3, tq:TQ.tq.L3, steps:listenSteps(TQ.L3)},
+  {id:"f1", topic:"film", sec:"", title:"🎬 Can or can't?", meta:"13 lines from the film", kind:"steps", min:8, film:FILMQ.f1, steps:[]},
+  {id:"f2", topic:"film", sec:"", title:"🎬 There is…", meta:"10 lines from the film", kind:"steps", min:7, film:FILMQ.f2, steps:[]}
 ];
 
 /* not used on this page (the template asks for them) */

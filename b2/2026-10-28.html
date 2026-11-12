@@ -491,6 +491,19 @@ s{color:var(--strike);text-decoration:line-through;text-decoration-thickness:2px
 .steps-list{margin:0;padding-left:1.3em;display:grid;gap:4px}
 .video{position:relative;width:100%;aspect-ratio:16/9;max-width:100%;background:#000;border-radius:10px;overflow:hidden}
 .video iframe,.video > div{position:absolute;inset:0;width:100%;height:100%;border:0}
+/* engine 72 (her 12.11 17:44: «плеер поменьше, чтобы не скроллить между квизом и видео»): in a listening task the video is at most ~30% of the
+   screen's height, so the lines sit under it on one screen; a phone keeps the full width */
+.video.vsm{max-width:min(100%, calc(30vh * 16 / 9));margin:0 auto}
+/* engine 72: a listening row's time strip (YouTube gives the page no sound, so time, not a waveform) */
+.lstrip{margin:2px 0 6px 42px}
+.ls-bar{position:relative;height:34px;border-radius:8px;background:var(--ground);border:1.5px solid var(--line);cursor:crosshair;touch-action:none;overflow:hidden;user-select:none;-webkit-user-select:none}
+.ls-tk{position:absolute;top:0;bottom:0;border-left:1px solid rgba(0,0,0,.14);font-size:.68rem;font-weight:700;color:var(--muted);padding:2px 0 0 3px;white-space:nowrap;pointer-events:none}
+.ls-tk.h{top:62%}
+.ls-sel{position:absolute;top:0;bottom:0;background:rgba(6,147,227,.22);border-left:2px solid var(--instr);border-right:2px solid var(--instr);pointer-events:none}
+.ls-head{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);pointer-events:none}
+.ls-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.ls-row kbd{font:inherit;font-size:.72rem;font-weight:800;margin-left:6px;padding:1px 6px;border-radius:6px;background:var(--ground);color:var(--muted)}
+@media (hover: none){ .ls-row kbd{display:none} }
 .yt-consent{display:grid;place-items:center;text-align:center;padding:10px 14px;color:#fff;background:#1D1D1B;font-size:.9rem;line-height:1.35}
 .yt-consent p{margin:0 0 8px}.yt-consent a{color:#9CC9FF}.yt-consent .small{color:#C9C9C9;margin:6px 0 0;font-size:.8rem}
 .vmsg{position:absolute;inset:0;z-index:2;margin:0;display:grid;place-items:center;text-align:center;padding:16px;color:#fff;font-size:.95rem;background:#1D1D1B}
@@ -2260,7 +2273,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = [];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "71";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "72";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -4163,7 +4176,7 @@ function renderListen(st, count, pct){
     shell({count, pct, instr,
       stageHTML: `
       <div class="panel">
-        <div class="video"><div id="yt"></div><p class="vmsg" id="vmsg" hidden></p>${ls.get("hw-yt-ok") ? `<p class="vload" id="vload">Loading the video…</p>` : ytConsentHTML()}</div>${rest}
+        <div class="video vsm"><div id="yt"></div><p class="vmsg" id="vmsg" hidden></p>${ls.get("hw-yt-ok") ? `<p class="vload" id="vload">Loading the video…</p>` : ytConsentHTML()}</div>${rest}
       </div>`,
       actionsHTML: navButtons("Check answers")});
     const msg = document.getElementById("vmsg"), vbox = msg.parentNode;
@@ -4203,6 +4216,41 @@ function renderListen(st, count, pct){
   const rows = [...app.querySelectorAll(".ln")];
   /* engine 68 (AL chat 12.11 09:10): how many times each row played and whether 🐢 was on, for the first try of its gaps */
   const heard = rows.map(() => 0); let heardSlow = false;
+  /* engine 72 (her 12.11 17:44: «пока не появилась вейвформа для ютуба»): under the row that played, its time strip, as in the film task —
+     drag = a piece, it plays when let go (at least 0.3 s); a tap = from there to the row's end; ▶ Play the piece / Space = the piece again;
+     the playhead runs along. A piece counts as a listen of its row. */
+  let ST = null;
+  const fmtS = t => Math.floor(t / 60) + ":" + String(Math.floor(t % 60)).padStart(2, "0");
+  const stripHead = tnow => { if(!ST || !ST.el.isConnected) return; const h = ST.el.querySelector(".ls-head");
+    if(tnow == null || tnow < ST.a || tnow > ST.b){ h.hidden = true; return; } h.hidden = false; h.style.left = ((tnow - ST.a) / (ST.b - ST.a) * 100) + "%"; };
+  const stripSel = () => { const x = ST.el.querySelector(".ls-sel"), btn = ST.el.querySelector(".ls-play"), hint = ST.el.querySelector(".ls-hint");
+    if(!ST.sel){ x.hidden = true; btn.hidden = true; hint.hidden = false; return; }
+    x.hidden = false; x.style.left = ((ST.sel[0] - ST.a) / (ST.b - ST.a) * 100) + "%"; x.style.width = ((ST.sel[1] - ST.sel[0]) / (ST.b - ST.a) * 100) + "%"; btn.hidden = false; hint.hidden = true; };
+  const stripOpen = i => {
+    if(ST && ST.i === i && ST.el.isConnected) return;
+    app.querySelectorAll(".lstrip").forEach(x => x.remove());
+    const L = lines[i], a = Math.max(0, L[1] - LEAD), b = L[1] + L[2] + LEAD, tk = [];
+    for(let t = Math.ceil(a * 2) / 2; t < b; t += .5) tk.push(t);
+    const el = document.createElement("div"); el.className = "lstrip";
+    el.innerHTML = `<div class="ls-bar" aria-label="The time of this line: drag along it to hear a piece">${tk.map(t => { const s = Math.abs(t - Math.round(t)) < .01;
+        return `<span class="ls-tk ${s ? "" : "h"}" style="left:${(t - a) / (b - a) * 100}%">${s ? fmtS(Math.round(t)) : ""}</span>`; }).join("")}<span class="ls-sel" hidden></span><span class="ls-head" hidden></span></div>
+      <div class="ls-row"><button class="linkish ls-play" hidden>▶ Play the piece<kbd>Space</kbd></button><span class="small ls-hint">Drag along the strip to hear a piece again, as slowly as you like.</span></div>`;
+    rows[i].after(el); ST = {i, a, b, el, sel: null}; window._lsST = () => ST && ST.el.isConnected ? ST : null;
+    const bar = el.querySelector(".ls-bar"), tAt = x => { const r = bar.getBoundingClientRect(); return a + Math.max(0, Math.min(1, (x - r.left) / r.width)) * (b - a); };
+    let d = null;
+    bar.addEventListener("pointerdown", e => { if(e.button) return; e.preventDefault(); try{ bar.setPointerCapture(e.pointerId); }catch(x){} d = {t0: tAt(e.clientX), x0: e.clientX, moved: false}; });
+    bar.addEventListener("pointermove", e => { if(!d) return; if(Math.abs(e.clientX - d.x0) > 4) d.moved = true;
+      if(d.moved){ const t = tAt(e.clientX); ST.sel = [Math.min(d.t0, t), Math.max(d.t0, t)]; stripSel(); } });
+    bar.addEventListener("pointerup", e => { const dd = d; d = null; if(!dd) return;
+      if(dd.moved && ST.sel){ let [s0, s1] = ST.sel; if(s1 - s0 < .3){ s1 = Math.min(b, s0 + .3); s0 = Math.max(a, s1 - .3); ST.sel = [s0, s1]; stripSel(); } play(s0, s1, i); }
+      else { ST.sel = null; stripSel(); play(dd.t0, b, i); } });
+    bar.addEventListener("pointercancel", () => { d = null; });
+    el.querySelector(".ls-play").addEventListener("click", () => { if(ST.sel) play(ST.sel[0], ST.sel[1], i); });
+  };
+  if(!window._lsKey){ window._lsKey = 1;
+    document.addEventListener("keydown", e => { const S = window._lsST && window._lsST(); if(!S || !S.sel || e.key !== " " || e.repeat) return;
+      if(e.target && e.target.closest && e.target.closest("input, textarea, select, button, [contenteditable]")) return;
+      e.preventDefault(); const b = S.el.querySelector(".ls-play"); if(b) b.click(); }); }
   const play = (from, to, i) => {
     if(!ytPlayer || !ytReady) return;
     heard[i] = (heard[i] || 0) + 1; if(rateNow() < 1) heardSlow = true;
@@ -4213,7 +4261,8 @@ function renderListen(st, count, pct){
     ytWatch = setTimeout(()=>{ try{ if(ytPlayer.getPlayerState() !== 1) document.getElementById("hint").hidden = false; }catch(e){} }, 2000);
     ytTimer = setInterval(()=>{
       let tnow = 0; try{ tnow = ytPlayer.getCurrentTime(); }catch(e){}
-      if(tnow >= to){ ytPlayer.pauseVideo(); clearInterval(ytTimer); rows.forEach(m=>m.classList.remove("playing")); }
+      stripHead(tnow);
+      if(tnow >= to){ ytPlayer.pauseVideo(); clearInterval(ytTimer); rows.forEach(m=>m.classList.remove("playing")); stripHead(null); }
     }, 100);
   };
   /* as in TubeQuizard (its offset = 1): start a second before the line and stop a second after it, so the first words are never cut off */
@@ -4222,6 +4271,7 @@ function renderListen(st, count, pct){
     if(ev.target.closest("input, .rev, .mk, .gap-ck")) return;
     if(i===0) play(Math.max(0, lines[0][1] - LEAD), clipEnd(lines, lines.length-1) + LEAD, 0);   /* top line: the whole clip, as in TubeQuizard */
     else play(Math.max(0, lines[i][1] - LEAD), lines[i][1] + lines[i][2] + LEAD, i);
+    if(i > 0 || row.classList.contains("has-gap")) stripOpen(i);   /* engine 72: the strip under the line (under the top line only when it has a gap: a tap there plays the whole clip) */
   }));
   app.querySelectorAll("#spd [data-rate]").forEach(b => b.addEventListener("click", () => {
     const r = Number(b.dataset.rate); ls.set("hw-rate", String(r)); ls.set("hw-slow", "");
