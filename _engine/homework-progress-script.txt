@@ -910,21 +910,23 @@ const ATT_HEAD = ["Time", "Code", "Student", "Group", "Homework", "Task", "Item"
 // tools 33 / engine 68 (AL chat's handoff 12.11 09:10: one journal for the first tries, the listening fields join it): columns after Key, so a
 // sheet made by the earlier script keeps working; a listening item (film line, a clip's gap) also gets what happened up to its Check, updated
 // later on the same row — the first-try columns never change
-const ATT_LIS = ["Words first", "Listens before first try", "Listens before Check", "Pieces", "Slow", "Checks", "Show me", "Final", "Words final", "Seconds", "Variant", "Compare"];
+// engine 76 (AL chat 12.11 19:10): Mode = once (a YouTube line heard once first, as in the film) or empty (the earlier way)
+const ATT_LIS = ["Words first", "Listens before first try", "Listens before Check", "Pieces", "Slow", "Checks", "Show me", "Final", "Words final", "Seconds", "Variant", "Compare", "Mode"];
 const WANTS = "Want to say";
 const WANT_HEAD = ["Time", "Code", "Student", "Group", "Homework", "Task", "Line", "Text", "On", "Key"];
 function attempts_(stu, page, p) {
   const items = (Array.isArray(p.items) ? p.items : []).slice(0, 300), got = [];
   if (!items.length) return { ok: true, n: 0, got: got };
   const sh = sheet_(ATTEMPTS, ATT_HEAD), n = sh.getLastRow() - 1, at = {}, K = ATT_HEAD.length, W = K + ATT_LIS.length;
-  if (String(sh.getRange(1, K + 1).getValue()) !== ATT_LIS[0]) sh.getRange(1, K + 1, 1, ATT_LIS.length).setValues([ATT_LIS]).setFontWeight("bold");
+  if (sh.getMaxColumns() < W) sh.insertColumnsAfter(sh.getMaxColumns(), W - sh.getMaxColumns());   // engine 76: the 27th column (Mode) is past a new sheet's 26
+  if (String(sh.getRange(1, K + 1).getValue()) !== ATT_LIS[0] || String(sh.getRange(1, W).getValue()) !== ATT_LIS[ATT_LIS.length - 1]) sh.getRange(1, K + 1, 1, ATT_LIS.length).setValues([ATT_LIS]).setFontWeight("bold");
   if (n > 0) sh.getRange(2, K, n, 1).getValues().forEach((r, i) => { at[r[0]] = i + 2; });
   const num = v => { const x = Number(v); return isFinite(x) && x >= 0 && x < 100000 ? Math.round(x) : ""; };
   const yes = v => v === true ? "yes" : "";
   // the listening part: what happened up to Check (it may come later than the first try, and again after another Check)
   const lis = (x, a) => { a = a && typeof a === "object" ? a : null;
     return [clean_(x.words, 12), num(x.lis), a ? num(a.plays) : "", a ? num(a.pieces) : "", a ? yes(a.slow) || (x.slow === true ? "yes" : "") : (x.slow === true ? "yes" : ""),
-      a ? num(a.checks) : "", a ? yes(a.shown) : "", a ? clean_(a.final, 300) : "", a ? clean_(a.wfinal, 12) : "", a ? num(a.secs) : "", clean_(x.v, 4), clean_(x.ab, 40)]; };
+      a ? num(a.checks) : "", a ? yes(a.shown) : "", a ? clean_(a.final, 300) : "", a ? clean_(a.wfinal, 12) : "", a ? num(a.secs) : "", clean_(x.v, 4), clean_(x.ab, 40), clean_(x.mode, 8)]; };
   const rows = [];
   items.forEach(x => {
     const item = clean_(x && x.item, 80); if (!item) return;
@@ -977,7 +979,7 @@ function attemptsSummary_(page) {
   if (!page) return { ok: false, error: "no-page" };
   const ss = SpreadsheetApp.getActiveSpreadsheet(), items = [], at = {}, wants = {};
   const sh = ss.getSheetByName(ATTEMPTS);
-  if (sh && sh.getLastRow() > 1) sh.getRange(2, 1, sh.getLastRow() - 1, ATT_HEAD.length + ATT_LIS.length).getValues().forEach(r => {
+  if (sh && sh.getLastRow() > 1) sh.getRange(2, 1, sh.getLastRow() - 1, Math.min(ATT_HEAD.length + ATT_LIS.length, sh.getMaxColumns())).getValues().forEach(r => {
     if (String(r[4]) !== page) return;
     const id = String(r[6]); let it = at[id];
     if (!it) { it = at[id] = { item: id, task: String(r[5]), type: String(r[7]), prompt: String(r[8]), answer: String(r[9]), tried: 0, ok: 0, blank: 0, wrong: {}, who: [], one: 0, oneOk: 0 }; items.push(it); }
@@ -988,7 +990,7 @@ function attemptsSummary_(page) {
     if (lis === 1 && !blank) { it.one++; if (ok) it.oneOk++; }
     // engine 71 (her 12.11 16:17: the results go to the chat that designed the experiment): also the half (Variant) and the time of the first try
     const tm = r[0] instanceof Date ? r[0].getTime() : (Number(r[0]) || String(r[0] || ""));
-    it.who.push([String(r[2]), blank ? "" : first, blank ? "blank" : ok ? "ok" : "no", lis, String(r[ATT_HEAD.length] || ""), String(r[ATT_HEAD.length + 10] || ""), tm]);
+    it.who.push([String(r[2]), blank ? "" : first, blank ? "blank" : ok ? "ok" : "no", lis, String(r[ATT_HEAD.length] || ""), String(r[ATT_HEAD.length + 10] || ""), tm, String(r[ATT_HEAD.length + 12] || "")]);
   });
   items.forEach(it => { it.wrong = Object.keys(it.wrong).map(k => [k, it.wrong[k]]).sort((a, b) => b[1] - a[1]); });
   const w = ss.getSheetByName(WANTS);

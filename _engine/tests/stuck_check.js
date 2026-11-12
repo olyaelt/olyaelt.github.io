@@ -32,7 +32,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
   out.hot = (await p.locator('section.hot:not(.wait):not(.unl-note)').innerText()).replace(/\s+/g, ' ');
   // engine 49 (her 31.10): a ❔ mark in "Waiting for your answer" opens the task at its step; ✓ Discussed takes it off the count but keeps it, quiet
   out.waitBefore = (await p.locator('section.hot.wait').innerText()).replace(/\s+/g, ' ');
-  await p.click('section.hot.wait [data-wgo]'); await p.waitForTimeout(300);
+  await p.click('section.hot.wait [data-wgo]:not([data-q])'); await p.waitForTimeout(300);   // engine 75: a question has data-wgo too (it opens the task's last screen)
   out.waitGo = {count: await p.locator('.taskbar .count').innerText().catch(() => '-'), framed: await p.locator('.t-marked').count()};
   await p.click('#home'); await p.waitForTimeout(200);
   await p.click(`[data-stuck="${meta.id}"]`); await p.waitForTimeout(400);

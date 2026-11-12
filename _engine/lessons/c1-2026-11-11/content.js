@@ -25,15 +25,15 @@ const LESSON = { date:"11.11.26", sub:"<b>The Intern, Scene 1.</b> Listening tra
 const ORDER_AB = {name:"order: chunks / contrast", x:["l1", "l2", "l3"], y:["l2", "l1", "l3"]};
 
 const TOPICS = [   /* her 12.11 18:14: two blocks, and it must show that the first is YouTube, the second the film and optional */
-  {id:"ear", title:"Based on YouTube", sub:"Short clips — for everyone"},
+  {id:"ear", title:"Based on YouTube", sub:""}   /* her 18:28: no «for everyone» — our context, not theirs */,
   {id:"film", title:"Based on the film · optional", sub:"Only if you have The Intern on your computer"}
 ];
 
 const listenSteps = clips => clips.map((clip, i) => ({type:"listen", clip, first:i===0}));
 const TASKS = [
-  {id:"l1", topic:"ear", sec:"", title:"There is / there are", meta:"8 short clips · 9 gaps", kind:"steps", min:6, tqLink:TQ.tqLink.L1, tq:TQ.tq.L1, steps:listenSteps(TQ.L1)},
-  {id:"l2", topic:"ear", sec:"", title:"There's, it's or that's?", meta:"9 short clips · 10 gaps", kind:"steps", min:6, tqLink:TQ.tqLink.L2, tq:TQ.tq.L2, steps:listenSteps(TQ.L2)},
-  {id:"l3", topic:"ear", sec:"", title:"Can or can't?", meta:"8 short clips · 9 gaps", kind:"steps", min:5, tqLink:TQ.tqLink.L3, tq:TQ.tq.L3, steps:listenSteps(TQ.L3)},
+  {id:"l1", topic:"ear", sec:"", listenOnce:true, title:"There is / there are", meta:"8 short clips · 9 gaps", kind:"steps", min:6, tqLink:TQ.tqLink.L1, tq:TQ.tq.L1, steps:listenSteps(TQ.L1)},
+  {id:"l2", topic:"ear", sec:"", listenOnce:true, title:"There's, it's or that's?", meta:"9 short clips · 10 gaps", kind:"steps", min:6, tqLink:TQ.tqLink.L2, tq:TQ.tq.L2, steps:listenSteps(TQ.L2)},
+  {id:"l3", topic:"ear", sec:"", listenOnce:true, title:"Can or can't?", meta:"8 short clips · 9 gaps", kind:"steps", min:5, tqLink:TQ.tqLink.L3, tq:TQ.tq.L3, steps:listenSteps(TQ.L3)},
   {id:"f1", topic:"film", sec:"", title:"🎬 Can or can't?", meta:"13 lines from the film", kind:"steps", min:8, film:FILMQ.f1, steps:[]},
   {id:"f2", topic:"film", sec:"", title:"🎬 There is…", meta:"10 lines from the film", kind:"steps", min:7, film:FILMQ.f2, steps:[]}
 ];

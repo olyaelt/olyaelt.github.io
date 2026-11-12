@@ -266,6 +266,10 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
         # everyone's stages; "decode": {"<line id>": {"marks": […], "note": "…"}} keeps only those lines (in that order), with her marks on at
         # once and her line from the class under each (the block is "shown": no question step)
         also, dcv = cv.get('also') or [], cv.get('decode') or {}
+        # tools 37: each kept block takes its own permanent number (the template numbers blocks by position, so her stages after the
+        # kept ones got the numbers of the page's next blocks, and any change to the later stages moved them)
+        allp = d['_pids']['blocks']; start = [sum(len(x['blocks']) for x in d['stages'][:k]) for k in range(len(d['stages']))]
+        kp = [allp[start[k] + j] for k in range(len(dc['stages'])) for j in range(len(dc['stages'][k]['blocks']))]
         for i in also:
             if not (isinstance(i, int) and 0 <= i < len(d['stages']) and d['stages'][i].get('teacher')):
                 sys.exit('%s: class_view also takes her own (teacher) stages only' % path)
@@ -281,9 +285,11 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
                     nb['instr2'] = nb['instr']
                     blocks.append(nb)
                 else: blocks.append(b)
+                kp.append(allp[start[i] + st['blocks'].index(b)])
             if blocks: dc['stages'] = dc['stages'] + [dict(st, blocks=blocks)]
         missing = [x for x in dcv if not any(x in [l['id'] for b in s.get('blocks', []) if b.get('kind') == 'decode' for l in b.get('lines', [])] for s in dc['stages'])]
         if missing: sys.exit('%s: class_view decode lines not found: %s' % (path, ', '.join(missing)))
+        dc['_pids'] = dict(d['_pids'], blocks=kp)
         dc['class_of'] = lesson.split('-')[0]   # tools 30 also (her 07.11 12:00: «не вернуться обратно»): the class page links back to the homework
         page = fill(tpl, dc, lesson + '/' + name + '-class').replace('__LIVE__', 'false').replace('__SYNC_URL__', '')
         assert '__DATA__' not in page and '__PAGE_ID__' not in page, 'placeholder left in the class view of %s' % path
@@ -314,6 +320,12 @@ def page_row(p, small=False):
             '<a class="plain" href="%s/%s.html" target="_blank" rel="noopener">plain page</a></div></div>'
             % (' small' if small else '', esc(p['title']), (' · ' + esc(p['part'])) if p['part'] else '', esc(KIND.get(p['type'], p['type'])), esc(p['name']),
                p['lesson'], p['name'], base, p['lesson'], p['name']))
+# the tools index, engine 76 (AL chat's handoff 12.11 18:25, her 18:19: «чтобы я могла легко его находить»): rows that are not pages of this site — a link
+# out, one Open button (no live / plain page). The diary is a claude.ai artifact: her marks live in its own store, so no copy here.
+EXTRA = {'prep': [{'title': 'Дневник непонятого', 'kind': "video player · mark what you didn't catch", 'url': 'https://claude.ai/artifact/2dyodDELmSHPNXTd6wmqej'}]}
+def link_row(x):
+    return ('<div class="pg"><div class="pg-t"><b>%s</b> <span class="kind">%s</span></div>'
+            '<div class="pg-a"><a class="btn primary" href="%s" target="_blank" rel="noopener">Open</a></div></div>' % (esc(x['title']), esc(x['kind']), esc(x['url'])))
 def lesson_html(lesson):
     lp = [x for x in pages if x['lesson'] == lesson]
     rest = lesson.split('-', 1)[1] if '-' in lesson else lesson
@@ -338,6 +350,7 @@ def lesson_html(lesson):
         today = sum(1 for c in order if c['today'])
         rows.append('<details class="fields"><summary>▸ %d fields%s</summary>%s</details></div>' % (len(fields) + len(inner), (' · %d orange today' % today) if today else '', items))
     rows += [page_row(x) for x in lp if x['type'] != 'revision-board' and x['name'] not in folded]
+    rows += [link_row(x) for x in EXTRA.get(lesson, [])]   # tools index, 12.11: links out after the pages (the lesson folder's own name: «prep»)
     return '<div class="lesson">%s</div>' % ''.join(rows)
 groups = {}
 for p in pages: groups.setdefault(p['lesson'].split('-')[0], set()).add(p['lesson'])

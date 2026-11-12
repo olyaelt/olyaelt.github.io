@@ -26,6 +26,7 @@ class Sheet {
     return R;
   }
   appendRow(a) { const r = this.getLastRow() + 1; a.forEach((v, j) => this.set(r, j+1, v)); }
+  getMaxColumns() { return Math.max(26, ...this.d.map(r => r.length)); }   // a new Google sheet has 26 columns (engine 76: Attempts needs 27)
   insertColumnsAfter(col, n) { this.d.forEach(row => { while (row.length < col) row.push(""); row.splice(col, 0, ...Array(n).fill("")); }); }
   setFrozenRows() {} setFrozenColumns() {} setColumnWidth() {} hideRows() {} hideColumns() {} hideSheet() { this.hidden = true; }
 }

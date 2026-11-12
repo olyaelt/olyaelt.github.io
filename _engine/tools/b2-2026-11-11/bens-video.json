@@ -152,7 +152,8 @@
      "box": "LIFE",
      "recall": true,
      "instr": "Last lesson's language: stages of life. Some words are hidden. Take turns: say the whole phrase, then tap the yellow to check.",
-     "tip": "Say each phrase whole, from memory. Then tap the yellow to check."
+     "tip": "Say each phrase whole, from memory. Then tap the yellow to check.",
+     "id": 40
     },
     {
      "kind": "game",
@@ -347,7 +348,8 @@
       }
      ],
      "tip": "Spin, ask When did you last…?, the next person answers (last month, ages ago, at school…) + one detail. Then tap to check the question.",
-     "box_state": "gapped"
+     "box_state": "gapped",
+     "id": 41
     }
    ]
   },
@@ -498,12 +500,14 @@
       }
      ],
      "img_left": true,
-     "cards": true
+     "cards": true,
+     "id": 42
     },
     {
      "kind": "picture",
      "img": "intern_flyer.jpg",
-     "task": "Ben is retired. He wants to become a …"
+     "task": "Ben is retired. He wants to become a …",
+     "id": 43
     },
     {
      "kind": "picture",
@@ -517,7 +521,8 @@
        "cap": ""
       }
      ],
-     "task": "Ben is retired. He wants to become a **senior intern**. He is recording a video to introduce himself to the company."
+     "task": "Ben is retired. He wants to become a **senior intern**. He is recording a video to introduce himself to the company.",
+     "id": 17
     },
     {
      "kind": "picture",
@@ -547,7 +552,8 @@
        "cap": ""
       }
      ],
-     "task": "Based on these visuals, what do you think has been going on in Ben's life? Why does he want to get back to work as an ‘intern’?"
+     "task": "Based on these visuals, what do you think has been going on in Ben's life? Why does he want to get back to work as an ‘intern’?",
+     "id": 20
     },
     {
      "kind": "picture",
@@ -577,7 +583,8 @@
        "cap": ""
       }
      ],
-     "task": "Were your predictions correct?"
+     "task": "Were your predictions correct?",
+     "id": 44
     },
     {
      "kind": "questions",
@@ -586,7 +593,8 @@
      "items": [
       "“I'm not an unhappy person,” Ben says. Do you believe him? What in the video makes you say that?",
       "Which of these things bother Ben? Which would bother **you** most, and which wouldn't bother you at all?"
-     ]
+     ],
+     "id": 6
     }
    ]
   },
@@ -594,9 +602,39 @@
    "label": "📜 Text",
    "blocks": [
     {
+     "kind": "picture",
+     "task": "What did Ben say? Take turns, one picture each. Say it as Ben: “I…”. Then read the text and compare.",
+     "imgs": [
+      {
+       "img": "still_1.jpg",
+       "cap": "1"
+      },
+      {
+       "img": "still_2.jpg",
+       "cap": "2"
+      },
+      {
+       "img": "still_3.jpg",
+       "cap": "3"
+      },
+      {
+       "img": "still_4.jpg",
+       "cap": "4"
+      },
+      {
+       "img": "still_5.jpg",
+       "cap": "5"
+      },
+      {
+       "img": "still_6.jpg",
+       "cap": "6"
+      }
+     ]
+    },
+    {
      "kind": "text",
      "instr": "What went wrong after Ben's trips?",
-     "tip": "Read with the glossary, then talk.",
+     "tip": "Read with the glossary and compare with what you said.",
      "lines": [
       {
        "s": "",
@@ -797,7 +835,8 @@
        ],
        "ru": "накрывало (как обухом по голове)"
       }
-     ]
+     ],
+     "id": 45
     },
     {
      "kind": "text",
@@ -984,7 +1023,8 @@
        ],
        "ru": "накрывало (как обухом по голове)"
       }
-     ]
+     ],
+     "id": 4
     },
     {
      "kind": "text",
@@ -1067,6 +1107,54 @@
         " like a ton of bricks."
        ]
       }
+     ],
+     "id": 5
+    },
+    {
+     "kind": "cards",
+     "style": "kwt",
+     "instr": "Say it like Ben. Use the word in capitals.",
+     "cards": [
+      {
+       "front": "In the beginning, I liked it — everything was new and exciting.",
+       "key": "FIRST",
+       "frame": "___ the novelty of it.",
+       "answer": "At first, I enjoyed",
+       "back": "**At first, I enjoyed** the novelty of it.",
+       "note": "поначалу мне нравилась новизна · можно и: At first, I liked…"
+      },
+      {
+       "front": "Wherever I went, the first night was always hard.",
+       "key": "MATTER",
+       "frame": "___ I went, the first night was always hard.",
+       "answer": "No matter where",
+       "back": "**No matter where** I went, the first night was always hard.",
+       "note": "куда бы я ни поехал"
+      },
+      {
+       "front": "But there was one thing I didn't like: I had nobody to talk to.",
+       "key": "PROBLEM",
+       "frame": "___, I had nobody to talk to.",
+       "answer": "The problem was",
+       "back": "**The problem was**, I had nobody to talk to.",
+       "note": "Проблема была в том, что…"
+      },
+      {
+       "front": "When I got home, I suddenly felt terribly lonely.",
+       "key": "BRICKS",
+       "frame": "When I got home, the loneliness ___.",
+       "answer": "hit me like a ton of bricks",
+       "back": "When I got home, the loneliness **hit me like a ton of bricks**.",
+       "note": "накрыло (как обухом по голове)"
+      },
+      {
+       "front": "After I stopped working, I had lots of free time and nothing to fill it with.",
+       "key": "HANDS",
+       "frame": "After I stopped working, I had a lot of ___.",
+       "answer": "time on my hands",
+       "back": "After I stopped working, I had a lot of **time on my hands**.",
+       "note": "свободное время, которое нечем занять"
+      }
      ]
     },
     {
@@ -1079,7 +1167,8 @@
       "**Then:** What do you do when you've got **time on your hands**?",
       "Name **two** moments in life when people get that **nowhere-to-be** feeling (after a long trip, at the end of a big project…). What helps?"
      ],
-     "fast": "tell your partner what Ben did at first, and what went wrong — from memory."
+     "fast": "tell your partner what Ben did at first, and what went wrong — from memory.",
+     "id": 46
     },
     {
      "kind": "text",
@@ -1276,7 +1365,8 @@
        ],
        "ru": "китайский язык"
       }
-     ]
+     ],
+     "id": 47
     },
     {
      "kind": "text",
@@ -1537,7 +1627,8 @@
        ],
        "ru": "Поверь, я всё перепробовал."
       }
-     ]
+     ],
+     "id": 9
     },
     {
      "kind": "text",
@@ -1654,6 +1745,85 @@
         ".\""
        ]
       }
+     ],
+     "id": 10
+    },
+    {
+     "kind": "cards",
+     "style": "kwt",
+     "instr": "Say it like Ben. Use the word in capitals.",
+     "cards": [
+      {
+       "front": "I can't stay at home all day — I need to go somewhere, anywhere.",
+       "key": "OUT",
+       "frame": "I need to ___ and go somewhere — anywhere.",
+       "answer": "get out of the house",
+       "back": "I need to **get out of the house** and go somewhere — anywhere.",
+       "note": "выбраться из дома"
+      },
+      {
+       "front": "When I sing in my choir, I feel like I really belong.",
+       "key": "PART",
+       "frame": "My choir ___.",
+       "answer": "makes me feel part of something",
+       "back": "My choir **makes me feel part of something**.",
+       "note": "чувствовать себя частью чего-то"
+      },
+      {
+       "front": "I fill my days with all sorts of things: books, films, cooking, gardening and lots more.",
+       "key": "NAME",
+       "frame": "I fill my days with all sorts of things: books, films, cooking, gardening — ___.",
+       "answer": "you name it",
+       "back": "I fill my days with all sorts of things: books, films, cooking, gardening — **you name it**.",
+       "note": "чем я только не занимаюсь"
+      },
+      {
+       "front": "There's a little café on my street. I don't know why, but I like it there.",
+       "key": "EXPLAIN",
+       "frame": "There's a little café on my street. ___, but I like it there.",
+       "answer": "Can't explain it",
+       "back": "There's a little café on my street. **Can't explain it**, but I like it there.",
+       "note": "не могу объяснить почему (I в разговоре часто пропадает)"
+      },
+      {
+       "front": "Honestly, there's nothing I haven't tried.",
+       "key": "EVERYTHING",
+       "frame": "Believe me, ___.",
+       "answer": "I've tried everything",
+       "back": "Believe me, **I've tried everything**.",
+       "note": "всё перепробовал → present perfect: итог к сегодняшнему дню"
+      }
+     ]
+    },
+    {
+     "kind": "cards",
+     "style": "share",
+     "instr": "Mind if…? Answer the question. Then check.",
+     "cards": [
+      {
+       "ctx": "A busy café. A woman with a coffee points at the free chair at your table.",
+       "a": "Excuse me, mind if I sit here?",
+       "hint": "[you don't mind]",
+       "back": "No, go ahead.",
+       "next": "Thanks! It's so busy today.",
+       "note": "Mind if…? = Вы не против? → No, go ahead. = Не против, пожалуйста."
+      },
+      {
+       "ctx": "A hot train. The man next to you looks at the window.",
+       "a": "Mind if I open the window?",
+       "hint": "[you don't mind]",
+       "back": "No, not at all. It's really hot in here.",
+       "next": "Thanks — that's much better.",
+       "note": "No, not at all. = Нет, что вы, пожалуйста."
+      },
+      {
+       "ctx": "At work. A colleague needs your pen for a second.",
+       "a": "Mind if I borrow your pen?",
+       "hint": "[you don't mind]",
+       "back": "No, not at all — here you go.",
+       "next": "Thanks, I'll give it right back.",
+       "note": "here you go = вот, держи"
+      }
      ]
     },
     {
@@ -1666,7 +1836,8 @@
       "In my free time? [Books, films, long walks / Baking, gardening, the gym / …] — **you name it**.",
       "**Believe me, I've tried everything** to [get up earlier / stop checking my phone / remember new words / …]: [three alarms / apps / flashcards / …]."
      ],
-     "fast": "Ben has tried yoga, cooking and Mandarin. Which one would you try first — and which would you never try? Why?"
+     "fast": "Ben has tried yoga, cooking and Mandarin. Which one would you try first — and which would you never try? Why?",
+     "id": 48
     },
     {
      "kind": "text",
@@ -1870,355 +2041,8 @@
        ],
        "ru": "краем глаза заметил ваше объявление"
       }
-     ]
-    },
-    {
-     "kind": "text",
-     "instr": "Remember the missing words. Tap the yellow and orange to check.",
-     "lines": [
-      {
-       "s": "",
-       "p": [
-        "And then, of course, there are the funerals. So many more than I could imagine."
-       ]
-      },
-      {
-       "s": "",
-       "p": [
-        "The only traveling I do ",
-        {
-         "f": "t",
-         "r": "hese"
-        },
-        " ",
-        {
-         "f": "d",
-         "r": "ays"
-        },
-        " is out to San Diego to visit my son and his family. They're great. I love them to pieces. But to be honest, I think I probably ",
-        {
-         "f": "r",
-         "r": "elied"
-        },
-        " ",
-        {
-         "f": "o",
-         "r": "n"
-        },
-        " them ",
-        {
-         "f": "w",
-         "r": "ay"
-        },
-        " ",
-        {
-         "f": "m",
-         "r": "ore"
-        },
-        " than I ",
-        {
-         "f": "s",
-         "r": "hould"
-        },
-        "."
-       ]
-      },
-      {
-       "s": "",
-       "p": [
-        {
-         "f": "D",
-         "r": "on't"
-        },
-        " ",
-        {
-         "f": "g",
-         "r": "et"
-        },
-        " ",
-        {
-         "f": "m",
-         "r": "e"
-        },
-        " ",
-        {
-         "f": "w",
-         "r": "rong"
-        },
-        ", I'm not an unhappy person. Quite the contrary. I just know there's a hole in my life, and I need to ",
-        {
-         "f": "f",
-         "r": "ill"
-        },
-        " ",
-        {
-         "f": "i",
-         "r": "t"
-        },
-        ". Soon."
-       ]
-      },
-      {
-       "s": "",
-       "p": [
-        "Which ",
-        {
-         "f": "b",
-         "r": "rings"
-        },
-        " me to today, when I was leaving the market and ",
-        {
-         "f": "c",
-         "r": "aught"
-        },
-        " your flyer out of the corner of my eye. Hmm. \"Seniors, be an intern.\""
-       ]
-      }
      ],
-     "gloss": [
-      {
-       "p": [
-        {
-         "f": "t",
-         "r": "hese"
-        },
-        " ",
-        {
-         "f": "d",
-         "r": "ays"
-        }
-       ],
-       "ru": "сейчас, теперь"
-      },
-      {
-       "p": [
-        "I ",
-        {
-         "f": "r",
-         "r": "elied"
-        },
-        " ",
-        {
-         "f": "o",
-         "r": "n"
-        },
-        " ",
-        {
-         "f": "",
-         "r": "/rɪˈlaɪd ɒn/",
-         "o": 1
-        },
-        " them ",
-        {
-         "f": "w",
-         "r": "ay"
-        },
-        " ",
-        {
-         "f": "m",
-         "r": "ore"
-        },
-        " than I ",
-        {
-         "f": "s",
-         "r": "hould"
-        }
-       ],
-       "ru": "я опирался на них куда больше, чем следовало"
-      },
-      {
-       "p": [
-        {
-         "f": "D",
-         "r": "on't"
-        },
-        " ",
-        {
-         "f": "g",
-         "r": "et"
-        },
-        " ",
-        {
-         "f": "m",
-         "r": "e"
-        },
-        " ",
-        {
-         "f": "w",
-         "r": "rong"
-        },
-        ", … ",
-        {
-         "f": "",
-         "r": "/rɒŋ/",
-         "o": 1
-        }
-       ],
-       "ru": "Пойми(те) меня правильно, …"
-      },
-      {
-       "p": [
-        "I need to ",
-        {
-         "f": "f",
-         "r": "ill"
-        },
-        " ",
-        {
-         "f": "i",
-         "r": "t"
-        }
-       ],
-       "ru": "мне нужно её чем-то заполнить"
-      },
-      {
-       "p": [
-        "Which ",
-        {
-         "f": "b",
-         "r": "rings"
-        },
-        " me to … ",
-        {
-         "f": "",
-         "r": "/brɪŋz/",
-         "o": 1
-        }
-       ],
-       "ru": "И тут мы подходим к…"
-      },
-      {
-       "p": [
-        {
-         "f": "c",
-         "r": "aught"
-        },
-        " ",
-        {
-         "f": "",
-         "r": "/kɔːt/",
-         "o": 1
-        },
-        " your flyer"
-       ],
-       "ru": "заметил ваше объявление"
-      }
-     ]
-    },
-    {
-     "kind": "text",
-     "instr": "Now without the glossary.",
-     "lines": [
-      {
-       "s": "",
-       "p": [
-        "And then, of course, there are the funerals. So many more than I could imagine."
-       ]
-      },
-      {
-       "s": "",
-       "p": [
-        "The only traveling I do ",
-        {
-         "f": "t",
-         "r": "hese"
-        },
-        " ",
-        {
-         "f": "d",
-         "r": "ays"
-        },
-        " is out to San Diego to visit my son and his family. They're great. I love them to pieces. But to be honest, I think I probably ",
-        {
-         "f": "r",
-         "r": "elied"
-        },
-        " ",
-        {
-         "f": "o",
-         "r": "n"
-        },
-        " them ",
-        {
-         "f": "w",
-         "r": "ay"
-        },
-        " ",
-        {
-         "f": "m",
-         "r": "ore"
-        },
-        " than I ",
-        {
-         "f": "s",
-         "r": "hould"
-        },
-        "."
-       ]
-      },
-      {
-       "s": "",
-       "p": [
-        {
-         "f": "D",
-         "r": "on't"
-        },
-        " ",
-        {
-         "f": "g",
-         "r": "et"
-        },
-        " ",
-        {
-         "f": "m",
-         "r": "e"
-        },
-        " ",
-        {
-         "f": "w",
-         "r": "rong"
-        },
-        ", I'm not an unhappy person. Quite the contrary. I just know there's a hole in my life, and I need to ",
-        {
-         "f": "f",
-         "r": "ill"
-        },
-        " ",
-        {
-         "f": "i",
-         "r": "t"
-        },
-        ". Soon."
-       ]
-      },
-      {
-       "s": "",
-       "p": [
-        "Which ",
-        {
-         "f": "b",
-         "r": "rings"
-        },
-        " me to today, when I was leaving the market and ",
-        {
-         "f": "c",
-         "r": "aught"
-        },
-        " your flyer out of the corner of my eye. Hmm. \"Seniors, be an intern.\""
-       ]
-      }
-     ]
-    },
-    {
-     "kind": "questions",
-     "instr": "Talk to your partner: finish the sentences about you. Your partner asks one more question.",
-     "items": [
-      "The only [sport / travelling / cooking] I do **these days** is [walking to the bus stop / going to the supermarket / making toast / …].",
-      "I think I **rely on** [my phone / coffee / my GPS / …] **way more than I should**: [I can't … without it / …].",
-      "[I can't wait for the holidays / Winter here is so long / I'm on my phone far too much]. **Don't get me wrong**, [I love my job / I like it here / it's really useful], but [I really need a break / I miss the sun / I'd like to read more].",
-      "If I were Ben, I'd **fill** the **hole in his life** with [a dog / singing in a choir / Spanish lessons / volunteering / …]."
-     ],
-     "fast": "Ben gets the internship at an online fashion start-up. Name two things he might find hard there."
+     "id": 49
     }
    ]
   },
@@ -2249,7 +2073,8 @@
        "cap": "5 · The flyer"
       }
      ],
-     "task": "What do you remember about Ben? Look at the pictures and tell each other **three** things."
+     "task": "What do you remember about Ben? Look at the pictures and tell each other **three** things.",
+     "id": 51
     },
     {
      "kind": "say",
@@ -2278,7 +2103,8 @@
       "**9**  I **rely on** my phone more than I should. ((rely ##/rɪˈlaɪ/## — ударение на второй слог))",
       "**10**  **Don't get me wrong**, …"
      ],
-     "answer_title": "Check"
+     "answer_title": "Check",
+     "id": 18
     },
     {
      "kind": "text",
@@ -2474,7 +2300,8 @@
         ", …"
        ]
       }
-     ]
+     ],
+     "id": 19
     },
     {
      "kind": "picture",
@@ -2501,7 +2328,8 @@
       }
      ],
      "box": "STORY",
-     "task": "Be Ben: tell his story to your partner (“I…”), using the pictures and the box. Your partner adds anything you left out. Then swap."
+     "task": "Be Ben: tell his story to your partner (“I…”), using the pictures and the box. Your partner adds anything you left out. Then swap.",
+     "id": 52
     },
     {
      "kind": "text",
@@ -2569,7 +2397,8 @@
         ", I'm not an unhappy person. Quite the contrary. I just know there's a hole in my life, and I need to fill it."
        ]
       }
-     ]
+     ],
+     "id": 21
     },
     {
      "kind": "questions",
@@ -2581,9 +2410,11 @@
       "**3**  Ben has tried yoga, cooking and Mandarin. Name **two** things you've tried — or would like to try — in your free time, and **one** you'd never try (again).",
       "**4**  Ben says there's **a hole in his life**. Name **two** things that could fill it — and **one** that wouldn't."
      ],
-     "fast": "If you're done: go back to 📜 Text and say the missing words of part 2 from memory."
+     "fast": "If you're done: go back to 📜 Text and say the missing words of part 2 from memory.",
+     "id": 11
     }
-   ]
+   ],
+   "parked": true
   },
   {
    "label": "🃏 Story or sum-up?",
@@ -2604,7 +2435,8 @@
       "**3**  Believe me, **I've tried** everything.",
       "**4**  (1) past simple: a story — what happened at first. (3) present perfect: a sum-up — everything up to now."
      ],
-     "answer_title": "Check"
+     "answer_title": "Check",
+     "id": 23
     },
     {
      "kind": "say",
@@ -2622,7 +2454,8 @@
       "((Слова — только подсказки, решает смысл: I tried everything when I lived there — тот период закончился → past simple.))"
      ],
      "answer_title": "The rule",
-     "box": "TENSES"
+     "box": "TENSES",
+     "id": 24
     },
     {
      "kind": "model",
@@ -2682,7 +2515,8 @@
        ]
       }
      ],
-     "tip": "Both ways are fine. What matters: the story → past simple, the sum-up to now → present perfect."
+     "tip": "Both ways are fine. What matters: the story → past simple, the sum-up to now → present perfect.",
+     "id": 25
     },
     {
      "kind": "text",
@@ -2736,7 +2570,8 @@
        "ru": "слишком много работы"
       }
      ],
-     "box": "TENSES"
+     "box": "TENSES",
+     "id": 26
     },
     {
      "kind": "say",
@@ -2751,7 +2586,179 @@
       "((Pattern 1: сначала история, потом итог. it hit me — до меня дошло. learned ##/lɜːnd/##))"
      ],
      "answer_title": "Check",
-     "box": "TENSES"
+     "box": "TENSES",
+     "id": 27
+    },
+    {
+     "kind": "text",
+     "instr": "Say the verbs in the right form.",
+     "lines": [
+      {
+       "ctx": "Tom, 27 · moved for a job"
+      },
+      {
+       "s": "",
+       "p": [
+        "Toronto? So far, so good. ",
+        {
+         "f": "",
+         "r": "I've found"
+        },
+        " (I / find)",
+        " a flat, and ",
+        {
+         "f": "",
+         "r": "I've even learned"
+        },
+        " (I / even / learn)",
+        " to skate — well, almost. The first month ",
+        {
+         "f": "",
+         "r": "was"
+        },
+        " (be)",
+        " hard, though: it ",
+        {
+         "f": "",
+         "r": "was"
+        },
+        " (be)",
+        " minus twenty, and I ",
+        {
+         "f": "",
+         "r": "didn't have"
+        },
+        " (not have)",
+        " a proper coat."
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        "so far, so good"
+       ],
+       "ru": "пока всё хорошо"
+      },
+      {
+       "p": [
+        "a proper coat"
+       ],
+       "ru": "нормальная зимняя куртка"
+      }
+     ],
+     "box": "TENSES",
+     "id": 32
+    },
+    {
+     "kind": "say",
+     "instr": "Why these tenses? Discuss together, then tap “Show the answer”.",
+     "task": [
+      "((**Tom, 27 · moved for a job**))",
+      "Toronto? So far, so good. **I've found** a flat, and **I've even learned** to skate — well, almost. The first month **was** hard, though: it **was** minus twenty, and I **didn't have** a proper coat."
+     ],
+     "answer": [
+      "**I've found · I've even learned** — so far: the sum-up ((итог → present perfect))",
+      "**was · was · didn't have** — the first month: a detail of the story ((история → past simple))",
+      "((Pattern 2. Toronto ##/təˈrɒntəʊ/## · proper ##/ˈprɒpə/##))"
+     ],
+     "answer_title": "Check",
+     "box": "TENSES",
+     "id": 33
+    },
+    {
+     "kind": "text",
+     "instr": "Say the verbs in the right form.",
+     "lines": [
+      {
+       "ctx": "Helen, 44 · a new dog"
+      },
+      {
+       "s": "",
+       "p": [
+        "We ",
+        {
+         "f": "",
+         "r": "got"
+        },
+        " (get)",
+        " a dog in the summer. The first few days ",
+        {
+         "f": "",
+         "r": "were"
+        },
+        " (be)",
+        " chaos: he ",
+        {
+         "f": "",
+         "r": "ate"
+        },
+        " (eat)",
+        " a shoe, a sofa cushion and nearly my passport. Since then, ",
+        {
+         "f": "",
+         "r": "he's calmed"
+        },
+        " (he / calm)",
+        " down a bit, and ",
+        {
+         "f": "",
+         "r": "I've met"
+        },
+        " (I / meet)",
+        " more neighbours in three months than in five years."
+       ]
+      }
+     ],
+     "gloss": [
+      {
+       "p": [
+        "chaos ",
+        {
+         "ipa": "/ˈkeɪɒs/"
+        }
+       ],
+       "ru": "сущий хаос"
+      },
+      {
+       "p": [
+        "calm down"
+       ],
+       "ru": "успокоиться"
+      }
+     ],
+     "box": "TENSES",
+     "id": 36
+    },
+    {
+     "kind": "say",
+     "instr": "Why these tenses? Discuss together, then tap “Show the answer”.",
+     "task": [
+      "((**Helen, 44 · a new dog**))",
+      "We **got** a dog in the summer. The first few days **were** chaos: he **ate** a shoe … Since then, **he's calmed** down a bit, and **I've met** more neighbours in three months than in five years."
+     ],
+     "answer": [
+      "**got · were · ate** — the story: the first days ((история → past simple))",
+      "**he's calmed · I've met** — since then, in three months ((итог к сегодняшнему дню → present perfect))",
+      "((Pattern 1. ate ##/et/## или ##/eɪt/## · cushion ##/ˈkʊʃn/##))"
+     ],
+     "answer_title": "Check",
+     "box": "TENSES",
+     "id": 37
+    },
+    {
+     "kind": "questions",
+     "instr": "Now you. Talk to your partner (3 minutes).",
+     "box": "TENSES",
+     "items": [
+      "Think of a **change** in your life: a move, a new job, a new hobby… — or take one from the stories. Tell your partner **one line about the beginning** and **one line that sums it up**: ((At first, … / The first few weeks … · Since then, I've … / So far, …)) Your partner asks **one question**: So what was it like at first? / How's it going so far?"
+     ],
+     "fast": "Say the verbs of the three stories from memory. Then tell your partner about a second change — this time start with the sum-up.",
+     "id": 39
+    },
+    {
+     "kind": "cloud",
+     "text": "⚡ Extra: more stories"
     },
     {
      "kind": "text",
@@ -2817,7 +2824,8 @@
        "ru": "записаться"
       }
      ],
-     "box": "TENSES"
+     "box": "TENSES",
+     "id": 28
     },
     {
      "kind": "say",
@@ -2833,7 +2841,8 @@
       "((Pattern 2: сначала итог, потом подробности. I made two good friends, Spanish has gone much better — тоже можно. lost ##/lɒst/## · signed up ##/saɪnd ʌp/##))"
      ],
      "answer_title": "Check",
-     "box": "TENSES"
+     "box": "TENSES",
+     "id": 29
     },
     {
      "kind": "text",
@@ -2881,7 +2890,8 @@
        "ru": "мне понадобилось время"
       }
      ],
-     "box": "TENSES"
+     "box": "TENSES",
+     "id": 30
     },
     {
      "kind": "say",
@@ -2897,82 +2907,8 @@
       "((Pattern 1. Málaga ##/ˈmæləɡə/## · took ##/tʊk/##))"
      ],
      "answer_title": "Check",
-     "box": "TENSES"
-    },
-    {
-     "kind": "text",
-     "instr": "Say the verbs in the right form.",
-     "lines": [
-      {
-       "ctx": "Tom, 27 · moved for a job"
-      },
-      {
-       "s": "",
-       "p": [
-        "Toronto? So far, so good. ",
-        {
-         "f": "",
-         "r": "I've found"
-        },
-        " (I / find)",
-        " a flat, and ",
-        {
-         "f": "",
-         "r": "I've even learned"
-        },
-        " (I / even / learn)",
-        " to skate — well, almost. The first month ",
-        {
-         "f": "",
-         "r": "was"
-        },
-        " (be)",
-        " hard, though: it ",
-        {
-         "f": "",
-         "r": "was"
-        },
-        " (be)",
-        " minus twenty, and I ",
-        {
-         "f": "",
-         "r": "didn't have"
-        },
-        " (not have)",
-        " a proper coat."
-       ]
-      }
-     ],
-     "gloss": [
-      {
-       "p": [
-        "so far, so good"
-       ],
-       "ru": "пока всё хорошо"
-      },
-      {
-       "p": [
-        "a proper coat"
-       ],
-       "ru": "нормальная зимняя куртка"
-      }
-     ],
-     "box": "TENSES"
-    },
-    {
-     "kind": "say",
-     "instr": "Why these tenses? Discuss together, then tap “Show the answer”.",
-     "task": [
-      "((**Tom, 27 · moved for a job**))",
-      "Toronto? So far, so good. **I've found** a flat, and **I've even learned** to skate — well, almost. The first month **was** hard, though: it **was** minus twenty, and I **didn't have** a proper coat."
-     ],
-     "answer": [
-      "**I've found · I've even learned** — so far: the sum-up ((итог → present perfect))",
-      "**was · was · didn't have** — the first month: a detail of the story ((история → past simple))",
-      "((Pattern 2. Toronto ##/təˈrɒntəʊ/## · proper ##/ˈprɒpə/##))"
-     ],
-     "answer_title": "Check",
-     "box": "TENSES"
+     "box": "TENSES",
+     "id": 31
     },
     {
      "kind": "text",
@@ -3038,7 +2974,8 @@
        "ru": "дом в нашем распоряжении"
       }
      ],
-     "box": "TENSES"
+     "box": "TENSES",
+     "id": 34
     },
     {
      "kind": "say",
@@ -3053,85 +2990,8 @@
       "((Pattern 1. quiet ##/ˈkwaɪət/## · used ##/juːzd/##))"
      ],
      "answer_title": "Check",
-     "box": "TENSES"
-    },
-    {
-     "kind": "text",
-     "instr": "Say the verbs in the right form.",
-     "lines": [
-      {
-       "ctx": "Helen, 44 · a new dog"
-      },
-      {
-       "s": "",
-       "p": [
-        "We ",
-        {
-         "f": "",
-         "r": "got"
-        },
-        " (get)",
-        " a dog in the summer. The first few days ",
-        {
-         "f": "",
-         "r": "were"
-        },
-        " (be)",
-        " chaos: he ",
-        {
-         "f": "",
-         "r": "ate"
-        },
-        " (eat)",
-        " a shoe, a sofa cushion and nearly my passport. Since then, ",
-        {
-         "f": "",
-         "r": "he's calmed"
-        },
-        " (he / calm)",
-        " down a bit, and ",
-        {
-         "f": "",
-         "r": "I've met"
-        },
-        " (I / meet)",
-        " more neighbours in three months than in five years."
-       ]
-      }
-     ],
-     "gloss": [
-      {
-       "p": [
-        "chaos ",
-        {
-         "ipa": "/ˈkeɪɒs/"
-        }
-       ],
-       "ru": "сущий хаос"
-      },
-      {
-       "p": [
-        "calm down"
-       ],
-       "ru": "успокоиться"
-      }
-     ],
-     "box": "TENSES"
-    },
-    {
-     "kind": "say",
-     "instr": "Why these tenses? Discuss together, then tap “Show the answer”.",
-     "task": [
-      "((**Helen, 44 · a new dog**))",
-      "We **got** a dog in the summer. The first few days **were** chaos: he **ate** a shoe … Since then, **he's calmed** down a bit, and **I've met** more neighbours in three months than in five years."
-     ],
-     "answer": [
-      "**got · were · ate** — the story: the first days ((история → past simple))",
-      "**he's calmed · I've met** — since then, in three months ((итог к сегодняшнему дню → present perfect))",
-      "((Pattern 1. ate ##/et/## или ##/eɪt/## · cushion ##/ˈkʊʃn/##))"
-     ],
-     "answer_title": "Check",
-     "box": "TENSES"
+     "box": "TENSES",
+     "id": 35
     }
    ]
   },
@@ -3143,25 +3003,18 @@
      "instr": "Before you go: talk to your partner.",
      "box": "BEFORE",
      "items": [
-      "**1**  Tell Ben's story in **two** sentences: how it all started, and where he is now.",
+      "**1**  Tell Ben's story in **two** sentences: how he felt at first and what his life is like now. Start: **At first, he**… **Now he**…",
       "**2**  Name **two** things you rely on more than you should (your phone? coffee? your car?). Start: **Don't get me wrong**, I love…, but…"
-     ]
+     ],
+     "id": 38
     },
     {
      "kind": "questions",
      "instr": "What are your takeaways?",
      "items": [
       "What are your takeaways?"
-     ]
-    },
-    {
-     "kind": "questions",
-     "instr": "Now you. Talk to your partner (3 minutes).",
-     "box": "TENSES",
-     "items": [
-      "Think of a **change** in your life: a move, a new job, a new hobby… — or take one from the stories. Tell your partner **one line about the beginning** and **one line that sums it up**: ((At first, … / The first few weeks … · Since then, I've … / So far, …)) Your partner asks **one question**: So what was it like at first? / How's it going so far?"
      ],
-     "fast": "Say the verbs of the four stories from memory. Then tell your partner about a second change — this time start with the sum-up."
+     "id": 53
     }
    ]
   },
@@ -3209,7 +3062,8 @@
        "before": "Don't get me wrong, I'm not an unhappy person. Quite the contrary.",
        "text": "I just know {{there's a hole in my life}}, and I need to fill it."
       }
-     ]
+     ],
+     "id": 54
     }
    ],
    "teacher": true,
@@ -3349,13 +3203,370 @@
        "ctx": "48:00.83",
        "text": "{{Can't tomorrow.}} What about Saturday?"
       }
-     ]
+     ],
+     "id": 55
     }
    ],
    "teacher": true,
    "after": 1
   }
  ],
+ "parked": {
+  "why": "B2 lesson chat, handoff 12.11 20:15 (her decision 19:52–19:59): for Fri 13.11 part 3 of the text is only read with one question; its memorising and speaking come back later together with 🗣 Ben's story (that stage stays in \"stages\" with \"parked\": true, so every stage keeps its number). Each block keeps its permanent number (\"id\").",
+  "blocks": [
+   {
+    "kind": "text",
+    "instr": "Remember the missing words. Tap the yellow and orange to check.",
+    "lines": [
+     {
+      "s": "",
+      "p": [
+       "And then, of course, there are the funerals. So many more than I could imagine."
+      ]
+     },
+     {
+      "s": "",
+      "p": [
+       "The only traveling I do ",
+       {
+        "f": "t",
+        "r": "hese"
+       },
+       " ",
+       {
+        "f": "d",
+        "r": "ays"
+       },
+       " is out to San Diego to visit my son and his family. They're great. I love them to pieces. But to be honest, I think I probably ",
+       {
+        "f": "r",
+        "r": "elied"
+       },
+       " ",
+       {
+        "f": "o",
+        "r": "n"
+       },
+       " them ",
+       {
+        "f": "w",
+        "r": "ay"
+       },
+       " ",
+       {
+        "f": "m",
+        "r": "ore"
+       },
+       " than I ",
+       {
+        "f": "s",
+        "r": "hould"
+       },
+       "."
+      ]
+     },
+     {
+      "s": "",
+      "p": [
+       {
+        "f": "D",
+        "r": "on't"
+       },
+       " ",
+       {
+        "f": "g",
+        "r": "et"
+       },
+       " ",
+       {
+        "f": "m",
+        "r": "e"
+       },
+       " ",
+       {
+        "f": "w",
+        "r": "rong"
+       },
+       ", I'm not an unhappy person. Quite the contrary. I just know there's a hole in my life, and I need to ",
+       {
+        "f": "f",
+        "r": "ill"
+       },
+       " ",
+       {
+        "f": "i",
+        "r": "t"
+       },
+       ". Soon."
+      ]
+     },
+     {
+      "s": "",
+      "p": [
+       "Which ",
+       {
+        "f": "b",
+        "r": "rings"
+       },
+       " me to today, when I was leaving the market and ",
+       {
+        "f": "c",
+        "r": "aught"
+       },
+       " your flyer out of the corner of my eye. Hmm. \"Seniors, be an intern.\""
+      ]
+     }
+    ],
+    "gloss": [
+     {
+      "p": [
+       {
+        "f": "t",
+        "r": "hese"
+       },
+       " ",
+       {
+        "f": "d",
+        "r": "ays"
+       }
+      ],
+      "ru": "сейчас, теперь"
+     },
+     {
+      "p": [
+       "I ",
+       {
+        "f": "r",
+        "r": "elied"
+       },
+       " ",
+       {
+        "f": "o",
+        "r": "n"
+       },
+       " ",
+       {
+        "f": "",
+        "r": "/rɪˈlaɪd ɒn/",
+        "o": 1
+       },
+       " them ",
+       {
+        "f": "w",
+        "r": "ay"
+       },
+       " ",
+       {
+        "f": "m",
+        "r": "ore"
+       },
+       " than I ",
+       {
+        "f": "s",
+        "r": "hould"
+       }
+      ],
+      "ru": "я опирался на них куда больше, чем следовало"
+     },
+     {
+      "p": [
+       {
+        "f": "D",
+        "r": "on't"
+       },
+       " ",
+       {
+        "f": "g",
+        "r": "et"
+       },
+       " ",
+       {
+        "f": "m",
+        "r": "e"
+       },
+       " ",
+       {
+        "f": "w",
+        "r": "rong"
+       },
+       ", … ",
+       {
+        "f": "",
+        "r": "/rɒŋ/",
+        "o": 1
+       }
+      ],
+      "ru": "Пойми(те) меня правильно, …"
+     },
+     {
+      "p": [
+       "I need to ",
+       {
+        "f": "f",
+        "r": "ill"
+       },
+       " ",
+       {
+        "f": "i",
+        "r": "t"
+       }
+      ],
+      "ru": "мне нужно её чем-то заполнить"
+     },
+     {
+      "p": [
+       "Which ",
+       {
+        "f": "b",
+        "r": "rings"
+       },
+       " me to … ",
+       {
+        "f": "",
+        "r": "/brɪŋz/",
+        "o": 1
+       }
+      ],
+      "ru": "И тут мы подходим к…"
+     },
+     {
+      "p": [
+       {
+        "f": "c",
+        "r": "aught"
+       },
+       " ",
+       {
+        "f": "",
+        "r": "/kɔːt/",
+        "o": 1
+       },
+       " your flyer"
+      ],
+      "ru": "заметил ваше объявление"
+     }
+    ],
+    "id": 14
+   },
+   {
+    "kind": "text",
+    "instr": "Now without the glossary.",
+    "lines": [
+     {
+      "s": "",
+      "p": [
+       "And then, of course, there are the funerals. So many more than I could imagine."
+      ]
+     },
+     {
+      "s": "",
+      "p": [
+       "The only traveling I do ",
+       {
+        "f": "t",
+        "r": "hese"
+       },
+       " ",
+       {
+        "f": "d",
+        "r": "ays"
+       },
+       " is out to San Diego to visit my son and his family. They're great. I love them to pieces. But to be honest, I think I probably ",
+       {
+        "f": "r",
+        "r": "elied"
+       },
+       " ",
+       {
+        "f": "o",
+        "r": "n"
+       },
+       " them ",
+       {
+        "f": "w",
+        "r": "ay"
+       },
+       " ",
+       {
+        "f": "m",
+        "r": "ore"
+       },
+       " than I ",
+       {
+        "f": "s",
+        "r": "hould"
+       },
+       "."
+      ]
+     },
+     {
+      "s": "",
+      "p": [
+       {
+        "f": "D",
+        "r": "on't"
+       },
+       " ",
+       {
+        "f": "g",
+        "r": "et"
+       },
+       " ",
+       {
+        "f": "m",
+        "r": "e"
+       },
+       " ",
+       {
+        "f": "w",
+        "r": "rong"
+       },
+       ", I'm not an unhappy person. Quite the contrary. I just know there's a hole in my life, and I need to ",
+       {
+        "f": "f",
+        "r": "ill"
+       },
+       " ",
+       {
+        "f": "i",
+        "r": "t"
+       },
+       ". Soon."
+      ]
+     },
+     {
+      "s": "",
+      "p": [
+       "Which ",
+       {
+        "f": "b",
+        "r": "rings"
+       },
+       " me to today, when I was leaving the market and ",
+       {
+        "f": "c",
+        "r": "aught"
+       },
+       " your flyer out of the corner of my eye. Hmm. \"Seniors, be an intern.\""
+      ]
+     }
+    ],
+    "id": 15
+   },
+   {
+    "kind": "questions",
+    "instr": "Talk to your partner: finish the sentences about you. Your partner asks one more question.",
+    "items": [
+     "The only [sport / travelling / cooking] I do **these days** is [walking to the bus stop / going to the supermarket / making toast / …].",
+     "I think I **rely on** [my phone / coffee / my GPS / …] **way more than I should**: [I can't … without it / …].",
+     "[I can't wait for the holidays / Winter here is so long / I'm on my phone far too much]. **Don't get me wrong**, [I love my job / I like it here / it's really useful], but [I really need a break / I miss the sun / I'd like to read more].",
+     "If I were Ben, I'd **fill** the **hole in his life** with [a dog / singing in a choir / Spanish lessons / volunteering / …]."
+    ],
+    "fast": "Ben gets the internship at an online fashion start-up. Name two things he might find hard there.",
+    "id": 50
+   }
+  ]
+ },
  "class_view": {
   "stages": [
    0,

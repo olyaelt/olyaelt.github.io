@@ -200,6 +200,13 @@ details.summary[open] summary::after{content:"Hide"}
 .t-prev-h{margin-bottom:-4px}
 .t-copy{margin-left:auto}
 .t-msg{align-self:center}
+.t-discslot{margin-left:auto;display:flex;align-items:center;gap:6px}
+.t-qs{margin-top:12px;border-left:5px solid var(--label)}
+.t-q{display:flex;gap:12px;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding:8px 0}
+.t-q-t{margin:0}
+.t-q.is-done .t-q-t{opacity:.6}
+.t-disc-on{color:var(--done);font-weight:800}
+.wait-disc-btn{font-size:.85rem}
 .hot.wait .tool{margin-left:8px;font-size:.9rem;padding:3px 8px}
 .t-prev:empty{display:none}
 .t-msg:empty{display:none}
@@ -836,6 +843,8 @@ audio{width:100%}
 .film-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px}
 .film-row .grow{flex:1}
 .film-ask{font-weight:800}
+.lines .l1-ask{margin:0 0 8px;padding:2px 8px 4px}   /* engine 76: «What did you catch?» under a YouTube line */
+.gap-in[readonly]{cursor:pointer}
 .film-res{margin-top:10px;display:grid;gap:8px;justify-items:start}
 .film-score{margin:0;font-weight:700}
 .film-you{font-weight:700}
@@ -1987,7 +1996,7 @@ const TASKS = [
 ];
 
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "72";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "76";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -2076,7 +2085,7 @@ function firstTry(t, item, o){
   /* engine 68 (AL chat's handoff 12.11 09:10: one journal): a listening item also says after how many listens it was typed and how many of
      its words were right, so a first try after one listen can be told from one after five */
   o = Object.assign({}, orderFT(), o);
-  ["words", "lis", "slow", "v", "ab"].forEach(k => { if(o[k] != null && o[k] !== false) FIRST[id][k] = o[k]; });
+  ["words", "lis", "slow", "v", "ab", "mode"].forEach(k => { if(o[k] != null && o[k] !== false) FIRST[id][k] = o[k]; });
   try{ localStorage.setItem(FT_KEY, JSON.stringify(FIRST)); }catch(e){}
   ftSendSoon();
 }
@@ -2103,7 +2112,7 @@ async function ftSend(){
 }
 function setStudentView(on){
   ls.set("hw-as-student", on ? "1" : "");
-  try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || /^hw-rev-/.test(k) || /^hw-(typed|pos|sort|first|want)-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
+  try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || /^hw-rev-/.test(k) || /^hw-(typed|pos|sort|first|want|l1)-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
   location.reload();
 }
 document.addEventListener("click", ev => { const b = ev.target.closest && ev.target.closest("#as-student, #as-teacher"); if(b) setStudentView(b.id === "as-student"); });
@@ -2180,7 +2189,7 @@ function wireSync(){
   /* "Not you?": the next person starts clean on this device — the last person's ticks, marks, bookmarks and drafts here are forgotten
      (engine 35: before, a second person's code took over the first one's ticks; what was sent stays in Olya's table) */
   if(ch) ch.addEventListener("click",()=>{ ["hw-code","hw-who","hw-role","hw-gid","hw-as-student"].forEach(k => ls.set(k, ""));
-    try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || /^hw-rev-/.test(k) || /^hw-(typed|pos|sort|first|want)-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
+    try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || /^hw-rev-/.test(k) || /^hw-(typed|pos|sort|first|want|l1)-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
     try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){}
     location.reload(); });
   const go = document.getElementById("code-go"), inp = document.getElementById("code");
@@ -2602,7 +2611,7 @@ function mkBarHTML(id){
 }
 function wireMkBar(id){
   app.querySelectorAll("[data-mkgo]").forEach(b=>b.addEventListener("click",()=>openTask(id, +b.dataset.mkgo)));
-  app.querySelectorAll("[data-mkq]").forEach(b=>b.addEventListener("click",()=>renderTeacherTask(id)));
+  app.querySelectorAll("[data-mkq]").forEach(b=>b.addEventListener("click",()=>{ const t = TASKS.find(x => x.id === id); openTask(id, t && t.kind === "steps" ? t.steps.length - 1 : null); setTimeout(() => { const q = document.getElementById("t-qs"); if(q) q.scrollIntoView({block: "center"}); }, 60); }));   /* engine 75 */
   const nb = document.getElementById("t-mk-names"); if(nb) nb.addEventListener("click",()=>{ ls.set("hw-hide", hideNames() ? "" : "1"); refreshMarks(); });
   const all = document.getElementById("t-mk-all");
   if(all) all.addEventListener("click", async ()=>{
@@ -2630,6 +2639,18 @@ function annotateMarks(){
     const lab = `<div class="t-mk-who ${o?"":"is-done"}"><span>❔ ${whoMarked(it.marks)}${what ? ` · “${esc(what)}”` : ""}</span>${notes}${o ? `<button class="linklike" data-mkdone="${ids}">✓ Discussed</button>` : `<span>✓ discussed</span><button class="linklike" data-mkundo="${ids}">undo</button>`}</div>`;
     el.insertAdjacentHTML(it.row < 0 && it.gap == null && it.lb == null ? "afterbegin" : "afterend", lab);
   });
+  /* engine 75 (her 12.11 19:44: «отображать последний скрин задания и после него просто вопрос… и там тоже Discussed… ходить между
+     этими вопросами с одной странички»): the students' ❓ questions on this task, under its last screen, each with ✓ Discussed / undo */
+  app.querySelectorAll(".t-qs").forEach(x => x.remove());
+  const qs = (teacherData.work || []).filter(w => w.task === id && w.type === "question");
+  const lastIdx = current.kind === "steps" ? (current.steps || []).length - 1 : 0;
+  const stage = app.querySelector(".stage");
+  if(qs.length && stage && (current.kind !== "steps" || stepIdx === lastIdx)){
+    const gone = new Set((discOf(id).ids || []).map(String)), stn = teacherData.students || [];
+    stage.insertAdjacentHTML("afterend", `<section class="panel t-qs" id="t-qs"><b>❓ ${qs.length === 1 ? "Their question" : "Their questions"}</b>${qs.map(w => { const d = gone.has(String(w.id)) || !!String(w.feedback || "").trim();
+      return `<div class="t-q ${d ? "is-done" : ""}"><p class="t-q-t">${hn ? "" : `<b>${esc((stn[w.s] || {}).name || "")}</b> · `}<span class="small">${esc(w.sent || "")}</span><br>${esc(textOf(w)).replace(/\n/g, "<br>")}</p>${
+        String(w.feedback || "").trim() ? `<span class="small">✓ answered in writing</span>` : gone.has(String(w.id)) ? `<span class="small t-disc-on">✓ discussed</span> <button class="linklike" data-mkundo="${w.id}">undo</button>` : `<button class="btn t-disc-btn" data-mkdone="${w.id}">✓ Discussed</button>`}</div>`; }).join("")}</section>`);
+  }
   app.querySelectorAll("[data-mkdone]").forEach(b=>b.addEventListener("click", async e=>{ e.stopPropagation(); if(await setDiscussed(id, {ids: b.dataset.mkdone.split(",")})) refreshMarks(); }));
   app.querySelectorAll("[data-mkundo]").forEach(b=>b.addEventListener("click", async e=>{ e.stopPropagation(); if(await setDiscussed(id, {undo: b.dataset.mkundo.split(",")})) refreshMarks(); }));
 }
@@ -2670,9 +2691,10 @@ function waitHTML(){
   const open = all.filter(w=>!isDiscW(w)), done = all.filter(isDiscW);
   /* a ❔ mark opens the task itself at its step, the line framed (her 31.10: she shows the group what it's about); a text, a recording or
      a question opens the students' work, where it can be read */
-  const siOf = w => { const it = w.type === "marked" ? markedItems(w.task).find(it=>it.marks.some(m=>String(m.id) === String(w.id))) : null; return it ? it.si : null; };
+  const siOf = w => { if(w.type === "question"){ const t = TASKS[pos[w.task]]; return t ? (t.kind === "steps" ? t.steps.length - 1 : 0) : null; }   /* engine 75: a question → the task's last screen, where it is */
+    const it = w.type === "marked" ? markedItems(w.task).find(it=>it.marks.some(m=>String(m.id) === String(w.id))) : null; return it ? it.si : null; };
   const li = (w, d) => { const si = siOf(w);
-    return `<li class="${d?"is-disc":""}"><button class="linklike" ${si != null ? `data-wgo="${w.task}" data-si="${si}"` : `data-teach="${w.task}" data-wid="${w.id}"`}>${hn ? "" : esc((st[w.s]||{}).name||"") + " — "}${esc(TASKS[pos[w.task]].title)}</button> <span>${w.type==="marked" ? "❔ marked, with a note" : WAIT_ICON[w.type]||""}${d ? " · ✓ discussed" : ""}</span></li>`; };
+    return `<li class="${d?"is-disc":""}"><button class="linklike" ${si != null ? `data-wgo="${w.task}" data-si="${si}"${w.type === "question" ? ` data-q="1"` : ""}` : `data-teach="${w.task}" data-wid="${w.id}"`}>${hn ? "" : esc((st[w.s]||{}).name||"") + " — "}${esc(TASKS[pos[w.task]].title)}</button> <span>${w.type==="marked" ? "❔ marked, with a note" : WAIT_ICON[w.type]||""}${d ? " · ✓ discussed" : ""}</span>${d ? "" : ` <button class="linklike wait-disc-btn" data-wdone="${esc(w.task)}" data-wdid="${w.id}" title="You went over it in class or in Telegram">✓ Discussed</button>`}</li>`; };
   return `<section class="hot wait ${open.length?"":"calm"}"><b>💬 Waiting for your answer${open.length?`: ${open.length}`:""}</b>${open.length
     ? `<ul>${open.map(w=>li(w, false)).join("")}</ul>`
     : `<p class="small">Nothing to answer on this homework.</p>`}${done.length ? `<p class="small wait-disc-h">✓ Discussed in class</p><ul class="wait-disc">${done.map(w=>li(w, true)).join("")}</ul>` : ""}</section>`;
@@ -2680,7 +2702,10 @@ function waitHTML(){
 function wireTeacher(){
   document.querySelectorAll("[data-teach]").forEach(b=>{ if(b._t) return; b._t = 1; b.addEventListener("click",()=>renderTeacherTask(b.dataset.teach, b.dataset.wid)); });
   document.querySelectorAll("[data-stuck]").forEach(b=>{ if(b._t) return; b._t = 1; b.addEventListener("click",()=>renderStuck(b.dataset.stuck)); });
-  document.querySelectorAll("[data-wgo]").forEach(b=>{ if(b._t) return; b._t = 1; b.addEventListener("click",()=>openTask(b.dataset.wgo, +b.dataset.si)); });
+  document.querySelectorAll("[data-wgo]").forEach(b=>{ if(b._t) return; b._t = 1; b.addEventListener("click",()=>{ openTask(b.dataset.wgo, +b.dataset.si);
+    setTimeout(() => { const q = document.getElementById("t-qs"); if(q && b.dataset.q) q.scrollIntoView({block: "center"}); }, 60); }); });
+  document.querySelectorAll("[data-wdone]").forEach(b=>{ if(b._t) return; b._t = 1; b.addEventListener("click", async e=>{ e.stopPropagation(); b.disabled = true;   /* engine 74 */
+    if(await setDiscussed(b.dataset.wdone, {ids: [String(b.dataset.wdid)]})){ if(!current){ const y = scrollY; renderHome(); scrollTo(0, y); } } else b.disabled = false; }); });
   const pb = document.getElementById("unl-pub");
   if(pb && !pb._t){ pb._t = 1; pb.addEventListener("click",()=>setPublished(pb)); }
   const h = document.getElementById("hide-names");
@@ -2705,6 +2730,18 @@ async function copyText(s, btn){
   if(!ok){ const ta = document.createElement("textarea"); ta.value = s; ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select();
     try{ ok = document.execCommand("copy"); }catch(e){} ta.remove(); }
   if(btn){ const was = btn.textContent; btn.textContent = ok ? "✓ Copied" : "Couldn't copy"; setTimeout(()=>{ btn.textContent = was; }, 1600); }
+}
+/* engine 74 (her 12.11 19:28: «один вопрос висит… как мне на него сделать дискаст… я не пишу ответы на такие вопросы, я их в классе разбираю»):
+   each piece of a student's work has its own ✓ Discussed in class (and undo) — on this page and in «💬 Waiting for your answer»; it stops
+   waiting for an answer, as with «✓ All discussed» on the task */
+const discSlot = w => isDiscW(w) ? `<span class="small t-disc-on">✓ Discussed in class</span> <button class="linklike" data-wundo>undo</button>`
+  : `<button class="btn t-disc-btn" data-wdisc title="You went over it in class or in Telegram: it stops waiting for your answer">✓ Discussed in class</button>`;
+function wireDisc(card, w){
+  const slot = card.querySelector(".t-discslot"); if(!slot) return;
+  const b = slot.querySelector("[data-wdisc]"), u = slot.querySelector("[data-wundo]");
+  const again = () => { slot.innerHTML = discSlot(w); wireDisc(card, w); };
+  if(b) b.addEventListener("click", async () => { b.disabled = true; if(await setDiscussed(w.task, {ids: [String(w.id)]})) again(); else b.disabled = false; });
+  if(u) u.addEventListener("click", async () => { if(await setDiscussed(w.task, {undo: [String(w.id)]})) again(); });
 }
 function renderTeacherTask(id, wid){
   const t = TASKS.find(x=>x.id===id); if(!t || !teacherData) return;
@@ -2739,7 +2776,7 @@ function renderTeacherTask(id, wid){
             <textarea class="t-ta" rows="${rowsOf(startOf(w))}" aria-label="Feedback for this student">${esc(startOf(w))}</textarea>
             <div class="small t-prev-h">What the student sees:</div>
             <div class="fb-text t-prev"></div>
-            <div class="row-btns"><button class="btn primary" data-save>Save</button><span class="small t-msg">${saved(w) ? "✓ Saved" : "Not saved yet"}</span></div>
+            <div class="row-btns"><button class="btn primary" data-save>Save</button><span class="small t-msg">${saved(w) ? "✓ Saved" : "Not saved yet"}</span><span class="t-discslot">${discSlot(w)}</span></div>
           </div>
         </div>`).join("") : `<div class="panel"><p class="small">Nothing sent for this task yet.</p></div>`}`,
     actionsHTML: `<button class="btn" id="t-open">Open the task</button><button class="btn primary grow" id="t-home">Back to all tasks</button>`, panel: true});
@@ -2753,6 +2790,7 @@ function renderTeacherTask(id, wid){
     card.querySelectorAll("[data-wrap]").forEach(x=>x.addEventListener("click",()=>{ const [a,c] = x.dataset.wrap.split("|"); wrapSel(ta, a, c); }));
     card.querySelectorAll("[data-mark]").forEach(x=>{ x.addEventListener("mousedown", e=>e.preventDefault()); x.addEventListener("click",()=>markSel(ta, x.dataset.mark)); });
     card.querySelector("[data-copy]").addEventListener("click", e=>copyText(taskForClaude(t) + "\n\n" + itemForClaude(w, ta.value), e.currentTarget));
+    wireDisc(card, w);   /* engine 74 */
     card.querySelector("[data-save]").addEventListener("click", async ()=>{
       msg.textContent = "Saving…";
       const res = await post({action:"feedback", code:myCode(), page:PAGE_KEY, id:w.id, text:ta.value});
@@ -2768,8 +2806,8 @@ function refreshMeter(){ const m = document.getElementById("meter-slot"); if(m &
 function footHTML(){
   if(SELF) return myCode() && syncState!=="unknown" ? `<span>My ticks are saved with my code, on all my devices.</span>` : `<span>The ticks on this page are saved on this device only until I enter my code.</span>`;   /* engine 60 */
   return myCode() && syncState!=="unknown"
-    ? `<span>When you finish a task, mark it in our spreadsheet in your colour.</span><span>Your ticks are saved for Olya and on all your devices.</span><span>Olya sees your first try at each answer${hasListening() ? " and how many times you listened" : ""}, so she knows what to go over in class.</span>`
-    : `<span>When you finish a task, mark it in our spreadsheet in your colour.</span><span>The ticks on this page are saved on this phone only.</span>`;
+    ? `<span>Your ticks are saved for Olya and on all your devices.</span><span>Olya sees your first try at each answer${hasListening() ? " and how many times you listened" : ""}, so she knows what to go over in class.</span>`
+    : `<span>The ticks on this page are saved on this phone only.</span>`;   /* engine 73 (her 12.11 18:29): no more «mark it in our spreadsheet» — she doesn't give homework in the spreadsheet any more */
 }
 function refreshFoot(){ const f = document.getElementById("foot"); if(f) f.innerHTML = footHTML(); }
 
@@ -2875,7 +2913,7 @@ function renderHome(justDone){
             ${done.has(t.id) && t.kind === "steps" && !isTeacher() ? `<button class="again-btn" data-again="${t.id}" aria-label="Do it again" title="Do it again">↺</button>` : ""}<button class="status" data-toggle="${t.id}" aria-pressed="${done.has(t.id)}" aria-label="${done.has(t.id)?"Done — tap to untick":"Tap to mark as done"}">✓</button>
           </div><div data-fbslot="${t.id}">${isTeacher() ? teacherLine(t.id) : fbLine(t.id)}</div>${isTeacher() && t.tqLink ? tqLinkHTML(t) : !isTeacher() && t.tq ? tqAltHTML(t) : ""}</div>`;
   app.innerHTML = `
-    ${justDone?`<div class="done-banner" role="status">✓ Done!${isTeacher() ? " Teacher view: nothing was sent and nothing counts for the group." : lastDone && myCode() && syncState!=="unknown" ? ` +${framesOf(lastDone)} 🎞 for ${meStats ? "your film" : "our group"}.` : " Mark it in our spreadsheet in your colour."}${reactHTML()}</div>`:""}
+    ${justDone?`<div class="done-banner" role="status">✓ Done!${isTeacher() ? " Teacher view: nothing was sent and nothing counts for the group." : lastDone && myCode() && syncState!=="unknown" ? ` +${framesOf(lastDone)} 🎞 for ${meStats ? "your film" : "our group"}.` : ""}${reactHTML()}</div>`:""}
     <header class="lesson-head">
       ${ON_SITE?`<a class="all-hw" href="index.html">${SELF ? "← My lessons" : "← All homework"}</a>`:""}
       <span class="date">${LESSON.date}</span>
@@ -3852,19 +3890,37 @@ function partsHTML(parts){
 function renderListen(st, count, pct){
   const lines = st.clip;
   /* engine 63 also (C1 06.11 e4/e5): a listening task's own `instr` leads its first screen, the how-to after it */
-  const instr = st.first && current.instr
+  const instr = current.listenOnce && !current._once && !current._review && !isTeacher()
+    ? (st.first ? (current.instr ? current.instr + " " : "") + "Click a line and listen once. Write what you caught — even one word. Then listen as many times as you like, and check."
+       : "Click a line and listen once. Write what you caught, then listen again as often as you like, and check.")
+    : st.first && current.instr
     ? current.instr + " Tap a line to hear it (the top one plays the whole clip), then Check next to a gap, or Check answers."
     : st.first
     ? "Tap the top line to hear the whole clip, or any line to hear just that line. Catch the missing words in the framed lines: type them if you like, then tap Check next to a gap, or Check answers for all of them."
     : "Listen and catch the missing words, then tap Check next to a gap, or Check answers.";
   let gk = 0;
   const keyOf = k => current.id+"-"+curS()+(current._once?"-again":"")+"-g"+k;
-  const lineHTML = (l,i) => { const skip = st._rows && !st._rows.has(i); return `<div class="ln ${l[3].some(p=>typeof p!=="string")?"has-gap":""}" data-i="${i}">
+  /* engine 76 (the AL chat's request 12.11 19:10, her decision 18:28–19:08: «одинаковая механика… первая попытка в YouTube и в фильме будет
+     значить одно и то же»): `listenOnce` on a listening task = the film's first step on YouTube lines — a line with a gap plays ONCE (normal
+     speed; neighbouring lines that still wait for their first listen are cut out of it), then «What did you catch?» waits: the line's gaps,
+     That's it / Enter, or «Nothing yet ↻» (it plays again at once). Only then the line plays as often as they like, its strip opens and Check
+     works. One first version per line (all its gaps) goes to her journal at once as item s<step>.r<line> with mode «once»; what was typed
+     before the first Check stays the gap's own item (s<step>.g<k>), as before. Not in her view, not in «Do it again». */
+  const ONCE = !!(current.listenOnce && !current._once && !current._review && !isTeacher());
+  const OK1 = "hw-l1-" + PAGE_KEY + "-" + current.id + "-s" + curS(), O1 = ONCE ? lsJSON(OK1, {}) : {};   /* line → {h: heard once, f: first version} */
+  const saveO1 = () => { if(ONCE) ls.set(OK1, JSON.stringify(O1)); };
+  const rowGaps = []; { let k = 0; lines.forEach((l, i) => { rowGaps[i] = []; l[3].forEach(p => { if(typeof p !== "string") rowGaps[i].push(k++); }); }); }
+  if(ONCE) rowGaps.forEach((ks, i) => { if(ks.length && !O1[i] && ks.some(k => (typed[keyOf(k)] || "").trim())) O1[i] = {old: 1}; });   /* typed before this mode came: free */
+  const phase = i => !ONCE || !rowGaps[i].length ? 2 : O1[i] && (O1[i].f != null || O1[i].old) ? 2 : O1[i] && O1[i].h ? 1 : 0;
+  const pending = () => ONCE && rowGaps.some((ks, i) => ks.length && phase(i) < 2);
+  const rowOfK = k => rowGaps.findIndex(ks => ks.includes(k));
+  const askHTML = i => `<div class="film-row l1-ask" data-ask="${i}"><span class="film-ask">What did you catch? Even one word.</span><button class="btn primary" data-l1ok="${i}">That's it</button><button class="btn" data-l1none="${i}">Nothing yet ↻</button></div>`;
+  const lineHTML = (l,i) => { const skip = st._rows && !st._rows.has(i), ph = phase(i); return `<div class="ln ${l[3].some(p=>typeof p!=="string")?"has-gap":""}" data-i="${i}">
       <button class="pl" aria-label="${i===0?"Play the whole clip":"Play this line"}">▶</button>
       <span class="ln-text">${l[3].map(p => typeof p === "string" ? esc(p)
         : (k => skip ? `<b>${esc(p.gap)}</b>` : `<input class="gap-in" data-k="${k}" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"
-             aria-label="Type the missing words" style="width:min(100%, ${p.gap.length + 3}ch)" value="${esc(typed[keyOf(k)]||"")}"><button class="gap-ck" data-k="${k}" aria-label="Check this gap" ${(typed[keyOf(k)]||"").trim() ? "" : "hidden"}>Check</button>`)(gk++)).join("")}${i===0?` <span class="whole-note">· whole clip</span>`:""}</span>
-    </div>`; };
+             aria-label="Type the missing words" style="width:min(100%, ${p.gap.length + 3}ch)" value="${esc(typed[keyOf(k)]||"")}" ${ph === 0 ? "readonly" : ""}><button class="gap-ck" data-k="${k}" aria-label="Check this gap" ${(typed[keyOf(k)]||"").trim() && ph === 2 ? "" : "hidden"}>Check</button>`)(gk++)).join("")}${i===0?` <span class="whole-note" ${pending() ? "hidden" : ""}>· whole clip</span>`:""}</span>
+    </div>${ph === 1 ? askHTML(i) : ""}`; };
   const rest = `
         <div class="tap-hint small" id="hint" hidden><p>Nothing playing? Tap the video once, then tap the line again.</p>
           <details class="yt-help"><summary>Still nothing?</summary>
@@ -3943,7 +3999,7 @@ function renderListen(st, count, pct){
   const stripOpen = i => {
     if(ST && ST.i === i && ST.el.isConnected) return;
     app.querySelectorAll(".lstrip").forEach(x => x.remove());
-    const L = lines[i], a = Math.max(0, L[1] - LEAD), b = L[1] + L[2] + LEAD, tk = [];
+    const [a, b] = rng(i), tk = [];
     for(let t = Math.ceil(a * 2) / 2; t < b; t += .5) tk.push(t);
     const el = document.createElement("div"); el.className = "lstrip";
     el.innerHTML = `<div class="ls-bar" aria-label="The time of this line: drag along it to hear a piece">${tk.map(t => { const s = Math.abs(t - Math.round(t)) < .01;
@@ -3965,26 +4021,67 @@ function renderListen(st, count, pct){
     document.addEventListener("keydown", e => { const S = window._lsST && window._lsST(); if(!S || !S.sel || e.key !== " " || e.repeat) return;
       if(e.target && e.target.closest && e.target.closest("input, textarea, select, button, [contenteditable]")) return;
       e.preventDefault(); const b = S.el.querySelector(".ls-play"); if(b) b.click(); }); }
-  const play = (from, to, i) => {
-    if(!ytPlayer || !ytReady) return;
-    heard[i] = (heard[i] || 0) + 1; if(rateNow() < 1) heardSlow = true;
+  const play = (from, to, i, o = {}) => {
+    if(!ytPlayer || !ytReady) return false;
+    heard[i] = (heard[i] || 0) + 1; if(rateNow() < 1 && !o.once) heardSlow = true;
     clearInterval(ytTimer); clearTimeout(ytWatch);
     rows.forEach((m,k)=>m.classList.toggle("playing", k===i));
-    try{ ytPlayer.setPlaybackRate(rateNow()); }catch(e){}
+    try{ ytPlayer.setPlaybackRate(o.once ? 1 : rateNow()); }catch(e){}
     ytPlayer.seekTo(from, true); ytPlayer.playVideo();
     ytWatch = setTimeout(()=>{ try{ if(ytPlayer.getPlayerState() !== 1) document.getElementById("hint").hidden = false; }catch(e){} }, 2000);
     ytTimer = setInterval(()=>{
       let tnow = 0; try{ tnow = ytPlayer.getCurrentTime(); }catch(e){}
       stripHead(tnow);
-      if(tnow >= to){ ytPlayer.pauseVideo(); clearInterval(ytTimer); rows.forEach(m=>m.classList.remove("playing")); stripHead(null); }
+      if(tnow >= to){ ytPlayer.pauseVideo(); clearInterval(ytTimer); rows.forEach(m=>m.classList.remove("playing")); stripHead(null); if(o.end) o.end(); }
     }, 100);
+    return true;
   };
   /* as in TubeQuizard (its offset = 1): start a second before the line and stop a second after it, so the first words are never cut off */
   const LEAD = 1;
+  /* a line's own time, a second either side; engine 76: without the lines that still wait for their first listen */
+  const rng = i => { const L = lines[i]; let a = Math.max(0, L[1] - LEAD), b = L[1] + L[2] + LEAD;
+    if(ONCE) rowGaps.forEach((ks, j) => { if(j === i || !ks.length || phase(j) >= 2) return; const s0 = lines[j][1], e0 = s0 + lines[j][2];
+      if(j < i) a = Math.max(a, Math.min(e0, L[1])); else b = Math.min(b, Math.max(s0, L[1] + L[2])); });
+    return [a, b]; };
+  let busy1 = null;   /* engine 76: the line whose one listen is playing */
+  const nudge1 = i => { const h = app.querySelector(`[data-ask="${i}"]`); [h, ...rows[i].querySelectorAll(".gap-in")].forEach(x => { if(!x) return; x.classList.remove("nudge"); void x.offsetWidth; x.classList.add("nudge"); });
+    const f = rows[i].querySelector(".gap-in"); if(f) f.focus(); };
+  const wireAsk = i => { const ok = app.querySelector(`[data-l1ok="${i}"]`), no = app.querySelector(`[data-l1none="${i}"]`);
+    if(ok) ok.addEventListener("click", () => firstDone(i, false)); if(no) no.addEventListener("click", () => firstDone(i, true)); };
+  const toAsk = i => { if(!rows[i].isConnected) return; rows[i].querySelectorAll(".gap-in").forEach(x => x.readOnly = false); if(!app.querySelector(`[data-ask="${i}"]`)) rows[i].insertAdjacentHTML("afterend", askHTML(i));
+    wireAsk(i); setTimeout(() => { const f = rows[i].querySelector(".gap-in"); if(f) f.focus(); }, 30); };
+  /* the line's first version: all its gaps as they are now (or nothing), sent at once; then the line is free */
+  const firstDone = (i, none, quiet) => { if(phase(i) !== 1) return;
+    const ks = rowGaps[i], l = lines[i], vals = ks.map(k => none ? "" : (typed[keyOf(k)] || "").trim());
+    let got = 0, n = 0, all = true;
+    ks.forEach((k, j) => { const g = gapsAll[k], v = vals[j], gw = gapWords(v, g.ans, g.accs.slice(1), g.pre, g.post); got += gw.got; n += gw.n;
+      if(!(v && (sameAnswer(v, g.accs, g.post) || markAnswer(v, g.accs).ok))) all = false; });
+    const first = vals.some(Boolean) ? vals.join(" … ") : "";
+    firstTry(current, "s" + curS() + ".r" + i, {type: "listen", prompt: l[3].map(p => typeof p === "string" ? p : "___").join(""), answer: ks.map(k => gapsAll[k].ans).join(" … "),
+      first, ok: all && !!first, words: got + "/" + n, lis: 1, mode: "once"});
+    O1[i] = {h: 1, f: first}; saveO1();
+    const ask = app.querySelector(`[data-ask="${i}"]`); if(ask) ask.remove();
+    rows[i].querySelectorAll(".gap-in").forEach(x => { const c = x.nextElementSibling; if(c && c.classList.contains("gap-ck")) c.hidden = !x.value.trim(); });
+    const wn = app.querySelector(".whole-note"); if(wn) wn.hidden = pending();
+    if(quiet) return;
+    const f = rows[i].querySelector(".gap-in"); if(got > 0 && f) filmHearts(f, got === n ? 9 : 4);
+    if(none){ const [a, b] = rng(i); play(a, b, i); }
+    ST = null; if(i > 0 || rows[i].classList.contains("has-gap")) stripOpen(i);
+  };
+  app.querySelectorAll("[data-ask]").forEach(x => wireAsk(+x.dataset.ask));
   rows.forEach((row,i)=>row.addEventListener("click",ev=>{
-    if(ev.target.closest("input, .rev, .mk, .gap-ck")) return;
-    if(i===0) play(Math.max(0, lines[0][1] - LEAD), clipEnd(lines, lines.length-1) + LEAD, 0);   /* top line: the whole clip, as in TubeQuizard */
-    else play(Math.max(0, lines[i][1] - LEAD), lines[i][1] + lines[i][2] + LEAD, i);
+    if(ev.target.closest(".rev, .mk, .gap-ck")) return;
+    if(ev.target.closest("input") && !(ONCE && phase(i) === 0)) return;
+    if(ONCE){
+      if(busy1 != null){ let s0 = -1; try{ s0 = ytPlayer.getPlayerState(); }catch(e){} if(s0 === 1 || s0 === 3) return; busy1 = null; }   /* let the one listen finish; a stuck one may start again */
+      const ph = phase(i);
+      if(ph === 1){ nudge1(i); return; }   /* the line waits for what they caught: «Nothing yet ↻» plays it again at once */
+      if(ph === 0){ const [a, b] = rng(i);
+        if(play(a, b, i, {once: true, end: () => { busy1 = null; O1[i] = {h: 1}; saveO1(); toAsk(i); }})) busy1 = i;
+        return; }
+    }
+    if(i===0 && !pending()) play(Math.max(0, lines[0][1] - LEAD), clipEnd(lines, lines.length-1) + LEAD, 0);   /* top line: the whole clip, as in TubeQuizard */
+    else { const [a, b] = rng(i); play(a, b, i); }
     if(i > 0 || row.classList.contains("has-gap")) stripOpen(i);   /* engine 72: the strip under the line (under the top line only when it has a gap: a tap there plays the whole clip) */
   }));
   app.querySelectorAll("#spd [data-rate]").forEach(b => b.addEventListener("click", () => {
@@ -4001,7 +4098,7 @@ function renderListen(st, count, pct){
       const k = +inp.dataset.k, g = gapsAll[k], ans = g.ans, val = inp.value.trim();
       const gw = gapWords(val, ans, g.accs.slice(1), g.pre, g.post);
       firstTry(current, "s" + curS() + ".g" + k, {type: "listen", prompt: g.line, answer: ans, first: val, ok: !!val && (sameAnswer(val, g.accs, g.post) || markAnswer(val, g.accs).ok),
-        words: gw.got + "/" + gw.n, lis: (heard[g.row] || 0) + (g.row ? heard[0] || 0 : 0), slow: heardSlow});   /* engine 67, 68: after how many listens */
+        words: gw.got + "/" + gw.n, lis: (heard[g.row] || 0) + (g.row ? heard[0] || 0 : 0), slow: heardSlow, mode: ONCE ? "once" : null});   /* engine 67, 68: after how many listens; 76: the mode */
       const ck = inp.nextElementSibling; if(ck && ck.classList.contains("gap-ck")) ck.remove();
       const res = document.createElement("span");
       if(!val){ res.className = "gap-res ans"; res.textContent = ans; inp.replaceWith(res); return; }
@@ -4025,12 +4122,17 @@ function renderListen(st, count, pct){
   };
   app.querySelectorAll(".gap-in").forEach(inp=>{
     const ck = inp.nextElementSibling && inp.nextElementSibling.classList.contains("gap-ck") ? inp.nextElementSibling : null;
-    inp.addEventListener("click", ev=>ev.stopPropagation());
-    inp.addEventListener("input", ()=>{ typed[keyOf(+inp.dataset.k)] = inp.value; saveTyped(); if(ck) ck.hidden = !inp.value.trim(); });
-    inp.addEventListener("keydown", ev=>{ if(ev.key==="Enter"){ ev.preventDefault(); if(inp.value.trim()) checkOne(inp, true); else inp.blur(); } });
+    const ri = rowOfK(+inp.dataset.k);
+    inp.addEventListener("click", ev=>{ if(!(ONCE && phase(ri) === 0)) ev.stopPropagation(); });   /* engine 76: a gap still waiting for its line's one listen starts it */
+    inp.addEventListener("input", ()=>{ typed[keyOf(+inp.dataset.k)] = inp.value; saveTyped(); if(ck) ck.hidden = !inp.value.trim() || phase(ri) < 2; });
+    inp.addEventListener("keydown", ev=>{ if(ev.key==="Enter"){ ev.preventDefault();
+      if(ONCE && phase(ri) < 2){ if(phase(ri) === 1){ const ks = rowGaps[ri], nx = ks[ks.indexOf(+inp.dataset.k) + 1], nxi = nx != null && app.querySelector(`.gap-in[data-k="${nx}"]`);
+          if(nxi) nxi.focus(); else firstDone(ri, false); } return; }
+      if(inp.value.trim()) checkOne(inp, true); else inp.blur(); } });
     if(ck) ck.addEventListener("click", ev=>{ ev.stopPropagation(); checkOne(inp, false); });
   });
   wireNav(()=>{
+    if(ONCE) rowGaps.forEach((ks, i) => { if(ks.length && phase(i) === 1) firstDone(i, false, true); });   /* engine 76: typed, then Check answers straight away */
     app.querySelectorAll(".gap-in").forEach(judgeGap);
     if(canMark()){
       /* "?" only where there was something to catch (engine 37, her promise to a student: nothing to ask about on a line without a gap) */
@@ -4458,7 +4560,8 @@ async function ftSummary(fresh){
   const res = await post({action: "attemptsSummary", code: myCode(), page: PAGE_KEY});
   if(res && res.ok){ FT_SUM = res; FT_AT = Date.now(); } return res;
 }
-const ftOrder = id => { const m = String(id).split(":")[1] || "", n = (m.match(/\d+/g) || []).map(Number); return n.reduce((a, x, i) => a + x * Math.pow(1000, 2 - i), 0); };
+const ftOrder = id => { const m = String(id).split(":")[1] || "", n = (m.match(/\d+/g) || []).map(Number); return n.reduce((a, x, i) => a + x * Math.pow(1000, 2 - i), 0) + (/\.g\d/.test(m) ? 500000 : 0); };   /* engine 76: a step's lines (one listen) before its gaps (before Check) */
+const ftLine1 = it => /\.r\d+$/.test(it.item);   /* engine 76: what they caught on a YouTube line after one listen */
 const ftTypeWord = {rewrite: "rewrite", listen: "listening", fix: "Fix it", sort: "sort", gist: "gist", film: "film"};
 function ftGroups(res){
   const by = {}; (res.items || []).forEach(it => { (by[it.task] = by[it.task] || []).push(it); });
@@ -4468,10 +4571,10 @@ function ftGroups(res){
 function ftHTML(res){
   const G = ftGroups(res), W = res.wants || [];
   if(!G.length && !W.length) return `<p class="ft-empty">No first tries yet. They come in when students with a code check an answer on this page.</p>`;
-  const blankWord = it => it.type === "film" ? "nothing caught" : "opened without a try";
+  const blankWord = it => it.type === "film" || ftLine1(it) ? "nothing caught" : "opened without a try";
   const itemHTML = it => FT_MODE === "item"
     ? `<div class="ft-item"><p class="ft-p">${esc(it.prompt)}</p><p class="ft-a">→ <b>${esc(it.answer)}</b> <span class="ft-type">${esc(ftTypeWord[it.type] || it.type)}</span></p>
-        <p class="ft-n">${it.tried ? `<span class="ft-ok">✓ ${it.ok} of ${it.tried}</span> right the first time` : `No one typed an answer`}${it.blank ? ` · <span class="ft-bl">${it.blank} ${blankWord(it)}</span>` : ""}${it.type === "listen" && it.tried ? ` · after one listen: <span class="ft-ok">✓ ${it.oneOk || 0} of ${it.one || 0}</span>` : ""}</p>
+        <p class="ft-n">${ftLine1(it) ? `<span class="ft-type">after one listen</span> ` : ""}${it.tried ? `<span class="ft-ok">✓ ${it.ok} of ${it.tried}</span> right the first time` : `No one typed an answer`}${it.blank ? ` · <span class="ft-bl">${it.blank} ${blankWord(it)}</span>` : ""}${it.type === "listen" && it.tried && !ftLine1(it) ? ` · after one listen: <span class="ft-ok">✓ ${it.oneOk || 0} of ${it.one || 0}</span>` : ""}</p>
         ${it.wrong.length ? `<p class="ft-w">${it.wrong.map(([w, n]) => `<span class="ft-wr"><s>${esc(w)}</s>${n > 1 ? ` <b>×${n}</b>` : ""}</span>`).join(" ")}</p>` : ""}</div>`
     : `<div class="ft-item"><p class="ft-p">${esc(it.prompt)}</p><p class="ft-a">→ <b>${esc(it.answer)}</b></p>
         <ul class="ft-who">${it.who.map(([name, first, r, lis, words]) => `<li><b>${esc(name)}</b> ${r === "ok" ? `<span class="ft-ok">✓ ${esc(first)}</span>` : r === "no" ? `<s>${esc(first)}</s>` : `<span class="ft-bl">${blankWord(it)}</span>`}${lis != null && lis !== "" ? ` <span class="ft-lis">🎧 ${lis}${words ? " · " + esc(String(words).replace("/", " of ")) + " words" : ""}</span>` : ""}</li>`).join("")}</ul></div>`;
@@ -4503,11 +4606,17 @@ function ftForAnalysis(res){
     return `${two(d.getDate())}.${two(d.getMonth() + 1)} ${two(d.getHours())}:${two(d.getMinutes())}:${two(d.getSeconds())}`; };
   const O = orderAB(), out = [`First tries · ${PAGE_KEY.replace(/^hw-ge-/, "")} · «${document.title}» · as of ${tm(FT_AT || Date.now())}`];
   if(O) out.push(`The order comparison «${O.name || "order"}»: half x — ${O.x.map(title).join(" → ")}; half y — ${(O.y || []).map(title).join(" → ")}.`);
-  out.push(`${names.length} student${names.length === 1 ? "" : "s"}, S1…S${names.length} (no names). One row per gap: the first thing typed before Check.`, "");
-  out.push(["student", "half", "task", "item", "prompt", "answer", "first try", "result", "listens before", "words right", "time"].join("\t"));
+  /* engine 76: kind = what the row is (a line after one listen / a gap before Check / a film line); mode = once (listen once first) or free
+     (the earlier way); without the newer Code.gs the mode comes from the rows themselves: a student with line rows in a step did it «once» */
+  const kindOf = it => it.type === "film" ? "film line, one listen" : ftLine1(it) ? "line, one listen" : it.type === "listen" ? "gap, before Check" : it.type;
+  const stepOf = it => it.task + ":" + ((String(it.item).split(":")[1] || "").match(/^s\d+/) || [""])[0], once = new Set();
+  res.items.forEach(it => { if(ftLine1(it)) it.who.forEach(w => once.add(w[0] + "|" + stepOf(it))); });
+  const modeOf = (it, w) => w[7] || (it.type === "film" || ftLine1(it) ? "once" : it.type === "listen" ? (once.has(w[0] + "|" + stepOf(it)) ? "once" : "free") : "");
+  out.push(`${names.length} student${names.length === 1 ? "" : "s"}, S1…S${names.length} (no names). Listening: «line, one listen» = what they caught after one listen (mode once); «gap, before Check» = the first thing typed in a gap before Check.`, "");
+  out.push(["student", "half", "task", "item", "kind", "mode", "prompt", "answer", "first try", "result", "listens before", "words right", "time"].join("\t"));
   const by = {};
-  res.items.forEach(it => it.who.forEach(([n, f, r, lis, w, v, t]) => {
-    out.push([S(n), v || "", title(it.task), it.item, it.prompt, it.answer, f, r === "ok" ? "right" : r === "no" ? "wrong" : "opened without a try", lis == null ? "" : lis, w || "", tm(t)].map(one).join("\t"));
+  res.items.forEach(it => it.who.forEach(w => { const [n, f, r, lis, ww, v, t] = w;
+    out.push([S(n), v || "", title(it.task), it.item, kindOf(it), modeOf(it, w), it.prompt, it.answer, f, r === "ok" ? "right" : r === "no" ? "wrong" : ftLine1(it) || it.type === "film" ? "nothing caught" : "opened without a try", lis == null ? "" : lis, ww || "", tm(t)].map(one).join("\t"));
     const x = by[S(n)] = by[S(n)] || {half: "", at: {}}; if(v) x.half = v; const ms = when(t);
     if(!isNaN(ms) && (x.at[it.task] == null || ms < x.at[it.task])) x.at[it.task] = ms; }));
   out.push("", "The order each student did the tasks in (by the time of their first answers):");
@@ -4589,7 +4698,6 @@ function renderEnd(t){
   shell({stageHTML:`
     <div class="end">
       <div class="cloud">This is the end of the task.<br>Takeaways?</div>
-      ${myCode() && syncState!=="unknown" ? "" : "<p>Mark it in our spreadsheet in your colour.</p>"}
     </div>`,
     actionsHTML:`${t.kind==="steps"?`<button class="btn" id="again">Do it again</button>`:""}<button class="btn primary grow" id="list">All tasks</button>`});
   document.getElementById("list").addEventListener("click",goHome);
@@ -4854,10 +4962,9 @@ function renderProduce(st, count, pct){
     return res;
   }
   const tag = () => `Over to you · ${LESSON_TAG}${who.value.trim()?" · "+who.value.trim():""}`;
-  const done = "If you sent it to Olya, mark the task in our spreadsheet in your colour.";
   $("copy").addEventListener("click", async ()=>{
     const text = txt.value.trim(); if(!text){ say("msg","Write or dictate it first."); return; }
-    try{ await navigator.clipboard.writeText(tag()+"\n\n"+text); markSent(); say("msg","Copied. Paste it into your chat with Olya or into our spreadsheet, then tap <b>Finish</b>."); }
+    try{ await navigator.clipboard.writeText(tag()+"\n\n"+text); markSent(); say("msg","Copied. Paste it into your chat with Olya, then tap <b>Finish</b>."); }
     catch(e){ txt.select(); say("msg","Copying didn't work here. Select the text and copy it."); }
   });
   /* engine 58: send what is on the screen; true = it has reached Olya (or the share sheet sent it), so the task can finish */

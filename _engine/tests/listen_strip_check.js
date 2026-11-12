@@ -19,6 +19,11 @@ const PLAYER = `function(id,o){const d=document.getElementById(id),f=document.cr
   // a line with a gap played → its strip; the top line without a gap → no strip
   const gi = await p.evaluate(() => [...document.querySelectorAll('.ln')].findIndex(x => x.classList.contains('has-gap')));
   await p.click(`.ln[data-i="${gi}"] .pl`); await p.waitForTimeout(300);
+  // engine 76: on these pages a line with a gap is heard once first: no strip until what they caught is in
+  const once = await p.evaluate(() => !!(current && current.listenOnce));
+  if (once) { ok(!(await p.locator('.lstrip').count()), 'a strip during the one listen');
+    await p.waitForSelector('[data-l1ok]', {timeout: 20000}); ok(!(await p.locator('.lstrip').count()), 'a strip before the one listen was answered');
+    await p.click('[data-l1ok]'); await p.waitForTimeout(300); }
   ok(await p.evaluate(i => { const s = document.querySelector('.lstrip'); return !!s && s.previousElementSibling === document.querySelector(`.ln[data-i="${i}"]`) && s.querySelectorAll('.ls-tk').length >= 4; }, gi), 'no strip under the line');
   if (shots) { fs.mkdirSync(shots, {recursive: true}); await p.screenshot({path: path.join(shots, 'strip.png')}); }
   // drag = a piece, it plays when let go; ▶ Play the piece / Space again

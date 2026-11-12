@@ -197,6 +197,7 @@ figure.pic.zoomable{cursor:zoom-in}
 .bx.pl{color:inherit}
 @media (min-width:900px){ .pic-row.many{grid-template-columns:repeat(3,minmax(0,1fr));--tile-h:min(30vh, 250px)} }   /* six stills: three a row, big enough to talk about on a shared screen */
 .pic-row.many figure.tile{justify-content:center}
+@media (min-width:900px){ .pic-row.many.cap{--tile-h:min(26vh, 230px)} }   /* tools 37: six numbered stills under a task line (Ben's video 13.11): the numbers stay above the Next bar on 1280×720 */
 /* tools 32 (her 11.11 16:48, her slide 7): "cards": true — each line a coloured card (pink, green, yellow, as on her slide), bold plain black */
 .tx.cards .dlg > p{padding:8px 12px;border-radius:8px;color:#1D1D1B;margin:0 0 10px}
 .tx.cards .dlg > p:nth-of-type(3n+1){background:#F4CCCC}
@@ -980,8 +981,10 @@ const ledShown = e => e.kind === "line" ? lineToMark(e.orig) : e.orig;   /* what
    shows only on her device (her code here); the data keeps it at the END of the stages, so the groups' part numbers and links stay
    the same. "after": i puts it after stage i in her order (her ⇄ on the live page can still move it). */
 const T_ME = (() => { try{ return localStorage.getItem("hw-role") === "teacher" && !!localStorage.getItem("hw-code"); }catch(e){ return false; } })();
-const stageOn = i => !!D.stages[i] && (!D.stages[i].teacher || T_ME);
-const DEF_ORD = (() => { const o = D.stages.map((_, i) => i).filter(i => !D.stages[i].teacher);
+/* tools 37 (the B2 lesson chat's handoff 12.11 20:15: 🗣 Ben's story «в parked», back later): a stage with "parked": true stays in the data,
+   so every stage keeps its number (her ⇄ order, her 🗑 / ✏️ on a stage, #part links, the class view), and shows nowhere */
+const stageOn = i => !!D.stages[i] && !D.stages[i].parked && (!D.stages[i].teacher || T_ME);
+const DEF_ORD = (() => { const o = D.stages.map((_, i) => i).filter(i => !D.stages[i].teacher && !D.stages[i].parked);
   if(T_ME) D.stages.forEach((st, i) => { if(!st.teacher) return; let k = o.indexOf(Number(st.after)); k = k > -1 ? k + 1 : o.length;
     while(k < o.length && D.stages[o[k]].teacher) k++; o.splice(k, 0, i); });
   return o; })();
@@ -1303,7 +1306,10 @@ const creditHTML = c => c ? `<p class="credit">${esc(c).replace(/\[([^\]]+)\]\((
    the whole screen, a tap closes it */
 /* tools 31 (B2 11.11 «Ben's video»: five pictures of his story): `imgs: [{img, cap}]` = a numbered row of small pictures, each on a white
    tile (her pictures are black lines on a transparent ground: on the dark theme they would vanish), the caption under each; a tap shows one big */
-const picRowHTML = b => `<div class="pic-row${b.imgs.length > 4 ? " many" : ""}">${b.imgs.map((o, i) => `<figure class="pic tile" data-zoom title="Tap to see it bigger"><img src="${esc(o.img)}" alt="${esc(o.cap || o.alt || "")}">${o.cap ? `<figcaption>${esc(o.cap)}</figcaption>` : ""}</figure>`).join("")}</div>`;   /* tools 32: no caption → no empty line under the tile */
+const picRowHTML = b => `<div class="pic-row${b.imgs.length > 4 ? " many" : ""}${b.imgs.some(o => o.cap) ? " cap" : ""}">${b.imgs.map((o, i) => `<figure class="pic tile" data-zoom title="Tap to see it bigger"><img src="${esc(o.img)}" alt="${esc(o.cap || o.alt || "")}">${o.cap ? `<figcaption>${esc(o.cap)}</figcaption>` : ""}</figure>`).join("")}</div>`;   /* tools 32: no caption → no empty line under the tile */
+/* tools 37 (the same handoff: «⚡ Extra: more stories», a cloud on her slide): {"kind": "cloud", "text": "…"} = a screen with the stage cloud
+   and its words inside a stage, before the extra part of it */
+const cloudHTML = b => { const t = String(b.text || "").replace(/^[^A-Za-z]+/, ""); return `<div class="stage-intro"><div class="si-card"><img src="../stage-cloud.png" alt=""><span class="si-name ${t.length > 13 ? "long" : ""}">${esc(t)}</span></div></div>`; };
 const pictureHTML = b => { if(b.lead) return retellHTML(b);
   if(b.imgs && b.imgs.length) return `${b.task ? `<p class="task">${mk(b.task)}</p>` : ""}${picRowHTML(b)}${creditHTML(b.credit)}`;
   const tm = b.timer ? `<button class="btn ptimer" data-ptimer>${esc(ptimerText(b))}</button>` : "", fig = b._missing ? `<figure class="pic" style="margin:0">${altFramesHTML(b.alt)}</figure>`
@@ -2013,7 +2019,7 @@ const FILM = Object.assign({total: null, week: null, sent: {}, queue: [], open: 
 const filmSave = () => store.set(FILM_KEY, {total: FILM.total, week: FILM.week, sent: FILM.sent, queue: FILM.queue});
 const partId = i => "part-" + String(D.stages[i].label || i).replace(/^\S+\s+/, "").toLowerCase().replace(/[^a-z0-9äöüß]+/g, "-").replace(/^-|-$/g, "").slice(0, 40);
 const partMin = st => Number(st.min) > 0 ? Number(st.min) : Math.max(3, Math.round(st.blocks.reduce((a, b) => a + (b.kind === "listen" ? (b.clips || []).length * .5 : b.kind === "game" ? 6 : b.kind === "cards" ? (b.cards || []).length * .5 : b.kind === "tool" ? 6 : 2), 0)));
-function filmTasks(){ return D.stages.map((st, i) => ({id: partId(i), title: st.label, frames: partMin(st)})).filter((t, i) => !D.stages[i].teacher)
+function filmTasks(){ return D.stages.map((st, i) => ({id: partId(i), title: st.label, frames: partMin(st)})).filter((t, i) => !D.stages[i].teacher && !D.stages[i].parked)
   .concat(BLOCKS.filter(isPlay).map(b => ({id: "win-" + b._pid, title: "🏆 " + (D.stages[b._si].label || ""), frames: 3}))); }
 async function filmSend(events){
   if(!PTS) return; const code = selfCode(); if(events) FILM.queue = FILM.queue.concat(events); filmSave(); if(!code || FILM.busy) return;
@@ -2482,7 +2488,7 @@ if(BLOCKS.some(b => b.kind === "decode")) dcGet("handle").then(h => { if(h && h.
 /* ---------- the page ---------- */
 function blockHTML(b){
   const body = b.kind === "text" ? textHTML(b) : b.kind === "model" ? modelHTML(b) : b.kind === "write" ? writeHTML(b) : b.kind === "say" ? sayHTML(b) : b.kind === "postits" ? postitsHTML(b) : b.kind === "council" ? councilHTML(b)
-    : b.kind === "picture" ? pictureHTML(b) : b.kind === "calendars" ? calendarsHTML(b) : b.kind === "tool" ? toolHTML(b)
+    : b.kind === "picture" ? pictureHTML(b) : b.kind === "cloud" ? cloudHTML(b) : b.kind === "calendars" ? calendarsHTML(b) : b.kind === "tool" ? toolHTML(b)
     : b.kind === "questions" ? questionsHTML(b) : b.kind === "cards" ? groupDotsHTML(b) + `<div class="deck">${cardsHTML(b)}</div>` : b.kind === "scenes" ? scenesHTML(b)
     : b.kind === "fix" ? fixHTML(b) : b.kind === "sort" ? sortHTML(b) : b.kind === "game" && b.piece === "secret" ? secretHTML(b)
     : b.kind === "listen" ? listenHTML(b) : b.kind === "decode" ? decodeHTML(b) : b.kind === "box" ? boxBlockHTML(b) : b.kind === "mix" ? mixHTML(b) : b.kind === "game" && b.piece === "wheel" ? groupDotsHTML(b) + gamePeekHTML(b) + wheelHTML(b) : b.kind === "game" && ROLLS.includes(b.piece) ? rollHTML(b)
@@ -2972,7 +2978,7 @@ LW.onFresh = () => { saved = {w: {}, again: []}; save(); S.bs = {}; S.far = {}; 
 addEventListener("storage", e => { if(e.key !== null && e.key !== KEY && e.key !== PLACE_KEY) return; if(e.newValue != null && e.key !== null) return;
   saved = {w: {}, again: []}; const v = S.view; newState(); S.view = v; render(); });   /* 🧹 Start fresh in 📥 Groups: her test answers on this computer go too */
 LW.onGo = label => { const i = D.stages.findIndex(s => s.label === label); if(i > -1){ freshStage(i); goStage(i); } };
-LW.stages = D.stages.map((s, i) => [i, s.label]);
+LW.stages = D.stages.map((s, i) => [i, s.label]).filter(([i]) => !D.stages[i].parked);
 LW.board = D.boardPage && D.cell ? {id: LESSON + "/" + D.boardPage, cell: D.cell} : null;
 LW.groupsView = () => !!S && S.view === "groups";
 liveRerender = () => render();
