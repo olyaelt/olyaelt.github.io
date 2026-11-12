@@ -911,22 +911,35 @@ const ATT_HEAD = ["Time", "Code", "Student", "Group", "Homework", "Task", "Item"
 // sheet made by the earlier script keeps working; a listening item (film line, a clip's gap) also gets what happened up to its Check, updated
 // later on the same row — the first-try columns never change
 // engine 76 (AL chat 12.11 19:10): Mode = once (a YouTube line heard once first, as in the film) or empty (the earlier way)
-const ATT_LIS = ["Words first", "Listens before first try", "Listens before Check", "Pieces", "Slow", "Checks", "Show me", "Final", "Words final", "Seconds", "Variant", "Compare", "Mode"];
+// engine 77 (her 22:56, her first tries showed «Thu Jan 01 2026 00:00:00 GMT+0100… words»): «1/1 words» typed into a cell becomes a date in
+// Google Sheets. Written with a leading ' it stays text; a cell that already became a date is read back as got/of again (the smaller first).
+function asText_(s) { return s ? "'" + s : ""; }
+function words_(v) {
+  if (v instanceof Date) {
+    let us = true; try { us = /^en_US/.test(SpreadsheetApp.getActiveSpreadsheet().getSpreadsheetLocale()); } catch (e) {}
+    let a = us ? v.getMonth() + 1 : v.getDate(), b = us ? v.getDate() : v.getMonth() + 1;
+    if (a > b) { const t = a; a = b; b = t; }
+    return a + "/" + b;
+  }
+  return String(v == null ? "" : v).replace(/^'/, "");
+}
+// engine 78 (AL chat 12.11 23:15): Context plays = how often the clip's lines without a gap were played before this first try
+const ATT_LIS = ["Words first", "Listens before first try", "Listens before Check", "Pieces", "Slow", "Checks", "Show me", "Final", "Words final", "Seconds", "Variant", "Compare", "Mode", "Context plays"];
 const WANTS = "Want to say";
 const WANT_HEAD = ["Time", "Code", "Student", "Group", "Homework", "Task", "Line", "Text", "On", "Key"];
 function attempts_(stu, page, p) {
   const items = (Array.isArray(p.items) ? p.items : []).slice(0, 300), got = [];
   if (!items.length) return { ok: true, n: 0, got: got };
   const sh = sheet_(ATTEMPTS, ATT_HEAD), n = sh.getLastRow() - 1, at = {}, K = ATT_HEAD.length, W = K + ATT_LIS.length;
-  if (sh.getMaxColumns() < W) sh.insertColumnsAfter(sh.getMaxColumns(), W - sh.getMaxColumns());   // engine 76: the 27th column (Mode) is past a new sheet's 26
+  if (sh.getMaxColumns() < W) sh.insertColumnsAfter(sh.getMaxColumns(), W - sh.getMaxColumns());   // engine 76, 78: Mode and Context plays are past a new sheet's 26 columns
   if (String(sh.getRange(1, K + 1).getValue()) !== ATT_LIS[0] || String(sh.getRange(1, W).getValue()) !== ATT_LIS[ATT_LIS.length - 1]) sh.getRange(1, K + 1, 1, ATT_LIS.length).setValues([ATT_LIS]).setFontWeight("bold");
   if (n > 0) sh.getRange(2, K, n, 1).getValues().forEach((r, i) => { at[r[0]] = i + 2; });
   const num = v => { const x = Number(v); return isFinite(x) && x >= 0 && x < 100000 ? Math.round(x) : ""; };
   const yes = v => v === true ? "yes" : "";
   // the listening part: what happened up to Check (it may come later than the first try, and again after another Check)
   const lis = (x, a) => { a = a && typeof a === "object" ? a : null;
-    return [clean_(x.words, 12), num(x.lis), a ? num(a.plays) : "", a ? num(a.pieces) : "", a ? yes(a.slow) || (x.slow === true ? "yes" : "") : (x.slow === true ? "yes" : ""),
-      a ? num(a.checks) : "", a ? yes(a.shown) : "", a ? clean_(a.final, 300) : "", a ? clean_(a.wfinal, 12) : "", a ? num(a.secs) : "", clean_(x.v, 4), clean_(x.ab, 40), clean_(x.mode, 8)]; };
+    return [asText_(clean_(x.words, 12)), num(x.lis), a ? num(a.plays) : "", a ? num(a.pieces) : "", a ? yes(a.slow) || (x.slow === true ? "yes" : "") : (x.slow === true ? "yes" : ""),
+      a ? num(a.checks) : "", a ? yes(a.shown) : "", a ? clean_(a.final, 300) : "", a ? asText_(clean_(a.wfinal, 12)) : "", a ? num(a.secs) : "", clean_(x.v, 4), clean_(x.ab, 40), clean_(x.mode, 8), num(x.ctx)]; };
   const rows = [];
   items.forEach(x => {
     const item = clean_(x && x.item, 80); if (!item) return;
@@ -990,7 +1003,7 @@ function attemptsSummary_(page) {
     if (lis === 1 && !blank) { it.one++; if (ok) it.oneOk++; }
     // engine 71 (her 12.11 16:17: the results go to the chat that designed the experiment): also the half (Variant) and the time of the first try
     const tm = r[0] instanceof Date ? r[0].getTime() : (Number(r[0]) || String(r[0] || ""));
-    it.who.push([String(r[2]), blank ? "" : first, blank ? "blank" : ok ? "ok" : "no", lis, String(r[ATT_HEAD.length] || ""), String(r[ATT_HEAD.length + 10] || ""), tm, String(r[ATT_HEAD.length + 12] || "")]);
+    it.who.push([String(r[2]), blank ? "" : first, blank ? "blank" : ok ? "ok" : "no", lis, words_(r[ATT_HEAD.length]), String(r[ATT_HEAD.length + 10] || ""), tm, String(r[ATT_HEAD.length + 12] || ""), r[ATT_HEAD.length + 13] === "" || r[ATT_HEAD.length + 13] == null ? null : Number(r[ATT_HEAD.length + 13])]);
   });
   items.forEach(it => { it.wrong = Object.keys(it.wrong).map(k => [k, it.wrong[k]]).sort((a, b) => b[1] - a[1]); });
   const w = ss.getSheetByName(WANTS);

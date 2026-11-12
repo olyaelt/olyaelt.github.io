@@ -30,9 +30,9 @@ const PLAYER = `function(id,o){const d=document.getElementById(id),f=document.cr
   ok(!/half|order|birthday|Born on/i.test(await A.p.textContent('#app')), 'text about the order on the student\'s page');
   // a first try says the half and the comparison
   const first = O[hA].split(',')[0]; await A.p.click(`[data-open="${first}"]`); await A.p.waitForTimeout(500);
-  // engine 76: these lines are «listen once» first — the line plays, then what they caught, then Check
+  // engine 76–78: play the line first (a «listen once» page asks what they caught before Check)
   await A.p.evaluate(() => document.querySelector('.gap-in[data-k="0"]').closest('.ln').click()); await A.p.waitForTimeout(1500);
-  await A.p.fill('.gap-in[data-k="0"]', 'zzz'); await A.p.click('[data-l1ok]'); await A.p.click('.gap-ck[data-k="0"]'); await A.p.waitForTimeout(2800);
+  await A.p.fill('.gap-in[data-k="0"]', 'zzz'); if (await A.p.locator('[data-l1ok]').count()) await A.p.click('[data-l1ok]'); await A.p.click('.gap-ck[data-k="0"]'); await A.p.waitForTimeout(2800);
   const At = env.sheets.Attempts, row = At.getRange(2, 1, At.getLastRow() - 1, 26).getValues().find(r => r[2] === 'Anna');
   ok(row && row[24] === hA && /order/.test(row[25]), 'the half in the journal: ' + JSON.stringify(row));
   // the order holds once a task was opened, even if the half changes

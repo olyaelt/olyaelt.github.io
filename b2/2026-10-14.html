@@ -1039,7 +1039,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = ["click on the top line to hear the context","click on the line with the gap and try to catch what's in the gap","check","listen again — how did the expression sound?","optional: pronounce the expression like the speaker"];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "77";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "78";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -1128,7 +1128,7 @@ function firstTry(t, item, o){
   /* engine 68 (AL chat's handoff 12.11 09:10: one journal): a listening item also says after how many listens it was typed and how many of
      its words were right, so a first try after one listen can be told from one after five */
   o = Object.assign({}, orderFT(), o);
-  ["words", "lis", "slow", "v", "ab", "mode"].forEach(k => { if(o[k] != null && o[k] !== false) FIRST[id][k] = o[k]; });
+  ["words", "lis", "slow", "v", "ab", "mode", "ctx"].forEach(k => { if(o[k] != null && o[k] !== false) FIRST[id][k] = o[k]; });
   try{ localStorage.setItem(FT_KEY, JSON.stringify(FIRST)); }catch(e){}
   ftSendSoon();
 }
@@ -1155,7 +1155,7 @@ async function ftSend(){
 }
 function setStudentView(on){
   ls.set("hw-as-student", on ? "1" : "");
-  try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || /^hw-rev-/.test(k) || /^hw-(typed|pos|sort|first|want|l1)-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
+  try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || /^hw-rev-/.test(k) || /^hw-(typed|pos|sort|first|want|l1|heard)-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
   location.reload();
 }
 document.addEventListener("click", ev => { const b = ev.target.closest && ev.target.closest("#as-student, #as-teacher"); if(b) setStudentView(b.id === "as-student"); });
@@ -1232,7 +1232,7 @@ function wireSync(){
   /* "Not you?": the next person starts clean on this device — the last person's ticks, marks, bookmarks and drafts here are forgotten
      (engine 35: before, a second person's code took over the first one's ticks; what was sent stays in Olya's table) */
   if(ch) ch.addEventListener("click",()=>{ ["hw-code","hw-who","hw-role","hw-gid","hw-as-student"].forEach(k => ls.set(k, ""));
-    try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || /^hw-rev-/.test(k) || /^hw-(typed|pos|sort|first|want|l1)-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
+    try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || /^hw-rev-/.test(k) || /^hw-(typed|pos|sort|first|want|l1|heard)-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
     try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){}
     location.reload(); });
   const go = document.getElementById("code-go"), inp = document.getElementById("code");
@@ -2007,6 +2007,7 @@ function clearTaskState(id){
   const p = lsJSON(POS_KEY, {}); delete p[id]; ls.set(POS_KEY, JSON.stringify(p));
   if(typeof FIXES === "object") Object.keys(FIXES).forEach(k => { if(k.startsWith(id + ":") || k.startsWith(id + "-")) delete FIXES[k]; });
   { const T = TASKS.find(x => x.id === id); if(T && T.film){ const S = filmState(T); S.lines = {}; filmSave(T, S); } }   /* engine 65 */
+  try{ Object.keys(localStorage).forEach(k => { if(k.startsWith("hw-heard-" + PAGE_KEY + "-" + id + "-") || k.startsWith("hw-l1-" + PAGE_KEY + "-" + id + "-")) localStorage.removeItem(k); }); }catch(e){}   /* engine 78 */
 }
 function openTask(id, idx, mode){
   if(LOCKED()) return renderGate();
@@ -3029,7 +3030,11 @@ function renderListen(st, count, pct){
   }
   const rows = [...app.querySelectorAll(".ln")];
   /* engine 68 (AL chat 12.11 09:10): how many times each row played and whether 🐢 was on, for the first try of its gaps */
-  const heard = rows.map(() => 0); let heardSlow = false;
+  /* engine 78 (AL chat 12.11 23:15, her 23:09–23:21: free listening, «plays» before the first Check): the plays of each line stay on the
+     device, so a reload in the middle of a clip doesn't reset them */
+  const HK = "hw-heard-" + PAGE_KEY + "-" + current.id + "-s" + curS() + (current._once ? "-again" : ""), H0 = lsJSON(HK, {});
+  const heard = rows.map((_, i) => (H0.h || [])[i] || 0); let heardSlow = !!H0.slow;
+  const saveHeard = () => { try{ ls.set(HK, JSON.stringify({h: heard, slow: heardSlow})); }catch(e){} };
   /* engine 72 (her 12.11 17:44: «пока не появилась вейвформа для ютуба»): under the row that played, its time strip, as in the film task —
      drag = a piece, it plays when let go (at least 0.3 s); a tap = from there to the row's end; ▶ Play the piece / Space = the piece again;
      the playhead runs along. A piece counts as a listen of its row. */
@@ -3067,7 +3072,7 @@ function renderListen(st, count, pct){
       e.preventDefault(); const b = S.el.querySelector(".ls-play"); if(b) b.click(); }); }
   const play = (from, to, i, o = {}) => {
     if(!ytPlayer || !ytReady) return false;
-    heard[i] = (heard[i] || 0) + 1; if(rateNow() < 1 && !o.once) heardSlow = true;
+    heard[i] = (heard[i] || 0) + 1; if(rateNow() < 1 && !o.once) heardSlow = true; saveHeard();
     clearInterval(ytTimer); clearTimeout(ytWatch);
     rows.forEach((m,k)=>m.classList.toggle("playing", k===i));
     try{ ytPlayer.setPlaybackRate(o.once ? 1 : rateNow()); }catch(e){}
@@ -3150,7 +3155,8 @@ function renderListen(st, count, pct){
       const k = +inp.dataset.k, g = gapsAll[k], ans = g.ans, val = inp.value.trim();
       const gw = gapWords(val, ans, g.accs.slice(1), g.pre, g.post);
       firstTry(current, "s" + curS() + ".g" + k, {type: "listen", prompt: g.line, answer: ans, first: val, ok: !!val && (sameAnswer(val, g.accs, g.post) || markAnswer(val, g.accs).ok),
-        words: gw.got + "/" + gw.n, lis: (heard[g.row] || 0) + (g.row ? heard[0] || 0 : 0), slow: heardSlow, mode: ONCE ? "once" : null});   /* engine 67, 68: after how many listens; 76: the mode */
+        words: gw.got + "/" + gw.n, lis: (heard[g.row] || 0) + (g.row ? heard[0] || 0 : 0), slow: heardSlow, mode: ONCE ? "once" : "free",
+        ctx: rows.reduce((a, _, j) => a + (j && j !== g.row && !rowGaps[j].length ? heard[j] || 0 : 0), 0)});   /* engine 67, 68: after how many listens; 76, 78: the mode, the context lines' plays */
       const ck = inp.nextElementSibling; if(ck && ck.classList.contains("gap-ck")) ck.remove();
       const res = document.createElement("span");
       if(!val){ res.className = "gap-res ans"; res.textContent = ans; inp.replaceWith(res); return; }
@@ -3488,10 +3494,13 @@ function filmMarksHTML(l){
 function renderFilm(st, count, pct){
   const t = current, base = t.film.lines[st.li], S = filmState(t), R = S.lines[base.id] = S.lines[base.id] || {};
   const l = filmLineV(base, R), P = filmParts(l), yt = ytTask(t); FILM.lnow = {t, i: stepIdx, l};
-  const phase = t._review || R.done ? 3 : R.first != null ? 2 : R.heard ? 1 : 0, last = stepIdx === t.steps.length - 2;
+  /* engine 78 (AL chat 12.11 23:15, her «давай перейдём на свободное прослушивание сейчас»): `film.free` = no «listen once» step — the line plays
+     as often as they like from the start, Check gives the first try (with its plays); a line already answered the once way keeps it */
+  const FREE = !!t.film.free && R.first == null;
+  const phase = t._review || R.done ? 3 : FREE || R.first != null ? 2 : R.heard ? 1 : 0, last = stepIdx === t.steps.length - 2;
   const abSwitch = isTeacher() && base.b ? ` <span class="film-ab" role="group" aria-label="Variant">Variant${base.set ? " · set " + esc(base.set) : ""}: ${["a", "b"].map(v => `<button class="chip-t" data-abv="${v}" aria-pressed="${l._v === v}">${v.toUpperCase()}</button>`).join("")}</span>` : "";
-  const instr = (t.film.instr || "Click a line and listen once. Write what you caught — even one word. Then listen as many times as you like.")
-    + (st.first ? `<span class="film-note">In real life there's no replay. Your first listen shows your real ear; the rest is training.</span>` : "")
+  const instr = (t.film.instr || (t.film.free ? "Click a line and listen as many times as you like. Type what you hear, then press Check." : "Click a line and listen once. Write what you caught — even one word. Then listen as many times as you like."))
+    + (st.first && !t.film.free ? `<span class="film-note">In real life there's no replay. Your first listen shows your real ear; the rest is training.</span>` : "")
     + (st.first && t.film.optional ? `<span class="film-note">${esc(t.film.optional === true ? "Optional — only if you have " + (t.film.film || "the film") + " on your computer." : t.film.optional)}</span>` : "") + abSwitch;
   if(!FILM_DESK && !yt){ shell({count, pct, instr: "", stageHTML: `<div class="panel"><div class="film-phone"><p>💻 <b>Open this task on the computer where your film is.</b></p><p class="small">The sound comes from your own copy of ${esc(t.film.film || "the film")}, so this task works only there.</p></div></div>`,
     actionsHTML: `<button class="btn" id="prev">Back</button><button class="btn primary grow" id="go">${last ? "To the end" : "Next"}</button>`});
@@ -3509,7 +3518,7 @@ function renderFilm(st, count, pct){
   const under = phase === 0 ? `<p class="film-hint" id="fh">▶ Click the line to listen — <b>once</b>.</p>`
     : phase === 1 ? `<div class="film-row" id="fh"><span class="film-ask">What did you catch? Even one word. <span class="small">Enter</span></span><button class="btn" id="f-none">Nothing yet ↻</button></div>`
     : phase === 2 ? `<div class="film-row" id="fh"><button class="btn primary" id="f-check">Check</button><button class="linklike" id="f-show">Can't catch it → show me</button></div>`
-    : `<div class="film-res" id="fh">${R.first == null ? "" : R.shown ? `<p class="film-score">First listen: <b>${w1.got} of ${w1.n}</b> word${w1.n === 1 ? "" : "s"}</p>` : `<p class="film-score">First listen: <b>${w1.got} of ${w1.n}</b> word${w1.n === 1 ? "" : "s"} → now: <b>${wf.got} of ${wf.n}</b></p>`}${filmMarksHTML(l)}<button class="btn" id="f-again">▶ Listen again</button></div>`;
+    : `<div class="film-res" id="fh">${R.first == null || t.film.free ? "" : R.shown ? `<p class="film-score">First listen: <b>${w1.got} of ${w1.n}</b> word${w1.n === 1 ? "" : "s"}</p>` : `<p class="film-score">First listen: <b>${w1.got} of ${w1.n}</b> word${w1.n === 1 ? "" : "s"} → now: <b>${wf.got} of ${wf.n}</b></p>`}${filmMarksHTML(l)}<button class="btn" id="f-again">▶ Listen again</button></div>`;
   const ctx = x => x ? `<div class="ln film-ctx"><span></span><span class="ln-text">${esc(x)}</span></div>` : "";
   const stageHTML = `<div class="panel film">
       ${yt ? ytfBoxHTML() : `<div class="film-box video"><div class="film-over">${filmBoxInner(t)}</div></div>`}
@@ -3531,7 +3540,11 @@ function renderFilm(st, count, pct){
   const nudge = () => { const h = document.getElementById("fh"); [h, inp].forEach(x => { if(!x) return; x.classList.remove("nudge"); void x.offsetWidth; x.classList.add("nudge"); }); if(inp) inp.focus(); };
   const after = () => { const wf = filmWords(R.final, l); ftAfter(t, l.id, {plays: R.plays || 0, pieces: R.pieces || 0, slow: !!R.slow, checks: R.checks || 0, shown: !!R.shown,
     final: R.final || "", wfinal: wf.got + "/" + wf.n, secs: R.t2 && R.t0 ? Math.round((R.t2 - R.t0) / 1000) : null}); };   /* engine 68: the same row in her journal */
-  const playMore = () => { const r = rateNow(); if(r < 1 && !R.done) R.slow = true; if(R.done) R.after = (R.after || 0) + 1; else R.plays = (R.plays || 0) + 1; save(); filmPlay(l, r); };
+  const playMore = () => { const r = rateNow(); if(r < 1 && !R.done) R.slow = true; if(R.done) R.after = (R.after || 0) + 1; else { R.plays = (R.plays || 0) + 1; R.t0 = R.t0 || Date.now(); } save(); filmPlay(l, r); };
+  /* engine 78: in free mode the first try is what stands at Check (or «show me»), with the plays before it */
+  const freeFirst = txt => { if(!FREE) return; const w = filmWords(txt, l); R.first = txt; R.t1 = Date.now(); R.w1 = w.got;
+    firstTry(t, l.id, {type: "film", prompt: P.pre + "___" + P.post, answer: P.gap, first: txt, ok: w.n > 0 && w.got === w.n, words: w.got + "/" + w.n, lis: R.plays || 0, slow: !!R.slow,
+      v: base.b ? l._v : null, ab: base.b && t.film.ab ? t.film.ab.name || "ab" : null, mode: "free"}); };
   const firstDone = txt => { R.first = txt; R.t1 = Date.now(); const w = filmWords(txt, l); R.w1 = w.got; R.typing = txt; save();
     firstTry(t, l.id, {type: "film", prompt: P.pre + "___" + P.post, answer: P.gap, first: txt, ok: w.n > 0 && w.got === w.n, words: w.got + "/" + w.n, lis: R.plays || 1,
       v: base.b ? l._v : null, ab: base.b && t.film.ab ? t.film.ab.name || "ab" : null, mode: R.pre ? "guess" : "once"});   /* engine 67, 68, 69; 77: the mode */
@@ -3551,8 +3564,8 @@ function renderFilm(st, count, pct){
       if(phase === 1) firstDone(inp.value.trim()); else if(phase === 2) document.getElementById("f-check").click(); }); }
   const on = (id, f) => { const x = document.getElementById(id); if(x) x.addEventListener("click", f); };
   on("f-none", () => firstDone(""));
-  on("f-check", () => { filmStop(); R.final = (inp ? inp.value : "").trim(); R.checks = (R.checks || 0) + 1; R.t2 = Date.now(); R.done = true; R.wf = filmWords(R.final, l).got; save(); after(); redo(); });
-  on("f-show", () => { filmStop(); R.final = (inp ? inp.value : "").trim(); R.shown = true; R.t2 = Date.now(); R.done = true; R.wf = filmWords(R.final, l).got; save(); after(); redo(); });
+  on("f-check", () => { filmStop(); R.final = (inp ? inp.value : "").trim(); freeFirst(R.final); R.checks = (R.checks || 0) + 1; R.t2 = Date.now(); R.done = true; R.wf = filmWords(R.final, l).got; save(); after(); redo(); });
+  on("f-show", () => { filmStop(); R.final = (inp ? inp.value : "").trim(); freeFirst(R.final); R.shown = true; R.t2 = Date.now(); R.done = true; R.wf = filmWords(R.final, l).got; save(); after(); redo(); });
   on("f-again", () => playMore());
   app.querySelectorAll("#spd [data-rate]").forEach(b => b.addEventListener("click", () => { const r = Number(b.dataset.rate); ls.set("hw-rate", String(r)); ls.set("hw-slow", "");
     app.querySelectorAll("#spd [data-rate]").forEach(x => x.setAttribute("aria-pressed", Number(x.dataset.rate) === r));
@@ -3572,7 +3585,7 @@ function filmRecord(t, T){
   const yt = ytTask(t), out = [`${yt ? "🎧 YouTube" : "🎬 " + (t.film.film || "film")} · order: ${t.steps.filter(s => s.type === "film").map(s => t.film.lines[s.li].id).join(" ")}${!yt && FILM.name ? " · file: " + FILM.name : ""}${t.film.ab && filmHalf() ? " · half " + filmHalf() : ""}`];
   /* engine 68 (AL chat 12.11 09:10, one journal): each line — first version, listens, pieces, 🐢, Check, show me, final — is a row of sheet
      Attempts; this record keeps what the homework table needs: the order, the file and the totals */
-  out.push(`Total: first listen ${T.a}/${T.n} words (${T.p1}%) → in the end ${T.b}/${T.n} (${T.p2}%) · each line: sheet Attempts`);
+  out.push(t.film.free ? `Total: ${T.b}/${T.n} words (${T.p2}%), listening freely · each line: sheet Attempts` : `Total: first listen ${T.a}/${T.n} words (${T.p1}%) → in the end ${T.b}/${T.n} (${T.p2}%) · each line: sheet Attempts`);
   const skipped = T.rows.filter(({R}) => R.first == null).map(({l}) => l.id); if(skipped.length) out.push(`not tried: ${skipped.join(" ")}`);
   return out.join("\n"); }
 let filmSending = false;
@@ -3586,8 +3599,8 @@ function renderFilmSum(st, count, pct){
   const t = current, T = filmTotals(t);
   const hard = T.rows.filter(x => x.R.first != null && x.w1.n && x.w1.got < x.w1.n).sort((x, y) => x.w1.got / x.w1.n - y.w1.got / y.w1.n).slice(0, 3);
   const stageHTML = `<div class="panel film fsum">
-      <div class="film-sum"><p class="film-big">After one listen you caught <b>${T.p1}%</b> of the words. In the end: <b>${T.p2}%</b>.</p>
-      <p class="small">In real life there's no replay. Your first listen shows your real ear; the rest is training.</p></div>
+      <div class="film-sum">${t.film.free ? `<p class="film-big">You caught <b>${T.p2}%</b> of the words.</p>` : `<p class="film-big">After one listen you caught <b>${T.p1}%</b> of the words. In the end: <b>${T.p2}%</b>.</p>
+      <p class="small">In real life there's no replay. Your first listen shows your real ear; the rest is training.</p>`}</div>
       ${hard.length && (FILM_DESK || ytTask(t)) ? `${ytTask(t) ? ytfBoxHTML() : `<div class="film-box video"><div class="film-over">${filmBoxInner(t)}</div></div>`}
       <p class="film-h">The hardest to hear — listen again:</p>
       <div class="lines">${hard.map(({l}) => { const P = filmParts(l); return `<div class="ln has-gap film-ln" data-id="${esc(l.id)}"><button class="pl" aria-label="Play the line">▶</button><span class="ln-text">${esc(P.pre)}<span class="gap-res ans">${esc(P.gap)}</span>${esc(P.post)}</span></div>`; }).join("")}</div>` : ""}
@@ -3661,15 +3674,15 @@ function ftForAnalysis(res){
   if(O) out.push(`The order comparison «${O.name || "order"}»: half x — ${O.x.map(title).join(" → ")}; half y — ${(O.y || []).map(title).join(" → ")}.`);
   /* engine 76: kind = what the row is (a line after one listen / a gap before Check / a film line); mode = once (listen once first) or free
      (the earlier way); without the newer Code.gs the mode comes from the rows themselves: a student with line rows in a step did it «once» */
-  const kindOf = it => it.type === "film" ? "film line, one listen" : ftLine1(it) ? "line, one listen" : it.type === "listen" ? "gap, before Check" : it.type;
+  const kindOf = (it, w) => it.type === "film" ? (w && w[7] === "free" ? "film line, before Check" : "film line, one listen") : ftLine1(it) ? "line, one listen" : it.type === "listen" ? "gap, before Check" : it.type;
   const stepOf = it => it.task + ":" + ((String(it.item).split(":")[1] || "").match(/^s\d+/) || [""])[0], once = new Set();
   res.items.forEach(it => { if(ftLine1(it)) it.who.forEach(w => once.add(w[0] + "|" + stepOf(it))); });
-  const modeOf = (it, w) => w[7] || (it.type === "film" || ftLine1(it) ? "once" : it.type === "listen" ? (once.has(w[0] + "|" + stepOf(it)) ? "once" : "free") : "");
-  out.push(`${names.length} student${names.length === 1 ? "" : "s"}, S1…S${names.length} (no names). Listening: «line, one listen» = what they caught after one listen (mode once); «gap, before Check» = the first thing typed in a gap before Check.`, "");
-  out.push(["student", "half", "task", "item", "kind", "mode", "prompt", "answer", "first try", "result", "listens before", "words right", "time"].join("\t"));
+  const modeOf = (it, w) => w[7] || (it.type === "film" || ftLine1(it) ? "once" : it.type === "listen" ? (once.has(w[0] + "|" + stepOf(it)) ? "once" : "free") : "");   /* before Code.gs 76/78: a film line answered freely shows as «once» — its plays tell */
+  out.push(`${names.length} student${names.length === 1 ? "" : "s"}, S1…S${names.length} (no names). Listening: «gap, before Check» = the first thing typed in a gap before Check, after «plays» listens of its line; «line, one listen» = what they caught after one listen (mode once, 12.11 21:00–23:30); mode guess = typed before that one listen.`, "");
+  out.push(["student", "half", "task", "item", "kind", "mode", "prompt", "answer", "first try", "result", "plays", "ctx plays", "words right", "time"].join("\t"));   /* engine 78: plays = before this first try; ctx plays = the clip's lines without a gap */
   const by = {};
   res.items.forEach(it => it.who.forEach(w => { const [n, f, r, lis, ww, v, t] = w;
-    out.push([S(n), v || "", title(it.task), it.item, kindOf(it), modeOf(it, w), it.prompt, it.answer, f, r === "ok" ? "right" : r === "no" ? "wrong" : ftLine1(it) || it.type === "film" ? "nothing caught" : "opened without a try", lis == null ? "" : lis, ww || "", tm(t)].map(one).join("\t"));
+    out.push([S(n), v || "", title(it.task), it.item, kindOf(it, w), modeOf(it, w), it.prompt, it.answer, f, r === "ok" ? "right" : r === "no" ? "wrong" : ftLine1(it) || it.type === "film" ? "nothing caught" : "opened without a try", lis == null ? "" : lis, w[8] == null ? "" : w[8], ww || "", tm(t)].map(one).join("\t"));
     const x = by[S(n)] = by[S(n)] || {half: "", at: {}}; if(v) x.half = v; const ms = when(t);
     if(!isNaN(ms) && (x.at[it.task] == null || ms < x.at[it.task])) x.at[it.task] = ms; }));
   out.push("", "The order each student did the tasks in (by the time of their first answers):");

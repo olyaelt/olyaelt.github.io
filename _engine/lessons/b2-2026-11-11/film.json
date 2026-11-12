@@ -3,7 +3,7 @@
   "film": "The Intern",
   "optional": true,
   "shuffle": false,
-  "instr": "Click a line and listen once. Write what you caught — even one word. Then listen as many times as you like.",
+  "instr": "Click a line and listen as many times as you like. Type what you hear, then press Check.",
   "lines": [
    {
     "id": "bt1",
@@ -159,6 +159,7 @@
     "bank": "pmwdrf5v8cmln",
     "form": "can"
    }
-  ]
+  ],
+  "free": true
  }
 }

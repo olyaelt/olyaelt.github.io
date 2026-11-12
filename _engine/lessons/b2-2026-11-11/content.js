@@ -31,9 +31,9 @@ const TOPICS = [   /* her 12.11 18:14: two blocks, and it must show that the fir
 
 const listenSteps = clips => clips.map((clip, i) => ({type:"listen", clip, first:i===0}));
 const TASKS = [
-  {id:"l1", topic:"ear", sec:"", listenOnce:true, title:"There is / there are", meta:"8 short clips · 9 gaps", kind:"steps", min:6, tqLink:TQ.tqLink.L1, tq:TQ.tq.L1, steps:listenSteps(TQ.L1)},
-  {id:"l2", topic:"ear", sec:"", listenOnce:true, title:"There's, it's or that's?", meta:"8 short clips · 9 gaps", kind:"steps", min:6, tqLink:TQ.tqLink.L2, tq:TQ.tq.L2, steps:listenSteps(TQ.L2)},
-  {id:"l3", topic:"ear", sec:"", listenOnce:true, title:"Can or can't?", meta:"8 short clips · 9 gaps", kind:"steps", min:5, tqLink:TQ.tqLink.L3, tq:TQ.tq.L3, steps:listenSteps(TQ.L3)},
+  {id:"l1", topic:"ear", sec:"", title:"There is / there are", meta:"8 short clips · 9 gaps", kind:"steps", min:6, tqLink:TQ.tqLink.L1, tq:TQ.tq.L1, steps:listenSteps(TQ.L1)},
+  {id:"l2", topic:"ear", sec:"", title:"There's, it's or that's?", meta:"8 short clips · 9 gaps", kind:"steps", min:6, tqLink:TQ.tqLink.L2, tq:TQ.tq.L2, steps:listenSteps(TQ.L2)},
+  {id:"l3", topic:"ear", sec:"", title:"Can or can't?", meta:"8 short clips · 9 gaps", kind:"steps", min:5, tqLink:TQ.tqLink.L3, tq:TQ.tq.L3, steps:listenSteps(TQ.L3)},
   {id:"f1", topic:"film", sec:"", title:"🎬 Can or can't?", meta:"16 lines from the film", kind:"steps", min:10, film:FILMQ.f1, steps:[]}
 ];
 

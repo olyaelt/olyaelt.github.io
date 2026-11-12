@@ -15,7 +15,7 @@ class Sheet {
     const R = {
       getValues: () => Array.from({length: nr}, (_, i) => Array.from({length: nc}, (_, j) => sh.get(r+i, c+j))),
       getValue: () => sh.get(r, c),
-      setValues: (v) => { if (v.length !== nr || v.some(x => x.length !== nc)) throw new Error(`setValues size mismatch ${v.length}x${v[0]&&v[0].length} vs ${nr}x${nc}`); v.forEach((row, i) => row.forEach((x, j) => sh.set(r+i, c+j, x))); return R; },
+      setValues: (v) => { if (v.length !== nr || v.some(x => x.length !== nc)) throw new Error(`setValues size mismatch ${v.length}x${v[0]&&v[0].length} vs ${nr}x${nc}`); v.forEach((row, i) => row.forEach((x, j) => sh.set(r+i, c+j, typeof x === 'string' && x[0] === "'" ? x.slice(1) : x))); return R; },   // a leading ' keeps a cell text in Sheets and is not stored
       setValue: (v) => { sh.set(r, c, v); if (sh.rich) delete sh.rich[r+","+c]; return R; },
       getRichTextValues: () => Array.from({length: nr}, (_, i) => Array.from({length: nc}, (_, j) => {
         const runs = (sh.rich && sh.rich[(r+i)+","+(c+j)]) || [{text: String(sh.get(r+i, c+j))}];

@@ -21,6 +21,8 @@ const PLAYER = `function(id,o){const d=document.getElementById(id),f=document.cr
   await ctx.route('https://hw.test/**', r => r.fulfill({status: 200, contentType: 'text/html', body: html}));
   const p = await ctx.newPage(); p.on('pageerror', e => errs.push(e.message));
   await p.goto('https://hw.test/' + rel); await p.waitForTimeout(900);
+  const once = () => p.evaluate(() => TASKS.forEach(t => { if (/^l\d/.test(t.id)) t.listenOnce = true; }));   // engine 78: the pages listen freely now; the engine's «listen once» is still tested here
+  await once();
   const A = () => env.sheets.Attempts, rows = () => A() ? A().getRange(2, 1, Math.max(1, A().getLastRow() - 1), 27).getValues().filter(r => r[0]) : [];
   const head = () => A() ? A().getRange(1, 1, 1, 27).getValues()[0] : [];
   // a step: where are its gap lines
@@ -85,7 +87,7 @@ const PLAYER = `function(id,o){const d=document.getElementById(id),f=document.cr
   R = rows(); const r3 = R.find(r => /^l3:s3\.r0$/.test(r[6]));
   ok(r3 && r3[10] === "can't … can be" && r3[11] === '✗' && r3[9] === "can't … can't" && r3[14] === '1/2' && r3[26] === 'guess', 'one first version for the line, both gaps; typed before the listen = Mode guess: ' + JSON.stringify(r3));
   // a reload keeps the line free (no second «one listen»)
-  await p.reload(); await p.waitForTimeout(900); await go('l3', 3);
+  await p.reload(); await p.waitForTimeout(900); await once(); await go('l3', 3);
   st = await p.evaluate(() => ({ck: !document.querySelector('.ln[data-i="0"] .gap-ck').hidden, ask: !!document.querySelector('[data-ask]')}));
   ok(st.ck && !st.ask, 'after a reload the line stays free: ' + JSON.stringify(st));
   // a finished task opened on a device with no place saved: its first screen (it opened on the last clip, «сразу Finish»)
