@@ -1345,7 +1345,7 @@ const TASKS = [
 ];
 
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "76";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "77";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -2320,7 +2320,7 @@ function openTask(id, idx, mode){
   fixOrder();   /* engine 71 */
   if(mode === "fresh") clearTaskState(id);
   const n = (t.steps || []).length, mine = !isTeacher() && t.kind === "steps" && mode !== "fresh" && idx == null;
-  if(mine && taskDone(id)){ current = Object.assign({}, t, {_review: true}); const p = posOf(id); stepIdx = p != null && p < n ? p : Math.max(0, n - 1); }
+  if(mine && taskDone(id)){ current = Object.assign({}, t, {_review: true}); const p = posOf(id); stepIdx = p != null && p < n ? p : 0; }   /* engine 77: on another device it opened on its last clip, «сразу Finish» */
   else { current = t; const p = mine ? posOf(id) : null; stepIdx = idx != null ? idx : p != null && p < n ? p : 0; }
   checked = false;
   try{ if(location.hash !== "#"+id) history.replaceState(null,"","#"+id); }catch(e){}
@@ -3161,7 +3161,7 @@ function renderShare(st, count, pct){
 }
 
 /* ---------- listening (clips from TubeQuizard, played from YouTube) ---------- */
-let ytPromise = null, ytPlayer = null, ytTimer = null, ytWatch = null, ytReady = false, ytVideo = "", ytReadyWatch = null;
+let ytPromise = null, ytPlayer = null, ytTimer = null, ytWatch = null, ytReady = false, ytVideo = "", ytReadyWatch = null, ytBad = "";   /* engine 77: ytBad = a video YouTube refused (not in their country, removed) */
 /* engine 36 (a C1 student's phone, 28.10: a black box, no message): YouTube says it's ready through one callback,
    window.onYouTubeIframeAPIReady; a browser that puts its own button on YouTube videos (Yandex Browser does) or a slow
    connection can mean that call never reaches us. So we also watch for YT.Player itself, wait up to 20 s instead of 7,
@@ -3239,7 +3239,7 @@ function partsHTML(parts){
 function renderListen(st, count, pct){
   const lines = st.clip;
   /* engine 63 also (C1 06.11 e4/e5): a listening task's own `instr` leads its first screen, the how-to after it */
-  const instr = current.listenOnce && !current._once && !current._review && !isTeacher()
+  const instr = current.listenOnce && !current._once && !current._review
     ? (st.first ? (current.instr ? current.instr + " " : "") + "Click a line and listen once. Write what you caught — even one word. Then listen as many times as you like, and check."
        : "Click a line and listen once. Write what you caught, then listen again as often as you like, and check.")
     : st.first && current.instr
@@ -3254,13 +3254,13 @@ function renderListen(st, count, pct){
      speed; neighbouring lines that still wait for their first listen are cut out of it), then «What did you catch?» waits: the line's gaps,
      That's it / Enter, or «Nothing yet ↻» (it plays again at once). Only then the line plays as often as they like, its strip opens and Check
      works. One first version per line (all its gaps) goes to her journal at once as item s<step>.r<line> with mode «once»; what was typed
-     before the first Check stays the gap's own item (s<step>.g<k>), as before. Not in her view, not in «Do it again». */
-  const ONCE = !!(current.listenOnce && !current._once && !current._review && !isTeacher());
+     before the first Check stays the gap's own item (s<step>.g<k>), as before. Not in «Do it again»; in her view too since engine 77. */
+  const ONCE = !!(current.listenOnce && !current._once && !current._review);   /* engine 77 (her 22:49: «плохая идея — разводить мою механику и механику, которую видят студенты»): in her view too; her first versions are never sent */
   const OK1 = "hw-l1-" + PAGE_KEY + "-" + current.id + "-s" + curS(), O1 = ONCE ? lsJSON(OK1, {}) : {};   /* line → {h: heard once, f: first version} */
   const saveO1 = () => { if(ONCE) ls.set(OK1, JSON.stringify(O1)); };
   const rowGaps = []; { let k = 0; lines.forEach((l, i) => { rowGaps[i] = []; l[3].forEach(p => { if(typeof p !== "string") rowGaps[i].push(k++); }); }); }
   if(ONCE) rowGaps.forEach((ks, i) => { if(ks.length && !O1[i] && ks.some(k => (typed[keyOf(k)] || "").trim())) O1[i] = {old: 1}; });   /* typed before this mode came: free */
-  const phase = i => !ONCE || !rowGaps[i].length ? 2 : O1[i] && (O1[i].f != null || O1[i].old) ? 2 : O1[i] && O1[i].h ? 1 : 0;
+  const phase = i => !ONCE || !rowGaps[i].length || ytBad === lines[0][0] ? 2 : O1[i] && (O1[i].f != null || O1[i].old) ? 2 : O1[i] && O1[i].h ? 1 : 0;
   const pending = () => ONCE && rowGaps.some((ks, i) => ks.length && phase(i) < 2);
   const rowOfK = k => rowGaps.findIndex(ks => ks.includes(k));
   const askHTML = i => `<div class="film-row l1-ask" data-ask="${i}"><span class="film-ask">What did you catch? Even one word.</span><button class="btn primary" data-l1ok="${i}">That's it</button><button class="btn" data-l1none="${i}">Nothing yet ↻</button></div>`;
@@ -3268,7 +3268,7 @@ function renderListen(st, count, pct){
       <button class="pl" aria-label="${i===0?"Play the whole clip":"Play this line"}">▶</button>
       <span class="ln-text">${l[3].map(p => typeof p === "string" ? esc(p)
         : (k => skip ? `<b>${esc(p.gap)}</b>` : `<input class="gap-in" data-k="${k}" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"
-             aria-label="Type the missing words" style="width:min(100%, ${p.gap.length + 3}ch)" value="${esc(typed[keyOf(k)]||"")}" ${ph === 0 ? "readonly" : ""}><button class="gap-ck" data-k="${k}" aria-label="Check this gap" ${(typed[keyOf(k)]||"").trim() && ph === 2 ? "" : "hidden"}>Check</button>`)(gk++)).join("")}${i===0?` <span class="whole-note" ${pending() ? "hidden" : ""}>· whole clip</span>`:""}</span>
+             aria-label="Type the missing words" style="width:min(100%, ${p.gap.length + 3}ch)" value="${esc(typed[keyOf(k)]||"")}"><button class="gap-ck" data-k="${k}" aria-label="Check this gap" ${(typed[keyOf(k)]||"").trim() && ph === 2 ? "" : "hidden"}>Check</button>`)(gk++)).join("")}${i===0?` <span class="whole-note">· whole clip</span>`:""}</span>
     </div>${ph === 1 ? askHTML(i) : ""}`; };
   const rest = `
         <div class="tap-hint small" id="hint" hidden><p>Nothing playing? Tap the video once, then tap the line again.</p>
@@ -3324,6 +3324,7 @@ function renderListen(st, count, pct){
         videoId: lines[0][0], width: "100%", height: "100%",
         playerVars: { playsinline: 1, rel: 0, modestbranding: 1, cc_load_policy: 0, iv_load_policy: 3, start: Math.floor(lines[0][1]) },
         events: { onReady: () => { ytReady = true; clearTimeout(ytReadyWatch); loading(false); if(msg.isConnected){ msg.hidden = true; } },
+                  onError: () => { ytBad = ytVideo; app.querySelectorAll(".l1-ask").forEach(x => x.remove()); },   /* engine 77: a student's video «not available in your country» */
                   onApiChange: captionsOffOnce, onStateChange: e => { if(e && e.data === 1){ setTimeout(captionsOffOnce, 300); setTimeout(captionsOffOnce, 1500); } } }
       });
       clearTimeout(ytReadyWatch); ytReadyWatch = setTimeout(failed, YT_READY_WAIT);
@@ -3397,8 +3398,10 @@ function renderListen(st, count, pct){
     const f = rows[i].querySelector(".gap-in"); if(f) f.focus(); };
   const wireAsk = i => { const ok = app.querySelector(`[data-l1ok="${i}"]`), no = app.querySelector(`[data-l1none="${i}"]`);
     if(ok) ok.addEventListener("click", () => firstDone(i, false)); if(no) no.addEventListener("click", () => firstDone(i, true)); };
-  const toAsk = i => { if(!rows[i].isConnected) return; rows[i].querySelectorAll(".gap-in").forEach(x => x.readOnly = false); if(!app.querySelector(`[data-ask="${i}"]`)) rows[i].insertAdjacentHTML("afterend", askHTML(i));
-    wireAsk(i); setTimeout(() => { const f = rows[i].querySelector(".gap-in"); if(f) f.focus(); }, 30); };
+  const TOUCH = (() => { try{ return matchMedia("(pointer: coarse)").matches; }catch(e){ return false; } })();
+  const toAsk = (i, nofocus) => { if(!rows[i].isConnected) return; if(!app.querySelector(`[data-ask="${i}"]`)) rows[i].insertAdjacentHTML("afterend", askHTML(i));
+    wireAsk(i); if(!TOUCH && !nofocus) setTimeout(() => { const f = rows[i].querySelector(".gap-in"); if(f && document.activeElement !== f) f.focus(); }, 30); };
+  const preOf = i => rowGaps[i].some(k => (typed[keyOf(k)] || "").trim()) ? 1 : 0;   /* typed before the one listen: a guess, not what they caught */
   /* the line's first version: all its gaps as they are now (or nothing), sent at once; then the line is free */
   const firstDone = (i, none, quiet) => { if(phase(i) !== 1) return;
     const ks = rowGaps[i], l = lines[i], vals = ks.map(k => none ? "" : (typed[keyOf(k)] || "").trim());
@@ -3407,11 +3410,10 @@ function renderListen(st, count, pct){
       if(!(v && (sameAnswer(v, g.accs, g.post) || markAnswer(v, g.accs).ok))) all = false; });
     const first = vals.some(Boolean) ? vals.join(" … ") : "";
     firstTry(current, "s" + curS() + ".r" + i, {type: "listen", prompt: l[3].map(p => typeof p === "string" ? p : "___").join(""), answer: ks.map(k => gapsAll[k].ans).join(" … "),
-      first, ok: all && !!first, words: got + "/" + n, lis: 1, mode: "once"});
+      first, ok: all && !!first, words: got + "/" + n, lis: 1, mode: O1[i] && O1[i].pre ? "guess" : "once"});
     O1[i] = {h: 1, f: first}; saveO1();
     const ask = app.querySelector(`[data-ask="${i}"]`); if(ask) ask.remove();
     rows[i].querySelectorAll(".gap-in").forEach(x => { const c = x.nextElementSibling; if(c && c.classList.contains("gap-ck")) c.hidden = !x.value.trim(); });
-    const wn = app.querySelector(".whole-note"); if(wn) wn.hidden = pending();
     if(quiet) return;
     const f = rows[i].querySelector(".gap-in"); if(got > 0 && f) filmHearts(f, got === n ? 9 : 4);
     if(none){ const [a, b] = rng(i); play(a, b, i); }
@@ -3424,9 +3426,16 @@ function renderListen(st, count, pct){
     if(ONCE){
       if(busy1 != null){ let s0 = -1; try{ s0 = ytPlayer.getPlayerState(); }catch(e){} if(s0 === 1 || s0 === 3) return; busy1 = null; }   /* let the one listen finish; a stuck one may start again */
       const ph = phase(i);
+      if(i === 0 && pending()){   /* engine 77 (her 22:43: «кликнула по верхней строчке… проиграл только одну строчку»): the top line = the whole clip, once, for every line still waiting */
+        const w = rowGaps.map((ks, j) => ks.length && phase(j) === 1 ? j : -1).find(j => j >= 0);
+        if(w != null){ nudge1(w); return; }   /* a line heard once already waits for what they caught */
+        const todo = rowGaps.map((ks, j) => ks.length && phase(j) === 0 ? j : -1).filter(j => j >= 0), pre = {}; todo.forEach(j => { pre[j] = preOf(j); });
+        if(play(Math.max(0, lines[0][1] - LEAD), clipEnd(lines, lines.length-1) + LEAD, 0, {once: true, end: () => { busy1 = null;
+            todo.forEach(j => { O1[j] = {h: 1, pre: pre[j]}; }); saveO1(); todo.forEach((j, n) => toAsk(j, n > 0)); }})) busy1 = 0;
+        return; }
       if(ph === 1){ nudge1(i); return; }   /* the line waits for what they caught: «Nothing yet ↻» plays it again at once */
-      if(ph === 0){ const [a, b] = rng(i);
-        if(play(a, b, i, {once: true, end: () => { busy1 = null; O1[i] = {h: 1}; saveO1(); toAsk(i); }})) busy1 = i;
+      if(ph === 0){ const [a, b] = rng(i), pre = preOf(i);
+        if(play(a, b, i, {once: true, end: () => { busy1 = null; O1[i] = {h: 1, pre}; saveO1(); toAsk(i); }})) busy1 = i;
         return; }
     }
     if(i===0 && !pending()) play(Math.max(0, lines[0][1] - LEAD), clipEnd(lines, lines.length-1) + LEAD, 0);   /* top line: the whole clip, as in TubeQuizard */
@@ -3475,7 +3484,7 @@ function renderListen(st, count, pct){
     inp.addEventListener("click", ev=>{ if(!(ONCE && phase(ri) === 0)) ev.stopPropagation(); });   /* engine 76: a gap still waiting for its line's one listen starts it */
     inp.addEventListener("input", ()=>{ typed[keyOf(+inp.dataset.k)] = inp.value; saveTyped(); if(ck) ck.hidden = !inp.value.trim() || phase(ri) < 2; });
     inp.addEventListener("keydown", ev=>{ if(ev.key==="Enter"){ ev.preventDefault();
-      if(ONCE && phase(ri) < 2){ if(phase(ri) === 1){ const ks = rowGaps[ri], nx = ks[ks.indexOf(+inp.dataset.k) + 1], nxi = nx != null && app.querySelector(`.gap-in[data-k="${nx}"]`);
+      if(ONCE && phase(ri) < 2){ if(phase(ri) === 0){ inp.blur(); return; } if(phase(ri) === 1){ const ks = rowGaps[ri], nx = ks[ks.indexOf(+inp.dataset.k) + 1], nxi = nx != null && app.querySelector(`.gap-in[data-k="${nx}"]`);
           if(nxi) nxi.focus(); else firstDone(ri, false); } return; }
       if(inp.value.trim()) checkOne(inp, true); else inp.blur(); } });
     if(ck) ck.addEventListener("click", ev=>{ ev.stopPropagation(); checkOne(inp, false); });
@@ -3801,7 +3810,7 @@ function renderFilm(st, count, pct){
     else if(w.got === w.n) gapHTML = `<span class="gap-res ok">${esc(fin)} ✓</span>`;
     else { const m = markAnswer(fin, [P.gap].concat(l.alt || []));   /* kind corrections: the right words marked, the wrong ones struck, then the answer */
       gapHTML = (m.ok || m.plain ? `<span class="film-you"><span class="wrong">${esc(fin)}</span></span>` : `<span class="film-you">${m.you}</span>`) + `<span class="to-ans"> → </span><span class="gap-res ans">${esc(P.gap)}</span>`; } }
-  else gapHTML = `<input class="gap-in film-in" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="The missing words" style="width:min(100%, ${Math.max(9, P.gap.length + 4, String(val).length + 3)}ch)" value="${esc(val)}" ${phase === 0 ? "readonly" : ""}>`;
+  else gapHTML = `<input class="gap-in film-in" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="The missing words" style="width:min(100%, ${Math.max(9, P.gap.length + 4, String(val).length + 3)}ch)" value="${esc(val)}">`;   /* engine 77 (her 22:48: «давай нигде не закрывать поле. Всё-таки они знают, что задание на аудирование»): open before the one listen too */
   const w1 = filmWords(R.first, l), wf = filmWords(R.final, l);
   const under = phase === 0 ? `<p class="film-hint" id="fh">▶ Click the line to listen — <b>once</b>.</p>`
     : phase === 1 ? `<div class="film-row" id="fh"><span class="film-ask">What did you catch? Even one word. <span class="small">Enter</span></span><button class="btn" id="f-none">Nothing yet ↻</button></div>`
@@ -3831,14 +3840,15 @@ function renderFilm(st, count, pct){
   const playMore = () => { const r = rateNow(); if(r < 1 && !R.done) R.slow = true; if(R.done) R.after = (R.after || 0) + 1; else R.plays = (R.plays || 0) + 1; save(); filmPlay(l, r); };
   const firstDone = txt => { R.first = txt; R.t1 = Date.now(); const w = filmWords(txt, l); R.w1 = w.got; R.typing = txt; save();
     firstTry(t, l.id, {type: "film", prompt: P.pre + "___" + P.post, answer: P.gap, first: txt, ok: w.n > 0 && w.got === w.n, words: w.got + "/" + w.n, lis: R.plays || 1,
-      v: base.b ? l._v : null, ab: base.b && t.film.ab ? t.film.ab.name || "ab" : null});   /* engine 67, 68, 69 */
+      v: base.b ? l._v : null, ab: base.b && t.film.ab ? t.film.ab.name || "ab" : null, mode: R.pre ? "guess" : "once"});   /* engine 67, 68, 69; 77: the mode */
     if(w.got > 0 && inp) filmHearts(inp, w.got === w.n ? 9 : 4); if(!txt) playMore(); redo(); };
   if(!yt && !app._filmOpenWired){ app._filmOpenWired = true; app.addEventListener("click", e => { const b = e.target.closest("[data-filmopen]"), b2 = e.target.closest("[data-filmreopen]"); if(b) filmOpen(); if(b2) filmReopen(); }); }
   row.addEventListener("click", e => {
     if(e.target.closest("input") && phase !== 0) return;
     if(!yt && !FILM.url){ const o = app.querySelector("[data-filmopen]"); if(o){ o.classList.remove("nudge"); void o.offsetWidth; o.classList.add("nudge"); } return; }
     if(phase === 0){ if(FILM.playing) return;
-      if(filmPlay(l, 1, () => { R.heard = true; save(); redo(); setTimeout(() => { const i = app.querySelector(".film-in"); if(i) i.focus(); }, 30); })){ R.t0 = R.t0 || Date.now(); R.plays = 1; if(base.b && !isTeacher()) R.v = l._v; save(); }
+      const pre = inp && inp.value.trim() ? 1 : 0;   /* engine 77: typed before the one listen = a guess */
+      if(filmPlay(l, 1, () => { R.heard = true; save(); redo(); setTimeout(() => { const i = app.querySelector(".film-in"); if(i) i.focus(); }, 30); })){ R.t0 = R.t0 || Date.now(); R.plays = 1; R.pre = pre; if(base.b && !isTeacher()) R.v = l._v; save(); }
       return; }
     if(phase === 1){ nudge(); return; }   /* the line waits for what they caught: «Nothing yet ↻» plays it again at once */
     playMore(); });
