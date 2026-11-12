@@ -936,7 +936,8 @@ function attempts_(stu, page, p) {
     }
     at[key] = -1;
     const blank = x.blank === true;
-    rows.push([fmtDate_(Number(x.t) > 0 ? Number(x.t) : Date.now()), stu.code, stu.name, stu.group, page, clean_(x.task, 60), item, clean_(x.type, 20),
+    // engine 71: with seconds, so the order of a student's first answers can be told apart
+    rows.push([Utilities.formatDate(new Date(Number(x.t) > 0 ? Number(x.t) : Date.now()), TZ, "dd.MM HH:mm:ss"), stu.code, stu.name, stu.group, page, clean_(x.task, 60), item, clean_(x.type, 20),
       clean_(x.prompt, 300), clean_(x.answer, 200), blank ? "" : clean_(x.first, 300), blank ? "" : (x.ok === true ? "✓" : "✗"), blank ? "yes" : "", key]
       .concat(listening ? lis(x, x.after) : ATT_LIS.map(() => "")));
   });
@@ -985,7 +986,9 @@ function attemptsSummary_(page) {
     // engine 68: a listening try says after how many listens it was typed; «after one listen» is the measure the AL chat counts
     const lis = r[ATT_HEAD.length + 1] === "" ? null : Number(r[ATT_HEAD.length + 1]);
     if (lis === 1 && !blank) { it.one++; if (ok) it.oneOk++; }
-    it.who.push([String(r[2]), blank ? "" : first, blank ? "blank" : ok ? "ok" : "no", lis, String(r[ATT_HEAD.length] || "")]);
+    // engine 71 (her 12.11 16:17: the results go to the chat that designed the experiment): also the half (Variant) and the time of the first try
+    const tm = r[0] instanceof Date ? r[0].getTime() : (Number(r[0]) || String(r[0] || ""));
+    it.who.push([String(r[2]), blank ? "" : first, blank ? "blank" : ok ? "ok" : "no", lis, String(r[ATT_HEAD.length] || ""), String(r[ATT_HEAD.length + 10] || ""), tm]);
   });
   items.forEach(it => { it.wrong = Object.keys(it.wrong).map(k => [k, it.wrong[k]]).sort((a, b) => b[1] - a[1]); });
   const w = ss.getSheetByName(WANTS);

@@ -606,10 +606,16 @@ body{overflow:hidden}
 .pp-filter input{font:inherit;font-weight:700;border:2px solid var(--line);border-radius:8px;padding:3px 8px;background:var(--card);color:var(--ink)}
 .pp-filter .t{width:5.2em;text-align:center}
 .pp-filter .q{flex:1;min-width:10em}
-.pp-filter .n{color:var(--muted);font-weight:700}
+.pp-filter .n{color:var(--muted);font-weight:700;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.pp-filter .n .bad{color:#B00020}
+.pp-filter .nav{font:inherit;font-size:1.15rem;line-height:1;font-weight:900;width:28px;height:26px;border-radius:8px;border:2px solid var(--instr);background:var(--card);color:var(--instr);cursor:pointer;padding:0 0 2px}
+.chip.sm{font-size:.75rem;padding:1px 8px}
+.cue-x .hit{box-shadow:inset 0 -3px 0 #FF8A00;font-weight:800}
+.cue-x .hit.now{background:rgba(255,138,0,.28);border-radius:3px}
 .pp-cues{overflow:auto;min-height:0;padding-right:4px}
 .cue{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:8px;align-items:baseline;padding:3px 4px;border-radius:8px}
 .cue.cur{background:var(--ground)}
+.cue.wsel{box-shadow:inset 4px 0 0 var(--instr)}
 .cue-pl{width:26px;height:26px;border-radius:50%;border:0;background:var(--instr);color:var(--instr-ink);font-size:.7rem;cursor:pointer;align-self:center}
 .cue-pl.ctxpick{background:#E08A00}
 .cue-pl.stopb{background:var(--ink);color:var(--card);font-size:.8rem}
@@ -1835,7 +1841,8 @@ function gDemo(host, kind, {onDone = null} = {}){
    computer, and with her code in her table (sheet «Decoding bank»), so it is the same on both computers. ================= */
 const P = {v: null, url: "", film: "", sub: "", key: "", cues: [], pieces: [], features: [], cur: -1, sel: null, cursor: null, win: [0, 12],
   draft: null, ctxPick: false, from: "", to: "", q: "", playing: null, raf: 0, au: null, pk: {lo: {}, hi: {}}, pkKey: "", pkDirty: false,
-  dirty: {p: new Set(), del: new Set(), f: false}, saveT: 0, saved: "", status: "", rate: 1, keepN: 0, dragging: false, mouseDown: false};
+  dirty: {p: new Set(), del: new Set(), f: false}, saveT: 0, saved: "", status: "", rate: 1, keepN: 0, dragging: false, mouseDown: false,
+  whole: true, only: false, hits: {}, hitList: [], hitAt: -1, hitKey: "", findBad: false};
 const isHer = () => { try{ return localStorage.getItem("hw-role") === "teacher" && !!localStorage.getItem("hw-code"); }catch(e){ return false; } };
 const tableOn = () => TABLE_PAGE && !!LIVE_URL && isHer();
 const PALETTE = ["#FFF06A", "#7CF07C", "#9FD3FF", "#FFB3C7", "#FFC98A", "#C9B3FF", "#A8F0E4", "#E0E0A0"];
@@ -1908,14 +1915,15 @@ function follow(t){
   while(lo <= hi){ const m = (lo + hi) >> 1; if(C[m].s <= t + .02){ k = m; lo = m + 1; } else hi = m - 1; }
   if(k > -1 && k !== P.cur) setCur(k);
 }
-function setCur(k){
+function setCur(k, force){
   const L = document.getElementById("pp-cues"); if(!L){ P.cur = k; return; }
   const old = L.querySelector(".cue.cur"), el = L.querySelector(`.cue[data-c="${k}"]`), lr = L.getBoundingClientRect();
   const seen = x => { const a = x.getBoundingClientRect(); return a.bottom > lr.top && a.top < lr.bottom; };
-  const lead = !P.mouseDown && (!old || seen(old));   /* she follows along (her line was on screen) → the list follows; she scrolled away → it stays */
+  const lead = force || (!P.mouseDown && (!old || seen(old)));   /* she follows along (her line was on screen) → the list follows; she scrolled away → it stays */
   if(old) old.classList.remove("cur"); P.cur = k;
   if(el){ el.classList.add("cur"); const a = el.getBoundingClientRect();
     if(lead && (a.bottom > lr.bottom - 6 || a.top < lr.top + 2)) L.scrollTo({top: L.scrollTop + (a.top - lr.top) - lr.height * .25, behavior: "smooth"}); }
+  markSel();
   nowMark();
 }
 /* the line that plays on shows ■ (stop) instead of ▶ */
@@ -1936,6 +1944,12 @@ function bankMark(){ document.querySelectorAll(".pp-bank li.now").forEach(l => l
 function bankSet(id, ch){ const x = P.pieces.find(p => p.id === id); if(!x) return; Object.assign(x, ch, {u: Date.now()}); if(P.draft && P.draft.id === id) Object.assign(P.draft, ch);
   P.dirty.p.add(id); saveSoon(); renderSide(); }
 const roleOf = x => x.role === "train" ? "train" : "diag";
+/* tools 36 (her 12.11 14:07): a piece chosen on the waveform lights up its line(s) in the transcript and brings them on screen, to start working on them at once */
+const inSel = c => P.sel && c.s < P.sel.e && c.e > P.sel.s;
+function markSel(){ const L = document.getElementById("pp-cues"); if(!L) return; L.querySelectorAll(".cue.wsel").forEach(x => x.classList.remove("wsel"));
+  if(P.sel) P.cues.forEach((c, i) => { if(c.e > P.sel.s && c.s < P.sel.e){ const el = L.querySelector(`.cue[data-c="${i}"]`); if(el) el.classList.add("wsel"); } }); }
+function cueAt(s, e){ let best = -1, bo = 0; P.cues.forEach((c, i) => { const o = Math.min(e, c.e) - Math.max(s, c.s); if(o > bo){ bo = o; best = i; } });
+  if(best < 0){ for(let i = 0; i < P.cues.length && P.cues[i].s <= s; i++) best = i; } return best; }
 function runFrom(i){ const c = P.cues[i]; if(!c) return;
   if(P.ctxPick && P.draft){ P.draft.ctx = c.s; P.ctxPick = false; renderSide(); paintCues(); return; }
   P.cur = i; winTo(c.s, c.e); P.sel = null; P.cursor = c.s; paintCues(); play(c.s, Infinity, "run"); }
@@ -1997,7 +2011,7 @@ function wireWave(){
   cv.addEventListener("pointerup", e => { const d = drag; drag = null; P.dragging = false; if(!d) return; if(d.edge) cancelAnimationFrame(d.edge); if(d.pan){ cv.style.cursor = "grab"; return; } stop();
     if(!d.moved){ P.sel = null; P.cursor = tAt(e); } else { d.x = e.clientX; drag = d; selTo(); drag = null; P.cursor = P.sel.s; }
     if(P.ctxPick && P.draft){ P.draft.ctx = P.cursor; P.ctxPick = false; renderSide(); }
-    waveDraw(); if(d.moved) playPiece(); else play(P.cursor, Infinity, "run"); });
+    waveDraw(); if(d.moved){ const k = cueAt(P.sel.s, P.sel.e); if(k > -1) setCur(k, true); playPiece(); } else { markSel(); play(P.cursor, Infinity, "run"); } });
   cv.addEventListener("pointercancel", () => { if(drag && drag.edge) cancelAnimationFrame(drag.edge); drag = null; P.dragging = false; });
   cv.addEventListener("wheel", e => { e.preventDefault(); let [w0, w1] = P.win; const w = w1 - w0;
     if(e.ctrlKey || e.metaKey){ const t = tAt(e), nw = Math.max(2, Math.min(600, w * (e.deltaY > 0 ? 1.25 : .8))); w0 = t - (t - w0) * nw / w; w1 = w0 + nw; }
@@ -2117,22 +2131,46 @@ function addFeature(name, parent){ name = String(name || "").trim(); if(!name) r
   P.features.push(f); P.dirty.f = true; saveSoon(); return f; }
 /* ---------- the screen ---------- */
 const nudge = sel => { const x = document.querySelector(sel); if(x){ x.classList.remove("pop"); void x.offsetWidth; x.classList.add("pop"); x.focus && x.focus(); } };
-/* find: words, or a regex — with /…/ or without (her 13:37: «can|can't», «(can|can't)»: | ( ) [ ] \ * + ? make it a regex); ’ and ' are the same */
-function shown(){ const a = parseT(P.from), b = parseT(P.to), ap = t => String(t).replace(/[’‘]/g, "'"); let re = null, q = ap(P.q.trim());
-  if(/^\/.+\/[a-z]*$/i.test(q)){ try{ const m = q.match(/^\/(.+)\/([a-z]*)$/i); re = new RegExp(m[1], m[2].includes("i") ? m[2] : m[2] + "i"); }catch(e){ re = null; } }
-  else if(/[|()[\]\\*+?^$]/.test(q)){ try{ re = new RegExp(q, "i"); }catch(e){ re = null; } }
-  return P.cues.map((c, i) => i).filter(i => { const c = P.cues[i]; if(a != null && c.e < a) return false; if(b != null && c.s > b) return false;
-    if(!q) return true; const t = ap(c.t); return re ? re.test(t) : t.toLowerCase().includes(q.toLowerCase()); }); }
+/* find (tools 36, her 12.11 13:37–14:06): words, or a regex — with /…/ or without (| ( ) [ ] \\ * + ? make it one); ’ = '; whole words by default (no «can» in «applicants»).
+   The transcript stays whole (the context is needed to set the context): the finds are underlined, Enter / › go to the next one, ‹ / Shift+Enter back; «only these» shows just their lines. */
+const apos = t => String(t).replace(/[’‘]/g, "'");
+function findRe(){ const q = apos(P.q.trim()); if(!q) return null; const m = q.match(/^\/(.+)\/([a-z]*)$/i);
+  let src = m ? m[1] : /[|()[\]\\*+?^$]/.test(q) ? q : q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  if(P.whole) src = `(?<![A-Za-z0-9'])(?:${src})(?![A-Za-z0-9'])`;
+  try{ return new RegExp(src, "gi"); }catch(e){ return false; } }
+function inScene(c){ const a = parseT(P.from), b = parseT(P.to); return !(a != null && c.e < a) && !(b != null && c.s > b); }
+function computeHits(){ const re = findRe(), key = P.q + "|" + P.whole + "|" + P.from + "|" + P.to + "|" + P.cues.length;
+  if(key === P.hitKey) return; P.hitKey = key; P.hits = {}; P.hitList = []; P.findBad = re === false; P.hitAt = -1; if(!re) return;
+  P.cues.forEach((c, i) => { if(!inScene(c)) return; const t = apos(c.t), L = []; let m; re.lastIndex = 0;
+    while((m = re.exec(t))){ if(!m[0].length){ re.lastIndex++; continue; } L.push([m.index, m.index + m[0].length]); P.hitList.push([i, m.index]); }
+    if(L.length) P.hits[i] = L; }); }
+function shown(){ computeHits(); const only = P.only && P.q.trim();
+  return P.cues.map((c, i) => i).filter(i => inScene(P.cues[i]) && (!only || P.hits[i])); }
+function gotoHit(dir){ computeHits(); const H = P.hitList, n = H.length; if(!n) return;
+  if(P.hitAt < 0){ const from = P.cur > -1 ? P.cur : 0; let k = H.findIndex(h => h[0] >= from); if(k < 0) k = 0; P.hitAt = dir > 0 ? k : (k - 1 + n) % n; }   /* the first from the line she is on */
+  else P.hitAt = (P.hitAt + dir + n) % n;
+  const i = H[P.hitAt][0], c = P.cues[i]; P.cur = i; P.sel = null; P.cursor = c.s; winTo(c.s, c.e); paintCues(); scrollToCue(i); waveDraw(); }
+function findNav(){ const el = document.getElementById("pp-n"); if(!el) return; const q = P.q.trim();
+  if(!P.cues.length){ el.innerHTML = ""; return; }
+  if(!q){ el.innerHTML = `${P.cues.filter(inScene).length} lines`; return; }
+  const n = P.hitList.length;
+  el.innerHTML = (P.findBad ? `<span class="bad">regex?</span>` : `${P.hitAt > -1 ? `${P.hitAt + 1} / ` : ""}${n} found`)
+    + (n ? ` <button class="nav" data-hit="-1" title="Back (Shift+Enter)">‹</button><button class="nav" data-hit="1" title="Next (Enter)">›</button>` : "")
+    + ` <button class="chip sm ${P.whole ? "on" : ""}" data-whole title="Whole words: «can» is not found in «applicants»">whole words</button><button class="chip sm ${P.only ? "on" : ""}" data-only title="Show only the lines with a find">only these</button>`; }
 function cueHTML(i){
   const c = P.cues[i], marks = [];
   const add = (x, cls) => { if(i < x.c0 || i > x.c1) return; const base = cueOffset(x.c0, i), s = Math.max(0, x.gs - base), e = Math.min(c.t.length, x.ge - base); if(e > s) marks.push({s, e, x, cls}); };
   P.pieces.forEach(x => { if(!P.draft || P.draft.id !== x.id) add(x, x.id); }); if(P.draft) add(P.draft, "draft");
   marks.sort((m, n) => m.s - n.s); let h = "", at = 0;
-  marks.forEach(m => { if(m.s < at) return; h += esc(c.t.slice(at, m.s));
-    h += m.cls === "draft" ? `<mark class="draft" style="background:${featColor(P.draft.f)}">${esc(c.t.slice(m.s, m.e))}</mark>`
-      : `<mark data-pc="${m.x.id}" class="${m.x.hidden ? "hid" : ""}" style="background:${featColor(m.x.f)}" title="${esc(featName(m.x.f))}${m.x.hidden ? " · hidden" : ""}">${esc(c.t.slice(m.s, m.e))}</mark>`; at = m.e; });
-  h += esc(c.t.slice(at));
-  return `<div class="cue ${i === P.cur ? "cur" : ""}" data-c="${i}"><button class="cue-pl ${P.ctxPick ? "ctxpick" : ""}" data-cpl="${i}" aria-label="${P.ctxPick ? "Context from this line" : "Play from this line"}" title="${P.ctxPick ? "Context from this line" : "Play from this line"}">${P.ctxPick ? "⏮" : "▶"}</button><span class="cue-t" data-cpl="${i}">${tmS(c.s)}</span><span class="cue-x" data-cx="${i}">${h}</span></div>`;
+  const H = P.hits && P.hits[i], curAt = P.hitAt > -1 && P.hitList[P.hitAt] && P.hitList[P.hitAt][0] === i ? P.hitList[P.hitAt][1] : -1;
+  const hl = (a0, b0) => { const t = c.t; if(!H) return esc(t.slice(a0, b0)); let out = "", at2 = a0;   /* the finds, underlined (inside pieces too) */
+    H.forEach(([a, b]) => { const x = Math.max(a, at2), y = Math.min(b, b0); if(y <= x) return; out += esc(t.slice(at2, x)) + `<span class="hit${a === curAt ? " now" : ""}">${esc(t.slice(x, y))}</span>`; at2 = y; });
+    return out + esc(t.slice(at2, b0)); };
+  marks.forEach(m => { if(m.s < at) return; h += hl(at, m.s);
+    h += m.cls === "draft" ? `<mark class="draft" style="background:${featColor(P.draft.f)}">${hl(m.s, m.e)}</mark>`
+      : `<mark data-pc="${m.x.id}" class="${m.x.hidden ? "hid" : ""}" style="background:${featColor(m.x.f)}" title="${esc(featName(m.x.f))}${m.x.hidden ? " · hidden" : ""}">${hl(m.s, m.e)}</mark>`; at = m.e; });
+  h += hl(at, c.t.length);
+  return `<div class="cue ${i === P.cur ? "cur" : ""} ${inSel(c) ? "wsel" : ""}" data-c="${i}"><button class="cue-pl ${P.ctxPick ? "ctxpick" : ""}" data-cpl="${i}" aria-label="${P.ctxPick ? "Context from this line" : "Play from this line"}" title="${P.ctxPick ? "Context from this line" : "Play from this line"}">${P.ctxPick ? "⏮" : "▶"}</button><span class="cue-t" data-cpl="${i}">${tmS(c.s)}</span><span class="cue-x" data-cx="${i}">${h}</span></div>`;
 }
 function renderTop(){ const t = document.getElementById("pp-top"); if(!t) return;
   t.innerHTML = `<h1>🎧 Decoding prep</h1>
@@ -2179,14 +2217,14 @@ function bankHTML(){
 function renderSide(){ const s = document.getElementById("pp-side"); if(s){ const top = (s.querySelector(".pp-bank") || {}).scrollTop, sc = s.scrollTop; s.innerHTML = editorHTML() + bankHTML(); s.scrollTop = sc; } const L = document.getElementById("pp-cues"); if(L) paintCues(); bankMark(); waveDraw(); }
 function paintCues(){ const L = document.getElementById("pp-cues"); if(!L) return; const list = shown();
   L.innerHTML = list.length ? list.map(cueHTML).join("") : `<p class="pp-hint">${P.cues.length ? "No lines match." : "Open the subtitles (.srt) — the lines appear here."}</p>`;
-  const n = document.getElementById("pp-n"); if(n) n.textContent = P.cues.length ? `${list.length} line${list.length === 1 ? "" : "s"}` : ""; nowMark(); }
+  findNav(); nowMark(); }
 function scrollToCue(i){ const el = document.querySelector(`.cue[data-c="${i}"]`); if(el) el.scrollIntoView({block: "center", behavior: "smooth"}); }
 function render(){
   const app = document.getElementById("app");
   if(!app.dataset.built){ app.dataset.built = "1";
     app.innerHTML = `<div class="pp-top" id="pp-top"></div>
       <div class="pp-main"><div class="pp-left"><div class="pp-filter">Lines <input class="t" data-from placeholder="from" value="${esc(P.from)}"> – <input class="t" data-to placeholder="to" value="${esc(P.to)}">
-          <input class="q" data-q placeholder="find: words, or /regex/" value="${esc(P.q)}"><span class="n" id="pp-n"></span></div><div class="pp-cues" id="pp-cues"></div></div>
+          <input class="q" data-q placeholder="find: words or a regex · Enter = next" value="${esc(P.q)}"><span class="n" id="pp-n"></span></div><div class="pp-cues" id="pp-cues"></div></div>
         <div class="pp-right"><div class="pp-vid" id="pp-vid"><div class="msg">Your film plays here — from your computer, nothing is uploaded.</div></div><div class="pp-side" id="pp-side"></div></div></div>
       <div class="pp-wave"><canvas data-wave aria-label="The sound: drag to choose a piece"></canvas>
         <div class="pp-ctl"><button class="pp-btn" data-pp-piece>▶ Play the piece <kbd>Space</kbd></button><span class="pp-sel" id="pp-sel"></span>
@@ -2204,6 +2242,9 @@ function wire(){
     if((x = on("[data-cpl]"))){ if(x.classList.contains("stopb")){ stop(); return; } runFrom(+x.dataset.cpl); return; }
     if((x = on("mark[data-pc]")) && window.getSelection().isCollapsed){ openPiece(x.dataset.pc); return; }
     if((x = on(".cue-x")) && window.getSelection().isCollapsed && e.detail <= 1){ runFrom(+x.dataset.cx); return; }   /* a click in the words (not a drag, not a double click) */
+    if((x = on("[data-hit]"))){ gotoHit(+x.dataset.hit); return; }
+    if(on("[data-whole]")){ P.whole = !P.whole; store.set("prep-filter", {from: P.from, to: P.to, q: P.q, whole: P.whole, only: P.only}); paintCues(); return; }
+    if(on("[data-only]")){ P.only = !P.only; store.set("prep-filter", {from: P.from, to: P.to, q: P.q, whole: P.whole, only: P.only}); paintCues(); if(P.cur > -1) scrollToCue(P.cur); return; }
     if((x = on("[data-bplay]"))){ if(P.playing && P.playing.id === x.dataset.bplay) stop(); else playBank(x.dataset.bplay); return; }
     if((x = on("[data-ball]"))){ e.preventDefault(); playAll(x.dataset.ball.split(",").filter(Boolean)); return; }
     if((x = on("[data-bhard]"))){ const [id, k] = x.dataset.bhard.split(":"), p = P.pieces.find(q => q.id === id); if(p) bankSet(id, {[k]: !p[k]}); return; }
@@ -2230,8 +2271,9 @@ function wire(){
   });
   app.addEventListener("input", e => { const t = e.target;
     if(t.matches("[data-from]")) P.from = t.value; else if(t.matches("[data-to]")) P.to = t.value; else if(t.matches("[data-q]")) P.q = t.value; else { if(t.matches("[data-note]") && P.draft) P.draft.note = t.value; return; }
-    store.set("prep-filter", {from: P.from, to: P.to, q: P.q}); paintCues(); });
+    store.set("prep-filter", {from: P.from, to: P.to, q: P.q, whole: P.whole, only: P.only}); paintCues(); });
   app.addEventListener("keydown", e => { const t = e.target;
+    if(t.matches("[data-q]") && e.key === "Enter"){ e.preventDefault(); gotoHit(e.shiftKey ? -1 : 1); }
     if(t.matches("[data-newf]") && e.key === "Enter"){ e.preventDefault(); app.querySelector("[data-addf]").click(); }
     if(t.matches("[data-note]") && e.key === "Enter"){ e.preventDefault(); app.querySelector("[data-save]").click(); } });
   document.getElementById("pp-cues").addEventListener("mouseup", () => setTimeout(selToDraft, 0));
@@ -2257,7 +2299,7 @@ function chatText(){
   return out.join("\n");
 }
 /* the start: the filter as she left it; the files remembered by the browser come back with one click (▶ Open … again) */
-(() => { const f = store.get("prep-filter"); if(f){ P.from = f.from || ""; P.to = f.to || ""; P.q = f.q || ""; } })();
+(() => { const f = store.get("prep-filter"); if(f){ P.from = f.from || ""; P.to = f.to || ""; P.q = f.q || ""; P.whole = f.whole !== false; P.only = !!f.only; } })();
 P.status = tableOn() ? "Your code is here: the bank goes to your table" : TABLE_PAGE ? "Enter your code on any homework page to keep the bank in your table" : "This page keeps the bank on this computer · the live page keeps it in your table";
 render();
 </script>

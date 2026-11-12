@@ -1,0 +1,19 @@
+{
+ "title": "Can you hear it? There is, there's, it's, that's, can, can't",
+ "group": "b2",
+ "file": "2026-11-11.html",
+ "listed": false,
+ "assets": {
+  "STICKER": "sticker.png",
+  "TQ": "tq.json"
+ },
+ "class": {
+  "topics": [
+   {
+    "t": "The Intern: Ben's video",
+    "href": "../tools/b2-2026-11-11/bens-video-class.html"
+   }
+  ]
+ },
+ "earlier": false
+}

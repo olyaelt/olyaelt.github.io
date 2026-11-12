@@ -1008,7 +1008,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = ["click on the top line to hear the context","click on the line with the gap and try to catch what's in the gap","check","listen again — how did the expression sound?","optional: pronounce the expression like the speaker"];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "70";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "71";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -1074,6 +1074,21 @@ const asStudent = () => !!(SYNC_URL && ls.get("hw-code") && ls.get("hw-role") ==
 const FT_KEY = "hw-first-" + PAGE_KEY;
 let FIRST = (() => { try{ return JSON.parse(localStorage.getItem(FT_KEY) || "{}") || {}; }catch(e){ return {}; } })();
 const ftPlain = h => String(h == null ? "" : h).replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
+/* engine 71 (her 12.11 16:16, the AL chat's order comparison: «давай это сделаем автоматически, иначе мы их запутаем»; «чем меньше не нужного
+   им текста, тем лучше»): ORDER_AB = {name, x: [task ids], y: [task ids]} in a page's content — each student simply gets the tasks in his half's
+   order, with no word about it. The half comes from her table (sheet «A/B halves»: equal halves in each group, the same in every homework);
+   without a code or before the table answers, this device picks one. The order is kept from the first task he opens, so it never jumps.
+   Her view: the x order and one line saying so. Every first try on the page says its half (Variant) and ORDER_AB.name (Compare). */
+const orderAB = () => (typeof ORDER_AB !== "undefined" && ORDER_AB && ORDER_AB.x) ? ORDER_AB : null;
+const orderKey = () => "hw-order-" + PAGE_KEY;
+function abHalf(){ const c = myCode(), t = c && ls.get("hw-half-" + c); if(t === "x" || t === "y") return t;
+  let h = ls.get("hw-half-local"); if(h !== "x" && h !== "y"){ h = Math.random() < .5 ? "x" : "y"; ls.set("hw-half-local", h); } return h; }
+function orderHalf(){ const O = orderAB(); if(!O || isTeacher()) return "x"; const f = ls.get(orderKey()); return f === "x" || f === "y" ? f : abHalf(); }
+function applyOrder(){ const O = orderAB(); if(!O) return false; const ids = O[orderHalf()] || O.x, before = TASKS.map(t => t.id).join();
+  TASKS.sort((a, b) => { const i = ids.indexOf(a.id), j = ids.indexOf(b.id); return (i < 0 ? 99 : i) - (j < 0 ? 99 : j); });
+  return TASKS.map(t => t.id).join() !== before; }
+function fixOrder(){ if(orderAB() && !isTeacher() && !ls.get(orderKey())) ls.set(orderKey(), orderHalf()); }
+const orderFT = () => orderAB() && !isTeacher() ? {v: orderHalf(), ab: orderAB().name || "order"} : {};
 function firstTry(t, item, o){
   if(!t || t._once || t._review || isTeacher()) return;
   const id = t.id + ":" + item; if(FIRST[id]) return;
@@ -1081,6 +1096,7 @@ function firstTry(t, item, o){
   FIRST[id] = {task: t.id, item: id, type: o.type, prompt: ftPlain(o.prompt).slice(0, 300), answer: ftPlain(o.answer).slice(0, 200), first: first.slice(0, 300), ok: !!o.ok && !!first, blank: !first, t: Date.now()};
   /* engine 68 (AL chat's handoff 12.11 09:10: one journal): a listening item also says after how many listens it was typed and how many of
      its words were right, so a first try after one listen can be told from one after five */
+  o = Object.assign({}, orderFT(), o);
   ["words", "lis", "slow", "v", "ab"].forEach(k => { if(o[k] != null && o[k] !== false) FIRST[id][k] = o[k]; });
   try{ localStorage.setItem(FT_KEY, JSON.stringify(FIRST)); }catch(e){}
   ftSendSoon();
@@ -1119,7 +1135,7 @@ async function syncNow(code, opts={}){
   syncBusy = true;
   const res = await post({ action:"sync", code, page:PAGE_KEY, date:LESSON.date,
       tasks: TASKS.map(t=>({id:t.id, title:t.title + (t.film && t.film.optional ? " (optional)" : ""), frames:framesOf(t)})),
-      ab: TASKS.some(t => t.film && t.film.ab) ? 1 : 0,   /* engine 69: her table gives this student a half for the A/B lines */
+      ab: TASKS.some(t => t.film && t.film.ab) || orderAB() ? 1 : 0,   /* engine 69, 71: her table gives this student a half for the A/B lines and the order */
       teacher: ls.get("hw-role") === "teacher" ? 1 : 0,   /* engine 70: her page only reads, so her table answers it without the queue */
       events: Object.entries(marks).map(([task,m])=>({task, done:m.done, ts:m.ts})) }, opts);
   syncBusy = false;
@@ -1143,7 +1159,8 @@ async function syncNow(code, opts={}){
     });
     saveMarks();
     if(res.work){ work = res.work; saveWork(); refreshWork(); }
-    if(res.half && code === myCode()) ls.set("hw-half-" + code, res.half);
+    if(res.half && code === myCode()){ ls.set("hw-half-" + code, res.half);
+      if(applyOrder() && !current){ const y = scrollY; renderHome(); scrollTo(0, y); } }   /* engine 71: the table's half, until he opens a task */
     if(code === myCode()){ flushFlags(); ftSendSoon(); wantSendSoon(); }
     if(res.group && code === myCode()){ groupStats = res.group; ls.set("hw-group-"+GROUP_ID, JSON.stringify(res.group)); refreshMeter(); checkMilestone(res.group, GROUP_ID); }
     if(gotMe(res, code)) refreshMeter();
@@ -1888,6 +1905,7 @@ function renderHome(justDone){
       ${TASKS.some(t=>!t.later && !(fileTask(t) && !FILM_DESK) && !(t.film && t.film.optional)) ? `<p class="total">About ${Math.round(TASKS.filter(t=>!t.later && !(fileTask(t) && !FILM_DESK) && !(t.film && t.film.optional)).reduce((s,t)=>s+minutesOf(t),0)/5)*5} minutes in total — you don't have to do it all in one go.${TASKS.some(t=>t.later)?" Tasks marked <b>for later</b> aren't in that time: come back to them when you like.":""}${TASKS.some(t=>t.film && t.film.optional)?" <b>Optional</b> tasks aren't in it either.":""}</p>` : ""}
     </header>
     ${classHTML()}
+    ${isTeacher() && orderAB() ? `<p class="small order-note">🔀 Students see these tasks in their half's order (sheet «A/B halves»): x — ${orderAB().x.map(i => esc((TASKS.find(t => t.id === i) || {}).title || i)).join(" → ")}; y — ${(orderAB().y || []).map(i => esc((TASKS.find(t => t.id === i) || {}).title || i)).join(" → ")}. You see the x order.</p>` : ""}
     ${isTeacher() && SYNC_URL ? `<p class="ft-open-row"><button class="btn" id="ft-open">📊 First tries</button><span class="small">what they typed or chose before the answer was shown</span></p>` : ""}
     <div id="sync-slot">${syncHTML()}</div>
     <div id="fbnew-slot">${newFbHTML()}</div>
@@ -1933,6 +1951,7 @@ function clearTaskState(id){
 function openTask(id, idx, mode){
   if(LOCKED()) return renderGate();
   const t = TASKS.find(x=>x.id===id); if(!t){ renderHome(); return; }
+  fixOrder();   /* engine 71 */
   if(mode === "fresh") clearTaskState(id);
   const n = (t.steps || []).length, mine = !isTeacher() && t.kind === "steps" && mode !== "fresh" && idx == null;
   if(mine && taskDone(id)){ current = Object.assign({}, t, {_review: true}); const p = posOf(id); stepIdx = p != null && p < n ? p : Math.max(0, n - 1); }
@@ -3454,12 +3473,38 @@ function ftCSV(res){
   (res.wants || []).forEach(w => rows.push([title(w.task), w.line, "want", w.text, "", w.n, "", "", FT_MODE === "student" ? w.who.join(" | ") : ""]));
   return "﻿" + rows.map(r => r.map(q).join(",")).join("\r\n");
 }
+/* engine 71 (her 12.11 16:17: «как потом передавать результаты ветке, которая дизайнила эксперимент»): 📋 For the analysis = every first try on this
+   page as a table to paste into that chat — no names (S1, S2… in alphabetical order), the half, the time — and the order each student really
+   did the tasks in (by the time of their first answers). */
+function ftForAnalysis(res){
+  const one = v => String(v == null ? "" : v).replace(/[\t\r\n]+/g, " ").trim();
+  const names = [...new Set(res.items.flatMap(it => it.who.map(w => w[0])))].sort((a, b) => a.localeCompare(b)), S = n => "S" + (names.indexOf(n) + 1);
+  const title = id => (TASKS.find(t => t.id === id) || {}).title || id;
+  /* the journal's Time is «dd.MM HH:mm(:ss)» (her table may also turn it into a date) */
+  const when = x => { if(typeof x === "number") return x; const m = String(x || "").match(/^(\d{1,2})\.(\d{1,2})\.?(?:\d{2,4})?\s+(\d{1,2}):(\d{2})(?::(\d{2}))?/);
+    if(m) return new Date(new Date().getFullYear(), +m[2] - 1, +m[1], +m[3], +m[4], +(m[5] || 0)).getTime(); const d = Date.parse(x); return isNaN(d) ? NaN : d; };
+  const two = n => String(n).padStart(2, "0"), tm = x => { const ms = when(x); if(isNaN(ms)) return ""; const d = new Date(ms);
+    return `${two(d.getDate())}.${two(d.getMonth() + 1)} ${two(d.getHours())}:${two(d.getMinutes())}:${two(d.getSeconds())}`; };
+  const O = orderAB(), out = [`First tries · ${PAGE_KEY.replace(/^hw-ge-/, "")} · «${document.title}» · as of ${tm(FT_AT || Date.now())}`];
+  if(O) out.push(`The order comparison «${O.name || "order"}»: half x — ${O.x.map(title).join(" → ")}; half y — ${(O.y || []).map(title).join(" → ")}.`);
+  out.push(`${names.length} student${names.length === 1 ? "" : "s"}, S1…S${names.length} (no names). One row per gap: the first thing typed before Check.`, "");
+  out.push(["student", "half", "task", "item", "prompt", "answer", "first try", "result", "listens before", "words right", "time"].join("\t"));
+  const by = {};
+  res.items.forEach(it => it.who.forEach(([n, f, r, lis, w, v, t]) => {
+    out.push([S(n), v || "", title(it.task), it.item, it.prompt, it.answer, f, r === "ok" ? "right" : r === "no" ? "wrong" : "opened without a try", lis == null ? "" : lis, w || "", tm(t)].map(one).join("\t"));
+    const x = by[S(n)] = by[S(n)] || {half: "", at: {}}; if(v) x.half = v; const ms = when(t);
+    if(!isNaN(ms) && (x.at[it.task] == null || ms < x.at[it.task])) x.at[it.task] = ms; }));
+  out.push("", "The order each student did the tasks in (by the time of their first answers):");
+  Object.keys(by).sort((a, b) => +a.slice(1) - +b.slice(1)).forEach(k => { const x = by[k], ts = Object.keys(x.at).sort((a, b) => x.at[a] - x.at[b]);
+    out.push(`${k}${x.half ? " · half " + x.half : ""}: ${ts.map(id => title(id) + " (" + tm(x.at[id]) + ")").join(" → ")}`); });
+  return out.join("\n");
+}
 async function renderFirstTries(fresh){
   current = null; stopPlayer(); filmStop();
   app.innerHTML = `<div class="taskbar"><div class="taskbar-row"><button class="back" id="home">← All tasks</button></div><h2 class="task-title">📊 First tries</h2></div>
     <div class="instr">What they typed or chose before the answer was shown — the first time only. Only you see this.</div>
     <div class="ft-bar"><span class="seg" role="group" aria-label="Show"><button data-ftm="item" aria-pressed="${FT_MODE === "item"}">By item</button><button data-ftm="student" aria-pressed="${FT_MODE === "student"}">By student</button></span>
-      <button class="btn" id="ft-csv">⬇ CSV</button><button class="btn" id="ft-ref">↻ Refresh</button><span class="small" id="ft-msg">Loading from your table…</span></div>
+      <button class="btn" id="ft-csv">⬇ CSV</button><button class="btn" id="ft-ai" title="Every first try without names, with the half and the time — to paste into the chat that planned the experiment">📋 For the analysis</button><button class="btn" id="ft-ref">↻ Refresh</button><span class="small" id="ft-msg">Loading from your table…</span></div>
     <div class="panel ft" id="ft-body"></div>`;
   document.getElementById("home").addEventListener("click", () => goHome());
   const msg = document.getElementById("ft-msg"), body = document.getElementById("ft-body");
@@ -3470,6 +3515,7 @@ async function renderFirstTries(fresh){
   paint();
   app.querySelectorAll("[data-ftm]").forEach(b => b.addEventListener("click", () => { FT_MODE = b.dataset.ftm; paint(); }));
   document.getElementById("ft-ref").addEventListener("click", () => renderFirstTries(true));
+  document.getElementById("ft-ai").addEventListener("click", e => copyText(ftForAnalysis(res), e.currentTarget));
   document.getElementById("ft-csv").addEventListener("click", () => { const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([ftCSV(res)], {type: "text/csv;charset=utf-8"})); a.download = PAGE_KEY.replace(/^hw-ge-/, "") + "-first-tries" + (FT_MODE === "student" ? "-by-student" : "") + ".csv";
     document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000); });
@@ -3895,6 +3941,7 @@ function toOwnGroup(gid){
   document.body.innerHTML = ""; location.replace("../" + gid + "/index.html"); return true;
 }
 const start = (location.hash||"").replace("#","");
+applyOrder();   /* engine 71 */
 if(!(myCode() && toOwnGroup(ls.get("hw-gid")))){
   if(start && TASKS.some(t=>t.id===start)) openTask(start); else renderHome();
   if(myCode()) syncNow();

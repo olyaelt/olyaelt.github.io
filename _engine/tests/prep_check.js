@@ -117,8 +117,9 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
   await choose(p, 4, 'of the');
   const box = await p.locator('canvas[data-wave]').boundingBox();
   await p.mouse.move(box.x + box.width * .35, box.y + 40); await p.mouse.down(); await p.mouse.move(box.x + box.width * .45, box.y + 40, {steps: 5}); await p.mouse.up(); await p.waitForTimeout(200);
-  st = await p.evaluate(() => ({sel: P.sel, playing: P.playing && P.playing.what}));
+  st = await p.evaluate(() => ({sel: P.sel, playing: P.playing && P.playing.what, cur: P.cur, k: cueAt(P.sel.s, P.sel.e), wsel: document.querySelectorAll('.cue.wsel').length}));
   ok(st.sel && st.sel.e > st.sel.s && st.playing === 'piece', '4: the drag on the waveform: ' + JSON.stringify(st));
+  ok(st.k > -1 && st.cur === st.k && st.wsel >= 1, '4: the waveform piece did not light up its line: ' + JSON.stringify(st));
   await p.click('[data-pp-time]');
   ok(await p.evaluate(() => Math.abs(P.draft.s - P.sel.s) < .001), '4: the piece time from the waveform');
   ok(!(await p.$('[data-newf]')), '4: the add row is open on a new piece'); await p.click('[data-addopen]');
@@ -131,11 +132,20 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec';
   await p.click('[data-save]'); await p.waitForTimeout(1600);
   rows = bank().filter(r => r[0] !== '_features');
   ok(rows.length === 2 && rows.some(r => r[5] === 'weak of' && r[6] === 'C1' && r[8] === ''), '4: the second row: ' + JSON.stringify(rows));
-  // 5. find: words, or /regex/
-  await p.fill('[data-q]', "/can'?t/"); await p.waitForTimeout(150);
-  const found = await p.locator('.cue').count(); ok(found === 2, "5: /can'?t/ found " + found + ' lines');
-  await p.fill('[data-q]', "/can|can't/"); await p.waitForTimeout(150); const nRe = await p.locator('.cue').count();
-  for (const q of ["can|can't", "(can|can’t)"]) { await p.fill('[data-q]', q); await p.waitForTimeout(150); const n = await p.locator('.cue').count(); ok(nRe >= 2 && n === nRe, '5: «' + q + '» found ' + n + ', /can|can\'t/ ' + nRe); }
+  // 5. find (her 14:06): the transcript stays whole, the finds are underlined; whole words by default; Enter / › to the next, Shift+Enter back; «only these»
+  const fnd = async q => { await p.fill('[data-q]', q); await p.waitForTimeout(150); return p.evaluate(() => ({lines: document.querySelectorAll('.cue').length, hits: document.querySelectorAll('.cue-x .hit').length, n: document.getElementById('pp-n').textContent})); };
+  let F5 = await fnd("/can'?t/"); ok(F5.lines === 40 && F5.hits === 2 && /2 found/.test(F5.n), "5: /can'?t/: " + JSON.stringify(F5));
+  F5 = await fnd('can'); ok(F5.hits === 4 && F5.lines === 40, '5: «can» as a word (not in scanned / scanner / can\'t): ' + JSON.stringify(F5));
+  await p.click('[data-whole]'); await p.waitForTimeout(100); ok(await p.evaluate(() => document.querySelectorAll('.cue-x .hit').length) === 8, '5: whole words off');
+  await p.click('[data-whole]'); await p.waitForTimeout(100);
+  for (const q of ["/can|can't/", "can|can't", "(can|can’t)"]) { F5 = await fnd(q); ok(F5.hits === 6, '5: «' + q + '»: ' + JSON.stringify(F5)); }
+  await p.evaluate(() => { P.cur = -1; }); await p.press('[data-q]', 'Enter'); await p.waitForTimeout(200);
+  let h5 = await p.evaluate(() => ({at: P.hitAt, cur: P.cur, first: P.hitList[0][0], now: (document.querySelector('.cue-x .hit.now') || {}).textContent, n: document.getElementById('pp-n').textContent}));
+  ok(h5.at === 0 && h5.cur === h5.first && /^can't$/i.test(h5.now) && /1 \/ 6 found/.test(h5.n), '5: Enter → the first find: ' + JSON.stringify(h5));
+  await p.press('[data-q]', 'Enter'); await p.press('[data-q]', 'Shift+Enter'); await p.click('[data-hit="1"]'); await p.waitForTimeout(150);
+  ok(await p.evaluate(() => P.hitAt === 1 && P.cur === P.hitList[1][0]), '5: › / Shift+Enter');
+  await p.click('[data-only]'); await p.waitForTimeout(100); ok(await p.locator('.cue').count() === 6, '5: only these: ' + await p.locator('.cue').count());
+  await p.click('[data-only]'); await p.waitForTimeout(100);
   await shot(p, 'p4-find');
   await p.fill('[data-q]', ''); await p.fill('[data-from]', '0:20'); await p.fill('[data-to]', '0:40'); await p.waitForTimeout(150);
   const scene = await p.evaluate(() => [...document.querySelectorAll('.cue')].map(x => P.cues[+x.dataset.c].s));
