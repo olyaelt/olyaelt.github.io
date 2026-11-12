@@ -800,6 +800,15 @@ button.kbub{cursor:pointer} button.kbub small{display:block;font-size:.85rem;fon
 .dc-arcs path{fill:none;stroke:var(--dc-arc);stroke-width:3.5;stroke-linecap:round}
 .dc-cloud{display:inline-flex;align-items:center;justify-content:center;min-width:3.4em;height:1.25em;padding:0 .4em;vertical-align:-.12em;border-radius:999px;background:#D6ECFB;color:#0679BD;font-size:.95em}
 .dc-cloud span{font-size:.9em;line-height:1}
+/* tools 32 (her 11.11 18:09: «вместо облачка… просто gapfill, как у них в TubeQuizard»): the gap is a box to type in; it starts the same size whatever the gap */
+.dc-gapin{font:inherit;font-size:.82em;font-weight:700;color:var(--ink);height:1.4em;padding:0 .35em;margin:0 .05em;vertical-align:.04em;border:2px solid #9FCDEE;border-bottom:4px solid var(--instr);border-radius:10px;background:#EEF7FD;max-width:100%;box-sizing:border-box}
+.dc-gapin:focus{outline:none;border-color:var(--instr);background:var(--card)}
+.dc-gapin::placeholder{color:#7FB3D8;font-weight:600}
+.dc-try{margin:.1em 0 0;font-size:calc(1.3rem * (.6 + .4 * var(--k, 1)));font-weight:700;line-height:1.5}
+.dc-try-h{font-size:.9em}
+.dc-try .ok{color:var(--ok)}
+.dc-try .no{color:color-mix(in srgb, var(--ink) 70%, var(--card));text-decoration:line-through;text-decoration-color:var(--label);text-decoration-thickness:3px}
+.dc-try-ok{color:var(--ok);font-weight:900}
 .dw{display:inline-block;position:relative;border-radius:8px;line-height:1.15;transition:color .35s, background-color .2s}
 .dl{display:inline-block;position:relative;line-height:1.15;transition:color .35s}
 .dj{display:inline-block;position:relative;white-space:pre;padding:0 .1em;border-radius:6px;line-height:1.15}
@@ -879,6 +888,8 @@ button.kbub{cursor:pointer} button.kbub small{display:block;font-size:.85rem;fon
 :root[data-theme="dark"] .dc{--dc-grey:#7C8086}
 :root[data-theme="dark"] .dc-wave{--dc-wbg:#15191D;--dc-clip:rgba(255,255,255,.05);--dc-sel:rgba(108,195,255,.22);--dc-edge:#6CC3FF;--dc-wave:#7FB6DA;--dc-tick:#A4A7AB;--dc-cur:#ECECEA;--dc-head:#FF7A7A}
 :root[data-theme="dark"] .dc-cloud{background:#1E3A52;color:#9ED3FA}
+:root[data-theme="dark"] .dc-gapin{background:#15283A;border-color:#2F5878;border-bottom-color:var(--instr)}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .dc-gapin{background:#15283A;border-color:#2F5878;border-bottom-color:var(--instr)} }
 </style>
 </head>
 <body>
@@ -2037,7 +2048,7 @@ function wireFilm(root){ if(!PTS) return;
 const DC_FRESH = 4 * 3600e3, DC_MAX = (window.DC_MAX_MB || 400) * 1048576, DC_RATE = 200, DCK = "tool-decode-" + PAGE_ID;
 let DCS = store.get(DCK) || {}; ["m", "prev", "plays", "clips", "mine"].forEach(k => { if(!DCS[k] || typeof DCS[k] !== "object") DCS[k] = {}; });
 const dcSave = () => store.set(DCK, DCS);
-const DC = {mk: {}, fresh: null, pan: null, letters: null, url: "", name: "", m: null, peaks: null, wBusy: false, wErr: "", dur: 0, win: null, winFor: null,
+const DC = {mk: {}, ty: {}, fresh: null, pan: null, letters: null, url: "", name: "", m: null, peaks: null, wBusy: false, wErr: "", dur: 0, win: null, winFor: null,
   sel: null, cur: 0, playing: false, stopAt: null, pic: store.get("dc-pic") !== false,   /* the picture beside the line by default (her 11.11 15:46: «видео сбоку полезно») */ handle: null, raf: 0, b: null, drag: null, hinted: !!store.get("dc-hinted")};
 /* her own lines (her 11.11 15:37: «вставить конкретное время… gapped строчку, которую я заранее подготовила»): ✏️ My lines, one per row —
    the film's time, then the line with the gap in [square brackets]: "21:28 I was [sitting there] with Gus", "21:28-21:30.5 …" (the piece's
@@ -2059,7 +2070,7 @@ const dcLines = b => { const m = dcMine(b); return m.length ? m : b.lines || [];
 const dcId = (b, i) => { const l = dcLines(b)[i] || {}, pl = P["lines." + b._pid] || []; return String(l.id || "b" + b._pid + "-" + (pl[i] != null ? pl[i] : i)); };
 const dcSt = b => { const st = bs(b); if(!st.dc) st.dc = {at: 0, ans: false}; st.dc.at = Math.max(0, Math.min(st.dc.at, dcLines(b).length - 1)); return st.dc; };
 const dcPending = b => { const Q = dcSt(b); return dcLines(b).length > 0 && (!Q.ans || Q.at < dcLines(b).length - 1); };
-function dcNext(b){ const Q = dcSt(b); dcClose(); if(!Q.ans){ Q.ans = true; Q.just = true; } else { Q.at++; Q.ans = false; } render(); keepPlace(); Q.just = false; }
+function dcNext(b){ const Q = dcSt(b); dcClose(); if(!Q.ans){ dcTry(b); Q.ans = true; Q.just = true; } else { Q.at++; Q.ans = false; } render(); keepPlace(); Q.just = false; }
 function dcBack(b){ const Q = dcSt(b); dcClose();
   if(Q.ans){ Q.ans = false; render(); keepPlace(); return true; }
   if(Q.at > 0){ Q.at--; Q.ans = true; render(); keepPlace(); return true; } return false; }
@@ -2071,7 +2082,7 @@ function dcWords(l){ const out = [];
   return out; }
 const dcBare = t => String(t).toLowerCase().replace(/’/g, "'").replace(/[^a-z0-9']/g, "");
 const dcNew = () => ({w: {}, l: {}, k: [], s: {}, n: ""});
-const dcHas = M => !!M && (Object.keys(M.w || {}).length + Object.keys(M.l || {}).length + (M.k || []).length + Object.keys(M.s || {}).length > 0 || !!M.n);
+const dcHas = M => !!M && (Object.keys(M.w || {}).length + Object.keys(M.l || {}).length + (M.k || []).length + Object.keys(M.s || {}).length > 0 || !!M.n || !!M.ty);
 /* this lesson's marks of line i: in memory, else what this computer kept from the last 4 hours (a reload in the lesson) */
 function dcMarks(b, i){ const id = dcId(b, i); if(DC.mk[id]) return DC.mk[id];
   const o = DCS.m[id], l = dcLines(b)[i];
@@ -2118,15 +2129,26 @@ function dcWordHTML(w, i, M, ans){
   const cls = ["dw", wm ? "m-" + wm : "", dcIsFresh("w" + i) ? "nw" : "", DC.letters === i ? "lt" : "", DC.pan && DC.pan.i === i && DC.pan.l == null ? "sel" : "", ans && w.g ? "gw" : ""].filter(Boolean).join(" ");
   return `<span class="${cls}" data-dw="${i}">${h}</span>`; }
 function dcLineInner(b){
-  const Q = dcSt(b), l = dcLines(b)[Q.at], W = dcWords(l), M = dcMarks(b, Q.at); let h = "", cloud = false;
+  const Q = dcSt(b), l = dcLines(b)[Q.at], W = dcWords(l), M = dcMarks(b, Q.at), tid = dcId(b, Q.at), tv = DC.ty[tid] != null ? DC.ty[tid] : M.ty || ""; let h = "", cloud = false;
   W.forEach((w, i) => {
-    if(!Q.ans && w.g){ if(!cloud) h += (i ? `<span class="dj"> </span>` : "") + `<span class="dc-cloud" role="img" aria-label="missing words"><span>☁</span></span>`; cloud = true; return; }
+    if(!Q.ans && w.g){ if(!cloud) h += (i ? `<span class="dj"> </span>` : "") + `<input class="dc-gapin" data-dcgapin value="${esc(tv)}" size="${dcTySize(tv)}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="The missing words — Enter checks">`; cloud = true; return; }
     cloud = false;
     if(i) h += Q.ans ? `<span class="dj${M.k.includes(i - 1) ? " on" : ""}" data-dj="${i - 1}" title="Link these two words"> </span>` : `<span class="dj"> </span>`;
     h += Q.ans ? dcWordHTML(w, i, M, Q.just) : `<span class="dw">${esc(w.t)}</span>`; });
   const note = !Q.ans ? "" : DC.noteEdit ? `<div class="dc-notebox"><span aria-hidden="true">📝</span><input class="dp-in dc-notein" data-dcnotein value="${esc(M.n || "")}" maxlength="200" autocomplete="off" spellcheck="false" aria-label="A note on this line"><button class="dp-b ok" data-dcnoteok title="Enter">✓</button></div>` : M.n ? `<p class="dc-notet${DC.fresh === "n" ? " nw" : ""}" data-dcnote title="Tap to change">📝 ${esc(M.n)}</p>` : "";
   const long = String(l.text || "").replace(/\{\{|\}\}/g, "").length > 52;   /* a long line a little smaller, so it fits beside the picture */
-  return `<p class="dc-line${long ? " long" : ""}${Q.ans && Q.just ? " just" : ""}" data-dcline>${h}</p><svg class="dc-arcs" aria-hidden="true"></svg>${note}${Q.ans ? dcPanHTML(b) : ""}`; }
+  return `<p class="dc-line${long ? " long" : ""}${Q.ans && Q.just ? " just" : ""}" data-dcline>${h}</p><svg class="dc-arcs" aria-hidden="true"></svg>${Q.ans ? dcTryHTML(l, M) : ""}${note}${Q.ans ? dcPanHTML(b) : ""}`; }
+/* what was typed in the gap: the right words green, the rest struck (kind corrections); all of it right → ✓ */
+const dcTySize = v => Math.max(9, String(v).length + 2);
+function dcTry(b){ const Q = dcSt(b), inp = document.querySelector("#main [data-dcgapin]"), v = (inp ? inp.value : DC.ty[dcId(b, Q.at)] || "").trim(), M = dcMarks(b, Q.at);
+  if(v && v !== M.ty){ M.ty = v; dcStore(b); } }
+function dcTryHTML(l, M){ if(!M.ty) return "";
+  const ans = dcWords(l).filter(w => w.g).map(w => dcBare(w.t)).filter(Boolean), ty = String(M.ty).split(/\s+/).filter(Boolean), n = ty.length, m = ans.length;
+  const L = Array.from({length: n + 1}, () => new Array(m + 1).fill(0));
+  for(let i = n - 1; i >= 0; i--) for(let j = m - 1; j >= 0; j--) L[i][j] = dcBare(ty[i]) === ans[j] ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
+  const ok = new Set(); for(let i = 0, j = 0; i < n && j < m;){ if(dcBare(ty[i]) === ans[j]){ ok.add(i); i++; j++; } else if(L[i + 1][j] >= L[i][j + 1]) i++; else j++; }
+  const all = ok.size === n && n === m;
+  return `<p class="dc-try" data-dctry><span class="dc-try-h" title="Typed">✍️</span> ${ty.map((t, i) => `<span class="${ok.has(i) ? "ok" : "no"}">${esc(t)}</span>`).join(" ")}${all ? ` <span class="dc-try-ok">✓</span>` : ""}</p>`; }
 function dcPanHTML(b){ const P = DC.pan; if(!P) return ""; const Q = dcSt(b), M = dcMarks(b, Q.at), W = dcWords(dcLines(b)[Q.at]);
   if(P.say != null) return `<div class="dc-pan say" data-dcpan><span class="dp-l">sounds like</span><input class="dp-in" data-dcsayin value="${esc(P.say)}" maxlength="24" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="How it sounds"><button class="dp-b ok" data-dcsayok title="Enter">✓</button></div>`;
   const cur = P.l != null ? M.l[P.i + "." + P.l] : M.w[P.i], bt = (k, lbl, key, t) => `<button class="dp-b${cur === k ? " on" : ""}" data-dcmk="${k}" title="${t} (${key})">${lbl}</button>`;
@@ -2359,6 +2381,7 @@ function dcCopyText(b){
   const out = [`🎧 ${D.title} · ${new Date().toLocaleString("en-GB", {day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"})}${DC.name ? " · " + DC.name : ""}`];
   dcLines(b).forEach((l, i) => { const id = dcId(b, i), W = dcWords(l), M = dcMarks(b, i), pl = dcPlays(b, i), mk = dcMarksOut(W, M);
     out.push("", `${i + 1} (${id}) ${String(l.text || "").replace(/\{\{|\}\}/g, m => m === "{{" ? "[" : "]")}`);
+    if(M.ty) out.push(`   ✍️ typed: ${M.ty}`);
     if(M.n) out.push(`   📝 ${M.n}`);
     if(l.at && !dcClip(b, i)) out.push(`   ⏱ ${l.at}`);
     if(mk.length) out.push("   " + mk.map(x => `${DC_WORD[x.mark] || x.mark} ${x.at.replace("|", "‿")}${x.say ? ` → “${x.say}”` : ""}`).join(" · "), `   marks: ${JSON.stringify(mk)}`);
@@ -2388,7 +2411,7 @@ function wireDecode(b, root){ DC.b = b; const Q = dcSt(b), id = dcId(b, Q.at);
     if(on("[data-dcpin]")){ if(DC.sel){ DCS.clips[id] = dcFmt(DC.sel.s) + "-" + dcFmt(DC.sel.e); dcSave(); dcPlayerPaint(); } return; }
     if(on("[data-dcpic]")){ DC.pic = !DC.pic; store.set("dc-pic", DC.pic); render(); return; }
     if(on("[data-dccopy]")){ const btn = on("[data-dccopy]"), ok = await copyText(dcCopyText(b)); btn.textContent = ok ? "Copied ✓" : "Couldn't copy"; setTimeout(() => { if(btn.isConnected) btn.textContent = "📋 Copy analysis"; }, 2200); return; }
-    if(on("[data-dcclear]")){ const id2 = dcId(b, Q.at); DC.mk[id2] = dcNew(); dcClose(); dcStore(b); dcPaint(b); return; }
+    if(on("[data-dcclear]")){ const id2 = dcId(b, Q.at); DC.mk[id2] = dcNew(); delete DC.ty[id2]; dcClose(); dcStore(b); dcPaint(b); return; }
     if(on("[data-dclast]")){ const L = dcLast(b); if(L){ const M = JSON.parse(JSON.stringify(L.v)); DC.mk[id] = M; DC.freshAll = [].concat(Object.keys(M.w).map(k => "w" + k), Object.keys(M.l).map(k => "l" + k), M.k.map(k => "k" + k), Object.keys(M.s).map(k => "s" + k)); dcStore(b); dcPaint(b); } return; }
     if(!Q.ans) return;
     if((x = on("[data-dcmk]"))){ dcMark(b, x.dataset.dcmk); return; }
@@ -2404,7 +2427,12 @@ function wireDecode(b, root){ DC.b = b; const Q = dcSt(b), id = dcId(b, Q.at);
       if(dcPreset(b, i)){ DC.pan = null; DC.letters = null; dcHinted(); return; }
       DC.pan = DC.pan && DC.pan.i === i && DC.pan.l == null ? null : {i, l: null}; if(DC.letters !== i) DC.letters = null; dcPaint(b); return; }
     if(DC.pan || DC.letters != null){ dcClose(); dcPaint(b); } });
+  card.addEventListener("input", e => { if(e.target.matches && e.target.matches("[data-dcgapin]")){ DC.ty[dcId(b, Q.at)] = e.target.value; e.target.size = dcTySize(e.target.value); } });
   card.addEventListener("keydown", e => {
+    if(e.target.matches && e.target.matches("[data-dcgapin]")){   /* Enter = check (the answer); Ctrl+Space = the piece again; Esc = out of the box (then Space plays) */
+      if(e.key === "Enter"){ e.preventDefault(); dcNext(b); return; }
+      if(e.key === " " && e.ctrlKey){ e.preventDefault(); dcSpace(b); return; }
+      if(e.key === "Escape"){ e.preventDefault(); e.target.blur(); } return; }
     if(e.target.matches && e.target.matches("[data-dctime]") && e.key === "Enter"){ e.preventDefault(); const v = dcT(e.target.value.replace(",", ".")); if(v != null && DC.url){ e.target.blur(); dcGo(v); } return; }
     if(e.target.matches && e.target.matches("[data-dcnotein]")){ if(e.key === "Enter"){ e.preventDefault(); dcNoteOk(b); } if(e.key === "Escape"){ e.preventDefault(); DC.noteEdit = false; dcPaint(b); } return; }
     if(e.target.matches && e.target.matches("[data-dcsayin]")){ if(e.key === "Enter"){ e.preventDefault(); dcSayOk(b); } if(e.key === "Escape"){ e.preventDefault(); dcClose(); dcPaint(b); } } });

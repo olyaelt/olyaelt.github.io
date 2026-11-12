@@ -73,7 +73,7 @@ const URL_ = 'https://script.google.com/macros/s/TEST/exec', PAGE = 'tools/c1-sc
 
   // next lesson, the same laptop: the counts go on from where they were
   { const src = fs.readFileSync(path.join(site, PAGE + '-live.html'), 'utf8').replace(/LIVE_URL = "https:\/\/script\.google\.com[^"]*"/, `LIVE_URL = "${URL_}"`);
-    const tmp = path.join(site, 'tools/c1-schools/_dg_test_again.html'); fs.writeFileSync(tmp, src); await A.goto('file://' + tmp); await A.waitForTimeout(300); fs.unlinkSync(tmp); } await A.evaluate(k => { while (S.queue[0] !== 'o' + k) { flip(); answer(true); } flip(); answer(false); }, x); await A.waitForTimeout(2600);
+    const tmp = path.join(site, 'tools/c1-schools/_dg_test_again.html'); fs.writeFileSync(tmp, src); await A.goto('file://' + tmp); await A.waitForTimeout(300); fs.unlinkSync(tmp); } await A.evaluate(k => { while (S.queue[0] !== 'o' + k) { flip(); answer(true); } flip(); answer(false); }, x); await A.waitForTimeout(3600);   // the page sends 2 s after the last answer; 2.6 s was too tight under load (flaky 12.11)
   out.kept = JSON.parse(rows().find(r => r[3] === 'Anna')[4])[x]; expect('counts kept on reload (3 now)', out.kept === 3, out.kept);
   const Pl = await open(PAGE + '.html', 'anna'); await ans(Pl, false); await Pl.waitForTimeout(2600);
   out.plain = {posts: plainPosts, dots: await Pl.locator('#gdots').count()}; expect('plain page: nothing sent, no dots', out.plain.posts === 0 && out.plain.dots === 0, out.plain);

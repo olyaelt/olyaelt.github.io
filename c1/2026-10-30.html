@@ -805,6 +805,88 @@ audio{width:100%}
 .react-pre{margin:0;padding:8px 12px;background:var(--card);border:2px solid var(--line);border-radius:12px;font-size:var(--step-0)}
 .react-pre .react-msg{color:var(--done);font-weight:700}
 .actions .ask-box{display:grid;gap:6px} .actions .ask-box[hidden]{display:none}
+/* engine 65: 🎬 listening from the film (her own copy, played here) */
+.film-box{max-width:min(100%, calc(34vh * 16 / 9));margin:0 auto}
+.film-v{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+.video > .film-over{position:absolute;inset:0;z-index:2;display:grid;place-items:center;padding:14px;text-align:center;color:#fff;background:#1D1D1B}
+.film-box.has-film > .film-over{inset:auto 0 0 0;background:transparent;padding:0;pointer-events:none}
+.film-box.has-film > .film-over:empty{display:none}
+.film-msg p{margin:0 0 10px;line-height:1.4}.film-msg .btn{margin:4px}
+.film-warn{margin:0;width:100%;background:rgba(0,0,0,.72);color:#FFE38A;font-size:.85rem;font-weight:700;padding:4px 8px}
+.film-note{display:block;margin-top:6px;font-weight:600;font-size:.88em;opacity:.9}
+.panel.film .lines{margin-top:10px}
+/* on a computer the film on the left, the line and its buttons on the right: everything above Back / Next at 1280 × 720 */
+@media (min-width:900px){ .panel.film:not(.fsum){display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,32%);gap:8px 22px;align-items:start}
+  .panel.film:not(.fsum) > .film-box{grid-column:2;grid-row:1 / span 3;max-width:100%;width:100%;margin:0}
+  .panel.film:not(.fsum) > :not(.film-box){grid-column:1;min-width:0}
+  .panel.film:not(.fsum) > .fw{grid-column:1 / -1}
+  .panel.film:not(.fsum) .film-msg{font-size:.88rem} .panel.film:not(.fsum) .film-msg p{margin-bottom:6px}
+  .panel.film:not(.fsum) .lines{margin-top:0} .panel.film:not(.fsum) .film-hint, .panel.film:not(.fsum) .film-row, .panel.film:not(.fsum) .film-res{margin-top:4px}
+  .panel.film.fsum{display:grid;grid-template-columns:minmax(0,45%) minmax(0,1fr);gap:8px 22px;align-items:start}
+  .panel.film.fsum > .film-sum{grid-column:1 / -1} .panel.film.fsum > .film-box{grid-column:1;grid-row:2 / span 2;max-width:100%;width:100%;margin:0}
+  .panel.film.fsum > .film-h, .panel.film.fsum > .lines{grid-column:2;margin-top:0} }
+.film-ln{font-size:1.15rem}
+.film-ctx{border-color:transparent;color:var(--muted);cursor:default;padding-top:2px;padding-bottom:2px}
+.film-hint{margin:8px 0 0;color:var(--muted);font-weight:700}
+.film-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px}
+.film-row .grow{flex:1}
+.film-ask{font-weight:800}
+.film-res{margin-top:10px;display:grid;gap:8px;justify-items:start}
+.film-score{margin:0;font-weight:700}
+.film-you{font-weight:700}
+.film-marks{margin:0;line-height:2.3;font-size:1.1rem}
+.fm-h{font-weight:800;color:var(--muted);font-size:.85em;margin-right:4px}
+.fm-w{position:relative}.fm-grey{color:var(--strike)}.fm-strike,.fm-gone{text-decoration:line-through;text-decoration-thickness:2px;color:var(--strike)}
+.fm-strong{font-weight:900;text-decoration:underline;text-underline-offset:.15em}
+.fm-w[data-say]::before{content:attr(data-say);position:absolute;left:50%;transform:translateX(-50%);top:-1.15em;font-size:.68em;font-weight:800;color:var(--ipa);white-space:nowrap}
+.fm-link{color:var(--instr);font-weight:900}
+.film-sum{display:grid;gap:6px;margin-bottom:12px}.film-big{margin:0;font-size:1.3rem;line-height:1.4}
+.film-h{margin:12px 0 0;font-weight:800}
+.film-phone{padding:18px;text-align:center}.film-phone p{margin:0 0 8px}
+/* engine 66: the waveform (as the lesson's decoding page) */
+.fw{margin-top:12px;display:grid;gap:8px}
+.fw-wave{display:block;width:100%;height:110px;border-radius:10px;cursor:crosshair;touch-action:none;
+  --fw-bg:#F3F7FA;--fw-sel:rgba(6,147,227,.20);--fw-edge:#0693E3;--fw-wave:#3D6F8F;--fw-tick:#6B6B6B;--fw-cur:#1D1D1B;--fw-head:#E00000}
+:root[data-theme="dark"] .fw-wave{--fw-bg:#15191D;--fw-sel:rgba(108,195,255,.22);--fw-edge:#6CC3FF;--fw-wave:#7FB6DA;--fw-tick:#A4A7AB;--fw-cur:#ECECEA;--fw-head:#FF7A7A}
+.fw-ctl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.fw-ctl kbd{font:inherit;font-size:.72rem;font-weight:800;margin-left:6px;padding:1px 6px;border-radius:6px;background:var(--ground);color:var(--muted)}
+.fw-sel{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:700}
+.fw-hint{color:var(--muted);flex:1;min-width:12em}
+.fw-spd{margin-left:auto}
+.fw-wave{height:100px}
+.nudge{animation:fnudge .6s ease-out}
+@keyframes fnudge{0%,100%{box-shadow:0 0 0 0 rgba(6,147,227,0)}30%{box-shadow:0 0 0 6px rgba(6,147,227,.35)}}
+.fheart{position:fixed;z-index:70;pointer-events:none;font-size:1.5rem;animation:fheart 1.4s ease-out both}
+@keyframes fheart{0%{transform:translate(-50%,0) scale(.5);opacity:0}15%{opacity:1}100%{transform:translate(calc(-50% + var(--dx)),-130px) scale(1.15);opacity:0}}
+@media (prefers-reduced-motion: reduce){ .nudge{animation:none;outline:3px solid var(--instr)} .fheart{animation-duration:.01s} }
+/* engine 67: her first tries, «I want to say this» */
+.ft-open-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0 12px}
+.ft-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 12px}
+.seg{display:inline-flex;border:2px solid var(--line);border-radius:99px;overflow:hidden}
+.seg button{font:inherit;font-weight:800;border:0;background:var(--card);color:var(--ink);padding:6px 14px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--instr);color:var(--instr-ink)}
+.ft-task h3{margin:14px 0 6px;font-size:1.1rem}
+.ft-item{border-top:1px solid var(--line);padding:8px 0;display:grid;gap:3px}
+.ft-p{margin:0;font-weight:700}.ft-a{margin:0;color:var(--muted)}.ft-a b{color:var(--ink)}
+.ft-type{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;border:1.5px solid var(--line);border-radius:99px;padding:0 6px;margin-left:4px}
+.ft-n{margin:0}.ft-ok{color:var(--ok-ink);font-weight:800}.ft-bl{color:var(--muted);font-weight:700}
+.ft-w{margin:0;display:flex;flex-wrap:wrap;gap:4px 12px}.ft-wr s{text-decoration-color:var(--strike);color:var(--ink)}
+.ft-who{margin:2px 0 0;padding-left:1.2em;display:grid;gap:2px}.ft-who s{color:var(--strike)}
+.ft-empty{margin:0;color:var(--muted)}
+.up-rows{display:grid;gap:10px}
+.up-row{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.up-text{flex:1;min-width:0;display:grid;gap:4px}
+.up-said{margin:0;color:var(--muted)}
+.up-better{margin:0;font-size:1.12rem;font-weight:600}
+.up-arrow{color:var(--muted);font-weight:400}
+.up-want{font:inherit;font-weight:800;font-size:.9rem;white-space:nowrap;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:6px 12px;cursor:pointer}
+.up-want.on{border-color:#E0457B;background:#FDEBF1;color:#A3174A}
+.up-h{display:inline-block;width:1.25em;text-align:center;font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif}
+.up-want.pop .up-h{animation:upPop .45s ease-out}
+@keyframes upPop{40%{transform:scale(1.5)}}
+.up-n{font-weight:900;white-space:nowrap}
+:root[data-theme="dark"] .up-want.on{background:#4A1C2C;color:#FFC2D6;border-color:#E0457B}
+@media (max-width:560px){ .up-row{flex-direction:column;align-items:stretch} .up-side{text-align:right} }
 </style>
 
 </head>
@@ -2842,7 +2924,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = [];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "64";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "67";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [{"type": "rewrite", "r": {"o": "I did a course to become a yoga teacher too.", "k": "TRAINED", "pre": "I ", "post": " a yoga teacher too.", "a": "trained as", "acc": ["trained as", "trained to be"], "n": "trained as — active: I trained (I did it myself).<br><i class=\"ru\">я ещё и выучилась на преподавателя йоги<\/i><br><i class=\"ru\">or: trained to be<\/i>"}, "frm": "23.10.26"}, {"type": "sayit", "s": {"rows": [["<span class=\"en\">Nobody taught me how to talk to clients — I learned it <span class=\"trap\">in practice<\/span>.<\/span> <i class=\"ru\">(научилась в процессе работы)<\/i>", "Nobody taught me how to talk to clients — I learned it <b class=\"g\">on the job<\/b>."]], "note": "", "html": true}, "instr": "What would Dan or Ruth say instead?", "frm": "21.10.26"}, {"type": "rewrite", "r": {"pre": "I'm ", "hint": "по образованию экономист", "post": ", but I've worked in IT for years.", "a": "an economist by training", "acc": ["an economist by training", "a trained economist", "an economist by education"], "n": "economist <span class=\"ipa\">/ɪˈkɒnəmɪst/<\/span><br>X by training = what you studied or trained as.<br><i class=\"ru\">or: a trained economist / an economist by education (less common)<\/i>"}, "frm": "23.10.26"}, {"type": "rewrite", "r": {"o": "The course taught me the basics of statistics.", "k": "GROUNDING", "pre": "The course gave ", "post": " statistics.", "a": "me a good grounding in", "acc": ["me a good grounding in", "me a solid grounding in", "me a thorough grounding in", "me a basic grounding in", "me a grounding in"], "n": "<span class=\"ipa\">/ˈɡraʊndɪŋ/<\/span><br>a good grounding in + subject.<br><i class=\"ru\">дал мне хорошую базу по статистике<\/i><br><i class=\"ru\">or: me a solid / thorough / basic grounding in<\/i><br><i class=\"ru\">or: me a grounding in<\/i>"}, "frm": "23.10.26"}];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -2853,7 +2935,7 @@ if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
       : {type:"sayit", s:e.s, first:i===0, box:"", instr:e.instr})});
 }
 /* rough minutes per step, so students can plan their time */
-const EST = {gaps:5, dlg:2.5, rewrite:1, fix:1, sayit:1.5, share:1.5, lookback:2, listen:1.2, task:1, plan:3, produce:12, sort:8};
+const EST = {gaps:5, dlg:2.5, rewrite:1, fix:1, sayit:1.5, share:1.5, lookback:2, listen:1.2, film:1.5, filmsum:.5, upgrade:2, task:1, plan:3, produce:12, sort:8};
 const framesOf = t => minutesOf(t) * ((t.steps||[]).some(s=>s.type==="produce") ? 2 : 1);   /* group goal: a frame per minute, Over to you double */
 const GROUP_ID = PAGE_KEY.split("-")[2] || "group";
 let groupStats = (()=>{ try{ return JSON.parse(localStorage.getItem("hw-group-"+GROUP_ID)||"null"); }catch(e){ return null; } })();
@@ -2900,9 +2982,35 @@ const myCode = () => SYNC_URL ? ls.get("hw-code") : "";
 /* Olya's "Student view": her own code, but the page behaves like a student's page, and nothing is sent to the table.
    Switching in or out starts from a clean page (her own ticks and marks on this device are cleared). */
 const asStudent = () => !!(SYNC_URL && ls.get("hw-code") && ls.get("hw-role") === "teacher" && ls.get("hw-as-student"));
+/* ---------- engine 67 (the methodika chat's request 11.11 22:40; her 22:12: «у нас есть sentence reformulation, а я никак, как учитель, не
+   анализирую, что они там написали… это действительно большая дырка»): FIRST TRIES. What a student typed or chose before an answer was first
+   shown, per item, once (a second try, Do it again, the bookmarks round never count); nothing typed = «opened without a try». Kept on the
+   device, sent with their code to her table (sheet Attempts); only she sees the summary (📊 First tries). Items said aloud and opened by a
+   tap (gaps in a text, say it, look back) have nothing typed, so they don't count. ---------- */
+const FT_KEY = "hw-first-" + PAGE_KEY;
+let FIRST = (() => { try{ return JSON.parse(localStorage.getItem(FT_KEY) || "{}") || {}; }catch(e){ return {}; } })();
+const ftPlain = h => String(h == null ? "" : h).replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
+function firstTry(t, item, o){
+  if(!t || t._once || t._review || isTeacher()) return;
+  const id = t.id + ":" + item; if(FIRST[id]) return;
+  const first = String(o.first == null ? "" : o.first).trim();
+  FIRST[id] = {task: t.id, item: id, type: o.type, prompt: ftPlain(o.prompt).slice(0, 300), answer: ftPlain(o.answer).slice(0, 200), first: first.slice(0, 300), ok: !!o.ok && !!first, blank: !first, t: Date.now()};
+  try{ localStorage.setItem(FT_KEY, JSON.stringify(FIRST)); }catch(e){}
+  ftSendSoon();
+}
+let ftTimer = null, ftBusy = false;
+function ftSendSoon(){ if(ftTimer) return; ftTimer = setTimeout(() => { ftTimer = null; ftSend(); }, 1500); }   /* a send already waiting takes what comes before it */
+async function ftSend(){
+  if(ftBusy || !myCode() || isTeacher() || asStudent() || syncState === "unknown") return;
+  const todo = Object.values(FIRST).filter(x => !x.sent); if(!todo.length) return;
+  ftBusy = true; const part = todo.slice(0, 150);
+  const res = await post({action: "attempts", code: myCode(), page: PAGE_KEY, date: LESSON.date, items: part});
+  if(res && res.ok){ (Array.isArray(res.got) ? res.got : part.map(x => x.item)).forEach(i => { if(FIRST[i]) FIRST[i].sent = 1; }); try{ localStorage.setItem(FT_KEY, JSON.stringify(FIRST)); }catch(e){} }
+  ftBusy = false; if(res && res.ok && todo.length > part.length) ftSendSoon();
+}
 function setStudentView(on){
   ls.set("hw-as-student", on ? "1" : "");
-  try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || /^hw-rev-/.test(k) || /^hw-(typed|pos|sort)-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
+  try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || /^hw-rev-/.test(k) || /^hw-(typed|pos|sort|first|want)-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
   location.reload();
 }
 document.addEventListener("click", ev => { const b = ev.target.closest && ev.target.closest("#as-student, #as-teacher"); if(b) setStudentView(b.id === "as-student"); });
@@ -2931,7 +3039,7 @@ async function syncNow(code, opts={}){
     });
     saveMarks();
     if(res.work){ work = res.work; saveWork(); refreshWork(); }
-    if(code === myCode()) flushFlags();
+    if(code === myCode()){ flushFlags(); ftSendSoon(); wantSendSoon(); }
     if(res.group && code === myCode()){ groupStats = res.group; ls.set("hw-group-"+GROUP_ID, JSON.stringify(res.group)); refreshMeter(); checkMilestone(res.group, GROUP_ID); }
     if(gotMe(res, code)) refreshMeter();
     if(code === myCode()){ ls.set("hw-who", res.name||""); if(!ls.get("hw-name") && res.name) ls.set("hw-name", res.name); }
@@ -2971,7 +3079,7 @@ function wireSync(){
   /* "Not you?": the next person starts clean on this device — the last person's ticks, marks, bookmarks and drafts here are forgotten
      (engine 35: before, a second person's code took over the first one's ticks; what was sent stays in Olya's table) */
   if(ch) ch.addEventListener("click",()=>{ ["hw-code","hw-who","hw-role","hw-gid","hw-as-student"].forEach(k => ls.set(k, ""));
-    try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || /^hw-rev-/.test(k) || /^hw-(typed|pos|sort)-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
+    try{ Object.keys(localStorage).filter(k => /^hw-ge-/.test(k) || /^hw-rev-/.test(k) || /^hw-(typed|pos|sort|first|want)-/.test(k) || k === "hw-mark-used").forEach(k => localStorage.removeItem(k)); }catch(e){}
     try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){}
     location.reload(); });
   const go = document.getElementById("code-go"), inp = document.getElementById("code");
@@ -3559,7 +3667,7 @@ function refreshMeter(){ const m = document.getElementById("meter-slot"); if(m &
 function footHTML(){
   if(SELF) return myCode() && syncState!=="unknown" ? `<span>My ticks are saved with my code, on all my devices.</span>` : `<span>The ticks on this page are saved on this device only until I enter my code.</span>`;   /* engine 60 */
   return myCode() && syncState!=="unknown"
-    ? `<span>When you finish a task, mark it in our spreadsheet in your colour.</span><span>Your ticks are saved for Olya and on all your devices.</span>`
+    ? `<span>When you finish a task, mark it in our spreadsheet in your colour.</span><span>Your ticks are saved for Olya and on all your devices.</span><span>Olya sees your first try at each answer, so she knows what to go over in class.</span>`
     : `<span>When you finish a task, mark it in our spreadsheet in your colour.</span><span>The ticks on this page are saved on this phone only.</span>`;
 }
 function refreshFoot(){ const f = document.getElementById("foot"); if(f) f.innerHTML = footHTML(); }
@@ -3605,6 +3713,7 @@ const typed = {};   /* what the student typed — engine 51: kept on the device,
 const TYPED_KEY = "hw-typed-" + PAGE_KEY, POS_KEY = "hw-pos-" + PAGE_KEY, SORT_KEY = "hw-sort-" + PAGE_KEY;
 const lsJSON = (k, d) => { try{ return JSON.parse(ls.get(k) || "null") || d; }catch(e){ return d; } };
 Object.assign(typed, lsJSON(TYPED_KEY, {}));
+TASKS.forEach(t => { if(t.film) t.steps = filmSteps(t); });   /* engine 65: 🎬 a film task's screens, in this device's order */
 let typedT = 0; const saveTyped = () => { clearTimeout(typedT); typedT = setTimeout(() => ls.set(TYPED_KEY, JSON.stringify(typed)), 300); };
 const norm = s => String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/[.!?,;:]+$/,"").replace(/\s+/g," ").trim();
 
@@ -3659,7 +3768,7 @@ function renderHome(justDone){
   const taskBtn = t => `
           <div class="task-wrap"><div class="task-row ${done.has(t.id)?"is-done":""} ${t.stop?"stop":""}">
             <button class="task-btn" data-open="${t.id}">
-              <span><div class="t">${esc(t.title)}${t.later?` <span class="later-tag">for later</span>`:""}</div><div class="m">${esc(t.meta)} · ≈ ${minutesOf(t)} min</div>${t.alt?`<div class="alt">${esc(t.alt)}</div>`:""}</span>
+              <span><div class="t">${esc(t.title)}${t.later?` <span class="later-tag">for later</span>`:""}${t.film && !FILM_DESK ? ` <span class="later-tag">💻 on the computer</span>` : ""}</div><div class="m">${esc(t.meta)} · ≈ ${minutesOf(t)} min</div>${t.alt?`<div class="alt">${esc(t.alt)}</div>`:""}</span>
             </button>
             ${done.has(t.id) && t.kind === "steps" && !isTeacher() ? `<button class="again-btn" data-again="${t.id}" aria-label="Do it again" title="Do it again">↺</button>` : ""}<button class="status" data-toggle="${t.id}" aria-pressed="${done.has(t.id)}" aria-label="${done.has(t.id)?"Done — tap to untick":"Tap to mark as done"}">✓</button>
           </div><div data-fbslot="${t.id}">${isTeacher() ? teacherLine(t.id) : fbLine(t.id)}</div>${isTeacher() && t.tqLink ? tqLinkHTML(t) : !isTeacher() && t.tq ? tqAltHTML(t) : ""}</div>`;
@@ -3670,9 +3779,10 @@ function renderHome(justDone){
       <span class="date">${LESSON.date}</span>
       <h1>${SELF || SHOWT ? esc(document.title) : "Homework"}</h1>
       ${LESSON.sub?`<p>${LESSON.sub}</p>`:""}
-      <p class="total">About ${Math.round(TASKS.filter(t=>!t.later).reduce((s,t)=>s+minutesOf(t),0)/5)*5} minutes in total — you don't have to do it all in one go.${TASKS.some(t=>t.later)?" Tasks marked <b>for later</b> aren't in that time: come back to them when you like.":""}</p>
+      ${TASKS.some(t=>!t.later && !(t.film && !FILM_DESK)) ? `<p class="total">About ${Math.round(TASKS.filter(t=>!t.later && !(t.film && !FILM_DESK)).reduce((s,t)=>s+minutesOf(t),0)/5)*5} minutes in total — you don't have to do it all in one go.${TASKS.some(t=>t.later)?" Tasks marked <b>for later</b> aren't in that time: come back to them when you like.":""}</p>` : ""}
     </header>
     ${classHTML()}
+    ${isTeacher() && SYNC_URL ? `<p class="ft-open-row"><button class="btn" id="ft-open">📊 First tries</button><span class="small">what they typed or chose before the answer was shown</span></p>` : ""}
     <div id="sync-slot">${syncHTML()}</div>
     <div id="fbnew-slot">${newFbHTML()}</div>
     <div id="meter-slot">${(myCode() && syncState!=="unknown") ? meterNow() : ""}</div>
@@ -3695,6 +3805,7 @@ function renderHome(justDone){
     const id = b.dataset.toggle; setMark(id, !done.has(id)); refreshTicks();
   }));
   app.classList.toggle("teacher", isTeacher()); wireTeacher();
+  { const fo = document.getElementById("ft-open"); if(fo) fo.addEventListener("click", () => renderFirstTries()); }   /* engine 67 */
   wireSync(); wireFb(); if(justDone){ wireReact(); if(!isTeacher()) setTimeout(()=>confetti(false), 120); } else lastDone = null;
   window.scrollTo(0,0);
 }
@@ -3711,6 +3822,7 @@ function clearTaskState(id){
   Object.keys(SORTS).forEach(k => { if(k.startsWith(id + ":")) delete SORTS[k]; }); saveSorts();
   const p = lsJSON(POS_KEY, {}); delete p[id]; ls.set(POS_KEY, JSON.stringify(p));
   if(typeof FIXES === "object") Object.keys(FIXES).forEach(k => { if(k.startsWith(id + ":") || k.startsWith(id + "-")) delete FIXES[k]; });
+  { const T = TASKS.find(x => x.id === id); if(T && T.film){ const S = filmState(T); S.lines = {}; filmSave(T, S); } }   /* engine 65 */
 }
 function openTask(id, idx, mode){
   if(LOCKED()) return renderGate();
@@ -3782,12 +3894,13 @@ addEventListener("resize", () => { const f = app && app.querySelector(".step-pic
 addEventListener("keydown", e => { if(e.key === "Escape"){ const f = document.querySelector(".step-pic.zoom"); if(f) f.click(); } });
 const againBarHTML = () => { const base = TASKS.find(x=>x.id===current.id), bm = base ? onceMoreTask(base) : null;
   return `<div class="again-bar"><span class="ab-done">✓ Done</span><button class="linklike" id="do-again">↺ Do it again</button>${bm ? `<button class="linklike" id="do-bm">🔖 Your bookmarks again (${bm.steps.length})</button>` : ""}</div>`; };
-function goHome(justDone){ stopPlayer(); stopRecorder(); try{ history.replaceState(null,"",location.pathname+location.search); }catch(e){} renderHome(justDone===true); }
+function goHome(justDone){ stopPlayer(); filmStop(); stopRecorder(); try{ history.replaceState(null,"",location.pathname+location.search); }catch(e){} renderHome(justDone===true); }
 
 function renderTask(){
   const t = current;
   const nextListen = t.steps && stepIdx < t.steps.length && t.steps[stepIdx].type === "listen";
   if(nextListen && playerOnScreen()) pausePlayer(); else stopPlayer();
+  if(!(t.steps && stepIdx < t.steps.length && /^film/.test(t.steps[stepIdx].type))) filmStop();
   stopRecorder();
   if(t.kind==="gaps") return renderGaps(t);
   if(t.kind==="link") return renderLink(t);
@@ -3805,7 +3918,7 @@ function renderTask(){
   if(!t._once && !isTeacher()) savePos(t.id, stepIdx);
   const count = t._once ? `Once more: your bookmarks · ${stepIdx+1} of ${t.steps.length}` : `${stepIdx+1} of ${t.steps.length}`;
   const pct = Math.round((stepIdx)/t.steps.length*100);
-  ({dlg:renderDlg, gist:renderGist, rewrite:renderRewrite, fix:renderFix, sayit:renderSayit, boxtask:renderBoxTask, share:renderShare, lookback:renderLookback, listen:renderListen, task:renderTaskCard, plan:renderPlan, produce:renderProduce, sort:renderSort})[st.type](st, count, pct);
+  ({dlg:renderDlg, gist:renderGist, rewrite:renderRewrite, fix:renderFix, sayit:renderSayit, boxtask:renderBoxTask, share:renderShare, lookback:renderLookback, listen:renderListen, film:renderFilm, filmsum:renderFilmSum, upgrade:renderUpgrade, task:renderTaskCard, plan:renderPlan, produce:renderProduce, sort:renderSort})[st.type](st, count, pct);
   if(!t._once) annotateMarks();
   window.scrollTo(0,0);
 }
@@ -3817,7 +3930,7 @@ function navButtons(checkLabel="Check"){
 function wireNav(onCheck, guard){
   document.getElementById("prev").addEventListener("click",()=>{ if(stepIdx>0){ stepIdx--; checked=false; renderTask(); } else goHome(); });   /* engine 51 (her 31.10): Back on the first screen = back to all tasks */
   document.getElementById("go").addEventListener("click",()=>{
-    if(!checked){ checked = true; onCheck(); }
+    if(!checked){ ftAtCheck(); checked = true; onCheck(); }
     else { if(guard && !guard()) return; stepIdx++; checked=false; renderTask(); }   /* engine 57: guard = "not sent yet?" on Over to you */
   });
 }
@@ -4070,6 +4183,7 @@ function renderGist(st, count, pct){
   const go = document.getElementById("go"); if(!checked){ go.disabled = true; go.textContent = "Next"; }
   app.querySelectorAll("[data-gist]").forEach(b => b.addEventListener("click", () => {
     if(checked) return; const i = +b.dataset.gist, y = scrollY;
+    { const o = (st.opts || [])[i] || {}, r = (st.opts || [])[st.ok] || {}; firstTry(current, "s" + curS(), {type: "gist", prompt: st.q || "gist", answer: r.alt || r.txt || String(st.ok), first: o.alt || o.txt || String(i), ok: i === st.ok}); }   /* engine 67 */
     if(i === st.ok){ S.wrong = null; checked = true; }
     else { S.wrong = i; S.shake = i; setTimeout(() => { S.shake = null; const x = app.querySelector(".gist-opt.shake"); if(x) x.classList.remove("shake"); }, 600); }
     renderTaskKeep(); scrollTo(0, y);
@@ -4229,6 +4343,14 @@ function renderRewrite(st, count, pct){
 }
 /* re-render the same step after Check without resetting */
 function renderTaskKeep(){ const keep = checked; renderTask(); checked = keep; }
+/* engine 67: the first try of a rewrite or a Fix it item, at its Check */
+function ftAtCheck(){ const st = current && current.steps && current.steps[stepIdx]; if(!st) return; const si = curS();
+  if(st.type === "rewrite"){ const r = st.r, val = (typed[current.id + "-" + si] || "").trim();
+    firstTry(current, "s" + si, {type: "rewrite", prompt: (r.o ? ftPlain(origHTML(r.o)) + " → " : "") + r.pre + "___" + r.post + (r.k ? " (" + ftPlain(r.k) + ")" : ""), answer: r.a, first: val, ok: !!val && judgeRewrite(val, r).m.ok}); }
+  else if(st.type === "fix"){ const it = st.it, S = fixSt[current.id + "-" + si] || {};
+    if(it.kind === "which"){ const ok = new Set(it.ok || []), picks = (S.picks || []).slice().sort((a, b) => a - b);
+      firstTry(current, "s" + si, {type: "fix", prompt: fixSnippet(st), answer: (it.ok || []).map(i => it.opts[i]).join(" / "), first: picks.map(i => it.opts[i]).join(" / "), ok: picks.length === ok.size && picks.every(i => ok.has(i))}); }
+    else firstTry(current, "s" + si, {type: "fix", prompt: fixSnippet(st), answer: fixRight(it), first: ""}); } }
 /* ===== fixit (engine 49, C1 30.10) ===== */
 /* «Fix it» (TZ from the C1 lesson chat 31.10; her wish: the fixed form big and red). Each block opens with its card: the slip with only the
    wrong bit struck grey (‸ = a missing word) and the good part green, the right version with the fix big and red, why in English, then
@@ -4282,6 +4404,7 @@ function renderFix(st, count, pct){
   }
   const ws = fixWords(it);
   const place = (i, w) => {
+    firstTry(current, "s" + curS(), {type: "fix", prompt: it.tokens.join(" "), answer: placeAnswerHTML(it, fixRight(it)), first: it.tokens.map((x, j) => x === "▢" ? (j === i ? "[" + w + "]" : null) : x).filter(x => x != null).join(" "), ok: i === it.slot && w === fixRight(it)});   /* engine 67 */
     if(i === it.slot && w === fixRight(it)){ S.msg = ""; S.solved = true; checked = true; renderTaskKeep(); const a = app.querySelector(".fx-in"); if(a) a.classList.add("pop"); return; }
     S.msg = i === it.slot ? "Not quite — try the other word." : "Not quite — try another place."; S.shake = i; S.sel = null; S.slot = null;
     renderTaskKeep(); setTimeout(() => { S.shake = null; const sl = app.querySelector(".fx-slot.shake"); if(sl) sl.classList.remove("shake"); }, 600);
@@ -4491,6 +4614,7 @@ function renderSort(st, count, pct){
     keep(); const b = box(p); if(b) b.classList.add("landed"); };
   const place = p => {
     if(S.busy || !S.open || S.landed || it.mode === "auto") return;
+    firstTry(current, "s" + curS() + ".c" + it.i, {type: "sort", prompt: (it.ru ? it.ru + " → " : "") + it.en, answer: it.p, first: p, ok: p === it.p});   /* engine 67 */
     if(p === it.p){ S.busy = true; fly(p, 550, () => land(p)); return; }
     S.wrong = it.why; keep(); const b = box(p); if(b){ b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake"); }
   };
@@ -4724,10 +4848,12 @@ function renderListen(st, count, pct){
     try{ ytPlayer && ytPlayer.setPlaybackRate(r); }catch(e){}
   }));
   /* engine 55: each gap with the other forms it takes (its alt) and the words after it (a short form can't close a clause) */
-  const gapsAll = lines.flatMap(l => l[3].map((p, j) => typeof p === "string" ? null : {ans: p.gap, accs: [p.gap, ...(p.alt || [])], post: typeof l[3][j+1] === "string" ? l[3][j+1] : ""}).filter(Boolean));
+  const gapsAll = lines.flatMap(l => l[3].map((p, j) => typeof p === "string" ? null : {ans: p.gap, accs: [p.gap, ...(p.alt || [])], post: typeof l[3][j+1] === "string" ? l[3][j+1] : "",
+    line: l[3].map((q, m) => typeof q === "string" ? q : m === j ? "___" : q.gap).join("")}).filter(Boolean));
   /* engine 38: what they typed stays in the gap, green when right, red + → the answer when not (see judgeRewrite) */
   const judgeGap = inp => {
       const k = +inp.dataset.k, g = gapsAll[k], ans = g.ans, val = inp.value.trim();
+      firstTry(current, "s" + curS() + ".g" + k, {type: "listen", prompt: g.line, answer: ans, first: val, ok: !!val && (sameAnswer(val, g.accs, g.post) || markAnswer(val, g.accs).ok)});   /* engine 67 */
       const ck = inp.nextElementSibling; if(ck && ck.classList.contains("gap-ck")) ck.remove();
       const res = document.createElement("span");
       if(!val){ res.className = "gap-res ans"; res.textContent = ans; inp.replaceWith(res); return; }
@@ -4794,6 +4920,380 @@ function renderLookback(st, count, pct){
 /* ---------- end ---------- */
 /* engine 57 (her 09:25: «если нажала Finish, но не нажала Send, задание не отмечается как сделанное — и студентам напомнит, и меня не введёт
    в заблуждение»): a task with Over to you counts as done only once its text or recording was sent (to her table, or shared / copied) */
+/* ---------- engine 65 (the AL chat's request 11.11 21:40, her decisions 11.11 21:03–21:27): 🎬 listening from the film ----------
+   A task with `film: {film, dur?, instr?, lines: [{id, clip: "m:ss.xx-m:ss.xx", text with {{gap}}, before?, after?, m?: marks}]}`:
+   the sound comes from the student's own copy of the film (📂, nothing is uploaded); a line on a screen, as in TubeQuizard, the gap
+   inside the line. Each line: listen once → write what you caught (or «Nothing yet ↻») → listen as often as you like → Check
+   (or «Can't catch it → show me»). Hearts when the first version has a right word. The first line stays first, the rest come in an
+   order of this device's own. At the end: what one listen caught and what it came to. With a student's code the record goes to her table. */
+const FILM_DESK = (() => { try{ return matchMedia("(pointer: fine)").matches && innerWidth >= 700; }catch(e){ return true; } })();
+const FILM = {v: null, url: "", name: "", dur: 0, raf: 0, playing: null, err: ""};
+function filmKey(t){ return "hw-film-" + PAGE_KEY + "-" + t.id; }   /* declarations: the screens are made early (after lsJSON), before this part of the page */
+function filmState(t){ const S = lsJSON(filmKey(t), {}); S.lines = S.lines || {}; return S; }
+function filmSave(t, S){ ls.set(filmKey(t), JSON.stringify(S)); }
+const filmT = s => { const m = String(s || "").trim().match(/^(?:(\d+):)?(\d+):(\d+(?:\.\d+)?)$/); return m ? (+(m[1] || 0)) * 3600 + (+m[2]) * 60 + (+m[3]) : null; };
+const filmClip = l => { const [a, b] = String(l.clip || "").split(/\s*[-–]\s*/); const s = filmT(a), e = filmT(b); return s != null && e != null && e > s ? {s, e} : null; };
+const filmFmt = t => { t = Math.max(0, t || 0); const h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = Math.floor(t % 60); return (h ? h + ":" + String(m).padStart(2, "0") : m) + ":" + String(s).padStart(2, "0"); };
+function filmParts(l){ const m = String(l.text || "").match(/^([\s\S]*?)\{\{([\s\S]*?)\}\}([\s\S]*)$/); return m ? {pre: m[1], gap: m[2].trim(), post: m[3]} : {pre: String(l.text || ""), gap: "", post: ""}; }
+/* the words of a gap they got right, in order (contractions and apostrophes as in the other gaps) */
+const filmCore = w => coreOf(String(w).replace(APOS, "'")).core.toLowerCase();
+function filmWords(val, l){
+  const P = filmParts(l), T = splitTok(P.gap).map(filmCore).filter(Boolean), n = T.length;
+  const v = String(val || "").trim(); if(!v) return {got: 0, n};
+  if(sameAnswer(v, [P.gap].concat(l.alt || []), P.post)) return {got: n, n};
+  const S = splitTok(stripFrame(v, {pre: P.pre, post: P.post})).map(filmCore).filter(Boolean);
+  const L = Array.from({length: S.length + 1}, () => new Array(n + 1).fill(0));
+  for(let i = S.length - 1; i >= 0; i--) for(let j = n - 1; j >= 0; j--) L[i][j] = S[i] === T[j] ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
+  return {got: Math.min(n, L[0][0]), n};
+}
+/* the order: the first line first, the others in this device's own order, kept */
+function filmSteps(t){
+  const lines = t.film.lines || [], S = filmState(t);
+  let order = Array.isArray(S.order) && S.order.length === lines.length && lines.every(l => S.order.includes(l.id)) ? S.order : null;
+  if(!order){ const rest = lines.slice(1).map(l => l.id); for(let i = rest.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [rest[i], rest[j]] = [rest[j], rest[i]]; }
+    order = lines.length ? [lines[0].id].concat(t.film.shuffle === false ? lines.slice(1).map(l => l.id) : rest) : []; S.order = order; filmSave(t, S); }
+  return order.map((id, k) => ({type: "film", li: lines.findIndex(l => l.id === id), first: k === 0})).concat([{type: "filmsum"}]);
+}
+
+/* the film file: one <video> for the page, moved into each screen; Chrome / Edge remember the file for the next time */
+function filmVideo(){
+  if(!FILM.v){ const v = document.createElement("video"); v.className = "film-v"; v.playsInline = true; v.preload = "auto"; v.disablePictureInPicture = true;
+    v.addEventListener("loadedmetadata", () => { FILM.dur = v.duration || 0; filmPaintBox(); filmCue(); });
+    v.addEventListener("error", () => { FILM.err = "This file doesn't play in the browser. Try another copy of the film (an .mp4 works best)."; filmPaintBox(); });
+    FILM.v = v; }
+  return FILM.v;
+}
+function filmIDB(){ return new Promise((res, rej) => { try{ const r = indexedDB.open("hw-film", 1); r.onupgradeneeded = () => r.result.createObjectStore("h"); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }catch(e){ rej(e); } }); }
+async function filmKeep(h){ try{ const db = await filmIDB(); db.transaction("h", "readwrite").objectStore("h").put(h, "film"); }catch(e){} }
+async function filmKept(){ try{ const db = await filmIDB(); return await new Promise(res => { const r = db.transaction("h").objectStore("h").get("film"); r.onsuccess = () => res(r.result || null); r.onerror = () => res(null); }); }catch(e){ return null; } }
+function filmSet(file){ const v = filmVideo(); if(FILM.url) URL.revokeObjectURL(FILM.url); FILM.url = URL.createObjectURL(file); FILM.name = file.name; FILM.err = ""; FILM.dur = 0; v.src = FILM.url; v.load(); filmPaintBox();
+  fwLoad(file.name + "|" + file.size); }   /* engine 66: the waveform heard before, for this file */
+async function filmOpen(){
+  if(window.showOpenFilePicker){ try{ const [h] = await showOpenFilePicker({id: "hw-film", types: [{description: "The film", accept: {"video/*": [".mp4", ".m4v", ".mkv", ".webm", ".mov", ".avi"]}}]}); filmSet(await h.getFile()); filmKeep(h); }catch(e){} return; }
+  const inp = document.createElement("input"); inp.type = "file"; inp.accept = "video/*,.mkv"; inp.style.display = "none"; document.body.appendChild(inp);
+  inp.addEventListener("change", () => { const f = inp.files && inp.files[0]; if(f) filmSet(f); inp.remove(); }); inp.click();
+}
+async function filmReopen(){ const h = await filmKept(); if(!h) return filmOpen();
+  try{ if((await h.queryPermission({mode: "read"})) !== "granted" && (await h.requestPermission({mode: "read"})) !== "granted") return filmOpen(); filmSet(await h.getFile()); }catch(e){ filmOpen(); } }
+function filmBoxInner(t){
+  const f = t && t.film || {}, off = f.dur && FILM.dur && Math.abs(FILM.dur - f.dur) > 3;
+  if(FILM.err) return `<div class="film-msg"><p>${esc(FILM.err)}</p><button class="btn" data-filmopen>📂 Open another file</button></div>`;
+  if(!FILM.url) return `<div class="film-msg"><p>The sound comes from <b>your own copy of ${esc(f.film || "the film")}</b> on this computer. Nothing is uploaded.</p>
+      <button class="btn primary" data-filmopen>📂 Open the film</button><button class="btn" data-filmreopen hidden>▶ Open it again</button></div>`;
+  return off ? `<p class="film-warn">This looks like a different version of the film — the lines may not match.</p>` : "";
+}
+function filmPaintBox(){ const box = app && app.querySelector(".film-box"); if(!box) return;
+  const over = box.querySelector(".film-over"); if(over) over.innerHTML = filmBoxInner(current); box.classList.toggle("has-film", !!FILM.url && !FILM.err);
+  if(!FILM.url && window.showOpenFilePicker) filmKept().then(h => { const b = box.querySelector("[data-filmreopen]"); if(h && b){ b.hidden = false; b.textContent = `▶ Open “${h.name}” again`; } }); }
+/* the picture waits on the line's own moment */
+function filmCue(){ const st = current && current.film && current.steps && current.steps[stepIdx]; if(!st || st.type !== "film" || !FILM.url || FILM.playing) return;
+  const c = filmClip(current.film.lines[st.li]); if(c) try{ FILM.v.currentTime = Math.max(0, c.s - .3); }catch(e){} }
+function filmStop(){ cancelAnimationFrame(FILM.raf); if(FILM.v) try{ FILM.v.pause(); }catch(e){} const done = FILM.playing; FILM.playing = null; app && app.querySelectorAll(".ln.playing").forEach(x => x.classList.remove("playing")); return done; }
+/* a clip with a little air around it (subtitles start late and end early); ends → onEnd */
+function filmPlay(l, rate, onEnd, row, range){
+  const c = filmClip(l), v = filmVideo(); if(!c || !FILM.url) return false;
+  filmStop(); const W = fwWin(l), s = range ? range.s : W[0], e = range ? range.e : W[1];
+  FILM.playing = {id: l.id, onEnd}; v.playbackRate = rate || 1; fwAudio();
+  if(!range){ row = row || app.querySelector(".film-ln"); if(row) row.classList.add("playing"); }
+  const go = () => { const p = v.play(); if(p && p.catch) p.catch(() => {});
+    const tick = () => { if(!FILM.playing || FILM.playing.id !== l.id) return; fwCapture(); fwDraw();
+      if(v.currentTime >= e || v.ended){ const cb = FILM.playing.onEnd; filmStop(); fwKeep(); fwDraw(); if(cb) cb(); return; } FILM.raf = requestAnimationFrame(tick); };
+    FILM.raf = requestAnimationFrame(tick); };
+  if(Math.abs(v.currentTime - s) < .05 && v.readyState >= 2) go(); else { v.addEventListener("seeked", go, {once: true}); v.currentTime = s; }
+  return true;
+}
+/* engine 66 (her 11.11 22:14: «гистограмму туда тоже встроить, так же, как она была у нас на сегодняшнем занятии внизу страницы… они могут
+   кусочки проигрывать, и это прям очень-очень хорошо было для них»): the sound of the line under it, as on the lesson's decoding page.
+   A whole film is too big to read in the browser, so the waveform draws as the line plays (an analyser on the film's own sound) and is
+   kept on this computer for this file. It shows from the second listen on; drag = a piece, a click = from there; ▶ / Space plays it. */
+const FW_RATE = 100;
+FILM.pk = {lo: {}, hi: {}}; FILM.pkKey = ""; FILM.sel = {}; FILM.cur = {};
+const fwWin = l => { const c = filmClip(l); return c ? [Math.max(0, c.s - .3), c.e + .45] : [0, 1]; };
+function fwAudio(){
+  if(!FILM.au){ try{ const Ctx = window.AudioContext || window.webkitAudioContext, ac = new Ctx(), src = ac.createMediaElementSource(filmVideo()), an = ac.createAnalyser();
+    an.fftSize = 2048; src.connect(an); an.connect(ac.destination); FILM.au = {ac, an, buf: new Float32Array(an.fftSize)}; }catch(e){ FILM.au = {off: true}; } }
+  if(FILM.au.ac && FILM.au.ac.state !== "running") try{ FILM.au.ac.resume(); }catch(e){}
+}
+function fwCapture(){ const A = FILM.au, v = FILM.v; if(!A || !A.an || !v || v.paused) return;
+  A.an.getFloatTimeDomainData(A.buf); const sr = A.ac.sampleRate, N = A.buf.length, now = v.currentTime, rate = v.playbackRate || 1, per = sr / FW_RATE / rate, k = Math.floor(N / per);
+  for(let c = 0; c < k; c++){ const a = Math.floor(N - (c + 1) * per), z = Math.floor(N - c * per); let lo = 0, hi = 0;
+    for(let i = Math.max(0, a); i < z; i++){ const x = A.buf[i]; if(x < lo) lo = x; if(x > hi) hi = x; }
+    const b = Math.floor((now - (c + .5) / FW_RATE) * FW_RATE); if(b < 0) continue;
+    FILM.pk.lo[b] = Math.max(-127, Math.round(lo * 127)); FILM.pk.hi[b] = Math.min(127, Math.round(hi * 127)); }
+  FILM.pkDirty = true; }
+async function fwKeep(){ if(!FILM.pkDirty || !FILM.pkKey) return; FILM.pkDirty = false;
+  try{ const db = await filmIDB(); db.transaction("h", "readwrite").objectStore("h").put({lo: FILM.pk.lo, hi: FILM.pk.hi}, "pk:" + FILM.pkKey); }catch(e){} }
+async function fwLoad(key){ FILM.pkKey = key; FILM.pk = {lo: {}, hi: {}};
+  try{ const db = await filmIDB(), v = await new Promise(res => { const r = db.transaction("h").objectStore("h").get("pk:" + key); r.onsuccess = () => res(r.result || null); r.onerror = () => res(null); });
+    if(v && FILM.pkKey === key){ FILM.pk = {lo: Object.assign({}, v.lo, FILM.pk.lo), hi: Object.assign({}, v.hi, FILM.pk.hi)}; fwDraw(); } }catch(e){} }
+const fwFmt = t => { const m = Math.floor(t / 60), x = t - m * 60; return m + ":" + (x < 10 ? "0" : "") + x.toFixed(2); };
+function fwLine(){ const st = current && current.film && current.steps && current.steps[stepIdx]; return st && st.type === "film" ? current.film.lines[st.li] : null; }
+function fwDraw(){
+  const cv = app && app.querySelector("canvas[data-fw]"), l = fwLine(); if(!cv || !l) return;
+  const W = Math.max(50, cv.clientWidth), H = Math.max(40, cv.clientHeight), r = devicePixelRatio || 1;
+  if(cv.width !== Math.round(W * r) || cv.height !== Math.round(H * r)){ cv.width = Math.round(W * r); cv.height = Math.round(H * r); }
+  const g = cv.getContext("2d"); g.setTransform(r, 0, 0, r, 0, 0); g.clearRect(0, 0, W, H);
+  const cs = getComputedStyle(cv), col = v => cs.getPropertyValue(v).trim() || "#888";
+  const [w0, w1] = fwWin(l), X = t => (t - w0) / (w1 - w0) * W, RH = 17, WH = H - RH, mid = WH / 2, sel = FILM.sel[l.id];
+  g.fillStyle = col("--fw-bg"); g.fillRect(0, 0, W, WH);
+  if(sel){ g.fillStyle = col("--fw-sel"); g.fillRect(X(sel.s), 0, Math.max(1, X(sel.e) - X(sel.s)), WH); }
+  const b0 = Math.floor(w0 * FW_RATE), b1 = Math.ceil(w1 * FW_RATE); let top = 6, got = 0;
+  for(let b = b0; b < b1; b++){ const hi = FILM.pk.hi[b]; if(hi == null) continue; got++; top = Math.max(top, hi, -FILM.pk.lo[b]); }
+  const amp = (WH / 2 - 3) / top, wv = col("--fw-wave"), un = col("--fw-tick");
+  for(let x = 0; x < W; x++){ const a = Math.floor((w0 + x / W * (w1 - w0)) * FW_RATE), z = Math.max(a + 1, Math.floor((w0 + (x + 1) / W * (w1 - w0)) * FW_RATE)); let lo = 0, hi = 0, has = false;
+    for(let b = a; b < z; b++){ if(FILM.pk.hi[b] == null) continue; has = true; if(FILM.pk.lo[b] < lo) lo = FILM.pk.lo[b]; if(FILM.pk.hi[b] > hi) hi = FILM.pk.hi[b]; }
+    if(has){ g.fillStyle = wv; g.fillRect(x, mid - hi * amp, 1, Math.max(1, (hi - lo) * amp)); } else if(x % 6 < 3){ g.fillStyle = un; g.fillRect(x, mid, 1, 1); } }
+  if(got < (b1 - b0) * .05){ g.fillStyle = un; g.font = "700 14px system-ui, sans-serif"; g.textAlign = "center"; g.fillText("The sound draws here as it plays — click the line", W / 2, mid - 10); g.textAlign = "start"; }
+  if(sel){ g.fillStyle = col("--fw-edge"); g.fillRect(X(sel.s) - 1, 0, 2, WH); g.fillRect(X(sel.e) - 1, 0, 2, WH); }
+  g.fillStyle = col("--fw-tick"); g.font = "600 11px system-ui, sans-serif";
+  for(let t = Math.ceil(w0 * 2) / 2; t <= w1 + 1e-6; t += .5){ const x = Math.round(X(t)), whole = Math.abs(t - Math.round(t)) < 1e-6; g.fillRect(x, WH, 1, whole ? 6 : 3);
+    if(whole && x < W - 30){ const m = Math.floor(t / 60), sec = Math.round(t - m * 60); g.fillText(m + ":" + String(sec).padStart(2, "0"), x + 3, H - 3); } }
+  const cur = FILM.cur[l.id]; if(cur != null){ g.fillStyle = col("--fw-cur"); g.fillRect(Math.round(X(cur)), 0, 1, WH); }
+  if(FILM.playing && FILM.playing.id === l.id && FILM.v){ g.fillStyle = col("--fw-head"); g.fillRect(Math.round(X(FILM.v.currentTime)) - 1, 0, 2, WH); }
+}
+function fwSelText(l){ const s = FILM.sel[l.id], c = FILM.cur[l.id]; return s ? `${fwFmt(s.s)} – ${fwFmt(s.e)}` : c != null ? `from ${fwFmt(c)}` : ""; }
+/* a piece: the selection, or from the click to the end of the line */
+function fwPiece(l, onPlay){ const s = FILM.sel[l.id], [w0, w1] = fwWin(l), c = FILM.cur[l.id];
+  if(FILM.playing && FILM.playing.piece){ filmStop(); fwDraw(); return; }
+  const range = s ? {s: s.s, e: s.e} : {s: c != null ? c : w0, e: w1}; if(range.e - range.s < .05) return;
+  if(onPlay) onPlay(); filmPlay(l, rateNow(), null, null, range); if(FILM.playing) FILM.playing.piece = true; }
+function fwWire(l, onPlay){ const cv = app.querySelector("canvas[data-fw]"); if(!cv) return;
+  const tAt = e => { const r = cv.getBoundingClientRect(), [w0, w1] = fwWin(l); return Math.max(w0, Math.min(w1, w0 + (e.clientX - r.left) / r.width * (w1 - w0))); };
+  const paintSel = () => { const x = app.querySelector("#fw-sel"); if(x) x.textContent = fwSelText(l); fwDraw(); };
+  let drag = null;
+  cv.addEventListener("pointerdown", e => { if(e.button) return; e.preventDefault(); try{ cv.setPointerCapture(e.pointerId); }catch(x){} drag = {t0: tAt(e), x0: e.clientX, moved: false}; });
+  cv.addEventListener("pointermove", e => { if(!drag) return; if(Math.abs(e.clientX - drag.x0) > 4) drag.moved = true;
+    if(drag.moved){ const t = tAt(e); FILM.sel[l.id] = {s: Math.min(drag.t0, t), e: Math.max(drag.t0, t)}; paintSel(); } });
+  cv.addEventListener("pointerup", e => { const d = drag; drag = null; if(!d) return; if(FILM.playing) filmStop();
+    if(!d.moved){ FILM.sel[l.id] = null; FILM.cur[l.id] = tAt(e); } else FILM.cur[l.id] = FILM.sel[l.id].s;
+    paintSel(); fwPiece(l, onPlay); });   /* as in the lesson: let go and the piece plays at once */
+  cv.addEventListener("pointercancel", () => { drag = null; });
+  const pb = app.querySelector("#fw-play"); if(pb) pb.addEventListener("click", () => fwPiece(l, onPlay));
+  requestAnimationFrame(fwDraw);
+}
+addEventListener("keydown", e => { if(e.key !== " " || e.repeat) return; const l = fwLine(); if(!l || !app.querySelector("canvas[data-fw]")) return;
+  const tg = e.target, inBox = tg && tg.matches && tg.matches(".film-in");
+  if(inBox ? !e.ctrlKey : (tg && tg.closest && tg.closest("input, textarea, button, a, select"))) return;
+  e.preventDefault(); const b = app.querySelector("#fw-play"); if(b) b.click(); });
+addEventListener("resize", () => fwDraw());
+function filmHearts(el, n){
+  const r = el.getBoundingClientRect(), calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  for(let i = 0; i < (calm ? 1 : n); i++){ const h = document.createElement("span"); h.className = "fheart"; h.textContent = "❤️"; h.setAttribute("aria-hidden", "true");
+    h.style.left = (r.left + r.width * (.2 + .6 * Math.random())) + "px"; h.style.top = (r.top - 4) + "px";
+    h.style.setProperty("--dx", Math.round((Math.random() - .5) * 90) + "px"); h.style.animationDelay = (i * 90) + "ms";
+    document.body.appendChild(h); setTimeout(() => h.remove(), 1700 + i * 90); }
+}
+/* Olya's marks from the decoding block (`m`: [{at, mark, say?}]) on the whole line, after Check */
+function filmMarksHTML(l){
+  const P = filmParts(l), words = (P.pre + P.gap + P.post).split(/\s+/).filter(Boolean), M = Array.isArray(l.m) ? l.m : []; if(!M.length) return "";
+  const cores = words.map(filmCore), find = at => { const [w, n] = String(at).split("#"); let k = 0; for(let i = 0; i < cores.length; i++) if(cores[i] === filmCore(w) && ++k === (+n || 1)) return i; return -1; };
+  const cls = words.map(() => []), say = {}, link = new Set(), lett = {};
+  M.forEach(x => { const at = String(x.at || "");
+    if(x.mark === "link"){ const [a, b] = at.split("|"); const i = find(a); if(i > -1 && cores[i + 1] === filmCore(b)) link.add(i); return; }
+    const [w, letters] = at.split(":"), i = find(w); if(i < 0) return;
+    if(letters && x.mark === "strike"){ lett[i] = letters; return; }
+    if(x.mark === "sounds" && x.say){ say[i] = x.say; return; }
+    cls[i].push("fm-" + x.mark); });
+  const wordHTML = (w, i) => { let h = esc(w);
+    if(lett[i]){ const L = lett[i].toLowerCase(), lw = w.toLowerCase(), at = lw.lastIndexOf(L); if(at > -1) h = esc(w.slice(0, at)) + `<s class="fm-gone">${esc(w.slice(at, at + L.length))}</s>` + esc(w.slice(at + L.length)); }
+    return `<span class="fm-w ${cls[i].join(" ")}"${say[i] ? ` data-say="${esc(say[i])}"` : ""}>${h}</span>`; };
+  return `<p class="film-marks"><span class="fm-h">How it sounds:</span> ${words.map((w, i) => wordHTML(w, i) + (i < words.length - 1 ? (link.has(i) ? `<span class="fm-link">‿</span>` : " ") : "")).join("")}</p>`;
+}
+function renderFilm(st, count, pct){
+  const t = current, l = t.film.lines[st.li], P = filmParts(l), S = filmState(t), R = S.lines[l.id] = S.lines[l.id] || {};
+  const phase = t._review || R.done ? 3 : R.first != null ? 2 : R.heard ? 1 : 0, last = stepIdx === t.steps.length - 2;
+  const instr = (t.film.instr || "Click a line and listen once. Write what you caught — even one word. Then listen as many times as you like.") + (st.first ? `<span class="film-note">In real life there's no replay. Your first listen shows your real ear; the rest is training.</span>` : "");
+  if(!FILM_DESK){ shell({count, pct, instr: "", stageHTML: `<div class="panel"><div class="film-phone"><p>💻 <b>Open this task on the computer where your film is.</b></p><p class="small">The sound comes from your own copy of ${esc(t.film.film || "the film")}, so this task works only there.</p></div></div>`,
+    actionsHTML: `<button class="btn" id="prev">Back</button><button class="btn primary grow" id="go">${last ? "To the end" : "Next"}</button>`});
+    document.getElementById("prev").addEventListener("click", () => { if(stepIdx > 0){ stepIdx--; renderTask(); } else goHome(); });
+    document.getElementById("go").addEventListener("click", () => { stepIdx++; renderTask(); }); return; }
+  const val = R.final != null ? R.final : R.typing != null ? R.typing : R.first || "";
+  let gapHTML;
+  if(phase === 3){ const fin = String(R.final || "").trim(), w = filmWords(fin, l);
+    if(!fin) gapHTML = `<span class="gap-res ans">${esc(P.gap)}</span>`;
+    else if(w.got === w.n) gapHTML = `<span class="gap-res ok">${esc(fin)} ✓</span>`;
+    else { const m = markAnswer(fin, [P.gap].concat(l.alt || []));   /* kind corrections: the right words marked, the wrong ones struck, then the answer */
+      gapHTML = (m.ok || m.plain ? `<span class="film-you"><span class="wrong">${esc(fin)}</span></span>` : `<span class="film-you">${m.you}</span>`) + `<span class="to-ans"> → </span><span class="gap-res ans">${esc(P.gap)}</span>`; } }
+  else gapHTML = `<input class="gap-in film-in" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="The missing words" style="width:min(100%, ${Math.max(9, P.gap.length + 4, String(val).length + 3)}ch)" value="${esc(val)}" ${phase === 0 ? "readonly" : ""}>`;
+  const w1 = filmWords(R.first, l), wf = filmWords(R.final, l);
+  const under = phase === 0 ? `<p class="film-hint" id="fh">▶ Click the line to listen — <b>once</b>.</p>`
+    : phase === 1 ? `<div class="film-row" id="fh"><span class="film-ask">What did you catch? Even one word. <span class="small">Enter</span></span><button class="btn" id="f-none">Nothing yet ↻</button></div>`
+    : phase === 2 ? `<div class="film-row" id="fh"><button class="btn primary" id="f-check">Check</button><button class="linklike" id="f-show">Can't catch it → show me</button></div>`
+    : `<div class="film-res" id="fh">${R.first == null ? "" : R.shown ? `<p class="film-score">First listen: <b>${w1.got} of ${w1.n}</b> word${w1.n === 1 ? "" : "s"}</p>` : `<p class="film-score">First listen: <b>${w1.got} of ${w1.n}</b> word${w1.n === 1 ? "" : "s"} → now: <b>${wf.got} of ${wf.n}</b></p>`}${filmMarksHTML(l)}<button class="btn" id="f-again">▶ Listen again</button></div>`;
+  const ctx = x => x ? `<div class="ln film-ctx"><span></span><span class="ln-text">${esc(x)}</span></div>` : "";
+  const stageHTML = `<div class="panel film">
+      <div class="film-box video"><div class="film-over">${filmBoxInner(t)}</div></div>
+      <div class="lines">${ctx(l.before)}<div class="ln has-gap film-ln" data-i="0"><button class="pl" aria-label="Play the line">▶</button><span class="ln-text">${esc(P.pre)}${gapHTML}${esc(P.post)}</span></div>${ctx(l.after)}</div>
+      ${under}
+      ${phase >= 2 ? `<div class="fw"><canvas class="fw-wave" data-fw aria-label="The sound of the line: drag to choose a piece"></canvas>
+        <div class="fw-ctl"><button class="btn" id="fw-play">▶ Play the piece <kbd>Space</kbd></button><span class="fw-sel" id="fw-sel">${esc(fwSelText(l))}</span><span class="small fw-hint">Listen as many times as you like: click the line, or drag on the sound for a piece.</span>
+          <span class="slow-row fw-spd"><span class="spd-l">🐢</span><span class="spd" id="spd" role="group" aria-label="Speed">${RATES.map(r => `<button data-rate="${r}" aria-pressed="${rateNow() === r}">${r === 1 ? "normal" : r}</button>`).join("")}</span></span></div></div>` : ""}</div>`;
+  shell({count, pct, instr, stageHTML, actionsHTML: `<button class="btn" id="prev">Back</button><button class="btn ${phase === 3 ? "primary" : ""} grow" id="go">${last ? "To the end" : "Next"}</button>`});
+  const box = app.querySelector(".film-box"); box.insertBefore(filmVideo(), box.firstChild); filmPaintBox(); if(!FILM.playing && FILM.v.readyState >= 1) filmCue();
+  const save = () => filmSave(t, S), redo = () => { save(); renderFilm(st, count, pct); };
+  const inp = app.querySelector(".film-in"), row = app.querySelector(".film-ln");
+  const nudge = () => { const h = document.getElementById("fh"); [h, inp].forEach(x => { if(!x) return; x.classList.remove("nudge"); void x.offsetWidth; x.classList.add("nudge"); }); if(inp) inp.focus(); };
+  const playMore = () => { const r = rateNow(); if(r < 1 && !R.done) R.slow = true; if(R.done) R.after = (R.after || 0) + 1; else R.plays = (R.plays || 0) + 1; save(); filmPlay(l, r); };
+  const firstDone = txt => { R.first = txt; R.t1 = Date.now(); const w = filmWords(txt, l); R.w1 = w.got; R.typing = txt; save();
+    firstTry(t, l.id, {type: "film", prompt: P.pre + "___" + P.post, answer: P.gap, first: txt, ok: w.n > 0 && w.got === w.n});   /* engine 67 */
+    if(w.got > 0 && inp) filmHearts(inp, w.got === w.n ? 9 : 4); if(!txt) playMore(); redo(); };
+  app.addEventListener("click", e => { const b = e.target.closest("[data-filmopen]"), b2 = e.target.closest("[data-filmreopen]"); if(b) filmOpen(); if(b2) filmReopen(); });
+  row.addEventListener("click", e => {
+    if(e.target.closest("input") && phase !== 0) return;
+    if(!FILM.url){ const o = app.querySelector("[data-filmopen]"); if(o){ o.classList.remove("nudge"); void o.offsetWidth; o.classList.add("nudge"); } return; }
+    if(phase === 0){ if(FILM.playing) return; R.t0 = R.t0 || Date.now(); R.plays = 1; save(); filmPlay(l, 1, () => { R.heard = true; save(); redo(); setTimeout(() => { const i = app.querySelector(".film-in"); if(i) i.focus(); }, 30); }); return; }
+    if(phase === 1){ nudge(); return; }   /* the line waits for what they caught: «Nothing yet ↻» plays it again at once */
+    playMore(); });
+  if(inp){ inp.addEventListener("input", () => { R.typing = inp.value; inp.style.width = `min(100%, ${Math.max(9, P.gap.length + 4, inp.value.length + 3)}ch)`; save(); });
+    inp.addEventListener("keydown", e => { if(e.key !== "Enter") return; e.preventDefault();
+      if(phase === 1) firstDone(inp.value.trim()); else if(phase === 2) document.getElementById("f-check").click(); }); }
+  const on = (id, f) => { const x = document.getElementById(id); if(x) x.addEventListener("click", f); };
+  on("f-none", () => firstDone(""));
+  on("f-check", () => { filmStop(); R.final = (inp ? inp.value : "").trim(); R.checks = (R.checks || 0) + 1; R.t2 = Date.now(); R.done = true; R.wf = filmWords(R.final, l).got; save(); redo(); });
+  on("f-show", () => { filmStop(); R.final = (inp ? inp.value : "").trim(); R.shown = true; R.t2 = Date.now(); R.done = true; R.wf = filmWords(R.final, l).got; save(); redo(); });
+  on("f-again", () => playMore());
+  app.querySelectorAll("#spd [data-rate]").forEach(b => b.addEventListener("click", () => { const r = Number(b.dataset.rate); ls.set("hw-rate", String(r)); ls.set("hw-slow", "");
+    app.querySelectorAll("#spd [data-rate]").forEach(x => x.setAttribute("aria-pressed", Number(x.dataset.rate) === r)); if(FILM.v && FILM.playing){ FILM.v.playbackRate = r; if(r < 1){ R.slow = true; save(); } } }));
+  document.getElementById("prev").addEventListener("click", () => { filmStop(); if(stepIdx > 0){ stepIdx--; renderTask(); } else goHome(); });
+  document.getElementById("go").addEventListener("click", () => { filmStop(); if(!R.done && !t._review){ R.skipped = true; save(); } stepIdx++; renderTask(); });
+  if(phase === 1 && inp) setTimeout(() => inp.focus(), 30);
+  if(phase >= 2){ if(FILM.sel[l.id] === undefined){ const c = filmClip(l); if(c) FILM.sel[l.id] = {s: c.s, e: c.e}; const x = app.querySelector("#fw-sel"); if(x) x.textContent = fwSelText(l); }
+    fwWire(l, () => { if(R.done) R.after = (R.after || 0) + 1; else { R.plays = (R.plays || 0) + 1; R.pieces = (R.pieces || 0) + 1; if(rateNow() < 1) R.slow = true; } save(); }); }
+}
+/* the end: one listen → in the end, the hardest lines to hear again; the record goes to her table once (a student's code) */
+function filmTotals(t){ const S = filmState(t); let n = 0, a = 0, b = 0; const rows = [];
+  t.steps.filter(s => s.type === "film").forEach(s => { const l = t.film.lines[s.li], R = S.lines[l.id] || {}, w1 = filmWords(R.first, l), wf = filmWords(R.final, l);
+    n += w1.n; a += w1.got; b += R.done ? wf.got : w1.got; rows.push({l, R, w1, wf}); });
+  return {S, n, a, b, rows, p1: n ? Math.round(a / n * 100) : 0, p2: n ? Math.round(b / n * 100) : 0}; }
+function filmRecord(t, T){
+  const sec = ms => ms > 0 ? Math.round(ms / 1000) + " s" : "–";
+  const out = [`🎬 ${t.film.film || "film"} · order: ${t.steps.filter(s => s.type === "film").map(s => t.film.lines[s.li].id).join(" ")}${FILM.name ? " · file: " + FILM.name : ""}`];
+  T.rows.forEach(({l, R, w1, wf}) => { const P = filmParts(l);
+    out.push(`${l.id} [${P.gap}] — first: ${R.first == null ? (R.skipped ? "skipped" : "–") : R.first ? `"${R.first}"` : "nothing"} (${w1.got} of ${w1.n})`
+      + ` · plays before Check: ${R.plays || 0}${R.pieces ? ` (${R.pieces} of them pieces)` : ""} · Check ×${R.checks || 0}${R.shown ? " · show me" : ""}${R.slow ? " · 🐢" : ""}`
+      + ` · final: ${R.done ? (R.final ? `"${R.final}"` : "–") + ` (${wf.got} of ${wf.n})` : "not finished"} · ${sec((R.t2 || 0) - (R.t0 || 0))}`); });
+  out.push(`Total: first listen ${T.a}/${T.n} words (${T.p1}%) → in the end ${T.b}/${T.n} (${T.p2}%)`);
+  return out.join("\n"); }
+let filmSending = false;
+async function filmSend(t, T){
+  if(!myCode() || isTeacher() || T.S.sent || filmSending) return; filmSending = true;
+  const res = await post({action: "submit", code: myCode(), page: PAGE_KEY, date: LESSON.date, task: t.id, title: t.title, type: "listening", text: filmRecord(t, T)});
+  if(res && res.ok){ const S = filmState(t); S.sent = res.id || true; filmSave(t, S); }
+  filmSending = false;
+}
+function renderFilmSum(st, count, pct){
+  const t = current, T = filmTotals(t);
+  const hard = T.rows.filter(x => x.R.first != null && x.w1.n && x.w1.got < x.w1.n).sort((x, y) => x.w1.got / x.w1.n - y.w1.got / y.w1.n).slice(0, 3);
+  const stageHTML = `<div class="panel film fsum">
+      <div class="film-sum"><p class="film-big">After one listen you caught <b>${T.p1}%</b> of the words. In the end: <b>${T.p2}%</b>.</p>
+      <p class="small">In real life there's no replay. Your first listen shows your real ear; the rest is training.</p></div>
+      ${hard.length && FILM_DESK ? `<div class="film-box video"><div class="film-over">${filmBoxInner(t)}</div></div>
+      <p class="film-h">The hardest to hear — listen again:</p>
+      <div class="lines">${hard.map(({l}) => { const P = filmParts(l); return `<div class="ln has-gap film-ln" data-id="${esc(l.id)}"><button class="pl" aria-label="Play the line">▶</button><span class="ln-text">${esc(P.pre)}<span class="gap-res ans">${esc(P.gap)}</span>${esc(P.post)}</span></div>`; }).join("")}</div>` : ""}
+    </div>`;
+  shell({count, pct: 100, instr: "", stageHTML, actionsHTML: `<button class="btn" id="prev">Back</button><button class="btn primary grow" id="go">Finish</button>`});
+  const box = app.querySelector(".film-box"); if(box){ box.insertBefore(filmVideo(), box.firstChild); filmPaintBox(); }
+  app.addEventListener("click", e => { if(e.target.closest("[data-filmopen]")) filmOpen(); if(e.target.closest("[data-filmreopen]")) filmReopen(); });
+  app.querySelectorAll(".film-ln[data-id]").forEach(row => row.addEventListener("click", () => { const l = t.film.lines.find(x => x.id === row.dataset.id);
+    if(!FILM.url){ const o = app.querySelector("[data-filmopen]"); if(o){ o.classList.remove("nudge"); void o.offsetWidth; o.classList.add("nudge"); } return; }
+    filmPlay(l, rateNow(), null, row); }));
+  document.getElementById("prev").addEventListener("click", () => { filmStop(); stepIdx--; renderTask(); });
+  document.getElementById("go").addEventListener("click", () => { filmStop(); stepIdx++; renderTask(); });
+  filmSend(t, T);
+}
+
+/* ---------- engine 67: her summary of the first tries (only her code reads it), the export, and «I want to say this» ---------- */
+let FT_SUM = null, FT_AT = 0, FT_MODE = "item";
+async function ftSummary(fresh){
+  if(!fresh && FT_SUM && Date.now() - FT_AT < 60000) return FT_SUM;
+  const res = await post({action: "attemptsSummary", code: myCode(), page: PAGE_KEY});
+  if(res && res.ok){ FT_SUM = res; FT_AT = Date.now(); } return res;
+}
+const ftOrder = id => { const m = String(id).split(":")[1] || "", n = (m.match(/\d+/g) || []).map(Number); return n.reduce((a, x, i) => a + x * Math.pow(1000, 2 - i), 0); };
+const ftTypeWord = {rewrite: "rewrite", listen: "listening", fix: "Fix it", sort: "sort", gist: "gist", film: "film"};
+function ftGroups(res){
+  const by = {}; (res.items || []).forEach(it => { (by[it.task] = by[it.task] || []).push(it); });
+  const order = TASKS.map(t => t.id).concat(Object.keys(by).filter(k => !TASKS.some(t => t.id === k)));
+  return order.filter(k => by[k]).map(k => ({task: k, title: (TASKS.find(t => t.id === k) || {}).title || k, items: by[k].sort((a, b) => ftOrder(a.item) - ftOrder(b.item))}));
+}
+function ftHTML(res){
+  const G = ftGroups(res), W = res.wants || [];
+  if(!G.length && !W.length) return `<p class="ft-empty">No first tries yet. They come in when students with a code check an answer on this page.</p>`;
+  const blankWord = it => it.type === "film" ? "nothing caught" : "opened without a try";
+  const itemHTML = it => FT_MODE === "item"
+    ? `<div class="ft-item"><p class="ft-p">${esc(it.prompt)}</p><p class="ft-a">→ <b>${esc(it.answer)}</b> <span class="ft-type">${esc(ftTypeWord[it.type] || it.type)}</span></p>
+        <p class="ft-n">${it.tried ? `<span class="ft-ok">✓ ${it.ok} of ${it.tried}</span> right the first time` : `No one typed an answer`}${it.blank ? ` · <span class="ft-bl">${it.blank} ${blankWord(it)}</span>` : ""}</p>
+        ${it.wrong.length ? `<p class="ft-w">${it.wrong.map(([w, n]) => `<span class="ft-wr"><s>${esc(w)}</s>${n > 1 ? ` <b>×${n}</b>` : ""}</span>`).join(" ")}</p>` : ""}</div>`
+    : `<div class="ft-item"><p class="ft-p">${esc(it.prompt)}</p><p class="ft-a">→ <b>${esc(it.answer)}</b></p>
+        <ul class="ft-who">${it.who.map(([name, first, r]) => `<li><b>${esc(name)}</b> ${r === "ok" ? `<span class="ft-ok">✓ ${esc(first)}</span>` : r === "no" ? `<s>${esc(first)}</s>` : `<span class="ft-bl">${blankWord(it)}</span>`}</li>`).join("")}</ul></div>`;
+  return G.map(g => `<section class="ft-task"><h3>${esc(g.title)}</h3>${g.items.map(itemHTML).join("")}</section>`).join("")
+    + (W.length ? `<section class="ft-task"><h3>❤️ I want to say this</h3>${W.map(w => `<div class="ft-item"><p class="ft-p">${esc(w.text)}</p><p class="ft-n"><b>${w.n}</b> ${w.n === 1 ? "student" : "students"}${FT_MODE === "student" ? ": " + w.who.map(esc).join(", ") : ""}</p></div>`).join("")}</section>` : "");
+}
+function ftCSV(res){
+  const q = v => { v = String(v == null ? "" : v); return /[",\n;]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }, rows = [];
+  const title = id => (TASKS.find(t => t.id === id) || {}).title || id;
+  if(FT_MODE === "item"){ rows.push(["Task", "Item", "Type", "Prompt", "Answer", "Tried", "Right the first time", "Opened without a try", "Wrong first tries"]);
+    ftGroups(res).forEach(g => g.items.forEach(it => rows.push([g.title, it.item, it.type, it.prompt, it.answer, it.tried, it.ok, it.blank, it.wrong.map(([w, n]) => w + (n > 1 ? " ×" + n : "")).join(" | ")]))); }
+  else { rows.push(["Task", "Item", "Type", "Prompt", "Answer", "Student", "First try", "Result"]);
+    ftGroups(res).forEach(g => g.items.forEach(it => it.who.forEach(([name, first, r]) => rows.push([g.title, it.item, it.type, it.prompt, it.answer, name, first, r === "ok" ? "right" : r === "no" ? "wrong" : "opened without a try"])))); }
+  (res.wants || []).forEach(w => rows.push([title(w.task), w.line, "want", w.text, "", w.n, "", "", FT_MODE === "student" ? w.who.join(" | ") : ""]));
+  return "﻿" + rows.map(r => r.map(q).join(",")).join("\r\n");
+}
+async function renderFirstTries(fresh){
+  current = null; stopPlayer(); filmStop();
+  app.innerHTML = `<div class="taskbar"><div class="taskbar-row"><button class="back" id="home">← All tasks</button></div><h2 class="task-title">📊 First tries</h2></div>
+    <div class="instr">What they typed or chose before the answer was shown — the first time only. Only you see this.</div>
+    <div class="ft-bar"><span class="seg" role="group" aria-label="Show"><button data-ftm="item" aria-pressed="${FT_MODE === "item"}">By item</button><button data-ftm="student" aria-pressed="${FT_MODE === "student"}">By student</button></span>
+      <button class="btn" id="ft-csv">⬇ CSV</button><button class="btn" id="ft-ref">↻ Refresh</button><span class="small" id="ft-msg">Loading from your table…</span></div>
+    <div class="panel ft" id="ft-body"></div>`;
+  document.getElementById("home").addEventListener("click", () => goHome());
+  const msg = document.getElementById("ft-msg"), body = document.getElementById("ft-body");
+  const res = await ftSummary(fresh); if(!body.isConnected) return;
+  if(!res || !res.ok){ msg.textContent = res && res.error === "not-teacher" ? "Only your code opens this." : "Your table didn't answer — try ↻ Refresh in a moment."; return; }
+  msg.textContent = `as of ${new Date(FT_AT).toLocaleTimeString("en-GB", {hour: "2-digit", minute: "2-digit"})}`;
+  const paint = () => { body.innerHTML = ftHTML(res); app.querySelectorAll("[data-ftm]").forEach(b => b.setAttribute("aria-pressed", b.dataset.ftm === FT_MODE)); };
+  paint();
+  app.querySelectorAll("[data-ftm]").forEach(b => b.addEventListener("click", () => { FT_MODE = b.dataset.ftm; paint(); }));
+  document.getElementById("ft-ref").addEventListener("click", () => renderFirstTries(true));
+  document.getElementById("ft-csv").addEventListener("click", () => { const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([ftCSV(res)], {type: "text/csv;charset=utf-8"})); a.download = PAGE_KEY.replace(/^hw-ge-/, "") + "-first-tries" + (FT_MODE === "student" ? "-by-student" : "") + ".csv";
+    document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000); });
+}
+/* «I want to say this» (methodika 11.11 22:40, her decision 22:30, an experiment): a step `{type: "upgrade", instr?, intro?, rows: [{id, said, better}]}`
+   — the group's lines from the lesson, anonymous, in the kind form (said: ~~the slip~~ struck grey; better: **the change** red), and a heart on
+   each: one tap = «I want to say this», a second tap takes it off. Sent with the code (sheet «Want to say»); in her view the count per line. */
+const WANT_KEY = "hw-want-" + PAGE_KEY;
+let WANTS = (() => { try{ return JSON.parse(localStorage.getItem(WANT_KEY) || "{}") || {}; }catch(e){ return {}; } })();
+let wantTimer = null, wantBusy = false;
+function wantSendSoon(){ if(wantTimer) return; wantTimer = setTimeout(() => { wantTimer = null; wantSend(); }, 1200); }
+async function wantSend(){
+  if(wantBusy || !myCode() || isTeacher() || asStudent() || syncState === "unknown") return;
+  const todo = Object.keys(WANTS).filter(k => !WANTS[k].sent); if(!todo.length) return; wantBusy = true;
+  const sentAt = {}; todo.forEach(k => { sentAt[k] = WANTS[k].t; });   /* a heart tapped again while this is on its way goes in the next send */
+  const res = await post({action: "wants", code: myCode(), page: PAGE_KEY, items: todo.map(k => ({item: k, task: WANTS[k].task, text: WANTS[k].text, on: !!WANTS[k].on}))});
+  if(res && res.ok) todo.forEach(k => { if(WANTS[k] && WANTS[k].t === sentAt[k]) WANTS[k].sent = 1; }); try{ localStorage.setItem(WANT_KEY, JSON.stringify(WANTS)); }catch(e){}
+  wantBusy = false; if(Object.keys(WANTS).some(k => !WANTS[k].sent)) wantSendSoon();
+}
+function renderUpgrade(st, count, pct){
+  checked = true; const t = current, rows = st.rows || [];
+  const on = r => !!(WANTS[t.id + ":" + r.id] && WANTS[t.id + ":" + r.id].on);
+  const heart = r => `<button type="button" class="up-want ${on(r) ? "on" : ""}" data-want="${esc(r.id)}" aria-pressed="${on(r)}"><span class="up-h" aria-hidden="true">${on(r) ? "❤️" : "♡"}</span> I want to say this</button>`;
+  shell({count, pct, instr: st.instr || "Your phrases from the lesson — and a richer way to say them. Tap ♡ next to one or two you'd like to be able to say yourself.",
+    stageHTML: `<div class="panel up">${st.intro ? `<p class="situation">${esc(st.intro)}</p>` : ""}<div class="up-rows">${rows.map(r => `<div class="up-row" data-up="${esc(r.id)}">
+        <div class="up-text"><p class="up-said">${fixMd(r.said)}</p><p class="up-better"><span class="up-arrow" aria-hidden="true">→</span> ${fixMd(r.better)}</p></div>
+        <div class="up-side">${isTeacher() ? `<span class="up-n" data-wn="${esc(r.id)}"></span>` : heart(r)}</div></div>`).join("")}</div></div>`,
+    actionsHTML: navButtons()});
+  app.querySelectorAll("[data-want]").forEach(b => b.addEventListener("click", () => {
+    const r = rows.find(x => x.id === b.dataset.want), k = t.id + ":" + r.id, now = !on(r);
+    WANTS[k] = {on: now, task: t.id, text: ftPlain(fixMd(r.better)), t: Date.now(), sent: 0}; try{ localStorage.setItem(WANT_KEY, JSON.stringify(WANTS)); }catch(e){}
+    b.classList.toggle("on", now); b.setAttribute("aria-pressed", now); b.querySelector(".up-h").textContent = now ? "❤️" : "♡";
+    b.classList.remove("pop"); if(now && !matchMedia("(prefers-reduced-motion: reduce)").matches){ void b.offsetWidth; b.classList.add("pop"); }
+    wantSendSoon(); }));
+  wireNav(() => {});
+  if(isTeacher() && SYNC_URL) ftSummary().then(res => { if(!res || !res.ok) return; const n = {}; (res.wants || []).forEach(w => { n[w.line] = w; });
+    app.querySelectorAll("[data-wn]").forEach(x => { const w = n[t.id + ":" + x.dataset.wn]; x.textContent = w ? `❤️ ${w.n}` : "♡ 0"; x.title = w ? w.who.join(", ") : ""; }); });
+}
+
 function needsSend(t){ return (t.steps || []).some(s => s.type === "produce"); }
 function sentFor(t){ return isTeacher() || (work[t.id] || []).some(w => w.type === "text" || w.type === "recording") || !!ls.get("hw-sent-" + PAGE_KEY + "-" + t.id); }
 const savedKey = id => "hw-saved-" + PAGE_KEY + "-" + id;   /* engine 58: "Save without sending" was tapped — the list reminds them */

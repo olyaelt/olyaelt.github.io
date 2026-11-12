@@ -3171,7 +3171,7 @@
     {
      "kind": "decode",
      "title": "Line",
-     "instr": "Listen. What's in the cloud? Write it to Olya in a private message.",
+     "instr": "Listen. What's in the gap? Write it to Olya in a private message.",
      "instr2": "What was hard to hear? Why?",
      "lines": [
       {
@@ -3221,7 +3221,7 @@
     {
      "kind": "decode",
      "title": "Line",
-     "instr": "Watch, then listen. What's in the cloud? Write it to Olya in a private message.",
+     "instr": "Watch, then listen. What's in the gap? Write it to Olya in a private message.",
      "instr2": "What was hard to hear? Why?",
      "lines": [
       {

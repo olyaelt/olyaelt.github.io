@@ -3,11 +3,21 @@
   {
    "pid": 0,
    "sig": "decode watch, then listen. what's in the cloud? write it to olya in a private message.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 1,
    "sig": "decode listen. what's in the cloud? write it to olya in a private message.",
+   "gone": true
+  },
+  {
+   "pid": 2,
+   "sig": "decode listen and type the missing words. then press enter to check.",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "decode watch, then listen. type the missing words, then press enter to check.",
    "gone": false
   }
  ],
@@ -129,6 +139,125 @@
   {
    "pid": 9,
    "sig": "d10",
+   "gone": false
+  }
+ ],
+ "lines.2": [
+  {
+   "pid": 0,
+   "sig": "d1",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "d2",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "d3",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "d4",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "d5",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "d6",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "d7",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "d8",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "d9",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "d10",
+   "gone": false
+  }
+ ],
+ "lines.3": [
+  {
+   "pid": 0,
+   "sig": "r4",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "r6",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "r7",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "r9",
+   "gone": false
+  },
+  {
+   "pid": 4,
+   "sig": "r12",
+   "gone": false
+  },
+  {
+   "pid": 5,
+   "sig": "r14",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "r15",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "r16",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "r18",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "r19",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "r23",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "r24",
+   "gone": false
+  },
+  {
+   "pid": 12,
+   "sig": "r25",
    "gone": false
   }
  ]

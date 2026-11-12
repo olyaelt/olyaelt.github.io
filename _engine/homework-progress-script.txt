@@ -131,7 +131,7 @@ function submit_(stu, page, p) {
   const sh = work_();
   const task = clean_(p.task, 60);
   if (!task) return { ok: false, error: "no-task" };
-  const type = p.type === "recording-drive" ? "🎙 recording (Drive)" : p.type === "recording" ? "🎙 recording (in Telegram)" : p.type === "question" ? "❓ question" : p.type === "marked" ? "🔖 marked" : "✍️ text";
+  const type = p.type === "recording-drive" ? "🎙 recording (Drive)" : p.type === "recording" ? "🎙 recording (in Telegram)" : p.type === "question" ? "❓ question" : p.type === "marked" ? "🔖 marked" : p.type === "listening" ? "🎧 listening" : "✍️ text";   // engine 65: 🎬 the film task's record (first listen, plays, final)
   const text = String(p.text == null ? "" : p.text).replace(/\r/g, "").slice(0, 20000);
   const phrases = (Array.isArray(p.phrases) ? p.phrases : []).map(x => clean_(x, 120)).filter(Boolean).join("\n");
   const key = stu.code + "|" + page + "|" + task;
@@ -543,6 +543,7 @@ function teacher_(stu, p) {
   if (p.action === "liveOp") return liveOp_(clean_(p.tool, 80), p.op || {});
   if (p.action === "toolNote") return toolNote_(stu, p);
   if (p.action === "toolRoster") return toolRoster_(p);
+  if (p.action === "bankPut") return bankPut_(p);                     // tools 33: her decoding bank
   const page = clean_(p.page, 80);
   if (!page) return { ok: false, error: "no-page" };
   if (p.action === "feedback" || p.action === "discussed" || p.action === "publish") ovBump_();   // engine 64: her overview counts afresh
@@ -879,6 +880,103 @@ function setFeedback_(id, text) {
 
 function safeText_(s) { return /^[=+\-@]/.test(s) ? "'" + s : s; }
 
+// ---------- engine 67 (the methodika chat's request 11.11 22:40; her 22:12: «у нас есть sentence reformulation, а я никак, как учитель, не
+// анализирую, что они там написали… То же самое в TubeQuizard. Это действительно большая дырка»): first tries ----------
+// A homework page sends what a student typed or chose BEFORE an answer was first shown, one row per item, first try only (a later try of the
+// same item never comes in); "Opened without a try" = they showed the answer with nothing typed. Only Olya's code reads the summary.
+const ATTEMPTS = "Attempts";
+const ATT_HEAD = ["Time", "Code", "Student", "Group", "Homework", "Task", "Item", "Type", "Prompt", "Answer", "First try", "Right", "Opened without a try", "Key"];
+const WANTS = "Want to say";
+const WANT_HEAD = ["Time", "Code", "Student", "Group", "Homework", "Task", "Line", "Text", "On", "Key"];
+function attempts_(stu, page, p) {
+  const items = (Array.isArray(p.items) ? p.items : []).slice(0, 300), got = [];
+  if (!items.length) return { ok: true, n: 0, got: got };
+  const sh = sheet_(ATTEMPTS, ATT_HEAD), n = sh.getLastRow() - 1, have = {};
+  if (n > 0) sh.getRange(2, ATT_HEAD.length, n, 1).getValues().forEach(r => { have[r[0]] = 1; });
+  const rows = [];
+  items.forEach(x => {
+    const item = clean_(x && x.item, 80); if (!item) return;
+    const key = stu.code + "|" + page + "|" + item; got.push(item);
+    if (have[key]) return; have[key] = 1;
+    const blank = x.blank === true;
+    rows.push([fmtDate_(Number(x.t) > 0 ? Number(x.t) : Date.now()), stu.code, stu.name, stu.group, page, clean_(x.task, 60), item, clean_(x.type, 20),
+      clean_(x.prompt, 300), clean_(x.answer, 200), blank ? "" : clean_(x.first, 300), blank ? "" : (x.ok === true ? "✓" : "✗"), blank ? "yes" : "", key]);
+  });
+  if (rows.length) sh.getRange(sh.getLastRow() + 1, 1, rows.length, ATT_HEAD.length).setValues(rows);
+  return { ok: true, n: rows.length, got: got };
+}
+// «I want to say this» on a line of the group's upgrade: a mark that can be taken off again (one row per student + line, On = yes / no)
+function wants_(stu, page, p) {
+  const items = (Array.isArray(p.items) ? p.items : []).slice(0, 100);
+  const sh = sheet_(WANTS, WANT_HEAD), n = sh.getLastRow() - 1, at = {};
+  if (n > 0) sh.getRange(2, WANT_HEAD.length, n, 1).getValues().forEach((r, i) => { at[r[0]] = i + 2; });
+  const now = fmtDate_(Date.now()), got = [];
+  items.forEach(x => {
+    const line = clean_(x && x.item, 80); if (!line) return;
+    const key = stu.code + "|" + page + "|" + line, on = x.on === true ? "yes" : "no", row = at[key]; got.push(line);
+    if (row) sh.getRange(row, 1, 1, WANT_HEAD.length).setValues([[now, stu.code, stu.name, stu.group, page, clean_(x.task, 60), line, clean_(x.text, 300), on, key]]);
+    else { sh.appendRow([now, stu.code, stu.name, stu.group, page, clean_(x.task, 60), line, clean_(x.text, 300), on, key]); at[key] = sh.getLastRow(); }
+  });
+  return { ok: true, got: got };
+}
+// her summary of one homework: per item how many tried, right first time, opened without a try, the wrong first tries grouped (same text = one, ×n),
+// and who wrote what (for the switch «by student»); per upgrade line how many want to say it
+const normTry_ = s => String(s == null ? "" : s).replace(/[’‘`´ʼ]/g, "'").replace(/\s+/g, " ").trim().toLowerCase().replace(/[.!?,;:]+$/, "");
+function attemptsSummary_(page) {
+  if (!page) return { ok: false, error: "no-page" };
+  const ss = SpreadsheetApp.getActiveSpreadsheet(), items = [], at = {}, wants = {};
+  const sh = ss.getSheetByName(ATTEMPTS);
+  if (sh && sh.getLastRow() > 1) sh.getRange(2, 1, sh.getLastRow() - 1, ATT_HEAD.length).getValues().forEach(r => {
+    if (String(r[4]) !== page) return;
+    const id = String(r[6]); let it = at[id];
+    if (!it) { it = at[id] = { item: id, task: String(r[5]), type: String(r[7]), prompt: String(r[8]), answer: String(r[9]), tried: 0, ok: 0, blank: 0, wrong: {}, who: [] }; items.push(it); }
+    const blank = String(r[12]) === "yes", ok = String(r[11]) === "✓", first = String(r[10]);
+    if (blank) it.blank++; else { it.tried++; if (ok) it.ok++; else { const k = normTry_(first); if (k) it.wrong[k] = (it.wrong[k] || 0) + 1; } }
+    it.who.push([String(r[2]), blank ? "" : first, blank ? "blank" : ok ? "ok" : "no"]);
+  });
+  items.forEach(it => { it.wrong = Object.keys(it.wrong).map(k => [k, it.wrong[k]]).sort((a, b) => b[1] - a[1]); });
+  const w = ss.getSheetByName(WANTS);
+  if (w && w.getLastRow() > 1) w.getRange(2, 1, w.getLastRow() - 1, WANT_HEAD.length).getValues().forEach(r => {
+    if (String(r[4]) !== page || String(r[8]) !== "yes") return;
+    const id = String(r[6]), x = wants[id] = wants[id] || { line: id, task: String(r[5]), text: String(r[7]), n: 0, who: [] }; x.n++; x.who.push(String(r[2]));
+  });
+  return { ok: true, items: items, wants: Object.keys(wants).map(k => wants[k]).sort((a, b) => b.n - a.n) };
+}
+
+// ---------- tools 33 (her 12.11 07:57: «мою подготовку к уроку тоже вынести к нам на тулзу… при подготовке я продолжаю прыгать между кучей
+// экранов»): her decoding bank — the pieces of a film she marked while listening (a feature, hard for B2 / C1, a note, the context), kept per film
+// so they wait for later lessons; one row per piece (readable columns + the whole piece as JSON), her feature list in the row "_features".
+const BANK = "Decoding bank";
+const BANK_HEAD = ["ID", "Film", "Time", "Line", "Gap", "Feature", "Hard for", "Note", "Context", "Updated", "Data"];
+function bankGet_(film) {
+  const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(BANK), pieces = [], films = {};
+  let features = [];
+  if (sh && sh.getLastRow() > 1) sh.getRange(2, 1, sh.getLastRow() - 1, BANK_HEAD.length).getValues().forEach(r => {
+    const f = String(r[1]); if (f) films[f] = (films[f] || 0) + (String(r[0]) === "_features" ? 0 : 1);
+    if (f !== film) return;
+    let d = null; try { d = JSON.parse(String(r[10])); } catch (err) { d = null; }
+    if (!d) return;
+    if (String(r[0]) === "_features") features = Array.isArray(d) ? d : []; else pieces.push(d);
+  });
+  return { ok: true, film: film, pieces: pieces, features: features, films: films };
+}
+function bankPut_(p) {
+  const film = clean_(p.film, 120); if (!film) return { ok: false, error: "no-film" };
+  const sh = sheet_(BANK, BANK_HEAD), n = sh.getLastRow() - 1, at = {};
+  if (n > 0) sh.getRange(2, 1, n, 2).getValues().forEach((r, i) => { if (String(r[1]) === film) at[String(r[0])] = i + 2; });
+  const now = fmtDate_(Date.now()), put = (id, vals) => { const row = at[id]; if (row) sh.getRange(row, 1, 1, BANK_HEAD.length).setValues([vals]); else { sh.appendRow(vals); at[id] = sh.getLastRow(); } };
+  const tm = t => { t = Number(t) || 0; const m = Math.floor(t / 60), s = (t - m * 60).toFixed(2); return m + ":" + (s.length < 5 ? "0" : "") + s; };
+  if (Array.isArray(p.features)) put("_features", ["_features", film, "", "", "", "(her list of features)", "", "", "", now, JSON.stringify(p.features).slice(0, 45000)]);
+  (Array.isArray(p.pieces) ? p.pieces : []).slice(0, 200).forEach(x => {
+    const id = clean_(x && x.id, 40); if (!id || id === "_features") return;
+    const hard = [x.b2 ? "B2" : "", x.c1h ? "C1" : ""].filter(Boolean).join(" ");
+    put(id, [id, film, tm(x.s) + "–" + tm(x.e), clean_(x.text, 400), clean_(x.gap, 200), clean_(x.fname, 120), hard, clean_(x.note, 400), x.ctx != null ? tm(x.ctx) : "", now, JSON.stringify(x).slice(0, 45000)]);
+  });
+  const del = (Array.isArray(p.del) ? p.del : []).map(x => String(x)).filter(id => at[id] && id !== "_features").map(id => at[id]).sort((a, b) => b - a);
+  del.forEach(row => sh.deleteRow(row));
+  return { ok: true, saved: (p.pieces || []).length, deleted: del.length };
+}
+
 // read-only questions skip the lock, so the groups' pages and her screen don't queue behind each other during a lesson
 function readOnly_(p) {
   if (p.action === "live") return { ok: true, live: liveGet_(clean_(p.tool, 80)) };          // a lesson tool (live version) asks for Olya's changes: no code, no personal data
@@ -898,6 +996,16 @@ function readOnly_(p) {
     const stu = findStudent_(p.code);
     if (!stu) return { ok: false, error: "unknown-code" };
     if (stu.group === TEACHER) return overviewCached_(p);
+  }
+  if (p.action === "bankGet") {                                                                // tools 33: her decoding bank (her code only)
+    const stu = findStudent_(p.code);
+    if (!stu) return { ok: false, error: "unknown-code" };
+    return stu.group === TEACHER ? bankGet_(clean_(p.film, 120)) : { ok: false, error: "not-teacher" };
+  }
+  if (p.action === "attemptsSummary") {                                                        // engine 67: her summary of the first tries (her code only)
+    const stu = findStudent_(p.code);
+    if (!stu) return { ok: false, error: "unknown-code" };
+    return stu.group === TEACHER ? attemptsSummary_(clean_(p.page, 80)) : { ok: false, error: "not-teacher" };
   }
   return null;
 }
@@ -946,6 +1054,8 @@ function sync_(p) {
     if (p.action === "seen") { seen_(stu, p.id); return { ok: true }; }
     if (p.action === "note") return note_(stu, p.id, p.text);
     if (p.action === "react") { const r = react_(stu, page, p); st_touch_(stu); return r; }
+    if (p.action === "attempts") return attempts_(stu, page, p);   // engine 67: first tries
+    if (p.action === "wants") return wants_(stu, page, p);         // engine 67: «I want to say this»
 
     const prog = progress_(stu.group);
     if (Array.isArray(p.tasks)) ensureColumns_(prog, page, clean_(p.date, 20), p.tasks.slice(0, 60));

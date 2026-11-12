@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>__TITLE__</title>
+<link rel="stylesheet" href="../../fonts/homework-sans.css">
+<style>
+__BASE_CSS__
+/* ---------- tools 33 (her 12.11 07:57–08:09): 🎧 decoding prep — her own page to listen to a film, mark its hard pieces and keep them ---------- */
+html,body{height:100%}
+body{overflow:hidden}
+.prep{display:grid;grid-template-rows:auto minmax(0,1fr) auto;height:100vh;max-width:none;padding:10px 16px 8px;gap:8px;box-sizing:border-box}
+.pp-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pp-top h1{margin:0 8px 0 0;font-size:1.25rem}
+.pp-file{max-width:16rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pp-stat{color:var(--muted);font-weight:700;font-size:.9rem}
+.pp-stat.ok{color:var(--ok-ink, #1E6B2E)}
+.pp-stat.warn{color:#A35A00}
+.pp-sp{flex:1}
+.pp-main{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,38%);gap:14px;min-height:0}
+.pp-left{display:grid;grid-template-rows:auto minmax(0,1fr);gap:6px;min-height:0;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:8px 10px}
+.pp-filter{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-weight:700;font-size:.92rem}
+.pp-filter input{font:inherit;font-weight:700;border:2px solid var(--line);border-radius:8px;padding:3px 8px;background:var(--card);color:var(--ink)}
+.pp-filter .t{width:5.2em;text-align:center}
+.pp-filter .q{flex:1;min-width:10em}
+.pp-filter .n{color:var(--muted);font-weight:700}
+.pp-cues{overflow:auto;min-height:0;padding-right:4px}
+.cue{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:8px;align-items:baseline;padding:3px 4px;border-radius:8px}
+.cue.cur{background:var(--ground)}
+.cue-pl{width:26px;height:26px;border-radius:50%;border:0;background:var(--instr);color:var(--instr-ink);font-size:.7rem;cursor:pointer;align-self:center}
+.cue-pl.ctxpick{background:#E08A00}
+.cue-t, .cue-pl{user-select:none}
+.cue-t{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.82rem;font-weight:700;cursor:pointer}
+.cue-x{font-size:1.05rem;line-height:1.55;user-select:text;cursor:text}
+.cue-x mark{border-radius:4px;padding:0 1px;cursor:pointer;color:inherit}
+.cue-x mark.draft{outline:2px dashed var(--instr);background:rgba(6,147,227,.15)}
+.cue-x mark.on{outline:2px solid var(--ink)}
+.pp-right{display:grid;grid-template-rows:auto minmax(0,1fr);gap:8px;min-height:0}
+.pp-vid{position:relative;aspect-ratio:16/9;width:100%;max-height:26vh;background:#000;border-radius:12px;overflow:hidden;justify-self:center}
+.pp-vid video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.pp-vid .msg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:#fff;padding:12px;font-size:.9rem}
+.pp-side{overflow:auto;min-height:0;display:grid;gap:10px;align-content:start}
+.pp-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:10px 12px;display:grid;gap:8px}
+.pp-card h3{margin:0;font-size:1rem}
+.pp-line{margin:0;font-size:1.1rem;line-height:1.5}
+.pp-line b{border-radius:4px;padding:0 2px}
+.pp-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.pp-lab{font-weight:800;font-size:.85rem;color:var(--muted);min-width:5.5em}
+.chip{font:inherit;font-size:.88rem;font-weight:800;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:2px 10px;cursor:pointer}
+.chip.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.chip .sw{display:inline-block;width:.8em;height:.8em;border-radius:3px;margin-right:5px;vertical-align:-.05em}
+.chip.sub{font-weight:700}
+.chip.hard.on{background:#FFE3B3;border-color:#A35A00;color:#5A3200}
+.pp-in{font:inherit;border:2px solid var(--line);border-radius:8px;padding:4px 8px;background:var(--card);color:var(--ink);min-width:0}
+.pp-in.grow{flex:1}
+.pp-btn{font:inherit;font-weight:800;font-size:.9rem;border:2px solid var(--instr);color:var(--instr);background:var(--card);border-radius:10px;padding:4px 10px;cursor:pointer}
+.pp-btn.pri{background:var(--instr);color:var(--instr-ink)}
+.pp-btn.quiet{border-color:var(--line);color:var(--muted)}
+.pp-btn[disabled]{opacity:.45;cursor:default}
+.pp-hint{margin:0;color:var(--muted);font-size:.88rem}
+.pp-bank details{border-top:1px solid var(--line);padding:4px 0}
+.pp-bank summary{cursor:pointer;font-weight:800}
+.pp-bank ul{margin:4px 0 0;padding-left:1.1em;display:grid;gap:2px}
+.pp-bank li{cursor:pointer}
+.pp-bank li .tm{color:var(--muted);font-variant-numeric:tabular-nums;font-size:.85rem;margin-right:4px}
+.pp-bank li .hd{font-size:.75rem;font-weight:900;color:#A35A00;margin-left:4px}
+.pp-wave{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:8px 10px;display:grid;gap:6px}
+.pp-wave canvas{display:block;width:100%;height:104px;border-radius:10px;cursor:crosshair;touch-action:none;
+  --fw-bg:#F3F7FA;--fw-sel:rgba(6,147,227,.20);--fw-edge:#0693E3;--fw-wave:#3D6F8F;--fw-tick:#6B6B6B;--fw-cur:#1D1D1B;--fw-head:#E00000;--fw-ctx:rgba(224,138,0,.18);--fw-piece:rgba(29,29,27,.07)}
+:root[data-theme="dark"] .pp-wave canvas{--fw-bg:#15191D;--fw-sel:rgba(108,195,255,.22);--fw-edge:#6CC3FF;--fw-wave:#7FB6DA;--fw-tick:#A4A7AB;--fw-cur:#ECECEA;--fw-head:#FF7A7A;--fw-ctx:rgba(255,170,60,.18);--fw-piece:rgba(255,255,255,.06)}
+.pp-ctl{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pp-ctl kbd{font:inherit;font-size:.72rem;font-weight:800;margin-left:6px;padding:1px 6px;border-radius:6px;background:var(--ground);color:var(--muted)}
+.pp-sel{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:700}
+.pp-legal{font-size:.75rem;color:var(--muted)}
+.pp-legal a{color:inherit}
+.pp-row h3{margin-right:4px}
+.pp-stat.sm{font-size:.8rem}
+@media (max-height:800px){ .pp-vid{max-height:18vh} .pp-wave canvas{height:86px} .pp-card{padding:8px 10px;gap:6px} .pp-line{font-size:1rem} .chip{padding:1px 9px} .pp-btn{padding:3px 9px} .pp-in{padding:3px 8px} .prep{gap:6px;padding-top:8px} }
+@media (max-width:900px){ body{overflow:auto} .prep{height:auto} .pp-main{grid-template-columns:1fr} .pp-cues{max-height:50vh} }
+</style>
+</head>
+<body>
+<div class="prep" id="app"></div>
+<script>
+const D = __DATA__;
+const TOOLS_VERSION = "__TOOLS_VERSION__";
+const PAGE_ID = "__PAGE_ID__";
+const TABLE_PAGE = __LIVE__;   /* the -live page keeps the bank in her table; it has no live changes of its own, so the shared live polling stays off */
+const LIVE_ON = false, LIVE_URL = "__SYNC_URL__";
+__BASE_JS__
+/* ================= 🎧 decoding prep (tools 33; her 12.11 07:57: «мою подготовку к уроку тоже вынести к нам на тулзу… при подготовке я
+   продолжаю прыгать между кучей экранов»; 08:00: «экраны, анализ и решение на урок, их желательно разделить… сложность B2/C1 можно
+   отмечать сразу по ходу»; 08:08: context «в репликах, но очень по-разному… таймстемп… выбираю либо на субтитрах, либо на вейв-форме»;
+   08:09: «играю либо через эту нижнюю полоску… либо кликаю на субтитры… кнопочка play у начала субтитров»).
+   Screen 1, the analysis: her film and its subtitles from her computer (nothing is uploaded); the lines as in the .srt, ▶ at each; the
+   waveform under them, drawn as the sound plays; words chosen in a line = a piece with a feature (her own list, with subtopics and colours),
+   hard for B2 / C1, a note and its context (from a line, from the waveform, or none). The pieces are her bank for this film: on this
+   computer, and with her code in her table (sheet «Decoding bank»), so it is the same on both computers. ================= */
+const P = {v: null, url: "", film: "", sub: "", key: "", cues: [], pieces: [], features: [], cur: -1, sel: null, cursor: null, win: [0, 12],
+  draft: null, ctxPick: false, from: "", to: "", q: "", playing: null, raf: 0, au: null, pk: {lo: {}, hi: {}}, pkKey: "", pkDirty: false,
+  dirty: {p: new Set(), del: new Set(), f: false}, saveT: 0, saved: "", status: "", rate: 1};
+const isHer = () => { try{ return localStorage.getItem("hw-role") === "teacher" && !!localStorage.getItem("hw-code"); }catch(e){ return false; } };
+const tableOn = () => TABLE_PAGE && !!LIVE_URL && isHer();
+const PALETTE = ["#FFF06A", "#7CF07C", "#9FD3FF", "#FFB3C7", "#FFC98A", "#C9B3FF", "#A8F0E4", "#E0E0A0"];
+const tm = t => { t = Math.max(0, t || 0); const h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = t - h * 3600 - m * 60;
+  return (h ? h + ":" + String(m).padStart(2, "0") : m) + ":" + (s < 10 ? "0" : "") + s.toFixed(2); };
+const tmS = t => { const x = tm(t); return x.replace(/\.\d+$/, ""); };
+const parseT = s => { const m = String(s || "").trim().replace(",", ".").match(/^(?:(\d+):)?(\d+):(\d+(?:\.\d+)?)$/); return m ? (+(m[1] || 0)) * 3600 + (+m[2]) * 60 + (+m[3]) : null; };
+const uid = () => "p" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+/* ---------- the subtitles: .srt or .ass (Aegisub), as they are — a cue is a line ---------- */
+function parseSubs(txt){
+  const out = [], clean = s => String(s).replace(/\{[^}]*\}/g, "").replace(/<[^>]+>/g, "").replace(/\\N|\\n/g, " ").replace(/\s+/g, " ").trim();
+  if(/^\s*\[Script Info\]/m.test(txt) || /^Dialogue:/m.test(txt)){
+    txt.split(/\r?\n/).forEach(l => { const m = l.match(/^Dialogue:\s*[^,]*,([^,]+),([^,]+),(?:[^,]*,){6}(.*)$/); if(!m) return;
+      const s = parseT(m[1]), e = parseT(m[2]), t = clean(m[3]); if(s != null && e != null && t) out.push({s, e, t}); });
+  } else {
+    txt.replace(/\r/g, "").split(/\n\s*\n/).forEach(b => { const L = b.split("\n").filter(x => x.trim() !== ""); const i = L.findIndex(x => /-->/.test(x)); if(i < 0) return;
+      const m = L[i].match(/(\d+:\d+:\d+[.,]\d+)\s*-->\s*(\d+:\d+:\d+[.,]\d+)/); if(!m) return;
+      const t = clean(L.slice(i + 1).join(" ")); if(t) out.push({s: parseT(m[1]), e: parseT(m[2]), t}); });
+  }
+  return out.sort((a, b) => a.s - b.s);
+}
+/* ---------- files: chosen once, Chrome / Edge remember them (IndexedDB) ---------- */
+function idb(){ return new Promise((res, rej) => { try{ const r = indexedDB.open("hw-prep", 1); r.onupgradeneeded = () => r.result.createObjectStore("h"); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }catch(e){ rej(e); } }); }
+async function idbPut(k, v){ try{ const db = await idb(); db.transaction("h", "readwrite").objectStore("h").put(v, k); }catch(e){} }
+async function idbGet(k){ try{ const db = await idb(); return await new Promise(res => { const r = db.transaction("h").objectStore("h").get(k); r.onsuccess = () => res(r.result || null); r.onerror = () => res(null); }); }catch(e){ return null; } }
+async function pick(kind){
+  const types = kind === "film" ? [{description: "The film", accept: {"video/*": [".mp4", ".m4v", ".mkv", ".webm", ".mov"]}}] : [{description: "Subtitles", accept: {"text/plain": [".srt", ".ass", ".ssa", ".txt"]}}];
+  if(window.showOpenFilePicker){ try{ const [h] = await showOpenFilePicker({id: "prep-" + kind, types}); idbPut(kind, h); use(kind, await h.getFile()); }catch(e){} return; }
+  const inp = document.createElement("input"); inp.type = "file"; inp.accept = kind === "film" ? "video/*,.mkv" : ".srt,.ass,.ssa,.txt"; inp.style.display = "none"; document.body.appendChild(inp);
+  inp.addEventListener("change", () => { const f = inp.files && inp.files[0]; if(f) use(kind, f); inp.remove(); }); inp.click();
+}
+async function reopen(kind){ const h = await idbGet(kind); if(!h) return pick(kind);
+  try{ if((await h.queryPermission({mode: "read"})) !== "granted" && (await h.requestPermission({mode: "read"})) !== "granted") return pick(kind); use(kind, await h.getFile()); }catch(e){ pick(kind); } }
+function video(){ if(!P.v){ const v = document.createElement("video"); v.playsInline = true; v.preload = "auto"; v.addEventListener("loadedmetadata", () => { waveDraw(); }); P.v = v; } return P.v; }
+async function use(kind, f){
+  if(kind === "film"){ const v = video(); if(P.url) URL.revokeObjectURL(P.url); P.url = URL.createObjectURL(f); P.film = f.name; v.src = P.url; v.load(); peaksLoad(f.name + "|" + f.size); }
+  else { P.sub = f.name; P.cues = parseSubs(await f.text()); P.key = f.name.replace(/\.(srt|ass|ssa|txt)$/i, ""); P.cur = -1; await bankLoad(); }
+  render();
+}
+/* ---------- the waveform: drawn from what plays (a whole film is too big to read here), kept per film file ---------- */
+const FW = 100;
+function audio(){ if(!P.au){ try{ const C = window.AudioContext || window.webkitAudioContext, ac = new C(), src = ac.createMediaElementSource(video()), an = ac.createAnalyser();
+    an.fftSize = 2048; src.connect(an); an.connect(ac.destination); P.au = {ac, an, buf: new Float32Array(an.fftSize)}; }catch(e){ P.au = {off: true}; } }
+  if(P.au.ac && P.au.ac.state !== "running") try{ P.au.ac.resume(); }catch(e){} }
+function capture(){ const A = P.au, v = P.v; if(!A || !A.an || !v || v.paused) return;
+  A.an.getFloatTimeDomainData(A.buf); const sr = A.ac.sampleRate, N = A.buf.length, now = v.currentTime, per = sr / FW / (v.playbackRate || 1), k = Math.floor(N / per);
+  for(let c = 0; c < k; c++){ const a = Math.floor(N - (c + 1) * per), z = Math.floor(N - c * per); let lo = 0, hi = 0;
+    for(let i = Math.max(0, a); i < z; i++){ const x = A.buf[i]; if(x < lo) lo = x; if(x > hi) hi = x; }
+    const b = Math.floor((now - (c + .5) / FW) * FW); if(b < 0) continue; P.pk.lo[b] = Math.max(-127, Math.round(lo * 127)); P.pk.hi[b] = Math.min(127, Math.round(hi * 127)); }
+  P.pkDirty = true; }
+async function peaksKeep(){ if(!P.pkDirty || !P.pkKey) return; P.pkDirty = false; idbPut("pk:" + P.pkKey, {lo: P.pk.lo, hi: P.pk.hi}); }
+async function peaksLoad(key){ P.pkKey = key; P.pk = {lo: {}, hi: {}}; const v = await idbGet("pk:" + key); if(v && P.pkKey === key){ P.pk = {lo: Object.assign({}, v.lo, P.pk.lo), hi: Object.assign({}, v.hi, P.pk.hi)}; waveDraw(); } }
+function stop(){ cancelAnimationFrame(P.raf); if(P.v) try{ P.v.pause(); }catch(e){} P.playing = null; waveDraw(); }
+function play(s, e, what){
+  if(!P.url){ nudge("[data-pick='film']"); return; }
+  stop(); const v = video(); audio(); v.playbackRate = P.rate; P.playing = {s, e, what};
+  const go = () => { const p = v.play(); if(p && p.catch) p.catch(() => {});
+    const tick = () => { if(!P.playing) return; capture(); waveDraw(); if(v.currentTime >= e || v.ended){ stop(); peaksKeep(); return; } P.raf = requestAnimationFrame(tick); };
+    P.raf = requestAnimationFrame(tick); };
+  if(Math.abs(v.currentTime - s) < .05 && v.readyState >= 2) go(); else { v.addEventListener("seeked", go, {once: true}); v.currentTime = Math.max(0, s); }
+}
+function winTo(s, e){ const pad = 1.5; let a = s - pad, b = e + pad; if(b - a < 8){ const m = (a + b) / 2; a = m - 4; b = m + 4; } if(a < 0){ b -= a; a = 0; } P.win = [a, b]; }
+function waveDraw(){
+  const cv = document.querySelector("canvas[data-wave]"); if(!cv) return;
+  const W = Math.max(50, cv.clientWidth), H = Math.max(40, cv.clientHeight), r = devicePixelRatio || 1;
+  if(cv.width !== Math.round(W * r) || cv.height !== Math.round(H * r)){ cv.width = Math.round(W * r); cv.height = Math.round(H * r); }
+  const g = cv.getContext("2d"); g.setTransform(r, 0, 0, r, 0, 0); g.clearRect(0, 0, W, H);
+  const cs = getComputedStyle(cv), col = v => cs.getPropertyValue(v).trim() || "#888";
+  const [w0, w1] = P.win, X = t => (t - w0) / (w1 - w0) * W, RH = 17, WH = H - RH, mid = WH / 2;
+  g.fillStyle = col("--fw-bg"); g.fillRect(0, 0, W, WH);
+  const d = P.draft; if(d){ g.fillStyle = col("--fw-piece"); g.fillRect(X(d.s), 0, X(d.e) - X(d.s), WH);
+    if(d.ctx != null && d.ctx < d.s){ g.fillStyle = col("--fw-ctx"); g.fillRect(X(d.ctx), 0, X(d.s) - X(d.ctx), WH); } }
+  if(P.sel){ g.fillStyle = col("--fw-sel"); g.fillRect(X(P.sel.s), 0, Math.max(1, X(P.sel.e) - X(P.sel.s)), WH); }
+  const b0 = Math.floor(w0 * FW), b1 = Math.ceil(w1 * FW); let top = 6, got = 0;
+  for(let b = b0; b < b1; b++){ const hi = P.pk.hi[b]; if(hi == null) continue; got++; top = Math.max(top, hi, -P.pk.lo[b]); }
+  const amp = (WH / 2 - 3) / top, wv = col("--fw-wave"), un = col("--fw-tick");
+  for(let x = 0; x < W; x++){ const a = Math.floor((w0 + x / W * (w1 - w0)) * FW), z = Math.max(a + 1, Math.floor((w0 + (x + 1) / W * (w1 - w0)) * FW)); let lo = 0, hi = 0, has = false;
+    for(let b = a; b < z; b++){ if(P.pk.hi[b] == null) continue; has = true; if(P.pk.lo[b] < lo) lo = P.pk.lo[b]; if(P.pk.hi[b] > hi) hi = P.pk.hi[b]; }
+    if(has){ g.fillStyle = wv; g.fillRect(x, mid - hi * amp, 1, Math.max(1, (hi - lo) * amp)); } else if(x % 6 < 3){ g.fillStyle = un; g.fillRect(x, mid, 1, 1); } }
+  if(got < (b1 - b0) * .05){ g.fillStyle = un; g.font = "700 13px system-ui, sans-serif"; g.textAlign = "center"; g.fillText(P.url ? "The sound draws here as it plays — ▶ a line, or drag here" : "Open your film first (📂 at the top)", W / 2, mid - 8); g.textAlign = "start"; }
+  if(P.sel){ g.fillStyle = col("--fw-edge"); g.fillRect(X(P.sel.s) - 1, 0, 2, WH); g.fillRect(X(P.sel.e) - 1, 0, 2, WH); }
+  g.fillStyle = col("--fw-tick"); g.font = "600 11px system-ui, sans-serif";
+  const span = w1 - w0, step = span > 40 ? 5 : span > 16 ? 2 : 1;
+  for(let t = Math.ceil(w0 / step) * step; t <= w1 + 1e-6; t += step){ const x = Math.round(X(t)); g.fillRect(x, WH, 1, 6); if(x < W - 40) g.fillText(tmS(t), x + 3, H - 3); }
+  if(P.cursor != null){ g.fillStyle = col("--fw-cur"); g.fillRect(Math.round(X(P.cursor)), 0, 1, WH); }
+  if(P.playing && P.v){ g.fillStyle = col("--fw-head"); g.fillRect(Math.round(X(P.v.currentTime)) - 1, 0, 2, WH); }
+  const st = document.querySelector("#pp-sel"); if(st) st.textContent = P.sel ? `${tm(P.sel.s)} – ${tm(P.sel.e)}` : P.cursor != null ? `from ${tm(P.cursor)}` : "";
+  const pt = document.querySelector("[data-pp-time]"); if(pt) pt.hidden = !P.sel;
+}
+function playPiece(){
+  const r = P.sel ? {s: P.sel.s, e: P.sel.e} : {s: P.cursor != null ? P.cursor : P.win[0], e: P.win[1]}; if(r.e - r.s < .05) return; play(r.s, r.e, "piece"); }
+function wireWave(){
+  const cv = document.querySelector("canvas[data-wave]"); if(!cv || cv._w) return; cv._w = 1;
+  const tAt = e => { const r = cv.getBoundingClientRect(), [w0, w1] = P.win; return Math.max(0, w0 + (e.clientX - r.left) / r.width * (w1 - w0)); };
+  let drag = null;
+  cv.addEventListener("pointerdown", e => { if(e.button) return; e.preventDefault(); try{ cv.setPointerCapture(e.pointerId); }catch(x){} drag = {t0: tAt(e), x0: e.clientX, moved: false}; });
+  cv.addEventListener("pointermove", e => { if(!drag) return; if(Math.abs(e.clientX - drag.x0) > 4) drag.moved = true;
+    if(drag.moved){ const t = tAt(e); P.sel = {s: Math.min(drag.t0, t), e: Math.max(drag.t0, t)}; waveDraw(); } });
+  cv.addEventListener("pointerup", e => { const d = drag; drag = null; if(!d) return; stop();
+    if(!d.moved){ P.sel = null; P.cursor = tAt(e); } else P.cursor = P.sel.s;
+    if(P.ctxPick && P.draft){ P.draft.ctx = P.cursor; P.ctxPick = false; renderSide(); }
+    waveDraw(); playPiece(); });
+  cv.addEventListener("pointercancel", () => { drag = null; });
+  cv.addEventListener("wheel", e => { e.preventDefault(); let [w0, w1] = P.win; const w = w1 - w0;
+    if(e.ctrlKey || e.metaKey){ const t = tAt(e), nw = Math.max(2, Math.min(600, w * (e.deltaY > 0 ? 1.25 : .8))); w0 = t - (t - w0) * nw / w; w1 = w0 + nw; }
+    else { const dx = (Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY) / cv.clientWidth * w; w0 += dx; w1 += dx; }
+    if(w0 < 0){ w1 -= w0; w0 = 0; } P.win = [w0, w1]; waveDraw(); }, {passive: false});
+}
+/* ---------- the bank: pieces and her features, kept on this computer and (her code, the live page) in her table ---------- */
+const localKey = () => "prep-bank-" + P.key;
+function featureOf(id){ return P.features.find(f => f.id === id) || null; }
+function featColor(id){ const f = featureOf(id); if(!f) return "#E6E6E6"; const top = f.parent ? featureOf(f.parent) : f; return (top && top.color) || "#E6E6E6"; }
+function featName(id){ const f = featureOf(id); if(!f) return "—"; const p = f.parent ? featureOf(f.parent) : null; return p ? p.name + " › " + f.name : f.name; }
+async function bankLoad(){
+  const loc = store.get(localKey()) || {pieces: [], features: []};
+  P.pieces = loc.pieces || []; P.features = loc.features || []; P.status = tableOn() ? "Loading your bank from your table…" : "On this computer only — open the live page with your code to keep it in your table";
+  render();
+  if(!tableOn()) return;
+  const res = await livePost({action: "bankGet", code: localStorage.getItem("hw-code"), film: P.key});
+  if(!res || !res.ok){ P.status = "⚠️ Your table didn't answer — the bank here is this computer's copy"; renderTop(); return; }
+  const byId = {}; (res.pieces || []).forEach(x => { byId[x.id] = x; });
+  P.pieces.forEach(x => { if(!byId[x.id] || (x.u || 0) > (byId[x.id].u || 0)){ byId[x.id] = x; P.dirty.p.add(x.id); } });   /* the newer copy of each piece wins */
+  P.pieces = Object.values(byId).sort((a, b) => a.s - b.s);
+  if((res.features || []).length) P.features = mergeFeatures(res.features, P.features); else if(P.features.length) P.dirty.f = true;
+  localSave(); P.status = "In your table ✓"; render(); if(P.dirty.p.size || P.dirty.f) saveSoon();
+}
+const mergeFeatures = (a, b) => { const out = a.slice(); b.forEach(f => { if(!out.some(x => x.id === f.id)) out.push(f); }); return out; };
+const localSave = () => store.set(localKey(), {pieces: P.pieces, features: P.features});
+function saveSoon(){ localSave(); if(!tableOn()) return; clearTimeout(P.saveT); P.status = "Saving…"; renderTop(); P.saveT = setTimeout(saveNow, 1200); }
+async function saveNow(){
+  const ids = [...P.dirty.p], del = [...P.dirty.del], f = P.dirty.f; P.dirty = {p: new Set(), del: new Set(), f: false};
+  const res = await livePost({action: "bankPut", code: localStorage.getItem("hw-code"), film: P.key, pieces: P.pieces.filter(x => ids.includes(x.id)).map(x => Object.assign({}, x, {fname: featName(x.f)})), del, features: f ? P.features : undefined});
+  if(res && res.ok){ P.saved = new Date().toLocaleTimeString("en-GB", {hour: "2-digit", minute: "2-digit"}); P.status = "In your table ✓ " + P.saved; }
+  else { ids.forEach(i => P.dirty.p.add(i)); del.forEach(i => P.dirty.del.add(i)); if(f) P.dirty.f = true; P.status = "⚠️ Not saved in your table yet — kept on this computer; it tries again with the next change"; }
+  renderTop();
+}
+/* ---------- pieces: words chosen in a line (or two) ---------- */
+const joinText = (c0, c1) => P.cues.slice(c0, c1 + 1).map(c => c.t).join(" ");
+const cueOffset = (c0, k) => P.cues.slice(c0, k).reduce((a, c) => a + c.t.length + 1, 0);
+function pieceParts(x){ const t = joinText(x.c0, x.c1); return {pre: t.slice(0, x.gs), gap: t.slice(x.gs, x.ge), post: t.slice(x.ge)}; }
+/* a piece points at its lines by their start times, so a renumbered .srt keeps it in place */
+function relink(){ P.pieces.forEach(x => { const i = P.cues.findIndex(c => Math.abs(c.s - x.cs0) < .05); if(i > -1){ const span = x.c1 - x.c0; x.c0 = i; x.c1 = Math.min(P.cues.length - 1, i + span); } }); }
+function selToDraft(){
+  const sel = window.getSelection(); if(!sel || sel.isCollapsed || !sel.rangeCount) return false;
+  const rg = sel.getRangeAt(0), el = n => (n.nodeType === 1 ? n : n.parentElement).closest(".cue-x"), a = el(rg.startContainer), b = el(rg.endContainer);
+  if(!a || !b) return false;
+  const off = (box, node, o) => { const r = document.createRange(); r.selectNodeContents(box); r.setEnd(node, o); return r.toString().length; };
+  let c0 = +a.dataset.cx, c1 = +b.dataset.cx, s0 = off(a, rg.startContainer, rg.startOffset), s1 = off(b, rg.endContainer, rg.endOffset);
+  if(c1 < c0){ [c0, c1] = [c1, c0]; [s0, s1] = [s1, s0]; }
+  const text = joinText(c0, c1); let gs = s0, ge = cueOffset(c0, c1) + s1;
+  while(gs < ge && /\s/.test(text[gs])) gs++; while(ge > gs && /\s/.test(text[ge - 1])) ge--;
+  while(gs > 0 && /[\w'’-]/.test(text[gs - 1])) gs--; while(ge < text.length && /[\w'’-]/.test(text[ge])) ge++;   /* whole words */
+  if(ge <= gs) return false;
+  sel.removeAllRanges();
+  const last = store.get("prep-last") || {};
+  P.addOpen = false;
+  P.draft = {id: null, c0, c1, cs0: P.cues[c0].s, gs, ge, s: P.cues[c0].s, e: P.cues[c1].e, f: last.f || null, b2: false, c1h: false, note: "", ctx: null};
+  P.cur = c0; winTo(P.draft.s, P.draft.e); render(); return true;
+}
+function openPiece(id){ const x = P.pieces.find(p => p.id === id); if(!x) return; P.addOpen = false; P.draft = Object.assign({}, x); P.cur = x.c0; winTo(x.s, x.e); render(); scrollToCue(x.c0); }
+function savePiece(){ const d = P.draft; if(!d) return; const pp = pieceParts(d);
+  const x = Object.assign({}, d, {gap: pp.gap, text: joinText(d.c0, d.c1), u: Date.now()}); if(!x.id) x.id = uid();
+  const i = P.pieces.findIndex(p => p.id === x.id); if(i > -1) P.pieces[i] = x; else P.pieces.push(x);
+  P.pieces.sort((a, b) => a.s - b.s); P.dirty.p.add(x.id); if(x.f) store.set("prep-last", {f: x.f});
+  P.draft = null; P.ctxPick = false; saveSoon(); render(); }
+function deletePiece(){ const d = P.draft; if(!d) return; if(d.id){ P.pieces = P.pieces.filter(p => p.id !== d.id); P.dirty.del.add(d.id); P.dirty.p.delete(d.id); saveSoon(); } P.draft = null; P.ctxPick = false; render(); }
+function addFeature(name, parent){ name = String(name || "").trim(); if(!name) return null;
+  const tops = P.features.filter(f => !f.parent).length, f = {id: "f" + Date.now().toString(36), name, parent: parent || null, color: parent ? null : PALETTE[tops % PALETTE.length]};
+  P.features.push(f); P.dirty.f = true; saveSoon(); return f; }
+/* ---------- the screen ---------- */
+const nudge = sel => { const x = document.querySelector(sel); if(x){ x.classList.remove("pop"); void x.offsetWidth; x.classList.add("pop"); x.focus && x.focus(); } };
+function shown(){ const a = parseT(P.from), b = parseT(P.to); let re = null, q = P.q.trim();
+  if(/^\/.+\/[a-z]*$/i.test(q)){ try{ const m = q.match(/^\/(.+)\/([a-z]*)$/i); re = new RegExp(m[1], m[2].includes("i") ? m[2] : m[2] + "i"); }catch(e){ re = null; } }
+  return P.cues.map((c, i) => i).filter(i => { const c = P.cues[i]; if(a != null && c.e < a) return false; if(b != null && c.s > b) return false;
+    if(!q) return true; return re ? re.test(c.t) : c.t.toLowerCase().includes(q.toLowerCase()); }); }
+function cueHTML(i){
+  const c = P.cues[i], marks = [];
+  const add = (x, cls) => { if(i < x.c0 || i > x.c1) return; const base = cueOffset(x.c0, i), s = Math.max(0, x.gs - base), e = Math.min(c.t.length, x.ge - base); if(e > s) marks.push({s, e, x, cls}); };
+  P.pieces.forEach(x => { if(!P.draft || P.draft.id !== x.id) add(x, x.id); }); if(P.draft) add(P.draft, "draft");
+  marks.sort((m, n) => m.s - n.s); let h = "", at = 0;
+  marks.forEach(m => { if(m.s < at) return; h += esc(c.t.slice(at, m.s));
+    h += m.cls === "draft" ? `<mark class="draft" style="background:${featColor(P.draft.f)}">${esc(c.t.slice(m.s, m.e))}</mark>`
+      : `<mark data-pc="${m.x.id}" style="background:${featColor(m.x.f)}" title="${esc(featName(m.x.f))}">${esc(c.t.slice(m.s, m.e))}</mark>`; at = m.e; });
+  h += esc(c.t.slice(at));
+  return `<div class="cue ${i === P.cur ? "cur" : ""}" data-c="${i}"><button class="cue-pl ${P.ctxPick ? "ctxpick" : ""}" data-cpl="${i}" aria-label="${P.ctxPick ? "Context from this line" : "Play this line"}" title="${P.ctxPick ? "Context from this line" : "Play this line"}">${P.ctxPick ? "⏮" : "▶"}</button><span class="cue-t" data-cpl="${i}">${tmS(c.s)}</span><span class="cue-x" data-cx="${i}">${h}</span></div>`;
+}
+function renderTop(){ const t = document.getElementById("pp-top"); if(!t) return;
+  t.innerHTML = `<h1>🎧 Decoding prep</h1>
+    <button class="pp-btn ${P.url ? "quiet" : "pri"} pp-file" data-pick="film" title="${esc(P.film)}">📂 ${P.film ? esc(P.film) : "Open the film"}</button>
+    <button class="pp-btn ${P.sub ? "quiet" : "pri"} pp-file" data-pick="sub" title="${esc(P.sub)}">📂 ${P.sub ? esc(P.sub) : "Open the subtitles (.srt)"}</button>
+    <span class="pp-stat ${/✓/.test(P.status) ? "ok" : /⚠️|only/i.test(P.status) ? "warn" : ""}">${esc(P.status)}</span><span class="pp-sp"></span>
+    ${P.pieces.length ? `<span class="pp-stat">${P.pieces.length} piece${P.pieces.length === 1 ? "" : "s"}</span><button class="pp-btn quiet" data-copy>📋 Copy for the chat</button><button class="pp-btn quiet" data-json>⬇ JSON</button>` : ""}`;
+  ["film", "sub"].forEach(k => { if(!(k === "film" ? P.url : P.sub) && window.showOpenFilePicker) idbGet(k).then(h => { const b = t.querySelector(`[data-pick="${k}"]`); if(h && b && !(k === "film" ? P.url : P.sub)){ b.dataset.re = "1"; b.textContent = `▶ Open “${h.name}” again`; } }); });
+}
+function editorHTML(){
+  const d = P.draft;
+  if(!d) return `<div class="pp-card"><h3>A piece</h3><p class="pp-hint">Choose words in a line with the mouse: they become a piece. Tap a coloured piece to change it.</p></div>`;
+  const pp = pieceParts(d), tops = P.features.filter(f => !f.parent);
+  const chip = f => `<button class="chip ${f.parent ? "sub" : ""} ${d.f === f.id ? "on" : ""}" data-feat="${f.id}"><span class="sw" style="background:${featColor(f.id)}"></span>${esc(f.parent ? "› " + f.name : f.name)}</button>`;
+  const feats = tops.map(t => chip(t) + P.features.filter(f => f.parent === t.id).map(chip).join("")).join("");
+  const ctxTxt = d.ctx == null ? "none" : `from ${tm(d.ctx)} · ${(d.s - d.ctx).toFixed(1)} s before`;
+  const addRow = P.addOpen || !P.features.length;
+  return `<div class="pp-card" data-editor>
+    <div class="pp-row"><h3>${d.id ? "Piece" : "New piece"}</h3><span class="pp-stat sm">${tm(d.s)} – ${tm(d.e)}</span><span class="pp-sp"></span><button class="pp-btn" data-pp-play>▶ The piece</button><button class="pp-btn quiet" data-pp-time ${P.sel ? "" : "hidden"} title="The piece's time = what you chose on the waveform">📌 This time</button></div>
+    <p class="pp-line">${esc(pp.pre)}<b style="background:${featColor(d.f)}">${esc(pp.gap)}</b>${esc(pp.post)}</p>
+    <div class="pp-row"><span class="pp-lab">Feature</span>${feats}${addRow ? "" : `<button class="chip" data-addopen>＋ new</button>`}</div>
+    ${addRow ? `<div class="pp-row"><span class="pp-lab"></span><input class="pp-in grow" data-newf placeholder="${P.features.length ? "New feature" : "Your first feature (e.g. weak of)"}"><select class="pp-in" data-newp><option value="">on its own</option>${tops.map(t => `<option value="${t.id}">under ${esc(t.name)}</option>`).join("")}</select><button class="pp-btn quiet" data-addf>＋ Add</button></div>` : ""}
+    <div class="pp-row"><span class="pp-lab">Hard for</span><button class="chip hard ${d.b2 ? "on" : ""}" data-hard="b2">B2</button><button class="chip hard ${d.c1h ? "on" : ""}" data-hard="c1h">C1</button></div>
+    <div class="pp-row"><span class="pp-lab">Context</span><span class="pp-stat">${ctxTxt}</span>${d.ctx != null ? `<button class="pp-btn" data-ctxplay>▶ With context</button><button class="pp-btn quiet" data-ctxnone title="No context">✕</button>` : ""}<button class="pp-btn ${P.ctxPick ? "pri" : "quiet"}" data-ctxpick>${P.ctxPick ? "Tap ⏮ at a line, or the waveform" : "⏮ From a line or the waveform"}</button></div>
+    <div class="pp-row"><span class="pp-lab">Note</span><input class="pp-in grow" data-note value="${esc(d.note || "")}" placeholder="what happens to the sound"></div>
+    <div class="pp-row"><button class="pp-btn pri" data-save>Save</button><button class="pp-btn quiet" data-cancel>Cancel</button><span class="pp-sp"></span><button class="pp-btn quiet" data-del>${d.id ? "Delete" : "Drop it"}</button></div>
+  </div>`;
+}
+function bankHTML(){
+  if(!P.pieces.length) return "";
+  const groups = {}; P.pieces.forEach(x => { const k = x.f || "_"; (groups[k] = groups[k] || []).push(x); });
+  const order = P.features.filter(f => !f.parent).flatMap(t => [t.id, ...P.features.filter(f => f.parent === t.id).map(f => f.id)]).filter(k => groups[k]).concat(groups._ ? ["_"] : []);
+  return `<div class="pp-card pp-bank"><h3>The bank · ${esc(P.key)}</h3>${order.map(k => `<details open><summary><span class="sw" style="display:inline-block;width:.8em;height:.8em;border-radius:3px;background:${k === "_" ? "#E6E6E6" : featColor(k)}"></span> ${esc(k === "_" ? "no feature yet" : featName(k))} · ${groups[k].length}</summary>
+    <ul>${groups[k].map(x => `<li data-open="${x.id}"><span class="tm">${tmS(x.s)}</span>${esc(x.gap)}${x.b2 ? `<span class="hd">B2</span>` : ""}${x.c1h ? `<span class="hd">C1</span>` : ""}</li>`).join("")}</ul></details>`).join("")}</div>`;
+}
+function renderSide(){ const s = document.getElementById("pp-side"); if(s){ s.innerHTML = editorHTML() + bankHTML(); } const L = document.getElementById("pp-cues"); if(L) paintCues(); waveDraw(); }
+function paintCues(){ const L = document.getElementById("pp-cues"); if(!L) return; const list = shown();
+  L.innerHTML = list.length ? list.map(cueHTML).join("") : `<p class="pp-hint">${P.cues.length ? "No lines match." : "Open the subtitles (.srt) — the lines appear here."}</p>`;
+  const n = document.getElementById("pp-n"); if(n) n.textContent = P.cues.length ? `${list.length} line${list.length === 1 ? "" : "s"}` : ""; }
+function scrollToCue(i){ const el = document.querySelector(`.cue[data-c="${i}"]`); if(el) el.scrollIntoView({block: "center", behavior: "smooth"}); }
+function render(){
+  const app = document.getElementById("app");
+  if(!app.dataset.built){ app.dataset.built = "1";
+    app.innerHTML = `<div class="pp-top" id="pp-top"></div>
+      <div class="pp-main"><div class="pp-left"><div class="pp-filter">Lines <input class="t" data-from placeholder="from" value="${esc(P.from)}"> – <input class="t" data-to placeholder="to" value="${esc(P.to)}">
+          <input class="q" data-q placeholder="find: words, or /regex/" value="${esc(P.q)}"><span class="n" id="pp-n"></span></div><div class="pp-cues" id="pp-cues"></div></div>
+        <div class="pp-right"><div class="pp-vid" id="pp-vid"><div class="msg">Your film plays here — from your computer, nothing is uploaded.</div></div><div class="pp-side" id="pp-side"></div></div></div>
+      <div class="pp-wave"><canvas data-wave aria-label="The sound: drag to choose a piece"></canvas>
+        <div class="pp-ctl"><button class="pp-btn" data-pp-piece>▶ Play the piece <kbd>Space</kbd></button><span class="pp-sel" id="pp-sel"></span>
+          <span class="pp-hint">Drag = a piece · click = play from there · wheel = move along, Ctrl + wheel = zoom</span><span class="pp-sp"></span>
+          <span class="spd" role="group" aria-label="Speed">${[1, .75, .5].map(r => `<button class="chip ${P.rate === r ? "on" : ""}" data-rate="${r}">${r === 1 ? "normal" : r}</button>`).join(" ")}</span>
+          <span class="pp-legal"><a href="../../impressum.html">Impressum</a> · <a href="../../datenschutz.html">Datenschutz</a></span></div></div>`;
+    wire(); }
+  const vb = document.getElementById("pp-vid"); if(P.url && P.v && P.v.parentNode !== vb){ vb.innerHTML = ""; vb.appendChild(P.v); }
+  renderTop(); renderSide(); wireWave(); requestAnimationFrame(waveDraw);
+}
+function wire(){
+  const app = document.getElementById("app");
+  app.addEventListener("click", e => { const t = e.target, on = q => t.closest(q); let x;
+    if((x = on("[data-pick]"))){ if(x.dataset.re) reopen(x.dataset.pick); else pick(x.dataset.pick); return; }
+    if((x = on("[data-cpl]"))){ const i = +x.dataset.cpl, c = P.cues[i];
+      if(P.ctxPick && P.draft){ P.draft.ctx = c.s; P.ctxPick = false; renderSide(); return; }
+      P.cur = i; winTo(c.s, c.e); P.sel = null; P.cursor = c.s; paintCues(); play(c.s, c.e, "line"); return; }
+    if((x = on("mark[data-pc]")) && window.getSelection().isCollapsed){ openPiece(x.dataset.pc); return; }
+    if((x = on("[data-open]"))){ openPiece(x.dataset.open); return; }
+    if(on("[data-pp-piece]")){ playPiece(); return; }
+    if((x = on("[data-rate]"))){ P.rate = +x.dataset.rate; if(P.v) P.v.playbackRate = P.rate; app.querySelectorAll("[data-rate]").forEach(b => b.classList.toggle("on", +b.dataset.rate === P.rate)); return; }
+    if(on("[data-copy]")){ copyText(chatText()).then(ok => { const b = on("[data-copy]"); if(b){ b.textContent = ok ? "Copied ✓" : "Couldn't copy"; setTimeout(() => renderTop(), 2000); } }); return; }
+    if(on("[data-json]")){ const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([JSON.stringify({film: P.key, features: P.features, pieces: P.pieces}, null, 1)], {type: "application/json"})); a.download = P.key + "-bank.json"; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000); return; }
+    const d = P.draft; if(!d) return;
+    if(on("[data-pp-play]")){ play(d.s, d.e, "line"); return; }
+    if(on("[data-pp-time]")){ if(P.sel){ d.s = P.sel.s; d.e = P.sel.e; renderSide(); } return; }
+    if((x = on("[data-feat]"))){ d.f = d.f === x.dataset.feat ? null : x.dataset.feat; renderSide(); paintCues(); return; }
+    if(on("[data-addopen]")){ P.addOpen = true; renderSide(); const n = app.querySelector("[data-newf]"); if(n) n.focus(); return; }
+    if(on("[data-addf]")){ const n = app.querySelector("[data-newf]"), p = app.querySelector("[data-newp]"), f = addFeature(n.value, p.value); if(f){ d.f = f.id; P.addOpen = true; renderSide(); paintCues(); } return; }
+    if((x = on("[data-hard]"))){ d[x.dataset.hard] = !d[x.dataset.hard]; renderSide(); return; }
+    if(on("[data-ctxpick]")){ P.ctxPick = !P.ctxPick; renderSide(); return; }
+    if(on("[data-ctxnone]")){ d.ctx = null; P.ctxPick = false; renderSide(); return; }
+    if(on("[data-ctxplay]")){ if(d.ctx != null) play(d.ctx, d.s, "ctx"); return; }
+    if(on("[data-save]")){ const n = app.querySelector("[data-note]"); if(n) d.note = n.value; savePiece(); return; }
+    if(on("[data-cancel]")){ P.draft = null; P.ctxPick = false; render(); return; }
+    if(on("[data-del]")){ deletePiece(); return; }
+  });
+  app.addEventListener("input", e => { const t = e.target;
+    if(t.matches("[data-from]")) P.from = t.value; else if(t.matches("[data-to]")) P.to = t.value; else if(t.matches("[data-q]")) P.q = t.value; else { if(t.matches("[data-note]") && P.draft) P.draft.note = t.value; return; }
+    store.set("prep-filter", {from: P.from, to: P.to, q: P.q}); paintCues(); });
+  app.addEventListener("keydown", e => { const t = e.target;
+    if(t.matches("[data-newf]") && e.key === "Enter"){ e.preventDefault(); app.querySelector("[data-addf]").click(); }
+    if(t.matches("[data-note]") && e.key === "Enter"){ e.preventDefault(); app.querySelector("[data-save]").click(); } });
+  document.getElementById("pp-cues").addEventListener("mouseup", () => setTimeout(selToDraft, 0));
+}
+document.addEventListener("keydown", e => {
+  if(e.target.closest && e.target.closest("input, textarea, select")) return;
+  if(e.key === " "){ e.preventDefault(); if(document.activeElement && document.activeElement.blur) document.activeElement.blur(); playPiece(); }
+  if(e.key === "Escape"){ if(P.playing) stop(); else if(P.draft){ P.draft = null; P.ctxPick = false; render(); } }
+});
+addEventListener("resize", waveDraw);
+async function copyText(t){ try{ await navigator.clipboard.writeText(t); return true; }catch(e){ const ta = document.createElement("textarea"); ta.value = t; document.body.appendChild(ta); ta.select(); let ok = false; try{ ok = document.execCommand("copy"); }catch(x){} ta.remove(); return ok; } }
+/* for a chat (Authentic Listening, a lesson chat): the bank by feature, each piece in the decoding block's own form ({{the gap}}) */
+function chatText(){
+  const out = [`🎧 Decoding bank · ${P.key} · ${P.pieces.length} pieces · ${new Date().toLocaleDateString("en-GB")}`];
+  const groups = {}; P.pieces.forEach(x => { (groups[x.f || "_"] = groups[x.f || "_"] || []).push(x); });
+  Object.keys(groups).forEach(k => { out.push("", `## ${k === "_" ? "no feature yet" : featName(k)} (${groups[k].length})`);
+    groups[k].forEach(x => { const pp = pieceParts(x); out.push(`${tm(x.s)}-${tm(x.e)}${x.ctx != null ? ` · ctx ${tm(x.ctx)}` : ""} · ${[x.b2 ? "hard B2" : "", x.c1h ? "hard C1" : ""].filter(Boolean).join(", ") || "—"} · ${pp.pre}{{${pp.gap}}}${pp.post}${x.note ? ` · ${x.note}` : ""} · id ${x.id}`); }); });
+  return out.join("\n");
+}
+/* the start: the filter as she left it; the files remembered by the browser come back with one click (▶ Open … again) */
+(() => { const f = store.get("prep-filter"); if(f){ P.from = f.from || ""; P.to = f.to || ""; P.q = f.q || ""; } })();
+P.status = tableOn() ? "Your code is here: the bank goes to your table" : TABLE_PAGE ? "Enter your code on any homework page to keep the bank in your table" : "This page keeps the bank on this computer · the live page keeps it in your table";
+render();
+</script>
+</body>
+</html>

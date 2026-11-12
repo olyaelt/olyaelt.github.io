@@ -11,7 +11,7 @@
     {
      "kind": "decode",
      "title": "Line",
-     "instr": "Listen. What's in the cloud? Write it to Olya in a private message.",
+     "instr": "Listen and type the missing words. Then press Enter to check.",
      "instr2": "What was hard to hear? Why?",
      "lines": [
       {
@@ -59,7 +59,7 @@
     {
      "kind": "decode",
      "title": "Line",
-     "instr": "Watch, then listen. What's in the cloud? Write it to Olya in a private message.",
+     "instr": "Watch, then listen. Type the missing words, then press Enter to check.",
      "instr2": "What was hard to hear? Why?",
      "lines": [
       {

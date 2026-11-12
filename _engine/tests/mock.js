@@ -4,6 +4,7 @@ const fs = require("fs"), vm = require("vm");
 class Sheet {
   constructor(name) { this.name = name; this.d = []; this.hidden = false; }
   getName() { return this.name; }
+  deleteRow(r) { this.d.splice(r - 1, 1); }   /* tools 33 */
   getLastRow() { for (let r = this.d.length; r > 0; r--) if ((this.d[r-1]||[]).some(v => v !== "" && v != null)) return r; return 0; }
   getLastColumn() { let m = 0; this.d.forEach(row => { for (let c = row.length; c > 0; c--) if (row[c-1] !== "" && row[c-1] != null) { m = Math.max(m, c); break; } }); return m; }
   get(r, c) { return (this.d[r-1] && this.d[r-1][c-1] != null) ? this.d[r-1][c-1] : ""; }

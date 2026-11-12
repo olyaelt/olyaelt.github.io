@@ -59,7 +59,8 @@ render();
 TYPES = {'dice-council': 'council_template.html', 'say-it-another-way': 'cards_template.html', 'dice-situations': 'situations_template.html',
          'situation-cards': 'situation_cards_template.html',   # tools 12
          'chat-scenes': 'chat_scenes_template.html',   # tools 13
-         'revision-board': 'revision_board_template.html', 'revision-field': 'revision_field_template.html'}   # tools 13, B2 revision 30.10
+         'revision-board': 'revision_board_template.html', 'revision-field': 'revision_field_template.html',   # tools 13, B2 revision 30.10
+         'decode-prep': 'decode_prep_template.html'}   # tools 33 (her 12.11 07:57): her own decoding prep — the film's hard pieces, kept in her table
 # the live version (tools 7, her wish 28.10): every page is also built as <page>-live.html, which asks her table for the changes
 # she makes during the lesson; the plain page never contacts the table and stays exactly as it was. The table's address is the
 # one the homework pages use (engine/page_template.html).
@@ -272,9 +273,9 @@ for f in sorted(glob.glob(os.path.join(T, 'assets', '*'))):
 # tools 9 (her wish 28.10): tools/index.html, a teacher's page with every lesson page, grouped by group and lesson, the live link
 # first (with Copy, for the Zoom chat) and the plain one as the fallback. Shown when her code is on this device (as on the live
 # pages: a lock on the door, the list is in the source); noindex, linked from nowhere.
-GROUPS = {'b2': 'B2 · Wed Fri 18.30', 'c1': 'C1 · Wed Fri 20.15', 'de': '🇩🇪 My German'}
+GROUPS = {'b2': 'B2 · Wed Fri 18.30', 'c1': 'C1 · Wed Fri 20.15', 'de': '🇩🇪 My German', 'prep': '🎧 My prep'}
 KIND = {'dice-council': '🎲 dice council', 'say-it-another-way': '🃏 say it another way', 'dice-situations': '🎲 dice situations', 'situation-cards': '🃏 situation cards', 'chat-scenes': '💬 chat scenes',
-        'revision-board': '🟦 Jeopardy board', 'revision-field': '🟨 revision field'}
+        'revision-board': '🟦 Jeopardy board', 'revision-field': '🟨 revision field', 'decode-prep': '🎧 decoding prep'}
 # tools 28 (her 4.11 06:51/08:05: «я каждый раз листаю, ищу, где же там Jeopardy… новые задания, чтобы появлялись сверху… в две колонки, как на
 # Homework»): B2 | C1 side by side, the newest lesson on top; a revision lesson starts with its Jeopardy board and folds its fields under it.
 # A lesson folder without a date in its name gets its date here (the day it was first used)

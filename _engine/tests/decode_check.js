@@ -13,7 +13,18 @@ const {chromium} = require('playwright'); const path = require('path'), fs = req
   const st = () => p.evaluate(() => ({at: dcSt(DC.b).at, ans: dcSt(DC.b).ans, m: dcMarks(DC.b, dcSt(DC.b).at)}));
   const ok = (c, m) => { if (!c) fail.push(m); };
   await p.goto('https://hw.test/tools/al-decode/decode-test.html#part-1-screen-1'); await p.waitForTimeout(500);
-  ok(await p.isVisible('.dc-cloud'), 'the gap is not a cloud');
+  ok(await p.isVisible('[data-dcgapin]'), 'the gap is not a box to type in');   // her 11.11 18:09: a gap fill, as in TubeQuizard
+  // typed: Enter checks — the right words green, the wrong one struck, in 📋 Copy; Space in the box types (doesn't play)
+  await p.click('[data-dcgapin]'); await p.keyboard.type('I was sit there'); await p.waitForTimeout(100);
+  ok(await p.evaluate(() => !DC.playing && document.querySelector('[data-dcgapin]').value === 'I was sit there'), 'Space in the box did not type');
+  await p.keyboard.press('Enter'); await p.waitForTimeout(400);
+  ok(await p.evaluate(() => dcSt(DC.b).ans && [...document.querySelectorAll('[data-dctry] .ok')].map(x => x.textContent).join(' ') === 'I was there' && [...document.querySelectorAll('[data-dctry] .no')].map(x => x.textContent).join(' ') === 'sit'), 'Enter did not check what was typed: ' + await p.evaluate(() => (document.querySelector('[data-dctry]') || {}).textContent));
+  ok(/typed: I was sit there/.test(await p.evaluate(() => dcCopyText(DC.b))), 'what was typed is not in 📋 Copy');
+  await p.click('[data-back]'); await p.waitForTimeout(300);
+  ok(await p.evaluate(() => !dcSt(DC.b).ans && document.querySelector('[data-dcgapin]').value === 'I was sit there'), 'Back: the box lost what was typed');
+  await p.fill('[data-dcgapin]', 'I was sitting there'); await p.keyboard.press('Enter'); await p.waitForTimeout(400);
+  ok(await p.evaluate(() => !!document.querySelector('[data-dctry] .dc-try-ok') && !document.querySelector('[data-dctry] .no')), 'all right: no ✓');
+  await p.click('[data-dcclear]'); await p.waitForTimeout(150); await p.click('[data-back]'); await p.waitForTimeout(300);
   ok(!(await p.evaluate(() => /\{\{|\}\}|\*\*/.test(document.body.innerText))), 'markup visible in the question');
   ok((await p.textContent('[data-step]')).includes('Answer'), 'Next does not say Answer');
   await p.click('[data-step]'); await p.waitForTimeout(400);
