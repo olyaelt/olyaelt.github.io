@@ -118,77 +118,77 @@
   {
    "pid": 23,
    "sig": "say how does ben tell his story? discuss together, then tap “show the answer”.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 24,
-   "sig": "say story, sum-up or now? which tense for each? discuss, then tap “show the answer”.",
-   "gone": false
+   "sig": "say story or sum-up? which tense for each? discuss, then tap “show the answer”.",
+   "gone": true
   },
   {
    "pid": 25,
-   "sig": "model two ways to tell it. the listener's question often decides which. say the verbs, then tap the yellow to check.",
-   "gone": false
+   "sig": "say two answers. which question does each one answer? how do you know? discuss, then tap “show the answer”.",
+   "gone": true
   },
   {
    "pid": 26,
-   "sig": "text tell the story or sum up? say the verbs in the right form. then tap the yellow to check.",
+   "sig": "text say the verbs in the right form. then tap the yellow to check.",
    "gone": false
   },
   {
    "pid": 27,
    "sig": "say why these tenses? discuss together, then tap “show the answer”.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 28,
-   "sig": "text say the verbs in the right form.",
+   "sig": "text say the verbs in the right form. then tap the yellow to check.",
    "gone": false
   },
   {
    "pid": 29,
    "sig": "say why these tenses? discuss together, then tap “show the answer”.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 30,
-   "sig": "text say the verbs in the right form.",
+   "sig": "text say the verbs in the right form. then tap the yellow to check.",
    "gone": false
   },
   {
    "pid": 31,
    "sig": "say why these tenses? discuss together, then tap “show the answer”.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 32,
-   "sig": "text say the verbs in the right form.",
+   "sig": "text say the verbs in the right form. then tap the yellow to check.",
    "gone": false
   },
   {
    "pid": 33,
    "sig": "say why these tenses? discuss together, then tap “show the answer”.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 34,
-   "sig": "text say the verbs in the right form.",
+   "sig": "text say the verbs in the right form. then tap the yellow to check.",
    "gone": false
   },
   {
    "pid": 35,
    "sig": "say why these tenses? discuss together, then tap “show the answer”.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 36,
-   "sig": "text say the verbs in the right form.",
+   "sig": "text say the verbs in the right form. then tap the yellow to check.",
    "gone": false
   },
   {
    "pid": 37,
    "sig": "say why these tenses? discuss together, then tap “show the answer”.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 38,
@@ -247,7 +247,7 @@
   },
   {
    "pid": 49,
-   "sig": "text what is missing in ben's life? what does he do about it?",
+   "sig": "text now read the end of ben's video.",
    "gone": false
   },
   {
@@ -282,27 +282,67 @@
   },
   {
    "pid": 56,
-   "sig": "picture",
+   "sig": "questions talk to your partner.",
    "gone": false
   },
   {
    "pid": 57,
-   "sig": "cards say it like ben. use the word in capitals.",
+   "sig": "text ben's story again. put the verbs in the right form — write them in the chat. then tap the yellow to check.",
    "gone": false
   },
   {
    "pid": 58,
-   "sig": "cards say it like ben. use the word in capitals.",
+   "sig": "text ben's story: three questions. discuss together.",
    "gone": false
   },
   {
    "pid": 59,
-   "sig": "cards mind if…? answer the question. then check.",
+   "sig": "text another story. put the verbs in the right form — write them in the chat. then tap the yellow to check.",
    "gone": false
   },
   {
    "pid": 60,
+   "sig": "text the same three questions. discuss together.",
+   "gone": false
+  },
+  {
+   "pid": 61,
+   "sig": "text story and sum-up",
+   "gone": false
+  },
+  {
+   "pid": 62,
+   "sig": "text check.",
+   "gone": false
+  },
+  {
+   "pid": 63,
+   "sig": "text check.",
+   "gone": false
+  },
+  {
+   "pid": 64,
+   "sig": "cards mind if…? answer the question. then check.",
+   "gone": false
+  },
+  {
+   "pid": 65,
+   "sig": "picture",
+   "gone": false
+  },
+  {
+   "pid": 66,
    "sig": "cloud",
+   "gone": false
+  },
+  {
+   "pid": 67,
+   "sig": "cards say it the way ben does. use the word in capitals — don't change it.",
+   "gone": false
+  },
+  {
+   "pid": 68,
+   "sig": "cards say it the way ben does. use the word in capitals — don't change it.",
    "gone": false
   }
  ],
@@ -414,7 +454,7 @@
   },
   {
    "pid": 21,
-   "sig": "get out of the house i need to get out of the house and go somewhere — anywhere. i need to ___ and go somewhere — anywhere. i can't stay at home all day — i need to go somewhere, anywhere. out выбраться из дома",
+   "sig": "get out of the house i need to get out of the house and go somewhere — anywhere. i need to ___ and go somewhere — anywhere. i can't stay at home all day — i need to go somewhere, anywhere. out выбраться из дома · не go out: go out — сходить куда-нибудь развлечься",
    "gone": false
   },
   {
@@ -579,7 +619,7 @@
   },
   {
    "pid": 2,
-   "sig": "1 tell ben's story in two sentences: how he felt at first and what his life is like now. start: at first, he… now he…",
+   "sig": "1 tell ben's story in two sentences: how he felt at first and what he's done since then. start: at first, he… since then, he's…",
    "gone": false
   }
  ],
@@ -618,12 +658,12 @@
   },
   {
    "pid": 3,
-   "sig": "then: what do you do when you've got time on your hands?",
+   "sig": "what do you do when you've got time on your hands?",
    "gone": false
   },
   {
    "pid": 4,
-   "sig": "name two moments in life when people get that nowhere-to-be feeling (after a long trip, at the end of a big project…). what helps?",
+   "sig": "name two moments in life when that nowhere-to-be feeling can hit you like a ton of bricks (after a long trip, at the end of a big project…). what helps?",
    "gone": false
   }
  ],
@@ -635,7 +675,7 @@
   },
   {
    "pid": 1,
-   "sig": "[my local café / my choir / my english class / volunteering / …] makes me feel part of something.",
+   "sig": "can't explain it, but [my local café / my choir / my english class / volunteering / …] makes me feel part of something.",
    "gone": false
   },
   {
@@ -804,6 +844,13 @@
   {
    "pid": 18,
    "sig": "r25",
+   "gone": false
+  }
+ ],
+ "questions.56": [
+  {
+   "pid": 0,
+   "sig": "ben has a hole in his life and needs to fill it. name two other ways he could fill it. which one would you choose for him?",
    "gone": false
   }
  ]

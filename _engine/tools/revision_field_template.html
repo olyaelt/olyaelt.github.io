@@ -174,6 +174,12 @@ aside.box.mainbox .pp-ru{font-size:calc(1rem * var(--k, 1))}
 .box-fold b{color:var(--instr-text, #0679BD)} .box-fold:hover{border-color:var(--instr)}
 .box-ctl{position:absolute;top:8px;right:10px;display:flex;gap:6px;z-index:2} .box-ctl .btn.slim{padding:2px 10px;font-size:.82rem;min-height:0}
 .say-isles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:12px;align-items:start}
+.say-isles.stack{grid-template-columns:minmax(0,1fr);gap:10px}
+.sidecol .dlg p{overflow:hidden} .dfig{float:left;height:calc(4.2rem * var(--k, 1));width:auto;margin:-2px 14px 6px 0} .dfig.fb{transform:scaleX(-1)}
+.tx-side .postits{grid-template-columns:minmax(0,1fr);gap:16px;padding:4px 6px 10px}
+.tx-side .postit{min-height:0;padding:12px 16px 16px;font-size:1.15rem}
+.hl-st,.hl-su{border-radius:4px;padding:0 .12em;color:#111111;-webkit-box-decoration-break:clone;box-decoration-break:clone} .hl-st{background:#B4F0A6} .hl-su{background:#A9DDFF}
+.tx-stick{margin:0 0 14px;padding:10px 14px 12px;background:#FFB900;color:#1D1D1B;font-size:1.15rem;font-weight:800;line-height:1.25;border:2px solid #1D1D1B;border-radius:3px 3px 3px 22px;box-shadow:3px 5px 0 rgba(0,0,0,.18);transform:rotate(-1.2deg)}
 .say-isle{background:var(--ground);border-radius:12px;padding:10px 14px 6px}
 .say-lines p.new{border-left:4px solid var(--ok);padding-left:10px;margin-left:-14px;animation:ansIn .35s ease-out}
 @keyframes ansIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -918,6 +924,7 @@ const mk = s => esc(s == null ? "" : s)
   .replace(/\(\((.+?)\)\)/g, '<span class="ctx">$1</span>')
   .replace(/&lt;g&gt;(.+?)&lt;\/g&gt;/g, '<span class="m-good">$1</span>')
   .replace(/&lt;m([123])&gt;(.+?)&lt;\/m\1&gt;/g, '<span class="mv m$1">$2</span>')   /* tools 25: her move colours (the German page) */
+  .replace(/&lt;(st|su)&gt;(.+?)&lt;\/\1&gt;/g, '<span class="hl-$1">$2</span>')   /* tools 39 (B2 13.11, her 15:36): the story green, the sum-up blue — one colour everywhere */
   .replace(/~~(.+?)~~/g, '<span class="m-del">$1</span>')
   .replace(/\^\^(.+?)\^\^/g, '<span class="m-red">$1</span>')
   .replace(/\[\[(.+?)\]\]/g, '<span class="m-chg">$1</span>')   /* tools 18 (her 20:03): grey = the part to change in your own version */   /* tools 18: her red words on the slides (yesterday, a week ago — why it's past simple) */
@@ -1112,19 +1119,28 @@ function allGaps(b){
   return [];
 }
 function textHTML(b){
-  const gl = b.gloss && b.gloss.length ? `<aside class="gloss${D.sketch ? " sk" : ""}" aria-label="Glossary">${D.sketch ? `<img class="sticker" src="../sk-glossary.png" alt="Glossary">` : ""}${b.gloss.map((g, gi) => `<p class="gl">${partsHTML(g.p, b, `xl${gi}g`)} <span class="ru">– ${esc(g.ru).replace(/~~(.+?)~~/g, '<span class="m-del">$1</span>')}</span></p>`).join("")}</aside>` : "";
+  /* tools 39 (B2 lesson chat 13.11 14:50, her 15:03 «вопрос в инструкции никто не заметит»): "sticker" — the question as a big yellow note
+     beside the text, above the glossary; "answer_btn" — the label of the button under the text that opens its answer */
+  const stick = b.sticker ? `<p class="tx-stick">${mk(b.sticker)}</p>` : "";
+  const gl0 = !(b.gloss && b.gloss.length) ? "" : `<aside class="gloss${D.sketch ? " sk" : ""}" aria-label="Glossary">${D.sketch ? `<img class="sticker" src="../sk-glossary.png" alt="Glossary">` : ""}${b.gloss.map((g, gi) => `<p class="gl">${partsHTML(g.p, b, `xl${gi}g`)} <span class="ru">– ${esc(g.ru).replace(/~~(.+?)~~/g, '<span class="m-del">$1</span>')}</span></p>`).join("")}</aside>`;
+  const gl = stick ? `<div class="tx-sidecol">${stick}${gl0}</div>` : gl0;
   /* tools 28 also (B2 6.11, engine request 2): "img" on the block = one picture above the conversation; a missing file shows nothing */
   const pic = b.img ? `<figure class="tx-pic${b.img_side && gl ? " glpic" : ""}"><img src="${esc(b.img)}" alt="${esc(b.alt || "")}" onerror="this.parentNode.remove()"></figure>` : "";
   /* tools 30 (her 6.11 13:12 «картинку для текста»): "img_side": true — the picture in the glossary's column, under it, so the text keeps its place */
   /* tools 32 (B2 chat 11.11, her slide 7): "img_left": true — the poster a narrow column left of the text, the glossary right */
   if(b.img_left && pic) return `<div class="tx imgl${gl ? "" : " single"}${b.cards ? " cards" : ""}">${pic}<div class="dlg${b.cols ? " cols" : ""}">${b.ctx ? `<p class="lctx">${mk(b.ctx)}</p>` : ""}${linesHTML(b.lines, b, "t")}${creditHTML(b.credit)}</div>${gl}</div>${gapTools(b)}${txAnsHTML(b)}`;
   if(b.img_side && gl) return `<div class="tx"><div class="dlg${b.cols ? " cols" : ""}">${b.ctx ? `<p class="lctx">${mk(b.ctx)}</p>` : ""}${linesHTML(b.lines, b, "t")}${creditHTML(b.credit)}</div><div class="tx-sidecol">${gl}${pic}</div></div>${gapTools(b)}${txAnsHTML(b)}`;
+  /* tools 39 (her 13.11 16:11–16:12, the guided discovery in 🃏): "side": [...] — the text left, the questions as post-it notes right (an empty
+     list keeps the column, so the text stands still from screen to screen); "k" — a fixed type size for such a series (no fitting, no jump) */
+  /* "figs": true — a dialogue's A and B as her stick people (her 16:13 «stick people пропали») */
+  const sideLines = () => { const h = linesHTML(b.lines, b, "t"); return !b.figs ? h : h.replace(/<b class="sp">(A|B):<\/b>/g, (m, w) => `<img class="skimg dfig${w === "B" ? " fb" : ""}" src="../${w === "A" ? "sk-talk" : "sk-listen"}.png" alt="${w}">${m}`); };
+  if(Array.isArray(b.side)) return `<div class="tx sidecol"${b.k ? ` data-k="${esc(String(b.k))}"` : ""}><div class="dlg">${sideLines()}</div><aside class="tx-side">${b.side.length ? `<div class="postits">${b.side.map((n, i) => `<div class="postit ${["c3", "c0", "c1", "c2"][i % 4]}">${mk(n)}</div>`).join("")}</div>` : ""}</aside></div>${gapTools(b)}${txAnsHTML(b)}`;
   return `${pic}<div class="tx ${gl ? "" : "single"}"><div class="dlg${b.cols ? " cols" : ""}">${b.ctx ? `<p class="lctx">${mk(b.ctx)}</p>` : ""}${linesHTML(b.lines, b, "t")}${creditHTML(b.credit)}</div>${gl}</div>${gapTools(b)}${txAnsHTML(b)}`;
 }
 /* tools 25 (the C1 chat 1.11 21:50 and the German page 2.11: «always meaning first»): a text can carry an answer to a meaning question —
    "Show the answer" (or Next) opens it under the lines */
 const txAnsHTML = b => !b.answer || !b.answer.length ? "" : bs(b).shown ? `<div class="tx-ans">${b.answer.map((l, i) => { const lp = `blocks.${b._pos}.answer.${i}`, lb = LEDP[lp] ? ledBtn(lp) : ""; return `<p${lb ? " data-live-host" : ""}>${mk(l)}${lb}</p>`; }).join("")}</div>`
-  : `<div class="row-actions"><button class="btn primary" data-txshow>Show the answer</button></div>`;
+  : `<div class="row-actions"><button class="btn primary" data-txshow>${esc(b.answer_btn || "Show the answer")}</button></div>`;
 function gapTools(b){
   const ids = allGaps(b), st = bs(b), all = ids.length && ids.every(id => st.open.has(id));
   return ids.length ? `<div class="tx-tools"><button class="btn slim" data-showall="${b._id}">${all ? "Hide all" : "Show all"}</button>${S.noFirst && b.kind === "text" ? `<span class="hint">⚡ No first letters this time.</span>` : sharing() ? `<span class="hint">🔖 next to an opened gap = we didn't know this</span>` : ""}</div>` : "";
@@ -1189,13 +1205,17 @@ function sayHTML(b){
   const sep = !!(st.shown && b.answer && !b.answer.some(l => b.task.includes(l)));
   const lines = st.shown && b.answer ? (sep ? [...b.task, ...b.answer] : b.answer) : b.task, isles = [];
   let titled = !st.shown || !b.answer_title;
-  lines.forEach((l, i) => { if(!isles.length || /^\*\*\d+\*\*/.test(l)) isles.push([]);
+  /* tools 39 (B2 lesson chat 13.11 14:50, her 14:58: «раскладка странная — цитата и вопросы плитками в три колонки»): "stack": true — the
+     quote, the question and the answer one under another, full width; a ((note)) of the answer after a numbered answer is its own isle */
+  let noteIsle = false;
+  lines.forEach((l, i) => { const nt = !!b.stack && st.shown && !b.task.includes(l) && /^\(\(/.test(l), a0 = !!b.stack && st.shown && sep && i === b.task.length;
+    if(!isles.length || /^\*\*\d+\*\*/.test(l) || a0 || (nt && !noteIsle)) isles.push([]); noteIsle = nt;
     const isNew = st.shown && !b.task.includes(l), head = isNew && !titled ? `<p class="ans-h">${esc(b.answer_title)}</p>` : "";
     if(isNew) titled = true;
     const inTask = !st.shown || !b.answer || (sep && i < b.task.length);
     const lp = `blocks.${b._pos}.${inTask ? "task" : "answer"}.${sep && !inTask ? i - b.task.length : i}`, lb = LEDP[lp] ? ledBtn(lp) : "";   /* tools 24 */
     isles[isles.length - 1].push(`${head}<p class="${isNew ? "new" : ""}"${lb ? " data-live-host" : ""}>${mk(l)}${lb}</p>`); });
-  const body = isles.length > 1 ? `<div class="say-isles">${isles.map(x => `<div class="say-isle">${x.join("")}</div>`).join("")}</div>` : isles.map(x => x.join("")).join("");
+  const body = isles.length > 1 ? `<div class="say-isles${b.stack ? " stack" : ""}">${isles.map(x => `<div class="say-isle">${x.join("")}</div>`).join("")}</div>` : isles.map(x => x.join("")).join("");
   return `<div class="say-lines">${body}</div>
     ${!b.answer ? (b.later ? `<p class="say-later">${mk(b.later)}</p>` : "") : st.shown ? `<div class="selfcheck"><span class="q">How close were you?</span>${opts.map(([v, l]) => `<button data-check="${v}" class="${st.check === v ? "on" : ""}" aria-pressed="${st.check === v}">${l}</button>`).join("")}</div>`
       : `<div class="row-actions"><button class="btn primary" data-sayshow>${isles.length > 1 ? "Show the answers" : "Show the answer"}</button></div>`}`;   /* tools 30: her «show the answers если несколько» */
@@ -2793,10 +2813,19 @@ function fitCard(){
   try{ fitCardK(fc, blk, bar); } finally { if(gp) gp.style.display = gpd; }
 }
 function fitCardK(fc, blk, bar){
+  if(fc.dataset && fc.dataset.k){ fc.style.setProperty("--k", fc.dataset.k); return; }   /* tools 39: a series with one fixed size */
   if(window.ResizeObserver && (fc.classList.contains("fgame") || fc.matches("[data-dc]")) && !fc._ro){ fc._ro = new ResizeObserver(() => { cancelAnimationFrame(fc._rt); fc._rt = requestAnimationFrame(() => { if(fc.isConnected) fitCard(); }); }); fc._ro.observe(fc); }
   const over = () => blk.getBoundingClientRect().bottom + 2 > bar.getBoundingClientRect().top;   /* the ⚡ under the last task may scroll: the task keeps its type */
   fc.querySelectorAll("img").forEach(im => { if(im.closest(".glpic")) return; if(!im.complete) im.addEventListener("load", () => { if(!fc.isConnected) return; fc.style.removeProperty("--k"); fitCard(); }, {once: true}); });   /* tools 30: the text's picture has its own size (fitTxPic) */   /* a picture still loading changes the card's size */
-  for(const k of [.92, .85, .78, .72, .66]){ if(!over()) return; fc.style.setProperty("--k", k); }
+  /* tools 39 (her 13.11 16:09 «текст бы побольше сделать… шрифт»): a reading text or a say screen also GROWS to fill the screen, from the
+     biggest size that still fits down; a text that doesn't fit at 1 shrinks as before */
+  const dl = fc.matches(".tx") ? fc.querySelector(".dlg") : null; if(dl) dl.style.removeProperty("--k");
+  /* the text itself may grow further beside a tall glossary: its own size, while the screen still holds it */
+  const growText = () => { if(!dl) return; const k0 = parseFloat(fc.style.getPropertyValue("--k")) || 1;
+    for(const t of [1.5, 1.4, 1.3, 1.22, 1.15, 1.08]){ if(k0 * t > 1.6) continue; dl.style.setProperty("--k", (k0 * t).toFixed(2)); if(!over()) return; } dl.style.removeProperty("--k"); };
+  if(fc.matches(".tx, .say-lines")){ for(const k of [1.45, 1.36, 1.28, 1.2, 1.12, 1.05]){ fc.style.setProperty("--k", k); if(!over()){ growText(); return; } } fc.style.removeProperty("--k"); }
+  if(!over()){ growText(); return; }
+  for(const k of [.92, .85, .78, .72, .66]){ fc.style.setProperty("--k", k); if(!over()){ growText(); return; } }
 }
 addEventListener("resize", () => { clearTimeout(fitCard.t); fitCard.t = setTimeout(() => { const fc = document.querySelector("#main .deck .fc, #main .cn"); if(fc) fc.style.removeProperty("--k"); fitCard(); }, 150); });
 /* tools 28 also (B2 6.11 fixes-1: the box grew to four groups and ran under the screen): on a computer the box beside a task must be seen
