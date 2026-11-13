@@ -1124,7 +1124,7 @@ function textHTML(b){
   /* tools 39 (B2 lesson chat 13.11 14:50, her 15:03 «вопрос в инструкции никто не заметит»): "sticker" — the question as a big yellow note
      beside the text, above the glossary; "answer_btn" — the label of the button under the text that opens its answer */
   const stick = b.sticker ? `<p class="tx-stick">${mk(b.sticker)}</p>` : "";
-  const gl0 = !(b.gloss && b.gloss.length) ? "" : `<aside class="gloss${D.sketch ? " sk" : ""}" aria-label="Glossary">${D.sketch ? `<img class="sticker" src="../sk-glossary.png" alt="Glossary">` : ""}${b.gloss.map((g, gi) => `<p class="gl">${partsHTML(g.p, b, `xl${gi}g`)} <span class="ru">– ${esc(g.ru).replace(/~~(.+?)~~/g, '<span class="m-del">$1</span>')}</span></p>`).join("")}</aside>`;
+  const gl0 = !(b.gloss && b.gloss.length) ? "" : `<aside class="gloss${D.sketch ? " sk" : ""}" aria-label="Glossary">${D.sketch ? `<img class="sticker" src="../sk-glossary.png" alt="Glossary">` : ""}${b.gloss.map((g, gi) => `<p class="gl">${partsHTML(g.p, b, `xl${gi}g`)}${g.ru ? ` <span class="ru">– ${esc(g.ru).replace(/~~(.+?)~~/g, '<span class="m-del">$1</span>')}</span>` : ""}</p>`).join("")}</aside>`;
   const gl = stick ? `<div class="tx-sidecol">${stick}${gl0}</div>` : gl0;
   /* tools 28 also (B2 6.11, engine request 2): "img" on the block = one picture above the conversation; a missing file shows nothing */
   const pic = b.img ? `<figure class="tx-pic${b.img_side && gl ? " glpic" : ""}"><img src="${esc(b.img)}" alt="${esc(b.alt || "")}" onerror="this.parentNode.remove()"></figure>` : "";

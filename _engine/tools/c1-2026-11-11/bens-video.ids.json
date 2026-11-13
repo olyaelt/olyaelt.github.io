@@ -98,22 +98,22 @@
   {
    "pid": 19,
    "sig": "text what is missing in ben's life? what does he do about it?",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 20,
    "sig": "text remember the missing words. tap the yellow and orange to check.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 21,
    "sig": "text now without the glossary.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 22,
    "sig": "questions talk to your partner: finish the sentences about you. your partner asks one more question.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 23,
@@ -148,77 +148,77 @@
   {
    "pid": 29,
    "sig": "say how does ben tell his story? discuss together, then tap “show the answer”.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 30,
    "sig": "say story, sum-up or now? which tense for each? discuss, then tap “show the answer”.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 31,
    "sig": "model two ways to tell it. the listener's question often decides which. say the verbs, then tap the yellow to check.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 32,
-   "sig": "text tell the story or sum up? say the verbs in the right form. then tap the yellow to check.",
+   "sig": "text say the verbs in the right form. then tap the yellow to check.",
    "gone": false
   },
   {
    "pid": 33,
    "sig": "say why these tenses? discuss together, then tap “show the answer”.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 34,
    "sig": "text say the verbs in the right form.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 35,
    "sig": "say why these tenses? discuss together, then tap “show the answer”.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 36,
    "sig": "text say the verbs in the right form.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 37,
    "sig": "say why these tenses? discuss together, then tap “show the answer”.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 38,
    "sig": "text say the verbs in the right form.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 39,
    "sig": "say why these tenses? discuss together, then tap “show the answer”.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 40,
    "sig": "text say the verbs in the right form.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 41,
    "sig": "say why these tenses? discuss together, then tap “show the answer”.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 42,
    "sig": "text say the verbs in the right form.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 43,
    "sig": "say why these tenses? discuss together, then tap “show the answer”.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 44,
@@ -254,6 +254,101 @@
    "pid": 50,
    "sig": "text now the second answer: read it aloud, then tap the yellow to check.",
    "gone": false
+  },
+  {
+   "pid": 51,
+   "sig": "cards say it the way ben does. use the word in capitals — don't change it.",
+   "gone": false
+  },
+  {
+   "pid": 52,
+   "sig": "cards say it the way ben does. use the word in capitals — don't change it.",
+   "gone": false
+  },
+  {
+   "pid": 53,
+   "sig": "cards mind if…? answer the question. then check.",
+   "gone": false
+  },
+  {
+   "pid": 54,
+   "sig": "text now read the end of ben's video.",
+   "gone": false
+  },
+  {
+   "pid": 55,
+   "sig": "picture",
+   "gone": false
+  },
+  {
+   "pid": 56,
+   "sig": "questions talk to your partner.",
+   "gone": false
+  },
+  {
+   "pid": 57,
+   "sig": "text ben's story again. put the verbs in the right form — write them in the chat. then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 58,
+   "sig": "text ben's story: three questions. discuss together.",
+   "gone": false
+  },
+  {
+   "pid": 59,
+   "sig": "text check.",
+   "gone": false
+  },
+  {
+   "pid": 60,
+   "sig": "text another story. put the verbs in the right form — write them in the chat. then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 61,
+   "sig": "text the same three questions. discuss together.",
+   "gone": false
+  },
+  {
+   "pid": 62,
+   "sig": "text check.",
+   "gone": false
+  },
+  {
+   "pid": 63,
+   "sig": "text story and sum-up",
+   "gone": false
+  },
+  {
+   "pid": 64,
+   "sig": "text say the verbs in the right form. then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 65,
+   "sig": "text say the verbs in the right form. then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 66,
+   "sig": "cloud",
+   "gone": false
+  },
+  {
+   "pid": 67,
+   "sig": "text say the verbs in the right form. then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 68,
+   "sig": "text say the verbs in the right form. then tap the yellow to check.",
+   "gone": false
+  },
+  {
+   "pid": 69,
+   "sig": "text say the verbs in the right form. then tap the yellow to check.",
+   "gone": false
   }
  ],
  "cards": [
@@ -285,6 +380,71 @@
   {
    "pid": 5,
    "sig": "my street is getting noisier and noisier. my street · noisy a new bar opens every month what’s getting more and more popular where you live? who’s happy about it, and who isn’t?",
+   "gone": false
+  },
+  {
+   "pid": 6,
+   "sig": "at first, i enjoyed at first, i enjoyed the novelty of it. ___ the novelty of it. in the beginning, i liked it — everything was new and exciting. first in the beginning, i liked how new it was · поначалу мне нравилась новизна · also fine: at first, i liked…",
+   "gone": false
+  },
+  {
+   "pid": 7,
+   "sig": "no matter where no matter where i went, the first night was always hard. ___ i went, the first night was always hard. wherever i went, the first night was always hard. matter wherever i went · куда бы я ни поехал",
+   "gone": false
+  },
+  {
+   "pid": 8,
+   "sig": "the problem was the problem was, i had nobody to talk to. ___, i had nobody to talk to. but there was one thing i didn't like: i had nobody to talk to. problem the catch was… · проблема была в том, что…",
+   "gone": false
+  },
+  {
+   "pid": 9,
+   "sig": "hit me like a ton of bricks when i got home, the loneliness hit me like a ton of bricks. when i got home, the loneliness ___. when i got home, i suddenly felt terribly lonely. bricks i suddenly felt it very strongly · накрыло (как обухом по голове)",
+   "gone": false
+  },
+  {
+   "pid": 10,
+   "sig": "time on my hands after i stopped working, i had a lot of time on my hands. after i stopped working, i had a lot of ___. after i stopped working, i had lots of free time and nothing to fill it with. hands free time and nothing to fill it with · свободное время, которое нечем занять",
+   "gone": false
+  },
+  {
+   "pid": 11,
+   "sig": "get out of the house i need to get out of the house and go somewhere — anywhere. i need to ___ and go somewhere — anywhere. i can't stay at home all day — i need to go somewhere, anywhere. out leave home, don't stay stuck indoors · выбраться из дома · not go out: go out = usually for fun",
+   "gone": false
+  },
+  {
+   "pid": 12,
+   "sig": "makes me feel part of something my choir makes me feel part of something. my choir ___. when i sing in my choir, i feel like i really belong. part i feel i belong · чувствовать себя частью чего-то",
+   "gone": false
+  },
+  {
+   "pid": 13,
+   "sig": "you name it i fill my days with all sorts of things: books, films, cooking, gardening — you name it. i fill my days with all sorts of things: books, films, cooking, gardening — ___. i fill my days with all sorts of things: books, films, cooking, gardening and lots more. name all kinds of things · чем я только не занимаюсь",
+   "gone": false
+  },
+  {
+   "pid": 14,
+   "sig": "can't explain it there's a little café on my street. can't explain it, but i like it there. there's a little café on my street. ___, but i like it there. there's a little café on my street. i don't know why, but i like it there. explain i don't know why · не могу объяснить почему · also fine: i can't explain it",
+   "gone": false
+  },
+  {
+   "pid": 15,
+   "sig": "i've tried everything believe me, i've tried everything. believe me, ___. honestly, there's nothing i haven't tried. everything i've tried it all → present perfect: a sum-up to now · всё перепробовал",
+   "gone": false
+  },
+  {
+   "pid": 16,
+   "sig": "excuse me, mind if i sit here? no, go ahead. a busy café. a woman with a coffee points at the free chair at your table. thanks! it's so busy today. mind if i…? = do you mind if i…? · вы не против, если я…? · no = i don't mind · я не против",
+   "gone": false
+  },
+  {
+   "pid": 17,
+   "sig": "mind if i open the window? no, not at all. it's really hot in here. a hot train. the man next to you looks at the window. thanks — that's much better. no, not at all. = нет, что вы, пожалуйста.",
+   "gone": false
+  },
+  {
+   "pid": 18,
+   "sig": "mind if i borrow your pen? no, not at all — here you go. at work. a colleague needs your pen for a second. thanks, i'll give it right back. here you go = вот, держи",
    "gone": false
   }
  ],
@@ -319,12 +479,12 @@
   },
   {
    "pid": 3,
-   "sig": "then: what do you do when you've got time on your hands?",
+   "sig": "what do you do when you've got time on your hands?",
    "gone": false
   },
   {
    "pid": 4,
-   "sig": "name two moments in life when people get that nowhere-to-be feeling (after a long trip, at the end of a big project…). what helps?",
+   "sig": "name two moments in life when that nowhere-to-be feeling can hit you like a ton of bricks (after a long trip, at the end of a big project…). what helps?",
    "gone": false
   }
  ],
@@ -336,7 +496,7 @@
   },
   {
    "pid": 1,
-   "sig": "[my local café / my choir / my english class / volunteering / …] makes me feel part of something.",
+   "sig": "can't explain it, but [my local café / my choir / my english class / volunteering / …] makes me feel part of something.",
    "gone": false
   },
   {
@@ -381,21 +541,26 @@
   {
    "pid": 0,
    "sig": "1 ben says he probably relied on his son's family “way more than he should”. why do you think he feels that way?",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 1,
    "sig": "2 “get up, get out of the house and go somewhere.” does it work for ben? would it work for you? why or why not?",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 2,
    "sig": "3 ben has tried yoga, cooking and mandarin. name two things you've tried — or would like to try — in your free time, and one you'd never try (again).",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 3,
    "sig": "4 ben says there's a hole in his life. name two things that could fill it — and one that wouldn't.",
+   "gone": true
+  },
+  {
+   "pid": 4,
+   "sig": "ben has a hole in his life and needs to fill it. name two other ways he could fill it. which one would you choose for him?",
    "gone": false
   }
  ],
@@ -403,11 +568,16 @@
   {
    "pid": 0,
    "sig": "1 tell ben's story in two sentences: how it all started, and where he is now.",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 1,
    "sig": "2 name two things you rely on more than you should (your phone? coffee? your car?). start: don't get me wrong, i love…, but…",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "1 tell ben's story in two sentences: how he felt at first and what he's done since then. start: at first, he… since then, he's…",
    "gone": false
   }
  ],
@@ -541,6 +711,28 @@
   {
    "pid": 12,
    "sig": "r25",
+   "gone": false
+  }
+ ],
+ "questions.56": [
+  {
+   "pid": 0,
+   "sig": "1 ben says he probably relied on his son's family “way more than he should”. why do you think he feels that way?",
+   "gone": false
+  },
+  {
+   "pid": 1,
+   "sig": "2 “get up, get out of the house and go somewhere.” does it work for ben? would it work for you? why or why not?",
+   "gone": false
+  },
+  {
+   "pid": 2,
+   "sig": "3 ben has tried yoga, cooking and mandarin. name two things you've tried — or would like to try — in your free time, and one you'd never try (again).",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "4 ben says there's a hole in his life. name two things that could fill it — and one that wouldn't.",
    "gone": false
   }
  ]
