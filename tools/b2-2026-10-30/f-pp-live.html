@@ -3856,7 +3856,9 @@ function wireGroupDots(){
     st.peekLbl = `👥 ${s.again ? `Back into the deck ${s.again}× · ${s.screens} screen${s.screens === 1 ? "" : "s"}` : s.got ? "Nobody sent it back" : "No group has answered it yet"}`; render(); return; }   /* the card opens over the game, the game stays as it is */
   if(b.kind === "game"){ gameOpenTask(b, b.tasks[i]); return; }   /* tools 16: her dot opens that square on the board */
   const s = deckStats(b.cards[i]._n);
-  st.look = st.look === i ? null : i; st.lookOpen = false; st.lookLbl = `👥 ${s.again ? `Back into the deck ${s.again}× · ${s.screens} screen${s.screens === 1 ? "" : "s"}` : s.got ? "Nobody sent it back" : "No group has answered it yet"}`; render(); })); }
+  /* tools 39 (her 13.11 19:02 in class: «оранжевые кружки не работают — вижу открытую карточку»): a finished deck had set lookBack, which
+     kept her dot's card open — her dot always opens the card closed */
+  st.look = st.look === i ? null : i; st.lookOpen = false; st.lookBack = false; st.lookLbl = `👥 ${s.again ? `Back into the deck ${s.again}× · ${s.screens} screen${s.screens === 1 ? "" : "s"}` : s.got ? "Nobody sent it back" : "No group has answered it yet"}`; render(); })); }
 
 /* ---------- ⚡ fast finishers (the last block): the fast line, their ↺ cards once more, the text again without first letters ---------- */
 const fastPs = lb => (Array.isArray(lb.fast) ? lb.fast.map((f, i) => [f, `blocks.${lb._pos}.fast.${i}`]) : [[lb.fast, `blocks.${lb._pos}.fast`]])
