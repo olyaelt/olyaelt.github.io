@@ -2679,10 +2679,16 @@
      "instr": "Story and sum-up",
      "lines": [
       {
+       "h": "Ben"
+      },
+      {
        "s": "",
        "p": [
         "<st>At first, I admit I enjoyed the novelty of it. I used all the miles I'd saved and traveled the globe. The problem was, as soon as I got home, the nowhere-to-be thing hit me like a ton of bricks. Tried yoga, learned to cook, bought some plants, took classes in Mandarin.</st> <su>Believe me, I've tried everything.</su>"
        ]
+      },
+      {
+       "h": "A new job"
       },
       {
        "s": "A",
@@ -2699,29 +2705,17 @@
       {
        "s": "",
        "p": [
-        "<st>**The story**</st> (what happened, one thing after another) → **past simple**"
-       ]
-      },
-      {
-       "s": "",
-       "p": [
-        "<su>**The sum-up**</su> (everything up to now) → **present perfect**"
-       ]
-      },
-      {
-       "s": "",
-       "p": [
-        "The sum-up can come **at the end** (like Ben) or **at the start**."
-       ]
-      },
-      {
-       "s": "",
-       "p": [
         "((По-русски и история, и итог — в прошедшем: «Поначалу мне нравилось», «Я всё перепробовал». По-английски итог — present perfect.))"
        ]
       }
      ],
-     "id": 61
+     "id": 61,
+     "side": [
+      "**The story** (what happened, one thing after another) → **past simple**",
+      "**The sum-up** (everything up to now) → **present perfect**",
+      "The sum-up can come **at the end** (like Ben) or **at the start**."
+     ],
+     "figs": true
     },
     {
      "kind": "text",

@@ -5114,7 +5114,10 @@ function fitCard(){
      taller, and the card kept the small type after it; a game that changes in place (the task, its answer, the next roll) fits again by itself */
   fc.style.removeProperty("--k");
   const gp = fc.querySelector(".tx-pic.glpic"), gpd = gp ? gp.style.display : ""; if(gp) gp.style.display = "none";   /* tools 30 */
-  try{ fitCardK(fc, blk, bar); } finally { if(gp) gp.style.display = gpd; }
+  /* tools 39 (her 13.11 16:24 «вернулся очень мелкий шрифт»): an opened answer under a text («Why these tenses?») doesn't shrink the text —
+     the size is fitted without it, and the answer may scroll */
+  const ta = blk.querySelector(".tx-ans"), tad = ta ? ta.style.display : ""; if(ta) ta.style.display = "none";
+  try{ fitCardK(fc, blk, bar); } finally { if(gp) gp.style.display = gpd; if(ta) ta.style.display = tad; }
 }
 function fitCardK(fc, blk, bar){
   if(fc.dataset && fc.dataset.k){ fc.style.setProperty("--k", fc.dataset.k); return; }   /* tools 39: a series with one fixed size */
