@@ -3273,6 +3273,8 @@ const ledAdd = (path, obj, key, kind) => { if(obj == null || obj[key] == null ||
 const CARD_FIELDS = ["instr", "ctx", "front", "a", "key", "frame", "back", "next", "why", "note", "hint", "turn"];
 BLOCKS.forEach((b, pos) => { const bp = "blocks." + pos; b._pos = pos;
   ledAdd(bp + ".instr", b, "instr"); ledAdd(bp + ".instr_next", b, "instr_next");
+  /* tools 39 (her 13.11 17:04 «хотела поменять if you're done, а там кнопки edit нет»): a block's ⚡ «If you're done» line is editable live too */
+  if(Array.isArray(b.fast)) b.fast.forEach((f, i) => ledAdd(bp + ".fast." + i, b.fast, i)); else ledAdd(bp + ".fast", b, "fast");
   if(b.kind === "text") (b.lines || []).forEach((l, i) => { if(l && Array.isArray(l.p)) ledAdd(bp + ".lines." + i, b.lines, i, "line"); });
   if(b.kind === "text") (b.answer || []).forEach((n, i) => ledAdd(bp + ".answer." + i, b.answer, i));   /* tools 25 */
   if(b.kind === "model") (b.parts || []).forEach((pt, pi) => (pt.lines || []).forEach((l, i) => { if(l && Array.isArray(l.p)) ledAdd(`${bp}.parts.${pi}.lines.${i}`, pt.lines, i, "line"); }));
@@ -3857,6 +3859,8 @@ function wireGroupDots(){
   st.look = st.look === i ? null : i; st.lookOpen = false; st.lookLbl = `👥 ${s.again ? `Back into the deck ${s.again}× · ${s.screens} screen${s.screens === 1 ? "" : "s"}` : s.got ? "Nobody sent it back" : "No group has answered it yet"}`; render(); })); }
 
 /* ---------- ⚡ fast finishers (the last block): the fast line, their ↺ cards once more, the text again without first letters ---------- */
+const fastPs = lb => (Array.isArray(lb.fast) ? lb.fast.map((f, i) => [f, `blocks.${lb._pos}.fast.${i}`]) : [[lb.fast, `blocks.${lb._pos}.fast`]])
+  .map(([f, p]) => { const lb2 = LEDP[p] ? ledBtn(p) : ""; return `<p${lb2 ? " data-live-host" : ""}>${mk(f)}${lb2}</p>`; }).join("");   /* tools 39: with her ✏️ */
 function fastHTML(){
   if(S.view !== "field") return "";
   const lb = curBlock();
@@ -3864,9 +3868,9 @@ function fastHTML(){
   if(lb && lb.kind === "questions"){ const at = spkView.findIndex(x => x.k === spkCur.key); if(at < spkView.length - 1) return ""; }
   /* tools 30 (C1 6.11 v2: the first chat has its own ⚡ in the middle of the page): a block's own "fast" shows under it, after its last
      question; on the last screen, the page's ⚡ as before */
-  if(!isLast()) return lb && lb.fast ? `<section class="fast"><h3>⚡ If you're done</h3>${[].concat(lb.fast).map(f => `<p>${mk(f)}</p>`).join("")}</section>` : "";
+  if(!isLast()) return lb && lb.fast ? `<section class="fast"><h3>⚡ If you're done</h3>${fastPs(lb)}</section>` : "";
   const again = saved.again.length, text = BLOCKS.find(b => b.kind === "text");
-  return `<section class="fast"><h3>⚡ If you're done</h3>${(lb && lb.fast ? [].concat(lb.fast) : FAST).map(f => `<p>${mk(f)}</p>`).join("")}
+  return `<section class="fast"><h3>⚡ If you're done</h3>${lb && lb.fast ? fastPs(lb) : FAST.map(f => `<p>${mk(f)}</p>`).join("")}
     <div class="row-actions">${again ? `<button class="btn slim" data-fast-cards>↺ Your ${again} hard card${again === 1 ? "" : "s"} once more</button>` : ""}${text ? `<button class="btn slim" data-fast-text>📖 The text again — no first letters</button>` : ""}</div></section>`;
 }
 function fastDeckBlock(){

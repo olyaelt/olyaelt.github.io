@@ -38,8 +38,6 @@ const PLAYER = `function(id,o){const d=document.getElementById(id),f=document.cr
     'the first tap does not play the whole clip from its first line: ' + JSON.stringify(L0) + ' ' + JSON.stringify(cl));
   ok(await p.evaluate(k => document.activeElement && document.activeElement.dataset.k === k, k), 'the tap does not leave the cursor in the gap');
   ok(!(await p.evaluate(() => !!document.querySelector('[data-ask]'))), 'no «What did you catch?»');
-  await p.click('.ln[data-i="1"] .pl'); await p.waitForTimeout(80);
-  ok(!(await p.evaluate(() => (window._yl || []).splice(0))).some(x => x[0] === 'seek'), 'a tap cut the first listen of the whole clip');
   ok(await p.waitForFunction(() => document.querySelector('.ln[data-i="2"]').classList.contains('playing'), null, {timeout: 6000}).then(() => true, () => false), 'the line that sounds does not light up');
   await p.waitForFunction(() => !document.querySelector('.ln.playing'), null, {timeout: 8000}).catch(() => fail.push('the whole clip never ended'));
   ok(await p.evaluate(() => !!document.querySelector('.lstrip')), 'no strip under the line after the first listen');
@@ -89,8 +87,7 @@ const PLAYER = `function(id,o){const d=document.getElementById(id),f=document.cr
   await q.click('.film-in'); await q.waitForTimeout(300);
   let fp = await q.evaluate(() => ({on: !!FILM.playing, ctx: !!(FILM.playing && FILM.playing.ctx), lit: !!document.querySelector('.film-ln.playing')}));
   ok(fp.on && fp.ctx && fp.lit, 'film: a tap on the empty field does not play the context first: ' + JSON.stringify(fp));
-  await q.click('.film-ln .pl'); await q.waitForTimeout(150); ok(await q.evaluate(() => !!(FILM.playing && FILM.playing.ctx)), 'film: a tap cut the context');
-  await q.waitForFunction(() => !FILM.playing, null, {timeout: 12000}).catch(() => fail.push('film: the context never ended')); await q.waitForTimeout(200);
+  // engine 83 (her 16:59): a tap while the context plays plays the line
   await q.click('.film-ln .pl'); await q.waitForTimeout(300);
   fp = await q.evaluate(() => ({on: !!FILM.playing, ctx: !!(FILM.playing && FILM.playing.ctx), t: FILM.v.currentTime}));
   ok(fp.on && !fp.ctx && fp.t >= fc0.s - .35 && fp.t < fc0.s + .6, 'film: after the context the line plays alone, from its own start ' + fc0.s + ': ' + JSON.stringify(fp));

@@ -1342,7 +1342,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = ["click on the top line to hear the context","click on the line with the gap and try to catch what's in the gap","check","listen again — how did the expression sound?","optional: pronounce the expression like the speaker"];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "82";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "83";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -3494,10 +3494,15 @@ function renderListen(st, count, pct){
   /* a line's play: the top line plays the whole clip (as in TubeQuizard), any other its own time; then its strip (engine 72; under the top
      line only when it has a gap) — a tap on the line, and since engine 80 a tap on its empty gap */
   function rowPlay(i){
-    if(CTXF && !ctxDone){   /* engine 81: the first listen = the whole clip; a tap while it plays doesn't cut it (a stuck one may start again) */
-      if(ctxBusy){ let s0 = -1; try{ s0 = ytPlayer.getPlayerState(); }catch(e){} if(s0 === 1 || s0 === 3) return; }
-      ctxBusy = !!play(Math.max(0, lines[0][1] - LEAD), clipEnd(lines, lines.length-1) + LEAD, 0, {whole: true, end: () => { ctxBusy = false; ctxDone = true; saveHeard();
-        if(rows[i].isConnected && (i > 0 || rows[i].classList.contains("has-gap"))) stripOpen(i); }});
+    /* engine 81: the first listen = the whole clip; engine 83 (her 16:58–16:59 «predictability интерфейса важнее… давай давать возможность
+       тапнуть»): a tap while it plays plays what was tapped, as everywhere */
+    if(CTXF && !ctxDone){
+      /* engine 83 (her 13.11 16:47, in class «слушали много раз, и полоса так и не появилась»): the whole clip counts as heard as soon as it
+         starts and the strip opens at once — if the clip stopped before its end (the video paused or ended on YouTube), the next tap is the
+         line, not the whole clip again and again */
+      ctxBusy = !!play(Math.max(0, lines[0][1] - LEAD), clipEnd(lines, lines.length-1) + LEAD, 0, {whole: true, end: () => { ctxBusy = false; }});
+      if(ctxBusy){ ctxDone = true; saveHeard(); }
+      if(i > 0 || rows[i].classList.contains("has-gap")) stripOpen(i);
       return; }
     if(i===0 && !pending()) play(Math.max(0, lines[0][1] - LEAD), clipEnd(lines, lines.length-1) + LEAD, 0, {whole: true});
     else { const [a, b] = rng(i); play(a, b, i); }
@@ -3556,6 +3561,8 @@ function renderListen(st, count, pct){
      "Check" after a gap, or Enter in it, checks just that gap; when the last one is checked, the step counts as checked (Check answers) */
   const checkOne = (inp, byKey) => {
     const k = +inp.dataset.k; judgeGap(inp);
+    /* engine 83 (her 13.11 16:51 «после чек пусть тоже появляется»): the checked line's strip, even if it hasn't played yet */
+    const rk = rowOfK(k); if(!ONCE && rk >= 0 && (rk > 0 || rows[rk].classList.contains("has-gap"))) stripOpen(rk);
     const left = [...app.querySelectorAll(".gap-in")];
     if(!left.length){ document.getElementById("go").click(); return; }
     if(byKey){ const next = left.find(x => +x.dataset.k > k) || left[0]; try{ next.focus({preventScroll: false}); }catch(e){ next.focus(); } }
@@ -3590,6 +3597,8 @@ function renderListen(st, count, pct){
       const d = document.createElement("div"), after = document.getElementById("after"), y0 = after.getBoundingClientRect().top; d.innerHTML = rh; placeRevHint(d.firstElementChild);
       const dy = after.getBoundingClientRect().top - y0; if(dy && window.scrollY > 0) window.scrollBy(0, dy); }
     document.getElementById("after").hidden = false;
+    /* engine 83: after Check answers, a strip under the first line with a gap if none is open */
+    if(!ONCE && !app.querySelector(".lstrip")){ const g0 = rows.findIndex((r, i) => r.classList.contains("has-gap")); if(g0 >= 0) stripOpen(g0); }
     const last = stepIdx === current.steps.length-1;
     document.getElementById("go").textContent = last ? "Finish" : "Next"; reactPre();
   });
@@ -3931,10 +3940,11 @@ function renderFilm(st, count, pct){
   const after = () => { const wf = filmWords(R.final, l); ftAfter(t, l.id, {plays: R.plays || 0, pieces: R.pieces || 0, slow: !!R.slow, checks: R.checks || 0, shown: !!R.shown,
     final: R.final || "", wfinal: wf.got + "/" + wf.n, secs: R.t2 && R.t0 ? Math.round((R.t2 - R.t0) / 1000) : null}); };   /* engine 68: the same row in her journal */
   const CF = filmCF(l), ctxNow = () => CF != null && !R.ctx && !t._review;   /* engine 81: the context the first time, then the line */
+  /* engine 83: the context counts as heard as soon as it starts, and a tap while it plays plays the line (her 16:59) */
   const ctxPlay = (rate, onEnd) => { const c = filmClip(l), lead = yt ? YT_LEAD : .3, tail = yt ? YT_LEAD : .45;
-    const ok = filmPlay(l, rate, () => { R.ctx = true; save(); if(onEnd) onEnd(); }, null, {s: Math.max(0, CF - lead), e: c.e + tail});
-    if(ok && FILM.playing){ FILM.playing.ctx = true; if(row) row.classList.add("playing"); } return ok; };
-  const playMore = () => { if(FILM.playing && FILM.playing.ctx) return;   /* a tap doesn't cut the context */
+    const ok = filmPlay(l, rate, () => { if(onEnd) onEnd(); }, null, {s: Math.max(0, CF - lead), e: c.e + tail});
+    if(ok){ R.ctx = true; save(); if(FILM.playing) FILM.playing.ctx = true; if(row) row.classList.add("playing"); } return ok; };
+  const playMore = () => {
     const r = rateNow(); if(r < 1 && !R.done) R.slow = true; if(R.done) R.after = (R.after || 0) + 1; else { R.plays = (R.plays || 0) + 1; R.t0 = R.t0 || Date.now(); } save();
     if(ctxNow()) ctxPlay(r); else filmPlay(l, r); };
   /* engine 78: in free mode the first try is what stands at Check (or «show me»), with the plays before it */
