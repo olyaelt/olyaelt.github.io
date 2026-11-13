@@ -852,7 +852,9 @@ audio{width:100%}
 .film-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px}
 .film-row .grow{flex:1}
 .film-ask{font-weight:800}
-.lines .l1-ask{margin:0 0 8px;padding:2px 8px 4px}   /* engine 76: «What did you catch?» under a YouTube line */
+.lines .l1-ask{margin:0 0 8px;padding:2px 8px 4px}
+.t-rm{margin:10px 0 0;padding:6px 10px;border:1px dashed var(--line);border-radius:10px;font-size:.95em}   /* engine 79 */
+.t-rm.is-gone{border:2px solid #c0392b;background:color-mix(in srgb, #c0392b 8%, transparent)}   /* engine 76: «What did you catch?» under a YouTube line */
 .gap-in[readonly]{cursor:pointer}
 .film-res{margin-top:10px;display:grid;gap:8px;justify-items:start}
 .film-score{margin:0;font-weight:700}
@@ -3115,7 +3117,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = [];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "78";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "81";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [{"type": "rewrite", "r": {"o": "The course taught me the basics of statistics.", "k": "GROUNDING", "pre": "The course gave ", "post": " statistics.", "a": "me a good grounding in", "acc": ["me a good grounding in", "me a solid grounding in", "me a thorough grounding in", "me a basic grounding in", "me a grounding in"], "n": "<span class=\"ipa\">/ˈɡraʊndɪŋ/<\/span><br>a good grounding in + subject.<br><i class=\"ru\">дал мне хорошую базу по статистике<\/i><br><i class=\"ru\">or: me a solid / thorough / basic grounding in<\/i><br><i class=\"ru\">or: me a grounding in<\/i>"}, "frm": "23.10.26"}, {"type": "sayit", "s": {"rows": [["<span class=\"en\">Nobody taught me how to talk to clients — I learned it <span class=\"trap\">in practice<\/span>.<\/span> <i class=\"ru\">(научилась в процессе работы)<\/i>", "Nobody taught me how to talk to clients — I learned it <b class=\"g\">on the job<\/b>."]], "note": "", "html": true}, "instr": "What would Dan or Ruth say instead?", "frm": "21.10.26"}, {"type": "rewrite", "r": {"o": "I did a course to become a yoga teacher too.", "k": "TRAINED", "pre": "I ", "post": " a yoga teacher too.", "a": "trained as", "acc": ["trained as", "trained to be"], "n": "trained as — active: I trained (I did it myself).<br><i class=\"ru\">я ещё и выучилась на преподавателя йоги<\/i><br><i class=\"ru\">or: trained to be<\/i>"}, "frm": "23.10.26"}];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -3253,7 +3255,7 @@ async function syncNow(code, opts={}){
   if(!res.ok && res.error === "other-group" && res.gid){ ls.set("hw-code", code); ls.set("hw-role",""); ls.set("hw-who",""); ls.set("hw-gid", res.gid); toOwnGroup(res.gid); return res; }
   if(res.ok) ls.set("hw-gid", res.role === "teacher" ? "" : (res.gid || ""));
   if(res.ok && res.role === "teacher"){
-    if(code === myCode()){ ls.set("hw-role","teacher"); ls.set("hw-who", res.name||""); teacherData = res; if(res.group){ groupStats = res.group; } syncState = "ok";
+    if(code === myCode()){ ls.set("hw-role","teacher"); ls.set("hw-who", res.name||""); teacherData = res; if(res.group){ groupStats = res.group; } syncState = "ok"; gotRemoved(res.removed);
       if(!current){ const y = scrollY; renderHome(); scrollTo(0,y); } }
     if(syncAgain){ syncAgain = false; syncNow(); }
     return res;
@@ -3266,6 +3268,7 @@ async function syncNow(code, opts={}){
     });
     saveMarks();
     if(res.work){ work = res.work; saveWork(); refreshWork(); }
+    if(code === myCode()) gotRemoved(res.removed);   /* engine 79 */
     if(res.half && code === myCode()){ ls.set("hw-half-" + code, res.half);
       if(applyOrder() && !current){ const y = scrollY; renderHome(); scrollTo(0, y); } }   /* engine 71: the table's half, until he opens a task */
     if(code === myCode()){ flushFlags(); ftSendSoon(); wantSendSoon(); }
@@ -3740,8 +3743,28 @@ function wireMkBar(id){
   });
 }
 /* in the step: a red frame and a label on each marked line (nothing of the answer) */
+/* engine 79: her «🗑 Remove from homework» under a listening clip or a 🎬 line (in her view only) */
+function rmBarHTML(){
+  if(!isTeacher() || !current || current._once || current._review) return "";
+  const st = current.steps && current.steps[stepIdx], k = st && rmItem(current, st);
+  if(!k) return "";
+  const what = st.type === "film" ? "line" : "clip";
+  return REMOVED.has(k) ? `<div class="t-rm is-gone"><b>🗑 Removed from homework</b> <span class="small">students don't see this ${what}</span> <button class="linklike" data-rmon="0">↩ Bring back</button></div>`
+    : `<div class="t-rm"><button class="linklike" data-rmon="1">🗑 Remove this ${what} from the homework</button></div>`;
+}
+async function setRemoved(on){
+  const st = current && current.steps && current.steps[stepIdx], k = st && rmItem(current, st); if(!k) return;
+  const was = new Set(REMOVED); on ? REMOVED.add(k) : REMOVED.delete(k); ls.set("hw-removed-" + PAGE_KEY, JSON.stringify([...REMOVED]));
+  const bar = app.querySelector(".t-rm"); if(bar){ bar.outerHTML = rmBarHTML(); wireRm(); }
+  const res = await post({action: "remove", code: myCode(), page: PAGE_KEY, item: k, on: !!on});
+  if(res && res.ok && Array.isArray(res.removed)){ REMOVED = new Set(res.removed.map(String)); ls.set("hw-removed-" + PAGE_KEY, JSON.stringify([...REMOVED])); }
+  else if(!res || !res.ok){ REMOVED = was; ls.set("hw-removed-" + PAGE_KEY, JSON.stringify([...REMOVED])); const b = app.querySelector(".t-rm"); if(b){ b.outerHTML = rmBarHTML(); wireRm(); }
+    const b2 = app.querySelector(".t-rm"); if(b2) b2.insertAdjacentHTML("beforeend", ` <span class="small">Not saved — no connection to the table. Try again.</span>`); }
+}
+function wireRm(){ app.querySelectorAll("[data-rmon]").forEach(b => b.addEventListener("click", () => setRemoved(b.dataset.rmon === "1"))); }
 function annotateMarks(){
   if(!isTeacher() || !teacherData || !current) return;
+  { app.querySelectorAll(".t-rm").forEach(x => x.remove()); const stg = app.querySelector(".stage"), h = rmBarHTML(); if(stg && h){ stg.insertAdjacentHTML("afterend", h); wireRm(); } }   /* engine 79 */
   app.querySelectorAll(".t-mk-who").forEach(x=>x.remove());
   app.querySelectorAll(".t-marked").forEach(x=>x.classList.remove("t-marked", "t-marked-done"));
   app.querySelectorAll("[data-mkgo]").forEach(b=>b.classList.toggle("on", +b.dataset.mkgo === stepIdx));
@@ -3972,6 +3995,30 @@ const TYPED_KEY = "hw-typed-" + PAGE_KEY, POS_KEY = "hw-pos-" + PAGE_KEY, SORT_K
 const lsJSON = (k, d) => { try{ return JSON.parse(ls.get(k) || "null") || d; }catch(e){ return d; } };
 Object.assign(typed, lsJSON(TYPED_KEY, {}));
 TASKS.forEach(t => { if(t.film) t.steps = filmSteps(t); });   /* engine 65: 🎬 a film task's screens, in this device's order */
+/* engine 79 (her 12.11: «кнопочку „Удалить из домашки“»): a clip of a listening task or a line of a 🎬 task that she takes out of the published
+   homework in her view. Her table keeps the list (sheet «Removed from homework»); every sync brings it, this device keeps it, and the next
+   time a task opens its removed screens are gone. Every screen keeps its own number (_orig), so the journal and the bookmarks don't move.
+   Her view shows them all, a removed one with «🗑 Removed from homework · ↩ Bring back». */
+let REMOVED = new Set(lsJSON("hw-removed-" + PAGE_KEY, []));
+const ALLSTEPS = {};
+const rmItem = (t, st) => st.type === "film" ? t.id + ":" + ((t.film.lines[st.li] || {}).id || st.li) : st.type === "listen" ? t.id + ":s" + st._orig : null;
+function applyRemoved(){
+  TASKS.forEach(t => {
+    if(!Array.isArray(t.steps) || !t.steps.length) return;
+    if(!ALLSTEPS[t.id]) ALLSTEPS[t.id] = t.steps.map((st, i) => { if(st._orig == null) st._orig = i; return st; });
+    const gone = st => { const k = rmItem(t, st); return !!k && REMOVED.has(k); };
+    t._removed = ALLSTEPS[t.id].filter(gone).length;
+    t.steps = isTeacher() ? ALLSTEPS[t.id] : ALLSTEPS[t.id].filter(st => !gone(st));
+  });
+}
+function gotRemoved(list){
+  if(!Array.isArray(list)) return;
+  const was = [...REMOVED].sort().join("|"), now = list.map(String).sort();
+  if(was === now.join("|")) return;
+  REMOVED = new Set(now); ls.set("hw-removed-" + PAGE_KEY, JSON.stringify(now));
+  if(!current){ applyRemoved(); const y = scrollY; renderHome(); scrollTo(0, y); }   /* in a task: from the next time it opens */
+}
+applyRemoved();
 function hasListening(){ return TASKS.some(t => t.film || (t.steps || []).some(s => s && s.type === "listen")); }   /* engine 68: the notice says «how many times you listened» only where there is listening */
 let typedT = 0; const saveTyped = () => { clearTimeout(typedT); typedT = setTimeout(() => ls.set(TYPED_KEY, JSON.stringify(typed)), 300); };
 const norm = s => String(s).toLowerCase().replace(/[’‘]/g,"'").replace(/[.!?,;:]+$/,"").replace(/\s+/g," ").trim();
@@ -4023,7 +4070,7 @@ const secsOf = tp => { const own = [...new Set(TASKS.filter(t => t.topic === tp.
   return own.map((x, j) => [x, j]).sort((a, b) => secRank(a[0]) - secRank(b[0]) || a[1] - b[1]).map(a => a[0]); };
 function renderHome(justDone){
   if(LOCKED()) return renderGate();
-  current = null;
+  current = null; applyRemoved();   /* engine 79 */
   const taskBtn = t => `
           <div class="task-wrap"><div class="task-row ${done.has(t.id)?"is-done":""} ${t.stop?"stop":""}">
             <button class="task-btn" data-open="${t.id}">
@@ -4087,6 +4134,7 @@ function clearTaskState(id){
 }
 function openTask(id, idx, mode){
   if(LOCKED()) return renderGate();
+  applyRemoved();   /* engine 79 */
   const t = TASKS.find(x=>x.id===id); if(!t){ renderHome(); return; }
   fixOrder();   /* engine 71 */
   if(mode === "fresh") clearTaskState(id);
@@ -4260,8 +4308,8 @@ document.addEventListener("click", ev => {
 /* "Once more" for a steps task: the bookmarked steps again, each with only its bookmarked items to do */
 const REV_TYPES = new Set(["dlg", "rewrite", "fix", "sayit", "share", "listen", "lookback", "sort"]);
 function onceMoreTask(t){
-  const steps = (t.steps || []).map((st, s) => ({st, s, revs: REV_TYPES.has(st.type) ? getRev(t.id, s) : new Set()})).filter(x => x.revs.size)
-    .map(x => ({...x.st, _orig: x.s, _rows: x.revs}));
+  const steps = (t.steps || []).map((st, i) => { const s = st._orig != null ? st._orig : i; return {st, s, revs: REV_TYPES.has(st.type) ? getRev(t.id, s) : new Set()}; }).filter(x => x.revs.size)
+    .map(x => ({...x.st, _orig: x.s, _rows: x.revs}));   /* engine 79: the screen's own number (removed screens) */
   return steps.length ? {...t, steps, _once: true, _base: t} : null;
 }
 const revKey = (id, s) => "hw-rev-" + PAGE_KEY + "-" + id + (s == null ? "" : "-s" + s);
@@ -5010,13 +5058,18 @@ function partsHTML(parts){
 function renderListen(st, count, pct){
   const lines = st.clip;
   /* engine 63 also (C1 06.11 e4/e5): a listening task's own `instr` leads its first screen, the how-to after it */
+  /* engine 81 (her 13.11 09:40–09:49, after a student's «я не слышала контекст, сразу на строку кликала»: «первый этап запускает контекст,
+     а второй — уже ту строку»): on every screen of a clip with more than one line the first listen is the whole clip from its first line,
+     whatever they tap (a gap, a line, the top line); the line that sounds lights up as it comes and a tap doesn't cut it; then any line plays
+     on its own, as before. Kept on the device per screen (with the plays); her view the same. Mode «context» in the journal. */
+  const CTXF = !(current.listenOnce && !current._once && !current._review) && lines.length > 1;
   const instr = current.listenOnce && !current._once && !current._review
     ? (st.first ? (current.instr ? current.instr + " " : "") + "Click a line and listen once. Write what you caught — even one word. Then listen as many times as you like, and check."
        : "Click a line and listen once. Write what you caught, then listen again as often as you like, and check.")
     : st.first && current.instr
-    ? current.instr + " Tap a line to hear it (the top one plays the whole clip), then Check next to a gap, or Check answers."
+    ? current.instr + (CTXF ? " The first listen plays the whole clip; then tap any line to hear just that line. Check next to a gap, or Check answers." : " Tap a line to hear it (the top one plays the whole clip), then Check next to a gap, or Check answers.")
     : st.first
-    ? "Tap the top line to hear the whole clip, or any line to hear just that line. Catch the missing words in the framed lines: type them if you like, then tap Check next to a gap, or Check answers for all of them."
+    ? (CTXF ? "The first listen plays the whole clip. Then tap any line to hear just that line, or the top one for the whole clip again." : "Tap the top line to hear the whole clip, or any line to hear just that line.") + " Catch the missing words in the framed lines: type them if you like, then tap Check next to a gap, or Check answers for all of them."
     : "Listen and catch the missing words, then tap Check next to a gap, or Check answers.";
   let gk = 0;
   const keyOf = k => current.id+"-"+curS()+(current._once?"-again":"")+"-g"+k;
@@ -5110,7 +5163,8 @@ function renderListen(st, count, pct){
      device, so a reload in the middle of a clip doesn't reset them */
   const HK = "hw-heard-" + PAGE_KEY + "-" + current.id + "-s" + curS() + (current._once ? "-again" : ""), H0 = lsJSON(HK, {});
   const heard = rows.map((_, i) => (H0.h || [])[i] || 0); let heardSlow = !!H0.slow;
-  const saveHeard = () => { try{ ls.set(HK, JSON.stringify({h: heard, slow: heardSlow})); }catch(e){} };
+  let ctxDone = !!(H0.c || heard[0] || checked), ctxBusy = false;   /* engine 81: the whole clip heard once on this screen (or the screen was checked before) */
+  const saveHeard = () => { try{ ls.set(HK, JSON.stringify({h: heard, slow: heardSlow, c: ctxDone ? 1 : 0})); }catch(e){} };
   /* engine 72 (her 12.11 17:44: «пока не появилась вейвформа для ютуба»): under the row that played, its time strip, as in the film task —
      drag = a piece, it plays when let go (at least 0.3 s); a tap = from there to the row's end; ▶ Play the piece / Space = the piece again;
      the playhead runs along. A piece counts as a listen of its row. */
@@ -5157,6 +5211,7 @@ function renderListen(st, count, pct){
     ytTimer = setInterval(()=>{
       let tnow = 0; try{ tnow = ytPlayer.getCurrentTime(); }catch(e){}
       stripHead(tnow);
+      if(o.whole){ let r = 0; lines.forEach((L, k) => { if(tnow >= L[1] - .1) r = k; }); rows.forEach((m, k) => m.classList.toggle("playing", k === r)); }   /* engine 81 */
       if(tnow >= to){ ytPlayer.pauseVideo(); clearInterval(ytTimer); rows.forEach(m=>m.classList.remove("playing")); stripHead(null); if(o.end) o.end(); }
     }, 100);
     return true;
@@ -5195,6 +5250,18 @@ function renderListen(st, count, pct){
     ST = null; if(i > 0 || rows[i].classList.contains("has-gap")) stripOpen(i);
   };
   app.querySelectorAll("[data-ask]").forEach(x => wireAsk(+x.dataset.ask));
+  /* a line's play: the top line plays the whole clip (as in TubeQuizard), any other its own time; then its strip (engine 72; under the top
+     line only when it has a gap) — a tap on the line, and since engine 80 a tap on its empty gap */
+  function rowPlay(i){
+    if(CTXF && !ctxDone){   /* engine 81: the first listen = the whole clip; a tap while it plays doesn't cut it (a stuck one may start again) */
+      if(ctxBusy){ let s0 = -1; try{ s0 = ytPlayer.getPlayerState(); }catch(e){} if(s0 === 1 || s0 === 3) return; }
+      ctxBusy = !!play(Math.max(0, lines[0][1] - LEAD), clipEnd(lines, lines.length-1) + LEAD, 0, {whole: true, end: () => { ctxBusy = false; ctxDone = true; saveHeard();
+        if(rows[i].isConnected && (i > 0 || rows[i].classList.contains("has-gap"))) stripOpen(i); }});
+      return; }
+    if(i===0 && !pending()) play(Math.max(0, lines[0][1] - LEAD), clipEnd(lines, lines.length-1) + LEAD, 0, {whole: true});
+    else { const [a, b] = rng(i); play(a, b, i); }
+    if(i > 0 || rows[i].classList.contains("has-gap")) stripOpen(i);
+  }
   rows.forEach((row,i)=>row.addEventListener("click",ev=>{
     if(ev.target.closest(".rev, .mk, .gap-ck")) return;
     if(ev.target.closest("input") && !(ONCE && phase(i) === 0)) return;
@@ -5213,9 +5280,7 @@ function renderListen(st, count, pct){
         if(play(a, b, i, {once: true, end: () => { busy1 = null; O1[i] = {h: 1, pre}; saveO1(); toAsk(i); }})) busy1 = i;
         return; }
     }
-    if(i===0 && !pending()) play(Math.max(0, lines[0][1] - LEAD), clipEnd(lines, lines.length-1) + LEAD, 0);   /* top line: the whole clip, as in TubeQuizard */
-    else { const [a, b] = rng(i); play(a, b, i); }
-    if(i > 0 || row.classList.contains("has-gap")) stripOpen(i);   /* engine 72: the strip under the line (under the top line only when it has a gap: a tap there plays the whole clip) */
+    rowPlay(i);
   }));
   app.querySelectorAll("#spd [data-rate]").forEach(b => b.addEventListener("click", () => {
     const r = Number(b.dataset.rate); ls.set("hw-rate", String(r)); ls.set("hw-slow", "");
@@ -5231,7 +5296,7 @@ function renderListen(st, count, pct){
       const k = +inp.dataset.k, g = gapsAll[k], ans = g.ans, val = inp.value.trim();
       const gw = gapWords(val, ans, g.accs.slice(1), g.pre, g.post);
       firstTry(current, "s" + curS() + ".g" + k, {type: "listen", prompt: g.line, answer: ans, first: val, ok: !!val && (sameAnswer(val, g.accs, g.post) || markAnswer(val, g.accs).ok),
-        words: gw.got + "/" + gw.n, lis: (heard[g.row] || 0) + (g.row ? heard[0] || 0 : 0), slow: heardSlow, mode: ONCE ? "once" : "free",
+        words: gw.got + "/" + gw.n, lis: (heard[g.row] || 0) + (g.row ? heard[0] || 0 : 0), slow: heardSlow, mode: ONCE ? "once" : CTXF ? "context" : "free",
         ctx: rows.reduce((a, _, j) => a + (j && j !== g.row && !rowGaps[j].length ? heard[j] || 0 : 0), 0)});   /* engine 67, 68: after how many listens; 76, 78: the mode, the context lines' plays */
       const ck = inp.nextElementSibling; if(ck && ck.classList.contains("gap-ck")) ck.remove();
       const res = document.createElement("span");
@@ -5257,7 +5322,10 @@ function renderListen(st, count, pct){
   app.querySelectorAll(".gap-in").forEach(inp=>{
     const ck = inp.nextElementSibling && inp.nextElementSibling.classList.contains("gap-ck") ? inp.nextElementSibling : null;
     const ri = rowOfK(+inp.dataset.k);
-    inp.addEventListener("click", ev=>{ if(!(ONCE && phase(ri) === 0)) ev.stopPropagation(); });   /* engine 76: a gap still waiting for its line's one listen starts it */
+    inp.addEventListener("click", ev=>{ if(ONCE && phase(ri) === 0) return; ev.stopPropagation();   /* engine 76: a gap still waiting for its line's one listen starts it */
+      /* engine 80 (a student 13.11 09:19: «как будто лишний тап — сперва жмёшь на пуск, потом на ячейку»; her yes 09:19): a tap on an EMPTY gap
+         also plays its line, one tap instead of two; with something typed it doesn't, so fixing a typo doesn't start the sound */
+      if(!ONCE && !inp.value.trim() && ri >= 0 && !rows[ri].classList.contains("playing") && !(current._review && st._rows && !st._rows.has(ri))) rowPlay(ri); });
     inp.addEventListener("input", ()=>{ typed[keyOf(+inp.dataset.k)] = inp.value; saveTyped(); if(ck) ck.hidden = !inp.value.trim() || phase(ri) < 2; });
     inp.addEventListener("keydown", ev=>{ if(ev.key==="Enter"){ ev.preventDefault();
       if(ONCE && phase(ri) < 2){ if(phase(ri) === 0){ inp.blur(); return; } if(phase(ri) === 1){ const ks = rowGaps[ri], nx = ks[ks.indexOf(+inp.dataset.k) + 1], nxi = nx != null && app.querySelector(`.gap-in[data-k="${nx}"]`);
@@ -5318,6 +5386,10 @@ function filmSave(t, S){ ls.set(filmKey(t), JSON.stringify(S)); }
 const filmT = s => { const m = String(s || "").trim().match(/^(?:(\d+):)?(\d+):(\d+(?:\.\d+)?)$/); return m ? (+(m[1] || 0)) * 3600 + (+m[2]) * 60 + (+m[3]) : null; };
 const filmClip = l => { if(l && l.video){ const s = Number(l.start), e = Number(l.end); return isFinite(s) && isFinite(e) && e > s ? {s, e} : null; }
   const [a, b] = String(l.clip || "").split(/\s*[-–]\s*/); const s = filmT(a), e = filmT(b); return s != null && e != null && e > s ? {s, e} : null; };
+/* engine 81 (her 13.11 09:49–09:50: «в склеенных кусках повтор не играем сначала»; «этап по следующему куску играет от, где они
+   закончили, до конца строки»): a line with `ctxFrom` (a time before its `clip`) plays from there the first time — the context — and from
+   then on only its own `clip`; the waveform / strip is the line's own */
+const filmCF = l => { if(!l || l.ctxFrom == null) return null; const v = typeof l.ctxFrom === "number" ? l.ctxFrom : filmT(l.ctxFrom), c = filmClip(l); return v != null && c && v < c.s ? v : null; };
 /* engine 69 (AL chat's request 11.11 21:40, additions 22:10 / 22:55; her «да, давай попробуем сделать сейчас», 12.11 09:37): the same
    listening task with lines from YouTube (`video`, `start`, `end` — the subtitle line's bounds, as in TubeQuizard) — one player for the
    task, a strip under the line instead of the waveform (YouTube doesn't give the page its sound), works on a phone too */
@@ -5396,7 +5468,8 @@ function filmPaintBox(){ const box = app && app.querySelector(".film-box"); if(!
   if(!FILM.url && window.showOpenFilePicker) filmKept().then(h => { const b = box.querySelector("[data-filmreopen]"); if(h && b){ b.hidden = false; b.textContent = `▶ Open “${h.name}” again`; } }); }
 /* the picture waits on the line's own moment */
 function filmCue(){ const st = current && current.film && current.steps && current.steps[stepIdx]; if(!st || st.type !== "film" || !FILM.url || FILM.playing) return;
-  const c = filmClip(current.film.lines[st.li]); if(c) try{ FILM.v.currentTime = Math.max(0, c.s - .3); }catch(e){} }
+  const L = current.film.lines[st.li], c = filmClip(L), cf = filmCF(L), R = (filmState(current).lines || {})[L.id] || {};
+  if(c) try{ FILM.v.currentTime = Math.max(0, (cf != null && !R.ctx ? cf : c.s) - .3); }catch(e){} }
 function filmStop(){ cancelAnimationFrame(FILM.raf); clearInterval(FILM.ytT); if(FILM.v) try{ FILM.v.pause(); }catch(e){}
   if(FILM.playing && FILM.playing.yt) try{ ytPlayer && ytPlayer.pauseVideo(); }catch(e){} const done = FILM.playing; FILM.playing = null; app && app.querySelectorAll(".ln.playing").forEach(x => x.classList.remove("playing")); return done; }
 /* a clip with a little air around it (subtitles start late and end early); ends → onEnd */
@@ -5616,11 +5689,17 @@ function renderFilm(st, count, pct){
   const nudge = () => { const h = document.getElementById("fh"); [h, inp].forEach(x => { if(!x) return; x.classList.remove("nudge"); void x.offsetWidth; x.classList.add("nudge"); }); if(inp) inp.focus(); };
   const after = () => { const wf = filmWords(R.final, l); ftAfter(t, l.id, {plays: R.plays || 0, pieces: R.pieces || 0, slow: !!R.slow, checks: R.checks || 0, shown: !!R.shown,
     final: R.final || "", wfinal: wf.got + "/" + wf.n, secs: R.t2 && R.t0 ? Math.round((R.t2 - R.t0) / 1000) : null}); };   /* engine 68: the same row in her journal */
-  const playMore = () => { const r = rateNow(); if(r < 1 && !R.done) R.slow = true; if(R.done) R.after = (R.after || 0) + 1; else { R.plays = (R.plays || 0) + 1; R.t0 = R.t0 || Date.now(); } save(); filmPlay(l, r); };
+  const CF = filmCF(l), ctxNow = () => CF != null && !R.ctx && !t._review;   /* engine 81: the context the first time, then the line */
+  const ctxPlay = (rate, onEnd) => { const c = filmClip(l), lead = yt ? YT_LEAD : .3, tail = yt ? YT_LEAD : .45;
+    const ok = filmPlay(l, rate, () => { R.ctx = true; save(); if(onEnd) onEnd(); }, null, {s: Math.max(0, CF - lead), e: c.e + tail});
+    if(ok && FILM.playing){ FILM.playing.ctx = true; if(row) row.classList.add("playing"); } return ok; };
+  const playMore = () => { if(FILM.playing && FILM.playing.ctx) return;   /* a tap doesn't cut the context */
+    const r = rateNow(); if(r < 1 && !R.done) R.slow = true; if(R.done) R.after = (R.after || 0) + 1; else { R.plays = (R.plays || 0) + 1; R.t0 = R.t0 || Date.now(); } save();
+    if(ctxNow()) ctxPlay(r); else filmPlay(l, r); };
   /* engine 78: in free mode the first try is what stands at Check (or «show me»), with the plays before it */
   const freeFirst = txt => { if(!FREE) return; const w = filmWords(txt, l); R.first = txt; R.t1 = Date.now(); R.w1 = w.got;
     firstTry(t, l.id, {type: "film", prompt: P.pre + "___" + P.post, answer: P.gap, first: txt, ok: w.n > 0 && w.got === w.n, words: w.got + "/" + w.n, lis: R.plays || 0, slow: !!R.slow,
-      v: base.b ? l._v : null, ab: base.b && t.film.ab ? t.film.ab.name || "ab" : null, mode: "free"}); };
+      v: base.b ? l._v : null, ab: base.b && t.film.ab ? t.film.ab.name || "ab" : null, mode: CF != null ? "context" : "free"}); };
   const firstDone = txt => { R.first = txt; R.t1 = Date.now(); const w = filmWords(txt, l); R.w1 = w.got; R.typing = txt; save();
     firstTry(t, l.id, {type: "film", prompt: P.pre + "___" + P.post, answer: P.gap, first: txt, ok: w.n > 0 && w.got === w.n, words: w.got + "/" + w.n, lis: R.plays || 1,
       v: base.b ? l._v : null, ab: base.b && t.film.ab ? t.film.ab.name || "ab" : null, mode: R.pre ? "guess" : "once"});   /* engine 67, 68, 69; 77: the mode */
@@ -5631,10 +5710,12 @@ function renderFilm(st, count, pct){
     if(!yt && !FILM.url){ const o = app.querySelector("[data-filmopen]"); if(o){ o.classList.remove("nudge"); void o.offsetWidth; o.classList.add("nudge"); } return; }
     if(phase === 0){ if(FILM.playing) return;
       const pre = inp && inp.value.trim() ? 1 : 0;   /* engine 77: typed before the one listen = a guess */
-      if(filmPlay(l, 1, () => { R.heard = true; save(); redo(); setTimeout(() => { const i = app.querySelector(".film-in"); if(i) i.focus(); }, 30); })){ R.t0 = R.t0 || Date.now(); R.plays = 1; R.pre = pre; if(base.b && !isTeacher()) R.v = l._v; save(); }
+      const end0 = () => { R.heard = true; save(); redo(); setTimeout(() => { const i = app.querySelector(".film-in"); if(i) i.focus(); }, 30); };
+      if(ctxNow() ? ctxPlay(1, end0) : filmPlay(l, 1, end0)){ R.t0 = R.t0 || Date.now(); R.plays = 1; R.pre = pre; if(base.b && !isTeacher()) R.v = l._v; save(); }
       return; }
     if(phase === 1){ nudge(); return; }   /* the line waits for what they caught: «Nothing yet ↻» plays it again at once */
     playMore(); });
+  if(inp && phase === 2) inp.addEventListener("click", () => { if(!inp.value.trim() && !FILM.playing && (yt || FILM.url)) playMore(); });   /* engine 80: a tap on the empty field plays the line */
   if(inp){ inp.addEventListener("input", () => { R.typing = inp.value; inp.style.width = `min(100%, ${Math.max(9, P.gap.length + 4, inp.value.length + 3)}ch)`; save(); });
     inp.addEventListener("keydown", e => { if(e.key !== "Enter") return; e.preventDefault();
       if(phase === 1) firstDone(inp.value.trim()); else if(phase === 2) document.getElementById("f-check").click(); }); }
@@ -5764,6 +5845,22 @@ function ftForAnalysis(res){
   out.push("", "The order each student did the tasks in (by the time of their first answers):");
   Object.keys(by).sort((a, b) => +a.slice(1) - +b.slice(1)).forEach(k => { const x = by[k], ts = Object.keys(x.at).sort((a, b) => x.at[a] - x.at[b]);
     out.push(`${k}${x.half ? " · half " + x.half : ""}: ${ts.map(id => title(id) + " (" + tm(x.at[id]) + ")").join(" → ")}`); });
+  /* engine 79 (AL chat's handoff 12.11 23:55, point 9): how each student rated each task (the Easy / OK / Hard banner) and the lines they
+     marked «?» (Hard to hear) with their note — from her view's data; a student with no first tries gets the next S number */
+  if(teacherData){
+    const sts = teacherData.students || [], more = sts.map(x => x.name).filter(n => n && !names.includes(n)).sort((a, b) => a.localeCompare(b));
+    const SS = i => { const n = (sts[i] || {}).name || ""; return names.includes(n) ? S(n) : "S" + (names.length + more.indexOf(n) + 1); };
+    const rr = [];
+    Object.entries(teacherData.reactions || {}).forEach(([task, r]) => ["easy", "ok", "hard"].forEach(lv => (r[lv] || []).forEach(i => rr.push([SS(i), title(task), lv === "ok" ? "OK" : lv[0].toUpperCase() + lv.slice(1)]))));
+    out.push("", "How they rated each task (Easy / OK / Hard):", ["student", "task", "rating"].join("\t"));
+    rr.sort((a, b) => +a[0].slice(1) - +b[0].slice(1) || a[1].localeCompare(b[1])).forEach(x => out.push(x.map(one).join("\t")));
+    if(!rr.length) out.push("(none yet)");
+    const mk = (teacherData.work || []).filter(w => w.type === "marked").map(w => { const ls = String(w.text || "").split("\n"), nt = ls.find(x => /^— /.test(x));
+      return [SS(w.s), title(w.task), ls[0] || "", nt ? nt.slice(2) : ""]; });
+    out.push("", "Lines they marked «?» (Hard to hear), with their note:", ["student", "task", "line", "note"].join("\t"));
+    mk.sort((a, b) => +a[0].slice(1) - +b[0].slice(1) || a[1].localeCompare(b[1])).forEach(x => out.push(x.map(one).join("\t")));
+    if(!mk.length) out.push("(none yet)");
+  }
   return out.join("\n");
 }
 async function renderFirstTries(fresh){

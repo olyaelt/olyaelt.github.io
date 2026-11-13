@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>__TITLE__</title>
+<link rel="stylesheet" href="../../fonts/homework-sans.css">
+<style>
+__BASE_CSS__
+/* ---------- tools 38 (the AL chat's handoff 12.11 23:55; her 23:37–23:54): ⭐ her ratings of a homework's lines — each line as a student
+   meets it first (an empty gap, what she hears), then the answer and how hard it is ---------- */
+.rt{max-width:880px;margin:0 auto;padding:12px 16px 40px}
+.rt-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.rt-top h1{margin:0;font-size:1.3rem}
+.rt-sp{flex:1}
+.rt-stat{color:var(--muted);font-weight:700;font-size:.92rem}
+.rt-stat.ok{color:var(--ok-ink)}
+.rt-stat.warn{color:#A35A00}
+.rt-prog{height:8px;border-radius:6px;background:var(--line);overflow:hidden;margin:2px 0 10px}
+.rt-prog i{display:block;height:100%;background:var(--ok)}
+.rt-dots{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 10px}
+.rt-dots button{font:inherit;font-size:.78rem;font-weight:800;width:30px;height:26px;border-radius:7px;border:2px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer;padding:0}
+.rt-dots button.done{background:var(--ok-chip);border-color:var(--ok);color:var(--ok-ink)}
+.rt-dots button.cur{border-color:var(--instr);color:var(--ink);box-shadow:0 0 0 2px var(--instr) inset}
+.rt-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 16px;display:grid;gap:12px}
+.rt-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-weight:800}
+.rt-head .n{font-size:1.05rem}
+.rt-tag{font-size:.8rem;font-weight:800;border-radius:999px;padding:1px 9px;background:var(--ok-chip);color:var(--ok-ink)}
+.rt-tag.film{background:#FFE7C2;color:#7A4A00}
+.rt-tag.gr{background:var(--fix-bg);color:#0B3D91}
+.rt-vid{position:relative;width:min(100%, calc(28vh * 16 / 9));aspect-ratio:16/9;background:#000;border-radius:10px;overflow:hidden;margin:0 auto}
+.rt-vid iframe,.rt-vid video{position:absolute;inset:0;width:100%;height:100%;border:0}
+.rt-vid .msg{position:absolute;inset:0;display:grid;place-items:center;color:#fff;text-align:center;padding:12px;font-weight:700}
+.rt-play{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.rt-lines{display:grid;gap:4px;font-size:1.15rem;line-height:1.45}
+.rt-row{color:var(--muted)}
+.rt-row.me{color:var(--ink);font-weight:700;font-size:1.25rem}
+.rt-in{font:inherit;font-weight:700;border:0;border-bottom:3px solid var(--ink);background:var(--hl, #FFF06A);color:#111;padding:0 6px;min-width:7ch;border-radius:4px 4px 0 0}
+.rt-ans{display:flex;gap:12px;flex-wrap:wrap;align-items:baseline;font-size:1.1rem}
+.rt-ans .you{font-weight:800}
+.rt-ans .sub{font-weight:800;color:var(--ok-ink)}
+.rt-ans .same{color:var(--ok-ink);font-weight:800}
+.rt-ans .diff{color:#A35A00;font-weight:800}
+.rt-q{display:grid;gap:6px}
+.rt-q h3{margin:0;font-size:1rem}
+.rt-chips{display:flex;flex-wrap:wrap;gap:6px}
+.rt-chip{font:inherit;font-weight:700;font-size:.95rem;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:5px 10px;cursor:pointer;text-align:left}
+.rt-chip b{margin-right:4px}
+.rt-chip[aria-pressed="true"]{background:var(--instr);border-color:var(--instr);color:#fff}
+.rt-chip.lv5[aria-pressed="true"]{background:#B00020;border-color:#B00020}
+.rt-note{font:inherit;width:100%;box-sizing:border-box;border:2px solid var(--line);border-radius:10px;padding:6px 8px;background:var(--card);color:var(--ink);min-height:2.4em}
+.rt-nav{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:12px}
+.rt-gone{margin-top:22px}
+.rt-gone summary{font-weight:800;cursor:pointer}
+.rt-gone .rt-card{margin-top:10px}
+.rt-lock{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+@media (max-width:600px){ .rt-lines{font-size:1.05rem} .rt-row.me{font-size:1.12rem} .rt-vid{width:100%} .rt-dots{gap:3px} .rt-dots button{width:25px;height:21px;font-size:.68rem;border-width:1px} }
+@media (min-width:1000px){ .rt{max-width:1180px} #card{grid-template-columns:minmax(0,44%) minmax(0,1fr);align-items:start} #head{grid-column:1/-1} #vid{width:100%;margin:0} }   /* the clip on the left, the line and the rating on the right: one screen */
+</style>
+</head>
+<body>
+<div class="rt" id="app"></div>
+<script>
+const D = __DATA__;
+const TOOLS_VERSION = "__TOOLS_VERSION__";
+const PAGE_ID = "__PAGE_ID__";
+const TABLE_PAGE = __LIVE__;
+const LIVE_ON = false, LIVE_URL = "__SYNC_URL__";
+__BASE_JS__
+/* ================= ⭐ rating a homework's lines (tools 38; the AL chat's handoff 12.11 23:55, her 23:37–23:54: «сравнить мой разбор с
+   реальной трудностью для студентов»). Her page only (her code). Each line once, in one shuffled order (fixed when the page was built);
+   first as a student meets it — the clip exactly as on the homework page, the gap empty, what she hears; then «Show the answer» (her
+   23:51: with the answer open she'd have missed the line where the subtitles say «it's» and Billie Eilish says «that's»); then how hard
+   it is for the students (1–5), why, a note. No student results on this page, the groups hidden until she has rated the line.
+   Every tap is kept on this device and in her table (sheet «My ratings», the line's Attempts items in the row, so the data joins).
+   The lines she took out of the homework: at the end, folded, with «why I took it out». ================= */
+const LEVELS = [[1, "Very easy", "a spare line"], [2, "B2 will manage", ""], [3, "B2 and C1", ""], [4, "C1 only", ""], [5, "Too hard", "take it out"]];
+const WHYS = ["sound (reduction, speed)", "words", "context / humour", "out of sync or poor sound", "the subtitles say something else"];
+const GONE_WHYS = ["humour or context", "words", "sound", "the subtitles don't match", "other"];
+const isHer = () => { try{ return localStorage.getItem("hw-role") === "teacher" && !!localStorage.getItem("hw-code"); }catch(e){ return false; } };
+const KEY = "rate-" + D.set, R = Object.assign({cards: {}, at: 0, showGroups: false}, store.get(KEY) || {});
+const S = {i: Math.max(0, D.cards.findIndex(c => !(R.cards[c.id] || {}).level)), ytReady: false, yt: null, ytVid: "", timer: 0, film: {v: null, url: "", name: ""}, dirty: new Set(), saveT: 0, status: "", gone: false};
+if(S.i < 0) S.i = 0;
+const save = () => { R.at = Date.now(); store.set(KEY, R); };
+const all = () => D.cards.concat(D.removed || []);
+const byId = id => all().find(c => c.id === id);
+const rated = c => !!(R.cards[c.id] || {}).level;
+const doneN = () => D.cards.filter(rated).length;
+const tableOn = () => !!LIVE_URL && isHer();
+/* ---------- her table ---------- */
+async function loadTable(){
+  if(!tableOn()) return;
+  S.status = "loading…"; paintStat();
+  const res = await livePost({action: "rateGet", code: localStorage.getItem("hw-code"), set: D.set});
+  if(res && res.ok){ Object.entries(res.cards || {}).forEach(([id, x]) => { const mine = R.cards[id]; if(!mine || (x.at || 0) > (mine.at || 0)) R.cards[id] = x; });
+    save(); S.status = "saved ✓"; paint(); }
+  else { S.status = res && res.error === "not-teacher" ? "not your code" : "offline — kept on this device"; paintStat(); }
+}
+function queue(id){ S.dirty.add(id); clearTimeout(S.saveT); S.status = "…"; paintStat(); S.saveT = setTimeout(flush, 700); }
+async function flush(){
+  if(!S.dirty.size) return; if(!tableOn()){ S.status = "kept on this device"; paintStat(); S.dirty.clear(); return; }
+  const ids = [...S.dirty]; S.dirty.clear();
+  const cards = ids.map(id => { const c = byId(id), x = R.cards[id] || {}; return Object.assign({}, x, {id, groups: c.groups.join(" · "), tasks: c.tasks.join(" · "),
+    items: Object.entries(c.items || {}).map(([g, a]) => g + ": " + a.join(" ")).join("; "), line: c.rows.find(r => r.me).t, answer: c.answer}); });
+  const res = await livePost({action: "ratePut", code: localStorage.getItem("hw-code"), set: D.set, cards});
+  if(res && res.ok){ S.status = "saved ✓"; } else { ids.forEach(id => S.dirty.add(id)); S.status = "not saved — will try again"; setTimeout(flush, 5000); }
+  paintStat();
+}
+function setCard(id, patch){ R.cards[id] = Object.assign({}, R.cards[id] || {}, patch, {at: Date.now()}); save(); queue(id); }
+/* ---------- playing: YouTube lines (the homework's own player settings) and the film from her computer.
+   Two players: the card's (stays while the screen changes) and, folded below, the one of a line she took out ---------- */
+function ytLoad(){ return new Promise(res => { if(window.YT && window.YT.Player) return res();
+  const prev = window.onYouTubeIframeAPIReady; window.onYouTubeIframeAPIReady = () => { if(prev) try{ prev(); }catch(e){} res(); };
+  if(!document.querySelector('script[src*="youtube.com/iframe_api"]')){ const s = document.createElement("script"); s.src = "https://www.youtube.com/iframe_api"; document.head.appendChild(s); } }); }
+const P2 = {main: {yt: null, ready: false, vid: "", box: null}, gone: {yt: null, ready: false, vid: "", box: null}};
+async function ytShow(which, box, c, then){
+  const P = P2[which];
+  if(P.yt && P.box === box && box.querySelector("iframe")){ if(P.vid !== c.video){ P.vid = c.video; try{ P.yt.cueVideoById({videoId: c.video, startSeconds: Math.floor(c.play[0])}); }catch(e){} } if(then) then(); return; }
+  if(P.yt){ try{ P.yt.destroy(); }catch(e){} P.yt = null; }
+  if(P.box && P.box !== box) P.box.innerHTML = "";
+  const id = "yt-" + which; box.innerHTML = `<div id="${id}"></div>`; P.box = box; P.vid = c.video; P.ready = false;
+  await ytLoad(); if(!document.getElementById(id)) return;
+  P.yt = new YT.Player(id, {videoId: c.video, width: "100%", height: "100%", playerVars: {playsinline: 1, rel: 0, modestbranding: 1, cc_load_policy: 0, iv_load_policy: 3, start: Math.floor(c.play[0])},
+    events: {onReady: () => { P.ready = true; if(then) then(); }, onApiChange: () => { try{ P.yt.unloadModule("captions"); P.yt.unloadModule("cc"); }catch(e){} }}});
+}
+function stop(){ clearInterval(S.timer); S.timer = 0; ["main", "gone"].forEach(w => { try{ if(P2[w].yt) P2[w].yt.pauseVideo(); }catch(e){} }); if(S.film.v) S.film.v.pause();
+  document.querySelectorAll("[data-play].on").forEach(b => b.classList.remove("on")); }
+function play(c, range, btn, which){
+  stop(); const [a, b] = range;
+  if(c.kind === "yt"){ const P = P2[which]; if(!P.yt || !P.ready || P.vid !== c.video) return;
+    if(btn) btn.classList.add("on");
+    try{ P.yt.setPlaybackRate(1); P.yt.seekTo(a, true); P.yt.playVideo(); }catch(e){}
+    S.timer = setInterval(() => { let t = 0; try{ t = P.yt.getCurrentTime(); }catch(e){} if(t >= b) stop(); }, 100); }
+  else { const v = S.film.v; if(!v || !S.film.url) return; if(btn) btn.classList.add("on"); v.currentTime = a; const p = v.play(); if(p && p.catch) p.catch(() => {});
+    S.timer = setInterval(() => { if(v.currentTime >= b || v.ended) stop(); }, 50); }
+}
+function idb(){ return new Promise((res, rej) => { try{ const r = indexedDB.open("hw-prep", 1); r.onupgradeneeded = () => r.result.createObjectStore("h"); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }catch(e){ rej(e); } }); }
+async function idbPut(k, v){ try{ const db = await idb(); db.transaction("h", "readwrite").objectStore("h").put(v, k); }catch(e){} }
+async function idbGet(k){ try{ const db = await idb(); return await new Promise(res => { const r = db.transaction("h").objectStore("h").get(k); r.onsuccess = () => res(r.result || null); r.onerror = () => res(null); }); }catch(e){ return null; } }
+function useFilm(f){ if(!S.film.v){ const v = document.createElement("video"); v.playsInline = true; v.preload = "auto"; S.film.v = v; }
+  if(S.film.url) URL.revokeObjectURL(S.film.url); S.film.url = URL.createObjectURL(f); S.film.name = f.name; S.film.v.src = S.film.url; S.film.v.load(); showCard(); }
+async function pickFilm(){
+  if(window.showOpenFilePicker){ try{ const [h] = await showOpenFilePicker({id: "prep-film", types: [{description: "The film", accept: {"video/*": [".mp4", ".m4v", ".mkv", ".webm", ".mov"]}}]}); idbPut("film", h); useFilm(await h.getFile()); }catch(e){} return; }
+  const inp = document.createElement("input"); inp.type = "file"; inp.accept = "video/*,.mkv"; inp.style.display = "none"; document.body.appendChild(inp);
+  inp.addEventListener("change", () => { const f = inp.files && inp.files[0]; if(f) useFilm(f); inp.remove(); }); inp.click();
+}
+async function reopenFilm(){ const h = await idbGet("film"); if(!h) return pickFilm();
+  try{ if((await h.queryPermission({mode: "read"})) !== "granted" && (await h.requestPermission({mode: "read"})) !== "granted") return pickFilm(); useFilm(await h.getFile()); }catch(e){ pickFilm(); } }
+/* ---------- the screens: the frame is built once (the player keeps playing), the card's parts are painted into it ---------- */
+const app = document.getElementById("app");
+function paintStat(){ const x = document.getElementById("st"); if(x){ x.textContent = S.status; x.className = "rt-stat " + (/✓/.test(S.status) ? "ok" : /not|offline/.test(S.status) ? "warn" : ""); } }
+const guessOf = (c, gp) => { const v = c.parts.map((p, k) => typeof p === "string" ? null : String((gp || {})[k] || "").trim()).filter(x => x != null); return v.some(Boolean) ? v.join(" … ") : ""; };
+const norm = t => String(t || "").trim().toLowerCase().replace(/[’‘]/g, "'").replace(/\s+/g, " ");
+const linesHTML = (c, x, open) => c.rows.map(r => r.me
+  ? `<div class="rt-row me">${c.parts.map((p, k) => typeof p === "string" ? esc(p) : open ? `<b class="sub">${esc(p.gap)}</b>` : `<input class="rt-in" data-guess="${k}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="What you hear" value="${esc(((x.guessParts || {})[k]) || "")}" style="width:${Math.max(7, String(p.gap).length + 3)}ch">`).join("")}</div>`
+  : `<div class="rt-row">${esc(r.t)}</div>`).join("");
+const headHTML = (c, x, gone) => { const film = c.kind === "film", on = R.showGroups || gone || !!x.level;
+  return `${gone ? "" : `<span class="n">${D.cards.indexOf(c) + 1} of ${D.cards.length}</span>`}<span class="rt-tag ${film ? "film" : ""}">${film ? "🎬 " + esc(D.film || "film") : "YouTube"}</span>
+    ${on ? `<span class="rt-tag gr">${esc(c.groups.join(" · "))}</span> <span class="rt-stat">${esc(c.tasks.join(" · "))}</span>` : `<span class="rt-stat">groups hidden until you rate it</span>`}`; };
+const bodyHTML = (c, x, gone) => { const shown = !!x.shown || gone, g = x.guess || "", same = g && norm(g) === norm(c.answer);
+  return `<div class="rt-play"><button class="btn primary" data-play="line">▶ The line</button>${c.ctx ? `<button class="btn" data-play="ctx">▶ The whole clip</button>` : ""}</div>
+    <div class="rt-lines">${linesHTML(c, x, shown)}</div>
+    ${gone ? "" : shown ? `<div class="rt-ans"><span>You heard: <span class="you">${g ? esc(g) : "—"}</span></span><span>Subtitles: <span class="sub">${esc(c.answer)}</span></span>${g ? `<span class="${same ? "same" : "diff"}">${same ? "✓ the same" : "≠ different"}</span>` : ""}</div>`
+      : `<div><button class="btn primary" data-show>Show the answer</button></div>`}
+    ${gone ? goneQHTML(c, x) : shown ? rateQHTML(c, x) : ""}`; };
+const rateQHTML = (c, x) => `<div class="rt-q"><h3>How hard is it to hear, for the students?</h3>
+    <div class="rt-chips">${LEVELS.map(([n, t, sub]) => `<button class="rt-chip lv${n}" data-level="${n}" aria-pressed="${x.level === n}"><b>${n}</b>${esc(t)}${sub ? ` <span class="rt-stat">(${esc(sub)})</span>` : ""}</button>`).join("")}</div></div>
+  <div class="rt-q"><h3>Why hard <span class="rt-stat">(if it is · any number)</span></h3>
+    <div class="rt-chips">${WHYS.map(w => `<button class="rt-chip" data-why="${esc(w)}" aria-pressed="${(x.why || []).includes(w)}">${esc(w)}</button>`).join("")}</div></div>
+  <div class="rt-q"><textarea class="rt-note" data-note placeholder="A note (if you like)">${esc(x.note || "")}</textarea></div>`;
+const goneQHTML = (c, x) => `<div class="rt-q"><h3>Why I took it out</h3>
+    <div class="rt-chips">${GONE_WHYS.map(w => `<button class="rt-chip" data-gwhy="${esc(w)}" aria-pressed="${(x.removedWhy || []).includes(w)}">${esc(w)}</button>`).join("")}</div>
+    <textarea class="rt-note" data-gnote placeholder="A note (if you like)">${esc(x.removedNote || "")}</textarea></div>`;
+function build(){
+  if(!isHer()){ app.innerHTML = `<div class="rt-lock"><h1>⭐ ${esc(D.title)}</h1><p>This page is for Olya. Open it where you have entered your code on a homework page.</p></div>`; return false; }
+  app.innerHTML = `<div class="rt-top"><h1>⭐ ${esc(D.title)}</h1><span class="rt-stat">${esc(D.part || "")}</span><span class="rt-sp"></span>
+      <span class="rt-stat" id="cnt"></span><span class="rt-stat" id="st"></span>
+      <label class="rt-stat"><input type="checkbox" id="sg" ${R.showGroups ? "checked" : ""}> show groups</label>
+      <button class="btn" id="copy">📋 Copy for the analysis</button></div>
+    <div class="rt-prog"><i id="bar"></i></div>
+    <div class="rt-dots" id="dots"></div>
+    <section class="rt-card" id="card"><div class="rt-head" id="head"></div><div class="rt-vid" id="vid"></div><div id="body" class="rt-q"></div></section>
+    <div class="rt-nav"><button class="btn" id="prev">← Back</button><button class="btn primary" id="next"></button></div>
+    ${(D.removed || []).length ? `<details class="rt-gone" id="gone"><summary>🗑 Lines I took out of the homework (${D.removed.length})</summary>${D.removed.map(g => `<section class="rt-card" data-gone="${esc(g.id)}"><div class="rt-head">${headHTML(g, R.cards[g.id] || {}, true)}</div><div class="rt-vid"></div><div class="rt-q">${bodyHTML(g, R.cards[g.id] || {}, true)}</div></section>`).join("")}</details>` : ""}`;
+  document.getElementById("prev").addEventListener("click", () => go(S.i - 1));
+  document.getElementById("next").addEventListener("click", () => { if(S.i < D.cards.length - 1) go(S.i + 1); else { const g = document.getElementById("gone"); if(g){ g.open = true; g.scrollIntoView({behavior: "smooth"}); } } });
+  document.getElementById("sg").addEventListener("change", e => { R.showGroups = e.target.checked; save(); paint(); });
+  document.getElementById("copy").addEventListener("click", copyAll);
+  document.getElementById("dots").addEventListener("click", e => { const b = e.target.closest("[data-go]"); if(b) go(+b.dataset.go); });
+  app.querySelectorAll("[data-gone]").forEach(el => wireCard(el, byId(el.dataset.gone), true));
+  return true;
+}
+function go(i){ if(i < 0 || i >= D.cards.length || i === S.i) return; stop(); S.i = i; showCard(); }
+function counts(){ const n = doneN(); document.getElementById("cnt").innerHTML = `<b>${n} of ${D.cards.length}</b> rated`; document.getElementById("bar").style.width = Math.round(n / D.cards.length * 100) + "%";
+  document.getElementById("dots").innerHTML = D.cards.map((x, i) => `<button data-go="${i}" class="${rated(x) ? "done" : ""} ${i === S.i ? "cur" : ""}" aria-label="Line ${i + 1}">${i + 1}</button>`).join(""); }
+/* the card's own parts, without touching its player */
+function paint(){
+  const c = D.cards[S.i], x = R.cards[c.id] || {};
+  counts(); document.getElementById("head").innerHTML = headHTML(c, x, false); document.getElementById("body").innerHTML = bodyHTML(c, x, false);
+  document.getElementById("prev").disabled = !S.i; document.getElementById("next").textContent = S.i < D.cards.length - 1 ? "Next →" : "To the lines I took out ↓";
+  wireCard(document.getElementById("card"), c, false); paintStat();
+}
+function showCard(){
+  const c = D.cards[S.i], box = document.getElementById("vid"); paint();
+  if(c.kind === "yt") ytShow("main", box, c);
+  else { if(P2.main.yt){ try{ P2.main.yt.destroy(); }catch(e){} P2.main.yt = null; P2.main.box = null; }
+    box.innerHTML = S.film.url ? "" : `<div class="msg"><div>🎬 The film plays from your computer.<br><button class="btn" data-film>Open ${esc(D.film || "the film")}</button></div></div>`;
+    if(S.film.url) box.appendChild(S.film.v); else box.querySelector("[data-film]").addEventListener("click", reopenFilm); }
+  const first = document.querySelector("#body [data-guess]"); if(first && !matchMedia("(pointer: coarse)").matches) first.focus({preventScroll: true});
+}
+function wireCard(el, card, gone){
+  const which = gone ? "gone" : "main";
+  el.querySelectorAll("[data-play]").forEach(b => b.addEventListener("click", () => {
+    const range = b.dataset.play === "ctx" ? card.ctx : card.play;
+    if(card.kind === "yt" && gone){ ytShow("gone", el.querySelector(".rt-vid"), card, () => play(card, range, b, "gone")); return; }
+    if(card.kind === "film" && !S.film.url){ reopenFilm(); return; }
+    play(card, range, b, which); }));
+  el.querySelectorAll("[data-guess]").forEach(inp => {
+    inp.addEventListener("input", () => { const x = R.cards[card.id] || {}, gp = Object.assign({}, x.guessParts || {}, {[inp.dataset.guess]: inp.value}); setCard(card.id, {guessParts: gp, guess: guessOf(card, gp)}); });
+    inp.addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); const nx = [...el.querySelectorAll("[data-guess]")], i = nx.indexOf(inp); if(nx[i + 1]) nx[i + 1].focus(); else { const s = el.querySelector("[data-show]"); if(s) s.click(); } } }); });
+  const sh = el.querySelector("[data-show]"); if(sh) sh.addEventListener("click", () => { setCard(card.id, {shown: true}); paint(); });
+  el.querySelectorAll("[data-level]").forEach(b => b.addEventListener("click", () => { const x = R.cards[card.id] || {}; setCard(card.id, {level: x.level === +b.dataset.level ? null : +b.dataset.level}); paint(); }));
+  el.querySelectorAll("[data-why]").forEach(b => b.addEventListener("click", () => { const w = new Set((R.cards[card.id] || {}).why || []); w.has(b.dataset.why) ? w.delete(b.dataset.why) : w.add(b.dataset.why);
+    setCard(card.id, {why: [...w]}); b.setAttribute("aria-pressed", w.has(b.dataset.why)); }));
+  el.querySelectorAll("[data-gwhy]").forEach(b => b.addEventListener("click", () => { const w = new Set((R.cards[card.id] || {}).removedWhy || []); w.has(b.dataset.gwhy) ? w.delete(b.dataset.gwhy) : w.add(b.dataset.gwhy);
+    setCard(card.id, {removedWhy: [...w]}); b.setAttribute("aria-pressed", w.has(b.dataset.gwhy)); }));
+  const nt = el.querySelector("[data-note]"); if(nt) nt.addEventListener("input", () => setCard(card.id, {note: nt.value}));
+  const gn = el.querySelector("[data-gnote]"); if(gn) gn.addEventListener("input", () => setCard(card.id, {removedNote: gn.value}));
+}
+function copyAll(){
+  const one = v => String(v == null ? "" : v).replace(/[\t\r\n]+/g, " ").trim(), out = [`Her ratings · ${D.title} · ${D.part || ""} · ${new Date().toLocaleString()}`,
+    "Difficulty for the students: 1 very easy (a spare line) · 2 B2 will manage · 3 B2 and C1 · 4 C1 only · 5 too hard, take it out", "",
+    ["card", "groups", "tasks", "Attempts items", "line", "answer (subtitles)", "she heard (before the answer)", "the same?", "difficulty", "why hard", "note"].join("\t")];
+  D.cards.forEach(c => { const x = R.cards[c.id] || {}, g = x.guess || "";
+    out.push([c.id, c.groups.join(" · "), c.tasks.join(" · "), Object.entries(c.items).map(([k, a]) => k + ": " + a.join(" ")).join("; "), c.rows.find(r => r.me).t, c.answer, g,
+      g ? (norm(g) === norm(c.answer) ? "yes" : "no") : "", x.level || "", (x.why || []).join(", "), x.note || ""].map(one).join("\t")); });
+  if((D.removed || []).length){ out.push("", "Lines she took out of the homework:", ["card", "groups", "task", "line", "why she took it out", "note"].join("\t"));
+    D.removed.forEach(c => { const x = R.cards[c.id] || {}; out.push([c.id, c.groups.join(" · "), c.tasks.join(" · "), c.rows.find(r => r.me).t, (x.removedWhy || []).join(", "), x.removedNote || ""].map(one).join("\t")); }); }
+  const t = out.join("\n"), b = document.getElementById("copy");
+  const ok = () => { if(b){ b.textContent = "✓ Copied"; setTimeout(() => { b.textContent = "📋 Copy for the analysis"; }, 1600); } };
+  const fallback = () => { const a = document.createElement("textarea"); a.value = t; document.body.appendChild(a); a.select(); try{ document.execCommand("copy"); ok(); }catch(e){} a.remove(); };
+  window._rtCopy = t;
+  if(navigator.clipboard) navigator.clipboard.writeText(t).then(ok, fallback); else fallback();
+}
+document.addEventListener("keydown", e => { if(e.target.closest && e.target.closest("input, textarea")) return;
+  if(e.key === "ArrowRight") go(S.i + 1); else if(e.key === "ArrowLeft") go(S.i - 1); });
+window.addEventListener("pagehide", () => { flush(); });
+if(build()){ showCard(); loadTable(); }
+</script>
+</body>
+</html>

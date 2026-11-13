@@ -24,6 +24,9 @@ const PLAYER = `function(id,o){const d=document.getElementById(id),f=document.cr
   if (once) { ok(!(await p.locator('.lstrip').count()), 'a strip during the one listen');
     await p.waitForSelector('[data-l1ok]', {timeout: 20000}); ok(!(await p.locator('.lstrip').count()), 'a strip before the one listen was answered');
     await p.click('[data-l1ok]'); await p.waitForTimeout(300); }
+  // engine 81 (her 13.11): the first listen on a screen is the whole clip; the strip opens under the line when it has played
+  if (!once && await p.locator('.ln.playing').count()) { ok(!(await p.locator('.lstrip').count()), 'a strip during the first listen of the whole clip');
+    await p.waitForFunction(() => !document.querySelector('.ln.playing'), null, {timeout: 60000}).catch(() => fail.push('the whole clip never ended')); await p.waitForTimeout(200); }
   ok(await p.evaluate(i => { const s = document.querySelector('.lstrip'); return !!s && s.previousElementSibling === document.querySelector(`.ln[data-i="${i}"]`) && s.querySelectorAll('.ls-tk').length >= 4; }, gi), 'no strip under the line');
   if (shots) { fs.mkdirSync(shots, {recursive: true}); await p.screenshot({path: path.join(shots, 'strip.png')}); }
   // drag = a piece, it plays when let go; ▶ Play the piece / Space again

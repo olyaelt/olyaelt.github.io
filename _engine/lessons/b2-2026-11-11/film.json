@@ -7,7 +7,7 @@
   "lines": [
    {
     "id": "bt1",
-    "clip": "1:11.12-1:16.22",
+    "clip": "1:14.59-1:16.22",
     "text": "{{That's all there is.}}",
     "before": "Freud said, love and work. Work and love.",
     "bank": "pmwdieka6jeoq",
@@ -22,11 +22,12 @@
       "mark": "link"
      }
     ],
-    "class": true
+    "class": true,
+    "ctxFrom": "1:11.12"
    },
    {
     "id": "bc1",
-    "clip": "1:11.12-1:23.36",
+    "clip": "1:19.19-1:23.36",
     "text": "{{As you can imagine}}, that's given me some time on my hands.",
     "before": "Freud said, love and work. Work and love. That's all there is. Well, I'm retired, and my wife is dead.",
     "bank": "pmwdighh6tu3x",
@@ -45,7 +46,8 @@
       "mark": "link"
      }
     ],
-    "class": true
+    "class": true,
+    "ctxFrom": "1:16.22"
    },
    {
     "id": "b2",
@@ -85,11 +87,12 @@
    },
    {
     "id": "b6",
-    "clip": "30:44.79-30:57.53",
+    "clip": "30:55.50-30:57.53",
     "text": "Why don't you tell her {{you can't drive her}} today,",
     "before": "Look, I don't want to make you feel uncomfortable, but I just happen to have looked out the window, and it appeared you were drinking something from a paper bag. – I don't know what you're talking about, man.",
     "bank": "pmwdr5v79imyv",
-    "form": "can't"
+    "form": "can't",
+    "ctxFrom": "30:44.79"
    },
    {
     "id": "b7",
@@ -100,43 +103,48 @@
    },
    {
     "id": "b8a",
-    "clip": "32:11.64-32:29.13",
+    "clip": "32:26.89-32:29.13",
     "text": "Well, {{I can't change}} the facts, dear.",
     "before": "So, we've been studying women under 40 who sleep less than six hours a night. – And what'd you find out? – It's interesting. It seems like they're 38% more likely to experience major weight gain compared to women who slept seven hours a night. – Are you kidding me? You know I haven't slept in two years.",
     "bank": "pmwdr92fg052x",
-    "form": "can't"
+    "form": "can't",
+    "ctxFrom": "32:11.64"
    },
    {
     "id": "b8b",
-    "clip": "32:11.64-32:34.10",
+    "clip": "32:32.20-32:34.10",
     "text": "{{Can I call you}} when I get home?",
     "before": "So, we've been studying women under 40 who sleep less than six hours a night. – And what'd you find out? – It's interesting. It seems like they're 38% more likely to experience major weight gain compared to women who slept seven hours a night. – Are you kidding me? You know I haven't slept in two years. – Well, I can't change the facts, dear. – Mom, you know what? I'm rushing into the city for a meeting and I need to prepare.",
     "bank": "pmwdr99tdiux6",
-    "form": "can"
+    "form": "can",
+    "ctxFrom": "32:29.13"
    },
    {
     "id": "bc3",
-    "clip": "33:15.64-33:19.18",
+    "clip": "33:17.58-33:19.18",
     "text": "– {{I can open the door}}. – Sure.",
     "before": "Oh, thanks, but you don't have to.",
     "bank": "pmwdra5fqbd8t",
-    "form": "can"
+    "form": "can",
+    "ctxFrom": "33:15.64"
    },
    {
     "id": "bc4",
-    "clip": "33:15.64-33:22.98",
+    "clip": "33:21.68-33:22.98",
     "text": "But {{if you can't stay here}},",
     "before": "Oh, thanks, but you don't have to. – I can open the door. – Sure. Okay, so, this shouldn't take more than an hour.",
     "bank": "pmwdramqacsup",
-    "form": "can't"
+    "form": "can't",
+    "ctxFrom": "33:19.18"
    },
    {
     "id": "bc4b",
-    "clip": "33:15.64-33:26.08",
+    "clip": "33:24.78-33:26.08",
     "text": "And then {{you can just pull}} up…",
     "before": "Oh, thanks, but you don't have to. – I can open the door. – Sure. Okay, so, this shouldn't take more than an hour. But if you can't stay here, I'll call Becky and then she'll find you.",
     "bank": "pmwdrav9ak28z",
-    "form": "can"
+    "form": "can",
+    "ctxFrom": "33:22.98"
    },
    {
     "id": "b10",

@@ -60,7 +60,8 @@ TYPES = {'dice-council': 'council_template.html', 'say-it-another-way': 'cards_t
          'situation-cards': 'situation_cards_template.html',   # tools 12
          'chat-scenes': 'chat_scenes_template.html',   # tools 13
          'revision-board': 'revision_board_template.html', 'revision-field': 'revision_field_template.html',   # tools 13, B2 revision 30.10
-         'decode-prep': 'decode_prep_template.html'}   # tools 33 (her 12.11 07:57): her own decoding prep — the film's hard pieces, kept in her table
+         'decode-prep': 'decode_prep_template.html',   # tools 33 (her 12.11 07:57): her own decoding prep — the film's hard pieces, kept in her table
+         'line-rating': 'line_rating_template.html'}   # tools 38 (AL chat's handoff 12.11 23:55): her ratings of a homework's lines, kept in her table
 # the live version (tools 7, her wish 28.10): every page is also built as <page>-live.html, which asks her table for the changes
 # she makes during the lesson; the plain page never contacts the table and stays exactly as it was. The table's address is the
 # one the homework pages use (engine/page_template.html).
@@ -239,7 +240,7 @@ for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p
                   'cells': [{'page': c.get('page'), 'today': bool(c.get('today')), 'closed': bool(c.get('closed')), 'col': c.get('col'), 'value': c.get('value')} for c in d.get('cells', [])] if d['type'] == 'revision-board' else None,
                   'embeds': [b['page'] for st in d.get('stages', []) for b in st.get('blocks', []) if b.get('kind') == 'tool'] if d['type'] == 'revision-field' else []})
     for suffix, live in (('', False), ('-live', True)):
-        page = html.replace('__LIVE__', 'true' if live else 'false').replace('__SYNC_URL__', SYNC if live or d.get('points') else '')   # tools 26: her own page with points talks to her table
+        page = html.replace('__LIVE__', 'true' if live else 'false').replace('__SYNC_URL__', SYNC if live or d.get('points') or d['type'] == 'line-rating' else '')   # tools 26: her own page with points talks to her table; tools 38: so does her rating page
         left = [k for k in ('__BASE_CSS__', '__BASE_JS__', '__LW_CSS__', '__LW_JS__', '__DATA__', '__REVIEW__', '__STICKER__', '__PAGE_ID__', '__LIVE__', '__SYNC_URL__') if k in page]
         assert not left, 'placeholder left in %s: %s' % (path, left)
         if live and not SYNC: print('WARNING: no SYNC_URL found, %s-live works like the plain page' % name)
@@ -303,7 +304,7 @@ for f in sorted(glob.glob(os.path.join(T, 'assets', '*'))):
 # pages: a lock on the door, the list is in the source); noindex, linked from nowhere.
 GROUPS = {'b2': 'B2 · Wed Fri 18.30', 'c1': 'C1 · Wed Fri 20.15', 'de': '🇩🇪 My German', 'prep': '🎧 My prep'}
 KIND = {'dice-council': '🎲 dice council', 'say-it-another-way': '🃏 say it another way', 'dice-situations': '🎲 dice situations', 'situation-cards': '🃏 situation cards', 'chat-scenes': '💬 chat scenes',
-        'revision-board': '🟦 Jeopardy board', 'revision-field': '🟨 revision field', 'decode-prep': '🎧 decoding prep'}
+        'revision-board': '🟦 Jeopardy board', 'revision-field': '🟨 revision field', 'decode-prep': '🎧 decoding prep', 'line-rating': '⭐ rate the lines'}
 # tools 28 (her 4.11 06:51/08:05: «я каждый раз листаю, ищу, где же там Jeopardy… новые задания, чтобы появлялись сверху… в две колонки, как на
 # Homework»): B2 | C1 side by side, the newest lesson on top; a revision lesson starts with its Jeopardy board and folds its fields under it.
 # A lesson folder without a date in its name gets its date here (the day it was first used)

@@ -28,17 +28,43 @@ const PLAYER = `function(id,o){const d=document.getElementById(id),f=document.cr
   const st = await p.evaluate(() => ({once: !!current.listenOnce, ask: !!document.querySelector('[data-ask]'), instr: document.querySelector('.instr').textContent}));
   ok(!st.once && !/listen once/i.test(st.instr), 'no «listen once» on these pages any more: ' + JSON.stringify(st));
   const k = await p.evaluate(() => document.querySelector('.ln[data-i="1"] .gap-in').dataset.k);
-  await p.click('.ln[data-i="1"] .pl'); await p.waitForTimeout(1500);
+  const cl = await p.evaluate(() => current.steps[stepIdx].clip.map(l => [l[1], l[2]]));
+  ok(/The first listen plays the whole clip/.test(st.instr), 'the instruction: ' + st.instr);
+  // engine 81 (her 13.11 09:40–09:49): the first tap — here on the EMPTY gap (engine 80) — plays the WHOLE clip from its first line;
+  // the line that sounds lights up; a tap while it plays doesn't cut it; the cursor stays in the gap
+  await p.evaluate(() => (window._yl || []).splice(0)); await p.click(`.gap-in[data-k="${k}"]`); await p.waitForTimeout(120);
+  const L0 = await p.evaluate(() => (window._yl || []).splice(0));
+  ok(L0.some(x => x[0] === 'seek' && Math.abs(x[1] - Math.max(0, cl[0][0] - 1)) < .01) && !L0.some(x => x[0] === 'seek' && Math.abs(x[1] - (cl[1][0] - 1)) < .01),
+    'the first tap does not play the whole clip from its first line: ' + JSON.stringify(L0) + ' ' + JSON.stringify(cl));
+  ok(await p.evaluate(k => document.activeElement && document.activeElement.dataset.k === k, k), 'the tap does not leave the cursor in the gap');
   ok(!(await p.evaluate(() => !!document.querySelector('[data-ask]'))), 'no «What did you catch?»');
+  await p.click('.ln[data-i="1"] .pl'); await p.waitForTimeout(80);
+  ok(!(await p.evaluate(() => (window._yl || []).splice(0))).some(x => x[0] === 'seek'), 'a tap cut the first listen of the whole clip');
+  ok(await p.waitForFunction(() => document.querySelector('.ln[data-i="2"]').classList.contains('playing'), null, {timeout: 6000}).then(() => true, () => false), 'the line that sounds does not light up');
+  await p.waitForFunction(() => !document.querySelector('.ln.playing'), null, {timeout: 8000}).catch(() => fail.push('the whole clip never ended'));
+  ok(await p.evaluate(() => !!document.querySelector('.lstrip')), 'no strip under the line after the first listen');
+  // then a tap on the empty gap plays its own line only
+  await p.evaluate(() => (window._yl || []).splice(0)); await p.click(`.gap-in[data-k="${k}"]`); await p.waitForTimeout(1500);
+  const L1 = await p.evaluate(() => (window._yl || []).splice(0));
+  ok(L1.some(x => x[0] === 'seek' && Math.abs(x[1] - (cl[1][0] - 1)) < .01), 'after the whole clip, a tap on the gap does not play its line: ' + JSON.stringify(L1));
   await p.click('.ln[data-i="1"] .pl'); await p.waitForTimeout(1500);
   await p.click('.ln[data-i="2"] .pl'); await p.waitForTimeout(1200);   // a line without a gap: context
-  await p.reload(); await p.waitForTimeout(900); await go('l3', 0);      // the plays stay over a reload
-  await p.click('.ln[data-i="1"] .pl'); await p.waitForTimeout(1500);
-  await p.fill(`.gap-in[data-k="${k}"]`, 'can'); await p.click(`.gap-ck[data-k="${k}"]`); await p.waitForTimeout(2600);
+  await p.reload(); await p.waitForTimeout(900); await go('l3', 0);      // the plays (and the whole clip heard) stay over a reload
+  await p.evaluate(() => (window._yl || []).splice(0)); await p.click('.ln[data-i="1"] .pl'); await p.waitForTimeout(1500);
+  ok((await p.evaluate(() => (window._yl || []).splice(0))).some(x => x[0] === 'seek' && Math.abs(x[1] - (cl[1][0] - 1)) < .01), 'after a reload the whole clip played again instead of the line');
+  await p.fill(`.gap-in[data-k="${k}"]`, 'can');
+  await p.evaluate(() => (window._yl || []).splice(0)); await p.click(`.gap-in[data-k="${k}"]`); await p.waitForTimeout(600);
+  ok(!(await p.evaluate(() => (window._yl || []).splice(0))).some(x => x[0] === 'seek'), 'a tap on a gap with text in it plays the line (fixing a typo would start the sound)');
+  await p.click(`.gap-ck[data-k="${k}"]`); await p.waitForTimeout(2600);
   const g = rows().find(r => /^l3:s0\.g/.test(r[6]));
-  ok(g && g[10] === 'can' && g[11] === '✓' && g[15] === 3 && g[26] === 'free' && g[27] === 1, 'Attempts: first try, plays 3 (over a reload), Mode free, Context plays 1: ' + JSON.stringify(g && g.slice(6)));
+  ok(g && g[10] === 'can' && g[11] === '✓' && g[15] === 4 && g[26] === 'context' && g[27] === 1, 'Attempts: first try, plays 4 (the whole clip + 3 of the line, over a reload), Mode context, Context plays 1: ' + JSON.stringify(g && g.slice(6)));
   ok((await A().getRange(1, 1, 1, 28).getValues()[0])[27] === 'Context plays', 'the Context plays column');
   const an = await p.evaluate(() => ftForAnalysis({items: [{task: 'l3', item: 'l3:s0.g0', type: 'listen', prompt: 'x', answer: 'can', who: [['Bella', 'can', 'ok', 3, '1/1', 'x', '12.11 23:40:00', 'free', 1]]}]}));
+  // engine 79 (AL 23:55, point 9): Easy / OK / Hard and the «?» lines, a student without first tries gets the next S
+  const an2 = await p.evaluate(() => { teacherData = {students: [{name: 'Bella'}, {name: 'Zed'}], reactions: {l3: {easy: [], ok: [0], hard: [1]}},
+    work: [{type: 'marked', s: 1, task: 'l3', text: "So, you ___ start planning\n— can or can't?\nx"}, {type: 'question', s: 0, task: 'l3', text: 'q'}]};
+    const r = ftForAnalysis({items: [{task: 'l3', item: 'l3:s0.g0', type: 'listen', prompt: 'x', answer: 'can', who: [['Bella', 'can', 'ok', 3, '1/1', 'x', '12.11 23:40:00', 'free', 1]]}]}); teacherData = null; return r; });
+  ok(/Easy \/ OK \/ Hard[^]*\nS1\t[^\n]*\tOK\nS2\t[^\n]*\tHard/.test(an2) && /Hard to hear[^]*\nS2\t[^\n]*\tSo, you ___ start planning\tcan or can't\?/.test(an2), '📋: ratings and «?» lines: ' + an2.split('How they')[1]);
   ok(/\tplays\tctx plays\t/.test(an) && /\tgap, before Check\tfree\t[^\n]*\tright\t3\t1\t1\/1\t/.test(an), '📋 For the analysis has plays and ctx plays: ' + an);
   await b.close();
 
@@ -58,14 +84,21 @@ const PLAYER = `function(id,o){const d=document.getElementById(id),f=document.cr
   await q.waitForFunction(() => FILM.dur > 0, null, {timeout: 15000}).catch(() => fail.push('the film did not load'));
   const fs1 = await q.evaluate(() => ({check: !!document.getElementById('f-check'), none: !!document.getElementById('f-none'), instr: document.querySelector('.instr').textContent}));
   ok(fs1.check && !fs1.none && /as many times as you like/.test(fs1.instr) && !/no replay/.test(fs1.instr), 'film free: Check at once, no «Nothing yet»: ' + JSON.stringify(fs1));
-  await q.click('.film-ln .pl'); await q.waitForTimeout(300); ok(await q.evaluate(() => !!FILM.playing), 'the line did not play');
-  await q.waitForFunction(() => !FILM.playing, null, {timeout: 8000}).catch(() => {}); await q.waitForTimeout(200);
-  await q.click('.film-ln .pl'); await q.waitForTimeout(300); ok(await q.evaluate(() => !!FILM.playing), 'film free: the line plays again at once');
+  // engine 81 (her 13.11 09:49–09:50): a line with `ctxFrom` plays from there the first time (the context), a tap doesn't cut it, then only the line
+  const fc0 = await q.evaluate(() => { const l = current.film.lines[current.steps[stepIdx].li], c = filmClip(l); l.ctxFrom = c.s - 2; renderTask(); return c; }); await q.waitForTimeout(400);
+  await q.click('.film-in'); await q.waitForTimeout(300);
+  let fp = await q.evaluate(() => ({on: !!FILM.playing, ctx: !!(FILM.playing && FILM.playing.ctx), lit: !!document.querySelector('.film-ln.playing')}));
+  ok(fp.on && fp.ctx && fp.lit, 'film: a tap on the empty field does not play the context first: ' + JSON.stringify(fp));
+  await q.click('.film-ln .pl'); await q.waitForTimeout(150); ok(await q.evaluate(() => !!(FILM.playing && FILM.playing.ctx)), 'film: a tap cut the context');
+  await q.waitForFunction(() => !FILM.playing, null, {timeout: 12000}).catch(() => fail.push('film: the context never ended')); await q.waitForTimeout(200);
+  await q.click('.film-ln .pl'); await q.waitForTimeout(300);
+  fp = await q.evaluate(() => ({on: !!FILM.playing, ctx: !!(FILM.playing && FILM.playing.ctx), t: FILM.v.currentTime}));
+  ok(fp.on && !fp.ctx && fp.t >= fc0.s - .35 && fp.t < fc0.s + .6, 'film: after the context the line plays alone, from its own start ' + fc0.s + ': ' + JSON.stringify(fp));
   await q.waitForFunction(() => !FILM.playing, null, {timeout: 8000}).catch(() => {});
   await q.fill('.film-in', 'lived'); await q.click('#f-check'); await q.waitForTimeout(3000);
   const fa = att.find(x => x.type === 'film');
-  ok(fa && fa.first === 'lived' && fa.lis === 2 && fa.mode === 'free', 'film free: the first try at Check, plays 2, Mode free: ' + JSON.stringify(fa));
+  ok(fa && fa.first === 'lived' && fa.lis === 2 && fa.mode === 'context', 'film free: the first try at Check, plays 2 (context + the line), Mode context: ' + JSON.stringify(fa));
   await b2.close();
   if (errs.length) fail.push('page errors: ' + errs.join(' | '));
-  console.log(fail.length ? 'FAILED:\n' + fail.join('\n') : 'OK listen free: plays before the first Check (kept over a reload), context plays, Mode free; film free'); process.exit(fail.length ? 1 : 0);
+  console.log(fail.length ? 'FAILED:\n' + fail.join('\n') : 'OK listen free: the whole clip first, then the line; plays before the first Check (kept over a reload), context plays, Mode context; film: the context first, then the line'); process.exit(fail.length ? 1 : 0);
 })();

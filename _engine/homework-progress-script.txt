@@ -565,11 +565,13 @@ function teacher_(stu, p) {
   if (p.action === "toolNote") return toolNote_(stu, p);
   if (p.action === "toolRoster") return toolRoster_(p);
   if (p.action === "bankPut") return bankPut_(p);                     // tools 33: her decoding bank
+  if (p.action === "ratePut") return ratePut_(p);                     // engine 79: her ratings of the homework's lines
   const page = clean_(p.page, 80);
   if (!page) return { ok: false, error: "no-page" };
   if (p.action === "feedback" || p.action === "discussed" || p.action === "publish") ovBump_();   // engine 64: her overview counts afresh
   if (p.action === "feedback") return setFeedback_(p.id, p.text);
   if (p.action === "discussed") return discussed_(page, p);
+  if (p.action === "remove") return removeItem_(page, p);   // engine 79
   if (p.action === "publish") return publish_(page, p.on === true);
   if (p.action !== "sync") return { ok: true, role: "teacher" };     // the teacher's own ticks, reactions and marks are not recorded
   const G = groupOfPage_(page), ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -614,7 +616,7 @@ function teacher_(stu, p) {
     try { discussed[String(r[2])] = JSON.parse(String(r[3])); } catch (err) {}
   });
   if (!p._ro) st_touch_(stu);   // engine 70: the lock-free read writes no visit
-  return { ok: true, role: "teacher", name: stu.name, students: students, done: done, work: work, reactions: reactions, discussed: discussed, published: published_([page]).length > 0, group: groupStats_(G) };
+  return { ok: true, role: "teacher", name: stu.name, students: students, done: done, work: work, reactions: reactions, discussed: discussed, published: published_([page]).length > 0, group: groupStats_(G), removed: removedOf_(page) };
 }
 
 // the start page and the group lists: what waits for Olya on every homework, in ONE request
@@ -1017,6 +1019,51 @@ function attemptsSummary_(page) {
 // ---------- tools 33 (her 12.11 07:57: «мою подготовку к уроку тоже вынести к нам на тулзу… при подготовке я продолжаю прыгать между кучей
 // экранов»): her decoding bank — the pieces of a film she marked while listening (a feature, hard for B2 / C1, a note, the context), kept per film
 // so they wait for later lessons; one row per piece (readable columns + the whole piece as JSON), her feature list in the row "_features".
+// engine 79 (AL chat's handoff 12.11 23:55, her experiment «my forecast vs their real difficulty»): her ratings of the homework's lines,
+// one row per line (card); the line's Attempts items are in the row, so the data joins
+const RATE = "My ratings";
+const RATE_HEAD = ["Set", "Card", "Groups", "Tasks", "Attempts items", "Line", "Answer", "Her guess (before the answer)", "Difficulty 1–5", "Why hard", "Note", "Removed: why", "Updated", "Data"];
+function rateGet_(set) {
+  const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(RATE), cards = {};
+  if (sh && sh.getLastRow() > 1) sh.getRange(2, 1, sh.getLastRow() - 1, RATE_HEAD.length).getValues().forEach(r => {
+    if (String(r[0]) !== set) return;
+    try { cards[String(r[1])] = JSON.parse(String(r[13])); } catch (err) {}
+  });
+  return { ok: true, set: set, cards: cards };
+}
+function ratePut_(p) {
+  const set = clean_(p.set, 80); if (!set) return { ok: false, error: "no-set" };
+  const sh = sheet_(RATE, RATE_HEAD), n = sh.getLastRow() - 1, at = {};
+  if (n > 0) sh.getRange(2, 1, n, 2).getValues().forEach((r, i) => { if (String(r[0]) === set) at[String(r[1])] = i + 2; });
+  const now = fmtDate_(Date.now());
+  (Array.isArray(p.cards) ? p.cards : []).slice(0, 100).forEach(x => {
+    const id = clean_(x && x.id, 60); if (!id) return;
+    const vals = [set, id, clean_(x.groups, 20), clean_(x.tasks, 200), clean_(x.items, 400), clean_(x.line, 400), clean_(x.answer, 200), clean_(x.guess, 200),
+      x.level ? num_(x.level) : "", clean_((x.why || []).join(", "), 200), clean_(x.note, 500), clean_((x.removedWhy || []).join(", ") + (x.removedNote ? " — " + x.removedNote : ""), 300), now, JSON.stringify(x).slice(0, 45000)];
+    if (at[id]) sh.getRange(at[id], 1, 1, vals.length).setValues([vals]); else { sh.appendRow(vals); at[id] = sh.getLastRow(); }
+  });
+  return { ok: true, saved: (p.cards || []).length };
+}
+function num_(v) { const x = Number(v); return isFinite(x) ? x : ""; }
+
+// engine 79 (her 12.11 17:5x: «кнопочку „Удалить из домашки“»): a clip or a film line she takes out of a published homework.
+// Removed: Key (page|item) | Page | Item | Removed | Updated. Every student's sync gets the page's list, so it's gone at once for everyone.
+const REMOVED = "Removed from homework";
+const REMOVED_HEAD = ["Key", "Page", "Item", "Removed", "Updated"];
+function removedOf_(page) {
+  const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(REMOVED), out = [];
+  if (sh && sh.getLastRow() > 1) sh.getRange(2, 1, sh.getLastRow() - 1, 4).getValues().forEach(r => { if (String(r[1]) === page && r[3] === true) out.push(String(r[2])); });
+  return out;
+}
+function removeItem_(page, p) {
+  const item = clean_(p.item, 80); if (!item) return { ok: false, error: "no-item" };
+  const sh = sheet_(REMOVED, REMOVED_HEAD), key = page + "|" + item, n = sh.getLastRow() - 1;
+  const keys = n > 0 ? sh.getRange(2, 1, n, 1).getValues().map(r => String(r[0])) : [];
+  const i = keys.indexOf(key), row = [key, page, item, p.on !== false, fmtDate_(Date.now())];
+  if (i > -1) sh.getRange(i + 2, 1, 1, row.length).setValues([row]); else sh.getRange(n + 2, 1, 1, row.length).setValues([row]);
+  return { ok: true, removed: removedOf_(page) };
+}
+
 const BANK = "Decoding bank";
 const BANK_HEAD = ["ID", "Film", "Time", "Line", "Gap", "Feature", "Hard for", "Note", "Context", "Updated", "Data"];
 function bankGet_(film) {
@@ -1073,6 +1120,11 @@ function readOnly_(p) {
   if (p.action === "sync" && p.teacher === 1) {
     const stu = findStudent_(p.code);
     if (stu && stu.group === TEACHER) return teacher_(stu, Object.assign({}, p, { _ro: true }));
+  }
+  if (p.action === "rateGet") {                                                                // engine 79: her ratings of the homework's lines (her code only)
+    const stu = findStudent_(p.code);
+    if (!stu) return { ok: false, error: "unknown-code" };
+    return stu.group === TEACHER ? rateGet_(clean_(p.set, 80)) : { ok: false, error: "not-teacher" };
   }
   if (p.action === "bankGet") {                                                                // tools 33: her decoding bank (her code only)
     const stu = findStudent_(p.code);
@@ -1179,7 +1231,7 @@ function sync_(p) {
     const tasks = {};
     data.forEach(r => { if (r[1] === stu.code && r[2] === page) tasks[r[3]] = { done: r[4] === true, ts: Number(r[5]) }; });
     const own = isGroup_(stu.group);
-    return { ok: true, name: stu.name, gid: own ? stu.group.toLowerCase() : "", tasks: tasks, work: workFor_(stu, page), group: own ? groupStats_(stu.group) : null, me: own ? null : meStats_(stu.code), half: p.ab ? half_(stu) : undefined };
+    return { ok: true, name: stu.name, gid: own ? stu.group.toLowerCase() : "", tasks: tasks, work: workFor_(stu, page), group: own ? groupStats_(stu.group) : null, me: own ? null : meStats_(stu.code), half: p.ab ? half_(stu) : undefined, removed: removedOf_(page) };
   } finally {
     lock.releaseLock();
   }
