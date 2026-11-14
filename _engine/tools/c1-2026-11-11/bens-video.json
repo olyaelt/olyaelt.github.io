@@ -1499,7 +1499,10 @@
       "What do you do when you've got **time on your hands**?",
       "Name **two** moments in life when that **nowhere-to-be** feeling can **hit you like a ton of bricks** (after a long trip, at the end of a big project…). What helps?"
      ],
-     "fast": "tell your partner what Ben did at first, and what went wrong — from memory."
+     "fast": [
+      "tell your partner what Ben did at first, and what went wrong — from memory.",
+      "+ **WHAT ARE YOUR TAKEAWAYS?**"
+     ]
     },
     {
      "kind": "text",
@@ -1755,7 +1758,12 @@
       {
        "s": "",
        "p": [
-        "— No."
+        "— ",
+        {
+         "f": "",
+         "r": "No"
+        },
+        "."
        ]
       },
       {
@@ -1876,7 +1884,12 @@
          "r": "/maɪnd ɪf/",
          "o": 1
         },
-        " — No.",
+        " — ",
+        {
+         "f": "",
+         "r": "No"
+        },
+        ".",
         " = can we sit here? — Sure."
        ],
        "ru": "Не против, если мы присядем? — Нет (= садитесь)."
@@ -2046,7 +2059,12 @@
       {
        "s": "",
        "p": [
-        "— No."
+        "— ",
+        {
+         "f": "",
+         "r": "No"
+        },
+        "."
        ]
       },
       {
@@ -2433,7 +2451,7 @@
      "items": [
       "Ben has a hole in his life and needs to **fill it**. Name **two** other ways he could fill it. Which one would you choose for him?"
      ],
-     "fast": "tell your partner Ben's story from memory, as Ben: “At first, I…”, “The problem was…”, “These days…”."
+     "fast": "What are your TAKEAWAYS from this scene, in terms of vocabulary?"
     }
    ]
   },
@@ -4241,5 +4259,105 @@
     "box": "TENSES"
    }
   ]
+ },
+ "class_view": {
+  "stages": [
+   0,
+   1,
+   2
+  ],
+  "also": [
+   6,
+   7
+  ],
+  "decode_instr": "Listen to each line (📂 your copy of the film) and look at what happens to the sounds. Tap a word to look closer.",
+  "decode": {
+   "d1": {
+    "marks": [
+     {
+      "at": "there|is",
+      "mark": "link"
+     },
+     {
+      "at": "That's|all",
+      "mark": "link"
+     }
+    ],
+    "note": "there‿is run together — a very common place."
+   },
+   "d2": {
+    "marks": [
+     {
+      "at": "can:a",
+      "mark": "strike"
+     },
+     {
+      "at": "you:ou",
+      "mark": "grey"
+     },
+     {
+      "at": "can|imagine",
+      "mark": "link"
+     }
+    ],
+    "note": "given, not giving. can has no vowel (it sounds a bit like gonna): can‿imagine."
+   },
+   "d8": {
+    "marks": [
+     {
+      "at": "Can't:t",
+      "mark": "strike"
+     }
+    ],
+    "note": "can't: no t, but the full, long vowel — compare can in line 2. After can comes the verb, so the context helps."
+   },
+   "d9": {
+    "marks": [],
+    "note": "there's, that's or it's? there's‿a run together, as in line 1."
+   },
+   "r4": {
+    "marks": [
+     {
+      "at": "Can:a",
+      "mark": "strike"
+     }
+    ],
+    "note": "can: no vowel. we and you sound almost the same here."
+   },
+   "r6": {
+    "marks": [
+     {
+      "at": "Can't:t",
+      "mark": "strike"
+     }
+    ],
+    "note": "can't: no t, a full vowel."
+   },
+   "r7": {
+    "marks": [],
+    "note": "can is reduced."
+   },
+   "r9": {
+    "marks": [
+     {
+      "at": "Can't:t",
+      "mark": "strike"
+     }
+    ],
+    "note": "can or can't? The full vowel says can't — in British and American English alike."
+   },
+   "r12": {
+    "marks": [],
+    "note": "it or her? The context decides. there's‿lots run together."
+   },
+   "r14": {
+    "marks": [],
+    "note": "almost no vowel → can."
+   },
+   "r15": {
+    "marks": [],
+    "note": "can or can't? The vowel says it — and watch the gestures."
+   }
+  }
  }
 }

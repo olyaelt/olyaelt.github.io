@@ -1,0 +1,1885 @@
+{
+ "type": "line-rating",
+ "title": "Rate the clips",
+ "part": "Listening quizzes · homework 13.11 → 18.11",
+ "set": "hw-2026-11-13",
+ "cards": [
+  {
+   "id": "a10-k8jcvV9XlOA-808_07",
+   "kind": "yt",
+   "video": "k8jcvV9XlOA",
+   "src": "Talks at Google · Lemony Snicket",
+   "whole": true,
+   "play": [
+    808.07,
+    817.05
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "Daniel: You did? Really? Edwin: Yeah. We did.",
+     "me": false,
+     "at": [
+      807.97,
+      809.58
+     ]
+    },
+    {
+     "t": "Daniel: Wow.",
+     "me": false,
+     "at": [
+      809.33,
+      811.85
+     ]
+    },
+    {
+     "t": "I'm sorry. My mother has a lot of ___.",
+     "me": true,
+     "at": [
+      811.6,
+      813.88
+     ],
+     "parts": [
+      "I'm sorry. My mother has a lot of ",
+      {
+       "gap": "time on her hands"
+      },
+      "."
+     ]
+    },
+    {
+     "t": "[Laughing]",
+     "me": false,
+     "at": [
+      813.63,
+      817.05
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "time on her hands",
+   "groups": [
+    "B2",
+    "C1"
+   ],
+   "tasks": [
+    "B2 · Ben, part 1: at first, the problem was…",
+    "C1 · Ben's phrases out there"
+   ],
+   "quizzes": [
+    "b2_1",
+    "c1_1"
+   ],
+   "items": {}
+  },
+  {
+   "id": "g1-Vao7T4__0Xw-67_34",
+   "kind": "yt",
+   "video": "Vao7T4__0Xw",
+   "src": "Great Big Story · A solitary life on Lookout Mountain",
+   "whole": true,
+   "play": [
+    67.34,
+    75.03
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "on the front porch,",
+     "me": false,
+     "at": [
+      67.24,
+      69.04
+     ]
+    },
+    {
+     "t": "sit out there, watch the sun come up.",
+     "me": false,
+     "at": [
+      68.79,
+      71.36
+     ]
+    },
+    {
+     "t": "Certainly every morning I ___.",
+     "me": true,
+     "at": [
+      71.11,
+      75.03
+     ],
+     "parts": [
+      "Certainly every morning I ",
+      {
+       "gap": "go out for a walk"
+      },
+      "."
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "go out for a walk",
+   "groups": [
+    "C1"
+   ],
+   "tasks": [
+    "C1 · Get out or go out?"
+   ],
+   "quizzes": [
+    "c1_2"
+   ],
+   "items": {}
+  },
+  {
+   "id": "b6-wuqg76YcT2Y-60_87",
+   "kind": "yt",
+   "video": "wuqg76YcT2Y",
+   "src": "The Ellen Show · Eva Mendes",
+   "whole": true,
+   "play": [
+    60.87,
+    68.55
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "- YOU KNOW, YOU HAVE NOT SHOWN",
+     "me": false,
+     "at": [
+      60.77,
+      62.18
+     ]
+    },
+    {
+     "t": "A PICTURE OF HER YET, BUT DO YOU MIND",
+     "me": false,
+     "at": [
+      61.93,
+      63.58
+     ]
+    },
+    {
+     "t": "IF I SHOW THE PICTURE FIRST, BECAUSE--",
+     "me": false,
+     "at": [
+      63.33,
+      65.12
+     ]
+    },
+    {
+     "t": "- THE ONE I SENT YOU?- YEAH.",
+     "me": false,
+     "at": [
+      64.87,
+      66.22
+     ]
+    },
+    {
+     "t": "- YEAH, ___.",
+     "me": true,
+     "at": [
+      65.97,
+      67.25
+     ],
+     "parts": [
+      "- YEAH, ",
+      {
+       "gap": "NO, GO AHEAD"
+      },
+      "."
+     ]
+    },
+    {
+     "t": "- I MEAN, RYAN GOSLING'S THE DAD,",
+     "me": false,
+     "at": [
+      67.0,
+      68.55
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "NO, GO AHEAD",
+   "groups": [
+    "B2",
+    "C1"
+   ],
+   "tasks": [
+    "B2 · Ben, part 2: get out of the house, you name it…",
+    "C1 · Ben's phrases out there"
+   ],
+   "quizzes": [
+    "b2_2",
+    "c1_1"
+   ],
+   "items": {}
+  },
+  {
+   "id": "a6-C9Gf-Zc2zjs-1339_16",
+   "kind": "yt",
+   "video": "C9Gf-Zc2zjs",
+   "src": "Anne-Marie · Music & Therapy",
+   "whole": true,
+   "play": [
+    1339.16,
+    1345.51
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "Every night,",
+     "me": false,
+     "at": [
+      1339.06,
+      1341.03
+     ]
+    },
+    {
+     "t": "___ from school I'd be in my room.",
+     "me": true,
+     "at": [
+      1340.78,
+      1343.87
+     ],
+     "parts": [
+      {
+       "gap": "as soon as I got home"
+      },
+      " from school I'd be in my room."
+     ]
+    },
+    {
+     "t": "Singing...",
+     "me": false,
+     "at": [
+      1343.62,
+      1345.51
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "as soon as I got home",
+   "groups": [
+    "B2"
+   ],
+   "tasks": [
+    "B2 · Ben, part 1: at first, the problem was…"
+   ],
+   "quizzes": [
+    "b2_1"
+   ],
+   "items": {}
+  },
+  {
+   "id": "c1-hosUolDbhI8-76_67",
+   "kind": "yt",
+   "video": "hosUolDbhI8",
+   "src": "Talks at Google · Questlove",
+   "whole": true,
+   "play": [
+    76.67,
+    82.14
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "[Someone in audience giggles in a high pitch]",
+     "me": false,
+     "at": [
+      76.57,
+      78.32
+     ]
+    },
+    {
+     "t": ">>[Interviewer]:You've got ___. The show doesn't start for hours, I think",
+     "me": true,
+     "at": [
+      78.07,
+      80.08
+     ],
+     "parts": [
+      ">>[Interviewer]:You've got ",
+      {
+       "gap": "nowhere to be"
+      },
+      ". The show doesn't start for hours, I think"
+     ]
+    },
+    {
+     "t": "you're Okay.",
+     "me": false,
+     "at": [
+      79.83,
+      81.11
+     ]
+    },
+    {
+     "t": ">>[Ahmir]:I'm safe.",
+     "me": false,
+     "at": [
+      80.86,
+      82.14
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "nowhere to be",
+   "groups": [
+    "C1"
+   ],
+   "tasks": [
+    "C1 · Ben's phrases out there"
+   ],
+   "quizzes": [
+    "c1_1"
+   ],
+   "items": {}
+  },
+  {
+   "id": "f3-kRCalQ2q7vM-1509_15",
+   "kind": "yt",
+   "video": "kRCalQ2q7vM",
+   "src": "Talks at Google · Anna Holmes",
+   "whole": true,
+   "play": [
+    1509.15,
+    1515.73
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "but I don't have a problem with the word feminist.",
+     "me": false,
+     "at": [
+      1509.05,
+      1511.73
+     ]
+    },
+    {
+     "t": "___.",
+     "me": true,
+     "at": [
+      1511.48,
+      1513.58
+     ],
+     "parts": [
+      {
+       "gap": "Quite the contrary"
+      },
+      "."
+     ]
+    },
+    {
+     "t": "Part of my frustration growing up",
+     "me": false,
+     "at": [
+      1513.33,
+      1515.73
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "Quite the contrary",
+   "groups": [
+    "B2",
+    "C1"
+   ],
+   "tasks": [
+    "For later (B2 and C1) · Ben, part 3"
+   ],
+   "quizzes": [
+    "later"
+   ],
+   "items": {}
+  },
+  {
+   "id": "b9-tZNBy-BdM2A-423_64",
+   "kind": "yt",
+   "video": "tZNBy-BdM2A",
+   "src": "Jimmy Kimmel Live · Joaquin Phoenix",
+   "whole": true,
+   "play": [
+    423.64,
+    427.22
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "WHAT KIND OF DANCING DID YOU DO?",
+     "me": false,
+     "at": [
+      423.54,
+      425.29
+     ]
+    },
+    {
+     "t": ">> ___.",
+     "me": true,
+     "at": [
+      425.04,
+      426.82
+     ],
+     "parts": [
+      ">> ",
+      {
+       "gap": "YOU NAME IT"
+      },
+      "."
+     ]
+    },
+    {
+     "t": ">> Jimmy: REALLY?",
+     "me": false,
+     "at": [
+      426.57,
+      427.22
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "YOU NAME IT",
+   "groups": [
+    "B2"
+   ],
+   "tasks": [
+    "B2 · Ben, part 2: get out of the house, you name it…"
+   ],
+   "quizzes": [
+    "b2_2"
+   ],
+   "items": {}
+  },
+  {
+   "id": "f2-h3y_cw4ZnFs-61_07",
+   "kind": "yt",
+   "video": "h3y_cw4ZnFs",
+   "src": "The Ellen Show · These hands are dry",
+   "whole": true,
+   "play": [
+    61.07,
+    72.39
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "THE BLOW DRYER, IT BLOWS YOUR HANDS SO HARD",
+     "me": false,
+     "at": [
+      60.97,
+      64.88
+     ]
+    },
+    {
+     "t": "THAT THE SKIN FLAPS ON YOUR HANDS.",
+     "me": false,
+     "at": [
+      64.63,
+      67.88
+     ]
+    },
+    {
+     "t": "___.IT DOESN'T DRY YOUR HANDS.",
+     "me": true,
+     "at": [
+      67.63,
+      69.72
+     ],
+     "parts": [
+      {
+       "gap": "DON'T GET ME WRONG"
+      },
+      ".IT DOESN'T DRY YOUR HANDS."
+     ]
+    },
+    {
+     "t": "IT JUST MAKES WAVES IN YOUR SKIN UNTIL YOU FINALLY GIVE UP",
+     "me": false,
+     "at": [
+      69.47,
+      72.39
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "DON'T GET ME WRONG",
+   "groups": [
+    "B2",
+    "C1"
+   ],
+   "tasks": [
+    "For later (B2 and C1) · Ben, part 3"
+   ],
+   "quizzes": [
+    "later"
+   ],
+   "items": {}
+  },
+  {
+   "id": "g6-pcPRZSURLEg-39_20",
+   "kind": "yt",
+   "video": "pcPRZSURLEg",
+   "src": "BuzzFeed · Quarter-life crisis",
+   "whole": true,
+   "play": [
+    39.2,
+    45.97
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "Boyfriend: What? Did you call me? Girl: No. Nothing.",
+     "me": false,
+     "at": [
+      39.1,
+      42.54
+     ]
+    },
+    {
+     "t": "Is it wrong that I would rather finish this scarf than ___ tonight?",
+     "me": true,
+     "at": [
+      42.29,
+      45.97
+     ],
+     "parts": [
+      "Is it wrong that I would rather finish this scarf than ",
+      {
+       "gap": "go out with my friends"
+      },
+      " tonight?"
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "go out with my friends",
+   "groups": [
+    "C1"
+   ],
+   "tasks": [
+    "C1 · Get out or go out?"
+   ],
+   "quizzes": [
+    "c1_2"
+   ],
+   "items": {}
+  },
+  {
+   "id": "a2-R2UmPrxHd6g-61_70",
+   "kind": "yt",
+   "video": "R2UmPrxHd6g",
+   "src": "The Ellen Show · Bars and Melody",
+   "whole": true,
+   "play": [
+    61.7,
+    69.28
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "\"HEY, DO YOU WANT TO MEET UP SOMETIME?\"",
+     "me": false,
+     "at": [
+      61.6,
+      63.38
+     ]
+    },
+    {
+     "t": "AND I WAS LIKE,\"OH, YEAH, SURE.\"",
+     "me": false,
+     "at": [
+      63.13,
+      65.45
+     ]
+    },
+    {
+     "t": "BUT ___, I THOUGHT,\"WELL, THIS IS A BIT SHADY.\"",
+     "me": true,
+     "at": [
+      65.2,
+      68.25
+     ],
+     "parts": [
+      "BUT ",
+      {
+       "gap": "AT FIRST"
+      },
+      ", I THOUGHT,\"WELL, THIS IS A BIT SHADY.\""
+     ]
+    },
+    {
+     "t": "[laughter]",
+     "me": false,
+     "at": [
+      68.0,
+      69.28
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "AT FIRST",
+   "groups": [
+    "B2"
+   ],
+   "tasks": [
+    "B2 · Ben, part 1: at first, the problem was…"
+   ],
+   "quizzes": [
+    "b2_1"
+   ],
+   "items": {}
+  },
+  {
+   "id": "f6-4v7kASXPQMc-16_29",
+   "kind": "yt",
+   "video": "4v7kASXPQMc",
+   "src": "Smithsonian · Miracle on the Hudson",
+   "whole": true,
+   "play": [
+    16.29,
+    26.01
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "And very shortly after takeoff they lost all engines",
+     "me": false,
+     "at": [
+      16.19,
+      19.5
+     ]
+    },
+    {
+     "t": "as a result of birds.",
+     "me": false,
+     "at": [
+      19.25,
+      21.66
+     ]
+    },
+    {
+     "t": "I caught something ___",
+     "me": true,
+     "at": [
+      21.41,
+      23.82
+     ],
+     "parts": [
+      "I caught something ",
+      {
+       "gap": "out of the corner of my eye"
+      }
+     ]
+    },
+    {
+     "t": "and slightly to our right, but still ahead of us",
+     "me": false,
+     "at": [
+      23.57,
+      26.01
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "out of the corner of my eye",
+   "groups": [
+    "B2",
+    "C1"
+   ],
+   "tasks": [
+    "For later (B2 and C1) · Ben, part 3"
+   ],
+   "quizzes": [
+    "later"
+   ],
+   "items": {}
+  },
+  {
+   "id": "b1-YbLFZSRtKew-445_70",
+   "kind": "yt",
+   "video": "YbLFZSRtKew",
+   "src": "Joel & Lia · Boxing Day in the UK",
+   "whole": true,
+   "play": [
+    445.7,
+    452.7
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "- Some people do it on the afternoon on Christmas Day,",
+     "me": false,
+     "at": [
+      445.6,
+      448.23
+     ]
+    },
+    {
+     "t": "but I think, most people are like,",
+     "me": false,
+     "at": [
+      447.98,
+      449.49
+     ]
+    },
+    {
+     "t": "let's ___,",
+     "me": true,
+     "at": [
+      449.24,
+      450.32
+     ],
+     "parts": [
+      "let's ",
+      {
+       "gap": "get out of the house"
+      },
+      ","
+     ]
+    },
+    {
+     "t": "we've been in the house on Christmas Day,",
+     "me": false,
+     "at": [
+      450.07,
+      451.87
+     ]
+    },
+    {
+     "t": "let's go for a walk.",
+     "me": false,
+     "at": [
+      451.62,
+      452.7
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "get out of the house",
+   "groups": [
+    "B2",
+    "C1"
+   ],
+   "tasks": [
+    "B2 · Ben, part 2: get out of the house, you name it…",
+    "C1 · Get out or go out?"
+   ],
+   "quizzes": [
+    "b2_2",
+    "c1_2"
+   ],
+   "items": {}
+  },
+  {
+   "id": "b5-29eFw4wdAM8-102_90",
+   "kind": "yt",
+   "video": "29eFw4wdAM8",
+   "src": "The Ellen Show · David Beckham's hidden camera",
+   "whole": true,
+   "play": [
+    102.9,
+    110.22
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "- OKAY.I'M READY.",
+     "me": false,
+     "at": [
+      102.8,
+      104.98
+     ]
+    },
+    {
+     "t": "- \"___ TAKE MY SHIRT OFF?\"",
+     "me": true,
+     "at": [
+      104.73,
+      106.65
+     ],
+     "parts": [
+      "- \"",
+      {
+       "gap": "DO YOU MIND IF I"
+      },
+      " TAKE MY SHIRT OFF?\""
+     ]
+    },
+    {
+     "t": "- ___ TAKE MY SHIRT OFF?",
+     "me": true,
+     "at": [
+      106.4,
+      108.52
+     ],
+     "parts": [
+      "- ",
+      {
+       "gap": "DO YOU MIND IF I"
+      },
+      " TAKE MY SHIRT OFF?"
+     ]
+    },
+    {
+     "t": "- ___.",
+     "me": true,
+     "at": [
+      108.27,
+      110.22
+     ],
+     "parts": [
+      "- ",
+      {
+       "gap": "NO, NOT AT ALL"
+      },
+      "."
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "DO YOU MIND IF I … DO YOU MIND IF I … NO, NOT AT ALL",
+   "groups": [
+    "B2",
+    "C1"
+   ],
+   "tasks": [
+    "B2 · Ben, part 2: get out of the house, you name it…",
+    "C1 · Ben's phrases out there"
+   ],
+   "quizzes": [
+    "b2_2",
+    "c1_1"
+   ],
+   "items": {}
+  },
+  {
+   "id": "b7-r10I2aONT8Q-36_00",
+   "kind": "yt",
+   "video": "r10I2aONT8Q",
+   "src": "The Ellen Show · A remarkable act of kindness",
+   "whole": true,
+   "play": [
+    36.0,
+    45.85
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "and I grabbed my husband, and I said,",
+     "me": false,
+     "at": [
+      35.9,
+      38.62
+     ]
+    },
+    {
+     "t": "\"Listen, I'm about to do something crazy.",
+     "me": false,
+     "at": [
+      38.37,
+      40.68
+     ]
+    },
+    {
+     "t": "I ___, but I need to give this woman my boots.\"",
+     "me": true,
+     "at": [
+      40.43,
+      43.58
+     ],
+     "parts": [
+      "I ",
+      {
+       "gap": "can't explain it"
+      },
+      ", but I need to give this woman my boots.\""
+     ]
+    },
+    {
+     "t": "He's like, \"Okay, crazy.\"And so--",
+     "me": false,
+     "at": [
+      43.33,
+      45.85
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "can't explain it",
+   "groups": [
+    "B2",
+    "C1"
+   ],
+   "tasks": [
+    "B2 · Ben, part 2: get out of the house, you name it…",
+    "C1 · Ben's phrases out there"
+   ],
+   "quizzes": [
+    "b2_2",
+    "c1_1"
+   ],
+   "items": {}
+  },
+  {
+   "id": "a5-Bt9QB0ISzMc-274_63",
+   "kind": "yt",
+   "video": "Bt9QB0ISzMc",
+   "src": "The Ellen Show · Ryan Gosling",
+   "whole": true,
+   "play": [
+    274.63,
+    282.59
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "they were passing out tiny sketches of me or something.",
+     "me": false,
+     "at": [
+      274.53,
+      277.07
+     ]
+    },
+    {
+     "t": "Because ___ in Italy,",
+     "me": true,
+     "at": [
+      276.82,
+      278.99
+     ],
+     "parts": [
+      "Because ",
+      {
+       "gap": "no matter where I went"
+      },
+      " in Italy,"
+     ]
+    },
+    {
+     "t": "I was just getting dive-bombed by Italian bees.",
+     "me": false,
+     "at": [
+      278.74,
+      282.59
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "no matter where I went",
+   "groups": [
+    "B2",
+    "C1"
+   ],
+   "tasks": [
+    "B2 · Ben, part 1: at first, the problem was…",
+    "C1 · Ben's phrases out there"
+   ],
+   "quizzes": [
+    "b2_1",
+    "c1_1"
+   ],
+   "items": {}
+  },
+  {
+   "id": "b8-P7Y2vcTo_kE-1194_01",
+   "kind": "yt",
+   "video": "P7Y2vcTo_kE",
+   "src": "Talks at Google · Brad Paisley",
+   "whole": true,
+   "play": [
+    1194.01,
+    1199.62
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "people feel a part of it.",
+     "me": false,
+     "at": [
+      1193.91,
+      1195.11
+     ]
+    },
+    {
+     "t": "Because they just want to ___, I think,",
+     "me": true,
+     "at": [
+      1194.86,
+      1196.96
+     ],
+     "parts": [
+      "Because they just want to ",
+      {
+       "gap": "feel a part of something"
+      },
+      ", I think,"
+     ]
+    },
+    {
+     "t": "in this world.",
+     "me": false,
+     "at": [
+      1196.71,
+      1199.62
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "feel a part of something",
+   "groups": [
+    "B2",
+    "C1"
+   ],
+   "tasks": [
+    "B2 · Ben, part 2: get out of the house, you name it…",
+    "C1 · Ben's phrases out there"
+   ],
+   "quizzes": [
+    "b2_2",
+    "c1_1"
+   ],
+   "items": {}
+  },
+  {
+   "id": "h1-_wMTKRixZIE-161_88",
+   "kind": "yt",
+   "video": "_wMTKRixZIE",
+   "src": "TED · Getting back to work after a career break",
+   "whole": true,
+   "play": [
+    161.88,
+    174.53
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "when the Today Show asked me if I could work with her",
+     "me": false,
+     "at": [
+      161.78,
+      165.59
+     ]
+    },
+    {
+     "t": "to see if I could help her turn things around.",
+     "me": false,
+     "at": [
+      165.34,
+      168.31
+     ]
+    },
+    {
+     "t": "The first thing I told Tracy was she had to ___.",
+     "me": true,
+     "at": [
+      168.06,
+      171.79
+     ],
+     "parts": [
+      "The first thing I told Tracy was she had to ",
+      {
+       "gap": "get out of the house"
+      },
+      "."
+     ]
+    },
+    {
+     "t": "I told her she had to go public with her job search",
+     "me": false,
+     "at": [
+      171.54,
+      174.53
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "get out of the house",
+   "groups": [
+    "C1"
+   ],
+   "tasks": [
+    "C1 · Get out or go out?"
+   ],
+   "quizzes": [
+    "c1_2"
+   ],
+   "items": {}
+  },
+  {
+   "id": "f5-caNLLFZ1zu0-593_75",
+   "kind": "yt",
+   "video": "caNLLFZ1zu0",
+   "src": "Zeitgeist · Jonah Peretti & Shane Smith",
+   "whole": true,
+   "play": [
+    593.75,
+    605.26
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "scale side, digital is the future. Nothing can compete with it.",
+     "me": false,
+     "at": [
+      593.65,
+      598.8
+     ]
+    },
+    {
+     "t": ">>Sal Masekela: ___ your Emmy nomination.",
+     "me": true,
+     "at": [
+      598.55,
+      602.72
+     ],
+     "parts": [
+      ">>Sal Masekela: ",
+      {
+       "gap": "Which brings me to"
+      },
+      " your Emmy nomination."
+     ]
+    },
+    {
+     "t": "[ Laughter ]>>Shane Smith: We didn't win.",
+     "me": false,
+     "at": [
+      602.47,
+      605.26
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "Which brings me to",
+   "groups": [
+    "B2",
+    "C1"
+   ],
+   "tasks": [
+    "For later (B2 and C1) · Ben, part 3"
+   ],
+   "quizzes": [
+    "later"
+   ],
+   "items": {}
+  },
+  {
+   "id": "b11-hXRe0N1hejE-2888_92",
+   "kind": "yt",
+   "video": "hXRe0N1hejE",
+   "src": "Talks at Google · Christopher McDougall",
+   "whole": true,
+   "play": [
+    2888.92,
+    2899.38
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "He snapped shut the viewfinder, and he's like, \"Okay, you're cured. Problem solved.\"",
+     "me": false,
+     "at": [
+      2888.82,
+      2892.74
+     ]
+    },
+    {
+     "t": "I've had this problem now for six months. ___.",
+     "me": true,
+     "at": [
+      2892.49,
+      2896.2
+     ],
+     "parts": [
+      "I've had this problem now for six months. ",
+      {
+       "gap": "I've tried everything"
+      },
+      "."
+     ]
+    },
+    {
+     "t": "So I go, \"All right, what is it?\" He's like, \"Describe to me the way you run.\"",
+     "me": false,
+     "at": [
+      2895.95,
+      2899.38
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "I've tried everything",
+   "groups": [
+    "B2",
+    "C1"
+   ],
+   "tasks": [
+    "B2 · Ben, part 2: get out of the house, you name it…",
+    "C1 · Ben's phrases out there"
+   ],
+   "quizzes": [
+    "b2_2",
+    "c1_1"
+   ],
+   "items": {}
+  },
+  {
+   "id": "g3-QVoleJYgdM8-21_00",
+   "kind": "yt",
+   "video": "QVoleJYgdM8",
+   "src": "The Ellen Show · Saoirse Ronan",
+   "whole": true,
+   "play": [
+    21.0,
+    26.98
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "I don't date.",
+     "me": false,
+     "at": [
+      20.9,
+      22.32
+     ]
+    },
+    {
+     "t": "OK.",
+     "me": false,
+     "at": [
+      22.07,
+      23.01
+     ]
+    },
+    {
+     "t": "I'm not into the whole, let's ___.",
+     "me": true,
+     "at": [
+      22.76,
+      26.48
+     ],
+     "parts": [
+      "I'm not into the whole, let's ",
+      {
+       "gap": "go out for dinner"
+      },
+      "."
+     ]
+    },
+    {
+     "t": "Yeah, so--",
+     "me": false,
+     "at": [
+      26.23,
+      26.98
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "go out for dinner",
+   "groups": [
+    "C1"
+   ],
+   "tasks": [
+    "C1 · Get out or go out?"
+   ],
+   "quizzes": [
+    "c1_2"
+   ],
+   "items": {}
+  },
+  {
+   "id": "a12-kacuTTfRgI0-2574_34",
+   "kind": "yt",
+   "video": "kacuTTfRgI0",
+   "src": "Talks at Google · Aisha Tyler",
+   "whole": true,
+   "play": [
+    2574.34,
+    2581.35
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": ">>LaFawn Bailey: Yeah. Like Nemo.",
+     "me": false,
+     "at": [
+      2574.24,
+      2576.12
+     ]
+    },
+    {
+     "t": ">>Aisha Tyler: You guys have a lot of ___ here at Google.",
+     "me": true,
+     "at": [
+      2575.87,
+      2581.03
+     ],
+     "parts": [
+      ">>Aisha Tyler: You guys have a lot of ",
+      {
+       "gap": "time on your hands"
+      },
+      " here at Google."
+     ]
+    },
+    {
+     "t": "[laughter]",
+     "me": false,
+     "at": [
+      2580.78,
+      2581.35
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "time on your hands",
+   "groups": [
+    "B2",
+    "C1"
+   ],
+   "tasks": [
+    "B2 · Ben, part 1: at first, the problem was…",
+    "C1 · Ben's phrases out there"
+   ],
+   "quizzes": [
+    "b2_1",
+    "c1_1"
+   ],
+   "items": {}
+  },
+  {
+   "id": "a3-uH0aihGWB8U-58_97",
+   "kind": "yt",
+   "video": "uH0aihGWB8U",
+   "src": "TED · Daniel Kish, sonar",
+   "whole": true,
+   "play": [
+    58.97,
+    68.48
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "Evidently, wandering around the nursery",
+     "me": false,
+     "at": [
+      58.87,
+      62.28
+     ]
+    },
+    {
+     "t": "was not a problem for me without eyes.",
+     "me": false,
+     "at": [
+      62.03,
+      65.85
+     ]
+    },
+    {
+     "t": "___ getting caught.",
+     "me": true,
+     "at": [
+      65.6,
+      68.48
+     ],
+     "parts": [
+      {
+       "gap": "The problem was"
+      },
+      " getting caught."
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "The problem was",
+   "groups": [
+    "B2"
+   ],
+   "tasks": [
+    "B2 · Ben, part 1: at first, the problem was…"
+   ],
+   "quizzes": [
+    "b2_1"
+   ],
+   "items": {}
+  },
+  {
+   "id": "b3-dlLq7CoA6mo-224_77",
+   "kind": "yt",
+   "video": "dlLq7CoA6mo",
+   "src": "The Ellen Show · Cousins Undercover",
+   "whole": true,
+   "play": [
+    224.77,
+    230.28
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "MAKING SURE THAT THEY GET OUT OF THE HOSPITAL BED,",
+     "me": false,
+     "at": [
+      224.67,
+      226.95
+     ]
+    },
+    {
+     "t": "___, OFF THE COUCH,",
+     "me": true,
+     "at": [
+      226.7,
+      228.78
+     ],
+     "parts": [
+      {
+       "gap": "GET OUT OF THE HOUSE"
+      },
+      ", OFF THE COUCH,"
+     ]
+    },
+    {
+     "t": "AND GO DO CRAZY THINGS",
+     "me": false,
+     "at": [
+      228.53,
+      230.28
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "GET OUT OF THE HOUSE",
+   "groups": [
+    "C1"
+   ],
+   "tasks": [
+    "C1 · Get out or go out?"
+   ],
+   "quizzes": [
+    "c1_2"
+   ],
+   "items": {}
+  },
+  {
+   "id": "b2-C1uvYz4Ers4-1336_03",
+   "kind": "yt",
+   "video": "C1uvYz4Ers4",
+   "src": "Talks at Google · Motown the Musical",
+   "whole": true,
+   "play": [
+    1336.03,
+    1347.09
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "I don't think I've ever [heard] anything that beautiful live.",
+     "me": false,
+     "at": [
+      1335.93,
+      1339.37
+     ]
+    },
+    {
+     "t": "KRYSTAL JOY BROWN: Wow, that's a huge compliment.",
+     "me": false,
+     "at": [
+      1339.12,
+      1341.9
+     ]
+    },
+    {
+     "t": "TODD WOMACK: I don't ___ much.",
+     "me": true,
+     "at": [
+      1341.65,
+      1344.19
+     ],
+     "parts": [
+      "TODD WOMACK: I don't ",
+      {
+       "gap": "get out of the house"
+      },
+      " much."
+     ]
+    },
+    {
+     "t": "KRYSTAL JOY BROWN: Well, in that case, it's an OK compliment.",
+     "me": false,
+     "at": [
+      1343.94,
+      1347.09
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "get out of the house",
+   "groups": [
+    "B2",
+    "C1"
+   ],
+   "tasks": [
+    "B2 · Ben, part 2: get out of the house, you name it…",
+    "C1 · Get out or go out?"
+   ],
+   "quizzes": [
+    "b2_2",
+    "c1_2"
+   ],
+   "items": {}
+  },
+  {
+   "id": "b10-OQyRuOEKfVk-4_98",
+   "kind": "yt",
+   "video": "OQyRuOEKfVk",
+   "src": "Jamie Oliver · The perfect omelette",
+   "whole": true,
+   "play": [
+    4.98,
+    10.07
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "you can use all sorts of different things:",
+     "me": false,
+     "at": [
+      4.88,
+      6.59
+     ]
+    },
+    {
+     "t": "crispy bacon, mushrooms, tomatoes, cheeses, ___!",
+     "me": true,
+     "at": [
+      6.34,
+      10.07
+     ],
+     "parts": [
+      "crispy bacon, mushrooms, tomatoes, cheeses, ",
+      {
+       "gap": "you name it"
+      },
+      "!"
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "you name it",
+   "groups": [
+    "B2"
+   ],
+   "tasks": [
+    "B2 · Ben, part 2: get out of the house, you name it…"
+   ],
+   "quizzes": [
+    "b2_2"
+   ],
+   "items": {}
+  },
+  {
+   "id": "b4-SaIbR5tVuvM-112_43",
+   "kind": "yt",
+   "video": "SaIbR5tVuvM",
+   "src": "Great Big Story · The biggest hedges",
+   "whole": true,
+   "play": [
+    112.43,
+    119.74
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "- [Narrator] Along with the hedges,",
+     "me": false,
+     "at": [
+      112.33,
+      113.68
+     ]
+    },
+    {
+     "t": "Dan is among the seven gardeners",
+     "me": false,
+     "at": [
+      113.43,
+      115.19
+     ]
+    },
+    {
+     "t": "who work throughout the year, ___,",
+     "me": true,
+     "at": [
+      114.94,
+      117.5
+     ],
+     "parts": [
+      "who work throughout the year, ",
+      {
+       "gap": "come rain or shine"
+      },
+      ","
+     ]
+    },
+    {
+     "t": "to manage the ever evolving grounds.",
+     "me": false,
+     "at": [
+      117.25,
+      119.74
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "come rain or shine",
+   "groups": [
+    "B2"
+   ],
+   "tasks": [
+    "B2 · Ben, part 2: get out of the house, you name it…"
+   ],
+   "quizzes": [
+    "b2_2"
+   ],
+   "items": {}
+  },
+  {
+   "id": "a8-hJFiz-y8NGw-1070_84",
+   "kind": "yt",
+   "video": "hJFiz-y8NGw",
+   "src": "Google Developers · Women Techmakers",
+   "whole": true,
+   "play": [
+    1070.84,
+    1081.43
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "was one of two women in my entering class",
+     "me": false,
+     "at": [
+      1070.74,
+      1073.63
+     ]
+    },
+    {
+     "t": "for graduate school, and often the only woman in a class.",
+     "me": false,
+     "at": [
+      1073.38,
+      1079.72
+     ]
+    },
+    {
+     "t": "So it really ___.",
+     "me": true,
+     "at": [
+      1079.47,
+      1081.43
+     ],
+     "parts": [
+      "So it really ",
+      {
+       "gap": "hit me like a ton of bricks"
+      },
+      "."
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "hit me like a ton of bricks",
+   "groups": [
+    "B2"
+   ],
+   "tasks": [
+    "B2 · Ben, part 1: at first, the problem was…"
+   ],
+   "quizzes": [
+    "b2_1"
+   ],
+   "items": {}
+  },
+  {
+   "id": "g2-otYqv4BJBHA-236_20",
+   "kind": "yt",
+   "video": "otYqv4BJBHA",
+   "src": "BBC · Dragons' Den",
+   "whole": true,
+   "play": [
+    236.2,
+    242.51
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "I just can't imagine me going home to say,",
+     "me": false,
+     "at": [
+      236.1,
+      238.15
+     ]
+    },
+    {
+     "t": "\"We're going to ___,\" and she's going to go,",
+     "me": true,
+     "at": [
+      237.9,
+      240.47
+     ],
+     "parts": [
+      "\"We're going to ",
+      {
+       "gap": "go out for dinner"
+      },
+      ",\" and she's going to go,"
+     ]
+    },
+    {
+     "t": "\"Oh, that's great, darling. Yeah, lovely.\"",
+     "me": false,
+     "at": [
+      240.22,
+      242.51
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "go out for dinner",
+   "groups": [
+    "C1"
+   ],
+   "tasks": [
+    "C1 · Get out or go out?"
+   ],
+   "quizzes": [
+    "c1_2"
+   ],
+   "items": {}
+  },
+  {
+   "id": "f1-VGcIX2CbM8M-31_50",
+   "kind": "yt",
+   "video": "VGcIX2CbM8M",
+   "src": "The Ellen Show · Uber driver",
+   "whole": true,
+   "play": [
+    31.5,
+    34.65
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "I love Drew Brees.",
+     "me": false,
+     "at": [
+      31.4,
+      32.63
+     ]
+    },
+    {
+     "t": "I love Drew Brees, too.",
+     "me": false,
+     "at": [
+      32.38,
+      33.32
+     ]
+    },
+    {
+     "t": "___.",
+     "me": true,
+     "at": [
+      33.07,
+      33.86
+     ],
+     "parts": [
+      {
+       "gap": "Don't get me wrong"
+      },
+      "."
+     ]
+    },
+    {
+     "t": "I love you, too.",
+     "me": false,
+     "at": [
+      33.61,
+      34.65
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "Don't get me wrong",
+   "groups": [
+    "B2",
+    "C1"
+   ],
+   "tasks": [
+    "For later (B2 and C1) · Ben, part 3"
+   ],
+   "quizzes": [
+    "later"
+   ],
+   "items": {}
+  },
+  {
+   "id": "f4-y2LQinFAQN4-1807_80",
+   "kind": "yt",
+   "video": "y2LQinFAQN4",
+   "src": "Talks at Google · Bear McCreary",
+   "whole": true,
+   "play": [
+    1807.8,
+    1816.05
+   ],
+   "ctx": null,
+   "rows": [
+    {
+     "t": "I wanna stress I'm not just throwing these in because I got bored.",
+     "me": false,
+     "at": [
+      1807.7,
+      1810.85
+     ]
+    },
+    {
+     "t": "___.",
+     "me": true,
+     "at": [
+      1810.6,
+      1811.98
+     ],
+     "parts": [
+      {
+       "gap": "Quite the contrary"
+      },
+      "."
+     ]
+    },
+    {
+     "t": "Most of the time, as a composer if you were working on a show",
+     "me": false,
+     "at": [
+      1811.73,
+      1816.05
+     ]
+    }
+   ],
+   "parts": [],
+   "answer": "Quite the contrary",
+   "groups": [
+    "B2",
+    "C1"
+   ],
+   "tasks": [
+    "For later (B2 and C1) · Ben, part 3"
+   ],
+   "quizzes": [
+    "later"
+   ],
+   "items": {}
+  }
+ ],
+ "removed": [],
+ "whys_add": [
+  "a word in the gap is swallowed",
+  "very reduced — find more like it for C1"
+ ]
+}

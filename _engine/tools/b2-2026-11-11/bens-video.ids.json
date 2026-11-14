@@ -615,11 +615,16 @@
   {
    "pid": 1,
    "sig": "2 name two things you rely on more than you should (your phone? coffee? your car?). start: don't get me wrong, i love…, but…",
-   "gone": false
+   "gone": true
   },
   {
    "pid": 2,
    "sig": "1 tell ben's story in two sentences: how he felt at first and what he's done since then. start: at first, he… since then, he's…",
+   "gone": false
+  },
+  {
+   "pid": 3,
+   "sig": "2 what makes you feel part of something? start: can't explain it, but…",
    "gone": false
   }
  ],

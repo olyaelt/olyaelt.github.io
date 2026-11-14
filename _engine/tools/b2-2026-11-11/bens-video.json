@@ -124,15 +124,16 @@
      "**At first**, I **enjoyed** it.",
      "**The problem was**, …",
      "… **hit me like a ton of bricks**.",
-     "**I've tried** everything."
+     "**I've tried** everything.",
+     "(a lot of) **time on my hands**"
     ]
    },
    {
-    "h": "PEOPLE",
+    "h": "WHAT HE DOES NOW",
     "items": [
-     "I **rely on** … more than I should. ##/rɪˈlaɪ/##",
-     "**Don't get me wrong**, …",
-     "**these days**"
+     "**get out of the house**",
+     "**Can't explain it**, but …",
+     "…, **you name it**."
     ]
    }
   ]
@@ -1161,7 +1162,7 @@
       "What do you do when you've got **time on your hands**?",
       "Name **two** moments in life when that **nowhere-to-be** feeling can **hit you like a ton of bricks** (after a long trip, at the end of a big project…). What helps?"
      ],
-     "fast": "tell your partner what Ben did at first, and what went wrong — from memory.",
+     "fast": "TAKEAWAYS?",
      "id": 46
     },
     {
@@ -1411,7 +1412,12 @@
       {
        "s": "",
        "p": [
-        "— No."
+        "— ",
+        {
+         "f": "",
+         "r": "No"
+        },
+        "."
        ]
       },
       {
@@ -1531,7 +1537,12 @@
          "r": "/maɪnd ɪf/",
          "o": 1
         },
-        " — No."
+        " — ",
+        {
+         "f": "",
+         "r": "No"
+        },
+        "."
        ],
        "ru": "Не против, если мы присядем? — Нет (= садитесь)."
       },
@@ -1697,7 +1708,12 @@
       {
        "s": "",
        "p": [
-        "— No."
+        "— ",
+        {
+         "f": "",
+         "r": "No"
+        },
+        "."
        ]
       },
       {
@@ -2557,7 +2573,7 @@
       {
        "s": "",
        "p": [
-        "<st>**The story**</st> → **past simple** · <su>**the sum-up**</su> → **present perfect**"
+        "<st>**The story**</st> → **...** · <su>**the sum-up**</su> → **...**"
        ]
       }
      ],
@@ -2661,7 +2677,7 @@
       {
        "s": "",
        "p": [
-        "<st>**The story**</st> → **past simple** · <su>**the sum-up**</su> → **present perfect**"
+        "<st>**The story**</st> → **...** · <su>**the sum-up**</su> → **...**"
        ]
       }
      ],
@@ -3143,7 +3159,7 @@
      "box": "BEFORE",
      "items": [
       "**1**  Tell Ben's story in **two** sentences: how he felt at first and what he's done since then. Start: **At first, he**… **Since then, he's**…",
-      "**2**  Name **two** things you rely on more than you should (your phone? coffee? your car?). Start: **Don't get me wrong**, I love…, but…"
+      "**2**  What makes you feel part of something? Start: **Can't explain it, but**…"
      ],
      "id": 38
     },
@@ -3906,7 +3922,8 @@
  "class_view": {
   "stages": [
    0,
-   1
+   1,
+   2
   ],
   "also": [
    6,
@@ -4011,6 +4028,7 @@
     ],
     "note": "can or can't? The full vowel says can't — in British and American English alike."
    }
-  }
+  },
+  "last_blocks": 12
  }
 }
