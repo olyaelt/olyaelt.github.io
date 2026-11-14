@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>/* the site theme: light unless this device chose dark (engine 56) */(function(){var t="light";try{if(localStorage.getItem("site-theme")==="dark")t="dark"}catch(e){}document.documentElement.setAttribute("data-theme",t)})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F6F1DC">
+<title>My prep</title>
+<link rel="stylesheet" href="../fonts/homework-sans.css">
+<style>
+/* engine 89 (her 14.11 16:24 «где мне страницы такие находить, с актуальными заданиями?» — 16:25 «отличная идея с prep»): her prep pages in one place, newest first, with how many clips she has rated (her table, her teacher code) */
+:root{
+  --ground:#F6F1DC; --card:#FFFFFF; --ink:#1D1D1B; --muted:#6B6B6B; --line:#D9D2B8; --instr:#0693E3; --instr-ink:#FFFFFF;
+  --label:#E00000; --done:#2E8B3E; --no:#C0392B; --hl:#FFFF00; --hl-ink:#1D1D1B;
+  --font-body:"Homework Sans","Calibri","Carlito","Segoe UI",system-ui,sans-serif; --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D; --instr:#1578C0; --label:#FF7A7A; --done:#62C774; --no:#FF8A80; color-scheme:dark; }
+}
+:root[data-theme="dark"]{ --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D; --instr:#1578C0; --label:#FF7A7A; --done:#62C774; --no:#FF8A80; color-scheme:dark; }
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font-body);font-size:1.08rem;line-height:1.45}
+.wrap{max-width:46rem;margin:0 auto;padding:24px 16px 40px}
+h1{font-size:1.9rem;margin:0 0 4px;line-height:1.15}
+.sub{color:var(--muted);margin:0 0 18px}
+.film{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:12px 16px;margin:0 0 18px}
+.film p{margin:0 0 6px} .film .big{font-size:1.35rem;font-weight:900}
+.film .small,.small{color:var(--muted);font-size:.92rem}
+.film .err{color:var(--no);font-weight:700}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input{font:inherit;padding:8px 12px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);width:13rem;max-width:100%}
+button{font:inherit;cursor:pointer}
+.btn{border:2px solid var(--instr);background:var(--card);color:var(--instr);border-radius:12px;padding:8px 16px;font-weight:800}
+.btn.primary{background:var(--instr);color:var(--instr-ink)}
+.link{border:0;background:none;color:var(--muted);text-decoration:underline;padding:0;font-size:.92rem}
+.lessons{display:grid;gap:12px;margin:0;padding:0;list-style:none}
+.lesson{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:14px 16px;text-decoration:none;color:inherit}
+.lesson:hover{border-color:var(--instr)}
+.flag{font-size:2rem;line-height:1}
+.lesson .t{font-weight:900;font-size:1.15rem;margin:0}
+.lesson .p{color:var(--muted);margin:0;font-size:.95rem}
+.lesson .st{color:var(--done);font-weight:800;white-space:nowrap}
+.legal{margin-top:28px;color:var(--muted);font-size:.85rem}
+.legal a{color:inherit}
+.lesson.old{opacity:.7}
+.cnt{display:block;font-size:.95rem;margin-top:4px}
+.cnt b{color:var(--ink)}
+.todo{color:var(--label);font-weight:900}
+.ok{color:var(--done);font-weight:900}
+h2{font-size:1.1rem;margin:22px 0 10px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>My prep</h1>
+  <p class="sub">Rating pages and drafts · only for me · newest first</p>
+  <section class="film" id="who"></section>
+  <ul class="lessons" id="list"></ul>
+  <h2 id="oldh" hidden>Done</h2>
+  <ul class="lessons" id="old"></ul>
+  <p class="small" style="margin-top:22px">Lesson pages for the groups: <a href="../tools/index.html">Tools</a> · my own lessons: <a href="../me/index.html">My lessons</a></p>
+  <footer class="legal"><a href="../impressum.html">Impressum</a> · <a href="../datenschutz.html">Datenschutz</a></footer>
+</div>
+<script>
+const PREP = [{"emoji": "🎧", "date": "14.11", "title": "Rate the clips: homework 13.11 + the pool for the adaptive quiz", "what": "Your rating page on the homework engine: the same screen as the students'.", "href": "rate-2026-11-13.html", "set": "hw-2026-11-13", "parts": [{"label": "Pool for the step quiz", "ids": ["p-m1-_C2Jmg82_1g-146_879", "p-g3-j4LSwZ05laQ-22_411", "p-t3-w0l_DqVfHhw-215_84", "p-n2-mPiyDWFr-jg-140_965", "p-p1-LeY0dgSF9l8-862_03", "p-e1-MFzDaBzBlL0-350_784", "p-t6-TPD7opOpk6k-603_07", "p-h1-L5n3V0VYGNg-566_222", "p-t5-b-HkNXW4nmU-515_038", "p-o2-REm143Pu11M-247_999", "p-e4-89O8CIDRtKw-1768_78", "p-s2-mgcjr1yz7ow-13_087", "p-t8-yP176MBG9Tk-82_06", "p-g2-ny5OQxLqzEM-2734_59", "p-y1-VkMR5q-R-sM-94_725", "p-n5-qCrVpRBBSvY-552_552", "p-t7-t9M0RPNr9qg-115_92", "p-e7-cJ45-FG_EUI-3128_85", "p-n6-GEZhD3J89ZE-2698_83", "p-e6-RX_9iBhF5_I-2554_25", "p-y2-R3t1cg2ZOxc-70_117", "p-r1-zZ_Yl1j7Qb4-309_48", "p-s3-heY_8JJHBIE-443_181", "p-v4-VsS7bo3JMqk-2581_97", "p-e3-ni7YG7Lbj_I-307_7", "p-n7-wBz90rYLKC4-3069_03", "p-t1-DFjIi2hxxf0-481_908", "p-b1-JA5f_YSlxHQ-261_54", "p-y4-UrJOAURIM7w-314_26", "p-s1-452bjRvf_Kc-206_233", "p-p3-U6PoUg7jXsA-939_837", "p-v1-aemCEtelvFM-73_666", "p-y3-qyk12bsXZBE-300_36", "p-m2-AfQT4Fz1ipI-114_533", "p-s5-c2tOp7OxyQ8-156_26", "p-p4-2Yt6raj-S1M-102_99", "p-b2-56sEJKjD95M-35_54", "p-s4-AkUcaludrcI-192_98", "p-n4-k3Ls28qBT5c-48_992", "p-s6-o2FM8Z_AexA-69_17", "p-v2-gj3RskVvVLA-2685_36", "p-h2-Cj2G5D9kz6c-127_3", "p-t2-iueVZJVEmEs-126_553", "p-o3-7QGP-e6y41w-285_851", "p-g1-VJjTOuUkK-k-2693_94", "p-p2-guZa7mQV1l0-2234_46", "p-e5-MLOIxc70nDg-229_3", "p-s7-xNmf-G81Irs-35_841", "p-m3-QAgncfAdeoM-223_533", "p-o1-_P-F0FHzMbY-3520_97", "p-v3-v_1irrPVt4M-1223_51", "p-m4-DGwlg6jEsJI-261_46", "p-o4-bg_zwkDOcNc-330_27"], "todo": true}, {"label": "Homework clips (B2 and C1)", "ids": ["a10-k8jcvV9XlOA-808_07", "g1-Vao7T4__0Xw-67_34", "b6-wuqg76YcT2Y-60_87", "a6-C9Gf-Zc2zjs-1339_16", "c1-hosUolDbhI8-76_67", "f3-kRCalQ2q7vM-1509_15", "f2-h3y_cw4ZnFs-61_07", "g6-pcPRZSURLEg-39_20", "a2-R2UmPrxHd6g-61_70", "f6-4v7kASXPQMc-16_29", "b1-YbLFZSRtKew-445_70", "b5-29eFw4wdAM8-102_90", "b7-r10I2aONT8Q-36_00", "a5-Bt9QB0ISzMc-274_63", "b8-P7Y2vcTo_kE-1194_01", "f5-caNLLFZ1zu0-593_75", "b11-hXRe0N1hejE-2888_92", "g3-QVoleJYgdM8-21_00", "b3-dlLq7CoA6mo-224_77", "b2-C1uvYz4Ers4-1336_03", "b10-OQyRuOEKfVk-4_98", "b4-SaIbR5tVuvM-112_43", "a8-hJFiz-y8NGw-1070_84", "g2-otYqv4BJBHA-236_20", "f1-VGcIX2CbM8M-31_50", "f4-y2LQinFAQN4-1807_80", "b9-tZNBy-BdM2A-416_14", "h1-_wMTKRixZIE-145_88", "a13-W-vj6BhQa5w-1042_52", "a14-kOS0umAH_to-1635_24"]}]}, {"emoji": "🔊", "date": "14.11", "title": "Can or can't: the trial quiz", "what": "The can / can't pool for the trial quiz (one B2 student).", "href": "rate-cancant-2026-11-14.html", "set": "cancant-2026-11-14", "parts": [{"label": "Main clips", "ids": ["dc13", "dc06", "dn33", "dn15", "dn28", "dc12", "dc14", "sn02", "dn21", "dc21", "dc16", "dn10", "dn08", "dc29", "dc28", "sc13", "dn30", "dc08", "sn05", "dc27", "dn11", "dc15", "dn36", "dc25", "dn02", "dn24", "sc05", "dn37", "dn03", "dc18", "dn32", "dc19", "dc23", "dn12", "dc17", "sn04", "dc22", "dn20", "dn17", "sc04", "sc02", "dn09", "dn13", "sn13", "dc02", "dc20", "dn14", "dc10", "dc04", "dn29", "dn04", "dn07"], "key": "main", "todo": true}, {"label": "Spare clips", "ids": ["dn23", "dn26", "dc24", "dn16", "sn06", "dc07", "sn18", "dn01", "sc09", "dn35", "dc09", "dn27", "sn09", "dn25", "dc05", "sc18", "dn18", "dc03", "dc11", "dn34", "dn22", "dn31", "sc06", "dn05", "dc26", "dn19"], "key": "spare"}]}, {"emoji": "🪜", "date": "14.11", "title": "Step quiz: demo", "what": "The adaptive quiz on your rated clips. Pretend you caught or missed everything to see both ways.", "href": "step-demo-2026-11-13.html"}, {"emoji": "🎬", "date": "12.11", "title": "Decoding prep", "what": "Your film and its .srt: mark the bits for decoding.", "href": "../tools/prep/decoding-live.html"}, {"emoji": "⭐", "date": "11.11", "title": "Rate the lines: homework 11.11", "what": "Done. Your ratings are in your table.", "old": true, "href": "../tools/prep/rate-2026-11-11-live.html", "set": "hw-2026-11-11", "parts": [{"label": "Lines", "ids": ["yt-xfwBwk7k3Gs-4_12", "film-533886534070", "yt-JwntNANJCOE-185_00", "film-113728113878", "film-5375853982", "yt-pnSw8g3DPHw-120_32", "film-401379401679", "yt-gpv7ayf_tyE-96_47", "film-313284313487", "yt-6jAlPQau5Hc-102_59", "film-403291403501", "yt-L6QRnULIjv4-31_19", "film-473146473306", "film-304479305753", "yt-JuDQD_t1ow0-53_07", "yt-k4vRFodAqWo-24_56", "film-331564332608", "film-461966462883", "film-150119215025", "film-321164323410", "yt-xkjWnKfpZ1I-122_92", "film-242288242488", "yt-n9DwoQ7HWvI-60_50", "film-9310893338", "film-1111211622", "yt-6jAlPQau5Hc-25_17", "yt-awzOq84NLpc-6_51", "film-2001020374", "yt-xkjWnKfpZ1I-246_28", "yt-bxMiLwA3qQ4-40_71", "yt-5ljluGA4dQU-294_22", "yt-Rln8dQEMz2Q-311_28", "yt-xkjWnKfpZ1I-1_27", "film-5041250682", "film-243115243388", "film-331564332298", "film-321164322913", "film-331564331918", "yt-gX_Nowc4EMk-122_92", "film-445874450048", "yt-7dcM3gPA-Qs-104_46", "film-1111212336", "yt-xkjWnKfpZ1I-272_94", "film-430676430890", "yt-JuDQD_t1ow0-57_70", "yt-xkjWnKfpZ1I-317_75", "yt-pnSw8g3DPHw-97_30", "yt-n9DwoQ7HWvI-56_44", "film-292371292634", "film-2486825355", "film-120934121641", "yt-xfwBwk7k3Gs-5_58", "film-110039511006", "yt-L6QRnULIjv4-29_14", "yt-6jAlPQau5Hc-23_71"], "key": "cards"}]}];
+const SYNC_URL = "https://script.google.com/macros/s/AKfycbwHqzwA-2z09POg7JSqiMhqglOKbD8bxs-UG-NcFKZPzTyzmdEW79ct3zHGktUGyLM_/exec";
+const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const get = k => { try{ return localStorage.getItem(k) || ""; }catch(e){ return ""; } };
+const teacher = () => get("hw-code") && get("hw-role") === "teacher";
+/* what this device already knows (the rating pages keep a copy), then her table */
+const local = set => { try{ return (JSON.parse(localStorage.getItem("rate-" + set) || "null") || {}).cards || {}; }catch(e){ return {}; } };
+const R = {}; let err = "";
+const rated = (cards, ids) => ids.filter(id => { const x = cards[id]; return x && (x.level || x.out); }).length;
+function item(p){
+  const cards = Object.assign({}, local(p.set || ""), R[p.set] || {});
+  const parts = (p.parts || []).map(x => { const n = rated(cards, x.ids), all = x.ids.length, left = all - n;
+    return `<span class="cnt">${esc(x.label)}: <b>${n} of ${all}</b> rated ${left ? (x.todo && !p.old ? `<span class="todo">· ${left} to go</span>` : "") : `<span class="ok">✓</span>`}</span>`; }).join("");
+  return `<li><a class="lesson${p.old ? " old" : ""}" href="${esc(p.href)}"><span class="flag" aria-hidden="true">${esc(p.emoji || "🎧")}</span><span><p class="t">${esc(p.title)}</p><p class="p">${esc(p.date)} · ${esc(p.what || "")}</p>${parts}</span><span class="st"></span></a></li>`; }
+function paint(){
+  document.getElementById("who").innerHTML = teacher() ? `<p class="small">${err ? `<span class="err">${esc(err)}</span>` : "The numbers come from your table (your ratings on any device)."}</p>`
+    : `<p><b>Your teacher code isn't on this device.</b> Open any homework page, type your code there, then come back: the numbers of rated clips need it.</p>`;
+  document.getElementById("list").innerHTML = PREP.filter(p => !p.old).map(item).join("");
+  const old = PREP.filter(p => p.old); document.getElementById("oldh").hidden = !old.length; document.getElementById("old").innerHTML = old.map(item).join(""); }
+async function load(){
+  if(!teacher() || !SYNC_URL) return;
+  for(const p of PREP.filter(x => x.set)){
+    try{ const r = await fetch(SYNC_URL, {method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, body: JSON.stringify({action: "rateGet", code: get("hw-code"), set: p.set})});
+      const res = await r.json(); if(res && res.ok) R[p.set] = res.cards || {}; else err = "Your table didn't answer — the numbers are from this device."; }
+    catch(e){ err = "No connection — the numbers are from this device."; }
+    paint(); } }
+paint(); load();
+</script>
+<style>.theme-tg{font:inherit;font-size:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px}</style>
+<script>/* 🌙 Dark theme / ☀️ Light theme beside Impressum · Datenschutz (engine 56) */(function(){
+var H=document.documentElement,lab=function(){return H.getAttribute("data-theme")==="dark"?"☀️ Light theme":"🌙 Dark theme"};
+function paint(){document.querySelectorAll(".theme-tg").forEach(function(b){b.textContent=lab()})}
+function add(){document.querySelectorAll("footer.legal, p.legal").forEach(function(f){if(f.querySelector(".theme-tg"))return;var b=document.createElement("button");b.type="button";b.className="theme-tg";
+b.addEventListener("click",function(){var d=H.getAttribute("data-theme")==="dark"?"light":"dark";H.setAttribute("data-theme",d);try{localStorage.setItem("site-theme",d)}catch(e){}paint()});
+f.appendChild(document.createTextNode(" · "));f.appendChild(b)});paint()}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",add);else add();
+addEventListener("storage",function(e){if(e.key==="site-theme"){H.setAttribute("data-theme",e.newValue==="dark"?"dark":"light");paint()}})})();</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+ "title": "The Intern · Scene 1: Come rain or shine",
+ "group": "b2",
+ "file": "2026-11-13.html",
+ "listed": false,
+ "assets": {
+  "STICKER": "sticker.png",
+  "GAPS": "gaps.json",
+  "PRACTICE": "practice.json",
+  "OTY": "otu.json",
+  "TQ": "tq.json"
+ },
+ "earlier": true,
+ "earlier_only": [
+  "as a kid",
+  "at school",
+  "at 18",
+  "in my early",
+  "in my mid",
+  "in my late",
+  "after i left school",
+  "straight out of university",
+  "third year at university",
+  "i still can't",
+  "i still don't have",
+  "when did you last",
+  "ages ago",
+  "i can't remember exactly"
+ ],
+ "class": {
+  "topics": [
+   {
+    "t": "The Intern: Ben's video",
+    "href": "../tools/b2-2026-11-11/bens-video-class.html"
+   }
+  ]
+ },
+ "earlier_unlisted": true
+}

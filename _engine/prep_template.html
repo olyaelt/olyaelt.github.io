@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F6F1DC">
+<title>My prep</title>
+<link rel="stylesheet" href="../fonts/homework-sans.css">
+<style>
+/* engine 89 (her 14.11 16:24 «где мне страницы такие находить, с актуальными заданиями?» — 16:25 «отличная идея с prep»): her prep pages in one place, newest first, with how many clips she has rated (her table, her teacher code) */
+:root{
+  --ground:#F6F1DC; --card:#FFFFFF; --ink:#1D1D1B; --muted:#6B6B6B; --line:#D9D2B8; --instr:#0693E3; --instr-ink:#FFFFFF;
+  --label:#E00000; --done:#2E8B3E; --no:#C0392B; --hl:#FFFF00; --hl-ink:#1D1D1B;
+  --font-body:"Homework Sans","Calibri","Carlito","Segoe UI",system-ui,sans-serif; --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D; --instr:#1578C0; --label:#FF7A7A; --done:#62C774; --no:#FF8A80; color-scheme:dark; }
+}
+:root[data-theme="dark"]{ --ground:#121416; --card:#1C1F23; --ink:#ECECEA; --muted:#A4A7AB; --line:#33373D; --instr:#1578C0; --label:#FF7A7A; --done:#62C774; --no:#FF8A80; color-scheme:dark; }
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font-body);font-size:1.08rem;line-height:1.45}
+.wrap{max-width:46rem;margin:0 auto;padding:24px 16px 40px}
+h1{font-size:1.9rem;margin:0 0 4px;line-height:1.15}
+.sub{color:var(--muted);margin:0 0 18px}
+.film{background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:12px 16px;margin:0 0 18px}
+.film p{margin:0 0 6px} .film .big{font-size:1.35rem;font-weight:900}
+.film .small,.small{color:var(--muted);font-size:.92rem}
+.film .err{color:var(--no);font-weight:700}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input{font:inherit;padding:8px 12px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);width:13rem;max-width:100%}
+button{font:inherit;cursor:pointer}
+.btn{border:2px solid var(--instr);background:var(--card);color:var(--instr);border-radius:12px;padding:8px 16px;font-weight:800}
+.btn.primary{background:var(--instr);color:var(--instr-ink)}
+.link{border:0;background:none;color:var(--muted);text-decoration:underline;padding:0;font-size:.92rem}
+.lessons{display:grid;gap:12px;margin:0;padding:0;list-style:none}
+.lesson{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:var(--radius);padding:14px 16px;text-decoration:none;color:inherit}
+.lesson:hover{border-color:var(--instr)}
+.flag{font-size:2rem;line-height:1}
+.lesson .t{font-weight:900;font-size:1.15rem;margin:0}
+.lesson .p{color:var(--muted);margin:0;font-size:.95rem}
+.lesson .st{color:var(--done);font-weight:800;white-space:nowrap}
+.legal{margin-top:28px;color:var(--muted);font-size:.85rem}
+.legal a{color:inherit}
+.lesson.old{opacity:.7}
+.cnt{display:block;font-size:.95rem;margin-top:4px}
+.cnt b{color:var(--ink)}
+.todo{color:var(--label);font-weight:900}
+.ok{color:var(--done);font-weight:900}
+h2{font-size:1.1rem;margin:22px 0 10px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>My prep</h1>
+  <p class="sub">Rating pages and drafts · only for me · newest first</p>
+  <section class="film" id="who"></section>
+  <ul class="lessons" id="list"></ul>
+  <h2 id="oldh" hidden>Done</h2>
+  <ul class="lessons" id="old"></ul>
+  <p class="small" style="margin-top:22px">Lesson pages for the groups: <a href="../tools/index.html">Tools</a> · my own lessons: <a href="../me/index.html">My lessons</a></p>
+  <footer class="legal"><a href="../impressum.html">Impressum</a> · <a href="../datenschutz.html">Datenschutz</a></footer>
+</div>
+<script>
+const PREP = __PREP_JSON__;
+const SYNC_URL = "__SYNC_URL__";
+const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const get = k => { try{ return localStorage.getItem(k) || ""; }catch(e){ return ""; } };
+const teacher = () => get("hw-code") && get("hw-role") === "teacher";
+/* what this device already knows (the rating pages keep a copy), then her table */
+const local = set => { try{ return (JSON.parse(localStorage.getItem("rate-" + set) || "null") || {}).cards || {}; }catch(e){ return {}; } };
+const R = {}; let err = "";
+const rated = (cards, ids) => ids.filter(id => { const x = cards[id]; return x && (x.level || x.out); }).length;
+function item(p){
+  const cards = Object.assign({}, local(p.set || ""), R[p.set] || {});
+  const parts = (p.parts || []).map(x => { const n = rated(cards, x.ids), all = x.ids.length, left = all - n;
+    return `<span class="cnt">${esc(x.label)}: <b>${n} of ${all}</b> rated ${left ? (x.todo && !p.old ? `<span class="todo">· ${left} to go</span>` : "") : `<span class="ok">✓</span>`}</span>`; }).join("");
+  return `<li><a class="lesson${p.old ? " old" : ""}" href="${esc(p.href)}"><span class="flag" aria-hidden="true">${esc(p.emoji || "🎧")}</span><span><p class="t">${esc(p.title)}</p><p class="p">${esc(p.date)} · ${esc(p.what || "")}</p>${parts}</span><span class="st"></span></a></li>`; }
+function paint(){
+  document.getElementById("who").innerHTML = teacher() ? `<p class="small">${err ? `<span class="err">${esc(err)}</span>` : "The numbers come from your table (your ratings on any device)."}</p>`
+    : `<p><b>Your teacher code isn't on this device.</b> Open any homework page, type your code there, then come back: the numbers of rated clips need it.</p>`;
+  document.getElementById("list").innerHTML = PREP.filter(p => !p.old).map(item).join("");
+  const old = PREP.filter(p => p.old); document.getElementById("oldh").hidden = !old.length; document.getElementById("old").innerHTML = old.map(item).join(""); }
+async function load(){
+  if(!teacher() || !SYNC_URL) return;
+  for(const p of PREP.filter(x => x.set)){
+    try{ const r = await fetch(SYNC_URL, {method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, body: JSON.stringify({action: "rateGet", code: get("hw-code"), set: p.set})});
+      const res = await r.json(); if(res && res.ok) R[p.set] = res.cards || {}; else err = "Your table didn't answer — the numbers are from this device."; }
+    catch(e){ err = "No connection — the numbers are from this device."; }
+    paint(); } }
+paint(); load();
+</script>
+</body>
+</html>

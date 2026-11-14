@@ -367,7 +367,7 @@ def group_html(g):
     return '<section class="col"><h2>%s</h2>%s</section>' % (esc(GROUPS.get(g, g.upper())), ''.join(lesson_html(l) for l in ls))
 blocks = ['<div class="cols">%s</div>' % ''.join(group_html(g) for g in ('b2', 'c1') if g in groups)]
 others = [g for g in sorted(groups) if g not in ('b2', 'c1')]
-if others: blocks.append('<div class="others">%s<p class="note">Your own lessons: <a href="../me/index.html">My lessons</a></p></div>' % ''.join(group_html(g) for g in others))
+if others: blocks.append('<div class="others">%s<p class="note">Your own lessons: <a href="../me/index.html">My lessons</a> · your rating pages and drafts: <a href="../prep/index.html">My prep</a></p></div>' % ''.join(group_html(g) for g in others))
 index = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, nofollow"><title>Lesson pages</title>

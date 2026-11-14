@@ -1,0 +1,15 @@
+[
+ {"emoji": "🎧", "date": "14.11", "title": "Rate the clips: homework 13.11 + the pool for the adaptive quiz", "what": "Your rating page on the homework engine: the same screen as the students'.",
+  "href": "rate-2026-11-13.html", "set": "hw-2026-11-13",
+  "parts": [{"label": "Pool for the step quiz", "ids": "lessons/prep-2026-11-13/pool.json", "todo": true}, {"label": "Homework clips (B2 and C1)", "ids": "lessons/prep-2026-11-13/clips.json"}]},
+ {"emoji": "🔊", "date": "14.11", "title": "Can or can't: the trial quiz", "what": "The can / can't pool for the trial quiz (one B2 student).",
+  "href": "rate-cancant-2026-11-14.html", "set": "cancant-2026-11-14",
+  "parts": [{"label": "Main clips", "ids": "lessons/prep-2026-11-14/clips.json", "key": "main", "todo": true}, {"label": "Spare clips", "ids": "lessons/prep-2026-11-14/clips.json", "key": "spare"}]},
+ {"emoji": "🪜", "date": "14.11", "title": "Step quiz: demo", "what": "The adaptive quiz on your rated clips. Pretend you caught or missed everything to see both ways.",
+  "href": "step-demo-2026-11-13.html"},
+ {"emoji": "🎬", "date": "12.11", "title": "Decoding prep", "what": "Your film and its .srt: mark the bits for decoding.",
+  "href": "../tools/prep/decoding-live.html"},
+ {"emoji": "⭐", "date": "11.11", "title": "Rate the lines: homework 11.11", "what": "Done. Your ratings are in your table.", "old": true,
+  "href": "../tools/prep/rate-2026-11-11-live.html", "set": "hw-2026-11-11",
+  "parts": [{"label": "Lines", "ids": "tools/prep/rate-2026-11-11.json", "key": "cards"}]}
+]

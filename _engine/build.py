@@ -37,6 +37,8 @@ if '__EARLIER__' in t:
         lessons_dir = os.path.dirname(os.path.normpath(lesson))
         listed = lambda d: json.load(open(os.path.join(lessons_dir, d, 'page.json'), encoding='utf-8')).get('listed', True) is not False
         older = sorted(d for d in os.listdir(lessons_dir) if re.match(m.group(1) + r'-\d{4}-\d{2}-\d{2}$', d) and d < name and listed(d))   # unlisted = not given yet
+        if cfg.get('earlier_unlisted'):   # engine 89: pages published from her table (📢 Publish) are «listed: false» too — this page looks back at them
+            older = sorted(d for d in os.listdir(lessons_dir) if re.match(m.group(1) + r'-\d{4}-\d{2}-\d{2}$', d) and d < name)
         chosen = []
         for k in (1, 2, 4, 8):                      # the last lesson, the one before, two weeks back, a month back
             if len(older) >= k and older[-k] not in chosen: chosen.append(older[-k])

@@ -1779,7 +1779,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = ["click on the top line to hear the context","click on the line with the gap and try to catch what's in the gap","check","listen again — how did the expression sound?","optional: pronounce the expression like the speaker"];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "88";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "89";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -2858,7 +2858,7 @@ function renderHome(justDone){
   const taskBtn = t => `
           <div class="task-wrap"><div class="task-row ${done.has(t.id)?"is-done":""} ${t.stop?"stop":""}">
             <button class="task-btn" data-open="${t.id}">
-              <span><div class="t">${esc(t.title)}${t.later?` <span class="later-tag">for later</span>`:""}${fileTask(t) && !FILM_DESK ? ` <span class="later-tag">💻 on the computer</span>` : ""}${t.film && t.film.optional ? ` <span class="later-tag">optional</span>` : ""}</div><div class="m">${esc(t.meta)} · ≈ ${minutesOf(t)} min</div>${t.alt?`<div class="alt">${esc(t.alt)}</div>`:""}</span>
+              <span><div class="t">${esc(t.title)}${t.later?` <span class="later-tag">for later</span>`:""}${t.optional?` <span class="later-tag">optional</span>`:""}${fileTask(t) && !FILM_DESK ? ` <span class="later-tag">💻 on the computer</span>` : ""}${t.film && t.film.optional ? ` <span class="later-tag">optional</span>` : ""}</div><div class="m">${esc(t.meta)} · ≈ ${minutesOf(t)} min</div>${t.alt?`<div class="alt">${esc(t.alt)}</div>`:""}</span>
             </button>
             ${done.has(t.id) && t.kind === "steps" && !isTeacher() ? `<button class="again-btn" data-again="${t.id}" aria-label="Do it again" title="Do it again">↺</button>` : ""}<button class="status" data-toggle="${t.id}" aria-pressed="${done.has(t.id)}" aria-label="${done.has(t.id)?"Done — tap to untick":"Tap to mark as done"}">✓</button>
           </div><div data-fbslot="${t.id}">${isTeacher() ? teacherLine(t.id) : fbLine(t.id)}</div>${isTeacher() && t.tqLink ? tqLinkHTML(t) : !isTeacher() && t.tq ? tqAltHTML(t) : ""}</div>`;
@@ -2869,7 +2869,7 @@ function renderHome(justDone){
       <span class="date">${LESSON.date}</span>
       <h1>${SELF || SHOWT ? esc(document.title) : "Homework"}</h1>
       ${LESSON.sub?`<p>${LESSON.sub}</p>`:""}
-      ${TASKS.some(t=>!t.later && !(fileTask(t) && !FILM_DESK) && !(t.film && t.film.optional)) ? `<p class="total">About ${Math.round(TASKS.filter(t=>!t.later && !(fileTask(t) && !FILM_DESK) && !(t.film && t.film.optional)).reduce((s,t)=>s+minutesOf(t),0)/5)*5} minutes in total — you don't have to do it all in one go.${TASKS.some(t=>t.later)?" Tasks marked <b>for later</b> aren't in that time: come back to them when you like.":""}${TASKS.some(t=>t.film && t.film.optional)?" <b>Optional</b> tasks aren't in it either.":""}</p>` : ""}
+      ${TASKS.some(t=>!t.later && !t.optional && !(fileTask(t) && !FILM_DESK) && !(t.film && t.film.optional)) ? `<p class="total">About ${Math.round(TASKS.filter(t=>!t.later && !t.optional && !(fileTask(t) && !FILM_DESK) && !(t.film && t.film.optional)).reduce((s,t)=>s+minutesOf(t),0)/5)*5} minutes in total — you don't have to do it all in one go.${TASKS.some(t=>t.later)?" Tasks marked <b>for later</b> aren't in that time: come back to them when you like.":""}${TASKS.some(t=>t.film && t.film.optional)?" <b>Optional</b> tasks aren't in it either.":""}</p>` : ""}
     </header>
     ${classHTML()}
     ${isTeacher() && orderAB() ? `<p class="small order-note">🔀 Students see these tasks in their half's order (sheet «A/B halves»): x — ${orderAB().x.map(i => esc((TASKS.find(t => t.id === i) || {}).title || i)).join(" → ")}; y — ${(orderAB().y || []).map(i => esc((TASKS.find(t => t.id === i) || {}).title || i)).join(" → ")}. You see the x order.</p>` : ""}

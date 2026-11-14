@@ -57,6 +57,21 @@ if os.path.exists(os.path.join(HERE, 'me.json')):
     open(os.path.join(site, 'me', 'index.html'), 'w', encoding='utf-8').write(site_theme.add(tpl.replace('__ME_JSON__', json.dumps(me, ensure_ascii=False).replace('</', '<\\/')).replace('__SYNC_URL__', sync_me)))
     print('her own lessons: me/index.html with', len(me), 'pages')
 
+# engine 89 (her 14.11 16:24–16:25): her prep pages in one place, /prep/index.html — prep.json lists them (newest first; `parts` = the clips a
+# rating page has, their ids read here from the lesson's data, so the page can count what she has rated); noindex, linked from the tools list
+if os.path.exists(os.path.join(HERE, 'prep.json')):
+    prep = json.load(open(os.path.join(HERE, 'prep.json'), encoding='utf-8'))
+    for it in prep:
+        for part in it.get('parts', []):
+            data = json.load(open(os.path.join(HERE, part['ids']), encoding='utf-8'))
+            if part.get('key'): data = data[part['key']]
+            part['ids'] = [x['id'] for x in data]
+    sync_p = re.search(r'const SYNC_URL = "([^"]*)"', open(os.path.join(HERE, 'engine', 'page_template.html'), encoding='utf-8').read()).group(1)
+    os.makedirs(os.path.join(site, 'prep'), exist_ok=True)
+    tpl = open(os.path.join(HERE, 'prep_template.html'), encoding='utf-8').read()
+    open(os.path.join(site, 'prep', 'index.html'), 'w', encoding='utf-8').write(site_theme.add(tpl.replace('__PREP_JSON__', json.dumps(prep, ensure_ascii=False).replace('</', '<\\/')).replace('__SYNC_URL__', sync_p)))
+    print('her prep: prep/index.html with', len(prep), 'pages')
+
 # the font lives on the site itself, so no page contacts a font service
 fdir = os.path.join(site, 'fonts'); os.makedirs(fdir, exist_ok=True)
 for f in ('homework-sans.css', 'OFL.txt'): shutil.copyfile(os.path.join(HERE, 'fonts', f), os.path.join(fdir, f))
