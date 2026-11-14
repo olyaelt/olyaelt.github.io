@@ -1270,7 +1270,7 @@
   "lines": [
    [
     "tZNBy-BdM2A",
-    416.14,
+    417.44,
     1.5,
     [
      "WHAT KIND OF DANCING DID YOU DO?"
@@ -1278,8 +1278,8 @@
    ],
    [
     "tZNBy-BdM2A",
-    417.64,
-    1.53,
+    418.94,
+    1.6,
     [
      ">> ",
      {
@@ -1290,14 +1290,15 @@
    ],
    [
     "tZNBy-BdM2A",
-    419.17,
-    0.4,
+    420.54,
+    0.5,
     [
      ">> Jimmy: REALLY?"
     ]
    ]
   ],
-  "mark": "relisten"
+  "mark": "relisten",
+  "note": "moved +1.3 s after her listening (14.11 11:58); the id keeps the old start so her rating stays"
  },
  {
   "id": "h1-_wMTKRixZIE-145_88",

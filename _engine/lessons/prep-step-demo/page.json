@@ -1,0 +1,11 @@
+{
+ "title": "Step quiz: demo on the rated clips",
+ "group": "prep",
+ "file": "step-demo-2026-11-13.html",
+ "listed": false,
+ "earlier": false,
+ "assets": {
+  "STICKER": "sticker.png",
+  "DEMO": "step_demo.json"
+ }
+}

@@ -49,7 +49,36 @@ const PLAYER = `function(id,o){const d=document.getElementById(id),f=document.cr
   // 📋 Copy all my ratings
   await T.evaluate(() => { window._cp = null; copyText = t => { window._cp = t; }; }); await T.click('[data-rtcopy]');
   const cp = await T.evaluate(() => window._cp || '');
-  ok(/\tthe same\?\t/.test(cp) && cp.split('\n').length === 32 && cp.includes('\tOUT\t'), '📋: ' + cp.slice(0, 300));
+  ok(/\tthe same\?\t/.test(cp) && cp.split('\n').length === 85 && cp.includes('\tOUT\t') && /^card\tphrase\t.*\tdifficulty\tfor_everyone\t/m.test(cp), '📋: ' + cp.slice(0, 300));
+  // engine 87 (AL chat 14.11 14:00 part 1): the pool — 53 new clips, white, no phrase twice in a row; the tick «for everyone»; the phrase after rating
+  await T.evaluate(() => openTask('pool')); await T.waitForTimeout(600);
+  st = await T.evaluate(() => ({n: current.steps.length, red: document.querySelectorAll('.rt-li.red').length, done: document.querySelectorAll('.rt-li.done').length, first: (document.querySelector('.rt-li') || {}).textContent,
+    twice: current.steps.some((s, i) => i && s.rate.phrase === current.steps[i - 1].rate.phrase)}));
+  ok(st.n === 53 && st.red === 0 && st.done === 0 && /^p-/.test(st.first) && !st.twice, 'the pool: ' + JSON.stringify(st));
+  await T.click('#go'); await T.waitForTimeout(500);
+  st = await T.evaluate(() => { const b = document.getElementById('rtbox'); return {tick: !!b.querySelector('[data-rte]'), hid: /the phrase hidden/.test(b.textContent), cnt: (b.textContent.match(/Rated: (\d+) of (\d+)/) || []).slice(1).join('/')}; });
+  ok(st.tick && st.hid && st.cnt === '0/53', 'a pool card after Check: ' + JSON.stringify(st));
+  await T.click('[data-rtl="2"]'); await T.click('[data-rte]'); await T.waitForTimeout(1500);
+  const ph = await T.evaluate(() => current.steps[0].rate.phrase), idp = await T.evaluate(() => current.steps[0].rate.id);
+  st = await T.evaluate(() => [...document.querySelectorAll('#rtbox .gr')].map(x => x.textContent));
+  ok(st.includes(ph), 'rated: the phrase shows: ' + JSON.stringify(st));
+  await T.evaluate(() => { window._cp = null; }); await T.click('[data-rtcopy]');
+  const cpp = (await T.evaluate(() => window._cp || '')).split('\n').find(l => l.startsWith(idp + '\t')) || '';
+  ok(cpp.split('\t')[1] === ph && cpp.split('\t')[9] === '2' && cpp.split('\t')[10] === 'yes', '📋 a pool card: ' + cpp);
+  { const R = env.sheets['My ratings'], r = R.getRange(2, 1, R.getLastRow() - 1, 14).getValues().find(r => r[1] === idp), x = r && JSON.parse(r[13]);
+    ok(x && x.everyone === true && x.level === 2, 'her table keeps «for everyone»: ' + JSON.stringify(x)); }
+  // engine 88 (AL 0920 §7, her 13:58): the shift buttons move the whole clip; kept with her rating, in 📋 and her table
+  { const t0 = await T.evaluate(() => current.steps[0].clip.map(l => l[1]));
+    await T.click('[data-rts="0.5"]'); await T.waitForTimeout(300); await T.click('[data-rts="1"]'); await T.waitForTimeout(1500);
+    const t1 = await T.evaluate(() => current.steps[0].clip.map(l => l[1])), lab = await T.evaluate(() => (document.querySelector('.rt-shift b') || {}).textContent);
+    ok(t1.every((v, i) => Math.abs(v - t0[i] - 1.5) < 0.01) && lab === '+1.5 s', 'shift +1.5 s: ' + JSON.stringify({t0, t1, lab}));
+    await T.evaluate(() => { window._cp = null; }); await T.click('[data-rtcopy]');
+    const row = (await T.evaluate(() => window._cp || '')).split('\n').find(l => l.startsWith(idp + '\t')) || '';
+    ok(row.split('\t').pop() === '1.5', '📋 shift column: ' + row.slice(-40));
+    const R = env.sheets['My ratings'], r = R.getRange(2, 1, R.getLastRow() - 1, 14).getValues().find(r => r[1] === idp), x = r && JSON.parse(r[13]);
+    ok(x && x.shift === 1.5, 'her table keeps the shift: ' + JSON.stringify(x && x.shift)); }
+  if (shots) await T.screenshot({path: path.join(shots, 'ratepage_pool.png'), fullPage: true});
+  await T.evaluate(() => openTask('rate')); await T.waitForTimeout(400);
   const R = env.sheets['My ratings'], rows = R ? R.getRange(2, 1, R.getLastRow() - 1, 14).getValues() : [], r0 = rows.find(r => r[1] === id0), x0 = r0 && JSON.parse(r0[13]);
   ok(r0 && r0[0] === 'hw-2026-11-13' && r0[8] === 4 && /swallowed/.test(r0[9]) && r0[10] === 'fast' && x0.out === true && x0.plays >= 1 && /^something else/.test(r0[7]), 'sheet «My ratings»: ' + JSON.stringify(r0 && r0.slice(0, 13)));
   // another device: from her table; the second clip still as a student meets it
@@ -84,7 +113,7 @@ const PLAYER = `function(id,o){const d=document.getElementById(id),f=document.cr
   ok(R2 && R2[0] === 'cancant-2026-11-14' && R2[7] === ans0.toLowerCase() && R2[8] === 2 && x2.qa['t heard'] === 'no' && x2.qa.vowel === 'none', 'her table: ' + JSON.stringify(R2 && R2.slice(0, 12)));
   await C.evaluate(() => { window._cp = null; copyText = t => { window._cp = t; }; }); await C.click('[data-rtcopy]');
   const cp2 = await C.evaluate(() => window._cp || ''), head2 = cp2.split('\n')[1];
-  ok(head2 === ['id', 'answer', 'her answer', 'plays before the answer', 't heard', 'vowel', 'step', 'flags', 'note', 'db n', 'db right share', 'db tier', 'priority'].join('\t') && cp2.split('\n').length === 80, '📋 can / can\'t: ' + head2);
+  ok(head2 === ['id', 'answer', 'her answer', 'plays before the answer', 't heard', 'vowel', 'step', 'flags', 'note', 'db n', 'db right share', 'db tier', 'priority', 'shift (s)'].join('\t') && cp2.split('\n').length === 80, '📋 can / can\'t: ' + head2);
   // a student code: nothing of hers
   env.sheets.Students.getRange(3, 1, 1, 3).setValues([['s1', 'Mila', 'C1']]);
   const S = await page('s1'); await S.waitForTimeout(500);

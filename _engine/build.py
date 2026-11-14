@@ -60,6 +60,7 @@ if '__EARLIER__' in t:
     t = t.replace('__EARLIER__', json.dumps(picked, ensure_ascii=False).replace('</', '<\\/'))
     print('from earlier lessons:', len(picked), 'items', sorted(set(i['frm'] for i in picked)))
 t = t.replace('__CLASS_MAT__', json.dumps(cfg.get('class'), ensure_ascii=False).replace('</', '<\\/'))   # engine 62: 📂 Class materials
+t = t.replace('__APOS_PAIRS__', open(os.path.join(HERE, 'engine', 'apostrophe_pairs.json'), encoding='utf-8').read().strip())   # engine 88: the apostrophe exceptions
 left = sorted(set(re.findall(r'__[A-Z][A-Z0-9_]*__', t)))
 if left: sys.exit('Unfilled placeholders: ' + ', '.join(left))
 os.makedirs(os.path.join(lesson, 'build'), exist_ok=True)

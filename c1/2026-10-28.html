@@ -151,6 +151,16 @@ details.summary[open] summary::after{content:"Hide"}
 .t-strip.open{border-left-color:var(--instr)}
 /* engine 41: a task for later (not in the total time) and, for her, the TubeQuizard copy of a listening task */
 .later-tag{display:inline-block;vertical-align:.15em;font-size:.72rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);border:1.5px solid var(--line);border-radius:99px;padding:0 8px;margin-left:4px;white-space:nowrap}
+.rep-q{margin:12px 0 0;font-size:.88rem;color:var(--muted)}.rep-q .linkish{color:var(--muted);font-size:inherit;font-weight:400}.rep-done{font-weight:700;color:var(--ink);font-size:1rem}
+.rep-big{display:block;font:inherit;font-weight:800;font-size:1rem;padding:10px 14px;border-radius:10px;border:2px solid var(--instr);background:var(--card);color:var(--ink);margin:8px 0;cursor:pointer}
+.linkish{font:inherit;background:none;border:0;padding:0;color:var(--instr);text-decoration:underline;cursor:pointer}
+.step-t{margin-top:10px;font-weight:400}.step-sim{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.step-sim .linkish{color:var(--instr-ink);margin-left:6px}.step-c{white-space:nowrap}
+.step-sim .rt-chip{border-color:var(--card)}.step-sim .rt-chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--card)}
+.rt-shift{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin:10px 0 2px}.rt-shift>span{font-weight:700}.rt-shift b{margin-left:4px}
+.rt-every{display:flex;gap:8px;align-items:center;margin:10px 0 2px;font-weight:700;cursor:pointer}.rt-every input{width:20px;height:20px;accent-color:var(--instr)}
+.instr .l-rule{margin-top:8px;font-size:.95rem}
+.instr .l-rule summary{cursor:pointer;font-weight:800;color:var(--instr-ink)}
+.instr .l-rule div{margin-top:6px;padding:8px 10px;background:var(--card);border-radius:8px;color:var(--ink);font-weight:400}
 .tq-link{margin:4px 2px 0;font-size:.9rem;color:var(--muted)}
 .tq-alt{margin:4px 2px 0;font-size:.9rem;color:var(--muted)}.tq-alt a{color:var(--instr)}
 .tq-link button{font:inherit;background:none;border:0;padding:0;color:var(--instr);text-decoration:underline;cursor:pointer}
@@ -2888,7 +2898,7 @@ const LOOKBACK = [];
 const MAP_NUMBERED = false;
 const TQ_STEPS = [];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "86";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "88";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [{"type": "rewrite", "r": {"o": "My degree is in physics.", "k": "DID", "pre": "I ", "post": " university.", "a": "did physics at", "acc": ["did physics at", "did a physics degree at"], "n": "<span class=\"ipa\">/ˈfɪzɪks/<\/span><br>do + subject, no article; at university.<br><i class=\"ru\">учился на физика<\/i><br><i class=\"ru\">or: did a physics degree at<\/i><br><i class=\"ru\">AmE: I majored in physics in college.<\/i>"}, "frm": "23.10.26"}, {"type": "sayit", "s": {"rows": [["<span class=\"en\">I studied <span class=\"trap\">at the faculty of mathematics<\/span>.<\/span> <i class=\"ru\">(учился на матфаке)<\/i>", "I studied <b class=\"g\">maths<\/b>. / I did <b class=\"g\">maths at uni<\/b>."]], "note": "", "html": true}, "instr": "What would Dan or Ruth say instead?", "frm": "21.10.26"}, {"type": "rewrite", "r": {"pre": "", "hint": "У нас часы не переводят", "post": ", so I can never remember whether our calls move earlier or later.", "a": "We don't change the clocks here", "acc": ["We don't change the clocks here", "The clocks don't change here", "We don't have daylight saving here", "We don't have daylight saving time here"], "n": "change the clocks — the clocks, plural.<br><i class=\"ru\">or: The clocks don't change here / We don't have daylight saving (time) here<\/i>"}, "frm": "23.10.26"}, {"type": "sayit", "s": {"rows": [["<span class=\"en\">Nobody taught me how to talk to clients — I learned it <span class=\"trap\">in practice<\/span>.<\/span> <i class=\"ru\">(научилась в процессе работы)<\/i>", "Nobody taught me how to talk to clients — I learned it <b class=\"g\">on the job<\/b>."]], "note": "", "html": true}, "instr": "What would Dan or Ruth say instead?", "frm": "21.10.26"}];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -2971,6 +2981,7 @@ function fixOrder(){ if(orderAB() && !isTeacher() && !ls.get(orderKey())) ls.set
 const orderFT = () => orderAB() && !isTeacher() ? {v: orderHalf(), ab: orderAB().name || "order"} : {};
 function firstTry(t, item, o){
   if(!t || t._once || t._review || isTeacher()) return;
+  if(o.type !== "player" && REPORTED.has(t.id + ":" + String(item).split(".")[0])) return;   /* engine 88: the video didn't play / didn't match — no try */
   const id = t.id + ":" + item; if(FIRST[id]) return;
   const first = String(o.first == null ? "" : o.first).trim();
   FIRST[id] = {task: t.id, item: id, type: o.type, prompt: ftPlain(o.prompt).slice(0, 300), answer: ftPlain(o.answer).slice(0, 200), first: first.slice(0, 300), ok: !!o.ok && !!first, blank: !first, t: Date.now()};
@@ -2978,9 +2989,14 @@ function firstTry(t, item, o){
      its words were right, so a first try after one listen can be told from one after five */
   o = Object.assign({}, orderFT(), o);
   ["words", "lis", "slow", "v", "ab", "mode", "ctx"].forEach(k => { if(o[k] != null && o[k] !== false) FIRST[id][k] = o[k]; });
+  if(t.step){ const sx = (t.steps.find(x => "s" + x._orig === String(item).split(".")[0]) || {})._step; if(sx) FIRST[id].step = sx.kind + " · level " + sx.wl + " (hers " + sx.level + ")"; }   /* engine 88 */
   try{ localStorage.setItem(FT_KEY, JSON.stringify(FIRST)); }catch(e){}
   ftSendSoon();
 }
+/* engine 88 (AL chat 14.11 14:00 part 2, her 13:58 «чтобы не бесила и чтобы её было заметно»): clips a student reported (or YouTube refused)
+   on this device — their gaps are no first try; key task:sN */
+const REPORTED = new Set((() => { try{ return JSON.parse(localStorage.getItem("hw-reported-" + PAGE_KEY) || "[]"); }catch(e){ return []; } })());
+const repSave = () => { try{ localStorage.setItem("hw-reported-" + PAGE_KEY, JSON.stringify([...REPORTED])); }catch(e){} };
 /* …and what happened after it, up to Check (listens, pieces, 🐢, Check ×, show me, the final text and its words, seconds): the same row,
    brought up to date at each Check; the first try itself never changes */
 function ftAfter(t, item, a){
@@ -3790,9 +3806,108 @@ TASKS.forEach(t => { if(t.film) t.steps = filmSteps(t); });   /* engine 65: 🎬
 let REMOVED = new Set(lsJSON("hw-removed-" + PAGE_KEY, []));
 const ALLSTEPS = {};
 const rmItem = (t, st) => st.type === "film" ? t.id + ":" + ((t.film.lines[st.li] || {}).id || st.li) : st.type === "listen" ? t.id + ":s" + st._orig : null;
+
+/* ---------- engine 88: the step quiz (AL chat 14.11 14:00 §3; her 13:58 «сделаем уже вторую версию, в которой квиз подстраивается», 14:01
+   «подгружая для нового студента информацию из таблицы, которая зависит от ответов предыдущих студентов») ----------
+   A task with `step` = {set, group: "B2"|"C1", pages: [both groups' page keys], phrases: [{phrase, clips: [{id, key, level, every?, spare?, lines}]}]}.
+   · First round: one start clip per phrase (B2: the clearest of level ≤ 3; C1: level 3 or the nearest) + the «for everyone» clips, shuffled:
+     no phrase twice in a row, no more than two of level 4–5 in a row.
+   · Caught at the first try (all its gaps) → the phrase's next harder clip comes 2–3 clips later; missed → the next clearer one. At most two
+     clips a phrase («for everyone» on top). Three caught in a row at level 3+ → now and then one probe a level up (not more than one in 4).
+   · The end: what's left that is level ≤ 3 goes last; a harder one that would land in the last two is dropped.
+   · Levels: hers, moved by the group's first tries (her table: stepStats — Elo, both groups together): ≤ 1 step from hers under 6 answers,
+     ≤ 2 after. A clip two students said doesn't match the sound, or YouTube said «removed» (100) for two, is no longer given.
+   · «The video doesn't play» (or YouTube's error) is no try: a spare clip of the same phrase, near its level; this student never gets that
+     video again (this device).
+   · Each show is a journal row with its step (start / harder / clearer / probe / every / spare) and the level then. */
+var STEP_STATS = {}, STEP_SIM = "real";
+const stepKeyOf = t => "hw-step-" + PAGE_KEY + "-" + t.id;
+function stepState(t){ if(!t._ss) t._ss = lsJSON(stepKeyOf(t), null) || {first: null, order: [], kind: {}, wl: {}, res: {}, queue: [], streak: 0, probeLvl: 4, lastProbe: -9}; return t._ss; }
+function stepSave(t){ try{ localStorage.setItem(stepKeyOf(t), JSON.stringify(t._ss)); }catch(e){} }
+function stepAll(t){ if(!t._by){ t._by = {}; t.step.phrases.forEach((p, pi) => p.clips.forEach(c => { c._p = pi; t._by[c.id] = c; })); } return t._by; }
+function stepWL(t, c){ const s = ((STEP_STATS[t.step.set] || {}).clips || {})[c.id]; if(!s || !s.n) return c.level;
+  const lim = s.n < 6 ? 1 : 2; return Math.max(1, Math.min(5, Math.max(c.level - lim, Math.min(c.level + lim, Math.round(s.b + 3))))); }
+function stepBadVideos(){ try{ return new Set(JSON.parse(localStorage.getItem("hw-bad-videos") || "[]")); }catch(e){ return new Set(); } }
+function stepUsable(t, c){ const s = ((STEP_STATS[t.step.set] || {}).clips || {})[c.id] || {};
+  return !(typeof REMOVED !== "undefined" && REMOVED.has(t.id + ":s@" + c.id) && !isTeacher()) && (s.nosync || 0) < 2 && (s.gone || 0) < 2 && !stepBadVideos().has(c.lines[0][0]); }
+function stepStart(t, p){
+  const C = p.clips.filter(c => !c.spare && stepUsable(t, c)), wl = c => stepWL(t, c); if(!C.length) return null;
+  if(t.step.group === "B2"){ const e = C.filter(c => wl(c) <= 3).sort((a, b) => wl(a) - wl(b)); return e[0] || C.slice().sort((a, b) => wl(a) - wl(b))[0]; }
+  return C.slice().sort((a, b) => Math.abs(wl(a) - 3) - Math.abs(wl(b) - 3) || wl(a) - wl(b))[0]; }
+function stepShuffle(t, ids){   /* no phrase twice in a row, no three of level 4–5 in a row (tries a few orders) */
+  const by = stepAll(t), hard = id => stepWL(t, by[id]) >= 4;
+  for(let k = 0; k < 400; k++){ const a = ids.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+    const tail = a.slice(-2).every(id => !hard(id)) || k > 200;
+    if(tail && a.every((id, i) => !i || by[id]._p !== by[a[i - 1]]._p) && a.every((id, i) => i < 2 || !(hard(id) && hard(a[i - 1]) && hard(a[i - 2])))) return a; }
+  return ids.slice(); }
+function stepInit(t){ const S = stepState(t); if(S.first) return; const by = stepAll(t);
+  const starts = t.step.phrases.map(p => stepStart(t, p)).filter(Boolean).map(c => c.id);
+  const every = Object.values(by).filter(c => c.every && !c.spare && !starts.includes(c.id) && stepUsable(t, c)).map(c => c.id);
+  S.first = stepShuffle(t, starts.concat(every)); S.kind0 = {}; starts.forEach(id => S.kind0[id] = "start"); every.forEach(id => S.kind0[id] = "every"); stepSave(t); }
+const stepStepOf = (t, id, i) => { const c = stepAll(t)[id], S = stepState(t); return {type: "listen", clip: c.lines, first: i === 0, _orig: "@" + id, _step: {id, key: c.key, kind: S.kind[id], wl: S.wl[id], level: c.level}}; };
+function stepBuild(t){ stepInit(t); const S = stepState(t); if(!S.order.length) stepPick(t); t.steps = S.order.map((id, i) => stepStepOf(t, id, i)); }
+/* the result of a clip she / the student leaves: caught = every gap right at the first try (the gaps on screen, else the journal) */
+function stepResult(t, id){ const S = stepState(t); if(S.res[id] != null) return;
+  if(REPORTED.has(t.id + ":s@" + id)){ S.res[id] = "r"; return; }
+  if(isTeacher() && STEP_SIM !== "real"){ S.res[id] = STEP_SIM === "caught" ? 1 : 0; return; }
+  const onScreen = current && current.steps[stepIdx - 1] && current.steps[stepIdx - 1]._orig === "@" + id ? [...app.querySelectorAll(".lines .gap-res")] : [];
+  if(onScreen.length) { S.res[id] = onScreen.every(x => x.classList.contains("ok") && !x.classList.contains("ans")) ? 1 : 0; return; }
+  const F = Object.values(FIRST).filter(x => x.item.startsWith(t.id + ":s@" + id + ".g"));
+  S.res[id] = F.length ? (F.every(x => x.ok) ? 1 : 0) : 0; }
+function stepAfter(t, id){   /* what the clip's result sends into the queue */
+  const S = stepState(t), by = stepAll(t), c = by[id], r = S.res[id], pos = S.order.length, wl = S.wl[id] || c.level;
+  const P = t.step.phrases[c._p].clips.filter(x => !x.spare && !S.order.includes(x.id) && !S.queue.some(q => q.id === x.id) && stepUsable(t, x));
+  if(r === "r"){ const v = c.lines[0][0]; if(!/match/.test((S.whyOf || {})[id] || "")){ const B = stepBadVideos(); B.add(v); try{ localStorage.setItem("hw-bad-videos", JSON.stringify([...B])); }catch(e){} }
+    const sp = t.step.phrases[c._p].clips.filter(x => !S.order.includes(x.id) && stepUsable(t, x) && x.lines[0][0] !== v).sort((a, b) => Math.abs(stepWL(t, a) - wl) - Math.abs(stepWL(t, b) - wl))[0];
+    if(sp) S.queue.unshift({id: sp.id, due: pos, kind: "spare"}); return; }
+  if(S.kind[id] === "probe"){ if(r) S.probeLvl = Math.min(5, S.probeLvl + 1); else { S.probeLvl = 4; S.streak = 0; } }
+  else if(r && wl >= 3) S.streak++; else if(!r) S.streak = 0;
+  const ladder = S.order.filter(x => by[x]._p === c._p && ["start", "harder", "clearer"].includes(S.kind[x])).length;
+  if(!["start", "harder", "clearer"].includes(S.kind[id]) || ladder >= 2) return;
+  const nx = r ? P.filter(x => stepWL(t, x) > wl).sort((a, b) => stepWL(t, a) - stepWL(t, b))[0] : P.filter(x => stepWL(t, x) < wl).sort((a, b) => stepWL(t, b) - stepWL(t, a))[0];
+  if(nx) S.queue.push({id: nx.id, due: pos + 2 + (Math.random() < .5 ? 0 : 1), kind: r ? "harder" : "clearer"}); }
+function stepPick(t, dry){
+  const S = stepState(t), by = stepAll(t), pos = S.order.length, wlOf = id => stepWL(t, by[id]);
+  const firstLeft = S.first.filter(id => !S.order.includes(id) && stepUsable(t, by[id]));
+  let queue = S.queue.filter(q => !S.order.includes(q.id) && stepUsable(t, by[q.id]));
+  const left = firstLeft.length + queue.length; if(!left) return null;
+  if(left <= 2) queue = queue.filter(q => !((q.kind === "harder" || q.kind === "probe") && wlOf(q.id) >= 4));   /* the end goes a step back */
+  const cand = queue.filter(q => q.due <= pos).sort((a, b) => a.due - b.due).map(q => ({id: q.id, kind: q.kind}))
+    .concat(firstLeft.map(id => ({id, kind: S.kind0[id] || "start"})), queue.filter(q => q.due > pos).sort((a, b) => a.due - b.due).map(q => ({id: q.id, kind: q.kind})));
+  if(!dry && S.streak >= 3 && pos - S.lastProbe >= 4 && left > 2){   /* a probe a level up */
+    const met = new Set(S.order.map(id => by[id]._p)), lastP = S.order.length ? by[S.order[S.order.length - 1]]._p : -1;   /* only phrases they've met, not the last one */
+    const pr = Object.values(by).filter(c => !c.spare && met.has(c._p) && c._p !== lastP && !S.order.includes(c.id) && !cand.some(x => x.id === c.id) && stepUsable(t, c) && stepWL(t, c) === S.probeLvl)[0];
+    if(pr) cand.unshift({id: pr.id, kind: "probe"}); }
+  const last = S.order[pos - 1], hard2 = pos >= 2 && wlOf(S.order[pos - 1]) >= 4 && wlOf(S.order[pos - 2]) >= 4;
+  const fits = x => (!last || by[x.id]._p !== by[last]._p) && !(hard2 && wlOf(x.id) >= 4) && !(left <= 2 && wlOf(x.id) >= 4 && cand.some(y => wlOf(y.id) <= 3));
+  const pick = cand.find(fits) || cand.find(x => !(hard2 && wlOf(x.id) >= 4)) || cand.find(x => !last || by[x.id]._p !== by[last]._p) || cand[0];
+  if(!pick) return null;
+  if(last && by[pick.id]._p === by[last]._p && pick.kind !== "start" && pick.kind !== "every"){   /* the same phrase right after: they'd know the gap — drop it (D.21, her 13:18) */
+    S.queue = S.queue.filter(q => q.id !== pick.id); return stepPick(t, dry); }
+  if(dry) return pick;
+  S.order.push(pick.id); S.kind[pick.id] = pick.kind; S.wl[pick.id] = wlOf(pick.id); if(pick.kind === "probe"){ S.lastProbe = pos; S.streak = 0; }
+  S.queue = S.queue.filter(q => q.id !== pick.id); stepSave(t); return pick; }
+/* Next on the last clip shown: its result, then the next clip (or the end) */
+function stepNextIfNeeded(t){
+  if(!t.step || t._review || t._once || stepIdx < t.steps.length) return;
+  const S = stepState(t), prev = S.order[stepIdx - 1]; if(prev){ stepResult(t, prev); stepAfter(t, prev); }
+  if(stepPick(t)) t.steps = S.order.map((id, i) => stepStepOf(t, id, i)); stepSave(t); }
+async function stepLoadStats(){
+  const ts = TASKS.filter(t => t.step); if(!ts.length || !myCode()) return;
+  for(const t of ts){ if(STEP_STATS[t.step.set]) continue; const levels = {}; Object.values(stepAll(t)).forEach(c => levels[c.id] = c.level);
+    const res = await post({action: "stepStats", code: myCode(), page: PAGE_KEY, pages: t.step.pages || [PAGE_KEY], levels});
+    if(res && res.ok) STEP_STATS[t.step.set] = res; } }
+/* her view: the ladders now (her level → the working level, answers) and «pretend you caught / missed everything» */
+function stepTeacherHTML(t){ const S = stepState(t), st = ((STEP_STATS[t.step.set] || {}).clips) || {};
+  const mark = id => S.res[id] === 1 ? " ✓" : S.res[id] === 0 ? " ✗" : S.res[id] === "r" ? " 🚫" : S.order.includes(id) ? " ←" : "";
+  return `<div class="step-t"><div class="step-sim">Pretend you: ${[["real", "answer for real"], ["caught", "catch everything"], ["missed", "miss everything"]].map(([k, l]) => `<button class="rt-chip" data-stepsim="${k}" aria-pressed="${STEP_SIM === k}">${l}</button>`).join("")} <button class="linkish" data-stepreset>↺ Start over</button></div>
+    <details class="l-rule"><summary>🪜 The ladders now</summary><div>${t.step.phrases.map(p => `<p><b>${esc(p.phrase)}</b>: ${p.clips.map(c => { const x = st[c.id] || {}, w = stepWL(t, c);
+      return `<span class="step-c">${esc(c.key || c.id)} ${c.level}${w !== c.level ? "→" + w : ""}${x.n ? ` (${x.n})` : ""}${c.every ? " ★" : ""}${c.spare ? " spare" : ""}${mark(c.id)}</span>`; }).join(" · ")}</p>`).join("")}
+      <p class="small">your level → the level now (answers so far) · ★ for everyone · ✓ ✗ 🚫 what happened on this device · ← now</p></div></details></div>`; }
+TASKS.forEach(t => { if(t.step) stepBuild(t); }); setTimeout(() => stepLoadStats(), 300);
 function applyRemoved(){
   TASKS.forEach(t => {
-    if(!Array.isArray(t.steps) || !t.steps.length) return;
+    if(t.step || !Array.isArray(t.steps) || !t.steps.length) return;
     if(!ALLSTEPS[t.id]) ALLSTEPS[t.id] = t.steps.map((st, i) => { if(st._orig == null) st._orig = i; return st; });
     const gone = st => { const k = rmItem(t, st); return !!k && REMOVED.has(k); };
     t._removed = ALLSTEPS[t.id].filter(gone).length;
@@ -3926,6 +4041,7 @@ function openTask(id, idx, mode){
   const t = TASKS.find(x=>x.id===id); if(!t){ renderHome(); return; }
   fixOrder();   /* engine 71 */
   if(mode === "fresh") clearTaskState(id);
+  if(t.step){ if(mode === "fresh"){ t._ss = null; try{ localStorage.removeItem(stepKeyOf(t)); }catch(e){} } stepBuild(t); if(!STEP_STATS[t.step.set]) stepLoadStats(); }   /* engine 88 */
   const n = (t.steps || []).length, mine = !isTeacher() && t.kind === "steps" && mode !== "fresh" && idx == null;
   if(mine && taskDone(id)){ current = Object.assign({}, t, {_review: true}); const p = posOf(id); stepIdx = p != null && p < n ? p : 0; }   /* engine 77: on another device it opened on its last clip, «сразу Finish» */
   else { current = t; const p = mine ? posOf(id) : null; stepIdx = idx != null ? idx : p != null && p < n ? p : 0; }
@@ -4003,6 +4119,7 @@ function renderTask(){
   stopRecorder();
   if(t.kind==="gaps") return renderGaps(t);
   if(t.kind==="link") return renderLink(t);
+  stepNextIfNeeded(t);   /* engine 88: the step quiz */
   if(stepIdx >= t.steps.length){
     if(t._once){ current = t._base; return goHome(true); }
     if(t._review) return goHome();
@@ -4015,14 +4132,14 @@ function renderTask(){
   const st = t.steps[stepIdx];
   if(t._review) checked = true;
   if(!t._once && !isTeacher()) savePos(t.id, stepIdx);
-  const count = t._once ? `Once more: your bookmarks · ${stepIdx+1} of ${t.steps.length}` : `${stepIdx+1} of ${t.steps.length}`;
-  const pct = Math.round((stepIdx)/t.steps.length*100);
+  const count = t._once ? `Once more: your bookmarks · ${stepIdx+1} of ${t.steps.length}` : t.step ? `Clip ${stepIdx+1}` : `${stepIdx+1} of ${t.steps.length}`;
+  const pct = t.step ? (S => Math.round(S.first.filter(id => S.order.indexOf(id) > -1 && S.order.indexOf(id) < stepIdx).length / Math.max(1, S.first.length) * 100))(stepState(t)) : Math.round((stepIdx)/t.steps.length*100);
   ({dlg:renderDlg, gist:renderGist, rewrite:renderRewrite, fix:renderFix, sayit:renderSayit, boxtask:renderBoxTask, share:renderShare, lookback:renderLookback, listen:renderListen, film:renderFilm, filmsum:renderFilmSum, upgrade:renderUpgrade, task:renderTaskCard, plan:renderPlan, produce:renderProduce, sort:renderSort})[st.type](st, count, pct);
   if(!t._once) annotateMarks();
   window.scrollTo(0,0);
 }
 function navButtons(checkLabel="Check"){
-  const last = stepIdx === current.steps.length-1;
+  const last = !(current.step && !current._review) && stepIdx === current.steps.length-1;   /* engine 88: the step quiz knows its end only when it gets there */
   return `<button class="btn" id="prev">Back</button>
           <button class="btn primary grow" id="go">${checked ? (last?"Finish":"Next") : checkLabel}</button>`;
 }
@@ -4333,10 +4450,26 @@ const sameAnswer = (val, accs, post) => { const mine = new Set(answerForms(val, 
 /* engine 84 (AL chat 13.11 20:45, her 20:37 «желательно это не засчитывать как ошибку»): in what they HEARD (listening gaps, 🎬 lines) only the
    apostrophe wrong is no mistake — «Thats' a», «thats a», «that,s a» for «That's a» are right («it's a» is still not); the page shows the
    spelling beside it. Writing tasks (rewrites) keep their apostrophes. */
-const HEARD_APOS = false;   /* waits for her yes (14.11 09:40): until then a listening gap checks apostrophes as before */
+const HEARD_APOS = true;   /* engine 88: on — her yes 14.11 13:58, with the exceptions below kept as a list */
 const noApos = f => String(f).replace(/'/g, "");
 /* her 09:43 («were засчитается за we're — это плохо»): no apostrophe makes another real word → still a mistake, both ways */
-const HOMO = new Set(["were", "well", "wed", "ill", "id", "hell", "shell", "shed", "its", "lets", "wont"]);
+/* engine 88 (her 14.11 13:58: «отдельно прописать исключения… потихонечку делать базу таких исключений»): the words where the apostrophe
+   is the whole difference (were / we're) — the list lives in engine/apostrophe_pairs.json, injected by build.py; 📋 For the analysis lists
+   the answers taken only for the apostrophe, so a real mishearing can go into the list */
+const APOS_PAIRS = [
+ {"plain": "were", "with": "we're", "note": "her 14.11 09:43"},
+ {"plain": "well", "with": "we'll", "note": ""},
+ {"plain": "wed", "with": "we'd", "note": ""},
+ {"plain": "ill", "with": "I'll", "note": ""},
+ {"plain": "id", "with": "I'd", "note": ""},
+ {"plain": "hell", "with": "he'll", "note": ""},
+ {"plain": "shell", "with": "she'll", "note": ""},
+ {"plain": "shed", "with": "she'd", "note": ""},
+ {"plain": "its", "with": "it's", "note": ""},
+ {"plain": "lets", "with": "let's", "note": ""},
+ {"plain": "wont", "with": "won't", "note": ""}
+];
+const HOMO = new Set(APOS_PAIRS.map(p => String(p.plain).toLowerCase()));
 const tokSame = (a, b) => a === b || (noApos(a) === noApos(b) && !HOMO.has(noApos(a)));
 const formSame = (x, y) => { const a = x.split(" "), b = y.split(" "); return a.length === b.length && a.every((w, k) => tokSame(w, b[k])); };
 const sameHeard = (val, accs, post) => { if(sameAnswer(val, accs, post)) return true; if(!HEARD_APOS) return false;
@@ -4887,19 +5020,19 @@ function rtCopy(btn){
   const R = rtStore(), one = v => String(v == null ? "" : v).replace(/[\t\n\r]+/g, " ").trim(), out = [];
   if(RATE.choice){
     out.push("Can or can't: her answers on the listening page (" + RATE.set + "), " + new Date().toLocaleString("en-GB"));
-    out.push(["id", "answer", "her answer", "plays before the answer"].concat((RATE.qs || []).map(q => q.id), ["step", "flags", "note", "db n", "db right share", "db tier", "priority"]).join("\t"));
+    out.push(["id", "answer", "her answer", "plays before the answer"].concat((RATE.qs || []).map(q => q.id), ["step", "flags", "note", "db n", "db right share", "db tier", "priority", "shift (s)"]).join("\t"));
     rtSteps().forEach(({s}) => { const x = R.cards[s.rate.id] || {}, db = s.rate.db || {};
       out.push([s.rate.id, rtAns(s), x.guess || "", x.shown ? x.plays || 0 : ""].concat((RATE.qs || []).map(q => (x.qa || {})[q.id] || ""),
-        [x.out ? "✕" : x.level || "", (x.why || []).join(", "), x.note || "", db.n == null ? "" : db.n, db.right_share == null ? "" : db.right_share, db.tier || "", s.rate.priority || ""]).map(one).join("\t")); });
+        [x.out ? "✕" : x.level || "", (x.why || []).join(", "), x.note || "", db.n == null ? "" : db.n, db.right_share == null ? "" : db.right_share, db.tier || "", s.rate.priority || "", x.shift || ""]).map(one).join("\t")); });
   } else {
     out.push("Her ratings of the clips (" + RATE.set + "), " + new Date().toLocaleString("en-GB"));
-    out.push(["card", "groups", "tasks", "line", "answer (subtitles)", "she heard (before the answer)", "the same?", "▶ before the answer", "difficulty", "why hard", "note", "out of the homework", "why out"].join("\t"));
+    out.push(["card", "phrase", "groups", "tasks", "line", "answer (subtitles)", "she heard (before the answer)", "the same?", "▶ before the answer", "difficulty", "for_everyone", "why hard", "note", "out of the homework", "why out", "shift (s)"].join("\t"));
     rtSteps().forEach(({s}) => { const x = R.cards[s.rate.id] || {}, g = x.guess || "";
-      out.push([s.rate.id, (s.rate.groups || []).join(" · "), (s.rate.tasks || []).join(" · "), rtLine(s), rtAns(s), g, g ? (rtNorm(g) === rtNorm(rtAns(s)) ? "yes" : "no") : "",
-        x.shown ? x.plays || 0 : "", x.level || "", (x.why || []).join(", "), x.note || "", x.out ? "OUT" : "", x.out ? (x.removedWhy || []).join(", ") + (x.removedNote ? " — " + x.removedNote : "") : ""].map(one).join("\t")); });
+      out.push([s.rate.id, s.rate.phrase || "", (s.rate.groups || []).join(" · "), (s.rate.tasks || []).join(" · "), rtLine(s), rtAns(s), g, g ? (rtNorm(g) === rtNorm(rtAns(s)) ? "yes" : "no") : "",
+        x.shown ? x.plays || 0 : "", x.level || "", x.everyone ? "yes" : "", (x.why || []).join(", "), x.note || "", x.out ? "OUT" : "", x.out ? (x.removedWhy || []).join(", ") + (x.removedNote ? " — " + x.removedNote : "") : "", x.shift || ""].map(one).join("\t")); });
   }
   copyText(out.join("\n"), btn); }
-function rtCount(){ const R = rtStore(), all = rtSteps().filter(({s}) => !RATE.total || (s.rate.priority || 1) === 1);
+function rtCount(){ const R = rtStore(), all = rtSteps().filter(({t, s}) => RATE.total ? (s.rate.priority || 1) === 1 : !current || t === current);
   return {done: all.filter(({s}) => { const x = R.cards[s.rate.id] || {}; return x.level || x.out; }).length, n: RATE.total || all.length}; }
 function rtHTML(st){
   const x = rtStore().cards[st.rate.id] || {}, on = !!(x.level || x.out), CH = RT_CH(st), cnt = rtCount();
@@ -4907,10 +5040,12 @@ function rtHTML(st){
     <p class="small">Rated: ${cnt.done} of ${cnt.n}</p>`;
   const right = CH ? rtNorm(x.guess) === rtNorm(rtAns(st)) : null, db = st.rate.db;
   return `<div class="rt-meta">${CH ? `<span>Your answer: <b>${esc(x.guess || "—")}</b> ${x.guess ? (right ? "✓" : "✗") : ""}</span>` : `<span>You heard: <b>${esc(x.guess || "—")}</b></span>`}<span>▶ ${x.plays || 0}× before the answer</span>
-      ${CH ? "" : on ? `<span class="gr">${esc((st.rate.groups || []).join(" · "))}</span><span>${esc((st.rate.tasks || []).join(" · "))}</span>` : `<span>groups hidden until you rate it</span>`}<span>Rated: ${cnt.done} of ${cnt.n}</span><span id="rt-st"></span></div>
+      ${CH ? "" : on ? `${(st.rate.groups || []).length ? `<span class="gr">${esc(st.rate.groups.join(" · "))}</span>` : ""}${st.rate.phrase ? `<span class="gr">${esc(st.rate.phrase)}</span>` : ""}<span>${esc((st.rate.tasks || []).join(" · "))}</span>` : `<span>${st.rate.phrase ? "the phrase" : "groups"} hidden until you rate it</span>`}<span>Rated: ${cnt.done} of ${cnt.n}</span><span id="rt-st"></span></div>
     ${(CH && RATE.qs || []).map(q => `<h3>${esc(q.q)}</h3><div class="rt-chips">${q.opts.map(o => `<button class="rt-chip" data-rtq="${esc(q.id)}" data-rtv="${esc(o)}" aria-pressed="${(x.qa || {})[q.id] === o}">${esc(o)}</button>`).join("")}</div>`).join("")}
     <h3>${CH ? "Step" : "How hard is it to hear, for the students?"}</h3>
     <div class="rt-chips">${RT_LEVELS().map(([n, t, sub]) => `<button class="rt-chip lv${n}" data-rtl="${n}" aria-pressed="${x.level === n && !(CH && x.out)}"><b>${n}</b> ${esc(t)}${sub ? ` <span class="sm">(${esc(sub)})</span>` : ""}</button>`).join("")}${CH ? `<button class="rt-chip lv5" data-rto="${x.out ? 0 : 1}" aria-pressed="${!!x.out}"><b>✕</b> take it out</button>` : ""}</div>
+    <div class="rt-shift"><span>Out of sync? Move the clip:</span>${[-1, -0.5, 0.5, 1].map(d => `<button class="rt-chip" data-rts="${d}">${d > 0 ? "+" : "−"}${Math.abs(d)} s</button>`).join("")}<b>${x.shift ? (x.shift > 0 ? "+" : "−") + Math.abs(x.shift) + " s" : "as in the subtitles"}</b>${x.shift ? ` <button class="linkish" data-rts="0">↺ back</button>` : ""}</div>
+    ${RATE.everyone ? `<label class="rt-every"><input type="checkbox" data-rte ${x.everyone ? "checked" : ""}> Good context — for everyone <span class="small">(even if it's easy: both groups get it)</span></label>` : ""}
     ${CH && on && db !== undefined ? `<p class="rt-db">${db ? `TubeQuizard: ${esc(db.n)} people, ${Math.round((db.right_share || 0) * 100)} % right${db.tier ? " · " + esc(db.tier) : ""}` : "TubeQuizard: no data for this clip"}</p>` : ""}
     <h3>${CH ? "Flags" : "Why hard"} <span class="small">(${CH ? "tick any" : "if it is · any number"})</span></h3>
     <div class="rt-chips">${RT_WHYS().map(w => `<button class="rt-chip" data-rtw="${esc(w)}" aria-pressed="${(x.why || []).includes(w)}">${esc(w)}</button>`).join("")}</div>
@@ -4932,6 +5067,9 @@ function rtWire(st){
   box.querySelectorAll("[data-rtg]").forEach(b => b.addEventListener("click", () => { const w = new Set(x().removedWhy || []); w.has(b.dataset.rtg) ? w.delete(b.dataset.rtg) : w.add(b.dataset.rtg); rtSet(st, {removedWhy: [...w]}); b.setAttribute("aria-pressed", w.has(b.dataset.rtg)); }));
   box.querySelectorAll("[data-rto]").forEach(b => b.addEventListener("click", () => { rtSet(st, {out: b.dataset.rto === "1"}); repaint(); }));
   const c = box.querySelector("[data-rtcopy]"); if(c) c.addEventListener("click", () => rtCopy(c));
+  box.querySelectorAll("[data-rts]").forEach(b => b.addEventListener("click", () => { const d = +b.dataset.rts, now = +(x().shift || 0);   /* engine 88: AL 0920 §7, her 13:58 */
+    rtSet(st, {shift: d === 0 ? 0 : Math.round((now + d) * 10) / 10}); renderTaskKeep(); }));
+  const e = box.querySelector("[data-rte]"); if(e) e.addEventListener("change", () => rtSet(st, {everyone: e.checked}));   /* AL chat 14.11 14:00 part 1, her 13:33 */
   const n = box.querySelector("[data-rtn]"); if(n) n.addEventListener("input", () => rtSet(st, {note: n.value}));
   const gn = box.querySelector("[data-rtgn]"); if(gn) gn.addEventListener("input", () => rtSet(st, {removedNote: gn.value}));
 }
@@ -4943,7 +5081,20 @@ const rtListHTML = () => `<div class="rt-list" aria-label="All the clips">${curr
   ? `<button class="rt-li ${rtDone(s) ? "done" : s.rate.mark === "relisten" ? "red" : ""} ${i === stepIdx ? "cur" : ""}" data-rtgo="${i}" title="${esc(s.rate.mark === "relisten" ? "listen again" : s.rate.mark === "new" ? "new" : "")}">${esc(s.rate.key || String(s.rate.id).split("-")[0])}</button>` : "").join("")}</div>`;
 function rtListWire(){ app.querySelectorAll("[data-rtgo]").forEach(b => b.addEventListener("click", () => { stepIdx = +b.dataset.rtgo; checked = false; renderTask(); })); }
 function rtListMark(st){ const b = app.querySelector(`[data-rtgo="${stepIdx}"]`); if(b && st.rate){ b.classList.toggle("done", rtDone(st)); b.classList.toggle("red", !rtDone(st) && st.rate.mark === "relisten"); } }
+const PLAYER_REPORT = true;   /* engine 88 */
+function repSkip(why){   /* the student says the video doesn't play / the sound doesn't match, or YouTube refused it: a «player» row, no try, Next */
+  const st = current && current.steps[stepIdx]; if(!st || st.type !== "listen") return; const key = current.id + ":s" + curS();
+  if(why !== "yt"){ const ln = st.clip.map(l => l[3].map(p => typeof p === "string" ? p : "___").join(""));
+    firstTry(current, "s" + curS() + ".rep", {type: "player", prompt: ln.find(t => t.includes("___")) || ln[0] || "", answer: st.clip[0][0], first: why === "nosync" ? "student: the sound doesn't match" : "student: the video doesn't play", ok: false}); }
+  REPORTED.add(key); repSave();
+  if(current.step && st._orig){ const S = stepState(current); (S.whyOf = S.whyOf || {})[String(st._orig).slice(1)] = why; stepSave(current); }
+  if(why === "yt"){ const m = document.getElementById("vmsg"); if(m){ m.hidden = false; m.innerHTML = `<span class="vm-t">This video isn't available for you.<br>It won't count — tap Next.</span>`; } }
+  const q = document.getElementById("repq"); if(q){ q.className = "rep-q rep-done"; q.removeAttribute("id"); q.innerHTML = "Thanks! This clip won't count. Tap <b>Next</b>."; }
+  const h = document.getElementById("hint"); if(h) h.hidden = true;
+  const go = document.getElementById("go"); if(go && !checked) go.click(); }
 function renderListen(st, count, pct){
+  if(st.rate && RT_ON()){ if(!st._clip0) st._clip0 = st.clip; const sh = +((rtStore().cards[st.rate.id] || {}).shift || 0);   /* engine 88: her shift of the clip */
+    st.clip = sh ? st._clip0.map(l => [l[0], Math.max(0, Math.round((l[1] + sh) * 100) / 100), l[2], l[3]]) : st._clip0; }
   const lines = st.clip;
   /* engine 63 also (C1 06.11 e4/e5): a listening task's own `instr` leads its first screen, the how-to after it */
   /* engine 81 (her 13.11 09:40–09:49, after a student's «я не слышала контекст, сразу на строку кликала»: «первый этап запускает контекст,
@@ -4959,6 +5110,10 @@ function renderListen(st, count, pct){
     : st.first
     ? (CTXF ? "The first listen plays the whole clip. Then tap any line to hear just that line, or the top one for the whole clip again." : "Tap the top line to hear the whole clip, or any line to hear just that line.") + " Catch the missing words in the framed lines: type them if you like, then tap Check next to a gap, or Check answers for all of them."
     : "Listen and catch the missing words, then tap Check next to a gap, or Check answers.";
+  /* engine 87 (AL chat 0920 part B, her rule of 14.11 for C1 «Get out or go out?»): a listening task may carry a folded rule under its
+     instruction on every screen — `rule: {h, html}` */
+  const ruleHTML = (current.rule ? `<details class="l-rule"><summary>${current.rule.h}</summary><div>${current.rule.html}</div></details>` : "")
+    + (current.step && isTeacher() && !current._review ? stepTeacherHTML(current) : "");   /* engine 88: her ladders and «pretend» */
   let gk = 0;
   const keyOf = k => current.id+"-"+curS()+(current._once?"-again":"")+"-g"+k;
   /* engine 86: a choice clip on her rate page — the gap stays closed (no typing) until she taps an answer button under the clip */
@@ -4986,20 +5141,22 @@ function renderListen(st, count, pct){
              aria-label="Type the missing words" style="width:min(100%, ${p.gap.length + 3}ch)" value="${esc(typed[keyOf(k)]||"")}"><button class="gap-ck" data-k="${k}" aria-label="Check this gap" ${(typed[keyOf(k)]||"").trim() && ph === 2 ? "" : "hidden"}>Check</button>`)(gk++)).join("")}${i===0?` <span class="whole-note">· whole clip</span>`:""}</span>
     </div>${ph === 1 ? askHTML(i) : ""}`; };
   const rest = `
-        <div class="tap-hint small" id="hint" hidden><p>Nothing playing? Tap the video once, then tap the line again.</p>
+        <div class="tap-hint small" id="hint" hidden><p>Nothing playing? Tap the video once, then tap the line again.</p>${st.rate ? "" : `<button class="rep-big" data-rep="noplay">🚫 The video doesn't play — skip this clip</button>`}
           <details class="yt-help"><summary>Still nothing?</summary>
             <p>If the video says <b>Sign in to confirm you're not a bot</b>, YouTube wants to know who's watching: tap <b>Sign in</b> on the video and use your Google account.</p>
             <p>On an iPhone or a Mac, Safari can hide that sign-in from videos on other sites: in the Safari settings, turn off <b>Prevent Cross-Site Tracking</b>, then reload this page.</p>
             <p>Or ${clipOutHTML(lines)}</p></details></div>
         <div class="slow-row"><span class="spd-l">🐢 Speed</span><div class="spd" id="spd" role="group" aria-label="Speed of the clips">${RATES.map(r => `<button data-rate="${r}" aria-pressed="${rateNow()===r}">${r===1?"normal":r}</button>`).join("")}</div></div>
         <div class="lines">${lines.map(lineHTML).join("")}</div>
+        ${st.rate ? "" : REPORTED.has(current.id + ":s" + curS()) ? `<p class="rep-q rep-done">Thanks! This clip won't count. Tap <b>Next</b>.</p>`
+          : `<p class="rep-q" id="repq"><button class="linkish" data-rep="noplay">Video not playing?</button> · <button class="linkish" data-rep="nosync">Sound doesn't match the words?</button></p>`}
 
         <p class="small" id="after" ${checked?"":"hidden"}>Listen again: how did the expression sound? Try to say it like the speaker.${stepIdx===current.steps.length-1&&current.takeaway?`<br><b>${current.takeaway}</b>`:""}</p>${st.rate && RT_ON() ? `<div class="rt-box" id="rtbox" ${CHM || checked || (rtStore().cards[st.rate.id] || {}).shown ? "" : "hidden"}>${rtHTML(st)}</div>` : ""}`;
   if(playerOnScreen()){
     /* the same player stays; only the lines, the counter and the buttons change */
     const bar = app.querySelector(".taskbar .count"); if(bar) bar.textContent = count;
     const fill = app.querySelector(".taskbar .bar i"); if(fill) fill.style.width = pct + "%";
-    const ins = app.querySelector(".instr"); if(ins) ins.innerHTML = instr;
+    const ins = app.querySelector(".instr"); if(ins) ins.innerHTML = instr + ruleHTML;
     app.querySelectorAll(".rev-hint").forEach(x => x.remove());   /* the last clip's bookmark hint goes with it (it comes back after Check) */
     const panel = app.querySelector(".stage .panel");
     [...panel.children].forEach(ch=>{ if(!ch.classList.contains("video")) ch.remove(); });
@@ -5008,7 +5165,7 @@ function renderListen(st, count, pct){
     app.querySelector(".actions").innerHTML = navButtons(CHM ? "Show the answer" : "Check answers");
     if(ytVideo !== lines[0][0]){ ytVideo = lines[0][0]; ytLoadN++; try{ ytPlayer.cueVideoById({videoId: lines[0][0], startSeconds: Math.floor(lines[0][1])}); }catch(e){} }
   } else {
-    shell({count, pct, instr,
+    shell({count, pct, instr: instr + ruleHTML,
       stageHTML: `
       <div class="panel">${st.rate && RT_ON() ? rtListHTML() : ""}
         <div class="video vsm"><div id="yt"></div><p class="vmsg" id="vmsg" hidden></p>${ls.get("hw-yt-ok") ? `<p class="vload" id="vload">Loading the video…</p>` : ytConsentHTML()}</div>${rest}
@@ -5044,7 +5201,8 @@ function renderListen(st, count, pct){
                     /* engine 84 (AL chat 13.11 20:45 §2): kept in the journal (data only; the student sees nothing new), so «the video didn't play» is told
                        from «gave up»: the clip's line, the video, YouTube's code (2 bad id · 5 HTML5 · 100 removed · 101 / 150 not allowed here) */
                     const ln = lines.map(l => l[3].map(p => typeof p === "string" ? p : "___").join("")), code = e && e.data != null ? e.data : "?";
-                    firstTry(current, "s" + curS() + ".yt", {type: "player", prompt: ln.find(t => t.includes("___")) || ln[0] || "", answer: ytVideo, first: "error " + code, ok: false}); },
+                    firstTry(current, "s" + curS() + ".yt", {type: "player", prompt: ln.find(t => t.includes("___")) || ln[0] || "", answer: ytVideo, first: "error " + code, ok: false});
+                    if(PLAYER_REPORT && current && !(current.steps[stepIdx] || {}).rate) repSkip("yt"); },
                   onApiChange: captionsOffOnce, onStateChange: e => { if(e && e.data === 1){ setTimeout(captionsOffOnce, 300); setTimeout(captionsOffOnce, 1500); } } }
       });
       clearTimeout(ytReadyWatch); ytReadyWatch = setTimeout(failed, YT_READY_WAIT);
@@ -5053,6 +5211,9 @@ function renderListen(st, count, pct){
     if(ok) ok.addEventListener("click", ()=>{ ls.set("hw-yt-ok", "1"); const c = document.getElementById("yt-consent"); if(c) c.remove(); startYT(); });
     else startYT();
   }
+  app.querySelectorAll("[data-rep]").forEach(b => b.addEventListener("click", () => repSkip(b.dataset.rep)));
+  app.querySelectorAll("[data-stepsim]").forEach(b => b.addEventListener("click", () => { STEP_SIM = b.dataset.stepsim; app.querySelectorAll("[data-stepsim]").forEach(x => x.setAttribute("aria-pressed", x === b)); }));
+  app.querySelectorAll("[data-stepreset]").forEach(b => b.addEventListener("click", () => { REPORTED.forEach(k => { if(k.startsWith(current.id + ":")) REPORTED.delete(k); }); repSave(); openTask(current.id, 0, "fresh"); }));
   const rows = [...app.querySelectorAll(".ln")];
   /* engine 68 (AL chat 12.11 09:10): how many times each row played and whether 🐢 was on, for the first try of its gaps */
   /* engine 78 (AL chat 12.11 23:15, her 23:09–23:21: free listening, «plays» before the first Check): the plays of each line stay on the
@@ -5263,7 +5424,7 @@ function renderListen(st, count, pct){
     const rtb = document.getElementById("rtbox"); if(rtb){ rtb.innerHTML = rtHTML(st); rtb.hidden = false; rtWire(st); }
     /* engine 83: after Check answers, a strip under the first line with a gap if none is open */
     if(!ONCE && !app.querySelector(".lstrip")){ const g0 = rows.findIndex((r, i) => r.classList.contains("has-gap")); if(g0 >= 0) stripOpen(g0); }
-    const last = stepIdx === current.steps.length-1;
+    const last = !(current.step && !current._review) && stepIdx === current.steps.length-1;   /* engine 88 */
     document.getElementById("go").textContent = last ? "Finish" : "Next"; reactPre();
   });
 }
@@ -5712,9 +5873,14 @@ function ftHTML(res){
   const G = ftGroups(res), W = res.wants || [];
   if(!G.length && !W.length) return `<p class="ft-empty">No first tries yet. They come in when students with a code check an answer on this page.</p>`;
   const blankWord = it => it.type === "film" || ftLine1(it) ? "nothing caught" : "opened without a try";
+  /* engine 88 (AL chat 14.11 14:00 part 2): per clip, how many students it didn't play for / whose sound didn't match (not tries) */
+  const noPlay = it => { if(it.type !== "listen") return ""; const k = it.item.split(".")[0], P = (res.player || []).filter(x => x.item.split(".")[0] === k);
+    const who = f => new Set(P.flatMap(x => x.who.filter(w => f(String(w[1]))).map(w => w[0]))).size, a = who(v => !/match/.test(v)), m = who(v => /match/.test(v));
+    const silent = it.who.filter(w => w[2] === "blank" && (w[3] === 0 || w[3] === "0")).length;
+    return (a ? ` · <span class="ft-bl">🚫 didn't play for ${a}</span>` : "") + (m ? ` · <span class="ft-bl">🔇 sound didn't match for ${m}</span>` : "") + (silent ? ` · <span class="ft-bl">${silent} didn't listen</span>` : ""); };
   const itemHTML = it => FT_MODE === "item"
     ? `<div class="ft-item"><p class="ft-p">${esc(it.prompt)}</p><p class="ft-a">→ <b>${esc(it.answer)}</b> <span class="ft-type">${esc(ftTypeWord[it.type] || it.type)}</span></p>
-        <p class="ft-n">${ftLine1(it) ? `<span class="ft-type">after one listen</span> ` : ""}${it.tried ? `<span class="ft-ok">✓ ${it.ok} of ${it.tried}</span> right the first time` : `No one typed an answer`}${it.blank ? ` · <span class="ft-bl">${it.blank} ${blankWord(it)}</span>` : ""}${it.type === "listen" && it.tried && !ftLine1(it) ? ` · after one listen: <span class="ft-ok">✓ ${it.oneOk || 0} of ${it.one || 0}</span>` : ""}</p>
+        <p class="ft-n">${ftLine1(it) ? `<span class="ft-type">after one listen</span> ` : ""}${it.tried ? `<span class="ft-ok">✓ ${it.ok} of ${it.tried}</span> right the first time` : `No one typed an answer`}${it.blank ? ` · <span class="ft-bl">${it.blank} ${blankWord(it)}</span>` : ""}${noPlay(it)}${it.type === "listen" && it.tried && !ftLine1(it) ? ` · after one listen: <span class="ft-ok">✓ ${it.oneOk || 0} of ${it.one || 0}</span>` : ""}</p>
         ${it.wrong.length ? `<p class="ft-w">${it.wrong.map(([w, n]) => `<span class="ft-wr"><s>${esc(w)}</s>${n > 1 ? ` <b>×${n}</b>` : ""}</span>`).join(" ")}</p>` : ""}</div>`
     : `<div class="ft-item"><p class="ft-p">${esc(it.prompt)}</p><p class="ft-a">→ <b>${esc(it.answer)}</b></p>
         <ul class="ft-who">${it.who.map(([name, first, r, lis, words]) => `<li><b>${esc(name)}</b> ${r === "ok" ? `<span class="ft-ok">✓ ${esc(first)}</span>` : r === "no" ? `<s>${esc(first)}</s>` : `<span class="ft-bl">${blankWord(it)}</span>`}${lis != null && lis !== "" ? ` <span class="ft-lis">🎧 ${lis}${words ? " · " + esc(String(words).replace("/", " of ")) + " words" : ""}</span>` : ""}</li>`).join("")}</ul></div>`;
@@ -5768,6 +5934,11 @@ function ftForAnalysis(res){
   out.push("", "Player errors (the video didn't play for this student; YouTube's code: 2 bad id · 5 HTML5 · 100 removed · 101 / 150 not allowed in their country):", ["student", "task", "item", "line", "video", "error", "time"].join("\t"));
   const pe = []; (res.player || []).forEach(it => it.who.forEach(w => pe.push([S(w[0]), title(it.task), it.item, it.prompt, it.answer, w[1], tm(w[6])])));
   pe.forEach(x => out.push(x.map(one).join("\t"))); if(!pe.length) out.push("(none)");
+  /* engine 88: a listening answer taken as right only because the apostrophe isn't checked — a candidate for the exceptions list */
+  const apN = v => String(v || "").replace(APOS, "'").toLowerCase().replace(/[^a-z0-9', ]+/g, " ").replace(/\s+/g, " ").trim(), apX = v => apN(v).replace(/[',]/g, "");
+  out.push("", "Taken as right only for the apostrophe (a real mishearing like were / we're? → add it to the exceptions: " + APOS_PAIRS.map(p => p.plain + "/" + p.with).join(", ") + "):", ["student", "task", "item", "they typed", "answer", "time"].join("\t"));
+  const ap = []; res.items.filter(it => it.type === "listen" || it.type === "film").forEach(it => it.who.forEach(w => { if(w[2] === "ok" && w[1] && apN(w[1]) !== apN(it.answer) && apX(w[1]) === apX(it.answer)) ap.push([S(w[0]), title(it.task), it.item, w[1], it.answer, tm(w[6])]); }));
+  ap.forEach(x => out.push(x.map(one).join("\t"))); if(!ap.length) out.push("(none)");
   if(!teacherData) out.push("", "How they rated each task and the lines they marked «?»: not loaded yet — tap ↻ Refresh in a moment and copy again.");
   if(teacherData){
     const sts = teacherData.students || [], more = sts.map(x => x.name).filter(n => n && !names.includes(n)).sort((a, b) => a.localeCompare(b));

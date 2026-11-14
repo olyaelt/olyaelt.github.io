@@ -2,7 +2,9 @@ const STICKER = "__STICKER__";
 const R1 = __R1__;      /* r1: Ben's video from the lesson (The Intern), three parts, each with the glossary → without */
 const E1 = __E1__;      /* e1: the group chat «Rick hands over the store», four parts with the glossary → without, then the phrases' places */
 const E2 = __E2__;      /* e2: six rewrites, then six situations */
-const OTY = __OTY__;    /* Over to you: Nina's reply (the friend's message hidden), the task, the plan */
+const OTY = __OTY__;
+const TQ = __TQ__;      /* C1_1, C1_2: the two listening quizzes from the AL chat (handoff 2026-11-14_1210, her clip order of 10:39–10:40), the subtitles' capitals made normal;
+                           tqLink: her TubeQuizard copy of each quiz; tq: the same quiz there for a student. No «for later» quiz (her 13:13). */    /* Over to you: Nina's reply (the friend's message hidden), the task, the plan */
 /* Link to the group's homework spreadsheet. Leave empty and the page simply says where to write. */
 const SHEET_URL = "";
 /* her 14.11 11:36: in her lists this homework goes by its own name, not by its topics (engine 63 SHOW_TITLE) */
@@ -56,10 +58,15 @@ const E2_STEPS = E2.steps.map(st => st.type === "rewrite"
   ? {type: "rewrite", instr: st.instr, box: BOX_BEN, boxState: "folded", r: {o: st.o, k: st.k, pre: st.pre, post: st.post, a: st.a, acc: st.acc, n: st.n ? md(st.n) : ""}}
   : {type: "sayit", instr: st.instr, box: BOX_BEN, boxState: st.box_state || "folded", s: {html: true, rows: [[esc(st.sit), md(st.ans, "g")]], note: st.note ? md(st.note) : ""}});
 
+const listenSteps = clips => clips.map((clip, i) => ({type:"listen", clip, first:i===0}));
 const TASKS = [
   {id:"r1", topic:"ben", sec:"Revision", title:"Ben's video: say it the way Ben does", meta:"3 parts · with the glossary, then without", kind:"steps", min:15, steps:R1_STEPS},
   {id:"e1", topic:"ben", sec:"Extension", title:"Rick hands over the store: a group chat", meta:"a group chat in 4 parts · with the glossary, then without · the phrases' places", kind:"steps", min:20, steps:E1_STEPS},
   {id:"e2", topic:"ben", sec:"Extension", title:"Say it another way — then what would you say?", meta:"6 rewrites · 6 situations", kind:"steps", min:10, steps:E2_STEPS},
+  {id:"c1_1", topic:"ben", sec:"Extension", title:"Ben's phrases out there", meta:"9 short clips · 11 gaps", kind:"steps", min:7, tqLink:TQ.tqLink.C1_1, tq:TQ.tq.C1_1, steps:listenSteps(TQ.C1_1)},
+  {id:"c1_2", topic:"ben", sec:"Extension", title:"Get out or go out?", meta:"8 short clips · 8 gaps", kind:"steps", min:6, tqLink:TQ.tqLink.C1_2, tq:TQ.tq.C1_2, steps:listenSteps(TQ.C1_2),
+   /* her rule (14.11), folded under the instruction on every clip (engine 87) */
+   rule:{h:"Go out or get out?", html:"<b>go out</b> = leave home to do something, there's a reason: <i>go out for dinner, go out with friends, go out for a walk</i>.<br><b>get out (of the house)</b> = the point is to stop sitting at home: <i>I really need to get out of the house today.</i>"}},
   {id:"otu", topic:"ben", sec:"Over to you!", title:OTY.title, meta:"Read a chat · plan · write or record", kind:"steps", min:12,
    steps:[Object.assign({checkLabel:"Show the message"}, OTU_READ()), {type:"task"}, {type:"plan"}, {type:"produce"}]}
 ];

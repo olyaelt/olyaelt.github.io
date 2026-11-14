@@ -6,6 +6,7 @@
  "earlier": false,
  "assets": {
   "STICKER": "sticker.png",
-  "CLIPS": "clips.json"
+  "CLIPS": "clips.json",
+  "POOL": "pool.json"
  }
 }

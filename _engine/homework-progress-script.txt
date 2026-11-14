@@ -566,6 +566,7 @@ function teacher_(stu, p) {
   if (p.action === "toolRoster") return toolRoster_(p);
   if (p.action === "bankPut") return bankPut_(p);                     // tools 33: her decoding bank
   if (p.action === "ratePut") return ratePut_(p);                     // engine 79: her ratings of the homework's lines
+  if (p.action === "stepStats") return stepStats_(stu, p);            // engine 88: the step quiz in her view (her ladders now)
   const page = clean_(p.page, 80);
   if (!page) return { ok: false, error: "no-page" };
   if (p.action === "feedback" || p.action === "discussed" || p.action === "publish") ovBump_();   // engine 64: her overview counts afresh
@@ -926,7 +927,7 @@ function words_(v) {
   return String(v == null ? "" : v).replace(/^'/, "");
 }
 // engine 78 (AL chat 12.11 23:15): Context plays = how often the clip's lines without a gap were played before this first try
-const ATT_LIS = ["Words first", "Listens before first try", "Listens before Check", "Pieces", "Slow", "Checks", "Show me", "Final", "Words final", "Seconds", "Variant", "Compare", "Mode", "Context plays"];
+const ATT_LIS = ["Words first", "Listens before first try", "Listens before Check", "Pieces", "Slow", "Checks", "Show me", "Final", "Words final", "Seconds", "Variant", "Compare", "Mode", "Context plays", "Step quiz"];
 const WANTS = "Want to say";
 const WANT_HEAD = ["Time", "Code", "Student", "Group", "Homework", "Task", "Line", "Text", "On", "Key"];
 function attempts_(stu, page, p) {
@@ -941,7 +942,7 @@ function attempts_(stu, page, p) {
   // the listening part: what happened up to Check (it may come later than the first try, and again after another Check)
   const lis = (x, a) => { a = a && typeof a === "object" ? a : null;
     return [asText_(clean_(x.words, 12)), num(x.lis), a ? num(a.plays) : "", a ? num(a.pieces) : "", a ? yes(a.slow) || (x.slow === true ? "yes" : "") : (x.slow === true ? "yes" : ""),
-      a ? num(a.checks) : "", a ? yes(a.shown) : "", a ? clean_(a.final, 300) : "", a ? asText_(clean_(a.wfinal, 12)) : "", a ? num(a.secs) : "", clean_(x.v, 4), clean_(x.ab, 40), clean_(x.mode, 8), num(x.ctx)]; };
+      a ? num(a.checks) : "", a ? yes(a.shown) : "", a ? clean_(a.final, 300) : "", a ? asText_(clean_(a.wfinal, 12)) : "", a ? num(a.secs) : "", clean_(x.v, 4), clean_(x.ab, 40), clean_(x.mode, 8), num(x.ctx), clean_(x.step, 60)]; };
   const rows = [];
   items.forEach(x => {
     const item = clean_(x && x.item, 80); if (!item) return;
@@ -1043,6 +1044,35 @@ function ratePut_(p) {
     if (at[id]) sh.getRange(at[id], 1, 1, vals.length).setValues([vals]); else { sh.appendRow(vals); at[id] = sh.getLastRow(); }
   });
   return { ok: true, saved: (p.cards || []).length };
+}
+// engine 88 (AL chat 14.11 14:00 §3.5–3.6; her 14:01 «подгружая для нового студента информацию из таблицы»): the step quiz. Every student's first
+// try of a clip (item …:s@<clip id>.gN; all its gaps right = caught) on the quiz's pages (both groups), in the order they came, moves the clip's
+// difficulty b (start: her level − 3) and the student's θ (B2 0, C1 1) — Elo, as in adaptive learning systems (Pelánek 2016). Back to the page:
+// per clip b and n, how many students said the sound doesn't match, how many got YouTube's «removed» (100); this student's θ. No names.
+function stepStats_(stu, p) {
+  const pages = (Array.isArray(p.pages) ? p.pages : []).slice(0, 6).map(x => clean_(x, 80)).filter(Boolean);
+  const lv = p.levels && typeof p.levels === "object" ? p.levels : {}, b = {}, n = {}, th = {}, nosync = {}, gone = {};
+  Object.keys(lv).slice(0, 400).forEach(id => { const k = clean_(id, 60); if (k) { b[k] = Math.max(1, Math.min(5, Number(lv[id]) || 3)) - 3; n[k] = 0; } });
+  const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(ATTEMPTS);
+  if (sh && sh.getLastRow() > 1) {
+    const res = {}, order = [];
+    sh.getRange(2, 1, sh.getLastRow() - 1, ATT_HEAD.length).getValues().forEach(r => {
+      if (pages.indexOf(String(r[4])) < 0) return;
+      const item = String(r[6]), g = /:s@(.+)\.g\d+$/.exec(item), q = /:s@(.+)\.(rep|yt)$/.exec(item);
+      if (q && q[1] in b) { const f = String(r[10]), who = String(r[1]);
+        if (/match/.test(f)) (nosync[q[1]] = nosync[q[1]] || {})[who] = 1; else if (/error 100/.test(f)) (gone[q[1]] = gone[q[1]] || {})[who] = 1; return; }
+      if (!g || !(g[1] in b)) return;
+      const k = String(r[1]) + "|" + g[1];
+      if (!res[k]) { res[k] = { code: String(r[1]), group: String(r[3]), clip: g[1], ok: true }; order.push(k); }
+      if (String(r[11]) !== "✓") res[k].ok = false;
+    });
+    order.forEach(k => { const x = res[k]; if (!(x.code in th)) th[x.code] = x.group === "C1" ? 1 : 0;
+      const e = 1 / (1 + Math.exp(b[x.clip] - th[x.code])), d = (x.ok ? 1 : 0) - e;
+      th[x.code] += 0.4 * d; b[x.clip] -= 0.3 * d; n[x.clip]++; });
+  }
+  const r2 = v => Math.round(v * 100) / 100, out = {};
+  Object.keys(b).forEach(id => { out[id] = { b: r2(b[id]), n: n[id], nosync: Object.keys(nosync[id] || {}).length, gone: Object.keys(gone[id] || {}).length }; });
+  return { ok: true, clips: out, theta: stu.code in th ? r2(th[stu.code]) : null };
 }
 function num_(v) { const x = Number(v); return isFinite(x) ? x : ""; }
 
@@ -1184,6 +1214,7 @@ function sync_(p) {
     if (p.action === "note") return note_(stu, p.id, p.text);
     if (p.action === "react") { const r = react_(stu, page, p); st_touch_(stu); return r; }
     if (p.action === "attempts") return attempts_(stu, page, p);   // engine 67: first tries
+    if (p.action === "stepStats") return stepStats_(stu, p);         // engine 88: the step quiz — the clips' working difficulty
     if (p.action === "wants") return wants_(stu, page, p);         // engine 67: «I want to say this»
 
     const prog = progress_(stu.group);
