@@ -1,0 +1,2445 @@
+{
+ "main": [
+  {
+   "id": "dc13",
+   "answer": "can",
+   "src": "Rachel and Jun · Fox Village in Zao Japan!  蔵王きつね村・kitsun",
+   "video": "92wtDKCtOiU",
+   "lines": [
+    [
+     "92wtDKCtOiU",
+     54.18,
+     3.72,
+     [
+      "Once the babies separate from their mom they join in one of these big adolescent pens"
+     ]
+    ],
+    [
+     "92wtDKCtOiU",
+     57.9,
+     3.1,
+     [
+      "where you ",
+      {
+       "gap": "can"
+      },
+      " watch them running back and forth and playing with each other,"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 809,
+    "right_share": 0.986,
+    "tier": "easy",
+    "vs_same_people": 0.09
+   },
+   "priority": 1
+  },
+  {
+   "id": "dc06",
+   "answer": "can",
+   "src": "torontopubliclibrary · Malcolm Gladwell | Part 3 | May 28, 2012",
+   "video": "QyL9H4wJ0VE",
+   "lines": [
+    [
+     "QyL9H4wJ0VE",
+     510.34,
+     5.629,
+     [
+      "he's not just using his profits, but he's using every penny he owns, he has, to pay"
+     ]
+    ],
+    [
+     "QyL9H4wJ0VE",
+     515.969,
+     4.521,
+     [
+      "off the local Nazis, so he ",
+      {
+       "gap": "can"
+      },
+      " keep his Jewish workers alive."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 409,
+    "right_share": 1.0,
+    "tier": "easy",
+    "vs_same_people": null
+   },
+   "priority": 1
+  },
+  {
+   "id": "dn33",
+   "answer": "can't",
+   "src": "Talks at Google · Anderson Cooper | Talks at Google",
+   "video": "FdmkBxguucA",
+   "lines": [
+    [
+     "FdmkBxguucA",
+     1482.659,
+     6.21,
+     [
+      ">>Woman: Hey, Anderson. My question for you is, if you could have five people to dinner"
+     ]
+    ],
+    [
+     "FdmkBxguucA",
+     1488.869,
+     2.53,
+     [
+      "with you, living, deceased, or fictional, who would they be and why? ",
+      {
+       "gap": "Can't"
+      },
+      " wait for"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 303,
+    "right_share": 0.614,
+    "tier": "hard",
+    "vs_same_people": -0.33
+   },
+   "priority": 1
+  },
+  {
+   "id": "dn15",
+   "answer": "can't",
+   "src": "Khan Academy · A Conversation with Elon Musk",
+   "video": "vDwzmJpI4io",
+   "lines": [
+    [
+     "vDwzmJpI4io",
+     27.91,
+     1.791,
+     [
+      "and even if one of those things is missing,"
+     ]
+    ],
+    [
+     "vDwzmJpI4io",
+     29.701,
+     1.979,
+     [
+      "you ",
+      {
+       "gap": "can't"
+      },
+      " make cars."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 422,
+    "right_share": 0.908,
+    "tier": "medium",
+    "vs_same_people": -0.06
+   },
+   "priority": 1
+  },
+  {
+   "id": "dn28",
+   "answer": "can't",
+   "src": "Rachel and Jun · Fox Village in Zao Japan!  蔵王きつね村・kitsun",
+   "video": "92wtDKCtOiU",
+   "lines": [
+    [
+     "92wtDKCtOiU",
+     26.24,
+     3.5,
+     [
+      "I ",
+      {
+       "gap": "can't"
+      },
+      " even believe a place like this reallyexists."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 848,
+    "right_share": 0.755,
+    "tier": "hard",
+    "vs_same_people": -0.12
+   },
+   "priority": 1
+  },
+  {
+   "id": "dc12",
+   "answer": "can",
+   "src": "Rachel and Jun · Fox Village in Zao Japan!  蔵王きつね村・kitsun",
+   "video": "92wtDKCtOiU",
+   "lines": [
+    [
+     "92wtDKCtOiU",
+     11.269,
+     2.8,
+     [
+      "It's a gorilla! It's like gorilla village."
+     ]
+    ],
+    [
+     "92wtDKCtOiU",
+     14.069,
+     2.691,
+     [
+      "It's a village slash zoo for foxes that you ",
+      {
+       "gap": "can"
+      },
+      " go inside"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 806,
+    "right_share": 0.988,
+    "tier": "easy",
+    "vs_same_people": 0.07
+   },
+   "priority": 1
+  },
+  {
+   "id": "dc14",
+   "answer": "can",
+   "src": "Rachel and Jun · Fox Village in Zao Japan!  蔵王きつね村・kitsun",
+   "video": "92wtDKCtOiU",
+   "lines": [
+    [
+     "92wtDKCtOiU",
+     48.43,
+     4.33,
+     [
+      "There's a fox hospital in this area, and if you want to, you ",
+      {
+       "gap": "can"
+      },
+      " hold a fox here!"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 721,
+    "right_share": 0.986,
+    "tier": "easy",
+    "vs_same_people": 0.09
+   },
+   "priority": 1
+  },
+  {
+   "id": "sn02",
+   "answer": "can't",
+   "src": "The Ellen Show · The cast of 'Annie'",
+   "video": "1Rl01v_6Kd8",
+   "lines": [
+    [
+     "1Rl01v_6Kd8",
+     156.466,
+     1.434,
+     [
+      "- WELL, I CAN TAKE THIS ONE, RIGHT?"
+     ]
+    ],
+    [
+     "1Rl01v_6Kd8",
+     157.9,
+     4.6,
+     [
+      "- NO, YOU ",
+      {
+       "gap": "CAN'T"
+      },
+      " JUST TAKE--- THAT'S SO EASY, JAMIE."
+     ]
+    ]
+   ],
+   "db": null,
+   "priority": 1
+  },
+  {
+   "id": "dn21",
+   "answer": "can't",
+   "src": "Talks at Google · Anderson Cooper | Talks at Google",
+   "video": "FdmkBxguucA",
+   "lines": [
+    [
+     "FdmkBxguucA",
+     1682.169,
+     4.32,
+     [
+      "and I also work for 60 Minutes on the side. Most of my 60 Minutes work, I can only do"
+     ]
+    ],
+    [
+     "FdmkBxguucA",
+     1686.489,
+     4.51,
+     [
+      "on weekends or on holidays, when I take vacation from my other jobs 'cause I ",
+      {
+       "gap": "can't"
+      },
+      " have my"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 528,
+    "right_share": 0.881,
+    "tier": "medium",
+    "vs_same_people": -0.33
+   },
+   "priority": 1
+  },
+  {
+   "id": "dc21",
+   "answer": "can",
+   "src": "TED · How to spot a liar | Pamela Meyer",
+   "video": "P_6vDLq64gE",
+   "lines": [
+    [
+     "P_6vDLq64gE",
+     447.813,
+     2.199,
+     [
+      "And then we're going to look at the hot spots"
+     ]
+    ],
+    [
+     "P_6vDLq64gE",
+     450.036,
+     1.853,
+     [
+      "and see if we ",
+      {
+       "gap": "can"
+      },
+      " find them ourselves."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 86,
+    "right_share": 0.953,
+    "tier": "medium",
+    "vs_same_people": 0.03
+   },
+   "priority": 1
+  },
+  {
+   "id": "dc16",
+   "answer": "can",
+   "src": "Rachel and Jun · Fox Village in Zao Japan!  蔵王きつね村・kitsun",
+   "video": "92wtDKCtOiU",
+   "lines": [
+    [
+     "92wtDKCtOiU",
+     148.36,
+     2.88,
+     [
+      "You ",
+      {
+       "gap": "can"
+      },
+      " buy treats for them, which come in plastic bags,"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 672,
+    "right_share": 0.982,
+    "tier": "easy",
+    "vs_same_people": 0.1
+   },
+   "priority": 1
+  },
+  {
+   "id": "dn10",
+   "answer": "can't",
+   "src": "TED · Can we build AI without losing control o",
+   "video": "8nt3edWLgIg",
+   "lines": [
+    [
+     "8nt3edWLgIg",
+     724.68,
+     1.856,
+     [
+      "Another reason we're told not to worry"
+     ]
+    ],
+    [
+     "8nt3edWLgIg",
+     726.56,
+     3.016,
+     [
+      "is that these machines ",
+      {
+       "gap": "can't"
+      },
+      " help but share our values"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 121,
+    "right_share": 0.959,
+    "tier": "easy",
+    "vs_same_people": 0.35
+   },
+   "priority": 1
+  },
+  {
+   "id": "dn08",
+   "answer": "can't",
+   "src": "torontopubliclibrary · Jim Treliving | Part 2 | October 25, 201",
+   "video": "mdBsgY2VhJ4",
+   "lines": [
+    [
+     "mdBsgY2VhJ4",
+     1189.48,
+     2.4,
+     [
+      {
+       "gap": "can't"
+      },
+      " make work. How did you know?"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 67,
+    "right_share": 0.97,
+    "tier": "easy",
+    "vs_same_people": -0.0
+   },
+   "priority": 1
+  },
+  {
+   "id": "dc29",
+   "answer": "can",
+   "src": "BBC · Sherlock Mini-Episode: Many Happy Return",
+   "video": "JwntNANJCOE",
+   "lines": [
+    [
+     "JwntNANJCOE",
+     371.04,
+     2.04,
+     [
+      "I can tell you what you can do."
+     ]
+    ],
+    [
+     "JwntNANJCOE",
+     373.12,
+     1.88,
+     [
+      "You ",
+      {
+       "gap": "can"
+      },
+      " stop being dead."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 615,
+    "right_share": 0.836,
+    "tier": "hard",
+    "vs_same_people": -0.08
+   },
+   "priority": 1
+  },
+  {
+   "id": "dc28",
+   "answer": "can",
+   "src": "Khan Academy · A Conversation with Elon Musk",
+   "video": "vDwzmJpI4io",
+   "lines": [
+    [
+     "vDwzmJpI4io",
+     61.62,
+     3.341,
+     [
+      "ELON MUSK: Well, it ",
+      {
+       "gap": "can"
+      },
+      " be done, but if then things go out"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 380,
+    "right_share": 0.889,
+    "tier": "hard",
+    "vs_same_people": -0.06
+   },
+   "priority": 1
+  },
+  {
+   "id": "sc13",
+   "answer": "can",
+   "src": "The Ellen Show · Acrobat Jon Stranks",
+   "video": "d-M3s5uYQiM",
+   "lines": [
+    [
+     "d-M3s5uYQiM",
+     219.01,
+     0.66,
+     [
+      "[LAUGHTER]"
+     ]
+    ],
+    [
+     "d-M3s5uYQiM",
+     219.67,
+     0.877,
+     [
+      "But you ",
+      {
+       "gap": "can"
+      },
+      " do that."
+     ]
+    ]
+   ],
+   "db": null,
+   "priority": 1
+  },
+  {
+   "id": "dn30",
+   "answer": "can't",
+   "src": "Simone Giertz · I made a robot that serves me soup",
+   "video": "ab47XHidvwQ",
+   "lines": [
+    [
+     "ab47XHidvwQ",
+     174.07,
+     1.28,
+     [
+      "It has like this weird"
+     ]
+    ],
+    [
+     "ab47XHidvwQ",
+     175.35,
+     6.839,
+     [
+      "bug where I have to slam it for it to actually start. I 3D printed all these parts because you ",
+      {
+       "gap": "can't"
+      },
+      " get a"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 735,
+    "right_share": 0.732,
+    "tier": "hard",
+    "vs_same_people": null
+   },
+   "priority": 1
+  },
+  {
+   "id": "dc08",
+   "answer": "can",
+   "src": "Khan Academy · A Conversation with Elon Musk",
+   "video": "vDwzmJpI4io",
+   "lines": [
+    [
+     "vDwzmJpI4io",
+     1575.79,
+     1.96,
+     [
+      "ELON MUSK: Well, I'm hopeful we ",
+      {
+       "gap": "can"
+      },
+      " do it next year."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 351,
+    "right_share": 1.0,
+    "tier": "easy",
+    "vs_same_people": 0.05
+   },
+   "priority": 1
+  },
+  {
+   "id": "sn05",
+   "answer": "can't",
+   "src": "The Ellen Show · Gina Rodriguez salsa lesson",
+   "video": "ywq4a_A4GSs",
+   "lines": [
+    [
+     "ywq4a_A4GSs",
+     49.9,
+     1.233,
+     [
+      "- AND THEN WE CAN DO SIDE TO SIDE."
+     ]
+    ],
+    [
+     "ywq4a_A4GSs",
+     51.133,
+     1.1,
+     [
+      "- NO, WE ",
+      {
+       "gap": "CAN'T"
+      },
+      ".OKAY."
+     ]
+    ]
+   ],
+   "db": null,
+   "priority": 1
+  },
+  {
+   "id": "dc27",
+   "answer": "can",
+   "src": "Talks at Google · Photography@Google: Thomas Hawk",
+   "video": "0Rlj40LHIg0",
+   "lines": [
+    [
+     "0Rlj40LHIg0",
+     546.62,
+     3.219,
+     [
+      "I ",
+      {
+       "gap": "can"
+      },
+      " get away from work during that time. And I'll"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 162,
+    "right_share": 0.895,
+    "tier": "hard",
+    "vs_same_people": -0.09
+   },
+   "priority": 1
+  },
+  {
+   "id": "dn11",
+   "answer": "can't",
+   "src": "torontopubliclibrary · Randy Bachman | Star Talks | April 8, 20",
+   "video": "2tOr4lC9Rjg",
+   "lines": [
+    [
+     "2tOr4lC9Rjg",
+     1461.54,
+     4.7,
+     [
+      "RB: The trick is you ",
+      {
+       "gap": "can't"
+      },
+      " let them sit down. You've gotta keep them up dancing, 'cause"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 61,
+    "right_share": 0.951,
+    "tier": "easy",
+    "vs_same_people": null
+   },
+   "priority": 1
+  },
+  {
+   "id": "dc15",
+   "answer": "can",
+   "src": "Talks at Google · Photography@Google: Thomas Hawk",
+   "video": "0Rlj40LHIg0",
+   "lines": [
+    [
+     "0Rlj40LHIg0",
+     1544.659,
+     3.75,
+     [
+      "photographs, too. I love cemeteries. I'll shoot in cemeteries. There's wonderful"
+     ]
+    ],
+    [
+     "0Rlj40LHIg0",
+     1548.409,
+     5.52,
+     [
+      "statuary you ",
+      {
+       "gap": "can"
+      },
+      " find sometimes. Here's a weeping angel, I think it's in Evergreen Cemetery,"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 140,
+    "right_share": 0.986,
+    "tier": "easy",
+    "vs_same_people": 0.1
+   },
+   "priority": 1
+  },
+  {
+   "id": "dn36",
+   "answer": "can't",
+   "src": "Talks at Google · Anderson Cooper | Talks at Google",
+   "video": "FdmkBxguucA",
+   "lines": [
+    [
+     "FdmkBxguucA",
+     1217.389,
+     4.331,
+     [
+      "and see it for yourself, because you don't know what these images really are. I mean,"
+     ]
+    ],
+    [
+     "FdmkBxguucA",
+     1221.72,
+     4.209,
+     [
+      "in many cases we ",
+      {
+       "gap": "can't"
+      },
+      " independently confirm what some of these images show. Are some of"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 1083,
+    "right_share": 0.51,
+    "tier": "hard",
+    "vs_same_people": -0.33
+   },
+   "priority": 1
+  },
+  {
+   "id": "dc25",
+   "answer": "can",
+   "src": "TED · How to spot a liar | Pamela Meyer",
+   "video": "P_6vDLq64gE",
+   "lines": [
+    [
+     "P_6vDLq64gE",
+     423.925,
+     1.311,
+     [
+      "What do you do?"
+     ]
+    ],
+    [
+     "P_6vDLq64gE",
+     425.26,
+     3.976,
+     [
+      "Well, there are steps we ",
+      {
+       "gap": "can"
+      },
+      " take to navigate our way through the morass."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 87,
+    "right_share": 0.92,
+    "tier": "medium",
+    "vs_same_people": -0.02
+   },
+   "priority": 1
+  },
+  {
+   "id": "dn02",
+   "answer": "can't",
+   "src": "torontopubliclibrary · Jim Treliving | Part 3 | October 25, 201",
+   "video": "-1WNVegUB8Y",
+   "lines": [
+    [
+     "-1WNVegUB8Y",
+     606.709,
+     5.281,
+     [
+      "is going to a bank or whatever. You can't go on what your time is worth. That's just"
+     ]
+    ],
+    [
+     "-1WNVegUB8Y",
+     611.99,
+     4.689,
+     [
+      "a misnomer. You ",
+      {
+       "gap": "can't"
+      },
+      " do that. You have to look at what the business is, project what"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 82,
+    "right_share": 1.0,
+    "tier": "easy",
+    "vs_same_people": 0.04
+   },
+   "priority": 1
+  },
+  {
+   "id": "dn24",
+   "answer": "can't",
+   "src": "Talks at Google · Photography@Google: Thomas Hawk",
+   "video": "0Rlj40LHIg0",
+   "lines": [
+    [
+     "0Rlj40LHIg0",
+     1843.289,
+     2.75,
+     [
+      "on our photos. We don't know where they're coming"
+     ]
+    ],
+    [
+     "0Rlj40LHIg0",
+     1846.039,
+     1.921,
+     [
+      "from. Flickr is capturing this data, why ",
+      {
+       "gap": "can't"
+      },
+      " you"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 129,
+    "right_share": 0.845,
+    "tier": "medium",
+    "vs_same_people": -0.05
+   },
+   "priority": 1
+  },
+  {
+   "id": "sc05",
+   "answer": "can",
+   "src": "The Ellen Show · Gina Rodriguez salsa lesson",
+   "video": "ywq4a_A4GSs",
+   "lines": [
+    [
+     "ywq4a_A4GSs",
+     48.866,
+     1.034,
+     [
+      "- OH!"
+     ]
+    ],
+    [
+     "ywq4a_A4GSs",
+     49.9,
+     1.233,
+     [
+      "- AND THEN WE ",
+      {
+       "gap": "CAN"
+      },
+      " DO SIDE TO SIDE."
+     ]
+    ]
+   ],
+   "db": null,
+   "priority": 1
+  },
+  {
+   "id": "dn37",
+   "answer": "can't",
+   "src": "TED · Can we build AI without losing control o",
+   "video": "8nt3edWLgIg",
+   "lines": [
+    [
+     "8nt3edWLgIg",
+     439.12,
+     2.296,
+     [
+      "they will very likely explore this spectrum"
+     ]
+    ],
+    [
+     "8nt3edWLgIg",
+     441.44,
+     1.856,
+     [
+      "in ways that we ",
+      {
+       "gap": "can't"
+      },
+      " imagine,"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 138,
+    "right_share": 0.413,
+    "tier": "hard",
+    "vs_same_people": -0.44
+   },
+   "priority": 1
+  },
+  {
+   "id": "dn03",
+   "answer": "can't",
+   "src": "torontopubliclibrary · Jim Treliving | Part 3 | October 25, 201",
+   "video": "-1WNVegUB8Y",
+   "lines": [
+    [
+     "-1WNVegUB8Y",
+     1529.38,
+     5.9,
+     [
+      "You know what, I call it the Monopoly game. I'd be very fortunate to make all kinds of"
+     ]
+    ],
+    [
+     "-1WNVegUB8Y",
+     1535.28,
+     4.47,
+     [
+      "money. And I ",
+      {
+       "gap": "can't"
+      },
+      " tell you how much I'm worth because I don't know, I don't ask. I work"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 72,
+    "right_share": 1.0,
+    "tier": "easy",
+    "vs_same_people": 0.03
+   },
+   "priority": 1
+  },
+  {
+   "id": "dc18",
+   "answer": "can",
+   "src": "Khan Academy · A Conversation with Elon Musk",
+   "video": "vDwzmJpI4io",
+   "lines": [
+    [
+     "vDwzmJpI4io",
+     1289.74,
+     3.13,
+     [
+      "And so I thought, OK, I ",
+      {
+       "gap": "can"
+      },
+      " do that."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 358,
+    "right_share": 0.969,
+    "tier": "medium",
+    "vs_same_people": 0.02
+   },
+   "priority": 1
+  },
+  {
+   "id": "dn32",
+   "answer": "can't",
+   "src": "Rachel and Jun · Fox Village in Zao Japan!  蔵王きつね村・kitsun",
+   "video": "92wtDKCtOiU",
+   "lines": [
+    [
+     "92wtDKCtOiU",
+     193.32,
+     4.12,
+     [
+      "They did this thing a lot where they open their mouths and squeal at each other, which"
+     ]
+    ],
+    [
+     "92wtDKCtOiU",
+     197.44,
+     5.46,
+     [
+      "we assumed was a show of dominance, but I'm not a fox scholar so I ",
+      {
+       "gap": "can't"
+      },
+      " say for sure."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 727,
+    "right_share": 0.646,
+    "tier": "hard",
+    "vs_same_people": -0.31
+   },
+   "priority": 1
+  },
+  {
+   "id": "dc19",
+   "answer": "can",
+   "src": "Talks at Google · Photography@Google: Thomas Hawk",
+   "video": "0Rlj40LHIg0",
+   "lines": [
+    [
+     "0Rlj40LHIg0",
+     984.54,
+     2.5,
+     [
+      "can get to the top of the Marriott; there's a great view from up there. They have a bar"
+     ]
+    ],
+    [
+     "0Rlj40LHIg0",
+     987.04,
+     3.719,
+     [
+      "up there. There are some places you ",
+      {
+       "gap": "can"
+      },
+      " get on top of"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 132,
+    "right_share": 0.962,
+    "tier": "medium",
+    "vs_same_people": -0.02
+   },
+   "priority": 1
+  },
+  {
+   "id": "dc23",
+   "answer": "can",
+   "src": "TED · How to spot a liar | Pamela Meyer",
+   "video": "P_6vDLq64gE",
+   "lines": [
+    [
+     "P_6vDLq64gE",
+     933.76,
+     2.476,
+     [
+      "(Video) Diane Downs: At night when I close my eyes,"
+     ]
+    ],
+    [
+     "P_6vDLq64gE",
+     936.26,
+     3.096,
+     [
+      "I ",
+      {
+       "gap": "can"
+      },
+      " see Christie reaching her hand out to me while I'm driving,"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 81,
+    "right_share": 0.938,
+    "tier": "medium",
+    "vs_same_people": 0.01
+   },
+   "priority": 1
+  },
+  {
+   "id": "dn12",
+   "answer": "can't",
+   "src": "TheEllenShow · Ed Sheeran Performs 'Thinking Out Loud'",
+   "video": "dHvUCKrGPhI",
+   "lines": [
+    [
+     "dHvUCKrGPhI",
+     16.5,
+     2.766,
+     [
+      "And I ",
+      {
+       "gap": "can't"
+      },
+      " sweep you off of your feet"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 804,
+    "right_share": 0.93,
+    "tier": "medium",
+    "vs_same_people": null
+   },
+   "priority": 1
+  },
+  {
+   "id": "dc17",
+   "answer": "can",
+   "src": "Talks at Google · Anderson Cooper | Talks at Google",
+   "video": "FdmkBxguucA",
+   "lines": [
+    [
+     "FdmkBxguucA",
+     358.979,
+     5.171,
+     [
+      "I said to my producer 'cause I was--. That was at 8 o'clock and my show was gonna be"
+     ]
+    ],
+    [
+     "FdmkBxguucA",
+     364.15,
+     5.06,
+     [
+      "repeated at 10. And I said, \"We ",
+      {
+       "gap": "can"
+      },
+      " just pull that up for the 10 o'clock.\" And there was"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 380,
+    "right_share": 0.979,
+    "tier": "easy",
+    "vs_same_people": null
+   },
+   "priority": 1
+  },
+  {
+   "id": "sn04",
+   "answer": "can't",
+   "src": "The Ellen Show · Steve Spangler",
+   "video": "TqB2-FRZy0s",
+   "lines": [
+    [
+     "TqB2-FRZy0s",
+     22.066,
+     1.0,
+     [
+      "- WANNA TRY IT?- OKAY."
+     ]
+    ],
+    [
+     "TqB2-FRZy0s",
+     23.066,
+     1.0,
+     [
+      "- NO, YOU ",
+      {
+       "gap": "CAN'T"
+      },
+      " DO THAT."
+     ]
+    ]
+   ],
+   "db": null,
+   "priority": 1
+  },
+  {
+   "id": "dc22",
+   "answer": "can",
+   "src": "Talks at Google · Photography@Google: Thomas Hawk",
+   "video": "0Rlj40LHIg0",
+   "lines": [
+    [
+     "0Rlj40LHIg0",
+     1522.07,
+     4.0,
+     [
+      "off. But I think -- if you really look for it there's"
+     ]
+    ],
+    [
+     "0Rlj40LHIg0",
+     1526.07,
+     3.239,
+     [
+      "really enough events that you ",
+      {
+       "gap": "can"
+      },
+      " find. These are shots"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 151,
+    "right_share": 0.947,
+    "tier": "medium",
+    "vs_same_people": 0.07
+   },
+   "priority": 1
+  },
+  {
+   "id": "dn20",
+   "answer": "can't",
+   "src": "Khan Academy · A Conversation with Elon Musk",
+   "video": "vDwzmJpI4io",
+   "lines": [
+    [
+     "vDwzmJpI4io",
+     1104.628,
+     2.562,
+     [
+      "and said, look there's nations that ",
+      {
+       "gap": "can't"
+      },
+      " do this."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 372,
+    "right_share": 0.882,
+    "tier": "medium",
+    "vs_same_people": -0.07
+   },
+   "priority": 1
+  },
+  {
+   "id": "dn17",
+   "answer": "can't",
+   "src": "Khan Academy · A Conversation with Elon Musk",
+   "video": "vDwzmJpI4io",
+   "lines": [
+    [
+     "vDwzmJpI4io",
+     49.335,
+     4.475,
+     [
+      "So you ",
+      {
+       "gap": "can't"
+      },
+      " put the interior in without this cable."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 383,
+    "right_share": 0.896,
+    "tier": "medium",
+    "vs_same_people": -0.07
+   },
+   "priority": 1
+  },
+  {
+   "id": "sc04",
+   "answer": "can",
+   "src": "The Ellen Show · Steve Spangler",
+   "video": "TqB2-FRZy0s",
+   "lines": [
+    [
+     "TqB2-FRZy0s",
+     46.7,
+     2.3,
+     [
+      "YOU CAN SPEND HOURS.MY WIFE GIVES ME LIKE 20 BUCKS,"
+     ]
+    ],
+    [
+     "TqB2-FRZy0s",
+     49.0,
+     1.566,
+     [
+      "AND I ",
+      {
+       "gap": "CAN"
+      },
+      " DO WHATEVER I WANT.- MM-HMM."
+     ]
+    ]
+   ],
+   "db": null,
+   "priority": 1
+  },
+  {
+   "id": "sc02",
+   "answer": "can",
+   "src": "The Ellen Show · The cast of 'Annie'",
+   "video": "1Rl01v_6Kd8",
+   "lines": [
+    [
+     "1Rl01v_6Kd8",
+     156.466,
+     1.434,
+     [
+      "- WELL, I ",
+      {
+       "gap": "CAN"
+      },
+      " TAKE THIS ONE, RIGHT?"
+     ]
+    ]
+   ],
+   "db": null,
+   "priority": 1
+  },
+  {
+   "id": "dn09",
+   "answer": "can't",
+   "src": "BBC · Sherlock Mini-Episode: Many Happy Return",
+   "video": "JwntNANJCOE",
+   "lines": [
+    [
+     "JwntNANJCOE",
+     118.08,
+     3.44,
+     [
+      "He didn't solve all of my cases.- He's out there."
+     ]
+    ],
+    [
+     "JwntNANJCOE",
+     121.56,
+     4.24,
+     [
+      "He's hiding, but he ",
+      {
+       "gap": "can't"
+      },
+      " stop himself from getting involved."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 1907,
+    "right_share": 0.965,
+    "tier": "easy",
+    "vs_same_people": 0.03
+   },
+   "priority": 1
+  },
+  {
+   "id": "dn13",
+   "answer": "can't",
+   "src": "TED · Can we build AI without losing control o",
+   "video": "8nt3edWLgIg",
+   "lines": [
+    [
+     "8nt3edWLgIg",
+     441.44,
+     1.856,
+     [
+      "in ways that we can't imagine,"
+     ]
+    ],
+    [
+     "8nt3edWLgIg",
+     443.32,
+     2.52,
+     [
+      "and exceed us in ways that we ",
+      {
+       "gap": "can't"
+      },
+      " imagine."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 130,
+    "right_share": 0.915,
+    "tier": "medium",
+    "vs_same_people": 0.3
+   },
+   "priority": 1
+  },
+  {
+   "id": "sn13",
+   "answer": "can't",
+   "src": "The Ellen Show · Acrobat Jon Stranks",
+   "video": "d-M3s5uYQiM",
+   "lines": [
+    [
+     "d-M3s5uYQiM",
+     219.67,
+     0.877,
+     [
+      "But you can do that."
+     ]
+    ],
+    [
+     "d-M3s5uYQiM",
+     220.547,
+     1.833,
+     [
+      "There's no sign that says you ",
+      {
+       "gap": "can't"
+      },
+      " do that."
+     ]
+    ]
+   ],
+   "db": null,
+   "priority": 1
+  },
+  {
+   "id": "dc02",
+   "answer": "can",
+   "src": "Talks at Google · Photography@Google: Thomas Hawk",
+   "video": "0Rlj40LHIg0",
+   "lines": [
+    [
+     "0Rlj40LHIg0",
+     1282.889,
+     6.91,
+     [
+      "it. So you ",
+      {
+       "gap": "can"
+      },
+      " get super close. So one I did to get"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 134,
+    "right_share": 1.0,
+    "tier": "easy",
+    "vs_same_people": 0.01
+   },
+   "priority": 1
+  },
+  {
+   "id": "dc20",
+   "answer": "can",
+   "src": "BBC · Sherlock Mini-Episode: Many Happy Return",
+   "video": "JwntNANJCOE",
+   "lines": [
+    [
+     "JwntNANJCOE",
+     371.04,
+     2.04,
+     [
+      "I can tell you what you ",
+      {
+       "gap": "can"
+      },
+      " do."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 805,
+    "right_share": 0.961,
+    "tier": "medium",
+    "vs_same_people": 0.02
+   },
+   "priority": 1
+  },
+  {
+   "id": "dn14",
+   "answer": "can't",
+   "src": "Rachel and Jun · Fox Village in Zao Japan!  蔵王きつね村・kitsun",
+   "video": "92wtDKCtOiU",
+   "lines": [
+    [
+     "92wtDKCtOiU",
+     61.0,
+     3.88,
+     [
+      "or sleeping in the most adorable giant fox ball EVER."
+     ]
+    ],
+    [
+     "92wtDKCtOiU",
+     64.88,
+     3.96,
+     [
+      "That is literally a pile of foxes. I ",
+      {
+       "gap": "can't"
+      },
+      " even count how many there are there."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 527,
+    "right_share": 0.911,
+    "tier": "medium",
+    "vs_same_people": -0.01
+   },
+   "priority": 1
+  },
+  {
+   "id": "dc10",
+   "answer": "can",
+   "src": "Khan Academy · A Conversation with Elon Musk",
+   "video": "vDwzmJpI4io",
+   "lines": [
+    [
+     "vDwzmJpI4io",
+     1774.36,
+     4.96,
+     [
+      "to a point where we ",
+      {
+       "gap": "can"
+      },
+      " make full reusability work."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 349,
+    "right_share": 0.991,
+    "tier": "easy",
+    "vs_same_people": 0.04
+   },
+   "priority": 1
+  },
+  {
+   "id": "dc04",
+   "answer": "can",
+   "src": "Talks at Google · Anderson Cooper | Talks at Google",
+   "video": "FdmkBxguucA",
+   "lines": [
+    [
+     "FdmkBxguucA",
+     263.02,
+     3.1,
+     [
+      ">>ANDERSON COOPER: All I ",
+      {
+       "gap": "can"
+      },
+      " say is they should thank their lucky stars it wasn't Depar-Two."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 860,
+    "right_share": 1.0,
+    "tier": "easy",
+    "vs_same_people": null
+   },
+   "priority": 1
+  },
+  {
+   "id": "dn29",
+   "answer": "can't",
+   "src": "Talks at Google · Photography@Google: Thomas Hawk",
+   "video": "0Rlj40LHIg0",
+   "lines": [
+    [
+     "0Rlj40LHIg0",
+     1917.6,
+     7.0,
+     [
+      "They were \"don't be that guy\" whatever that means. I've"
+     ]
+    ],
+    [
+     "0Rlj40LHIg0",
+     1924.669,
+     2.25,
+     [
+      "had content. I had a huge content battle that I ",
+      {
+       "gap": "can't"
+      }
+     ]
+    ]
+   ],
+   "db": {
+    "n": 121,
+    "right_share": 0.752,
+    "tier": "hard",
+    "vs_same_people": -0.15
+   },
+   "priority": 1
+  },
+  {
+   "id": "dn04",
+   "answer": "can't",
+   "src": "torontopubliclibrary · Jim Treliving | Part 3 | October 25, 201",
+   "video": "-1WNVegUB8Y",
+   "lines": [
+    [
+     "-1WNVegUB8Y",
+     1551.58,
+     4.27,
+     [
+      "back is because you ",
+      {
+       "gap": "can't"
+      },
+      " take it with you. When's the last time you seen a hearse going"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 73,
+    "right_share": 1.0,
+    "tier": "easy",
+    "vs_same_people": 0.03
+   },
+   "priority": 1
+  },
+  {
+   "id": "dn07",
+   "answer": "can't",
+   "src": "torontopubliclibrary · Mary Walsh | Sept 30, 2013 | Appel Salon",
+   "video": "sUsN0boE944",
+   "lines": [
+    [
+     "sUsN0boE944",
+     2519.52,
+     4.559,
+     [
+      "I just ",
+      {
+       "gap": "can't"
+      },
+      " stand the... But you know, this is a terrible, terrible thing to say and please"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 316,
+    "right_share": 0.972,
+    "tier": "easy",
+    "vs_same_people": null
+   },
+   "priority": 1
+  }
+ ],
+ "spare": [
+  {
+   "id": "dn23",
+   "answer": "can't",
+   "src": "TED · How to spot a liar | Pamela Meyer",
+   "video": "P_6vDLq64gE",
+   "lines": [
+    [
+     "P_6vDLq64gE",
+     918.26,
+     1.976,
+     [
+      "And you'll see when you see the video,"
+     ]
+    ],
+    [
+     "P_6vDLq64gE",
+     920.26,
+     2.334,
+     [
+      "she ",
+      {
+       "gap": "can't"
+      },
+      " even pretend to be an agonizing mother."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 63,
+    "right_share": 0.857,
+    "tier": "medium",
+    "vs_same_people": -0.11
+   },
+   "priority": 2
+  },
+  {
+   "id": "dn26",
+   "answer": "can't",
+   "src": "TED · How to spot a liar | Pamela Meyer",
+   "video": "P_6vDLq64gE",
+   "lines": [
+    [
+     "P_6vDLq64gE",
+     63.26,
+     3.976,
+     [
+      "I ",
+      {
+       "gap": "can't"
+      },
+      " even get a coffee date at Starbucks."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 77,
+    "right_share": 0.792,
+    "tier": "hard",
+    "vs_same_people": -0.13
+   },
+   "priority": 2
+  },
+  {
+   "id": "dc24",
+   "answer": "can",
+   "src": "TED · How to spot a liar | Pamela Meyer",
+   "video": "P_6vDLq64gE",
+   "lines": [
+    [
+     "P_6vDLq64gE",
+     156.26,
+     3.239,
+     [
+      "But there are times when we are unwilling participants in deception."
+     ]
+    ],
+    [
+     "P_6vDLq64gE",
+     159.523,
+     2.713,
+     [
+      "And that ",
+      {
+       "gap": "can"
+      },
+      " have dramatic costs for us."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 75,
+    "right_share": 0.933,
+    "tier": "medium",
+    "vs_same_people": -0.03
+   },
+   "priority": 2
+  },
+  {
+   "id": "dn16",
+   "answer": "can't",
+   "src": "Talks at Google · Photography@Google: Thomas Hawk",
+   "video": "0Rlj40LHIg0",
+   "lines": [
+    [
+     "0Rlj40LHIg0",
+     2152.309,
+     2.961,
+     [
+      "rank photos by social activity and the meta data around them."
+     ]
+    ],
+    [
+     "0Rlj40LHIg0",
+     2155.27,
+     3.309,
+     [
+      "Flickr even got a patent on it which I ",
+      {
+       "gap": "can't"
+      },
+      " believe they"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 111,
+    "right_share": 0.901,
+    "tier": "medium",
+    "vs_same_people": 0.0
+   },
+   "priority": 2
+  },
+  {
+   "id": "sn06",
+   "answer": "can't",
+   "src": "The Ellen Show · Ellen & Michelle Obama",
+   "video": "MKWzKzZrzts",
+   "lines": [
+    [
+     "MKWzKzZrzts",
+     33.248,
+     0.499,
+     [
+      "[LAUGHTER]"
+     ]
+    ],
+    [
+     "MKWzKzZrzts",
+     33.747,
+     1.403,
+     [
+      "No, you ",
+      {
+       "gap": "can't"
+      },
+      "."
+     ]
+    ]
+   ],
+   "db": null,
+   "priority": 2
+  },
+  {
+   "id": "dc07",
+   "answer": "can",
+   "src": "torontopubliclibrary · Jim Treliving | Part 2 | October 25, 201",
+   "video": "mdBsgY2VhJ4",
+   "lines": [
+    [
+     "mdBsgY2VhJ4",
+     1155.49,
+     4.399,
+     [
+      "\"We ",
+      {
+       "gap": "can"
+      },
+      " raise this money and we got a partner, and you're gonna carry us and we're gonna"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 66,
+    "right_share": 1.0,
+    "tier": "easy",
+    "vs_same_people": 0.03
+   },
+   "priority": 2
+  },
+  {
+   "id": "sn18",
+   "answer": "can't",
+   "src": "TED · The mind behind Tesla, SpaceX",
+   "video": "IgKWPdJWuBQ",
+   "lines": [
+    [
+     "IgKWPdJWuBQ",
+     278.87,
+     2.496,
+     [
+      "You can do that with an electric car because of its responsiveness."
+     ]
+    ],
+    [
+     "IgKWPdJWuBQ",
+     281.366,
+     2.127,
+     [
+      "You ",
+      {
+       "gap": "can't"
+      },
+      " do that with a gasoline car."
+     ]
+    ]
+   ],
+   "db": null,
+   "priority": 2
+  },
+  {
+   "id": "dn01",
+   "answer": "can't",
+   "src": "The Hollywood Reporter · Comedy Actresses Roundtable: Phoebe Wall",
+   "video": "fTuOAV0lK1M",
+   "lines": [
+    [
+     "fTuOAV0lK1M",
+     2252.433,
+     1.32,
+     [
+      "that she ",
+      {
+       "gap": "can't"
+      },
+      " come back."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 54,
+    "right_share": 1.0,
+    "tier": "easy",
+    "vs_same_people": null
+   },
+   "priority": 2
+  },
+  {
+   "id": "sc09",
+   "answer": "can",
+   "src": "Tom Scott · An international standard (British)",
+   "video": "nAsrsMPftOI",
+   "lines": [
+    [
+     "nAsrsMPftOI",
+     9.92,
+     3.19,
+     [
+      "and there are lengthy infographics videos talking about it."
+     ]
+    ],
+    [
+     "nAsrsMPftOI",
+     13.11,
+     1.84,
+     [
+      "But, as far as I ",
+      {
+       "gap": "can"
+      },
+      " tell,"
+     ]
+    ]
+   ],
+   "db": null,
+   "priority": 2
+  },
+  {
+   "id": "dn35",
+   "answer": "can't",
+   "src": "CGP Grey · The Difference between the United Kingdo",
+   "video": "rNu8XDBSn10",
+   "lines": [
+    [
+     "rNu8XDBSn10",
+     140.87,
+     3.58,
+     [
+      "there British Royalty on the money? To answer this, we need to talk about Empire."
+     ]
+    ],
+    [
+     "rNu8XDBSn10",
+     144.45,
+     2.619,
+     [
+      "You ",
+      {
+       "gap": "can't"
+      },
+      " have gone to school in the English-speaking world without having learned that the British"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 106,
+    "right_share": 0.519,
+    "tier": "hard",
+    "vs_same_people": -0.22
+   },
+   "priority": 2
+  },
+  {
+   "id": "dc09",
+   "answer": "can",
+   "src": "Talks at Google · Photography@Google: Thomas Hawk",
+   "video": "0Rlj40LHIg0",
+   "lines": [
+    [
+     "0Rlj40LHIg0",
+     1014.339,
+     4.29,
+     [
+      "50, 60 percent of the time you ",
+      {
+       "gap": "can"
+      },
+      " get on most hotel roofs"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 134,
+    "right_share": 0.993,
+    "tier": "easy",
+    "vs_same_people": 0.01
+   },
+   "priority": 2
+  },
+  {
+   "id": "dn27",
+   "answer": "can't",
+   "src": "TED · How to spot a liar | Pamela Meyer",
+   "video": "P_6vDLq64gE",
+   "lines": [
+    [
+     "P_6vDLq64gE",
+     265.26,
+     2.976,
+     [
+      "Now when we first hear this data, we recoil."
+     ]
+    ],
+    [
+     "P_6vDLq64gE",
+     268.26,
+     1.976,
+     [
+      "We ",
+      {
+       "gap": "can't"
+      },
+      " believe how prevalent lying is."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 80,
+    "right_share": 0.787,
+    "tier": "hard",
+    "vs_same_people": -0.14
+   },
+   "priority": 2
+  },
+  {
+   "id": "sn09",
+   "answer": "can't",
+   "src": "Tom Scott · An international standard (British)",
+   "video": "nAsrsMPftOI",
+   "lines": [
+    [
+     "nAsrsMPftOI",
+     113.38,
+     1.74,
+     [
+      "Let's see if I can do it..."
+     ]
+    ],
+    [
+     "nAsrsMPftOI",
+     115.12,
+     1.52,
+     [
+      "No, I ",
+      {
+       "gap": "can't"
+      },
+      "."
+     ]
+    ]
+   ],
+   "db": null,
+   "priority": 2
+  },
+  {
+   "id": "dn25",
+   "answer": "can't",
+   "src": "TED · How to spot a liar | Pamela Meyer",
+   "video": "P_6vDLq64gE",
+   "lines": [
+    [
+     "P_6vDLq64gE",
+     200.26,
+     3.476,
+     [
+      "he could have undermined the entire banking system of the Western world."
+     ]
+    ],
+    [
+     "P_6vDLq64gE",
+     203.76,
+     3.176,
+     [
+      "And you ",
+      {
+       "gap": "can't"
+      },
+      " find this guy on Google;you can't find him anywhere."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 89,
+    "right_share": 0.843,
+    "tier": "medium",
+    "vs_same_people": -0.08
+   },
+   "priority": 2
+  },
+  {
+   "id": "dc05",
+   "answer": "can",
+   "src": "Talks at Google · Anderson Cooper | Talks at Google",
+   "video": "FdmkBxguucA",
+   "lines": [
+    [
+     "FdmkBxguucA",
+     204.94,
+     1.93,
+     [
+      ">>ANDERSON COOPER: But I'm saving up for a rainy day."
+     ]
+    ],
+    [
+     "FdmkBxguucA",
+     206.87,
+     3.19,
+     [
+      ">>STEVE GROVE: Well, maybe you ",
+      {
+       "gap": "can"
+      },
+      " watch some of the clips on YouTube if you miss them during"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 117,
+    "right_share": 1.0,
+    "tier": "easy",
+    "vs_same_people": null
+   },
+   "priority": 2
+  },
+  {
+   "id": "sc18",
+   "answer": "can",
+   "src": "TED · The mind behind Tesla, SpaceX",
+   "video": "IgKWPdJWuBQ",
+   "lines": [
+    [
+     "IgKWPdJWuBQ",
+     277.036,
+     1.834,
+     [
+      "like the car has ESP."
+     ]
+    ],
+    [
+     "IgKWPdJWuBQ",
+     278.87,
+     2.496,
+     [
+      "You ",
+      {
+       "gap": "can"
+      },
+      " do that with an electric car because of its responsiveness."
+     ]
+    ]
+   ],
+   "db": null,
+   "priority": 2
+  },
+  {
+   "id": "dn18",
+   "answer": "can't",
+   "src": "torontopubliclibrary · Jim Treliving | Part 3 | October 25, 201",
+   "video": "-1WNVegUB8Y",
+   "lines": [
+    [
+     "-1WNVegUB8Y",
+     606.709,
+     5.281,
+     [
+      "is going to a bank or whatever. You ",
+      {
+       "gap": "can't"
+      },
+      " go on what your time is worth. That's just"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 86,
+    "right_share": 0.884,
+    "tier": "medium",
+    "vs_same_people": -0.1
+   },
+   "priority": 2
+  },
+  {
+   "id": "dc03",
+   "answer": "can",
+   "src": "Toronto Public Library · Appel Salon | Andre Dubus III | April 15",
+   "video": "EOG1Iw2njuk",
+   "lines": [
+    [
+     "EOG1Iw2njuk",
+     529.491,
+     4.049,
+     [
+      "And then, as I start to write from the point of view of one of these young Saudi brainwashed"
+     ]
+    ],
+    [
+     "EOG1Iw2njuk",
+     533.54,
+     5.94,
+     [
+      "boys, I'm still having a hard time thinking I ",
+      {
+       "gap": "can"
+      },
+      " become him imaginarily."
+     ]
+    ]
+   ],
+   "db": {
+    "n": 33,
+    "right_share": 1.0,
+    "tier": "easy",
+    "vs_same_people": 0.08
+   },
+   "priority": 2
+  },
+  {
+   "id": "dc11",
+   "answer": "can",
+   "src": "TED · How to spot a liar | Pamela Meyer",
+   "video": "P_6vDLq64gE",
+   "lines": [
+    [
+     "P_6vDLq64gE",
+     36.26,
+     3.576,
+     [
+      "is I'm going to show you what the research says about why we're all liars,"
+     ]
+    ],
+    [
+     "P_6vDLq64gE",
+     39.86,
+     1.576,
+     [
+      "how you ",
+      {
+       "gap": "can"
+      },
+      " become a liespotter"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 107,
+    "right_share": 0.991,
+    "tier": "easy",
+    "vs_same_people": 0.05
+   },
+   "priority": 2
+  },
+  {
+   "id": "dn34",
+   "answer": "can't",
+   "src": "torontopubliclibrary · Malcolm Gladwell | Part 3 | May 28, 2012",
+   "video": "QyL9H4wJ0VE",
+   "lines": [
+    [
+     "QyL9H4wJ0VE",
+     839.959,
+     3.811,
+     [
+      "and you forget they're billionaires. So, I'm talking to this guy, and I go into some rant"
+     ]
+    ],
+    [
+     "QyL9H4wJ0VE",
+     843.77,
+     5.95,
+     [
+      "as I often do about, why ",
+      {
+       "gap": "can't"
+      },
+      "... He's a software guy. I said, \"Why can't you fix the thing"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 63,
+    "right_share": 0.54,
+    "tier": "hard",
+    "vs_same_people": null
+   },
+   "priority": 2
+  },
+  {
+   "id": "dn22",
+   "answer": "can't",
+   "src": "Talks at Google · Photography@Google: Thomas Hawk",
+   "video": "0Rlj40LHIg0",
+   "lines": [
+    [
+     "0Rlj40LHIg0",
+     1939.7,
+     4.229,
+     [
+      "but I ",
+      {
+       "gap": "can't"
+      },
+      " get too much into it. So I've had some sort"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 112,
+    "right_share": 0.875,
+    "tier": "medium",
+    "vs_same_people": -0.03
+   },
+   "priority": 2
+  },
+  {
+   "id": "dn31",
+   "answer": "can't",
+   "src": "Talks at Google · Photography@Google: Thomas Hawk",
+   "video": "0Rlj40LHIg0",
+   "lines": [
+    [
+     "0Rlj40LHIg0",
+     2094.78,
+     2.95,
+     [
+      "on Flickr, that means they ",
+      {
+       "gap": "can't"
+      },
+      " comment on your photos"
+     ]
+    ]
+   ],
+   "db": {
+    "n": 117,
+    "right_share": 0.667,
+    "tier": "hard",
+    "vs_same_people": -0.25
+   },
+   "priority": 2
+  },
+  {
+   "id": "sc06",
+   "answer": "can",
+   "src": "The Ellen Show · Ellen & Michelle Obama",
+   "video": "MKWzKzZrzts",
+   "lines": [
+    [
+     "MKWzKzZrzts",
+     136.01,
+     2.25,
+     [
+      "I'm going to read a tiny bit of her book"
+     ]
+    ],
+    [
+     "MKWzKzZrzts",
+     138.26,
+     3.3,
+     [
+      "so that you ",
+      {
+       "gap": "can"
+      },
+      " see what is inside."
+     ]
+    ]
+   ],
+   "db": null,
+   "priority": 2
+  },
+  {
+   "id": "dn05",
+   "answer": "can't",
+   "src": "Talks at Google · Anderson Cooper | Talks at Google",
+   "video": "FdmkBxguucA",
+   "lines": [
+    [
+     "FdmkBxguucA",
+     3271.249,
+     5.87,
+     [
+      "sensationalistic about stuff. And I don't know if there's something specific that you're"
+     ]
+    ],
+    [
+     "FdmkBxguucA",
+     3277.119,
+     7.0,
+     [
+      "referencing, but certainly everybody's responsible just for their own little program and I ",
+      {
+       "gap": "can't"
+      }
+     ]
+    ]
+   ],
+   "db": {
+    "n": 50,
+    "right_share": 0.98,
+    "tier": "easy",
+    "vs_same_people": 0.13
+   },
+   "priority": 2
+  },
+  {
+   "id": "dc26",
+   "answer": "can",
+   "src": "torontopubliclibrary · Jim Treliving | Part 2 | October 25, 201",
+   "video": "mdBsgY2VhJ4",
+   "lines": [
+    [
+     "mdBsgY2VhJ4",
+     699.29,
+     4.199,
+     [
+      "from Whitehorse, can I meet you and we'll sign the lease tonight.\" And I said, \"Well,"
+     ]
+    ],
+    [
+     "mdBsgY2VhJ4",
+     703.489,
+     4.121,
+     [
+      "I just got to Prince Rupert.\" And he said,\"I think there's a bus at midnight you ",
+      {
+       "gap": "can"
+      }
+     ]
+    ]
+   ],
+   "db": {
+    "n": 66,
+    "right_share": 0.909,
+    "tier": "medium",
+    "vs_same_people": -0.07
+   },
+   "priority": 2
+  },
+  {
+   "id": "dn19",
+   "answer": "can't",
+   "src": "Toronto Public Library · Appel Salon | Andre Dubus III | April 15",
+   "video": "EOG1Iw2njuk",
+   "lines": [
+    [
+     "EOG1Iw2njuk",
+     462.5,
+     5.8,
+     [
+      "that he wrote, and that I try to write and I think you're doing that, too, you ",
+      {
+       "gap": "can't"
+      }
+     ]
+    ]
+   ],
+   "db": {
+    "n": 34,
+    "right_share": 0.882,
+    "tier": "medium",
+    "vs_same_people": -0.07
+   },
+   "priority": 2
+  }
+ ]
+}

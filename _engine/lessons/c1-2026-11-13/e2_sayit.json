@@ -1,0 +1,163 @@
+{
+ "steps": [
+  {
+   "type": "rewrite",
+   "instr": "Say it another way: complete the second sentence with the word in capitals, so it means the same.",
+   "o": "It doesn't matter if it's Rome or Tokyo — I never sleep well the first night.",
+   "k": "MATTER",
+   "pre": "",
+   "post": " I never sleep well the first night.",
+   "a": "No matter where I go,",
+   "acc": [
+    "No matter where I go,",
+    "No matter where I travel,",
+    "No matter where I go",
+    "No matter where I travel",
+    "No matter where I am,",
+    "No matter where I stay,"
+   ],
+   "n": "no matter where = wherever; keep “where”: not “no matter I travel”"
+  },
+  {
+   "type": "rewrite",
+   "instr": "Say it another way: complete the second sentence with the word in capitals, so it means the same.",
+   "o": "Since I stopped commuting, I've had lots of free time and nothing to fill it with.",
+   "k": "HANDS",
+   "pre": "Since I stopped commuting, I've had ",
+   "post": ".",
+   "a": "a lot of time on my hands",
+   "acc": [
+    "a lot of time on my hands",
+    "lots of time on my hands",
+    "a lot more time on my hands",
+    "so much time on my hands",
+    "plenty of time on my hands",
+    "more time on my hands",
+    "time on my hands",
+    "a lot of free time on my hands"
+   ],
+   "n": "time on my hands = free time and nothing to fill it with; “on”, not “in”"
+  },
+  {
+   "type": "rewrite",
+   "instr": "Say it another way: complete the second sentence with the word in capitals, so it means the same.",
+   "o": "I use GPS far too much, even to get to the supermarket.",
+   "k": "RELY",
+   "pre": "I ",
+   "post": ", even to get to the supermarket.",
+   "a": "rely on GPS way more than I should",
+   "acc": [
+    "rely on GPS way more than I should",
+    "rely on GPS much more than I should",
+    "rely on GPS more than I should",
+    "rely on GPS a lot more than I should",
+    "rely on GPS far more than I should",
+    "rely on GPS way too much",
+    "rely way too much on GPS",
+    "rely too much on GPS",
+    "rely on GPS too much"
+   ],
+   "n": "rely on sth more than I should = I need it or use it too much; “way more” = much more (informal)"
+  },
+  {
+   "type": "rewrite",
+   "instr": "Say it another way: complete the second sentence with the word in capitals, so it means the same.",
+   "o": "Whatever the weather's like, my neighbor cycles to work every day.",
+   "k": "SHINE",
+   "pre": "My neighbor cycles to work every day, ",
+   "post": ".",
+   "a": "come rain or shine",
+   "acc": [
+    "come rain or shine"
+   ],
+   "n": "come rain or shine = whatever the weather; it can also start the sentence: “Come rain or shine, my neighbor…”"
+  },
+  {
+   "type": "rewrite",
+   "instr": "Say it another way: complete the second sentence with the word in capitals, so it means the same.",
+   "o": "I don't know why, but I always feel at home in this old bookstore.",
+   "k": "EXPLAIN",
+   "pre": "",
+   "post": " I always feel at home in this old bookstore.",
+   "a": "I can't explain it, but",
+   "acc": [
+    "I can't explain it, but",
+    "Can't explain it, but",
+    "I can't explain it but",
+    "Can't explain it but",
+    "I cannot explain it, but",
+    "I can't explain why, but",
+    "I can't explain why but"
+   ],
+   "n": "with “it”: not “I can't explain, but…”"
+  },
+  {
+   "type": "rewrite",
+   "instr": "Say it another way: complete the second sentence with the word in capitals, so it means the same.",
+   "o": "I don't hate my new job at all. In fact, the opposite is true: I love it.",
+   "k": "CONTRARY",
+   "pre": "I don't hate my new job at all. ",
+   "post": ": I love it.",
+   "a": "Quite the contrary",
+   "acc": [
+    "Quite the contrary",
+    "On the contrary"
+   ],
+   "n": "Quite the contrary = the opposite is true; it follows a negative (“don't hate”)"
+  },
+  {
+   "type": "sayit",
+   "box": "BOX_BEN",
+   "box_state": "folded",
+   "instr": "What would you say? Say it aloud, then tap the yellow box to check.",
+   "sit": "In a busy café, a man points at the empty chair at your table: “Mind if I sit here?” You don't mind.",
+   "ans": "**No, go ahead.**",
+   "note": "or: No, not at all. / Sure, go ahead. — not “Yes, of course”: it can sound like “Yes, I do mind!”"
+  },
+  {
+   "type": "sayit",
+   "box": "BOX_BEN",
+   "box_state": "folded",
+   "instr": "What would you say? Say it aloud, then tap the yellow box to check.",
+   "sit": "Your colleague fixes a huge spreadsheet in ten seconds with a trick you've never seen.",
+   "ans": "Wow! Could you **explain to me** how you did that?",
+   "note": "explain something to somebody: “explain to me how…”, “explain it to me”; not “explain me”"
+  },
+  {
+   "type": "sayit",
+   "box": "BOX_BEN",
+   "box_state": "folded",
+   "instr": "What would you say? Say it aloud, then tap the yellow box to check.",
+   "sit": "Your friend has worked from home all week. She hasn't left home in three days. What does she need to do?",
+   "ans": "You need to **get out of the house**! Even a walk around the block helps.",
+   "note": "get out of the house = leave home; “go out” = usually to have fun in the evening"
+  },
+  {
+   "type": "sayit",
+   "box": "BOX_BEN",
+   "box_state": "folded",
+   "instr": "What would you say? Say it aloud, then tap the yellow box to check.",
+   "sit": "Your friend shows you her new, very short haircut. You like it, but it's a big change, and you want to say so kindly.",
+   "ans": "**Don't get me wrong**, I love it, but it's a big change!",
+   "note": "Don't get me wrong = please don't misunderstand me; then comes the “but” part"
+  },
+  {
+   "type": "sayit",
+   "box": "BOX_BEN",
+   "box_state": "folded",
+   "instr": "What would you say? Say it aloud, then tap the yellow box to check.",
+   "sit": "A friend asks why you've signed up for three online courses this month. (Your kids are at their grandparents' for the whole month.)",
+   "ans": "The kids are away, so I've got a lot of **time on my hands**.",
+   "note": "or: …so I have a lot of time on my hands · “on”, not “in”"
+  },
+  {
+   "type": "sayit",
+   "box": "BOX_BEN",
+   "box_state": "folded",
+   "instr": "What would you say? Say it aloud, then tap the yellow box to check.",
+   "sit": "Someone asks why you still volunteer at the food bank every Saturday, even when you're tired.",
+   "ans": "**I can't explain it, but** it **makes me feel part of something**.",
+   "note": "or: a part of something; not “the part of”"
+  }
+ ]
+}

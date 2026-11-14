@@ -1,0 +1,1344 @@
+{
+ "steps": [
+  {
+   "type": "dlg",
+   "intro": "Ben is retired. One day he sees a flyer: “Seniors, be an intern.” To apply, he records a video about himself. Part 1: why he needs a change. Say the missing words — the glossary helps — then tap the yellow boxes to check.",
+   "lines": [
+    {
+     "s": "Ben",
+     "p": [
+      "Freud said, \"Love and work. Work and love. That's all there is.\" Well, I'm retired, and my wife is dead. As you can imagine, that's given me some ",
+      {
+       "b": "time"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "on"
+      },
+      " ",
+      {
+       "b": "my hands"
+      },
+      "."
+     ]
+    },
+    {
+     "s": "Ben",
+     "p": [
+      "My wife's been gone for three and a half years. I miss her in every way. And retirement? That is an ongoing, relentless effort in creativity."
+     ]
+    },
+    {
+     "s": "Ben",
+     "p": [
+      {
+       "f": "A",
+       "r": "t"
+      },
+      " ",
+      {
+       "f": "f",
+       "r": "irst"
+      },
+      ", I admit ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "f": "e",
+       "r": "njoyed"
+      },
+      " the novelty of it. Sort of felt like I was playing hooky. I used all the miles I'd saved and traveled the globe. ",
+      {
+       "b": "The"
+      },
+      " ",
+      {
+       "f": "p",
+       "r": "roblem"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "as"
+      },
+      ", ",
+      {
+       "f": "n",
+       "r": "o"
+      },
+      " ",
+      {
+       "f": "m",
+       "r": "atter"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "here"
+      },
+      " ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "b": "went"
+      },
+      ", ",
+      {
+       "b": "as"
+      },
+      " ",
+      {
+       "b": "soon"
+      },
+      " ",
+      {
+       "b": "as"
+      },
+      " ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "f": "g",
+       "r": "ot"
+      },
+      " ",
+      {
+       "f": "h",
+       "r": "ome"
+      },
+      ", the nowhere-to-be thing ",
+      {
+       "f": "h",
+       "r": "it"
+      },
+      " ",
+      {
+       "f": "m",
+       "r": "e"
+      },
+      " ",
+      {
+       "b": "like"
+      },
+      " ",
+      {
+       "b": "a"
+      },
+      " ",
+      {
+       "b": "ton"
+      },
+      " ",
+      {
+       "b": "of"
+      },
+      " ",
+      {
+       "b": "bricks"
+      },
+      "."
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      "Freud /frɔɪd/"
+     ],
+     "m": "Sigmund Freud",
+     "ru": "Фрейд"
+    },
+    {
+     "p": [
+      "some time on my hands /taɪm ɒn maɪ hændz/"
+     ],
+     "m": "free time and nothing to fill it with",
+     "ru": "свободное время, которое нечем занять"
+    },
+    {
+     "p": [
+      "an ongoing, relentless effort /ˈɒnɡəʊɪŋ rɪˈlentləs ˈefət/"
+     ],
+     "m": "an effort that never lets up",
+     "ru": "постоянные, неустанные усилия"
+    },
+    {
+     "p": [
+      "At first, I enjoyed /ɪnˈdʒɔɪd/ the novelty /ˈnɒvlti/ of it"
+     ],
+     "m": "in the beginning, I liked how new it was",
+     "ru": "поначалу мне нравилась новизна"
+    },
+    {
+     "p": [
+      "playing hooky /ˈhʊki/"
+     ],
+     "m": "skipping school or work (AmE)",
+     "ru": "прогуливать"
+    },
+    {
+     "p": [
+      "the miles I'd saved"
+     ],
+     "m": "my frequent-flyer miles",
+     "ru": "накопленные мили"
+    },
+    {
+     "p": [
+      "The problem was, … /ˈprɒbləm wəz/"
+     ],
+     "m": "the catch was…",
+     "ru": "Проблема была в том, что…"
+    },
+    {
+     "p": [
+      "no matter where I went /nəʊ ˈmætə weə/"
+     ],
+     "m": "wherever I went",
+     "ru": "куда бы я ни поехал"
+    },
+    {
+     "p": [
+      "as soon as I got home"
+     ],
+     "m": "the moment I got home",
+     "ru": "как только я возвращался домой"
+    },
+    {
+     "p": [
+      "the nowhere-to-be thing"
+     ],
+     "m": "the feeling that I had nowhere I had to be",
+     "ru": "ощущение, что идти некуда и никто не ждёт"
+    },
+    {
+     "p": [
+      "… hit me like a ton /tʌn/ of bricks"
+     ],
+     "m": "I suddenly felt it very strongly",
+     "ru": "накрывало (как обухом по голове)"
+    }
+   ],
+   "credit": "From the film The Intern (2015): Ben's video"
+  },
+  {
+   "type": "dlg",
+   "intro": "Now the same part without the glossary.",
+   "lines": [
+    {
+     "s": "Ben",
+     "p": [
+      "Freud said, \"Love and work. Work and love. That's all there is.\" Well, I'm retired, and my wife is dead. As you can imagine, that's given me some ",
+      {
+       "b": "time"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "on"
+      },
+      " ",
+      {
+       "b": "my hands"
+      },
+      "."
+     ]
+    },
+    {
+     "s": "Ben",
+     "p": [
+      "My wife's been gone for three and a half years. I miss her in every way. And retirement? That is an ongoing, relentless effort in creativity."
+     ]
+    },
+    {
+     "s": "Ben",
+     "p": [
+      {
+       "f": "A",
+       "r": "t"
+      },
+      " ",
+      {
+       "f": "f",
+       "r": "irst"
+      },
+      ", I admit ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "f": "e",
+       "r": "njoyed"
+      },
+      " the novelty of it. Sort of felt like I was playing hooky. I used all the miles I'd saved and traveled the globe. ",
+      {
+       "b": "The"
+      },
+      " ",
+      {
+       "f": "p",
+       "r": "roblem"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "as"
+      },
+      ", ",
+      {
+       "f": "n",
+       "r": "o"
+      },
+      " ",
+      {
+       "f": "m",
+       "r": "atter"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "here"
+      },
+      " ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "b": "went"
+      },
+      ", ",
+      {
+       "b": "as"
+      },
+      " ",
+      {
+       "b": "soon"
+      },
+      " ",
+      {
+       "b": "as"
+      },
+      " ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "f": "g",
+       "r": "ot"
+      },
+      " ",
+      {
+       "f": "h",
+       "r": "ome"
+      },
+      ", the nowhere-to-be thing ",
+      {
+       "f": "h",
+       "r": "it"
+      },
+      " ",
+      {
+       "f": "m",
+       "r": "e"
+      },
+      " ",
+      {
+       "b": "like"
+      },
+      " ",
+      {
+       "b": "a"
+      },
+      " ",
+      {
+       "b": "ton"
+      },
+      " ",
+      {
+       "b": "of"
+      },
+      " ",
+      {
+       "b": "bricks"
+      },
+      "."
+     ]
+    }
+   ],
+   "credit": "From the film The Intern (2015): Ben's video"
+  },
+  {
+   "type": "dlg",
+   "intro": "Part 2: what Ben does about it now. Say the missing words — the glossary helps — then tap to check.",
+   "lines": [
+    {
+     "s": "Ben",
+     "p": [
+      "I realized the key to this whole deal was to keep moving. Get up, ",
+      {
+       "f": "",
+       "r": "get"
+      },
+      " ",
+      {
+       "f": "o",
+       "r": "ut"
+      },
+      " ",
+      {
+       "f": "o",
+       "r": "f"
+      },
+      " ",
+      {
+       "b": "the"
+      },
+      " ",
+      {
+       "b": "house"
+      },
+      ", and go somewhere. Anywhere. Come rain or shine, I'm at my Starbucks by 7:15."
+     ]
+    },
+    {
+     "s": "",
+     "p": [
+      "— Excuse me, ",
+      {
+       "f": "m",
+       "r": "ind"
+      },
+      " ",
+      {
+       "f": "i",
+       "r": "f"
+      },
+      " ",
+      {
+       "b": "we"
+      },
+      " ",
+      {
+       "b": "join"
+      },
+      " ",
+      {
+       "b": "you"
+      },
+      "?"
+     ]
+    },
+    {
+     "s": "",
+     "p": [
+      "— ",
+      {
+       "f": "",
+       "r": "No"
+      },
+      "."
+     ]
+    },
+    {
+     "s": "",
+     "p": [
+      "— Hey. How are you?"
+     ]
+    },
+    {
+     "s": "Ben",
+     "p": [
+      {
+       "f": "C",
+       "r": "an't"
+      },
+      " ",
+      {
+       "f": "e",
+       "r": "xplain"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "it"
+      },
+      {
+       "b": ", but"
+      },
+      " ",
+      {
+       "b": "it"
+      },
+      " ",
+      {
+       "f": "m",
+       "r": "akes"
+      },
+      " ",
+      {
+       "b": "me"
+      },
+      " ",
+      {
+       "f": "f",
+       "r": "eel"
+      },
+      " ",
+      {
+       "b": "part"
+      },
+      " ",
+      {
+       "b": "of"
+      },
+      " ",
+      {
+       "b": "something"
+      },
+      "."
+     ]
+    },
+    {
+     "s": "Ben",
+     "p": [
+      {
+       "b": "How"
+      },
+      " ",
+      {
+       "b": "do"
+      },
+      " ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "pend"
+      },
+      " ",
+      {
+       "b": "the"
+      },
+      " ",
+      {
+       "b": "rest"
+      },
+      " ",
+      {
+       "b": "of"
+      },
+      " ",
+      {
+       "b": "my"
+      },
+      " ",
+      {
+       "b": "days"
+      },
+      "? ",
+      {
+       "f": "Y",
+       "r": "ou"
+      },
+      " ",
+      {
+       "f": "n",
+       "r": "ame"
+      },
+      " ",
+      {
+       "f": "i",
+       "r": "t"
+      },
+      ". Golf, books, movies, pinochle. Tried yoga, learned to cook, ",
+      {
+       "f": "b",
+       "r": "ought"
+      },
+      " ",
+      {
+       "b": "some"
+      },
+      " ",
+      {
+       "b": "plants"
+      },
+      ", ",
+      {
+       "f": "t",
+       "r": "ook"
+      },
+      " ",
+      {
+       "b": "classes"
+      },
+      " ",
+      {
+       "b": "in"
+      },
+      " ",
+      {
+       "b": "Mandarin"
+      },
+      ". Xiang xin wo, wo shen me dou shiguo le. Translation… \"",
+      {
+       "b": "Believe"
+      },
+      " ",
+      {
+       "b": "me,"
+      },
+      " ",
+      {
+       "b": "I've"
+      },
+      " ",
+      {
+       "f": "t",
+       "r": "ried"
+      },
+      " ",
+      {
+       "f": "e",
+       "r": "verything"
+      },
+      ".\""
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      "the key /kiː/ to this whole deal was to"
+     ],
+     "m": "the most important thing in all this was to",
+     "ru": "главное во всём этом"
+    },
+    {
+     "p": [
+      "get out of the house"
+     ],
+     "m": "leave home, don't stay stuck indoors (“go out” = usually to have fun)",
+     "ru": "выбраться из дома"
+    },
+    {
+     "p": [
+      "Come rain or shine"
+     ],
+     "m": "every day, whatever the weather",
+     "ru": "в любую погоду"
+    },
+    {
+     "p": [
+      "I'm at my Starbucks by 7:15"
+     ],
+     "m": "no later than 7:15",
+     "ru": "к 7:15"
+    },
+    {
+     "p": [
+      "Excuse me, mind if /maɪnd ɪf/ we join you? — No."
+     ],
+     "m": "can we sit with you? — Sure. (“No” = I don't mind.)",
+     "ru": "Не против, если мы присядем? — Нет (= садитесь)."
+    },
+    {
+     "p": [
+      "Can't explain it /kænt ɪkˈspleɪn ɪt/ (BrE /kɑːnt/)"
+     ],
+     "m": "I don't know why",
+     "ru": "не могу объяснить почему"
+    },
+    {
+     "p": [
+      "it makes me feel (a) part of something"
+     ],
+     "m": "I feel I belong",
+     "ru": "я чувствую себя частью чего-то"
+    },
+    {
+     "p": [
+      "How do I spend the rest of my days?"
+     ],
+     "m": "what do I do with the rest of my life?",
+     "ru": "Как мне провести остаток жизни?"
+    },
+    {
+     "p": [
+      "You name it. /ˈneɪm ɪt/"
+     ],
+     "m": "all kinds of things",
+     "ru": "Чем я только не занимаюсь!"
+    },
+    {
+     "p": [
+      "pinochle /ˈpiːnʌkl/"
+     ],
+     "m": "a card game",
+     "ru": "пинокль (карточная игра)"
+    },
+    {
+     "p": [
+      "bought /bɔːt/ some plants, took /tʊk/ classes in Mandarin /ˈmændərɪn/"
+     ],
+     "m": "got some plants, went to Chinese classes",
+     "ru": "купил растения, ходил на китайский"
+    },
+    {
+     "p": [
+      "Believe me, I've tried everything. /traɪd ˈevriθɪŋ/"
+     ],
+     "m": "I really have tried it all",
+     "ru": "Поверь, я всё перепробовал."
+    }
+   ],
+   "credit": "From the film The Intern (2015): Ben's video"
+  },
+  {
+   "type": "dlg",
+   "intro": "Now the same part without the glossary.",
+   "lines": [
+    {
+     "s": "Ben",
+     "p": [
+      "I realized the key to this whole deal was to keep moving. Get up, ",
+      {
+       "f": "",
+       "r": "get"
+      },
+      " ",
+      {
+       "f": "o",
+       "r": "ut"
+      },
+      " ",
+      {
+       "f": "o",
+       "r": "f"
+      },
+      " ",
+      {
+       "b": "the"
+      },
+      " ",
+      {
+       "b": "house"
+      },
+      ", and go somewhere. Anywhere. Come rain or shine, I'm at my Starbucks by 7:15."
+     ]
+    },
+    {
+     "s": "",
+     "p": [
+      "— Excuse me, ",
+      {
+       "f": "m",
+       "r": "ind"
+      },
+      " ",
+      {
+       "f": "i",
+       "r": "f"
+      },
+      " ",
+      {
+       "b": "we"
+      },
+      " ",
+      {
+       "b": "join"
+      },
+      " ",
+      {
+       "b": "you"
+      },
+      "?"
+     ]
+    },
+    {
+     "s": "",
+     "p": [
+      "— ",
+      {
+       "f": "",
+       "r": "No"
+      },
+      "."
+     ]
+    },
+    {
+     "s": "",
+     "p": [
+      "— Hey. How are you?"
+     ]
+    },
+    {
+     "s": "Ben",
+     "p": [
+      {
+       "f": "C",
+       "r": "an't"
+      },
+      " ",
+      {
+       "f": "e",
+       "r": "xplain"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "it"
+      },
+      {
+       "b": ", but"
+      },
+      " ",
+      {
+       "b": "it"
+      },
+      " ",
+      {
+       "f": "m",
+       "r": "akes"
+      },
+      " ",
+      {
+       "b": "me"
+      },
+      " ",
+      {
+       "f": "f",
+       "r": "eel"
+      },
+      " ",
+      {
+       "b": "part"
+      },
+      " ",
+      {
+       "b": "of"
+      },
+      " ",
+      {
+       "b": "something"
+      },
+      "."
+     ]
+    },
+    {
+     "s": "Ben",
+     "p": [
+      {
+       "b": "How"
+      },
+      " ",
+      {
+       "b": "do"
+      },
+      " ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "pend"
+      },
+      " ",
+      {
+       "b": "the"
+      },
+      " ",
+      {
+       "b": "rest"
+      },
+      " ",
+      {
+       "b": "of"
+      },
+      " ",
+      {
+       "b": "my"
+      },
+      " ",
+      {
+       "b": "days"
+      },
+      "? ",
+      {
+       "f": "Y",
+       "r": "ou"
+      },
+      " ",
+      {
+       "f": "n",
+       "r": "ame"
+      },
+      " ",
+      {
+       "f": "i",
+       "r": "t"
+      },
+      ". Golf, books, movies, pinochle. Tried yoga, learned to cook, ",
+      {
+       "f": "b",
+       "r": "ought"
+      },
+      " ",
+      {
+       "b": "some"
+      },
+      " ",
+      {
+       "b": "plants"
+      },
+      ", ",
+      {
+       "f": "t",
+       "r": "ook"
+      },
+      " ",
+      {
+       "b": "classes"
+      },
+      " ",
+      {
+       "b": "in"
+      },
+      " ",
+      {
+       "b": "Mandarin"
+      },
+      ". Xiang xin wo, wo shen me dou shiguo le. Translation… \"",
+      {
+       "b": "Believe"
+      },
+      " ",
+      {
+       "b": "me,"
+      },
+      " ",
+      {
+       "b": "I've"
+      },
+      " ",
+      {
+       "f": "t",
+       "r": "ried"
+      },
+      " ",
+      {
+       "f": "e",
+       "r": "verything"
+      },
+      ".\""
+     ]
+    }
+   ],
+   "credit": "From the film The Intern (2015): Ben's video"
+  },
+  {
+   "type": "dlg",
+   "intro": "Part 3: the end of Ben's video. You read this part in class — now the key phrases are hidden. The glossary helps.",
+   "lines": [
+    {
+     "s": "Ben",
+     "p": [
+      "And then, of course, there are the funerals. So many more than I could imagine."
+     ]
+    },
+    {
+     "s": "Ben",
+     "p": [
+      "The only traveling I do ",
+      {
+       "f": "t",
+       "r": "hese"
+      },
+      " ",
+      {
+       "f": "d",
+       "r": "ays"
+      },
+      " is out to San Diego to visit my son and his family. They're great. I love them to pieces. But to be honest, I think I probably ",
+      {
+       "f": "r",
+       "r": "elied"
+      },
+      " ",
+      {
+       "f": "o",
+       "r": "n"
+      },
+      " ",
+      {
+       "b": "them"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "ay"
+      },
+      " ",
+      {
+       "f": "m",
+       "r": "ore"
+      },
+      " ",
+      {
+       "b": "than"
+      },
+      " ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "hould"
+      },
+      "."
+     ]
+    },
+    {
+     "s": "Ben",
+     "p": [
+      {
+       "f": "D",
+       "r": "on't"
+      },
+      " ",
+      {
+       "f": "g",
+       "r": "et"
+      },
+      " ",
+      {
+       "f": "m",
+       "r": "e"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "rong"
+      },
+      ", I'm not an unhappy person. ",
+      {
+       "f": "Q",
+       "r": "uite"
+      },
+      " ",
+      {
+       "f": "t",
+       "r": "he"
+      },
+      " ",
+      {
+       "f": "c",
+       "r": "ontrary"
+      },
+      ". I just know there's a hole in my life, and ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "b": "need"
+      },
+      " ",
+      {
+       "b": "to"
+      },
+      " ",
+      {
+       "f": "f",
+       "r": "ill"
+      },
+      " ",
+      {
+       "f": "i",
+       "r": "t"
+      },
+      ". Soon."
+     ]
+    },
+    {
+     "s": "Ben",
+     "p": [
+      {
+       "b": "Which"
+      },
+      " ",
+      {
+       "f": "b",
+       "r": "rings"
+      },
+      " ",
+      {
+       "b": "me"
+      },
+      " ",
+      {
+       "b": "to"
+      },
+      " today, when I was leaving the market and ",
+      {
+       "f": "c",
+       "r": "aught"
+      },
+      " ",
+      {
+       "b": "your"
+      },
+      " ",
+      {
+       "b": "flyer"
+      },
+      " out of the corner of my eye. Hmm. \"Seniors, be an intern.\""
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      "the funerals /ˈfjuːnərəlz/"
+     ],
+     "m": "ceremonies for people who have died",
+     "ru": "похороны"
+    },
+    {
+     "p": [
+      "these days"
+     ],
+     "m": "now, nowadays",
+     "ru": "сейчас, теперь"
+    },
+    {
+     "p": [
+      "I love them to pieces /ˈpiːsɪz/"
+     ],
+     "m": "I love them very much",
+     "ru": "я их обожаю"
+    },
+    {
+     "p": [
+      "I relied on /rɪˈlaɪd ɒn/ them way more than I should"
+     ],
+     "m": "I needed them much more than I should have",
+     "ru": "я опирался на них куда больше, чем следовало"
+    },
+    {
+     "p": [
+      "Don't get me wrong /rɒŋ/, …"
+     ],
+     "m": "please don't misunderstand me, …",
+     "ru": "Пойми(те) меня правильно, …"
+    },
+    {
+     "p": [
+      "Quite the contrary. /ˈkɒntrəri/"
+     ],
+     "m": "the opposite is true",
+     "ru": "Как раз наоборот."
+    },
+    {
+     "p": [
+      "a hole in my life /həʊl/, and I need to fill it"
+     ],
+     "m": "something's missing, and I need something to fill that gap",
+     "ru": "пустота в жизни, и её нужно чем-то заполнить"
+    },
+    {
+     "p": [
+      "Which brings me to … /brɪŋz/"
+     ],
+     "m": "and that leads me to…",
+     "ru": "И тут мы подходим к…"
+    },
+    {
+     "p": [
+      "caught /kɔːt/ your flyer out of the corner of my eye"
+     ],
+     "m": "happened to notice your flyer (without looking for it)",
+     "ru": "краем глаза заметил ваше объявление"
+    }
+   ],
+   "credit": "From the film The Intern (2015): Ben's video"
+  },
+  {
+   "type": "dlg",
+   "intro": "Now the same part without the glossary.",
+   "lines": [
+    {
+     "s": "Ben",
+     "p": [
+      "And then, of course, there are the funerals. So many more than I could imagine."
+     ]
+    },
+    {
+     "s": "Ben",
+     "p": [
+      "The only traveling I do ",
+      {
+       "f": "t",
+       "r": "hese"
+      },
+      " ",
+      {
+       "f": "d",
+       "r": "ays"
+      },
+      " is out to San Diego to visit my son and his family. They're great. I love them to pieces. But to be honest, I think I probably ",
+      {
+       "f": "r",
+       "r": "elied"
+      },
+      " ",
+      {
+       "f": "o",
+       "r": "n"
+      },
+      " ",
+      {
+       "b": "them"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "ay"
+      },
+      " ",
+      {
+       "f": "m",
+       "r": "ore"
+      },
+      " ",
+      {
+       "b": "than"
+      },
+      " ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "f": "s",
+       "r": "hould"
+      },
+      "."
+     ]
+    },
+    {
+     "s": "Ben",
+     "p": [
+      {
+       "f": "D",
+       "r": "on't"
+      },
+      " ",
+      {
+       "f": "g",
+       "r": "et"
+      },
+      " ",
+      {
+       "f": "m",
+       "r": "e"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "rong"
+      },
+      ", I'm not an unhappy person. ",
+      {
+       "f": "Q",
+       "r": "uite"
+      },
+      " ",
+      {
+       "f": "t",
+       "r": "he"
+      },
+      " ",
+      {
+       "f": "c",
+       "r": "ontrary"
+      },
+      ". I just know there's a hole in my life, and ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "b": "need"
+      },
+      " ",
+      {
+       "b": "to"
+      },
+      " ",
+      {
+       "f": "f",
+       "r": "ill"
+      },
+      " ",
+      {
+       "f": "i",
+       "r": "t"
+      },
+      ". Soon."
+     ]
+    },
+    {
+     "s": "Ben",
+     "p": [
+      {
+       "b": "Which"
+      },
+      " ",
+      {
+       "f": "b",
+       "r": "rings"
+      },
+      " ",
+      {
+       "b": "me"
+      },
+      " ",
+      {
+       "b": "to"
+      },
+      " today, when I was leaving the market and ",
+      {
+       "f": "c",
+       "r": "aught"
+      },
+      " ",
+      {
+       "b": "your"
+      },
+      " ",
+      {
+       "b": "flyer"
+      },
+      " out of the corner of my eye. Hmm. \"Seniors, be an intern.\""
+     ]
+    }
+   ],
+   "credit": "From the film The Intern (2015): Ben's video"
+  }
+ ]
+}

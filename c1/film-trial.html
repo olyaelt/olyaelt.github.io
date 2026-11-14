@@ -531,6 +531,30 @@ s{color:var(--strike);text-decoration:line-through;text-decoration-thickness:2px
 .gap-res{font-weight:700;border-radius:3px;padding:0 4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .gap-res.ans{background:var(--hl);color:var(--hl-ink)}
 .gap-res.ok{background:var(--ok-chip);color:var(--ok-ink)}
+/* engine 85 (her 14.11 09:46: «в интерфейсе отслушки иметь ровно такой же интерфейс, как у нас в упражнениях»): her rating under a
+   listening clip on a rate page (a homework page whose listen steps carry `rate`) — after Check, the same steps as the students */
+.rt-box{margin-top:12px;border-top:2px dashed var(--line);padding-top:10px;display:grid;gap:8px}
+.rt-box h3{margin:0;font-size:1rem}
+.rt-meta{font-weight:700;color:var(--muted);font-size:.92rem;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.rt-meta .gr{background:var(--fix-bg);color:#0B3D91;border-radius:999px;padding:1px 9px}
+.rt-chips{display:flex;flex-wrap:wrap;gap:6px}
+.rt-chip{font:inherit;font-weight:700;font-size:.95rem;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:5px 10px;cursor:pointer;text-align:left}
+.rt-chip[aria-pressed="true"]{background:var(--instr);border-color:var(--instr);color:#fff}
+.rt-chip.lv5[aria-pressed="true"]{background:#B00020;border-color:#B00020}
+.rt-chip .sm{font-weight:700;opacity:.75}
+.rt-note{font:inherit;width:100%;box-sizing:border-box;border:2px solid var(--line);border-radius:10px;padding:6px 8px;background:var(--card);color:var(--ink);min-height:2.4em}
+.gap-ch{display:inline-block;min-width:3.2em;text-align:center;background:var(--hl);color:var(--answer);border-bottom:2px solid var(--hl-ink);border-radius:4px 4px 0 0;font-weight:800}
+.rt-list{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 10px}
+.rt-li{font:inherit;font-size:.85rem;font-weight:800;min-width:2.6em;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:2px 6px;cursor:pointer}
+.rt-li.red{background:#B00020;border-color:#B00020;color:#fff}
+.rt-li.done{background:var(--ok-chip);border-color:var(--ok-chip);color:var(--ok-ink)}
+.rt-li.cur{outline:3px solid var(--instr);outline-offset:1px}
+.rt-chip.big{font-size:1.25rem;padding:8px 22px;min-width:5em;text-align:center}
+.rt-db{margin:0;font-weight:700;color:var(--muted)}
+.rt-out{font:inherit;font-weight:700;font-size:.9rem;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:4px 10px;cursor:pointer;justify-self:start}
+.rt-outon{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:#FDE2E4;color:#8A0016;border-radius:10px;padding:6px 10px;font-weight:800}
+.rt-outon button{font:inherit;font-weight:800;border:0;background:none;color:#8A0016;text-decoration:underline;cursor:pointer;padding:0}
+.gap-fb.gap-spell{background:var(--ok-chip);color:var(--ok-ink);font-weight:700}   /* engine 84: «✓ The spelling: That's a» under a line that was right but for the apostrophe */
 .gap-res.no{background:var(--no-chip);color:var(--no-ink)}
 .you-ok,.you-no{font-weight:700;border-radius:3px;padding:0 4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .you-ok{background:var(--ok-chip);color:var(--ok-ink)}.you-no{background:var(--no-chip);color:var(--no-ink)}
@@ -1168,7 +1192,7 @@ const TASKS = [
   {id:"film", topic:"film", sec:"Listening", title:"The Intern: what did they say?", meta:"3 lines from the film", kind:"steps", min:5, film:FILM_INTERN, steps:[]}
 ];
 /* ===== LESSON CONTENT: END — everything below is the engine, shared by all pages ===== */
-const ENGINE_VERSION = "83";   /* _engine/engine/VERSION */
+const ENGINE_VERSION = "86";   /* _engine/engine/VERSION */
 /* a few sentences from earlier homework of this group, picked by build.py at growing intervals */
 const EARLIER = [];
 if(EARLIER.length && !TASKS.some(t=>t.id==="earlier")){
@@ -1307,6 +1331,7 @@ async function syncNow(code, opts={}){
   if(res.ok) ls.set("hw-gid", res.role === "teacher" ? "" : (res.gid || ""));
   if(res.ok && res.role === "teacher"){
     if(code === myCode()){ ls.set("hw-role","teacher"); ls.set("hw-who", res.name||""); teacherData = res; if(res.group){ groupStats = res.group; } syncState = "ok"; gotRemoved(res.removed);
+      if(typeof RATE !== "undefined" && RATE && !window._rtLoaded){ window._rtLoaded = true; rtLoad(); }   /* engine 85: her ratings from her table */
       if(!current){ const y = scrollY; renderHome(); scrollTo(0,y); } }
     if(syncAgain){ syncAgain = false; syncNow(); }
     return res;
@@ -1798,7 +1823,7 @@ function wireMkBar(id){
 /* in the step: a red frame and a label on each marked line (nothing of the answer) */
 /* engine 79: her «🗑 Remove from homework» under a listening clip or a 🎬 line (in her view only) */
 function rmBarHTML(){
-  if(!isTeacher() || !current || current._once || current._review) return "";
+  if(!isTeacher() || !current || current._once || current._review || (typeof RATE !== "undefined" && RATE)) return "";
   const st = current.steps && current.steps[stepIdx], k = st && rmItem(current, st);
   if(!k) return "";
   const what = st.type === "film" ? "line" : "clip";
@@ -2609,6 +2634,19 @@ function answerForms(s, post){
   return forms;
 }
 const sameAnswer = (val, accs, post) => { const mine = new Set(answerForms(val, post)); return accs.some(a => answerForms(a, post).some(f => mine.has(f))); };
+/* engine 84 (AL chat 13.11 20:45, her 20:37 «желательно это не засчитывать как ошибку»): in what they HEARD (listening gaps, 🎬 lines) only the
+   apostrophe wrong is no mistake — «Thats' a», «thats a», «that,s a» for «That's a» are right («it's a» is still not); the page shows the
+   spelling beside it. Writing tasks (rewrites) keep their apostrophes. */
+const HEARD_APOS = false;   /* waits for her yes (14.11 09:40): until then a listening gap checks apostrophes as before */
+const noApos = f => String(f).replace(/'/g, "");
+/* her 09:43 («were засчитается за we're — это плохо»): no apostrophe makes another real word → still a mistake, both ways */
+const HOMO = new Set(["were", "well", "wed", "ill", "id", "hell", "shell", "shed", "its", "lets", "wont"]);
+const tokSame = (a, b) => a === b || (noApos(a) === noApos(b) && !HOMO.has(noApos(a)));
+const formSame = (x, y) => { const a = x.split(" "), b = y.split(" "); return a.length === b.length && a.every((w, k) => tokSame(w, b[k])); };
+const sameHeard = (val, accs, post) => { if(sameAnswer(val, accs, post)) return true; if(!HEARD_APOS) return false;
+  const v = String(val).replace(APOS, "'").replace(/([a-z]),([a-z])/gi, "$1'$2").replace(/'(?=\s|$)/g, "");   /* that,s → that's · «Thats' a» → Thats a */
+  const mine = answerForms(v, post);
+  return accs.some(a => answerForms(a, post).some(f => mine.some(m => formSame(m, f)))); };
 const splitTok = s => String(s).replace(APOS,"'").trim().split(/\s+/).filter(Boolean);
 const coreOf = w => { const m = w.match(/^([^A-Za-z0-9']*)(.*?)([^A-Za-z0-9']*)$/); return {lead:m[1], core:m[2], trail:m[3]}; };
 function lev(a,b){ const d=[...Array(b.length+1).keys()]; for(let i=1;i<=a.length;i++){ let p=d[0]; d[0]=i; for(let j=1;j<=b.length;j++){ const q=d[j]; d[j]=Math.min(d[j]+1,d[j-1]+1,p+(a[i-1]===b[j-1]?0:1)); p=q; } } return d[b.length]; }
@@ -3122,6 +3160,93 @@ function clipEnd(lines, i){ return (i+1 < lines.length ? lines[i+1][1] : lines[i
 function partsHTML(parts){
   return parts.map(p => typeof p === "string" ? esc(p) : `<span class="gapbox ${checked?"open":""}">${esc(p.gap)}</span>`).join("");
 }
+/* engine 85: her ratings of the clips (a rate page: content.js sets RATE = {set, whys_add}; each listen step has `rate` = {id, groups, tasks}).
+   Kept on this device and in her table (sheet «My ratings», the same as the 11.11 rate page: rateGet / ratePut). */
+/* engine 86 (AL chat 14.11 10:35 + 12:00; her 11:20): RATE may also set its own `levels` (her one ladder for both groups), `flags` in place
+   of the «why» labels, a `choice` (answer buttons instead of typing — the gap stays closed until she taps one: can / can't), `qs` (the
+   student's own questions, each with its options) and `total` (the counter); a step's `rate.db` = the TubeQuizard line, shown only once she
+   has given the step; 📋 Copy all my ratings (TSV) under every clip. */
+const RT_ON = () => typeof RATE !== "undefined" && !!RATE && isTeacher();
+const RT_LEVELS = () => (typeof RATE !== "undefined" && RATE && RATE.levels) || [[1, "Very easy", "a spare line"], [2, "B2 will manage", ""], [3, "B2 and C1", ""], [4, "C1 only", ""], [5, "Too hard", "take it out"]];
+const RT_WHYS = () => (typeof RATE !== "undefined" && RATE && RATE.flags) || ["sound (reduction, speed)", "words", "context / humour", "out of sync or poor sound", "the subtitles say something else"].concat((typeof RATE !== "undefined" && RATE && RATE.whys_add) || []);
+const RT_GONE = ["humour or context", "words", "sound", "the subtitles don't match", "other"];
+const RT_CH = st => !!(st && st.rate && typeof RATE !== "undefined" && RATE && RATE.choice);
+const rtNorm = v => String(v || "").replace(APOS, "'").toLowerCase().replace(/[^a-z0-9' ]+/g, " ").replace(/\s+/g, " ").trim();
+let RT = null, RT_T = 0; const RT_DIRTY = new Set();
+function rtStore(){ if(!RT){ RT = lsJSON("rate-" + RATE.set, {cards: {}}); if(!RT.cards) RT.cards = {}; } return RT; }
+async function rtLoad(){ if(!RT_ON()) return; const res = await post({action: "rateGet", code: myCode(), set: RATE.set});
+  if(res && res.ok){ const R = rtStore(); Object.entries(res.cards || {}).forEach(([id, x]) => { const m = R.cards[id]; if(!m || (x.at || 0) > (m.at || 0)) R.cards[id] = x; }); ls.set("rate-" + RATE.set, JSON.stringify(R));
+    const b = document.getElementById("rtbox"); if(b && current) renderTaskKeep(); } }
+function rtSet(st, patch){ const R = rtStore(), id = st.rate.id; R.cards[id] = Object.assign({}, R.cards[id] || {}, patch, {at: Date.now()}); ls.set("rate-" + RATE.set, JSON.stringify(R));
+  RT_DIRTY.add(st); clearTimeout(RT_T); RT_T = setTimeout(rtFlush, 700); }
+const rtLine = st => st.clip.filter(l => l[3].some(p => typeof p !== "string")).map(l => l[3].map(p => typeof p === "string" ? p : "___").join("")).join(" / ");
+const rtAns = st => st.clip.flatMap(l => l[3].filter(p => typeof p !== "string").map(p => p.gap)).join(" … ");
+async function rtFlush(){ if(!RT_DIRTY.size) return; const sts = [...RT_DIRTY]; RT_DIRTY.clear(); const R = rtStore();
+  const res = await post({action: "ratePut", code: myCode(), set: RATE.set, cards: sts.map(st => Object.assign({}, R.cards[st.rate.id] || {}, {id: st.rate.id, groups: (st.rate.groups || []).join(" · "), tasks: (st.rate.tasks || []).join(" · "), items: "", line: rtLine(st), answer: rtAns(st)}))});
+  const m = document.getElementById("rt-st"); if(m) m.textContent = res && res.ok ? "saved ✓" : "not saved — will try again";
+  if(!(res && res.ok)){ sts.forEach(x => RT_DIRTY.add(x)); setTimeout(rtFlush, 5000); } }
+window.addEventListener("pagehide", () => { if(RT_DIRTY.size) rtFlush(); });
+const rtSteps = () => TASKS.flatMap(t => (t.steps || []).filter(s => s && s.rate).map(s => ({t, s})));
+function rtCopy(btn){
+  const R = rtStore(), one = v => String(v == null ? "" : v).replace(/[\t\n\r]+/g, " ").trim(), out = [];
+  if(RATE.choice){
+    out.push("Can or can't: her answers on the listening page (" + RATE.set + "), " + new Date().toLocaleString("en-GB"));
+    out.push(["id", "answer", "her answer", "plays before the answer"].concat((RATE.qs || []).map(q => q.id), ["step", "flags", "note", "db n", "db right share", "db tier", "priority"]).join("\t"));
+    rtSteps().forEach(({s}) => { const x = R.cards[s.rate.id] || {}, db = s.rate.db || {};
+      out.push([s.rate.id, rtAns(s), x.guess || "", x.shown ? x.plays || 0 : ""].concat((RATE.qs || []).map(q => (x.qa || {})[q.id] || ""),
+        [x.out ? "✕" : x.level || "", (x.why || []).join(", "), x.note || "", db.n == null ? "" : db.n, db.right_share == null ? "" : db.right_share, db.tier || "", s.rate.priority || ""]).map(one).join("\t")); });
+  } else {
+    out.push("Her ratings of the clips (" + RATE.set + "), " + new Date().toLocaleString("en-GB"));
+    out.push(["card", "groups", "tasks", "line", "answer (subtitles)", "she heard (before the answer)", "the same?", "▶ before the answer", "difficulty", "why hard", "note", "out of the homework", "why out"].join("\t"));
+    rtSteps().forEach(({s}) => { const x = R.cards[s.rate.id] || {}, g = x.guess || "";
+      out.push([s.rate.id, (s.rate.groups || []).join(" · "), (s.rate.tasks || []).join(" · "), rtLine(s), rtAns(s), g, g ? (rtNorm(g) === rtNorm(rtAns(s)) ? "yes" : "no") : "",
+        x.shown ? x.plays || 0 : "", x.level || "", (x.why || []).join(", "), x.note || "", x.out ? "OUT" : "", x.out ? (x.removedWhy || []).join(", ") + (x.removedNote ? " — " + x.removedNote : "") : ""].map(one).join("\t")); });
+  }
+  copyText(out.join("\n"), btn); }
+function rtCount(){ const R = rtStore(), all = rtSteps().filter(({s}) => !RATE.total || (s.rate.priority || 1) === 1);
+  return {done: all.filter(({s}) => { const x = R.cards[s.rate.id] || {}; return x.level || x.out; }).length, n: RATE.total || all.length}; }
+function rtHTML(st){
+  const x = rtStore().cards[st.rate.id] || {}, on = !!(x.level || x.out), CH = RT_CH(st), cnt = rtCount();
+  if(CH && !x.shown) return `<h3>What do you hear?</h3><div class="rt-chips rt-choice">${RATE.choice.map(c => `<button class="rt-chip big" data-rtc="${esc(c)}">${esc(c)}</button>`).join("")}</div>
+    <p class="small">Rated: ${cnt.done} of ${cnt.n}</p>`;
+  const right = CH ? rtNorm(x.guess) === rtNorm(rtAns(st)) : null, db = st.rate.db;
+  return `<div class="rt-meta">${CH ? `<span>Your answer: <b>${esc(x.guess || "—")}</b> ${x.guess ? (right ? "✓" : "✗") : ""}</span>` : `<span>You heard: <b>${esc(x.guess || "—")}</b></span>`}<span>▶ ${x.plays || 0}× before the answer</span>
+      ${CH ? "" : on ? `<span class="gr">${esc((st.rate.groups || []).join(" · "))}</span><span>${esc((st.rate.tasks || []).join(" · "))}</span>` : `<span>groups hidden until you rate it</span>`}<span>Rated: ${cnt.done} of ${cnt.n}</span><span id="rt-st"></span></div>
+    ${(CH && RATE.qs || []).map(q => `<h3>${esc(q.q)}</h3><div class="rt-chips">${q.opts.map(o => `<button class="rt-chip" data-rtq="${esc(q.id)}" data-rtv="${esc(o)}" aria-pressed="${(x.qa || {})[q.id] === o}">${esc(o)}</button>`).join("")}</div>`).join("")}
+    <h3>${CH ? "Step" : "How hard is it to hear, for the students?"}</h3>
+    <div class="rt-chips">${RT_LEVELS().map(([n, t, sub]) => `<button class="rt-chip lv${n}" data-rtl="${n}" aria-pressed="${x.level === n && !(CH && x.out)}"><b>${n}</b> ${esc(t)}${sub ? ` <span class="sm">(${esc(sub)})</span>` : ""}</button>`).join("")}${CH ? `<button class="rt-chip lv5" data-rto="${x.out ? 0 : 1}" aria-pressed="${!!x.out}"><b>✕</b> take it out</button>` : ""}</div>
+    ${CH && on && db !== undefined ? `<p class="rt-db">${db ? `TubeQuizard: ${esc(db.n)} people, ${Math.round((db.right_share || 0) * 100)} % right${db.tier ? " · " + esc(db.tier) : ""}` : "TubeQuizard: no data for this clip"}</p>` : ""}
+    <h3>${CH ? "Flags" : "Why hard"} <span class="small">(${CH ? "tick any" : "if it is · any number"})</span></h3>
+    <div class="rt-chips">${RT_WHYS().map(w => `<button class="rt-chip" data-rtw="${esc(w)}" aria-pressed="${(x.why || []).includes(w)}">${esc(w)}</button>`).join("")}</div>
+    <textarea class="rt-note" data-rtn placeholder="A note (if you like)">${esc(x.note || "")}</textarea>
+    ${CH ? "" : x.out ? `<div class="rt-outon">✕ Out of the homework <button data-rto="0">↩ Put it back</button></div>
+      <h3>Why I took it out <span class="small">(if you like)</span></h3>
+      <div class="rt-chips">${RT_GONE.map(w => `<button class="rt-chip" data-rtg="${esc(w)}" aria-pressed="${(x.removedWhy || []).includes(w)}">${esc(w)}</button>`).join("")}</div>
+      <textarea class="rt-note" data-rtgn placeholder="A note (if you like)">${esc(x.removedNote || "")}</textarea>`
+    : `<button class="rt-out" data-rto="1">✕ Take it out of the homework</button>`}
+    <p><button class="rt-out" data-rtcopy>📋 Copy all my ratings</button></p>`; }
+function rtWire(st){
+  const box = document.getElementById("rtbox"); if(!box) return;
+  const repaint = () => { box.innerHTML = rtHTML(st); rtWire(st); rtListMark(st); };
+  const x = () => rtStore().cards[st.rate.id] || {};
+  box.querySelectorAll("[data-rtc]").forEach(b => b.addEventListener("click", () => { RT_PICK = b.dataset.rtc; const go = document.getElementById("go"); if(go && !checked) go.click(); }));
+  box.querySelectorAll("[data-rtq]").forEach(b => b.addEventListener("click", () => { const qa = Object.assign({}, x().qa || {}); qa[b.dataset.rtq] = qa[b.dataset.rtq] === b.dataset.rtv ? null : b.dataset.rtv; rtSet(st, {qa}); repaint(); }));
+  box.querySelectorAll("[data-rtl]").forEach(b => b.addEventListener("click", () => { const n = +b.dataset.rtl; rtSet(st, RT_CH(st) && x().out ? {level: n, out: false} : {level: x().level === n ? null : n}); repaint(); }));
+  box.querySelectorAll("[data-rtw]").forEach(b => b.addEventListener("click", () => { const w = new Set(x().why || []); w.has(b.dataset.rtw) ? w.delete(b.dataset.rtw) : w.add(b.dataset.rtw); rtSet(st, {why: [...w]}); b.setAttribute("aria-pressed", w.has(b.dataset.rtw)); }));
+  box.querySelectorAll("[data-rtg]").forEach(b => b.addEventListener("click", () => { const w = new Set(x().removedWhy || []); w.has(b.dataset.rtg) ? w.delete(b.dataset.rtg) : w.add(b.dataset.rtg); rtSet(st, {removedWhy: [...w]}); b.setAttribute("aria-pressed", w.has(b.dataset.rtg)); }));
+  box.querySelectorAll("[data-rto]").forEach(b => b.addEventListener("click", () => { rtSet(st, {out: b.dataset.rto === "1"}); repaint(); }));
+  const c = box.querySelector("[data-rtcopy]"); if(c) c.addEventListener("click", () => rtCopy(c));
+  const n = box.querySelector("[data-rtn]"); if(n) n.addEventListener("input", () => rtSet(st, {note: n.value}));
+  const gn = box.querySelector("[data-rtgn]"); if(gn) gn.addEventListener("input", () => rtSet(st, {removedNote: gn.value}));
+}
+let RT_PICK = null;   /* engine 86: the answer button she tapped (a choice clip), taken by Check */
+/* engine 86 (her 14.11 11:27: «легко найти те куски, которые нужно переслушать или новые отслушать… переслушать наверху красным, новые белые в конце»):
+   every clip of the task as a button on top — red = listen again (rate.mark «relisten»), white = not rated yet, green = rated; a tap opens it */
+const rtDone = s => { const x = rtStore().cards[s.rate.id] || {}; return !!(x.level || x.out); };
+const rtListHTML = () => `<div class="rt-list" aria-label="All the clips">${current.steps.map((s, i) => s && s.rate
+  ? `<button class="rt-li ${rtDone(s) ? "done" : s.rate.mark === "relisten" ? "red" : ""} ${i === stepIdx ? "cur" : ""}" data-rtgo="${i}" title="${esc(s.rate.mark === "relisten" ? "listen again" : s.rate.mark === "new" ? "new" : "")}">${esc(s.rate.key || String(s.rate.id).split("-")[0])}</button>` : "").join("")}</div>`;
+function rtListWire(){ app.querySelectorAll("[data-rtgo]").forEach(b => b.addEventListener("click", () => { stepIdx = +b.dataset.rtgo; checked = false; renderTask(); })); }
+function rtListMark(st){ const b = app.querySelector(`[data-rtgo="${stepIdx}"]`); if(b && st.rate){ b.classList.toggle("done", rtDone(st)); b.classList.toggle("red", !rtDone(st) && st.rate.mark === "relisten"); } }
 function renderListen(st, count, pct){
   const lines = st.clip;
   /* engine 63 also (C1 06.11 e4/e5): a listening task's own `instr` leads its first screen, the how-to after it */
@@ -3134,12 +3259,15 @@ function renderListen(st, count, pct){
     ? (st.first ? (current.instr ? current.instr + " " : "") + "Click a line and listen once. Write what you caught — even one word. Then listen as many times as you like, and check."
        : "Click a line and listen once. Write what you caught, then listen again as often as you like, and check.")
     : st.first && current.instr
-    ? current.instr + (CTXF ? " The first listen plays the whole clip; then tap any line to hear just that line. Check next to a gap, or Check answers." : " Tap a line to hear it (the top one plays the whole clip), then Check next to a gap, or Check answers.")
+    ? current.instr + (RT_CH(st) && RT_ON() ? (CTXF ? " The first listen plays the whole clip; then tap any line to hear just that line." : "") : CTXF ? " The first listen plays the whole clip; then tap any line to hear just that line. Check next to a gap, or Check answers." : " Tap a line to hear it (the top one plays the whole clip), then Check next to a gap, or Check answers.")
     : st.first
     ? (CTXF ? "The first listen plays the whole clip. Then tap any line to hear just that line, or the top one for the whole clip again." : "Tap the top line to hear the whole clip, or any line to hear just that line.") + " Catch the missing words in the framed lines: type them if you like, then tap Check next to a gap, or Check answers for all of them."
     : "Listen and catch the missing words, then tap Check next to a gap, or Check answers.";
   let gk = 0;
   const keyOf = k => current.id+"-"+curS()+(current._once?"-again":"")+"-g"+k;
+  /* engine 86: a choice clip on her rate page — the gap stays closed (no typing) until she taps an answer button under the clip */
+  const CHM = RT_CH(st) && RT_ON(), CHX = CHM ? rtStore().cards[st.rate.id] || {} : {};
+  const chHTML = p => CHX.shown ? `<span class="gap-res ${rtNorm(CHX.guess) === rtNorm(p.gap) ? "ok" : "no"}">${esc(p.gap)}</span>` : `<span class="gap-ch" aria-label="the missing word">&nbsp;?&nbsp;</span>`;
   /* engine 76 (the AL chat's request 12.11 19:10, her decision 18:28–19:08: «одинаковая механика… первая попытка в YouTube и в фильме будет
      значить одно и то же»): `listenOnce` on a listening task = the film's first step on YouTube lines — a line with a gap plays ONCE (normal
      speed; neighbouring lines that still wait for their first listen are cut out of it), then «What did you catch?» waits: the line's gaps,
@@ -3158,7 +3286,7 @@ function renderListen(st, count, pct){
   const lineHTML = (l,i) => { const skip = st._rows && !st._rows.has(i), ph = phase(i); return `<div class="ln ${l[3].some(p=>typeof p!=="string")?"has-gap":""}" data-i="${i}">
       <button class="pl" aria-label="${i===0?"Play the whole clip":"Play this line"}">▶</button>
       <span class="ln-text">${l[3].map(p => typeof p === "string" ? esc(p)
-        : (k => skip ? `<b>${esc(p.gap)}</b>` : `<input class="gap-in" data-k="${k}" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"
+        : (k => CHM ? chHTML(p) : skip ? `<b>${esc(p.gap)}</b>` : `<input class="gap-in" data-k="${k}" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"
              aria-label="Type the missing words" style="width:min(100%, ${p.gap.length + 3}ch)" value="${esc(typed[keyOf(k)]||"")}"><button class="gap-ck" data-k="${k}" aria-label="Check this gap" ${(typed[keyOf(k)]||"").trim() && ph === 2 ? "" : "hidden"}>Check</button>`)(gk++)).join("")}${i===0?` <span class="whole-note">· whole clip</span>`:""}</span>
     </div>${ph === 1 ? askHTML(i) : ""}`; };
   const rest = `
@@ -3170,7 +3298,7 @@ function renderListen(st, count, pct){
         <div class="slow-row"><span class="spd-l">🐢 Speed</span><div class="spd" id="spd" role="group" aria-label="Speed of the clips">${RATES.map(r => `<button data-rate="${r}" aria-pressed="${rateNow()===r}">${r===1?"normal":r}</button>`).join("")}</div></div>
         <div class="lines">${lines.map(lineHTML).join("")}</div>
 
-        <p class="small" id="after" ${checked?"":"hidden"}>Listen again: how did the expression sound? Try to say it like the speaker.${stepIdx===current.steps.length-1&&current.takeaway?`<br><b>${current.takeaway}</b>`:""}</p>`;
+        <p class="small" id="after" ${checked?"":"hidden"}>Listen again: how did the expression sound? Try to say it like the speaker.${stepIdx===current.steps.length-1&&current.takeaway?`<br><b>${current.takeaway}</b>`:""}</p>${st.rate && RT_ON() ? `<div class="rt-box" id="rtbox" ${CHM || checked || (rtStore().cards[st.rate.id] || {}).shown ? "" : "hidden"}>${rtHTML(st)}</div>` : ""}`;
   if(playerOnScreen()){
     /* the same player stays; only the lines, the counter and the buttons change */
     const bar = app.querySelector(".taskbar .count"); if(bar) bar.textContent = count;
@@ -3180,15 +3308,16 @@ function renderListen(st, count, pct){
     const panel = app.querySelector(".stage .panel");
     [...panel.children].forEach(ch=>{ if(!ch.classList.contains("video")) ch.remove(); });
     panel.insertAdjacentHTML("beforeend", rest);
-    app.querySelector(".actions").innerHTML = navButtons("Check answers");
+    if(st.rate && RT_ON()) panel.insertAdjacentHTML("afterbegin", rtListHTML());
+    app.querySelector(".actions").innerHTML = navButtons(CHM ? "Show the answer" : "Check answers");
     if(ytVideo !== lines[0][0]){ ytVideo = lines[0][0]; ytLoadN++; try{ ytPlayer.cueVideoById({videoId: lines[0][0], startSeconds: Math.floor(lines[0][1])}); }catch(e){} }
   } else {
     shell({count, pct, instr,
       stageHTML: `
-      <div class="panel">
+      <div class="panel">${st.rate && RT_ON() ? rtListHTML() : ""}
         <div class="video vsm"><div id="yt"></div><p class="vmsg" id="vmsg" hidden></p>${ls.get("hw-yt-ok") ? `<p class="vload" id="vload">Loading the video…</p>` : ytConsentHTML()}</div>${rest}
       </div>`,
-      actionsHTML: navButtons("Check answers")});
+      actionsHTML: navButtons(CHM ? "Show the answer" : "Check answers")});
     const msg = document.getElementById("vmsg"), vbox = msg.parentNode;
     const loading = on => { const l = document.getElementById("vload");
       if(on && !l) vbox.insertAdjacentHTML("beforeend", `<p class="vload" id="vload">Loading the video…</p>`); else if(!on && l) l.remove(); };
@@ -3215,7 +3344,11 @@ function renderListen(st, count, pct){
         videoId: lines[0][0], width: "100%", height: "100%",
         playerVars: { playsinline: 1, rel: 0, modestbranding: 1, cc_load_policy: 0, iv_load_policy: 3, start: Math.floor(lines[0][1]) },
         events: { onReady: () => { ytReady = true; clearTimeout(ytReadyWatch); loading(false); if(msg.isConnected){ msg.hidden = true; } },
-                  onError: () => { ytBad = ytVideo; app.querySelectorAll(".l1-ask").forEach(x => x.remove()); },   /* engine 77: a student's video «not available in your country» */
+                  onError: e => { ytBad = ytVideo; app.querySelectorAll(".l1-ask").forEach(x => x.remove());   /* engine 77: a student's video «not available in your country» */
+                    /* engine 84 (AL chat 13.11 20:45 §2): kept in the journal (data only; the student sees nothing new), so «the video didn't play» is told
+                       from «gave up»: the clip's line, the video, YouTube's code (2 bad id · 5 HTML5 · 100 removed · 101 / 150 not allowed here) */
+                    const ln = lines.map(l => l[3].map(p => typeof p === "string" ? p : "___").join("")), code = e && e.data != null ? e.data : "?";
+                    firstTry(current, "s" + curS() + ".yt", {type: "player", prompt: ln.find(t => t.includes("___")) || ln[0] || "", answer: ytVideo, first: "error " + code, ok: false}); },
                   onApiChange: captionsOffOnce, onStateChange: e => { if(e && e.data === 1){ setTimeout(captionsOffOnce, 300); setTimeout(captionsOffOnce, 1500); } } }
       });
       clearTimeout(ytReadyWatch); ytReadyWatch = setTimeout(failed, YT_READY_WAIT);
@@ -3304,7 +3437,7 @@ function renderListen(st, count, pct){
     const ks = rowGaps[i], l = lines[i], vals = ks.map(k => none ? "" : (typed[keyOf(k)] || "").trim());
     let got = 0, n = 0, all = true;
     ks.forEach((k, j) => { const g = gapsAll[k], v = vals[j], gw = gapWords(v, g.ans, g.accs.slice(1), g.pre, g.post); got += gw.got; n += gw.n;
-      if(!(v && (sameAnswer(v, g.accs, g.post) || markAnswer(v, g.accs).ok))) all = false; });
+      if(!(v && (sameHeard(v, g.accs, g.post) || markAnswer(v, g.accs).ok))) all = false; });
     const first = vals.some(Boolean) ? vals.join(" … ") : "";
     firstTry(current, "s" + curS() + ".r" + i, {type: "listen", prompt: l[3].map(p => typeof p === "string" ? p : "___").join(""), answer: ks.map(k => gapsAll[k].ans).join(" … "),
       first, ok: all && !!first, words: got + "/" + n, lis: 1, mode: O1[i] && O1[i].pre ? "guess" : "once"});
@@ -3367,14 +3500,16 @@ function renderListen(st, count, pct){
   const judgeGap = inp => {
       const k = +inp.dataset.k, g = gapsAll[k], ans = g.ans, val = inp.value.trim();
       const gw = gapWords(val, ans, g.accs.slice(1), g.pre, g.post);
-      firstTry(current, "s" + curS() + ".g" + k, {type: "listen", prompt: g.line, answer: ans, first: val, ok: !!val && (sameAnswer(val, g.accs, g.post) || markAnswer(val, g.accs).ok),
+      firstTry(current, "s" + curS() + ".g" + k, {type: "listen", prompt: g.line, answer: ans, first: val, ok: !!val && (sameHeard(val, g.accs, g.post) || markAnswer(val, g.accs).ok),
         words: gw.got + "/" + gw.n, lis: (heard[g.row] || 0) + (g.row ? heard[0] || 0 : 0), slow: heardSlow, mode: ONCE ? "once" : CTXF ? "context" : "free",
         ctx: rows.reduce((a, _, j) => a + (j && j !== g.row && !rowGaps[j].length ? heard[j] || 0 : 0), 0)});   /* engine 67, 68: after how many listens; 76, 78: the mode, the context lines' plays */
       const ck = inp.nextElementSibling; if(ck && ck.classList.contains("gap-ck")) ck.remove();
       const res = document.createElement("span");
       if(!val){ res.className = "gap-res ans"; res.textContent = ans; inp.replaceWith(res); return; }
-      const m = sameAnswer(val, g.accs, g.post) ? {ok: true} : markAnswer(val, g.accs);
-      if(m.ok){ res.className = "gap-res ok"; res.textContent = val + " ✓"; inp.replaceWith(res); return; }
+      const m = sameAnswer(val, g.accs, g.post) ? {ok: true} : sameHeard(val, g.accs, g.post) ? {ok: true, spell: true} : markAnswer(val, g.accs);
+      if(m.ok){ res.className = "gap-res ok"; res.textContent = val + " ✓"; inp.replaceWith(res);
+        if(m.spell){ const sp = document.createElement("div"); sp.className = "gap-fb gap-spell"; sp.textContent = "✓ The spelling: " + ans; const ln = res.closest(".ln"); if(ln) ln.appendChild(sp); else res.after(sp); }   /* engine 84: the spelling, under the line */
+        return; }
       res.className = "gap-res no"; res.textContent = val;
       const to = document.createElement("span"); to.className = "to-ans"; to.textContent = " → ";
       const right = document.createElement("span"); right.className = "gap-res ans"; right.textContent = ans;
@@ -3407,8 +3542,14 @@ function renderListen(st, count, pct){
       if(inp.value.trim()) checkOne(inp, true); else inp.blur(); } });
     if(ck) ck.addEventListener("click", ev=>{ ev.stopPropagation(); checkOne(inp, false); });
   });
+  if(st.rate && RT_ON()){ rtWire(st); rtListWire(); }
   wireNav(()=>{
     if(ONCE) rowGaps.forEach((ks, i) => { if(ks.length && phase(i) === 1) firstDone(i, false, true); });   /* engine 76: typed, then Check answers straight away */
+    if(st.rate && RT_ON() && !(rtStore().cards[st.rate.id] || {}).shown){   /* engine 85: her first version, before the answers open */
+      const v = []; for(let k = 0; k < gk; k++) v.push(String(typed[keyOf(k)] || "").trim());
+      rtSet(st, {shown: true, guess: CHM ? RT_PICK || "" : v.some(Boolean) ? v.join(" … ") : "", plays: heard.reduce((a, b) => a + b, 0)}); RT_PICK = null; }
+    if(CHM){ const x = rtStore().cards[st.rate.id] || {}; let k = 0;   /* engine 86: open the closed gap, right or not */
+      app.querySelectorAll(".gap-ch").forEach(sp => { const p = st.clip.flatMap(l => l[3].filter(q => typeof q !== "string"))[k++]; sp.outerHTML = `<span class="gap-res ${rtNorm(x.guess) === rtNorm(p.gap) ? "ok" : "no"}">${esc(p.gap)}</span>`; }); }
     app.querySelectorAll(".gap-in").forEach(judgeGap);
     if(canMark()){
       /* "?" only where there was something to catch (engine 37, her promise to a student: nothing to ask about on a line without a gap) */
@@ -3423,6 +3564,7 @@ function renderListen(st, count, pct){
       const d = document.createElement("div"), after = document.getElementById("after"), y0 = after.getBoundingClientRect().top; d.innerHTML = rh; placeRevHint(d.firstElementChild);
       const dy = after.getBoundingClientRect().top - y0; if(dy && window.scrollY > 0) window.scrollBy(0, dy); }
     document.getElementById("after").hidden = false;
+    const rtb = document.getElementById("rtbox"); if(rtb){ rtb.innerHTML = rtHTML(st); rtb.hidden = false; rtWire(st); }
     /* engine 83: after Check answers, a strip under the first line with a gap if none is open */
     if(!ONCE && !app.querySelector(".lstrip")){ const g0 = rows.findIndex((r, i) => r.classList.contains("has-gap")); if(g0 >= 0) stripOpen(g0); }
     const last = stepIdx === current.steps.length-1;
@@ -3476,13 +3618,14 @@ const filmFmt = t => { t = Math.max(0, t || 0); const h = Math.floor(t / 3600), 
 function filmParts(l){ const m = String(l.text || "").match(/^([\s\S]*?)\{\{([\s\S]*?)\}\}([\s\S]*)$/); return m ? {pre: m[1], gap: m[2].trim(), post: m[3]} : {pre: String(l.text || ""), gap: "", post: ""}; }
 /* the words of a gap they got right, in order (contractions and apostrophes as in the other gaps) */
 const filmCore = w => coreOf(String(w).replace(APOS, "'")).core.toLowerCase();
+const heardCore = w => { const c = filmCore(w); if(!HEARD_APOS) return c; const x = c.replace(/[',]/g, ""); return HOMO.has(x) ? c : x; };   /* engine 84: in what they heard, thats = that's = that,s */
 function filmWords(val, l){ const P = filmParts(l); return gapWords(val, P.gap, l.alt || [], P.pre, P.post); }
 /* how many words of a gap were caught, in order (I've = I have, as in the other gaps); the film's lines and the clips' gaps alike */
 function gapWords(val, gap, alts, pre, post){
-  const T = splitTok(gap).map(filmCore).filter(Boolean), n = T.length;
+  const T = splitTok(gap).map(heardCore).filter(Boolean), n = T.length;
   const v = String(val || "").trim(); if(!v) return {got: 0, n};
-  if(sameAnswer(v, [gap].concat(alts || []), post)) return {got: n, n};
-  const S = splitTok(stripFrame(v, {pre: pre, post: post})).map(filmCore).filter(Boolean);
+  if(sameHeard(v, [gap].concat(alts || []), post)) return {got: n, n};
+  const S = splitTok(stripFrame(v, {pre: pre, post: post})).map(heardCore).filter(Boolean);
   const L = Array.from({length: S.length + 1}, () => new Array(n + 1).fill(0));
   for(let i = S.length - 1; i >= 0; i--) for(let j = n - 1; j >= 0; j--) L[i][j] = S[i] === T[j] ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
   return {got: Math.min(n, L[0][0]), n};
@@ -3858,7 +4001,8 @@ let FT_SUM = null, FT_AT = 0, FT_MODE = "item";
 async function ftSummary(fresh){
   if(!fresh && FT_SUM && Date.now() - FT_AT < 60000) return FT_SUM;
   const res = await post({action: "attemptsSummary", code: myCode(), page: PAGE_KEY});
-  if(res && res.ok){ FT_SUM = res; FT_AT = Date.now(); } return res;
+  /* engine 84: a video that didn't play is no first try — its own list (📋 «Player errors») */
+  if(res && res.ok){ const all = res.items || []; res.player = all.filter(it => it.type === "player"); res.items = all.filter(it => it.type !== "player"); FT_SUM = res; FT_AT = Date.now(); } return res;
 }
 const ftOrder = id => { const m = String(id).split(":")[1] || "", n = (m.match(/\d+/g) || []).map(Number); return n.reduce((a, x, i) => a + x * Math.pow(1000, 2 - i), 0) + (/\.g\d/.test(m) ? 500000 : 0); };   /* engine 76: a step's lines (one listen) before its gaps (before Check) */
 const ftLine1 = it => /\.r\d+$/.test(it.item);   /* engine 76: what they caught on a YouTube line after one listen */
@@ -3897,7 +4041,7 @@ function ftCSV(res){
    did the tasks in (by the time of their first answers). */
 function ftForAnalysis(res){
   const one = v => String(v == null ? "" : v).replace(/[\t\r\n]+/g, " ").trim();
-  const names = [...new Set(res.items.flatMap(it => it.who.map(w => w[0])))].sort((a, b) => a.localeCompare(b)), S = n => "S" + (names.indexOf(n) + 1);
+  const names = [...new Set(res.items.concat(res.player || []).flatMap(it => it.who.map(w => w[0])))].sort((a, b) => a.localeCompare(b)), S = n => "S" + (names.indexOf(n) + 1);
   const title = id => (TASKS.find(t => t.id === id) || {}).title || id;
   /* the journal's Time is «dd.MM HH:mm(:ss)» (her table may also turn it into a date) */
   const when = x => { if(typeof x === "number") return x; const m = String(x || "").match(/^(\d{1,2})\.(\d{1,2})\.?(?:\d{2,4})?\s+(\d{1,2}):(\d{2})(?::(\d{2}))?/);
@@ -3924,6 +4068,11 @@ function ftForAnalysis(res){
     out.push(`${k}${x.half ? " · half " + x.half : ""}: ${ts.map(id => title(id) + " (" + tm(x.at[id]) + ")").join(" → ")}`); });
   /* engine 79 (AL chat's handoff 12.11 23:55, point 9): how each student rated each task (the Easy / OK / Hard banner) and the lines they
      marked «?» (Hard to hear) with their note — from her view's data; a student with no first tries gets the next S number */
+  /* engine 84: the clips whose video didn't play for a student (YouTube's error), not counted as tries */
+  out.push("", "Player errors (the video didn't play for this student; YouTube's code: 2 bad id · 5 HTML5 · 100 removed · 101 / 150 not allowed in their country):", ["student", "task", "item", "line", "video", "error", "time"].join("\t"));
+  const pe = []; (res.player || []).forEach(it => it.who.forEach(w => pe.push([S(w[0]), title(it.task), it.item, it.prompt, it.answer, w[1], tm(w[6])])));
+  pe.forEach(x => out.push(x.map(one).join("\t"))); if(!pe.length) out.push("(none)");
+  if(!teacherData) out.push("", "How they rated each task and the lines they marked «?»: not loaded yet — tap ↻ Refresh in a moment and copy again.");
   if(teacherData){
     const sts = teacherData.students || [], more = sts.map(x => x.name).filter(n => n && !names.includes(n)).sort((a, b) => a.localeCompare(b));
     const SS = i => { const n = (sts[i] || {}).name || ""; return names.includes(n) ? S(n) : "S" + (names.length + more.indexOf(n) + 1); };
@@ -3956,6 +4105,9 @@ async function renderFirstTries(fresh){
   paint();
   app.querySelectorAll("[data-ftm]").forEach(b => b.addEventListener("click", () => { FT_MODE = b.dataset.ftm; paint(); }));
   document.getElementById("ft-ref").addEventListener("click", () => renderFirstTries(true));
+  /* engine 84 (AL chat 14.11 08:30, her C1 screenshot): the ratings and «?» lines come from her view's data; when this page was opened straight
+     away it may not be in yet — ask for it now, and never leave the two blocks out without a word */
+  if(!teacherData) syncNow();
   document.getElementById("ft-ai").addEventListener("click", e => copyText(ftForAnalysis(res), e.currentTarget));
   document.getElementById("ft-csv").addEventListener("click", () => { const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([ftCSV(res)], {type: "text/csv;charset=utf-8"})); a.download = PAGE_KEY.replace(/^hw-ge-/, "") + "-first-tries" + (FT_MODE === "student" ? "-by-student" : "") + ".csv";

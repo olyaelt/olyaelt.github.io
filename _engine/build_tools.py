@@ -161,6 +161,13 @@ def page_ids(lesson, name, d, save=True):
 for path in sorted(p for p in glob.glob(os.path.join(T, '*', '*.json')) if not p.endswith('.ids.json')):   # .ids.json = the permanent numbers
     lesson, name = os.path.basename(os.path.dirname(path)), os.path.splitext(os.path.basename(path))[0]
     d = json.load(open(path, encoding='utf-8'))
+    if d.get('moved_to'):   # tools 41 (her 14.11 09:46): a page that moved (the rate page is now a homework page) — both links lead there
+        out_dir = os.path.join(site, 'tools', lesson); os.makedirs(out_dir, exist_ok=True)
+        for f in (name, name + '-live'):
+            open(os.path.join(out_dir, f + '.html'), 'w', encoding='utf-8').write('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex">'
+                '<meta http-equiv="refresh" content="0; url=%s"><title>Moved</title></head><body><p><a href="%s">This page has moved — open it here.</a></p>'
+                '<script>location.replace(%s + location.hash)</script></body></html>' % (d['moved_to'], d['moved_to'], json.dumps(d['moved_to'])))
+        continue
     if d.get('type') not in TYPES:
         sys.exit('%s: unknown task type %r. Types so far: %s. A new type is an engine request (homework-html-page, "Who changes what").' % (path, d.get('type'), ', '.join(TYPES)))
     html = open(os.path.join(T, TYPES[d['type']]), encoding='utf-8').read()

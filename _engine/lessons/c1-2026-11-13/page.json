@@ -1,0 +1,64 @@
+{
+ "title": "The Intern · Scene 1: Come rain or shine",
+ "group": "c1",
+ "file": "2026-11-13.html",
+ "listed": false,
+ "assets": {
+  "STICKER": "sticker.png",
+  "R1": "r1_ben.json",
+  "E1": "e1_rick.json",
+  "E2": "e2_sayit.json",
+  "OTY": "otu.json"
+ },
+ "earlier_only": [
+  "back in my day",
+  "out of touch",
+  "by heart",
+  "nobody ever taught",
+  "hands-on",
+  "complete waste",
+  "never used it since",
+  "come in handy",
+  "than you'd think",
+  "point of",
+  "add value",
+  "along the way",
+  "none of it counted",
+  "from scratch",
+  "paid off",
+  "only gets you so far",
+  "stopped hiring juniors",
+  "over to AI",
+  "out of date",
+  "steep learning curve",
+  "the hard way",
+  "on the job",
+  "read up on",
+  "taught myself",
+  "being able to adapt",
+  "what worries me",
+  "soft skills",
+  "look clueless",
+  "pretty much the same",
+  "a lot busier",
+  "than it used to be",
+  "not quite as",
+  "knocked down",
+  "going up",
+  "quite a few",
+  "geared towards",
+  "independent shops",
+  "when I was growing up",
+  "whereas",
+  "these days",
+  "just outside"
+ ],
+ "class": {
+  "topics": [
+   {
+    "t": "The Intern: Ben's video",
+    "href": "../tools/c1-2026-11-11/bens-video-class.html"
+   }
+  ]
+ }
+}

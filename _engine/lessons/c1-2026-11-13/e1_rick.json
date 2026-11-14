@@ -1,0 +1,1283 @@
+{
+ "steps": [
+  {
+   "type": "dlg",
+   "chat": true,
+   "intro": "Rick has run the hardware store in his small American hometown for 45 years. Now his son is taking over, and Rick's old school friends — all in their late sixties — are planning a party. Read their group chat and say the missing words — the glossary helps. Then tap to check. Some gaps have no first letters: there, think what's missing.",
+   "lines": [
+    {
+     "s": "Linda",
+     "p": [
+      "Hi, all! 🎉 After 45 years, Rick is finally ",
+      {
+       "b": "handing"
+      },
+      " the hardware store ",
+      {
+       "b": "over to"
+      },
+      " his son. Party at the store on Saturday, November 28 — Thanksgiving weekend, so everyone's home. Rick, you're not allowed to say no."
+     ]
+    },
+    {
+     "s": "Rick",
+     "p": [
+      "I'm saying no."
+     ]
+    },
+    {
+     "s": "Linda",
+     "p": [
+      "Too late. The cake's ordered. 🎂"
+     ]
+    },
+    {
+     "s": "Carol",
+     "p": [
+      "Ha! Count me in. Rick, ",
+      {
+       "b": "mind if I add"
+      },
+      " Walt? He'd never forgive us."
+     ]
+    },
+    {
+     "s": "Rick",
+     "p": [
+      {
+       "f": "",
+       "r": "No"
+      },
+      {
+       "b": ", go ahead."
+      },
+      " It's my party, apparently. 🙄"
+     ]
+    },
+    {
+     "s": "Walt",
+     "p": [
+      "Hi, everyone! Greetings from Japan! 🇯🇵 ",
+      {
+       "b": "Long time no see!"
+      },
+      " Rick, congratulations — or should I say condolences? 😄"
+     ]
+    },
+    {
+     "s": "Linda",
+     "p": [
+      "Walt!! ",
+      {
+       "b": "It's been ages!"
+      },
+      " Wait, you're in Japan?? ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "thought you were"
+      },
+      " in Chicago!"
+     ]
+    },
+    {
+     "s": "Walt",
+     "p": [
+      "Chicago was 1986 😄 ",
+      {
+       "b": "I've been in"
+      },
+      " Japan ",
+      {
+       "b": "for"
+      },
+      " 38 years ",
+      {
+       "b": "now"
+      },
+      ". I know, I know. ",
+      {
+       "f": "",
+       "r": "I've been meaning to get in touch"
+      },
+      " for years."
+     ]
+    },
+    {
+     "s": "Walt",
+     "p": [
+      "And Carol! ",
+      {
+       "f": "",
+       "r": "Last I heard"
+      },
+      ", you were in Arizona!"
+     ]
+    },
+    {
+     "s": "Carol",
+     "p": [
+      "Till this spring! We moved back in April. I missed the snow, believe it or not."
+     ]
+    },
+    {
+     "s": "Rick",
+     "p": [
+      "Says the woman who hasn't had a real winter in thirty years. 🥶"
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      "Mind if I add Walt? — No, go ahead. /maɪnd ɪf/"
+     ],
+     "m": "Do you mind…? — No = I don't mind (or: Not at all. / Sure, go ahead.)",
+     "ru": "Не против, если я добавлю…? — Нет, добавляй."
+    },
+    {
+     "p": [
+      "I thought you were in Chicago!"
+     ],
+     "m": "I believed you were there, but I was wrong",
+     "ru": "Я думала, ты в Чикаго! (не “I suppose you're…” = я так понимаю)"
+    },
+    {
+     "p": [
+      "I've been meaning to get in touch"
+     ],
+     "m": "I've wanted to contact you for a long time, but still haven't",
+     "ru": "я всё собирался написать"
+    },
+    {
+     "p": [
+      "Last I heard /hɜːd/, you were in…"
+     ],
+     "m": "the latest news I had (it may be out of date); not “Last time I heard”",
+     "ru": "насколько я слышал, ты была…"
+    }
+   ],
+   "note": "No, go ahead: avoid a bare “Yes” — it can sound like “Yes, I do mind.” · I thought you were…: you believed it until now, but it isn't true; or: I thought you lived in… / were still in…; not “I suppose you're…” · I've been meaning to get in touch: or: …to reach out / …to write; “get in touch” sounds friendlier than “contact you” · Last I heard, …: no “time”; then the old news in the past: “you were in Arizona” · hand the store over to his son = give it to his son to run"
+  },
+  {
+   "type": "dlg",
+   "chat": true,
+   "intro": "Now the same part without the glossary. A word in brackets helps you build the form.",
+   "lines": [
+    {
+     "s": "Linda",
+     "p": [
+      "Hi, all! 🎉 After 45 years, Rick is finally ",
+      {
+       "b": "handing"
+      },
+      " the hardware store ",
+      {
+       "b": "over to"
+      },
+      " his son. Party at the store on Saturday, November 28 — Thanksgiving weekend, so everyone's home. Rick, you're not allowed to say no."
+     ]
+    },
+    {
+     "s": "Rick",
+     "p": [
+      "I'm saying no."
+     ]
+    },
+    {
+     "s": "Linda",
+     "p": [
+      "Too late. The cake's ordered. 🎂"
+     ]
+    },
+    {
+     "s": "Carol",
+     "p": [
+      "Ha! Count me in. Rick, ",
+      {
+       "b": "mind if I add"
+      },
+      " Walt? He'd never forgive us."
+     ]
+    },
+    {
+     "s": "Rick",
+     "p": [
+      {
+       "f": "",
+       "r": "No"
+      },
+      {
+       "b": ", go ahead."
+      },
+      " It's my party, apparently. 🙄"
+     ]
+    },
+    {
+     "s": "Walt",
+     "p": [
+      "Hi, everyone! Greetings from Japan! 🇯🇵 ",
+      {
+       "b": "Long time no see!"
+      },
+      " Rick, congratulations — or should I say condolences? 😄"
+     ]
+    },
+    {
+     "s": "Linda",
+     "p": [
+      "Walt!! ",
+      {
+       "b": "It's been ages!"
+      },
+      " Wait, you're in Japan?? ",
+      {
+       "b": "I"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "thought you were"
+      },
+      " (think) in Chicago!"
+     ]
+    },
+    {
+     "s": "Walt",
+     "p": [
+      "Chicago was 1986 😄 ",
+      {
+       "b": "I've been in"
+      },
+      " Japan ",
+      {
+       "b": "for"
+      },
+      " 38 years ",
+      {
+       "b": "now"
+      },
+      ". I know, I know. ",
+      {
+       "f": "",
+       "r": "I've been meaning to get in touch"
+      },
+      " (mean) for years."
+     ]
+    },
+    {
+     "s": "Walt",
+     "p": [
+      "And Carol! ",
+      {
+       "f": "",
+       "r": "Last I heard"
+      },
+      " (hear), you were in Arizona!"
+     ]
+    },
+    {
+     "s": "Carol",
+     "p": [
+      "Till this spring! We moved back in April. I missed the snow, believe it or not."
+     ]
+    },
+    {
+     "s": "Rick",
+     "p": [
+      "Says the woman who hasn't had a real winter in thirty years. 🥶"
+     ]
+    }
+   ],
+   "note": "No, go ahead: avoid a bare “Yes” — it can sound like “Yes, I do mind.” · I thought you were…: you believed it until now, but it isn't true; or: I thought you lived in… / were still in…; not “I suppose you're…” · I've been meaning to get in touch: or: …to reach out / …to write; “get in touch” sounds friendlier than “contact you” · Last I heard, …: no “time”; then the old news in the past: “you were in Arizona” · hand the store over to his son = give it to his son to run"
+  },
+  {
+   "type": "dlg",
+   "chat": true,
+   "intro": "The chat goes on. The glossary helps.",
+   "lines": [
+    {
+     "s": "Walt",
+     "p": [
+      "So has the old town changed much? I haven't been back since 2009."
+     ]
+    },
+    {
+     "s": "Linda",
+     "p": [
+      {
+       "b": "Yes and no."
+      },
+      " Main Street is ",
+      {
+       "b": "pretty"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "much"
+      },
+      " ",
+      {
+       "b": "the same"
+      },
+      " — same bank, same diner, same grumpy guy in the hardware store. 😄 But it's ",
+      {
+       "f": "",
+       "r": "gotten"
+      },
+      " ",
+      {
+       "b": "a lot"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "busier"
+      },
+      ": two new coffee shops, and nowhere to park on a Saturday."
+     ]
+    },
+    {
+     "s": "Rick",
+     "p": [
+      "They've ",
+      {
+       "f": "k",
+       "r": "nocked"
+      },
+      " ",
+      {
+       "f": "d",
+       "r": "own"
+      },
+      " the old movie theater. Now it's a parking lot — and there's STILL nowhere to park. 🙄"
+     ]
+    },
+    {
+     "s": "Carol",
+     "p": [
+      "And Rosie's Diner is still great, but it's ",
+      {
+       "b": "not quite"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "as"
+      },
+      " ",
+      {
+       "b": "cozy"
+      },
+      " ",
+      {
+       "f": "a",
+       "r": "s"
+      },
+      " ",
+      {
+       "f": "i",
+       "r": "t"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "as"
+      },
+      ". Rosie's granddaughter runs it now. ",
+      {
+       "b": "These days"
+      },
+      " it's all avocado toast. 🥑"
+     ]
+    },
+    {
+     "s": "Walt",
+     "p": [
+      "Avocado toast? In OUR town? 😄"
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      "pretty much the same"
+     ],
+     "m": "almost the same",
+     "ru": "почти такая же"
+    },
+    {
+     "p": [
+      "it's gotten a lot busier"
+     ],
+     "m": "it is much busier now than before (BrE: it's got)",
+     "ru": "стало гораздо оживлённее"
+    },
+    {
+     "p": [
+      "They've knocked down /nɒkt daʊn/ the old movie theater."
+     ],
+     "m": "they demolished it (AmE often: torn down)",
+     "ru": "снесли старый кинотеатр"
+    },
+    {
+     "p": [
+      "not quite as cozy as it was"
+     ],
+     "m": "still nice, just a little less cozy than before",
+     "ru": "уже не такой уютный, как раньше"
+    }
+   ],
+   "note": "pretty much the same: with “much” — not “pretty the same” · it's gotten a lot busier: “busier”, not “more busy”; “a lot” / “much” before -er; or: it's got (BrE) · not quite as cozy as it was: or: not quite so cozy; not “such cozy as” · knocked down: AmE often “torn down”"
+  },
+  {
+   "type": "dlg",
+   "chat": true,
+   "intro": "Now without the glossary.",
+   "lines": [
+    {
+     "s": "Walt",
+     "p": [
+      "So has the old town changed much? I haven't been back since 2009."
+     ]
+    },
+    {
+     "s": "Linda",
+     "p": [
+      {
+       "b": "Yes and no."
+      },
+      " Main Street is ",
+      {
+       "b": "pretty"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "much"
+      },
+      " ",
+      {
+       "b": "the same"
+      },
+      " — same bank, same diner, same grumpy guy in the hardware store. 😄 But it's ",
+      {
+       "f": "",
+       "r": "gotten"
+      },
+      " ",
+      {
+       "b": "a lot"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "busier"
+      },
+      " (get / busy): two new coffee shops, and nowhere to park on a Saturday."
+     ]
+    },
+    {
+     "s": "Rick",
+     "p": [
+      "They've ",
+      {
+       "f": "k",
+       "r": "nocked"
+      },
+      " ",
+      {
+       "f": "d",
+       "r": "own"
+      },
+      " (demolish) the old movie theater. Now it's a parking lot — and there's STILL nowhere to park. 🙄"
+     ]
+    },
+    {
+     "s": "Carol",
+     "p": [
+      "And Rosie's Diner is still great, but it's ",
+      {
+       "b": "not quite"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "as"
+      },
+      " ",
+      {
+       "b": "cozy"
+      },
+      " ",
+      {
+       "f": "a",
+       "r": "s"
+      },
+      " ",
+      {
+       "f": "i",
+       "r": "t"
+      },
+      " ",
+      {
+       "f": "w",
+       "r": "as"
+      },
+      ". Rosie's granddaughter runs it now. ",
+      {
+       "b": "These days"
+      },
+      " it's all avocado toast. 🥑"
+     ]
+    },
+    {
+     "s": "Walt",
+     "p": [
+      "Avocado toast? In OUR town? 😄"
+     ]
+    }
+   ],
+   "note": "pretty much the same: with “much” — not “pretty the same” · it's gotten a lot busier: “busier”, not “more busy”; “a lot” / “much” before -er; or: it's got (BrE) · not quite as cozy as it was: or: not quite so cozy; not “such cozy as” · knocked down: AmE often “torn down”"
+  },
+  {
+   "type": "dlg",
+   "chat": true,
+   "intro": "The chat goes on. The glossary helps.",
+   "lines": [
+    {
+     "s": "Carol",
+     "p": [
+      "Walt, what do you DO over there? You were going to be an architect!"
+     ]
+    },
+    {
+     "s": "Walt",
+     "p": [
+      "I am — ",
+      {
+       "b": "by training"
+      },
+      "! But these days I make pottery. 🍵 Bowls, cups, the occasional teapot."
+     ]
+    },
+    {
+     "s": "Linda",
+     "p": [
+      "Pottery?! ",
+      {
+       "f": "H",
+       "r": "ow"
+      },
+      " ",
+      {
+       "f": "d",
+       "r": "id"
+      },
+      " ",
+      {
+       "f": "y",
+       "r": "ou"
+      },
+      " ",
+      {
+       "f": "g",
+       "r": "et"
+      },
+      " ",
+      {
+       "f": "i",
+       "r": "nto"
+      },
+      " ",
+      {
+       "f": "t",
+       "r": "hat"
+      },
+      "?"
+     ]
+    },
+    {
+     "s": "Walt",
+     "p": [
+      "Total accident. ",
+      {
+       "b": "A job came up"
+      },
+      " in Osaka in '88 — two years, I thought. Then my landlady took me to her pottery class, and that was it. In '95 I quit architecture and learned the rest ",
+      {
+       "f": "",
+       "r": "on"
+      },
+      " ",
+      {
+       "b": "the job"
+      },
+      ", in a little workshop near Kyoto. I ",
+      {
+       "f": "c",
+       "r": "an't"
+      },
+      " ",
+      {
+       "f": "e",
+       "r": "xplain"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "it"
+      },
+      {
+       "b": ", but"
+      },
+      " that workshop ",
+      {
+       "b": "makes me"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "feel part of"
+      },
+      " ",
+      {
+       "b": "something"
+      },
+      ". Twelve of us, one old kiln and a lot of green tea."
+     ]
+    },
+    {
+     "s": "Rick",
+     "p": [
+      "Sounds better than selling screws. 😄"
+     ]
+    },
+    {
+     "s": "Linda",
+     "p": [
+      "Love it! OK, planning Zoom on Thursday at 8 pm: speeches, slideshow, who brings what. Walt, are you in? You took half the photos in our yearbook! 📸"
+     ]
+    },
+    {
+     "s": "Walt",
+     "p": [
+      "That's 10 am Friday for me. Daylight saving time ended for you last weekend, right? ",
+      {
+       "b": "We don't change"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "the clocks"
+      },
+      " ",
+      {
+       "b": "here"
+      },
+      ", so it's a 14-hour ",
+      {
+       "b": "time difference"
+      },
+      " now. And the guys rebuilding our kiln come at 10. ",
+      {
+       "b": "Could we"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "make it"
+      },
+      " ",
+      {
+       "b": "7 your time"
+      },
+      "?"
+     ]
+    },
+    {
+     "s": "Linda",
+     "p": [
+      "Sure! Thursday, 7 pm. ",
+      {
+       "b": "Does that still work for"
+      },
+      " everyone?"
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      "How did you get into that?"
+     ],
+     "m": "how did it start for you?",
+     "ru": "Как ты к этому пришёл?"
+    },
+    {
+     "p": [
+      "I learned the rest on the job"
+     ],
+     "m": "while working, not on a course",
+     "ru": "остальному научился в процессе работы"
+    },
+    {
+     "p": [
+      "I can't explain it, but…"
+     ],
+     "m": "I don't know why, but…",
+     "ru": "не могу объяснить почему, но…"
+    },
+    {
+     "p": [
+      "…makes me feel (a) part of something"
+     ],
+     "m": "I feel I belong there",
+     "ru": "я чувствую себя частью чего-то"
+    },
+    {
+     "p": [
+      "We don't change the clocks here."
+     ],
+     "m": "we have no daylight saving time: the clocks stay the same all year",
+     "ru": "у нас время не переводят"
+    },
+    {
+     "p": [
+      "Could we make it 7 your time?"
+     ],
+     "m": "could we move the call to 7 pm, your time? (“it” = the call)",
+     "ru": "Можно перенести на 7 по твоему времени?"
+    },
+    {
+     "p": [
+      "by training · landlady · kiln /kɪln/ · yearbook"
+     ],
+     "m": "trained as one · the woman he rented a room from · a very hot oven for pottery · a school book with photos of the whole class",
+     "ru": "по образованию · квартирная хозяйка · печь для обжига · школьный альбом"
+    }
+   ],
+   "note": "on the job: “on”, not “in” or “at” · I can't explain it, but…: with “it”; and “explain it to me”, not “explain me” · makes me feel part of something: or: a part of; not “the part of” · We don't change the clocks here: “the clocks”, not “the time”; or: We don't set the clocks forward or back · Could we make it 7…?: no “to” after “make it”; or: Can we make it…? (“could” is a little softer) · or: Could we do 7?"
+  },
+  {
+   "type": "dlg",
+   "chat": true,
+   "intro": "Now without the glossary.",
+   "lines": [
+    {
+     "s": "Carol",
+     "p": [
+      "Walt, what do you DO over there? You were going to be an architect!"
+     ]
+    },
+    {
+     "s": "Walt",
+     "p": [
+      "I am — ",
+      {
+       "b": "by training"
+      },
+      "! But these days I make pottery. 🍵 Bowls, cups, the occasional teapot."
+     ]
+    },
+    {
+     "s": "Linda",
+     "p": [
+      "Pottery?! ",
+      {
+       "f": "H",
+       "r": "ow"
+      },
+      " ",
+      {
+       "f": "d",
+       "r": "id"
+      },
+      " ",
+      {
+       "f": "y",
+       "r": "ou"
+      },
+      " ",
+      {
+       "f": "g",
+       "r": "et"
+      },
+      " ",
+      {
+       "f": "i",
+       "r": "nto"
+      },
+      " ",
+      {
+       "f": "t",
+       "r": "hat"
+      },
+      "?"
+     ]
+    },
+    {
+     "s": "Walt",
+     "p": [
+      "Total accident. ",
+      {
+       "b": "A job came up"
+      },
+      " in Osaka in '88 — two years, I thought. Then my landlady took me to her pottery class, and that was it. In '95 I quit architecture and learned the rest ",
+      {
+       "f": "",
+       "r": "on"
+      },
+      " ",
+      {
+       "b": "the job"
+      },
+      " (1 word), in a little workshop near Kyoto. I ",
+      {
+       "f": "c",
+       "r": "an't"
+      },
+      " ",
+      {
+       "f": "e",
+       "r": "xplain"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "it"
+      },
+      {
+       "b": ", but"
+      },
+      " that workshop ",
+      {
+       "b": "makes me"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "feel part of"
+      },
+      " (feel / part) ",
+      {
+       "b": "something"
+      },
+      ". Twelve of us, one old kiln and a lot of green tea."
+     ]
+    },
+    {
+     "s": "Rick",
+     "p": [
+      "Sounds better than selling screws. 😄"
+     ]
+    },
+    {
+     "s": "Linda",
+     "p": [
+      "Love it! OK, planning Zoom on Thursday at 8 pm: speeches, slideshow, who brings what. Walt, are you in? You took half the photos in our yearbook! 📸"
+     ]
+    },
+    {
+     "s": "Walt",
+     "p": [
+      "That's 10 am Friday for me. Daylight saving time ended for you last weekend, right? ",
+      {
+       "b": "We don't change"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "the clocks"
+      },
+      " ",
+      {
+       "b": "here"
+      },
+      ", so it's a 14-hour ",
+      {
+       "b": "time difference"
+      },
+      " now. And the guys rebuilding our kiln come at 10. ",
+      {
+       "b": "Could we"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "make it"
+      },
+      " (make) ",
+      {
+       "b": "7 your time"
+      },
+      "?"
+     ]
+    },
+    {
+     "s": "Linda",
+     "p": [
+      "Sure! Thursday, 7 pm. ",
+      {
+       "b": "Does that still work for"
+      },
+      " everyone?"
+     ]
+    }
+   ],
+   "note": "on the job: “on”, not “in” or “at” · I can't explain it, but…: with “it”; and “explain it to me”, not “explain me” · makes me feel part of something: or: a part of; not “the part of” · We don't change the clocks here: “the clocks”, not “the time”; or: We don't set the clocks forward or back · Could we make it 7…?: no “to” after “make it”; or: Can we make it…? (“could” is a little softer) · or: Could we do 7?"
+  },
+  {
+   "type": "dlg",
+   "chat": true,
+   "intro": "The last part of the chat. The glossary helps.",
+   "lines": [
+    {
+     "s": "Rick",
+     "p": [
+      "Works for me. And come December, anything works for me. 🙃"
+     ]
+    },
+    {
+     "s": "Linda",
+     "p": [
+      "You must be thrilled!"
+     ]
+    },
+    {
+     "s": "Rick",
+     "p": [
+      "Thrilled? Well… ",
+      {
+       "b": "Don't get me wrong"
+      },
+      ", I'm proud of my son, and it's time. But forty-five years behind that counter, and now what? 😅"
+     ]
+    },
+    {
+     "s": "Walt",
+     "p": [
+      "Come to Japan and make bowls with me! Actually, wait. The workshop is closed until January — we're rebuilding the kiln — so I've got some ",
+      {
+       "b": "time"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "on"
+      },
+      " ",
+      {
+       "b": "my hands"
+      },
+      " right now. Maybe I should come to the party in person!"
+     ]
+    },
+    {
+     "s": "Linda",
+     "p": [
+      "WALT. YES!!! 🎉"
+     ]
+    },
+    {
+     "s": "Carol",
+     "p": [
+      "Bring a warm coat. We've had snow twice already."
+     ]
+    },
+    {
+     "s": "Walt",
+     "p": [
+      "Carol, you actually missed this? Isn't it boring after Arizona? 😄"
+     ]
+    },
+    {
+     "s": "Carol",
+     "p": [
+      "I did! Arizona was great, but 110 degrees half the year… And no, small-town life isn't boring. ",
+      {
+       "f": "Q",
+       "r": "uite"
+      },
+      " ",
+      {
+       "f": "t",
+       "r": "he"
+      },
+      " ",
+      {
+       "f": "c",
+       "r": "ontrary"
+      },
+      "! Book club, the farmers' market, the grandkids, movie nights at the library — ",
+      {
+       "f": "y",
+       "r": "ou"
+      },
+      " ",
+      {
+       "f": "n",
+       "r": "ame"
+      },
+      " ",
+      {
+       "f": "i",
+       "r": "t"
+      },
+      ". Ask me again in January, though, when I can't ",
+      {
+       "f": "",
+       "r": "get"
+      },
+      " ",
+      {
+       "f": "o",
+       "r": "ut"
+      },
+      " ",
+      {
+       "f": "o",
+       "r": "f"
+      },
+      " ",
+      {
+       "b": "the"
+      },
+      " ",
+      {
+       "b": "house"
+      },
+      " for a week. ❄️"
+     ]
+    },
+    {
+     "s": "Rick",
+     "p": [
+      "Ha! See you all Thursday."
+     ]
+    }
+   ],
+   "gloss": [
+    {
+     "p": [
+      "I've got some time on my hands"
+     ],
+     "m": "free time and nothing planned for it",
+     "ru": "у меня есть свободное время, которое нечем занять"
+    },
+    {
+     "p": [
+      "Quite the contrary. /ˈkɒntrəri/"
+     ],
+     "m": "the opposite is true (after a negative: “isn't boring”)",
+     "ru": "Как раз наоборот."
+    },
+    {
+     "p": [
+      "Book club, the market… — you name it."
+     ],
+     "m": "all kinds of things",
+     "ru": "чего только нет"
+    },
+    {
+     "p": [
+      "I can't get out of the house"
+     ],
+     "m": "I can't leave home (“go out” = usually to have fun)",
+     "ru": "не могу выбраться из дома"
+    },
+    {
+     "p": [
+      "110 degrees"
+     ],
+     "m": "110 °F, about 43 °C",
+     "ru": "около 43 °C"
+    }
+   ],
+   "note": "time on my hands: “on”, not “in” · Quite the contrary: it follows a negative · you name it: after a list, or before it, like Ben's “You name it. Golf, books…” · get out of the house: “get”, not “go”; when you're snowed in, you can't get out"
+  },
+  {
+   "type": "dlg",
+   "chat": true,
+   "intro": "Now without the glossary.",
+   "lines": [
+    {
+     "s": "Rick",
+     "p": [
+      "Works for me. And come December, anything works for me. 🙃"
+     ]
+    },
+    {
+     "s": "Linda",
+     "p": [
+      "You must be thrilled!"
+     ]
+    },
+    {
+     "s": "Rick",
+     "p": [
+      "Thrilled? Well… ",
+      {
+       "b": "Don't get me wrong"
+      },
+      ", I'm proud of my son, and it's time. But forty-five years behind that counter, and now what? 😅"
+     ]
+    },
+    {
+     "s": "Walt",
+     "p": [
+      "Come to Japan and make bowls with me! Actually, wait. The workshop is closed until January — we're rebuilding the kiln — so I've got some ",
+      {
+       "b": "time"
+      },
+      " ",
+      {
+       "f": "",
+       "r": "on"
+      },
+      " ",
+      {
+       "b": "my hands"
+      },
+      " (1 word) right now. Maybe I should come to the party in person!"
+     ]
+    },
+    {
+     "s": "Linda",
+     "p": [
+      "WALT. YES!!! 🎉"
+     ]
+    },
+    {
+     "s": "Carol",
+     "p": [
+      "Bring a warm coat. We've had snow twice already."
+     ]
+    },
+    {
+     "s": "Walt",
+     "p": [
+      "Carol, you actually missed this? Isn't it boring after Arizona? 😄"
+     ]
+    },
+    {
+     "s": "Carol",
+     "p": [
+      "I did! Arizona was great, but 110 degrees half the year… And no, small-town life isn't boring. ",
+      {
+       "f": "Q",
+       "r": "uite"
+      },
+      " ",
+      {
+       "f": "t",
+       "r": "he"
+      },
+      " ",
+      {
+       "f": "c",
+       "r": "ontrary"
+      },
+      "! Book club, the farmers' market, the grandkids, movie nights at the library — ",
+      {
+       "f": "y",
+       "r": "ou"
+      },
+      " ",
+      {
+       "f": "n",
+       "r": "ame"
+      },
+      " ",
+      {
+       "f": "i",
+       "r": "t"
+      },
+      ". Ask me again in January, though, when I can't ",
+      {
+       "f": "",
+       "r": "get"
+      },
+      " ",
+      {
+       "f": "o",
+       "r": "ut"
+      },
+      " ",
+      {
+       "f": "o",
+       "r": "f"
+      },
+      " ",
+      {
+       "b": "the"
+      },
+      " ",
+      {
+       "b": "house"
+      },
+      " for a week. ❄️"
+     ]
+    },
+    {
+     "s": "Rick",
+     "p": [
+      "Ha! See you all Thursday."
+     ]
+    }
+   ],
+   "note": "time on my hands: “on”, not “in” · Quite the contrary: it follows a negative · you name it: after a list, or before it, like Ben's “You name it. Golf, books…” · get out of the house: “get”, not “go”; when you're snowed in, you can't get out"
+  },
+  {
+   "type": "table",
+   "read": true,
+   "intro": "Same phrases, new places. Who said each phrase in the chat, and about what? Think first, then tap to see.",
+   "head": [
+    "Phrase",
+    "Where we met it",
+    "In the chat (tap to see)"
+   ],
+   "rows": [
+    [
+     "makes me feel part of something",
+     "Ben: his café",
+     "Walt: his pottery workshop in Japan"
+    ],
+    [
+     "time on my hands",
+     "Ben: life after he retired",
+     "Walt: his workshop is closed until January"
+    ],
+    [
+     "get out of the house",
+     "Ben's cure for having nowhere to be",
+     "Carol: snowed in in January, she can't"
+    ],
+    [
+     "you name it",
+     "Ben: all the hobbies he has tried",
+     "Carol: her busy small-town life"
+    ],
+    [
+     "Quite the contrary",
+     "Ben: he's not an unhappy person",
+     "Carol: small-town life isn't boring"
+    ],
+    [
+     "pretty much the same",
+     "the lesson “Has the area you live in changed?”",
+     "Linda: Main Street hasn't changed much"
+    ],
+    [
+     "Last I heard",
+     "catching up with an old friend (our first lessons)",
+     "Walt about Carol"
+    ]
+   ]
+  }
+ ]
+}

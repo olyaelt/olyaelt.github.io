@@ -1,0 +1,51 @@
+{
+ "title": "What's a normal week like for you these days?",
+ "read": {
+  "intro": "First, a chat. An old school friend finds Nina online after many years. What do you think the friend asks? Guess, then tap to see the message.",
+  "hidden": "Nina?? Is that you? 😄 Long time no see! What have you been up to? What's a normal week like for you these days?",
+  "reply": "Ha, **it's been ages**! **Last I heard**, you were in Singapore — are you still there? As for me, life's **pretty much the same**: same job, same apartment. I work from home three days a week. **Don't get me wrong**, I love it, but by day three I'm talking to my plants 😄 So on those days I make myself **get out of the house** first thing — a walk by the river, **come rain or shine**. Evenings? **You name it**: a cooking class, my sister's kids, TV shows (I **rely on** Netflix **way more than I should** 😅). And on Thursdays there's a quiz night at our local bar. **I can't explain it, but** our silly little team **makes me feel part of something**. (We've never won. Not once.) What about you? **What have you been up to?**"
+ },
+ "task": "Now it's your turn. An old friend from school or university finds you online and sends you the same message: “Long time no see! What have you been up to? What's a normal week like for you these days?” Write your reply — or record it as a voice message.",
+ "map": [
+  {
+   "part": "1 · Say hi and catch up",
+   "items": [
+    "It's been ages!",
+    "Long time no see!",
+    "I've been meaning to get in touch for ages!",
+    "I thought you were still in …!",
+    "Last I heard, you were in … — are you still there?",
+    "Life's pretty much the same: …"
+   ]
+  },
+  {
+   "part": "2 · What fills your week",
+   "items": [
+    "These days, I …",
+    "Evenings? You name it: …",
+    "…, …, … — you name it.",
+    "I make myself get out of the house …, come rain or shine.",
+    "I've got more time on my hands these days.",
+    "I'm not bored at all — quite the contrary!",
+    "I rely on … way more than I should. 😅"
+   ]
+  },
+  {
+   "part": "3 · What it means to you",
+   "items": [
+    "I can't explain it, but … makes me feel part of something.",
+    "Don't get me wrong, I love …, but …"
+   ]
+  },
+  {
+   "part": "4 · A question back",
+   "items": [
+    "What about you?",
+    "What have you been up to?",
+    "Are you still at / in …?"
+   ]
+  }
+ ],
+ "plan_instr": "Tap the phrases you'd like to use.",
+ "produce_instr": "Write your reply to your friend. (Prefer to talk? Tap Record it.)"
+}

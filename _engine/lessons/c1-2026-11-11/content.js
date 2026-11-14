@@ -4,6 +4,8 @@ const TQ = __TQ__;   /* L1, L2, L3: the clips [videoId, start, duration, parts] 
                         the lines are TubeQuizard's subtitles (12.11), capitals made normal; tqLink: her TubeQuizard copy of each quiz; tq: the quiz a student may do there instead */
 /* Link to the group's homework spreadsheet. Leave empty and the page simply says where to write. */
 const SHEET_URL = "";
+/* her 14.11 11:36: in her lists this homework goes by its own name, not by its topics (engine 63 SHOW_TITLE) */
+const SHOW_TITLE = true;
 const PAGE_KEY = "hw-ge-c1-2026-11-11";
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
